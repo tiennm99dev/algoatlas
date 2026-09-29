@@ -10,8 +10,14 @@ export const hub = {
   howTitle: 'How every lesson works',
   how: [
     { title: 'Run it', body: 'The real algorithm runs on your input and records every step.' },
-    { title: 'Step it', body: 'Play, pause, rewind, or scrub — with the matching line of pseudocode lit up.' },
-    { title: 'Change it', body: 'Edit the input and see how the number of steps grows or shrinks.' },
+    {
+      title: 'Step it',
+      body: 'Play, pause, rewind, or scrub — with the matching line of pseudocode lit up.',
+    },
+    {
+      title: 'Change it',
+      body: 'Edit the input and see how the number of steps grows or shrinks.',
+    },
   ],
   startCta: 'Start with sorting',
   lessonCount: /** @param {number} n */ (n) => (n === 1 ? '1 lesson' : `${n} lessons`),

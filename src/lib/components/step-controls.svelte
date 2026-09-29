@@ -41,16 +41,44 @@
   <svg viewBox="0 0 24 24" class="size-5 fill-current" aria-hidden="true"><path {d} /></svg>
 {/snippet}
 
-<div class="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-3" role="group" aria-label={c.groupLabel}>
+<div
+  class="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-3"
+  role="group"
+  aria-label={c.groupLabel}
+>
   <div class="flex flex-wrap items-center gap-2">
-    <button class="btn-icon" onclick={() => player.seek(0)} disabled={player.atStart} aria-label={c.first} title={c.first}>{@render icon(icons.first)}</button>
-    <button class="btn-icon" onclick={player.back} disabled={player.atStart} aria-label={c.back} title={c.back}>{@render icon(icons.back)}</button>
+    <button
+      class="btn-icon"
+      onclick={() => player.seek(0)}
+      disabled={player.atStart}
+      aria-label={c.first}
+      title={c.first}>{@render icon(icons.first)}</button
+    >
+    <button
+      class="btn-icon"
+      onclick={player.back}
+      disabled={player.atStart}
+      aria-label={c.back}
+      title={c.back}>{@render icon(icons.back)}</button
+    >
     <button class="btn-primary w-28 justify-center" onclick={player.toggle}>
       {@render icon(player.playing ? icons.pause : icons.play)}
       {player.playing ? c.pause : c.play}
     </button>
-    <button class="btn-icon" onclick={player.step} disabled={player.atEnd} aria-label={c.step} title={c.step}>{@render icon(icons.step)}</button>
-    <button class="btn-icon" onclick={() => player.seek(player.frames.length - 1)} disabled={player.atEnd} aria-label={c.last} title={c.last}>{@render icon(icons.last)}</button>
+    <button
+      class="btn-icon"
+      onclick={player.step}
+      disabled={player.atEnd}
+      aria-label={c.step}
+      title={c.step}>{@render icon(icons.step)}</button
+    >
+    <button
+      class="btn-icon"
+      onclick={() => player.seek(player.frames.length - 1)}
+      disabled={player.atEnd}
+      aria-label={c.last}
+      title={c.last}>{@render icon(icons.last)}</button
+    >
 
     <label class="ml-auto flex items-center gap-2 text-sm text-slate-600">
       {c.speed}

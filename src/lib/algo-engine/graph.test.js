@@ -42,7 +42,13 @@ describe('bfsGridTrace', () => {
   });
 
   it('visits cells in non-decreasing distance order', () => {
-    const frames = bfsGridTrace({ rows: 6, cols: 6, walls: new Set([7, 8, 9]), start: 0, goal: 35 });
+    const frames = bfsGridTrace({
+      rows: 6,
+      cols: 6,
+      walls: new Set([7, 8, 9]),
+      start: 0,
+      goal: 35,
+    });
     const order = frames.filter((f) => f.kind === 'dequeue').map((f) => f.dist[f.current]);
     expect(order.every((d, i) => i === 0 || order[i - 1] <= d)).toBe(true);
   });

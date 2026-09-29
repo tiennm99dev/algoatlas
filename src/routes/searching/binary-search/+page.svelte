@@ -66,7 +66,8 @@
   function pickAbsent() {
     const present = new Set(values);
     let v;
-    do v = Math.floor(Math.random() * (values[values.length - 1] + 5)); while (present.has(v));
+    do v = Math.floor(Math.random() * (values[values.length - 1] + 5));
+    while (present.has(v));
     draft = v;
     rebuild();
   }
@@ -100,20 +101,28 @@
 
   /** @param {number} i */
   function cellClass(i) {
-    const hit = mode === 'watch' ? frame.kind === 'found' && frame.mid === i : driveStatus === 'found' && probes.at(-1) === i;
+    const hit =
+      mode === 'watch'
+        ? frame.kind === 'found' && frame.mid === i
+        : driveStatus === 'found' && probes.at(-1) === i;
     if (hit) return 'border-state-sorted bg-state-sorted text-white';
-    if (mode === 'watch' && frame.mid === i) return 'border-state-active bg-state-active text-white';
-    if (mode === 'drive' && probes.includes(i)) return 'border-slate-300 bg-slate-200 text-slate-600 line-through';
+    if (mode === 'watch' && frame.mid === i)
+      return 'border-state-active bg-state-active text-white';
+    if (mode === 'drive' && probes.includes(i))
+      return 'border-slate-300 bg-slate-200 text-slate-600 line-through';
     const out = i < windowLo || i > windowHi || (mode === 'watch' && doneWatching);
-    return out ? 'border-slate-200 bg-slate-100 text-slate-500' : 'border-slate-300 bg-white text-slate-900';
+    return out
+      ? 'border-slate-200 bg-slate-100 text-slate-500'
+      : 'border-slate-300 bg-white text-slate-900';
   }
 
   /** @param {number} i */
   function marker(i) {
     if (mode !== 'watch' || doneWatching) return '';
-    return [i === frame.lo && 'lo', i === frame.mid && 'mid', i === frame.hi && 'hi'].filter(Boolean).join(' ');
+    return [i === frame.lo && 'lo', i === frame.mid && 'mid', i === frame.hi && 'hi']
+      .filter(Boolean)
+      .join(' ');
   }
-
 </script>
 
 <LessonLayout lesson={m}>
@@ -133,7 +142,15 @@
 
     <label class="flex flex-col gap-1 text-xs font-semibold tracking-wide text-slate-500 uppercase">
       {m.sizeLabel}: {size}
-      <input type="range" min="7" max="31" step="2" bind:value={size} onchange={newArray} class="accent-teal-700" />
+      <input
+        type="range"
+        min="7"
+        max="31"
+        step="2"
+        bind:value={size}
+        onchange={newArray}
+        class="accent-teal-700"
+      />
     </label>
 
     <div class="flex flex-wrap gap-2">
@@ -151,11 +168,15 @@
             {@const out = i < windowLo || i > windowHi}
             <li class="flex w-11 flex-col items-center">
               <button
-                class="focus-ring flex h-11 w-11 items-center justify-center rounded-lg border-2 font-mono text-sm font-semibold tabular-nums transition-colors {cellClass(i)} {mode === 'drive' && driveStatus === 'playing' && !out ? 'cursor-pointer hover:border-teal-600' : 'cursor-default'}"
+                class="focus-ring flex h-11 w-11 items-center justify-center rounded-lg border-2 font-mono text-sm font-semibold tabular-nums transition-colors {cellClass(
+                  i,
+                )} {mode === 'drive' && driveStatus === 'playing' && !out
+                  ? 'cursor-pointer hover:border-teal-600'
+                  : 'cursor-default'}"
                 disabled={mode !== 'drive' || driveStatus !== 'playing' || out}
                 aria-label={m.cellLabel(i, v, out)}
-                onclick={() => probe(i)}
-              >{v}</button>
+                onclick={() => probe(i)}>{v}</button
+              >
               <span class="mt-0.5 text-[10px] text-slate-500 tabular-nums">{i}</span>
               <span class="h-4 text-[10px] font-bold text-state-active">{marker(i)}</span>
             </li>
@@ -163,7 +184,10 @@
         </ol>
       </div>
 
-      <p class="min-h-12 rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-800" aria-live={mode === 'watch' && player.playing ? 'off' : 'polite'}>
+      <p
+        class="min-h-12 rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-800"
+        aria-live={mode === 'watch' && player.playing ? 'off' : 'polite'}
+      >
         {mode === 'watch' ? m.describe(frame, values, target) : driveMessage}
       </p>
 
@@ -178,7 +202,9 @@
       <dl class="grid grid-cols-2 gap-3">
         <div class="rounded-xl border border-slate-200 bg-white p-3">
           <dt class="text-xs text-slate-500">{mode === 'watch' ? m.binaryCount : m.yourCount}</dt>
-          <dd class="text-2xl font-bold tabular-nums">{mode === 'watch' ? frame.comparisons : probes.length}</dd>
+          <dd class="text-2xl font-bold tabular-nums">
+            {mode === 'watch' ? frame.comparisons : probes.length}
+          </dd>
         </div>
         <div class="rounded-xl border border-slate-200 bg-white p-3">
           <dt class="text-xs text-slate-500">{m.linearCount}</dt>

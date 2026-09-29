@@ -69,7 +69,11 @@ describe('makeSortedArray', () => {
 
 describe('pseudocode coverage', () => {
   it('found and not-found traces together highlight every line', () => {
-    const frames = [...binarySearchTrace(a, 91), ...binarySearchTrace(a, 2), ...binarySearchTrace(a, 4)];
+    const frames = [
+      ...binarySearchTrace(a, 91),
+      ...binarySearchTrace(a, 2),
+      ...binarySearchTrace(a, 4),
+    ];
     const seen = new Set(frames.flatMap((f) => f.lines));
     expect([...seen].sort((x, y) => x - y)).toEqual(binaryPseudocode.map((_, i) => i));
   });

@@ -6,11 +6,11 @@ Live: https://tiennm99dev.github.io/algoatlas/
 
 ## Lessons
 
-| Topic | Lesson | Path | Interaction |
-| --- | --- | --- | --- |
-| Sorting | Bubble sort & insertion sort | `/sorting/bubble-insertion-sort/` | Pick algorithm and starting array, step through, compare both algorithms’ totals on the same array |
-| Searching | Binary search | `/searching/binary-search/` | Watch mode, or "you drive" — probe cells yourself and compare with binary search |
-| Graphs | Breadth-first search on a grid | `/graphs/bfs-grid/` | Paint walls, move start/goal, watch the frontier expand and the shortest path appear |
+| Topic     | Lesson                         | Path                              | Interaction                                                                                        |
+| --------- | ------------------------------ | --------------------------------- | -------------------------------------------------------------------------------------------------- |
+| Sorting   | Bubble sort & insertion sort   | `/sorting/bubble-insertion-sort/` | Pick algorithm and starting array, step through, compare both algorithms’ totals on the same array |
+| Searching | Binary search                  | `/searching/binary-search/`       | Watch mode, or "you drive" — probe cells yourself and compare with binary search                   |
+| Graphs    | Breadth-first search on a grid | `/graphs/bfs-grid/`               | Paint walls, move start/goal, watch the frontier expand and the shortest path appear               |
 
 ## Develop
 

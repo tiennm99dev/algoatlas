@@ -17,7 +17,9 @@
 
 <section class="mx-auto max-w-5xl px-4 py-12">
   <nav class="mb-6 text-sm">
-    <a href={resolve('/')} class="focus-ring rounded text-teal-700 hover:underline">{copy.lessonChrome.backToHub}</a>
+    <a href={resolve('/')} class="focus-ring rounded text-teal-700 hover:underline"
+      >{copy.lessonChrome.backToHub}</a
+    >
   </nav>
 
   <header class="mb-8">
@@ -32,7 +34,9 @@
           href={resolve(/** @type {'/'} */ (lessonPath(lesson)))}
           class="block h-full rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-teal-600 hover:shadow-sm focus-ring"
         >
-          <div class="mb-2 text-xs font-semibold tracking-wide text-slate-500 uppercase">{lesson.level}</div>
+          <div class="mb-2 text-xs font-semibold tracking-wide text-slate-500 uppercase">
+            {lesson.level}
+          </div>
           <h2 class="mb-1 text-lg font-bold text-slate-900">{lesson.title}</h2>
           <p class="text-sm leading-relaxed text-slate-600">{lesson.intro}</p>
         </a>

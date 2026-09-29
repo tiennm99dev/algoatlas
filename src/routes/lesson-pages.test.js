@@ -185,7 +185,12 @@ describe('bfs lesson', () => {
   it('reports no path when the goal is walled in', () => {
     render(BfsPage);
     // Goal sits at row 5, column 13; seal its four neighbors.
-    for (const [r, c] of [[4, 13], [6, 13], [5, 12], [5, 14]]) {
+    for (const [r, c] of [
+      [4, 13],
+      [6, 13],
+      [5, 12],
+      [5, 14],
+    ]) {
       keyActivate(button(`Row ${r}, column ${c}`));
     }
     click(button('Last step'));
@@ -195,8 +200,7 @@ describe('bfs lesson', () => {
 
 describe('routing', () => {
   it('rejects prototype keys as topics', () => {
-    const run = (/** @type {string} */ topic) =>
-      load(/** @type {any} */ ({ params: { topic } }));
+    const run = (/** @type {string} */ topic) => load(/** @type {any} */ ({ params: { topic } }));
     expect(() => run('constructor')).toThrow();
     expect(run('sorting')).toEqual({ topic: 'sorting' });
   });

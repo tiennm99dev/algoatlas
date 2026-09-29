@@ -60,7 +60,11 @@ export const en = {
     'Swap the queue for a stack and you get depth-first search: it still reaches everything, but its first path is rarely the shortest.',
   ],
   complexity: [
-    ['Time', 'O(V + E)', 'Each cell is enqueued at most once, and each edge is examined at most twice — once from each end.'],
+    [
+      'Time',
+      'O(V + E)',
+      'Each cell is enqueued at most once, and each edge is examined at most twice — once from each end.',
+    ],
     ['Memory', 'O(V)', 'The visited set and the queue can each hold every cell.'],
   ],
   nextTeaser: 'Next up: depth-first search and Dijkstra’s algorithm on the same grid.',

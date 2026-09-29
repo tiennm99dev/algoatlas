@@ -59,7 +59,7 @@ describe('createPlayer', () => {
     expect(p.index).toBe(0);
   });
 
-  it("applies a speed change immediately while playing", () => {
+  it('applies a speed change immediately while playing', () => {
     const p = createPlayer([0, 1, 2, 3]);
     p.speed = 0.5;
     p.play();

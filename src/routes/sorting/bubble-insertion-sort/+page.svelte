@@ -102,7 +102,14 @@
 
     <label class="flex flex-col gap-1 text-xs font-semibold tracking-wide text-slate-500 uppercase">
       {m.sizeLabel}: {size}
-      <input type="range" min="5" max="30" bind:value={size} onchange={regenerate} class="accent-teal-700" />
+      <input
+        type="range"
+        min="5"
+        max="30"
+        bind:value={size}
+        onchange={regenerate}
+        class="accent-teal-700"
+      />
     </label>
 
     <button onclick={regenerate} class="btn-secondary">{m.shuffle}</button>
@@ -111,27 +118,49 @@
   <div class="grid gap-4 lg:grid-cols-[1fr_22rem]">
     <div class="flex flex-col gap-4">
       <div class="rounded-xl border border-slate-200 bg-white p-4">
-        <div class="flex h-72 gap-1" role="img" aria-label={m.barsLabel(frame.items.map((it) => it.value), frame.sorted.length)}>
+        <div
+          class="flex h-72 gap-1"
+          role="img"
+          aria-label={m.barsLabel(
+            frame.items.map((it) => it.value),
+            frame.sorted.length,
+          )}
+        >
           {#each frame.items as item, i (item.id)}
             {@const state = barState(i)}
             <!-- Label, bar area, and marker are separate rows so the bar height is a true share of its own area. -->
-            <div class="flex min-w-0 flex-1 flex-col" animate:flip={{ duration: prefersReducedMotion.current ? 0 : 200 }}>
-              <span class="h-5 shrink-0 text-center text-xs text-slate-600 tabular-nums">{frame.items.length <= 20 ? item.value : ''}</span>
+            <div
+              class="flex min-w-0 flex-1 flex-col"
+              animate:flip={{ duration: prefersReducedMotion.current ? 0 : 200 }}
+            >
+              <span class="h-5 shrink-0 text-center text-xs text-slate-600 tabular-nums"
+                >{frame.items.length <= 20 ? item.value : ''}</span
+              >
               <div class="relative flex-1">
-                <div class="absolute inset-x-0 bottom-0 rounded-t transition-colors {barClass[state]}" style="height: {(item.value / maxValue) * 100}%"></div>
+                <div
+                  class="absolute inset-x-0 bottom-0 rounded-t transition-colors {barClass[state]}"
+                  style="height: {(item.value / maxValue) * 100}%"
+                ></div>
               </div>
-              <span class="h-5 shrink-0 text-center text-sm leading-5 font-bold text-slate-700">{barMarker[state] ?? ''}</span>
+              <span class="h-5 shrink-0 text-center text-sm leading-5 font-bold text-slate-700"
+                >{barMarker[state] ?? ''}</span
+              >
             </div>
           {/each}
         </div>
         <ul class="mt-3 flex flex-wrap gap-4 text-xs text-slate-600">
           {#each legend as [cls, label] (label)}
-            <li class="flex items-center gap-1.5"><span class="size-3 rounded-sm {cls}"></span>{label}</li>
+            <li class="flex items-center gap-1.5">
+              <span class="size-3 rounded-sm {cls}"></span>{label}
+            </li>
           {/each}
         </ul>
       </div>
 
-      <p class="min-h-12 rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-800" aria-live={player.playing ? 'off' : 'polite'}>
+      <p
+        class="min-h-12 rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-800"
+        aria-live={player.playing ? 'off' : 'polite'}
+      >
         {m.describe(frame, algo)}
       </p>
 
@@ -153,9 +182,15 @@
         <h2 class="mb-2 text-xs text-slate-500">{m.compareTitle}</h2>
         <dl class="space-y-1">
           {#each totals as row (row.algo)}
-            <div class="flex justify-between gap-2 {row.algo === algo ? 'font-semibold text-slate-900' : 'text-slate-600'}">
+            <div
+              class="flex justify-between gap-2 {row.algo === algo
+                ? 'font-semibold text-slate-900'
+                : 'text-slate-600'}"
+            >
               <dt>{m.algorithms[row.algo]}</dt>
-              <dd class="tabular-nums">{m.compareRow(row.comparisons, row.swaps, m.swaps[row.algo])}</dd>
+              <dd class="tabular-nums">
+                {m.compareRow(row.comparisons, row.swaps, m.swaps[row.algo])}
+              </dd>
             </div>
           {/each}
         </dl>

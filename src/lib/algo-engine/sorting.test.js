@@ -31,7 +31,10 @@ describe.each([
 
   it('keeps item identity so bars can animate', () => {
     const frames = trace(toItems([3, 1, 2]));
-    const ids = frames.at(-1)?.items.map((it) => it.id).sort();
+    const ids = frames
+      .at(-1)
+      ?.items.map((it) => it.id)
+      .sort();
     expect(ids).toEqual([0, 1, 2]);
   });
 
@@ -76,7 +79,12 @@ describe('complexity counters', () => {
 
 describe('makeArray', () => {
   it('produces the requested length for every preset', () => {
-    for (const preset of /** @type {const} */ (['random', 'nearly-sorted', 'reversed', 'few-unique'])) {
+    for (const preset of /** @type {const} */ ([
+      'random',
+      'nearly-sorted',
+      'reversed',
+      'few-unique',
+    ])) {
       expect(makeArray(preset, 12, seeded(3))).toHaveLength(12);
     }
   });
@@ -109,7 +117,12 @@ describe('insertion sort shading', () => {
 
 describe('makeArray edge sizes', () => {
   it('returns a real value for a single element in every preset', () => {
-    for (const preset of /** @type {const} */ (['random', 'nearly-sorted', 'reversed', 'few-unique'])) {
+    for (const preset of /** @type {const} */ ([
+      'random',
+      'nearly-sorted',
+      'reversed',
+      'few-unique',
+    ])) {
       const a = makeArray(preset, 1, seeded(2));
       expect(a).toHaveLength(1);
       expect(Number.isFinite(a[0])).toBe(true);

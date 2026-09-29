@@ -22,14 +22,21 @@
 
 <article class="mx-auto max-w-5xl px-4 py-8">
   <nav class="mb-4 text-sm">
-    <a href={resolve(/** @type {'/'} */ (topicPath(lesson.topic)))} class="focus-ring rounded text-teal-700 hover:underline">{copy.lessonChrome.backToTopic}</a>
+    <a
+      href={resolve(/** @type {'/'} */ (topicPath(lesson.topic)))}
+      class="focus-ring rounded text-teal-700 hover:underline">{copy.lessonChrome.backToTopic}</a
+    >
   </nav>
 
   <header class="mb-6 max-w-3xl">
-    <div class="text-sm font-semibold tracking-wide text-slate-500 uppercase">{topic.title} · {lesson.level}</div>
+    <div class="text-sm font-semibold tracking-wide text-slate-500 uppercase">
+      {topic.title} · {lesson.level}
+    </div>
     <h1 class="mt-1 mb-2 text-3xl font-bold text-slate-900">{lesson.title}</h1>
     <p class="leading-relaxed text-slate-700">{lesson.intro}</p>
-    <p class="mt-4 rounded-lg border border-teal-200 bg-teal-50 px-4 py-3 text-sm text-teal-900">{lesson.instruction}</p>
+    <p class="mt-4 rounded-lg border border-teal-200 bg-teal-50 px-4 py-3 text-sm text-teal-900">
+      {lesson.instruction}
+    </p>
   </header>
 
   {@render children()}
@@ -66,5 +73,7 @@
     </section>
   </div>
 
-  <footer class="mt-10 border-t border-slate-200 pt-4 text-sm text-slate-500">{lesson.nextTeaser}</footer>
+  <footer class="mt-10 border-t border-slate-200 pt-4 text-sm text-slate-500">
+    {lesson.nextTeaser}
+  </footer>
 </article>

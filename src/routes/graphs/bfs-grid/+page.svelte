@@ -31,7 +31,13 @@
   const cellRefs = [];
 
   const player = createPlayer(
-    bfsGridTrace({ rows: ROWS, cols: COLS, walls: new Set(DEFAULT_WALLS), start: DEFAULT_START, goal: DEFAULT_GOAL }),
+    bfsGridTrace({
+      rows: ROWS,
+      cols: COLS,
+      walls: new Set(DEFAULT_WALLS),
+      start: DEFAULT_START,
+      goal: DEFAULT_GOAL,
+    }),
   );
   const frame = $derived(player.frame);
   const queueSet = $derived(new Set(frame.queue));
@@ -137,13 +143,16 @@
 
   /** @param {number} cell */
   function cellState(cell) {
-    if (cell === start) return { cls: 'bg-emerald-700 text-white', label: m.legend.start, mark: 'S' };
+    if (cell === start)
+      return { cls: 'bg-emerald-700 text-white', label: m.legend.start, mark: 'S' };
     if (cell === goal) return { cls: 'bg-rose-600 text-white', label: m.legend.goal, mark: 'G' };
     if (walls.has(cell)) return { cls: 'bg-slate-800', label: m.legend.wall, mark: '' };
     const d = frame.dist[cell];
     const mark = d >= 0 ? String(d) : '';
-    if (pathSet.has(cell)) return { cls: 'bg-state-path text-slate-900', label: m.legend.path, mark };
-    if (cell === frame.current) return { cls: 'bg-state-active text-white', label: m.legend.current, mark };
+    if (pathSet.has(cell))
+      return { cls: 'bg-state-path text-slate-900', label: m.legend.path, mark };
+    if (cell === frame.current)
+      return { cls: 'bg-state-active text-white', label: m.legend.current, mark };
     if (queueSet.has(cell)) {
       const ring = cell === frame.touched ? ' ring-2 ring-inset ring-sky-700' : '';
       return { cls: 'bg-state-frontier text-slate-900' + ring, label: m.legend.frontier, mark };
@@ -195,12 +204,18 @@
           <div role="row" class="contents">
             <span class="bg-white" aria-hidden="true"></span>
             {#each { length: COLS } as _, c (c)}
-              <span class="bg-white text-center text-[10px] leading-5 text-slate-500 tabular-nums" aria-hidden="true">{c}</span>
+              <span
+                class="bg-white text-center text-[10px] leading-5 text-slate-500 tabular-nums"
+                aria-hidden="true">{c}</span
+              >
             {/each}
           </div>
           {#each { length: ROWS } as _, r (r)}
             <div role="row" class="contents">
-              <span class="flex items-center justify-center bg-white text-[10px] text-slate-500 tabular-nums" aria-hidden="true">{r}</span>
+              <span
+                class="flex items-center justify-center bg-white text-[10px] text-slate-500 tabular-nums"
+                aria-hidden="true">{r}</span
+              >
               {#each { length: COLS } as _, c (c)}
                 {@const cell = at(r, c)}
                 {@const s = cellState(cell)}
@@ -209,12 +224,17 @@
                     data-cell={cell}
                     bind:this={cellRefs[cell]}
                     tabindex={cell === focusIndex ? 0 : -1}
-                    aria-label={m.cellLabel(cell, COLS, s.label, walls.has(cell) ? -1 : frame.dist[cell])}
+                    aria-label={m.cellLabel(
+                      cell,
+                      COLS,
+                      s.label,
+                      walls.has(cell) ? -1 : frame.dist[cell],
+                    )}
                     class="flex aspect-square w-full items-center justify-center text-xs font-semibold tabular-nums transition-colors focus-visible:relative focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-slate-900 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-inset {s.cls}"
                     onclick={(e) => e.detail === 0 && edit(cell)}
                     onfocus={() => (focusIndex = cell)}
-                    onkeydown={(e) => onCellKeydown(e, cell)}
-                  >{s.mark}</button>
+                    onkeydown={(e) => onCellKeydown(e, cell)}>{s.mark}</button
+                  >
                 </div>
               {/each}
             </div>
@@ -222,12 +242,17 @@
         </div>
         <ul class="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-600">
           {#each legend as [cls, label] (label)}
-            <li class="flex items-center gap-1.5"><span class="size-3 rounded-sm {cls}"></span>{label}</li>
+            <li class="flex items-center gap-1.5">
+              <span class="size-3 rounded-sm {cls}"></span>{label}
+            </li>
           {/each}
         </ul>
       </div>
 
-      <p class="min-h-12 rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-800" aria-live={player.playing ? 'off' : 'polite'}>
+      <p
+        class="min-h-12 rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-800"
+        aria-live={player.playing ? 'off' : 'polite'}
+      >
         {notice || m.describe(frame, COLS)}
       </p>
 
@@ -242,18 +267,28 @@
         </div>
         <div class="rounded-xl border border-slate-200 bg-white p-3">
           <dt class="text-xs text-slate-500">{m.pathLabel}</dt>
-          <dd class="text-2xl font-bold tabular-nums">{frame.path.length ? frame.path.length - 1 : '—'}</dd>
+          <dd class="text-2xl font-bold tabular-nums">
+            {frame.path.length ? frame.path.length - 1 : '—'}
+          </dd>
         </div>
       </dl>
       <div class="rounded-xl border border-slate-200 bg-white p-3">
         <h2 class="mb-2 text-xs text-slate-500">{m.queueLabel}</h2>
         <ol class="flex flex-wrap gap-1 font-mono text-xs">
           {#each frame.queue.slice(0, 18) as cell (cell)}
-            <li class="rounded px-1.5 py-0.5 {cell === frame.touched ? 'bg-sky-700 text-white' : 'bg-sky-100 text-sky-900'}">{m.coord(cell, COLS)}</li>
+            <li
+              class="rounded px-1.5 py-0.5 {cell === frame.touched
+                ? 'bg-sky-700 text-white'
+                : 'bg-sky-100 text-sky-900'}"
+            >
+              {m.coord(cell, COLS)}
+            </li>
           {:else}
             <li class="text-slate-500">{m.queueEmpty}</li>
           {/each}
-          {#if frame.queue.length > 18}<li class="text-slate-500">+{frame.queue.length - 18}</li>{/if}
+          {#if frame.queue.length > 18}<li class="text-slate-500">
+              +{frame.queue.length - 18}
+            </li>{/if}
         </ol>
       </div>
       <CodePanel lines={bfsPseudocode} active={frame.lines} />
