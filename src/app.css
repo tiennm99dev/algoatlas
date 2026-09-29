@@ -56,6 +56,15 @@
   @apply focus-ring rounded-md border border-slate-300 bg-white px-2 py-1.5 text-sm text-slate-900;
 }
 
+/* Diagonal hatch for costly terrain; a background-image, so it layers over any bg-* state color. */
+@utility terrain-mud {
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgb(120 53 15 / 0.55) 0 2px,
+    transparent 2px 7px
+  );
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

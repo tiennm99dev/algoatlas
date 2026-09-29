@@ -1,6 +1,5 @@
 <script>
-  import { flip } from 'svelte/animate';
-  import { prefersReducedMotion } from 'svelte/motion';
+  import BarChart from '$lib/components/bar-chart.svelte';
   import CodePanel from '$lib/components/code-panel.svelte';
   import LessonLayout from '$lib/components/lesson-layout.svelte';
   import SegmentedControl from '$lib/components/segmented-control.svelte';
@@ -33,7 +32,6 @@
 
   const player = createPlayer(traces.bubble(toItems(INITIAL)));
   const frame = $derived(player.frame);
-  const maxValue = $derived(Math.max(...values, 1));
   // Final totals of both algorithms on the current array, for side-by-side comparison.
   const totals = $derived(
     ALGOS.map((a) => {
@@ -118,38 +116,16 @@
   <div class="grid gap-4 lg:grid-cols-[1fr_22rem]">
     <div class="flex flex-col gap-4">
       <div class="rounded-xl border border-slate-200 bg-white p-4">
-        <div
-          class="flex h-72 gap-1"
-          role="img"
-          aria-label={m.barsLabel(
+        <BarChart
+          items={frame.items}
+          stateOf={(i) => barClass[barState(i)]}
+          markerOf={(i) => barMarker[barState(i)] ?? ''}
+          ariaLabel={m.barsLabel(
             frame.items.map((it) => it.value),
             frame.sorted.length,
           )}
-        >
-          {#each frame.items as item, i (item.id)}
-            {@const state = barState(i)}
-            <!-- Label, bar area, and marker are separate rows so the bar height is a true share of its own area. -->
-            <div
-              class="flex min-w-0 flex-1 flex-col"
-              animate:flip={{ duration: prefersReducedMotion.current ? 0 : 200 }}
-            >
-              <span class="h-5 shrink-0 text-center text-xs text-slate-600 tabular-nums"
-                >{frame.items.length <= 20 ? item.value : ''}</span
-              >
-              <div class="relative flex-1">
-                <div
-                  class="absolute inset-x-0 bottom-0 rounded-t {barClass[state]} {player.speed < 8
-                    ? 'transition-colors'
-                    : ''}"
-                  style="height: {(item.value / maxValue) * 100}%"
-                ></div>
-              </div>
-              <span class="h-5 shrink-0 text-center text-sm leading-5 font-bold text-slate-700"
-                >{frame.items.length <= 20 ? (barMarker[state] ?? '') : ''}</span
-              >
-            </div>
-          {/each}
-        </div>
+          speed={player.speed}
+        />
         <ul class="mt-3 flex flex-wrap gap-4 text-xs text-slate-600">
           {#each legend as [cls, label], i (i)}
             <li class="flex items-center gap-1.5">

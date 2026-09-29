@@ -1,5 +1,7 @@
 <script>
+  import ChipList from '$lib/components/chip-list.svelte';
   import CodePanel from '$lib/components/code-panel.svelte';
+  import GridBoard from '$lib/components/grid-board.svelte';
   import LessonLayout from '$lib/components/lesson-layout.svelte';
   import SegmentedControl from '$lib/components/segmented-control.svelte';
   import StepControls from '$lib/components/step-controls.svelte';
@@ -26,24 +28,6 @@
   let start = $state(DEFAULT_START);
   let goal = $state(DEFAULT_GOAL);
   let tool = $state(/** @type {Tool} */ ('wall'));
-  let focusIndex = $state(DEFAULT_START);
-  /** @type {HTMLElement | undefined} */
-  let grid;
-
-  // Below the sm breakpoint the grid is drawn transposed (10 across, 16 down) so cells stay
-  // wide enough to touch. Only the drawing changes: cell indices, traces, and labels do not.
-  let transposed = $state(false);
-  $effect(() => {
-    const narrow = window.matchMedia('(max-width: 639px)');
-    const update = () => (transposed = narrow.matches);
-    update();
-    narrow.addEventListener('change', update);
-    return () => narrow.removeEventListener('change', update);
-  });
-  const shownRows = $derived(transposed ? COLS : ROWS);
-  const shownCols = $derived(transposed ? ROWS : COLS);
-  /** Cell index at a drawn position. @param {number} dr @param {number} dc */
-  const shown = (dr, dc) => (transposed ? at(dc, dr) : at(dr, dc));
 
   const player = createPlayer(
     bfsGridTrace({
@@ -76,9 +60,6 @@
     clearNotice();
     player.load(bfsGridTrace({ rows: ROWS, cols: COLS, walls, start, goal }));
   }
-
-  /** Whether a drag is painting walls on (true) or erasing them (false). */
-  let painting = /** @type {boolean | null} */ (null);
 
   /** @param {number} cell @param {boolean} on */
   function setWall(cell, on) {
@@ -119,57 +100,6 @@
     say(tool === 'start' ? m.edits.startMoved(here) : m.edits.goalMoved(here));
   }
 
-  /** @param {PointerEvent} e */
-  function cellFromPoint(e) {
-    const el = document.elementFromPoint(e.clientX, e.clientY)?.closest('[data-cell]');
-    return el ? Number(/** @type {HTMLElement} */ (el).dataset.cell) : -1;
-  }
-
-  /** @param {PointerEvent} e */
-  function onPointerDown(e) {
-    if (e.button !== 0) return;
-    const cell = cellFromPoint(e);
-    if (cell < 0) return;
-    e.preventDefault();
-    if (tool === 'wall') {
-      painting = !walls.has(cell);
-      setWall(cell, painting);
-    } else {
-      edit(cell);
-    }
-  }
-
-  /** @param {PointerEvent} e */
-  function onPointerMove(e) {
-    if (painting === null) return;
-    // A release outside the window never reaches pointerup; stop once no button is held.
-    if ((e.buttons & 1) === 0) {
-      painting = null;
-      return;
-    }
-    const cell = cellFromPoint(e);
-    if (cell >= 0) setWall(cell, painting);
-  }
-
-  /** @param {KeyboardEvent} e @param {number} cell */
-  function onCellKeydown(e, cell) {
-    const r = Math.floor(cell / COLS);
-    const c = cell % COLS;
-    // Work in drawn coordinates so the arrows follow the screen when the grid is transposed.
-    let [dr, dc] = transposed ? [c, r] : [r, c];
-    if (e.key === 'ArrowUp') dr--;
-    else if (e.key === 'ArrowDown') dr++;
-    else if (e.key === 'ArrowLeft') dc--;
-    else if (e.key === 'ArrowRight') dc++;
-    else return;
-    e.preventDefault();
-    if (dr < 0 || dr >= shownRows || dc < 0 || dc >= shownCols) return;
-    focusIndex = shown(dr, dc);
-    /** @type {HTMLElement | null | undefined} */ (
-      grid?.querySelector(`[data-cell="${focusIndex}"]`)
-    )?.focus();
-  }
-
   function scatter() {
     walls = randomWalls(ROWS, COLS, 0.28, [start, goal]);
     rebuild();
@@ -181,7 +111,7 @@
   }
 
   /** @param {number} cell */
-  function cellState(cell) {
+  function cellLook(cell) {
     if (cell === start)
       return { cls: 'bg-emerald-700 text-white', label: m.legend.start, mark: 'S' };
     if (cell === goal) return { cls: 'bg-rose-600 text-white', label: m.legend.goal, mark: 'G' };
@@ -216,8 +146,6 @@
   ];
 </script>
 
-<svelte:window onpointerup={() => (painting = null)} onpointercancel={() => (painting = null)} />
-
 <LessonLayout lesson={m}>
   <div class="mb-4 flex flex-wrap items-end gap-4">
     <SegmentedControl
@@ -236,60 +164,31 @@
   <div class="grid gap-4 lg:grid-cols-[1fr_22rem]">
     <div class="flex flex-col gap-4">
       <div class="rounded-xl border border-slate-200 bg-white p-3">
-        <!-- touch-pan-y keeps vertical swipes scrolling the page; sideways drags still paint. -->
-        <div
-          role="grid"
-          tabindex="-1"
-          aria-label={m.gridLabel}
-          class="grid touch-pan-y gap-px overflow-hidden rounded-md border border-slate-200 bg-slate-200 select-none"
-          style="grid-template-columns: 1.5rem repeat({shownCols}, minmax(0, 1fr));"
-          bind:this={grid}
-          onpointerdown={onPointerDown}
-          onpointermove={onPointerMove}
-        >
-          <!-- Axis numbers let the (row,col) narration be read off the grid (on phones the row
-               index runs across the top). Screen readers get coordinates from each cell's label
-               instead, so the whole axis row is hidden from them. -->
-          <div class="contents" aria-hidden="true">
-            <span class="bg-white"></span>
-            {#each { length: shownCols } as _, dc (dc)}
-              <span class="bg-white text-center text-[10px] leading-5 text-slate-500 tabular-nums"
-                >{dc}</span
-              >
-            {/each}
-          </div>
-          {#each { length: shownRows } as _, dr (dr)}
-            <div role="row" class="contents">
-              <span
-                class="flex items-center justify-center bg-white text-[10px] text-slate-500 tabular-nums"
-                aria-hidden="true">{dr}</span
-              >
-              {#each { length: shownCols } as _, dc (dc)}
-                {@const cell = shown(dr, dc)}
-                {@const s = cellState(cell)}
-                <div role="gridcell" class="flex">
-                  <button
-                    data-cell={cell}
-                    tabindex={cell === focusIndex ? 0 : -1}
-                    aria-label={m.cellLabel(
-                      cell,
-                      COLS,
-                      s.label,
-                      walls.has(cell) ? -1 : frame.dist[cell],
-                    )}
-                    class="flex aspect-square w-full cursor-pointer items-center justify-center text-xs font-semibold tabular-nums focus-visible:relative focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-slate-900 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-inset {s.cls} {player.speed <
-                    8
-                      ? 'transition-colors'
-                      : ''}"
-                    onclick={(e) => e.detail === 0 && edit(cell)}
-                    onfocus={() => (focusIndex = cell)}
-                    onkeydown={(e) => onCellKeydown(e, cell)}>{s.mark}</button
-                  >
-                </div>
-              {/each}
-            </div>
-          {/each}
-        </div>
+        <GridBoard
+          rows={ROWS}
+          cols={COLS}
+          cellState={(cell) => {
+            const s = cellLook(cell);
+            return {
+              ...s,
+              label: m.cellLabel(cell, COLS, s.label, walls.has(cell) ? -1 : frame.dist[cell]),
+            };
+          }}
+          gridLabel={m.gridLabel}
+          initialFocus={DEFAULT_START}
+          speed={player.speed}
+          onPaintStart={(cell) => {
+            if (tool !== 'wall') {
+              edit(cell);
+              return null;
+            }
+            const on = !walls.has(cell);
+            setWall(cell, on);
+            return on;
+          }}
+          onPaint={setWall}
+          onEdit={edit}
+        />
         <ul class="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-600">
           {#each legend as [cls, label], i (i)}
             <li class="flex items-center gap-1.5">
@@ -324,25 +223,11 @@
           </dd>
         </div>
       </dl>
-      <div class="rounded-xl border border-slate-200 bg-white p-3">
-        <h2 class="mb-2 text-xs text-slate-500">{m.queueLabel}</h2>
-        <ol class="flex flex-wrap gap-1 font-mono text-xs">
-          {#each frame.queue.slice(0, 18) as cell (cell)}
-            <li
-              class="rounded px-1.5 py-0.5 {cell === frame.touched
-                ? 'bg-sky-700 text-white'
-                : 'bg-sky-100 text-sky-900'}"
-            >
-              {m.coord(cell, COLS)}
-            </li>
-          {:else}
-            <li class="text-slate-500">{m.queueEmpty}</li>
-          {/each}
-          {#if frame.queue.length > 18}<li class="text-slate-500">
-              +{frame.queue.length - 18}
-            </li>{/if}
-        </ol>
-      </div>
+      <ChipList
+        title={m.queueLabel}
+        emptyText={m.queueEmpty}
+        items={frame.queue.map((c) => ({ label: m.coord(c, COLS), hot: c === frame.touched }))}
+      />
       <CodePanel lines={bfsPseudocode} active={frame.lines} />
     </div>
   </div>
