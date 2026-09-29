@@ -261,7 +261,7 @@
           {#each frame.buckets as chain, b (b)}
             <li class="flex min-h-7 items-center gap-2 break-inside-avoid py-0.5" data-bucket={b}>
               <span class="w-6 shrink-0 text-right text-xs text-slate-500 tabular-nums"
-                ><span class="sr-only">{m.bucketPrefix}</span>{' '}{b}</span
+                ><span class="sr-only">{m.bucketPrefix + ' '}</span>{b}</span
               >
               <span
                 class="flex flex-wrap items-center gap-1 font-mono text-xs {frame.bucket === b &&

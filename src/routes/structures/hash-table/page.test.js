@@ -187,7 +187,7 @@ describe('hash table lesson', () => {
   it('gives each bucket index a spoken Bucket prefix', () => {
     render();
     const first = document.querySelector('ol[aria-label="Buckets"] li');
-    expect(first?.querySelector('span.sr-only')?.textContent).toBe('Bucket');
+    expect(first?.querySelector('span.sr-only')?.textContent).toBe('Bucket ');
     expect(first?.textContent).toMatch(/^Bucket 0/);
   });
 });
