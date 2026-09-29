@@ -1,0 +1,57 @@
+<script>
+  import { resolve } from '$app/paths';
+  import { t } from '$lib/i18n/index.js';
+  import { lessonPath, lessonsByTopic, topicPath } from '$lib/lessons/registry.js';
+
+  const copy = t();
+  const topics = copy.topicOrder.map((key) => ({
+    key,
+    ...copy.topics[key],
+    lessons: lessonsByTopic(key),
+  }));
+</script>
+
+<svelte:head>
+  <title>{copy.site.title} — {copy.site.tagline}</title>
+  <meta name="description" content={copy.site.description} />
+</svelte:head>
+
+<section class="mx-auto max-w-5xl px-4 py-16 text-center">
+  <h1 class="mb-4 text-4xl font-bold text-slate-900 sm:text-5xl">{copy.site.tagline}</h1>
+  <p class="mx-auto max-w-2xl text-lg leading-relaxed text-slate-600">{copy.site.description}</p>
+</section>
+
+<section class="mx-auto max-w-5xl px-4 pb-12">
+  <h2 class="mb-6 text-center text-2xl font-bold text-slate-900">{copy.hub.topicsTitle}</h2>
+  <ul class="grid gap-6 md:grid-cols-3">
+    {#each topics as topic (topic.key)}
+      <li class="flex flex-col rounded-2xl border border-slate-200 bg-white p-6">
+        <a href={resolve(/** @type {'/'} */ (topicPath(topic.key)))} class="group mb-2 flex items-center justify-between">
+          <h3 class="text-lg font-bold text-slate-900 group-hover:text-teal-700">{topic.title}</h3>
+          <span class="text-xs text-slate-500">{copy.hub.lessonCount(topic.lessons.length)}</span>
+        </a>
+        <p class="mb-4 flex-1 text-sm leading-relaxed text-slate-500">{topic.blurb}</p>
+        <ul class="space-y-1 text-sm">
+          {#each topic.lessons as lesson (lesson.slug)}
+            <li>
+              <a href={resolve(/** @type {'/'} */ (lessonPath(lesson)))} class="font-medium text-teal-700 hover:underline">→ {lesson.title}</a>
+            </li>
+          {/each}
+        </ul>
+      </li>
+    {/each}
+  </ul>
+</section>
+
+<section class="mx-auto max-w-5xl px-4 pb-20">
+  <h2 class="mb-6 text-center text-2xl font-bold text-slate-900">{copy.hub.howTitle}</h2>
+  <ol class="grid gap-6 md:grid-cols-3">
+    {#each copy.hub.how as step, i (step.title)}
+      <li class="rounded-2xl bg-teal-700 p-6 text-teal-50">
+        <div class="mb-2 text-sm font-semibold text-teal-200">{i + 1}</div>
+        <h3 class="mb-1 text-lg font-bold text-white">{step.title}</h3>
+        <p class="text-sm leading-relaxed">{step.body}</p>
+      </li>
+    {/each}
+  </ol>
+</section>

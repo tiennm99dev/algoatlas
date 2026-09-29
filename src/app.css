@@ -1,0 +1,34 @@
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
+@import '@fontsource/jetbrains-mono/400.css';
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Semantic state palette shared by every visualizer. */
+  --color-state-compare: #f59e0b;
+  --color-state-swap: #e11d48;
+  --color-state-sorted: #059669;
+  --color-state-active: #4f46e5;
+  --color-state-frontier: #38bdf8;
+  --color-state-visited: #c7d2fe;
+  --color-state-path: #fbbf24;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

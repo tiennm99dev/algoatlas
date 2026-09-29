@@ -1,0 +1,27 @@
+# SvelteKit build output
+.svelte-kit/
+build/
+
+# dependencies
+node_modules/
+
+# environment variables
+.env
+.env.*
+!.env.example
+
+# macOS
+.DS_Store
+
+# editor
+.vscode/
+.idea/
+
+# logs
+npm-debug.log*
+
+npm-debug.log*
+
+# tooling
+*.tsbuildinfo
+.eslintcache
