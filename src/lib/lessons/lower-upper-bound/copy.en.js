@@ -32,14 +32,18 @@ export const en = {
   sizeLabel: 'Size',
   newArray: 'New array',
   randomPresent: 'Present target',
+  /** @param {number} n @param {number} x */
+  newArrayNotice: (n, x) => `New array of ${n} values. Target is ${x}.`,
   randomAbsent: 'Missing target',
   /** @param {number[]} values @param {number} lo @param {number} hi */
   arrayLabel: (values, lo, hi) => `Sorted array: ${values.join(', ')}. Window [${lo}, ${hi}).`,
   windowHint: 'The window is half-open: [lo, hi) includes lo and excludes hi.',
   legend: {
     mid: 'Midpoint being read',
-    left: 'Test held (left of lo)',
-    right: 'Test failed (hi and beyond)',
+    /** @param {string} test */
+    left: (test) => `a[i] ${test} x held: left of lo`,
+    /** @param {string} keep */
+    right: (keep) => `a[i] ${keep} x: hi and beyond`,
     range: 'Copies of x',
     answer: 'Answer',
   },

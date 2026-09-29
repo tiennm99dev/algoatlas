@@ -97,7 +97,9 @@ describe('dijkstra lesson', () => {
     const next = button('Next step');
     for (let i = 0; i < 20 && !text().includes('(4,8) is open and unreached'); i++) click(next);
     // The first hop into the neighboring mud costs 3 (the average of 1 and 5), not 5.
-    expect(text()).toContain('(4,8) is open and unreached — its cost is 3 via (4,7)');
+    expect(text()).toContain(
+      '(4,8) is open and unreached — its cost is 0 + 3 (mud step) = 3 via (4,7)',
+    );
   });
 
   it('moving the goal onto mud clears its cost too', () => {
@@ -117,13 +119,29 @@ describe('dijkstra lesson', () => {
     expect(document.querySelector('button[aria-label*="Expanding"]')).toBeNull();
   });
 
+  it('narrates a relaxation as popped cost plus step, naming a mud step', () => {
+    render();
+    const next = button('Next step');
+    for (let i = 0; i < 600 && !text().includes('(mud step)'); i++) click(next);
+    expect(text()).toMatch(/\d+ \+ \d+ \(mud step\) = \d+/);
+  });
+
+  it('labels a stale queue entry and the hot chip as just pushed', () => {
+    render();
+    const next = button('Next step');
+    const chips = () => [...document.querySelectorAll('ol li')].map((c) => c.textContent ?? '');
+    for (let i = 0; i < 600 && !chips().some((t) => t.includes('(stale)')); i++) click(next);
+    expect(chips().some((t) => /^\(\d+,\d+\) \d+ \(stale\)$/.test(t.trim()))).toBe(true);
+    expect(chips().some((t) => t.includes('(just pushed)'))).toBe(true);
+  });
+
   it('lights only the live queue entry of the touched cell', () => {
     render();
     const next = button('Next step');
     for (let i = 0; i < 600; i++) {
       click(next);
       const chips = [...document.querySelectorAll('ol li')];
-      const labels = chips.map((c) => c.textContent?.replace(/ \(current\)$/, '').trim());
+      const labels = chips.map((c) => c.textContent?.replace(/ \(just pushed\)$/, '').trim());
       const hot = chips.filter((c) => c.querySelector('.sr-only'));
       if (hot.length && new Set(labels.map((l) => l?.split(' ')[0])).size < labels.length) {
         // A duplicate cell is queued: exactly one of its entries is hot.

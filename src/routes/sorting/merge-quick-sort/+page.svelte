@@ -31,18 +31,6 @@
   // A fixed first array keeps the prerendered HTML and the hydrated page identical.
   const INITIAL = [42, 17, 88, 5, 63, 29, 71, 12, 95, 36, 54, 24];
 
-  /**
-   * Whether equal values kept their input order (ids ascend within each run of equals), or
-   * null when no value repeats, since stability cannot show on such an array.
-   * @param {import('$lib/algo-engine/merge-quick-sort.js').DivideFrame} last
-   * @returns {boolean|null}
-   */
-  function isStable(last) {
-    const pairs = last.items.slice(1).map((it, i) => [last.items[i], it]);
-    if (!pairs.some(([a, b]) => a.value === b.value)) return null;
-    return pairs.every(([a, b]) => a.value !== b.value || a.id < b.id);
-  }
-
   /** @param {number[]} values @param {PivotRule} pivotRule */
   function build(values, pivotRule) {
     const traces = {
@@ -56,7 +44,7 @@
         algo: a,
         comparisons: last?.comparisons ?? 0,
         moves: last?.swaps ?? 0,
-        stable: last ? isStable(last) : null,
+        stable: last ? (m.stability(last.items)?.stable ?? null) : null,
       };
     });
     return { traces, totals };
@@ -88,14 +76,9 @@
     player.load(built.traces[algo]);
   }
 
-  function regenerate() {
-    clearNotice();
-    rebuild(makeArray(preset, size));
-  }
-
   // Reloading lands on frame 0, so an unchanged narration would give no feedback.
   function newArray() {
-    regenerate();
+    rebuild(makeArray(preset, size));
     say(m.newArrayNotice);
   }
 
@@ -108,6 +91,7 @@
   // Pivot changes only affect quicksort, but both traces are rebuilt on the current array.
   function changeRule() {
     rebuild(built.traces.merge[0].items.map((it) => it.value));
+    say(m.pivotNotice(m.pivots[rule]));
   }
 
   const merging = $derived(algo === 'merge');
@@ -124,6 +108,15 @@
     }
     if (i === frame.pivot) return 'pivot';
     if (frame.sorted.includes(i)) return 'sorted';
+    // While scanning, slots lo..i already hold values <= pivot: the low side that partition grows.
+    if (
+      (kind === 'scan' || kind === 'swap') &&
+      frame.range &&
+      i >= frame.range[0] &&
+      i <= frame.i
+    ) {
+      return 'run';
+    }
     if (frame.runs.some(([lo, hi]) => i >= lo && i <= hi)) return 'run';
     return 'idle';
   }
@@ -147,11 +140,16 @@
     run: m.markers.run,
   };
 
-  /** The buffer row spans the whole array; only slots lo..hi hold buffer items. */
+  /**
+   * The buffer row spans the whole array; only slots lo..hi hold buffer items. While merge sort
+   * is selected the row stays mounted, empty between merges, so the layout below never jumps.
+   */
   const auxRow = $derived.by(() => {
+    if (!merging) return null;
     const { aux, range } = frame;
-    if (!aux || !range) return null;
-    return frame.items.map((_, i) => (i >= range[0] && i <= range[1] ? aux[i - range[0]] : null));
+    return frame.items.map((_, i) =>
+      aux && range && i >= range[0] && i <= range[1] ? aux[i - range[0]] : null,
+    );
   });
 
   /** @param {number} i @returns {'head'|'taken'|'waiting'} */
@@ -165,8 +163,8 @@
 
   /** @type {Record<string, string>} */
   const auxClass = {
-    head: 'bg-slate-400 ring-2 ring-state-active ring-inset',
-    taken: 'bg-slate-200',
+    head: 'bg-slate-400 ring-2 ring-slate-900 ring-inset',
+    taken: 'bg-slate-400 opacity-40',
     waiting: 'bg-slate-400',
   };
 
@@ -200,19 +198,17 @@
   const legend = $derived(
     merging
       ? [
-          ['bg-state-swap', `${m.markers.write} ${m.legend.write}`],
-          [
-            'bg-slate-400 ring-2 ring-state-active ring-inset',
-            `${m.markers.head} ${m.legend.head}`,
-          ],
-          ['bg-slate-200', `${m.markers.taken} ${m.legend.taken}`],
+          ['bg-state-swap', `${m.markers.write} ${m.legend.write.merge}`],
+          [auxClass.head, `${m.markers.head} ${m.legend.head}`],
+          [auxClass.taken, `${m.markers.taken} ${m.legend.taken}`],
           ['bg-state-visited', `${m.markers.run} ${m.legend.run}`],
           ['bg-state-sorted', `${m.markers.sorted} ${m.legend.sorted}`],
         ]
       : [
           ['bg-state-compare', `${m.markers.compare} ${m.legend.compare}`],
-          ['bg-state-swap', `${m.markers.write} ${m.legend.write}`],
+          ['bg-state-swap', `${m.markers.write} ${m.legend.write.quick}`],
           ['bg-state-active', `${m.markers.pivot} ${m.legend.pivot}`],
+          ['bg-state-visited', `${m.markers.run} ${m.legend.lowSide}`],
           ['bg-state-sorted', `${m.markers.sorted} ${m.legend.sorted}`],
         ],
   );
@@ -230,7 +226,7 @@
 
     <label class="flex flex-col gap-1 text-xs font-semibold tracking-wide text-slate-500 uppercase">
       {m.presetLabel}
-      <select class="field" bind:value={preset} onchange={regenerate}>
+      <select class="field" bind:value={preset} onchange={newArray}>
         {#each PRESETS as p (p)}
           <option value={p}>{m.presets[p]}</option>
         {/each}
@@ -242,25 +238,21 @@
       <input
         type="range"
         min="6"
-        max="24"
+        max="20"
         bind:value={size}
-        onchange={regenerate}
+        onchange={newArray}
         class="focus-ring rounded accent-teal-700"
       />
     </label>
 
-    {#if !merging}
-      <label
-        class="flex flex-col gap-1 text-xs font-semibold tracking-wide text-slate-500 uppercase"
-      >
-        {m.pivotLabel}
-        <select class="field" name="pivot" bind:value={rule} onchange={changeRule}>
-          {#each RULES as r (r)}
-            <option value={r}>{m.pivots[r]}</option>
-          {/each}
-        </select>
-      </label>
-    {/if}
+    <label class="flex flex-col gap-1 text-xs font-semibold tracking-wide text-slate-500 uppercase">
+      {m.pivotLabel}
+      <select class="field" name="pivot" bind:value={rule} onchange={changeRule} disabled={merging}>
+        {#each RULES as r (r)}
+          <option value={r}>{m.pivots[r]}</option>
+        {/each}
+      </select>
+    </label>
 
     <button onclick={newArray} class="btn-secondary">{m.shuffle}</button>
   </div>
@@ -287,6 +279,7 @@
           )}
           speed={player.speed}
         />
+        {#if merging}<p class="mt-1 text-xs text-slate-500">{m.bufferCaption}</p>{/if}
         <ul class="mt-3 flex flex-wrap gap-4 text-xs text-slate-600">
           {#each legend as [cls, label], i (i)}
             <li class="flex items-center gap-1.5">
@@ -317,7 +310,7 @@
         <div class="col-span-2 rounded-xl border border-slate-200 bg-white p-3">
           <dt class="text-xs text-slate-500">{m.depthLabel}</dt>
           <dd class="text-2xl font-bold tabular-nums">
-            {m.depthValue(frame.depth, frame.maxDepth)}
+            {m.depthValue(frame.depth, frame.maxDepth, frame.items.length)}
           </dd>
         </div>
       </dl>

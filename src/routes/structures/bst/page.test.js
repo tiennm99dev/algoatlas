@@ -178,4 +178,48 @@ describe('binary search tree lesson', () => {
     click(buttonByText('Undo last'));
     expect(select.value).toBe('');
   });
+
+  it('wraps the tree in a focusable, labelled horizontal scroller', () => {
+    render(Page);
+    const scroller = document.querySelector('svg[role="img"]')?.parentElement;
+    expect(scroller?.getAttribute('tabindex')).toBe('0');
+    expect(scroller?.getAttribute('aria-label')).toBeTruthy();
+    expect(scroller?.className).toContain('overflow-x-auto');
+  });
+
+  it('inserts when Enter submits the key field and does not submit on Search', () => {
+    render(Page);
+    commit(keyInput(), '45');
+    const form = /** @type {HTMLFormElement} */ (keyInput().closest('form'));
+    form.requestSubmit();
+    flushSync();
+    expect(text()).toContain('Compare 45 with 50.');
+    click(button('Last step'));
+    expect(text()).toContain('Tree has 8 keys');
+    expect(buttonByText('Search').type).toBe('button');
+    expect(buttonByText('Delete').type).toBe('button');
+    expect(buttonByText('Undo last').type).toBe('button');
+    expect(buttonByText('Reset').type).toBe('button');
+  });
+
+  it('lets the random preset be chosen twice in a row', () => {
+    const rand = vi.spyOn(Math, 'random');
+    render(Page);
+    const select = /** @type {HTMLSelectElement} */ (
+      document.querySelector('select[name="preset"]')
+    );
+    commit(select, 'random');
+    const first = rand.mock.calls.length;
+    expect(first).toBeGreaterThan(0);
+    expect(select.value).toBe('');
+    commit(select, 'random');
+    expect(rand.mock.calls.length).toBeGreaterThan(first);
+    rand.mockRestore();
+  });
+
+  it('describes the root and the balanced height in the tree label', () => {
+    render(Page);
+    click(button('Last step'));
+    expect(treeLabel()).toContain('Root 50. Balanced height would be 3.');
+  });
 });

@@ -98,4 +98,38 @@ describe('lower and upper bound lesson', () => {
     click(button('Last step'));
     expect(text()).toContain('copies of 17');
   });
+
+  it('draws a one-row window strip whose width follows the window', () => {
+    render();
+    const fill = /** @type {HTMLElement} */ (
+      document.querySelector('[data-testid="window-strip"] > div')
+    );
+    // Opening window is [0, 15) over 16 slots.
+    expect(fill.style.left).toBe('0%');
+    expect(parseFloat(fill.style.width)).toBeCloseTo((15 / 16) * 100, 5);
+    click(button('Next step'));
+    click(button('Next step'));
+    expect(parseFloat(fill.style.width)).toBeLessThan((15 / 16) * 100);
+    click(button('Last step'));
+    expect(parseFloat(fill.style.width)).toBe(0);
+  });
+
+  it('names the actual test in the legend for each variant', () => {
+    render();
+    expect(text()).toContain('a[i] < x held: left of lo');
+    expect(text()).toContain('a[i] ≥ x: hi and beyond');
+    click(/** @type {HTMLElement} */ (document.querySelector('input[value="upper"]')));
+    expect(text()).toContain('a[i] ≤ x held: left of lo');
+    expect(text()).toContain('a[i] > x: hi and beyond');
+  });
+
+  it('announces a new array even when the target repeats', () => {
+    render();
+    click(button('Last step'));
+    const newArray = /** @type {HTMLElement} */ (
+      [...document.querySelectorAll('button')].find((b) => b.textContent === 'New array')
+    );
+    click(newArray);
+    expect(text()).toMatch(/New array of 15 values\. Target is \d+\./);
+  });
 });

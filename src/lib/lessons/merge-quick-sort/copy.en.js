@@ -1,5 +1,19 @@
 /** @typedef {import('$lib/algo-engine/merge-quick-sort.js').DivideFrame} DivideFrame */
 
+/**
+ * Whether equal values kept their input order. Equal values end up adjacent, so the first
+ * adjacent pair whose ids descend is a reordering. Null when no value repeats.
+ * @param {DivideFrame['items']} items
+ * @returns {{stable: true}|{stable: false, earlier: {id: number, value: number}, later: {id: number, value: number}}|null}
+ */
+function stability(items) {
+  const pairs = items.slice(1).map((it, i) => [items[i], it]);
+  const equal = pairs.filter(([a, b]) => a.value === b.value);
+  if (equal.length === 0) return null;
+  const bad = equal.find(([a, b]) => a.id > b.id);
+  return bad ? { stable: false, earlier: bad[1], later: bad[0] } : { stable: true };
+}
+
 export const en = {
   slug: 'merge-quick-sort',
   topic: 'sorting',
@@ -16,6 +30,7 @@ export const en = {
   presetLabel: 'Starting array',
   presets: {
     random: 'Random',
+    sorted: 'Sorted',
     'nearly-sorted': 'Nearly sorted',
     reversed: 'Reversed',
     'few-unique': 'Few unique values',
@@ -24,10 +39,13 @@ export const en = {
   shuffle: 'New array',
   pivotLabel: 'Pivot',
   pivots: { last: 'Last element', median3: 'Median of three', random: 'Random' },
+  /** @param {string} rule  the label of the pivot rule just chosen */
+  pivotNotice: (rule) => `Pivot rule: ${rule}. Both traces rebuilt.`,
   comparisons: 'Comparisons',
   moves: { merge: 'Writes', quick: 'Swaps' },
   depthLabel: 'Recursion depth',
-  depthValue: /** @param {number} d @param {number} max */ (d, max) => `${d} (max ${max})`,
+  /** @param {number} d @param {number} max @param {number} n  array size, for the balanced-tree reference */
+  depthValue: (d, max, n) => `${d} (max ${max}, balanced ≈ ${Math.ceil(Math.log2(n))})`,
   stackTitle: { merge: 'Call stack (outermost first)', quick: 'Ranges still to sort' },
   stackEmpty: 'empty',
   rangeChip: /** @param {number} lo @param {number} hi */ (lo, hi) => `[${lo}–${hi}]`,
@@ -42,6 +60,9 @@ export const en = {
         ? 'equal values kept their order'
         : 'equal values were reordered',
   newArrayNotice: 'New array loaded.',
+  bufferCaption:
+    'Buffer: a copy of the range being merged. ↑ next from each run, ✕ already written back.',
+  stability,
   /**
    * @param {number[]} values
    * @param {number} sortedCount
@@ -56,6 +77,7 @@ export const en = {
    * @param {string} [progress]  which buffer slots are next or already taken
    */
   auxLabel(values, progress = '') {
+    if (values.length === 0) return 'Buffer: empty.';
     return `Buffer: ${values.join(', ')}.${progress ? ` ${progress}` : ''}`;
   },
   /** @param {number|null} left @param {number|null} right @param {number} taken */
@@ -70,7 +92,8 @@ export const en = {
   },
   legend: {
     compare: 'Comparing',
-    write: 'Writing or swapping',
+    write: { merge: 'Writing to the array', quick: 'Swapping' },
+    lowSide: '≤ pivot, low side',
     pivot: 'Pivot',
     run: 'Merged run',
     head: 'Next from each buffer run',
@@ -108,7 +131,7 @@ export const en = {
         return `Write ${v(x)} to slot ${x} from the ${right ? 'right' : 'left'} run: ${why}.`;
       }
       case 'merged':
-        return `Merged [${lo}–${hi}] into one sorted run.`;
+        return `Merged [${lo}–${hi}] into one sorted run. The buffer is discarded.`;
       case 'call':
         return `Sort [${lo}–${hi}].`;
       case 'pivot':
@@ -123,8 +146,19 @@ export const en = {
         return `Swap slots ${x} and ${y} to grow the low side.`;
       case 'place':
         return `The pivot ${v(x)} lands at index ${x}, its final position. Sort the ranges on each side.`;
-      case 'done':
-        return `Sorted with ${f.comparisons} comparisons and ${f.swaps} ${algo === 'merge' ? 'writes' : 'swaps'}.`;
+      case 'done': {
+        const totals = `Sorted with ${f.comparisons} comparisons and ${f.swaps} ${algo === 'merge' ? 'writes' : 'swaps'}.`;
+        const s = stability(f.items);
+        if (s === null) return totals;
+        if (s.stable) return `${totals} Equal values kept their order.`;
+        const nth = (/** @type {number} */ id) => {
+          const n = id + 1;
+          const rem = n % 100;
+          const suffix = rem >= 11 && rem <= 13 ? 'th' : (['th', 'st', 'nd', 'rd'][n % 10] ?? 'th');
+          return `${n}${suffix}`;
+        };
+        return `${totals} Equal values were reordered: ${s.earlier.value} (originally ${nth(s.earlier.id)}) now follows ${s.later.value} (originally ${nth(s.later.id)}).`;
+      }
     }
   },
   takeaways: [

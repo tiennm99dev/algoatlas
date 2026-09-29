@@ -58,6 +58,24 @@ describe.each([
   });
 });
 
+describe('makeArray', () => {
+  it('returns the ascending array for the sorted preset, at any size', () => {
+    for (const n of [1, 2, 12, 20]) {
+      const a = makeArray('sorted', n);
+      expect(a).toHaveLength(n);
+      expect(a).toEqual(a.slice().sort((x, y) => x - y));
+    }
+    expect(makeArray('sorted', 8)).toEqual(makeArray('reversed', 8).reverse());
+  });
+
+  it('does not consume randomness for the sorted preset', () => {
+    const rand = () => {
+      throw new Error('sorted must be deterministic');
+    };
+    expect(() => makeArray('sorted', 10, rand)).not.toThrow();
+  });
+});
+
 describe('complexity counters', () => {
   it('bubble sort exits after one pass on sorted input', () => {
     const frames = bubbleSortTrace(toItems([1, 2, 3, 4, 5]));

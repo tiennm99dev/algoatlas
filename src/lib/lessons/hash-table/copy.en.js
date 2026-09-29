@@ -58,6 +58,7 @@ export const en = {
   newKeysLoaded: 'New keys loaded.',
   searchLabel: 'Search for',
   searchButton: 'Search',
+  searchDropped: 'The search was cleared because the table changed.',
   keyErrors: {
     format: 'Keys must be whole numbers from 0 to 999, separated by commas.',
     range: 'Keys must be whole numbers from 0 to 999.',
@@ -71,6 +72,7 @@ export const en = {
     size: 'Table size',
   },
   bucketsLabel: 'Buckets',
+  bucketPrefix: 'Bucket',
   pendingLabel: 'Waiting to rehash',
   pendingEmpty: 'none left',
   emptyBucket: 'empty',

@@ -163,4 +163,31 @@ describe('hash table lesson', () => {
     );
     expect(hit?.parentElement?.textContent).toContain('987');
   });
+
+  it('runs the search when Enter submits the search field', () => {
+    render();
+    const input = field('input[type="number"]');
+    commit(input, '39');
+    input.form?.requestSubmit();
+    flushSync();
+    expect(text()).toContain('Search 39: hash to bucket');
+  });
+
+  it('says a search was cleared when the hash function changes', () => {
+    render();
+    click(buttonByText('Search'));
+    expect(text()).toContain('Search 62: hash to bucket');
+    click(field('input[value="mod-pow2"]'));
+    expect(document.querySelector('p[aria-live]')?.textContent).toContain(
+      'The search was cleared because the table changed.',
+    );
+    expect(text()).toMatch(/Step 1 of/);
+  });
+
+  it('gives each bucket index a spoken Bucket prefix', () => {
+    render();
+    const first = document.querySelector('ol[aria-label="Buckets"] li');
+    expect(first?.querySelector('span.sr-only')?.textContent).toBe('Bucket');
+    expect(first?.textContent).toMatch(/^Bucket 0/);
+  });
 });

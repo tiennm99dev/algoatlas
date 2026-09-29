@@ -93,9 +93,13 @@
     const bfs = bfsGridTrace(grid).at(-1);
     const dijkstra = dijkstraGridTrace(grid).at(-1);
     if (!bfs?.path.length || !dijkstra?.path.length) return null;
+    const bfsCost = pathCost(bfs.path, cost);
+    const dijkstraCost = pathCost(dijkstra.path, cost);
     return {
-      bfs: m.bfsRoute(bfs.path.length - 1, pathCost(bfs.path, cost)),
-      dijkstra: m.dijkstraRoute(dijkstra.path.length - 1, pathCost(dijkstra.path, cost)),
+      bfs: m.bfsRoute(bfs.path.length - 1, bfsCost),
+      dijkstra: m.dijkstraRoute(dijkstra.path.length - 1, dijkstraCost),
+      // Emphasis goes to the strictly cheaper route; a tie emphasizes neither.
+      cheaper: bfsCost === dijkstraCost ? null : bfsCost < dijkstraCost ? 'bfs' : 'dijkstra',
     };
   });
 
@@ -111,7 +115,11 @@
     const d = frame.dist[cell];
     const mark = d >= 0 ? String(d) : '';
     // Mud is a hatch over whatever state color the cell has; the label carries its cost.
-    const mudCls = cost[cell] === MUD_COST ? ' terrain-mud' : '';
+    // Cells with no ring of their own get a mud ring, so the terrain shows even where the
+    // hatch barely differs from the fill.
+    const isMud = cost[cell] === MUD_COST;
+    const mudCls = isMud ? ' terrain-mud' : '';
+    const mudRing = (/** @type {string} */ color) => (isMud ? ` ring-1 ring-inset ${color}` : '');
     // The path fill is close in luminance to the settled fill, so it also gets an inset ring.
     if (pathSet.has(cell))
       return {
@@ -127,9 +135,14 @@
         mark,
       };
     if (cell === frame.current)
-      return { cls: 'bg-state-active text-white' + mudCls, label: m.legend.current, mark };
+      return {
+        cls: 'bg-state-active text-white' + mudRing('ring-amber-200') + mudCls,
+        label: m.legend.current,
+        mark,
+      };
     if (queueSet.has(cell)) {
-      const ring = cell === frame.touched ? ' ring-2 ring-inset ring-sky-900' : '';
+      const ring =
+        cell === frame.touched ? ' ring-2 ring-inset ring-sky-900' : mudRing('ring-amber-900');
       return {
         cls: 'bg-state-frontier text-slate-900' + ring + mudCls,
         label: m.legend.frontier,
@@ -137,15 +150,19 @@
       };
     }
     if (settledSet.has(cell))
-      return { cls: 'bg-state-visited text-indigo-900' + mudCls, label: m.legend.visited, mark };
-    return { cls: 'bg-white text-slate-900' + mudCls, label: '', mark };
+      return {
+        cls: 'bg-state-visited text-indigo-900' + mudRing('ring-amber-900') + mudCls,
+        label: m.legend.visited,
+        mark,
+      };
+    return { cls: 'bg-white text-slate-900' + mudRing('ring-amber-900') + mudCls, label: '', mark };
   }
 
   const legend = [
     ['bg-emerald-700', m.legend.start],
     ['bg-rose-600', m.legend.goal],
     ['bg-slate-800', m.legend.wall],
-    ['bg-white border border-slate-300 terrain-mud', m.legend.mud],
+    ['bg-white ring-1 ring-amber-900 ring-inset terrain-mud size-4', m.legend.mud],
     ['bg-state-frontier', m.legend.frontier],
     ['bg-state-visited', m.legend.visited],
     ['bg-state-active', m.legend.current],
@@ -199,7 +216,7 @@
         <ul class="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-600">
           {#each legend as [cls, label], i (i)}
             <li class="flex items-center gap-1.5">
-              <span class="size-3 rounded-sm {cls}"></span>{label}
+              <span class="rounded-sm {cls.includes('size-') ? '' : 'size-3'} {cls}"></span>{label}
             </li>
           {/each}
         </ul>
@@ -233,15 +250,20 @@
       {#if routes}
         <div class="rounded-xl border border-slate-200 bg-white p-3">
           <h2 class="mb-2 text-xs text-slate-500">{m.compareTitle}</h2>
-          <p class="text-sm text-slate-800">{routes.bfs}</p>
-          <p class="text-sm text-slate-800">{routes.dijkstra}</p>
+          <p class="text-sm text-slate-800" class:font-semibold={routes.cheaper === 'bfs'}>
+            {routes.bfs}
+          </p>
+          <p class="text-sm text-slate-800" class:font-semibold={routes.cheaper === 'dijkstra'}>
+            {routes.dijkstra}
+          </p>
         </div>
       {/if}
       <ChipList
         title={m.pqLabel}
         emptyText={m.pqEmpty}
+        hotLabel={m.hotLabel}
         items={frame.pq.map(([c, d]) => ({
-          label: m.pqChip(c, COLS, d),
+          label: m.pqChip(c, COLS, d, d > frame.dist[c]),
           hot: c === frame.touched && d === frame.dist[c],
         }))}
       />

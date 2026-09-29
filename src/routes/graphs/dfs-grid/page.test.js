@@ -82,7 +82,7 @@ describe('dfs lesson', () => {
     click(button('Next step'));
     expect(text()).toContain('Push (4,1): open and not visited yet.');
     const stack = [...document.querySelectorAll('ol li')].map((li) => li.textContent?.trim());
-    expect(stack).toContain('(4,1) (current)');
+    expect(stack).toContain('(4,1) (just pushed)');
   });
 
   it('reports no path when the goal is walled in', () => {
@@ -126,15 +126,17 @@ describe('dfs lesson', () => {
     const next = button('Next step');
     for (let i = 0; i < 400 && !text().includes('so skip it'); i++) click(next);
     expect(text()).toContain('so skip it');
-    const cell = document.querySelector('button[aria-label*="Stale copy, skipped"]');
+    const cell = document.querySelector('button[aria-label*="Stale, skipped"]');
     expect(cell).not.toBeNull();
     expect(document.querySelector('button[aria-label*="Expanding"]')).toBeNull();
   });
 
-  it('marks only the top stack entry as the current chip', () => {
+  it('announces the top stack entry as just pushed', () => {
     render(Page);
     click(button('Next step'));
     click(button('Next step'));
-    expect(document.querySelectorAll('ol li .sr-only')).toHaveLength(1);
+    const hot = document.querySelectorAll('ol li .sr-only');
+    expect(hot).toHaveLength(1);
+    expect(hot[0].textContent).toBe(' (just pushed)');
   });
 });

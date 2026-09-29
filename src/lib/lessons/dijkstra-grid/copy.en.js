@@ -12,7 +12,7 @@ export const en = {
   summary:
     'Watch Dijkstra’s algorithm find the cheapest route across a grid with mud, and see why a cell is final only when it is popped.',
   instruction:
-    'Paint walls and mud, move the start and goal, then play. Numbers show the cheapest known cost to reach each cell.',
+    'Paint walls and mud by clicking or dragging over the grid, or press Enter on a focused cell. Move the start and goal, then play. Numbers show the cheapest known cost to reach each cell.',
   tools: {
     wall: gridCopy.tools.wall,
     mud: 'Mud',
@@ -20,17 +20,18 @@ export const en = {
     goal: gridCopy.tools.goal,
   },
   randomTerrain: 'Random terrain',
-  clearTerrain: 'Clear',
+  clearTerrain: 'Clear terrain',
+  hotLabel: 'just pushed',
   pqLabel: 'Priority queue (cheapest first)',
   pqEmpty: 'empty',
-  /** @param {number} cell @param {number} cols @param {number} d */
-  pqChip(cell, cols, d) {
-    return `${en.coord(cell, cols)} ${d}`;
+  /** A stale entry costs more than the cell's best known cost now. @param {number} cell @param {number} cols @param {number} d @param {boolean} stale */
+  pqChip(cell, cols, d, stale) {
+    return `${en.coord(cell, cols)} ${d}${stale ? ' (stale)' : ''}`;
   },
   settledLabel: 'Settled',
   relaxLabel: 'Relaxations',
   costLabel: 'Dijkstra path cost',
-  compareTitle: 'Same grid, fewest steps',
+  compareTitle: 'Fewest steps vs cheapest route',
   /** @param {number} steps @param {number} cost */
   bfsRoute(steps, cost) {
     return `BFS route: ${steps} steps, cost ${cost}`;
@@ -75,10 +76,13 @@ export const en = {
         return `Pop ${at(f.current)} at cost ${f.popped}. Nothing cheaper is left in the queue, so its cost is final.`;
       case 'stale':
         return `Pop ${at(f.current)} at cost ${f.popped}, but a cheaper route of ${f.dist[f.current]} was found since: a stale entry, skip it.`;
-      case 'relax':
+      case 'relax': {
+        const step = f.dist[f.touched] - f.popped;
+        const sum = `${f.popped} + ${step}${step > 1 ? ' (mud step)' : ''} = ${f.dist[f.touched]}`;
         return f.improved
-          ? `Going through ${at(f.current)} reaches ${at(f.touched)} for ${f.dist[f.touched]}, cheaper than before. Push a new entry; the old one will go stale.`
-          : `${at(f.touched)} is open and unreached — its cost is ${f.dist[f.touched]} via ${at(f.current)}. Push it.`;
+          ? `Going through ${at(f.current)} reaches ${at(f.touched)} for ${sum}, cheaper than before. Push a new entry; the old one will go stale.`
+          : `${at(f.touched)} is open and unreached — its cost is ${sum} via ${at(f.current)}. Push it.`;
+      }
       case 'found':
         return `Reached the goal at cost ${f.popped}. The route has ${f.path.length - 1} steps.`;
       case 'no-path':

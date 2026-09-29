@@ -16,7 +16,7 @@ export const en = {
   targetLabel: 'Target',
   sizeLabel: 'Size',
   newArray: 'New array',
-  randomPresent: 'Random target',
+  randomPresent: 'Present target',
   randomAbsent: 'Missing target',
   arrayLabel: 'Sorted array',
   /** @param {number} i @param {number} v @param {'open'|'out'|'found'} state */

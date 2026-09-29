@@ -35,7 +35,14 @@
   const upperAnswer = $derived(boundTrace(values, target, 'upper').at(-1)?.answer ?? 0);
   const ceiling = $derived(Math.ceil(Math.log2(n + 1)));
 
+  /** A message shown in place of the narration, only on the frame it was raised on. */
+  let notice = $state({ text: '', at: -1 });
+  const narration = $derived(
+    notice.at === player.index ? notice.text : m.describe(frame, values, target),
+  );
+
   function rebuild() {
+    notice = { text: '', at: -1 };
     // An emptied number input binds null; keep the last valid target until it is refilled.
     if (typeof draft === 'number' && Number.isFinite(draft)) target = draft;
     else draft = target;
@@ -45,6 +52,8 @@
   function newArray() {
     values = makeSortedArrayWithDuplicates(size);
     pickPresent();
+    // A repeated target leaves the opening narration unchanged, so say that the array is new.
+    notice = { text: m.newArrayNotice(values.length, target), at: player.index };
   }
 
   function pickPresent() {
@@ -80,10 +89,11 @@
       .join(' ');
   }
 
+  // The legend names the test the current variant runs on a[mid], matching the pseudocode.
   const legend = $derived([
     ['bg-state-active', m.legend.mid],
-    ['border border-slate-300 bg-state-visited', m.legend.left],
-    ['border border-slate-200 bg-slate-100', m.legend.right],
+    ['border border-slate-300 bg-state-visited', m.legend.left(variant === 'lower' ? '<' : '≤')],
+    ['border border-slate-200 bg-slate-100', m.legend.right(variant === 'lower' ? '≥' : '>')],
     ['bg-state-sorted', m.legend.range],
   ]);
 </script>
@@ -125,6 +135,18 @@
   <div class="grid gap-4 lg:grid-cols-[1fr_22rem]">
     <div class="flex flex-col gap-4 lg:col-start-1 lg:row-start-1">
       <div class="rounded-xl border border-slate-200 bg-white p-4">
+        <!-- One-row view of the live window over n + 1 slots, so hi = n is representable even when cells wrap. -->
+        <div
+          class="relative mb-3 h-2 rounded bg-slate-200"
+          aria-hidden="true"
+          data-testid="window-strip"
+        >
+          <div
+            class="absolute inset-y-0 rounded bg-teal-700/60"
+            style="left: {(frame.lo / (n + 1)) * 100}%; width: {((frame.hi - frame.lo) / (n + 1)) *
+              100}%"
+          ></div>
+        </div>
         <div
           role="img"
           class="flex flex-wrap gap-1.5"
@@ -182,7 +204,7 @@
         class="min-h-12 rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-800"
         aria-live={player.playing ? 'off' : 'polite'}
       >
-        {m.describe(frame, values, target)}
+        {narration}
       </p>
     </div>
 

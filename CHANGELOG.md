@@ -36,6 +36,13 @@ All notable changes to **AlgoAtlas** are documented here. Format: [Keep a Change
 - Shared button, field, and focus-ring utilities plus a segmented control replace per-page class strings.
 - The sorting bars, BFS grid, and BFS queue panel are rendered by the shared components, with no behavior change.
 - The home topics grid shows four columns on wide screens; the existing lessons’ teasers point at the new lessons.
+- Lessons link to the previous and next lesson in order; the teaser describes the next one. A static 404 page covers mistyped URLs.
+- Step controls stay pinned until the code panel on phones; the Play button reads Replay at the end; hub cards are named by their title; the current topic is underlined.
+- Complexity tables use only Case or Resource headers with a Big-O gloss; every lesson has a one-sentence summary for its meta description and a “Try …” takeaway.
+- Merge/quick sort: a Sorted preset, a captioned buffer row that stays mounted, the quicksort low side drawn, a balanced-depth reference, and the stability verdict in the narration.
+- Lower/upper bound: a one-row window strip and legend text that names the test for the chosen variant.
+- Hash table and BST: Enter submits the primary action, dark text on compare fills, a focusable scrolling tree on phones, the focused bucket scrolls into view.
+- Dijkstra and DFS: mud cells carry an inset ring and the relax narration states popped + step; stale queue entries are labelled.
 
 ### Added
 

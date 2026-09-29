@@ -83,3 +83,5 @@ Write `plans/reports/fullstack-developer-260929-<hhmm>-phase-<N>-<slug>.md` and 
 - Grid lessons: the cell being worked on is "Expanding"; a popped stale entry is "Stale copy, skipped"; path labels name the algorithm.
 - Complexity table: supply `complexityHead` whenever a row is not an input case.
 - Palette tokens keep one primary meaning: `state-active` is the element being acted on now (pivot, midpoint, expanding cell, new node), `state-frontier` is queued or pending work, `state-visited` is finished-but-not-final work, `state-sorted` is final or found, `state-compare` and `state-swap` are a read and a write. Known overloads (`state-frontier` for a moved chip or a BST successor) are acceptable when the legend names them.
+- Text on fills: `state-compare` and `state-frontier` take `text-slate-900`; `state-active`, `state-sorted`, and `state-swap` take `text-white`. Any new text-on-fill pair must reach 4.5:1.
+- Enter submits: when a field has a primary button (insert, search), wrap them in a form whose submit runs that action. Fields that only commit on change need no form.

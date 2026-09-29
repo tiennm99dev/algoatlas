@@ -23,19 +23,22 @@ export const en = {
   presets: { balanced: 'Balanced order', sorted: 'Sorted order', random: 'Random' },
   opsTitle: 'Operations',
   opsEmpty: 'none yet',
+  opsHotLabel: 'last operation',
+  treeScroller: 'Tree drawing, scrolls sideways',
   /** @param {BstOp} op */
   opChip: (op) =>
     `${op.type === 'insert' ? en.insert : op.type === 'search' ? en.search : en.remove} ${op.key}`,
-  stats: { comparisons: 'Comparisons', height: 'Height', size: 'Size' },
+  stats: { comparisons: 'Comparisons (this operation)', height: 'Height', size: 'Size' },
   /** @param {number} h */
   balanced: (h) => `Perfectly balanced height: ${h}`,
   full: 'The tree is full (15 keys).',
   logFull: 'The log is full (40 operations). Undo or reset to continue.',
   keyError: 'Keys must be whole numbers from 0 to 99.',
   emptyTree: 'The tree is empty.',
-  /** @param {number[]} keys @param {number} h */
-  treeLabel: (keys, h) =>
-    `Tree with ${keys.length} keys, height ${h}. In order: ${keys.join(', ')}.`,
+  /** @param {number[]} keys @param {number} h @param {number | null} root @param {number} ideal */
+  treeLabel: (keys, h, root, ideal) =>
+    `Tree with ${keys.length} keys, height ${h}. In order: ${keys.join(', ')}.` +
+    (root === null ? '' : ` Root ${root}. Balanced height would be ${ideal}.`),
   /** @param {number} key @param {string} state */
   nodeLabel: (key, state) => (state ? `Key ${key}, ${state}` : `Key ${key}`),
   states: {
@@ -85,7 +88,7 @@ export const en = {
           ? `Copy the successor key ${f.nodes[f.succ].key} into the node that held ${key}.`
           : `At most one child: the parent now points past ${key} to that child.`;
       case 'remove':
-        return `The spare node is gone. The tree has ${f.size} keys.`;
+        return `The unlinked node is gone. The tree has ${f.size} keys.`;
       case 'done':
         return `Tree has ${f.size} keys, height ${f.height}.`;
     }

@@ -31,6 +31,8 @@
   let customText = $state(INITIAL.join(', '));
   let lastValidText = INITIAL.join(', ');
   let searchKey = 62;
+  /** Whether the loaded trace ends in a lookup, so a rebuild without one can say it dropped it. */
+  let searched = false;
   /** @type {number | null} */
   let searchDraft = $state(62);
 
@@ -50,21 +52,32 @@
     notice = { text: '', at: -1 };
   }
 
-  /** @param {number | null} [search] Key to look up after the inserts. */
+  /**
+   * @param {number | null} [search] Key to look up after the inserts.
+   * @returns {boolean} True when an active lookup was discarded by this rebuild.
+   */
   function rebuild(search = null) {
+    const dropped = searched && search === null;
+    searched = search !== null;
     clearNotice();
     const trace = hashTableTrace(keys, fn, search);
     player.load(trace);
     // Land on the lookup so the learner sees the filled table, not the inserts again.
     if (search !== null) player.seek(trace.findIndex((f) => f.kind === 'hash' && f.lines[0] === 6));
+    return dropped;
+  }
+
+  /** Rebuild after a hash-function or key change, telling the learner if a lookup was dropped. */
+  function rebuildAndReport() {
+    if (rebuild()) say(m.searchDropped);
   }
 
   function generate() {
     if (preset === 'custom') return;
     keys = makeKeys(preset, count);
     customText = lastValidText = keys.join(', ');
-    rebuild();
-    say(m.newKeysLoaded);
+    const dropped = rebuild();
+    say(dropped ? `${m.newKeysLoaded} ${m.searchDropped}` : m.newKeysLoaded);
   }
 
   function changePreset() {
@@ -84,7 +97,7 @@
     }
     keys = parsed.keys;
     lastValidText = customText;
-    rebuild();
+    rebuildAndReport();
   }
 
   /** Accept the search field when it holds a valid key; otherwise restore the last valid one. */
@@ -130,7 +143,7 @@
   }
 
   const CHIP_CLASS = {
-    compare: 'bg-state-compare text-white',
+    compare: 'bg-state-compare text-slate-900',
     hit: 'bg-state-sorted text-white',
     new: 'bg-state-active text-white',
     moved: 'bg-state-frontier text-slate-900',
@@ -140,6 +153,23 @@
   const mark = /** @param {ChipState} s */ (s) => (s ? m.marks[s] : '');
 
   const growing = $derived(frame.kind === 'grow' || frame.kind === 'rehash');
+  // Wider tables need more columns so the focused bucket stays near the fold.
+  const columnsClass = $derived(
+    frame.buckets.length > 32
+      ? 'columns-2 md:columns-3'
+      : frame.buckets.length > 16
+        ? 'columns-2'
+        : '',
+  );
+
+  // While stepping, bring the bucket the narration talks about into view; playing stays put.
+  $effect(() => {
+    const b = frame.bucket;
+    if (b < 0 || player.playing) return;
+    const row = document.querySelector(`[data-bucket="${b}"]`);
+    // jsdom does not implement scrollIntoView.
+    if (row && typeof row.scrollIntoView === 'function') row.scrollIntoView({ block: 'nearest' });
+  });
   const legend = $derived([
     ['bg-state-compare', `${m.marks.compare} ${m.legend.compare}`],
     ['bg-state-sorted', `${m.marks.hit} ${m.legend.hit}`],
@@ -165,7 +195,7 @@
       name="hash"
       options={FNS.map((f) => ({ value: f, label: m.hashes[f] }))}
       bind:value={fn}
-      onchange={() => rebuild()}
+      onchange={rebuildAndReport}
     />
 
     <label class={labelClass}>
@@ -199,18 +229,26 @@
       <button onclick={generate} class="btn-secondary">{m.newKeys}</button>
     {/if}
 
-    <label class={labelClass}>
-      {m.searchLabel}
-      <input
-        type="number"
-        min="0"
-        max={MAX_KEY}
-        class="field w-24"
-        bind:value={searchDraft}
-        onchange={commitSearch}
-      />
-    </label>
-    <button onclick={runSearch} class="btn-outline">{m.searchButton}</button>
+    <form
+      class="flex items-end gap-4"
+      onsubmit={(e) => {
+        e.preventDefault();
+        runSearch();
+      }}
+    >
+      <label class={labelClass}>
+        {m.searchLabel}
+        <input
+          type="number"
+          min="0"
+          max={MAX_KEY}
+          class="field w-24"
+          bind:value={searchDraft}
+          onchange={commitSearch}
+        />
+      </label>
+      <button type="submit" class="btn-outline">{m.searchButton}</button>
+    </form>
   </div>
 
   <div class="grid gap-4 lg:grid-cols-[1fr_22rem]">
@@ -219,13 +257,12 @@
         <h2 class="mb-2 text-xs text-slate-500">
           {m.bucketsLabel}
         </h2>
-        <ol
-          class="text-sm {frame.buckets.length > 16 ? 'sm:columns-2' : ''}"
-          aria-label={m.bucketsLabel}
-        >
+        <ol class="text-sm {columnsClass}" aria-label={m.bucketsLabel}>
           {#each frame.buckets as chain, b (b)}
-            <li class="flex min-h-7 items-center gap-2 break-inside-avoid py-0.5">
-              <span class="w-6 shrink-0 text-right text-xs text-slate-500 tabular-nums">{b}</span>
+            <li class="flex min-h-7 items-center gap-2 break-inside-avoid py-0.5" data-bucket={b}>
+              <span class="w-6 shrink-0 text-right text-xs text-slate-500 tabular-nums"
+                ><span class="sr-only">{m.bucketPrefix}</span>{' '}{b}</span
+              >
               <span
                 class="flex flex-wrap items-center gap-1 font-mono text-xs {frame.bucket === b &&
                 frame.kind !== 'rehash'
@@ -243,7 +280,7 @@
                       >{/if}</span
                   >
                 {:else}
-                  <span class="text-slate-400">{m.emptyBucket}</span>
+                  <span class="text-slate-500">{m.emptyBucket}</span>
                 {/each}
               </span>
             </li>
@@ -281,14 +318,12 @@
           </div>
         {/each}
       </dl>
-      {#if growing}
-        <ChipList
-          title={m.pendingLabel}
-          items={frame.pending.map((k) => ({ label: String(k) }))}
-          emptyText={m.pendingEmpty}
-          limit={MAX_KEYS}
-        />
-      {/if}
+      <ChipList
+        title={m.pendingLabel}
+        items={growing ? frame.pending.map((k) => ({ label: String(k) })) : []}
+        emptyText={m.pendingEmpty}
+        limit={MAX_KEYS}
+      />
       <CodePanel lines={hashPseudocode} active={frame.lines} />
     </div>
     <div class="sticky bottom-2 z-10 print:hidden lg:static lg:col-start-1 lg:row-start-2">

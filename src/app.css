@@ -57,12 +57,16 @@
   @apply focus-ring rounded-md border border-slate-300 bg-white px-2 py-1.5 text-sm text-slate-900;
 }
 
-/* Diagonal hatch for costly terrain; a background-image, so it layers over any bg-* state color. */
+/*
+ * Diagonal hatch for costly terrain; a background-image, so it layers over any bg-* state color.
+ * The stripe is light and wide so digits stay readable across it; the shape cue that survives on
+ * every fill is the inset ring that lessons add to mud cells without another ring.
+ */
 @utility terrain-mud {
   background-image: repeating-linear-gradient(
     135deg,
-    rgb(120 53 15 / 0.55) 0 2px,
-    transparent 2px 7px
+    rgb(120 53 15 / 0.45) 0 3px,
+    transparent 3px 8px
   );
 }
 

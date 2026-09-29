@@ -139,7 +139,7 @@ export function insertionSortTrace(input) {
 
 /**
  * Starting arrangements that expose best and worst cases.
- * @param {'random'|'nearly-sorted'|'reversed'|'few-unique'} preset
+ * @param {'random'|'sorted'|'nearly-sorted'|'reversed'|'few-unique'} preset
  * @param {number} n
  * @param {() => number} [rand] Injectable for deterministic tests.
  * @returns {number[]}
@@ -148,6 +148,8 @@ export function makeArray(preset, n, rand = Math.random) {
   const ascending = Array.from({ length: n }, (_, i) => Math.round(((i + 1) / n) * 95) + 5);
   if (n < 2) return ascending;
   switch (preset) {
+    case 'sorted':
+      return ascending;
     case 'reversed':
       return ascending.reverse();
     case 'nearly-sorted': {

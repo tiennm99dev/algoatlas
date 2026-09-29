@@ -2,8 +2,8 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
-import { mergeSortTrace } from '$lib/algo-engine/merge-quick-sort.js';
-import { toItems } from '$lib/algo-engine/sorting.js';
+import { mergeSortTrace, quickSortTrace } from '$lib/algo-engine/merge-quick-sort.js';
+import { makeArray, toItems } from '$lib/algo-engine/sorting.js';
 
 const INITIAL = [42, 17, 88, 5, 63, 29, 71, 12, 95, 36, 54, 24];
 
@@ -38,6 +38,14 @@ function click(el) {
 /** @param {string} value */
 function pickAlgo(value) {
   click(/** @type {HTMLInputElement} */ (document.querySelector(`input[value="${value}"]`)));
+}
+
+/** @param {string} selector @param {string} value */
+function choose(selector, value) {
+  const el = /** @type {HTMLSelectElement} */ (document.querySelector(selector));
+  el.value = value;
+  el.dispatchEvent(new Event('change', { bubbles: true }));
+  flushSync();
 }
 
 /** @param {string} label */
@@ -76,11 +84,26 @@ describe('merge and quick sort lesson', () => {
     expect(text()).toContain('Call stack (outermost first)');
   });
 
-  it('offers the pivot rule only for quicksort', () => {
+  it('keeps the pivot rule in place but enabled only for quicksort', () => {
     render();
-    expect(document.querySelector('select[name="pivot"]')).toBeNull();
+    const pivot = /** @type {HTMLSelectElement} */ (document.querySelector('select[name="pivot"]'));
+    expect(pivot.disabled).toBe(true);
     pickAlgo('quick');
-    expect(document.querySelector('select[name="pivot"]')).not.toBeNull();
+    expect(pivot.disabled).toBe(false);
+  });
+
+  it('names the write action per algorithm in the legend', () => {
+    render();
+    expect(text()).toContain('Writing to the array');
+    pickAlgo('quick');
+    expect(text()).toContain('Swapping');
+    expect(text()).not.toContain('Writing to the array');
+  });
+
+  it('caps the size slider where every buffer marker still fits', () => {
+    render();
+    const range = /** @type {HTMLInputElement} */ (document.querySelector('input[type="range"]'));
+    expect(range.max).toBe('20');
   });
 
   it('finishes sorted with the totals in the narration', () => {
@@ -110,9 +133,26 @@ describe('merge and quick sort lesson', () => {
     expect(text()).toContain('equal values kept their order');
   });
 
-  it('shows the merge buffer once a merge starts', () => {
+  it('keeps the buffer row mounted from the first frame while merge sort is selected', () => {
     render();
+    const row = document.querySelector('[aria-label^="Buffer:"]');
+    expect(row).not.toBeNull();
+    expect(row?.getAttribute('aria-label')).toBe('Buffer: empty.');
+    pickAlgo('quick');
     expect(document.querySelector('[aria-label^="Buffer:"]')).toBeNull();
+  });
+
+  it('captions the buffer row during a merge', () => {
+    render();
+    const copy = mergeSortTrace(toItems(INITIAL)).findIndex((f) => f.kind === 'copy');
+    seek(copy);
+    expect(text()).toContain('Buffer: a copy of the range being merged.');
+    pickAlgo('quick');
+    expect(text()).not.toContain('Buffer: a copy of the range being merged.');
+  });
+
+  it('shows the merge buffer contents once a merge starts', () => {
+    render();
     const copy = mergeSortTrace(toItems(INITIAL)).findIndex((f) => f.kind === 'copy');
     seek(copy);
     expect(document.querySelector('[aria-label^="Buffer:"]')).not.toBeNull();
@@ -163,6 +203,64 @@ describe('merge and quick sort lesson', () => {
       }
     }
     expect(seen).toBe(true);
+  });
+
+  it('loads an ascending array for the sorted preset, so last-pivot quicksort recurses once per element', () => {
+    render();
+    choose('select.field', 'sorted');
+    const expected = makeArray('sorted', 12);
+    expect(document.querySelector('[aria-label^="Array:"]')?.getAttribute('aria-label')).toContain(
+      `Array: ${expected.join(', ')}.`,
+    );
+    pickAlgo('quick');
+    click(button('Last step'));
+    expect(text()).toContain('(max 11, balanced ≈ 4)');
+  });
+
+  it('draws the quicksort low side with the run marker during a scan', () => {
+    render();
+    pickAlgo('quick');
+    const trace = quickSortTrace(toItems(INITIAL), 'last', Math.random);
+    const scan = trace.findIndex((f) => f.kind === 'scan' && f.range && f.i >= f.range[0]);
+    expect(scan).toBeGreaterThan(0);
+    const before = trace.findIndex((f) => f.kind === 'scan');
+    seek(before);
+    expect(document.querySelector('[aria-label^="Array:"]')?.textContent).not.toContain('▬');
+    seek(scan);
+    expect(document.querySelector('[aria-label^="Array:"]')?.textContent).toContain('▬');
+    expect(text()).toContain('▬ ≤ pivot, low side');
+  });
+
+  it('states the stability verdict in the done narration', () => {
+    render();
+    click(button('Last step'));
+    expect(text()).not.toContain('Equal values');
+    choose('select.field', 'few-unique');
+    click(button('Last step'));
+    expect(text()).toMatch(/writes\. Equal values kept their order\./);
+    pickAlgo('quick');
+    click(button('Last step'));
+    const narration = text();
+    const reordered = narration.match(
+      /Equal values were reordered: \d+ \(originally \d+\w\w\) now follows/,
+    );
+    const kept = narration.includes('Equal values kept their order.');
+    expect(reordered !== null || kept).toBe(true);
+  });
+
+  it('announces a rebuild caused by the preset, size, or pivot rule', () => {
+    render();
+    choose('select.field', 'reversed');
+    expect(text()).toContain('New array loaded.');
+    click(button('Next step'));
+    const range = /** @type {HTMLInputElement} */ (document.querySelector('input[type="range"]'));
+    range.value = '8';
+    range.dispatchEvent(new Event('change', { bubbles: true }));
+    flushSync();
+    expect(text()).toContain('New array loaded.');
+    pickAlgo('quick');
+    choose('select[name="pivot"]', 'median3');
+    expect(text()).toContain('Pivot rule: Median of three. Both traces rebuilt.');
   });
 
   it('confirms a new array in the narration and drops it on the next frame', () => {

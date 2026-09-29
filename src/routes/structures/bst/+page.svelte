@@ -21,6 +21,9 @@
   const PRESETS = /** @type {const} */ (['balanced', 'sorted', 'random']);
   const CELL_W = 40;
   const CELL_H = 48;
+  // Below this share of the natural drawing width the key text drops under about 11px, so the
+  // scroller takes over instead of shrinking the tree further.
+  const MIN_SCALE = 0.85;
 
   // A fixed first log keeps the prerendered HTML and the hydrated page identical.
   const INITIAL_OPS = makeOps('balanced');
@@ -110,15 +113,20 @@
 
   /** @param {Event & {currentTarget: HTMLSelectElement}} e */
   function loadPreset(e) {
-    preset = e.currentTarget.value;
+    const picked = /** @type {'balanced'|'sorted'|'random'} */ (e.currentTarget.value);
     clearNotice();
-    setOps(makeOps(/** @type {'balanced'|'sorted'|'random'} */ (preset), Math.random), 'last');
+    setOps(makeOps(picked, Math.random), 'last');
+    // A random log is never "the" preset: going back to the placeholder lets it be picked again.
+    preset = picked === 'random' ? '' : picked;
+    e.currentTarget.value = preset;
   }
 
   const layout = $derived(layoutTree(frame));
   const keys = $derived(inorderKeys(frame));
   const vbW = $derived(Math.max(1, frame.size) * CELL_W);
   const vbH = $derived(Math.max(1, frame.height) * CELL_H);
+  const rootKey = $derived(frame.root >= 0 ? frame.nodes[frame.root].key : null);
+  const idealHeight = $derived(Math.ceil(Math.log2(frame.size + 1)));
 
   /** @param {number} slot @returns {NodeState} */
   function stateOf(slot) {
@@ -145,7 +153,7 @@
     successor: 'fill-state-frontier',
     '': 'fill-white stroke-slate-400',
   };
-  const DARK_TEXT = new Set(['path', 'successor', '']);
+  const DARK_TEXT = new Set(['compare', 'path', 'successor', '']);
 
   const nodes = $derived(
     layout.flatMap((p, slot) => {
@@ -193,7 +201,14 @@
 </script>
 
 <LessonLayout lesson={m}>
-  <div class="mb-4 flex flex-wrap items-end gap-4">
+  <!-- Enter in the key field submits the form, which inserts; the other buttons never submit. -->
+  <form
+    class="mb-4 flex flex-wrap items-end gap-4"
+    onsubmit={(e) => {
+      e.preventDefault();
+      add('insert');
+    }}
+  >
     <label class="flex flex-col gap-1 text-xs font-semibold tracking-wide text-slate-500 uppercase">
       {m.keyLabel}
       <input
@@ -209,12 +224,17 @@
     </label>
 
     <div class="flex flex-wrap gap-2">
-      <button onclick={() => add('insert')} class="btn-primary">{m.insert}</button>
-      <button onclick={() => add('search')} class="btn-secondary">{m.search}</button>
-      <button onclick={() => add('delete')} class="btn-outline">{m.remove}</button>
-      <!-- aria-disabled rather than disabled so keyboard focus stays on the button when the log empties. -->
-      <button onclick={undo} class="btn-outline" aria-disabled={ops.length === 0}>{m.undo}</button>
-      <button onclick={reset} class="btn-outline" aria-disabled={ops.length === 0}>{m.reset}</button
+      <button type="submit" class="btn-primary">{m.insert}</button>
+      <button type="button" onclick={() => add('search')} class="btn-secondary">{m.search}</button>
+      <button type="button" onclick={() => add('delete')} class="btn-outline">{m.remove}</button>
+    </div>
+    <!-- aria-disabled rather than disabled so keyboard focus stays on the button when the log empties. -->
+    <div class="flex flex-wrap gap-2 border-l border-slate-300 pl-4">
+      <button type="button" onclick={undo} class="btn-outline" aria-disabled={ops.length === 0}
+        >{m.undo}</button
+      >
+      <button type="button" onclick={reset} class="btn-outline" aria-disabled={ops.length === 0}
+        >{m.reset}</button
       >
     </div>
 
@@ -227,64 +247,74 @@
         {/each}
       </select>
     </label>
-  </div>
+  </form>
 
   <div class="grid gap-4 lg:grid-cols-[1fr_22rem]">
     <div class="flex flex-col gap-4 lg:col-start-1 lg:row-start-1">
       <div class="rounded-xl border border-slate-200 bg-white p-4">
-        <!-- Layout is a pure function of the frame; the viewBox grows with node count and height. -->
-        <svg
-          viewBox="0 0 {vbW} {vbH}"
-          role="img"
-          aria-label={m.treeLabel(keys, frame.height)}
-          class="mx-auto h-auto w-full"
-          style="max-width: {vbW * 1.6}px"
-        >
-          {#each edges as e (e.id)}
-            <line
-              x1={e.x1}
-              y1={e.y1}
-              x2={e.x2}
-              y2={e.y2}
-              class="stroke-slate-400"
-              stroke-width="1.5"
-            />
-          {/each}
-          {#each nodes as n (n.slot)}
-            <g>
-              <title>{m.nodeLabel(n.key, n.state ? m.states[n.state] : '')}</title>
-              <circle
-                cx={n.cx}
-                cy={n.cy}
-                r="16"
-                stroke-width={n.state === '' ? 1.5 : 2.5}
-                class="{FILL[n.state]} {n.state === '' ? '' : 'stroke-slate-900'} {player.speed < 8
-                  ? 'transition-colors'
-                  : ''}"
+        <!-- Layout is a pure function of the frame; the viewBox grows with node count and height.
+             The drawing keeps a readable minimum width and scrolls sideways when the card is narrower. -->
+        <!-- A scrollable region must be keyboard focusable. -->
+        <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+        <div class="overflow-x-auto" tabindex="0" role="group" aria-label={m.treeScroller}>
+          <svg
+            viewBox="0 0 {vbW} {vbH}"
+            role="img"
+            aria-label={m.treeLabel(keys, frame.height, rootKey, idealHeight)}
+            class="mx-auto h-auto"
+            style="width: {vbW * 1.2}px; min-width: {vbW * MIN_SCALE}px; max-width: 100%"
+          >
+            {#each edges as e (e.id)}
+              <line
+                x1={e.x1}
+                y1={e.y1}
+                x2={e.x2}
+                y2={e.y2}
+                class="stroke-slate-400"
+                stroke-width="1.5"
               />
-              <text
-                x={n.cx}
-                y={n.cy}
-                text-anchor="middle"
-                dominant-baseline="central"
-                font-size="13"
-                font-weight="600"
-                class={DARK_TEXT.has(n.state) ? 'fill-slate-900' : 'fill-white'}>{n.key}</text
-              >
-              {#if n.state !== '' && n.state !== 'path'}
+            {/each}
+            {#each nodes as n (n.slot)}
+              <g>
+                <title>{m.nodeLabel(n.key, n.state ? m.states[n.state] : '')}</title>
+                <circle
+                  cx={n.cx}
+                  cy={n.cy}
+                  r="16"
+                  stroke-width={n.state === '' ? 1.5 : 2.5}
+                  class="{FILL[n.state]} {n.state === '' ? '' : 'stroke-slate-900'} {player.speed <
+                  8
+                    ? 'transition-colors'
+                    : ''}"
+                />
                 <text
-                  x={n.cx + 13}
-                  y={n.cy - 13}
+                  x={n.cx}
+                  y={n.cy}
                   text-anchor="middle"
                   dominant-baseline="central"
-                  font-size="11"
-                  font-weight="700"
-                  class="fill-slate-900">{m.markers[n.state]}</text
+                  font-size="13"
+                  font-weight="600"
+                  class={DARK_TEXT.has(n.state) ? 'fill-slate-900' : 'fill-white'}>{n.key}</text
                 >
-              {/if}
-            </g>
-          {/each}
-        </svg>
+                {#if n.state !== '' && n.state !== 'path'}
+                  <text
+                    x={n.cx + 13}
+                    y={n.cy - 13}
+                    text-anchor="middle"
+                    dominant-baseline="central"
+                    font-size="11"
+                    font-weight="700"
+                    stroke="white"
+                    stroke-width="3"
+                    stroke-linejoin="round"
+                    paint-order="stroke"
+                    class="fill-slate-900">{m.markers[n.state]}</text
+                  >
+                {/if}
+              </g>
+            {/each}
+          </svg>
+        </div>
         <ul class="mt-3 flex flex-wrap gap-4 text-xs text-slate-600">
           {#each legend as l (l.s)}
             <li class="flex items-center gap-1.5">
@@ -318,8 +348,14 @@
           <dd class="text-2xl font-bold tabular-nums">{frame.size}</dd>
         </div>
       </dl>
-      <p class="text-sm text-slate-600">{m.balanced(Math.ceil(Math.log2(frame.size + 1)))}</p>
-      <ChipList title={m.opsTitle} items={chips} emptyText={m.opsEmpty} limit={MAX_OPS} />
+      <p class="text-sm text-slate-600">{m.balanced(idealHeight)}</p>
+      <ChipList
+        title={m.opsTitle}
+        items={chips}
+        emptyText={m.opsEmpty}
+        limit={MAX_OPS}
+        hotLabel={m.opsHotLabel}
+      />
       <CodePanel lines={bstPseudocode} active={frame.lines} />
     </div>
     <div class="sticky bottom-2 z-10 print:hidden lg:static lg:col-start-1 lg:row-start-2">

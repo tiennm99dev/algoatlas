@@ -166,6 +166,7 @@
       <ChipList
         title={m.stackLabel}
         emptyText={m.stackEmpty}
+        hotLabel={m.hotLabel}
         items={frame.stack
           .toReversed()
           .map((c, i) => ({ label: m.coord(c, COLS), hot: i === 0 && c === frame.touched }))}
