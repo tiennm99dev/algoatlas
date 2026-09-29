@@ -69,5 +69,5 @@ export const en = {
     ['Linear scan', 'O(n)', 'Without sorting you must read every element.'],
   ],
   nextTeaser:
-    'Next up: lower bound and upper bound — binary search for the first position that fits.',
+    'Next up: lower bound and upper bound, binary search for the first position that fits and a count of duplicates.',
 };

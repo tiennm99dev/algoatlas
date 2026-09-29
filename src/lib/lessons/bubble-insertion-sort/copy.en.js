@@ -76,5 +76,6 @@ export const en = {
     ['Average', 'O(n²)', 'About half of all pairs are out of order.'],
     ['Worst', 'O(n²)', 'Reversed: every pair of elements must swap once.'],
   ],
-  nextTeaser: 'Next up: merge sort and quicksort — breaking the O(n²) barrier.',
+  nextTeaser:
+    'Next up: merge sort and quicksort, two divide-and-conquer ways past O(n²) on the same array.',
 };

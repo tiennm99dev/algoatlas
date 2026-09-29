@@ -1,6 +1,12 @@
 import { en as sortCopy } from './bubble-insertion-sort/copy.en.js';
+import { en as mergeQuickCopy } from './merge-quick-sort/copy.en.js';
 import { en as binaryCopy } from './binary-search/copy.en.js';
+import { en as boundsCopy } from './lower-upper-bound/copy.en.js';
+import { en as hashCopy } from './hash-table/copy.en.js';
+import { en as bstCopy } from './bst/copy.en.js';
 import { en as bfsCopy } from './bfs-grid/copy.en.js';
+import { en as dfsCopy } from './dfs-grid/copy.en.js';
+import { en as dijkstraCopy } from './dijkstra-grid/copy.en.js';
 
 /**
  * Fields every lesson copy module provides to the shared layout and hubs.
@@ -17,9 +23,19 @@ import { en as bfsCopy } from './bfs-grid/copy.en.js';
  * @property {string} nextTeaser
  */
 
-// Order: by topic (sorting → searching → graphs), then by difficulty.
+// Order: by topic (sorting → searching → structures → graphs), then by difficulty.
 /** @type {LessonCopy[]} */
-export const lessons = [sortCopy, binaryCopy, bfsCopy];
+export const lessons = [
+  sortCopy,
+  mergeQuickCopy,
+  binaryCopy,
+  boundsCopy,
+  hashCopy,
+  bstCopy,
+  bfsCopy,
+  dfsCopy,
+  dijkstraCopy,
+];
 
 /** @param {string} topic */
 export function lessonsByTopic(topic) {

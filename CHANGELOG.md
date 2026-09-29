@@ -34,6 +34,8 @@ All notable changes to **AlgoAtlas** are documented here. Format: [Keep a Change
 - Screen-reader narration pauses during autoplay; the swap animation honors reduced motion; step controls use SVG icons.
 - Home page leads with a start button and the how-it-works steps; skip link and current-topic marker in the header.
 - Shared button, field, and focus-ring utilities plus a segmented control replace per-page class strings.
+- The sorting bars, BFS grid, and BFS queue panel are rendered by the shared components, with no behavior change.
+- The home topics grid shows four columns on wide screens; the existing lessons’ teasers point at the new lessons.
 
 ### Added
 
@@ -43,6 +45,14 @@ All notable changes to **AlgoAtlas** are documented here. Format: [Keep a Change
 - CI checks that `VERSION` and `package.json` agree; `license` field; the reason for the `cookie` override is recorded in the runbook.
 - Binary-search legend, ✓ marker on the found cell, and a one-row window strip that stays readable when cells wrap.
 - Tests for long reversed arrays, negative values, duplicate search values, a sealed BFS start, the lesson registry, `aria-current` on nested routes, and the stop announcement.
+- Lesson: merge sort & quicksort, one page with an algorithm toggle, pivot rule, call-stack panel, merge buffer row, and totals for both on the same array.
+- Lesson: lower bound & upper bound on a half-open window, with the insertion caret, equal range, and duplicate count.
+- Lesson: hash table with separate chaining, three hash functions, growth at load factor 0.75, and search hit or miss.
+- Lesson: binary search tree with an insert, search, and delete log drawn as an SVG tree, successor deletion, and sorted-insert degeneration.
+- Lesson: depth-first search on the BFS grid, with visit order, stale-entry skips, and the DFS path against the BFS shortest path.
+- Lesson: Dijkstra’s algorithm on a grid with mud terrain, a priority-queue panel, and the cost of the BFS route for comparison.
+- "Data structures" topic and hub.
+- Shared `bar-chart`, `chip-list`, and `grid-board` components, and a `terrain-mud` hatch utility; each lesson keeps its interaction tests beside its route.
 
 ## [0.1.0.0] - 2026-09-29
 
