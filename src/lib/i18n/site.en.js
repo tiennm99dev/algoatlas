@@ -33,13 +33,17 @@ export const topics = {
     title: 'Searching',
     blurb: 'Find a value fast by throwing away half of the candidates at every step.',
   },
+  structures: {
+    title: 'Data structures',
+    blurb: 'Store data so that adding, finding, and removing stay fast as it grows.',
+  },
   graphs: {
     title: 'Graphs',
     blurb: 'Explore grids and networks layer by layer to find shortest paths.',
   },
 };
 
-export const topicOrder = ['sorting', 'searching', 'graphs'];
+export const topicOrder = ['sorting', 'searching', 'structures', 'graphs'];
 
 export const lessonChrome = {
   backToTopic: 'All lessons in this topic',

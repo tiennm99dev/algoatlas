@@ -338,6 +338,7 @@ describe('site chrome', () => {
     expect(currentTopics('/sorting/')).toEqual([
       ['Sorting', 'page'],
       ['Searching', null],
+      ['Data structures', null],
       ['Graphs', null],
     ]);
   });

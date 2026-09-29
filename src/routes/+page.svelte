@@ -41,7 +41,7 @@
 
 <section class="mx-auto max-w-5xl px-4 pb-20">
   <h2 class="mb-6 text-center text-2xl font-bold text-slate-900">{copy.hub.topicsTitle}</h2>
-  <ul class="grid gap-6 md:grid-cols-3">
+  <ul class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
     {#each topics as topic (topic.key)}
       <li class="flex flex-col rounded-2xl border border-slate-200 bg-white p-6">
         <a
