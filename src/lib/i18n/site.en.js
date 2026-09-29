@@ -2,7 +2,7 @@ export const site = {
   title: 'AlgoAtlas',
   tagline: 'Learn data structures and algorithms by stepping through them',
   description:
-    'AlgoAtlas is an interactive map of data structures and algorithms. Every lesson runs the real algorithm on input you control — step forward, rewind, and watch the cost add up.',
+    'AlgoAtlas is an interactive tour of data structures and algorithms. Every lesson runs the real algorithm on input you control — step forward, rewind, and watch the cost add up.',
 };
 
 export const hub = {
@@ -39,18 +39,25 @@ export const topics = {
   },
   graphs: {
     title: 'Graphs',
-    blurb: 'Explore grids with BFS, DFS, and Dijkstra to find paths and cheapest routes.',
+    blurb:
+      'Explore grids with breadth-first, depth-first, and Dijkstra’s search to find paths and cheapest routes.',
   },
 };
 
 export const topicOrder = ['sorting', 'searching', 'structures', 'graphs'];
 
 export const lessonChrome = {
-  backToTopic: 'All lessons in this topic',
+  backToTopic: /** @param {string} title */ (title) => `All lessons in ${title}`,
   backToHub: 'All topics',
   pseudocodeTitle: 'Pseudocode',
   takeawaysTitle: 'Key takeaways',
   complexityTitle: 'Complexity',
+  complexityNote:
+    'O(…) says how the number of steps grows with the input size n; constants are dropped.',
+  tryIt: 'Try it:',
+  lessonNavLabel: 'Lesson navigation',
+  previous: 'Previous lesson',
+  next: 'Next lesson',
   complexityHead: ['Case', 'Cost', 'Why'],
   navLabel: 'Main navigation',
   skipLink: 'Skip to content',
@@ -61,6 +68,7 @@ export const controls = {
   first: 'First step',
   back: 'Previous step',
   play: 'Play',
+  replay: 'Replay',
   pause: 'Pause',
   step: 'Next step',
   last: 'Last step',
@@ -70,5 +78,5 @@ export const controls = {
   stoppedAt: /** @param {number} i @param {number} n */ (i, n) =>
     i === n ? `Finished at step ${n} of ${n}.` : `Paused at step ${i} of ${n}.`,
   shortcuts:
-    'Shortcuts: Left and Right arrows step; Space plays or pauses while the player is focused.',
+    'Shortcuts: Left and Right arrows step; Space plays or pauses after you click inside the visualization. Speed 1× is one step per second.',
 };

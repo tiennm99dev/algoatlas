@@ -1,5 +1,5 @@
 <script>
-  import { untrack } from 'svelte';
+  import { tick, untrack } from 'svelte';
   import { t } from '$lib/i18n/index.js';
   import { SPEEDS } from '$lib/player/player.svelte.js';
 
@@ -17,7 +17,10 @@
   $effect(() => {
     const playing = player.playing;
     if (wasPlaying && !playing) {
-      stopped = untrack(() => c.stoppedAt(player.index + 1, player.frames.length));
+      const message = untrack(() => c.stoppedAt(player.index + 1, player.frames.length));
+      // A live region only announces changed text, so clear it before a repeated message.
+      stopped = '';
+      tick().then(() => (stopped = message));
     }
     wasPlaying = playing;
   });
@@ -79,7 +82,7 @@
     >
     <button class="btn-primary w-28 justify-center" onclick={player.toggle}>
       {@render icon(player.playing ? icons.pause : icons.play)}
-      {player.playing ? c.pause : c.play}
+      {player.playing ? c.pause : player.atEnd ? c.replay : c.play}
     </button>
     <button
       class="btn-icon"
@@ -114,7 +117,7 @@
     <span class="shrink-0 tabular-nums">{c.stepOf(player.index + 1, player.frames.length)}</span>
     <input
       type="range"
-      class="w-full accent-teal-700"
+      class="focus-ring w-full rounded accent-teal-700"
       min="0"
       max={player.frames.length - 1}
       value={player.index}
@@ -123,6 +126,6 @@
       oninput={(e) => player.seek(Number(e.currentTarget.value))}
     />
   </label>
-  <p class="text-xs text-slate-500">{c.shortcuts}</p>
+  <p class="text-xs text-slate-500 print:hidden">{c.shortcuts}</p>
   <p class="sr-only" role="status">{stopped}</p>
 </div>

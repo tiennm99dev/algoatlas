@@ -7,6 +7,8 @@ export const en = {
   title: 'Bubble sort & insertion sort',
   intro:
     'Two of the simplest ways to sort: bubble sort keeps swapping neighbors that are out of order, insertion sort grows a sorted prefix one card at a time. Both are O(n²) in the worst case — but they behave very differently on data that is almost sorted.',
+  summary:
+    'Compare bubble sort and insertion sort step by step, and see why both cost O(n²) but behave differently on nearly sorted data.',
   instruction:
     'Pick an algorithm and a starting arrangement, then press play or step through. Switch algorithms on the same array and compare the totals.',
   algorithmLabel: 'Algorithm',

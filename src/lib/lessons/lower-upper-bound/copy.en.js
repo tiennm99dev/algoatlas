@@ -7,6 +7,8 @@ export const en = {
   title: 'Lower bound & upper bound',
   intro:
     'Binary search can answer more than "is it here?". Lower bound finds the first position whose value is at least x; upper bound finds the first position whose value is greater than x. Every copy of x sits between the two.',
+  summary:
+    'Use binary search to find the first position at least x or greater than x, and count duplicates in O(log n).',
   instruction:
     'Choose lower or upper bound and a target, then step through. The window is half-open: lo is inside it, hi is just past its end. When the search ends, a caret marks where x would be inserted.',
   takeaways: [
@@ -15,6 +17,7 @@ export const en = {
     'The answer is always a valid insertion point from 0 to n, even when x is missing, smaller than everything, or larger than everything.',
     'upper − lower counts the copies of x in O(log n), without scanning the run of equal values.',
     'There is no early exit on a hit, so every search reads about log₂ n cells.',
+    'Try “Missing target”: the search still ends at a valid insertion point, and lower and upper bound agree.',
   ],
   complexityHead: ['Resource', 'Cost', 'Why'],
   complexity: [

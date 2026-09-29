@@ -30,9 +30,9 @@
   <h2 class="mb-6 text-center text-2xl font-bold text-slate-900">{copy.hub.howTitle}</h2>
   <ol class="grid gap-6 md:grid-cols-3">
     {#each copy.hub.how as step, i (i)}
-      <li class="rounded-2xl bg-teal-700 p-6 text-teal-50">
-        <div class="mb-2 text-sm font-semibold text-teal-100">{i + 1}</div>
-        <h3 class="mb-1 text-lg font-bold text-white">{step.title}</h3>
+      <li class="rounded-2xl border border-teal-200 bg-teal-50 p-6 text-teal-900">
+        <div class="mb-2 text-sm font-semibold text-teal-800">{i + 1}</div>
+        <h3 class="mb-1 text-lg font-bold text-teal-800">{step.title}</h3>
         <p class="text-sm leading-relaxed">{step.body}</p>
       </li>
     {/each}
@@ -43,7 +43,9 @@
   <h2 class="mb-6 text-center text-2xl font-bold text-slate-900">{copy.hub.topicsTitle}</h2>
   <ul class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
     {#each topics as topic (topic.key)}
-      <li class="flex flex-col rounded-2xl border border-slate-200 bg-white p-6">
+      <li
+        class="flex flex-col rounded-2xl border border-slate-200 bg-white p-6 transition hover:border-teal-600 hover:shadow-sm"
+      >
         <a
           href={resolve(/** @type {'/'} */ (topicPath(topic.key)))}
           class="group focus-ring mb-2 flex items-center justify-between rounded"
@@ -59,7 +61,7 @@
                 href={resolve(/** @type {'/'} */ (lessonPath(lesson)))}
                 class="focus-ring rounded font-medium text-teal-700 hover:underline"
                 ><span aria-hidden="true">→</span> {lesson.title}</a
-              >
+              ><span class="ml-1 text-xs text-slate-500">· {lesson.level}</span>
             </li>
           {/each}
         </ul>

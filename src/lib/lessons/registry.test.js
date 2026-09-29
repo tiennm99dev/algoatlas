@@ -23,6 +23,20 @@ describe('registry', () => {
     for (const lesson of lessons) expect(['Beginner', 'Intermediate']).toContain(lesson.level);
   });
 
+  it('gives every lesson a one-sentence summary shorter than its intro', () => {
+    for (const lesson of lessons) {
+      expect(lesson.summary?.length ?? 0).toBeGreaterThan(20);
+      expect(lesson.summary?.length ?? 0).toBeLessThan(lesson.intro.length);
+      expect(lesson.summary).toMatch(/\.$/);
+    }
+  });
+
+  it('offers a Beginner entry in every topic', () => {
+    for (const topic of t().topicOrder) {
+      expect(lessonsByTopic(topic).some((l) => l.level === 'Beginner')).toBe(true);
+    }
+  });
+
   it('builds directory-style paths with trailing slashes', () => {
     expect(lessonPath(lessons[0])).toBe('/sorting/bubble-insertion-sort/');
     expect(topicPath('graphs')).toBe('/graphs/');

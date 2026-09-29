@@ -7,6 +7,8 @@ export const en = {
   title: 'Binary search',
   intro:
     'In a sorted array, one comparison tells you which half the target is in. Throw the other half away and repeat: a million elements take at most 20 comparisons.',
+  summary:
+    'Halve a sorted array with each comparison, then take over in “You drive” mode and try to beat binary search.',
   instruction:
     'Watch mode runs the algorithm step by step. You drive mode lets you probe any cell yourself — see if you can beat binary search.',
   modeLabel: 'Mode',
@@ -62,6 +64,7 @@ export const en = {
     'Each read halves the candidates, so the cost is ⌊log₂ n⌋ + 1 reads at most. Doubling the array adds just one step.',
     'Picking the exact middle is what guarantees the bound. Probing off-center can get lucky, but its worst case is worse.',
     'Watch for off-by-one bugs: the loop runs while lo ≤ hi, and the window moves to mid ± 1, never to mid.',
+    'Try “You drive” mode: probe cells yourself and see whether you can find the target in fewer reads than binary search.',
   ],
   complexity: [
     ['Best', 'O(1)', 'The first midpoint is the target.'],

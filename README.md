@@ -37,6 +37,8 @@ npm run preview   # serve build/
 
 `main` deploys to GitHub Pages through `.github/workflows/deploy.yml`, which reruns lint, format, type check, and tests before building. See `RUNBOOK.md` for rollback.
 
+`static/404.html` is a hand-written, script-free page that GitHub Pages serves for unknown URLs; its home link assumes the `/algoatlas/` base path.
+
 ## Architecture
 
 - **Static site**: SvelteKit + `@sveltejs/adapter-static`, every route prerendered, `paths.base = '/algoatlas'` (override with `SITE_BASE`).

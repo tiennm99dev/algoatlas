@@ -7,10 +7,12 @@ const plural = (c) => `${c} comparison${c === 1 ? '' : 's'}`;
 export const en = {
   slug: 'hash-table',
   topic: 'structures',
-  level: 'Intermediate',
+  level: 'Beginner',
   title: 'Hash table',
   intro:
     'A hash table turns a key into a bucket number, so finding the key means looking in one short list instead of the whole collection. Watch keys land in buckets, collide, and get spread out again when the table grows.',
+  summary:
+    'Watch keys hash into buckets, collide, and get rehashed as the table grows, and see why lookups stay O(1) on average.',
   instruction:
     'Pick a hash function and a set of keys, then step through the inserts. When the table is more than 75% full it doubles in size and every key is rehashed. Then search for a key that is present or missing.',
   takeaways: [
@@ -18,13 +20,14 @@ export const en = {
     'The load factor n/m sets the average chain length. Growing the table when it passes 0.75 keeps lookups O(1) on average, and each key is moved O(1) times on average across all the growth.',
     'A bad table size ruins a good-looking hash: with m a power of two, k mod m keeps only the last bits, so multiples of 8 all land in the same few buckets. A prime m, or the multiplication method, spreads them.',
     'A search for a missing key costs the whole chain; a hit stops at the key’s position.',
+    'Try “Multiples of 8” with “k mod m, m = 2ᵖ”, then switch to “k mod m, m prime”: the same keys stop piling into a few buckets.',
   ],
-  complexityHead: ['Operation', 'Cost', 'Why'],
+  complexityHead: ['Case', 'Cost', 'Why'],
   complexity: [
-    ['Average', 'O(1)', 'Chains stay short while the load factor is bounded.'],
-    ['Worst', 'O(n)', 'Every key hashes to one bucket.'],
+    ['Lookup, average', 'O(1)', 'Chains stay short while the load factor is bounded.'],
+    ['Lookup, worst', 'O(n)', 'Every key hashes to one bucket.'],
     [
-      'Grow',
+      'Grow (rehash)',
       'O(n) once, O(1) amortized',
       'Doubling spreads the cost of rehashing over the inserts that filled the table.',
     ],

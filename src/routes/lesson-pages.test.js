@@ -1,9 +1,11 @@
 // @vitest-environment jsdom
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { createRawSnippet, flushSync, mount, unmount } from 'svelte';
+import { createRawSnippet, flushSync, mount, tick, unmount } from 'svelte';
 import SortPage from './sorting/bubble-insertion-sort/+page.svelte';
 import BinaryPage from './searching/binary-search/+page.svelte';
 import BfsPage from './graphs/bfs-grid/+page.svelte';
+import DijkstraPage from './graphs/dijkstra-grid/+page.svelte';
+import HubPage from './[topic]/+page.svelte';
 import Layout from './+layout.svelte';
 import { entries, load } from './[topic]/+page.js';
 import { page } from '$app/state';
@@ -117,13 +119,16 @@ describe('sorting lesson', () => {
     expect(text()).toMatch(/Step (\d+) of \1/);
   });
 
-  it('announces where playback stopped', () => {
+  it('announces where playback stopped', async () => {
     vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
     render(SortPage);
     click(buttonByText('Play'));
     vi.advanceTimersByTime(500);
     flushSync();
     click(buttonByText('Pause'));
+    // The status line is cleared first so a repeated message is announced again.
+    await tick();
+    flushSync();
     expect(document.querySelector('[role="status"]')?.textContent).toMatch(
       /^Paused at step 2 of \d+\.$/,
     );
@@ -345,5 +350,76 @@ describe('site chrome', () => {
 
   it('does not call a lesson the current page', () => {
     expect(currentTopics('/sorting/bubble-insertion-sort/')[0]).toEqual(['Sorting', 'true']);
+  });
+
+  it('marks the current topic with more than colour', () => {
+    currentTopics('/sorting/');
+    const link = /** @type {HTMLElement} */ (document.querySelector('nav a[aria-current]'));
+    expect(link.className).toContain('aria-[current]:font-semibold');
+    expect(link.className).toContain('aria-[current]:underline');
+  });
+
+  describe('lesson navigation', () => {
+    const nav = () => document.querySelector('nav[aria-label="Lesson navigation"]');
+    const hrefs = () =>
+      [...(nav()?.querySelectorAll('a') ?? [])].map((a) => a.getAttribute('href'));
+
+    it('has no previous link on the first lesson and links to the second as next', () => {
+      render(SortPage);
+      const links = hrefs();
+      expect(links).toHaveLength(1);
+      expect(links[0]).toMatch(new RegExp(`${lessonPath(lessons[1])}$`));
+      expect(nav()?.textContent).toContain(lessons[0].nextTeaser);
+      expect(nav()?.textContent).not.toContain('Previous lesson');
+    });
+
+    it('links a middle lesson to its registry neighbors', () => {
+      render(BinaryPage);
+      const at = lessons.findIndex((l) => l.slug === 'binary-search');
+      const links = hrefs();
+      expect(links).toHaveLength(2);
+      expect(links[0]).toMatch(new RegExp(`${lessonPath(lessons[at - 1])}$`));
+      expect(links[1]).toMatch(new RegExp(`${lessonPath(lessons[at + 1])}$`));
+    });
+
+    it('ends the path on the last lesson with the teaser and a link home', () => {
+      render(DijkstraPage);
+      const last = lessons[lessons.length - 1];
+      const links = hrefs();
+      expect(links).toHaveLength(2);
+      expect(links[0]).toMatch(new RegExp(`${lessonPath(lessons[lessons.length - 2])}$`));
+      expect(links[1]).toMatch(/\/$/);
+      expect(links[1]).not.toContain(last.slug);
+      expect(nav()?.textContent).toContain(last.nextTeaser);
+      expect(nav()?.textContent).toContain('All topics');
+      expect(nav()?.textContent).not.toContain('Next lesson');
+    });
+
+    it('names the back link after the topic and leads the banner with "Try it:"', () => {
+      render(BinaryPage);
+      expect(text()).toContain('All lessons in Searching');
+      expect(document.querySelector('header strong')?.textContent).toBe('Try it:');
+    });
+
+    it('glosses O(…) under the complexity heading', () => {
+      render(BinaryPage);
+      expect(text()).toContain('says how the number of steps grows');
+    });
+  });
+
+  it('places the sticky controls last in the lesson grid, after the code panel', () => {
+    render(BfsPage);
+    const grid = /** @type {HTMLElement} */ (
+      document.querySelector('.lg\\:grid-cols-\\[1fr_22rem\\]')
+    );
+    const last = /** @type {HTMLElement} */ (grid.lastElementChild);
+    expect(last.className).toContain('sticky');
+    expect(last.querySelector('[role="group"]')).not.toBeNull();
+  });
+
+  it('names each hub card link by the lesson title only', () => {
+    render(HubPage, { data: { topic: 'sorting' } });
+    const names = [...document.querySelectorAll('li a')].map((a) => a.textContent?.trim());
+    expect(names).toEqual(lessons.filter((l) => l.topic === 'sorting').map((l) => l.title));
   });
 });

@@ -6,9 +6,11 @@ export const en = {
   level: 'Intermediate',
   title: 'Merge sort & quicksort',
   intro:
-    'Both break the O(n²) barrier by divide and conquer. Merge sort splits the array in half, sorts each half, and merges the two sorted runs. Quicksort picks a pivot, moves smaller values to its left, and sorts each side.',
+    'Both break the O(n²) barrier by divide and conquer. Merge sort splits the array in half, sorts each half, and merges the two sorted runs. Quicksort picks a pivot, moves smaller values to its left, and sorts each side. While you step, bars outside the range a call is working on are dimmed.',
+  summary:
+    'Watch merge sort and quicksort split an array by divide and conquer, and see when quicksort degrades to O(n²).',
   instruction:
-    'Pick an algorithm and a starting array, then step through. The stack panel shows which part of the array each call is working on; bars outside it are dimmed. For quicksort, try each pivot rule on the sorted and reversed arrays.',
+    'Pick an algorithm and a starting array, then step through. The stack panel shows which part of the array each call is working on. For quicksort, try each pivot rule on the sorted and reversed arrays.',
   algorithmLabel: 'Algorithm',
   algorithms: { merge: 'Merge sort', quick: 'Quicksort' },
   presetLabel: 'Starting array',
@@ -130,13 +132,14 @@ export const en = {
     'Merge sort is stable because a tie takes from the left run. Quicksort is not: a partition swap can jump over an equal value.',
     'With the last element as pivot, quicksort is quadratic on sorted, reversed, or all-equal input: the recursion goes n levels deep. Median-of-three fixes sorted input but not all-equal input, which needs a three-way partition.',
     'Merge sort pays for its guarantee with an O(n) buffer. Quicksort partitions in place and needs only its call stack, which stays O(log n) if it recurses into the smaller side first.',
+    'Try quicksort with the “Last element” pivot on a “Reversed” array, then switch the pivot to “Median of three”: the recursion depth drops sharply.',
   ],
-  complexityHead: ['Case or resource', 'Cost', 'Why'],
+  complexityHead: ['Resource', 'Cost', 'Why'],
   complexity: [
-    ['Merge, any input', 'O(n log n)', 'log₂ n levels, n writes per level.'],
-    ['Quick, typical', 'O(n log n)', 'A good pivot splits the range into two similar halves.'],
+    ['Time, merge', 'O(n log n)', 'log₂ n levels, n writes per level.'],
+    ['Time, quick typical', 'O(n log n)', 'A good pivot splits the range into two similar halves.'],
     [
-      'Quick, worst',
+      'Time, quick worst',
       'O(n²)',
       'A pivot that is always the smallest or largest leaves one side empty.',
     ],

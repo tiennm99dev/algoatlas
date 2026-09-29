@@ -16,6 +16,7 @@ import { en as dijkstraCopy } from './dijkstra-grid/copy.en.js';
  * @property {string} level
  * @property {string} title
  * @property {string} intro
+ * @property {string} [summary]  One sentence for the meta description; falls back to `intro`.
  * @property {string} instruction
  * @property {string[]} takeaways
  * @property {string[]} [complexityHead]  Column headers when the default Case/Cost/Why does not fit.

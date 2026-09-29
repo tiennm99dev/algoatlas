@@ -9,6 +9,8 @@ export const en = {
   title: 'Breadth-first search on a grid',
   intro:
     'BFS explores a graph in rings: first every cell one step from the start, then every cell two steps away, and so on. Because of that order, the first time it reaches the goal it has found a shortest path.',
+  summary:
+    'Watch breadth-first search expand in rings on a grid you draw, and see why its first path to the goal is a shortest one.',
   instruction:
     'Draw walls by clicking or dragging over the grid, or press Enter on a focused cell. Move the start and goal, then play the search. Numbers show each cell’s distance from the start.',
   randomMaze: 'Random walls',
@@ -51,13 +53,14 @@ export const en = {
     'Marking a cell visited when it is enqueued — not when it is dequeued — stops it from entering the queue twice.',
     'BFS finds shortest paths only when every step costs the same. With weighted edges you need Dijkstra’s algorithm.',
     'Swap the queue for a stack and you get depth-first search: it still reaches everything, but its first path is rarely the shortest.',
+    'Try drawing a wall across the grid with one gap: the rings squeeze through the gap and the shortest path bends around the wall.',
   ],
   complexityHead: ['Resource', 'Cost', 'Why'],
   complexity: [
     [
       'Time',
       'O(V + E)',
-      'Each cell is enqueued at most once, and each edge is examined at most twice — once from each end.',
+      'With V cells and E edges between open neighbors, each cell is enqueued at most once, and each edge is examined at most twice — once from each end.',
     ],
     ['Memory', 'O(V)', 'The visited set and the queue can each hold every cell.'],
   ],

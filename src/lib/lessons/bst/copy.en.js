@@ -8,6 +8,8 @@ export const en = {
   title: 'Binary search tree',
   intro:
     'A binary search tree keeps every key smaller than a node on its left and every larger key on its right. Search, insert, and delete each walk one path from the root, so their cost is the height of the tree.',
+  summary:
+    'Insert, search, and delete keys in a binary search tree, and watch sorted inserts turn it into a list.',
   instruction:
     'Type a key and insert, search, or delete it, then step through the walk. Load the sorted preset to see the tree lean into a list. Undo removes the last operation.',
   keyLabel: 'Key',
@@ -93,6 +95,7 @@ export const en = {
     'Insert keys in sorted order and every new key goes right: the tree becomes a list with height n. Balanced trees such as AVL and red-black trees rotate to prevent this.',
     'Deleting a node with two children copies in its successor (the smallest key in the right subtree), then deletes the successor. That node has at most one child, so the second delete is easy.',
     'An in-order walk (left, node, right) visits the keys in sorted order.',
+    'Try “Sorted order”: every key goes right and the height grows to n, so each operation costs O(n).',
   ],
   complexityHead: ['Resource', 'Cost', 'Why'],
   complexity: [

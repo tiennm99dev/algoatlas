@@ -8,9 +8,11 @@ export const en = {
   level: 'Intermediate',
   title: 'Dijkstra’s algorithm on a grid',
   intro:
-    'When some steps cost more than others, the path with the fewest steps is no longer the cheapest. Dijkstra’s algorithm always expands the cheapest known cell next, so when it reaches the goal it has found the cheapest route.',
+    'When some steps cost more than others, the path with the fewest steps is no longer the cheapest. Dijkstra’s algorithm always expands the cheapest known cell next, so when it reaches the goal it has found the cheapest route. A step costs the average of the two cells it joins: 1 on open ground, 5 inside mud, 3 onto or off it.',
+  summary:
+    'Watch Dijkstra’s algorithm find the cheapest route across a grid with mud, and see why a cell is final only when it is popped.',
   instruction:
-    'Paint walls and mud, move the start and goal, then play. A step costs the average of the two cells it joins: 1 on open ground, 5 inside mud, 3 onto or off it. Numbers show the cheapest known cost to reach each cell.',
+    'Paint walls and mud, move the start and goal, then play. Numbers show the cheapest known cost to reach each cell.',
   tools: {
     wall: gridCopy.tools.wall,
     mud: 'Mud',
@@ -88,15 +90,17 @@ export const en = {
     'A cell is final only when it is popped, not when it is first reached. A cheaper route may still turn up in between; watch the goal’s cost drop before it is settled.',
     'Instead of lowering an entry already in the queue, this version pushes a new one and skips the stale entry when it surfaces.',
     'With every cost equal, Dijkstra explores in the same rings as BFS. Negative costs break it; they need Bellman–Ford.',
+    'Try painting a strip of mud across the direct route: the path bends around it whenever going around is cheaper than crossing.',
   ],
   complexityHead: ['Resource', 'Cost', 'Why'],
   complexity: [
     [
       'Time',
       'O((V + E) log V)',
-      'With a binary heap, each push and pop costs O(log V), and there is at most one push per relaxation.',
+      'With V cells and E edges between open neighbors and a binary heap, each push and pop costs O(log V), and there is at most one push per relaxation.',
     ],
     ['Memory', 'O(V + E)', 'The queue can hold one entry per relaxation, stale ones included.'],
   ],
-  nextTeaser: 'Next up: A* search, which aims Dijkstra at the goal with a distance estimate.',
+  nextTeaser:
+    'That is every lesson so far. A* search, which aims Dijkstra at the goal with a distance estimate, is next on the roadmap.',
 };

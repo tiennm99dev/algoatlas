@@ -40,7 +40,7 @@
             <li>
               <a
                 {href}
-                class="focus-ring rounded hover:text-teal-700 aria-[current]:text-teal-700"
+                class="focus-ring rounded hover:text-teal-700 aria-[current]:font-semibold aria-[current]:text-teal-700 aria-[current]:underline aria-[current]:decoration-2 aria-[current]:underline-offset-4"
                 aria-current={current(href)}>{copy.topics[key].title}</a
               >
             </li>
@@ -50,7 +50,7 @@
     </div>
   </header>
 
-  <main id="main" class="flex-1">
+  <main id="main" tabindex="-1" class="flex-1 outline-none">
     {@render children()}
   </main>
 
@@ -59,26 +59,20 @@
       class="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-x-4 gap-y-2 px-4 py-6 text-sm text-slate-500"
     >
       <span
-        >© <a
+        >© 2026 <a
           href="https://github.com/tiennm99"
-          class="focus-ring rounded text-teal-700 hover:underline"
-          target="_blank"
-          rel="noopener noreferrer">tiennm99</a
+          class="focus-ring rounded text-teal-700 hover:underline">tiennm99</a
         ></span
       >
       <span aria-hidden="true">·</span>
       <a
         href="https://github.com/tiennm99dev/algoatlas/blob/main/LICENSE"
-        class="focus-ring rounded text-teal-700 hover:underline"
-        target="_blank"
-        rel="noopener noreferrer">Apache-2.0</a
+        class="focus-ring rounded text-teal-700 hover:underline">Apache-2.0</a
       >
       <span aria-hidden="true">·</span>
       <a
         href="https://github.com/tiennm99dev/algoatlas"
-        class="focus-ring rounded text-teal-700 hover:underline"
-        target="_blank"
-        rel="noopener noreferrer">Source</a
+        class="focus-ring rounded text-teal-700 hover:underline">Source</a
       >
     </div>
   </footer>

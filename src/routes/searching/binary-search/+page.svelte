@@ -176,7 +176,7 @@
         step="2"
         bind:value={size}
         onchange={newArray}
-        class="accent-teal-700"
+        class="focus-ring rounded accent-teal-700"
       />
     </label>
 
@@ -188,7 +188,7 @@
   </div>
 
   <div class="grid gap-4 lg:grid-cols-[1fr_22rem]">
-    <div class="flex flex-col gap-4">
+    <div class="flex flex-col gap-4 lg:col-start-1 lg:row-start-1">
       <div class="rounded-xl border border-slate-200 bg-white p-4">
         <!-- One-row view of the live window, so the halving is visible even when cells wrap onto several rows. -->
         <div class="relative mb-3 h-2 rounded bg-slate-200" aria-hidden="true">
@@ -246,16 +246,12 @@
         {mode === 'watch' ? m.describe(frame, values, target) : driveMessage}
       </p>
 
-      {#if mode === 'watch'}
-        <div class="sticky bottom-2 z-10 lg:static">
-          <StepControls {player} />
-        </div>
-      {:else if driveStatus !== 'playing'}
+      {#if mode === 'drive' && driveStatus !== 'playing'}
         <button onclick={rebuild} class="btn-primary self-start">{m.drive.restart}</button>
       {/if}
     </div>
 
-    <div class="flex flex-col gap-4">
+    <div class="flex flex-col gap-4 lg:col-start-2 lg:row-span-2">
       <dl class="grid grid-cols-2 gap-3">
         <div class="rounded-xl border border-slate-200 bg-white p-3">
           <dt class="text-xs text-slate-500">{mode === 'watch' ? m.binaryCount : m.yourCount}</dt>
@@ -276,5 +272,10 @@
         </p>
       {/if}
     </div>
+    {#if mode === 'watch'}
+      <div class="sticky bottom-2 z-10 print:hidden lg:static lg:col-start-1 lg:row-start-2">
+        <StepControls {player} />
+      </div>
+    {/if}
   </div>
 </LessonLayout>

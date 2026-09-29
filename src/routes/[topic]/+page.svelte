@@ -27,19 +27,22 @@
     <p class="text-lg text-slate-600">{topic.blurb}</p>
   </header>
 
-  <ul class="grid gap-4 md:grid-cols-2">
+  <ul class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
     {#each lessons as lesson (lesson.slug)}
-      <li>
-        <a
-          href={resolve(/** @type {'/'} */ (lessonPath(lesson)))}
-          class="block h-full rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-teal-600 hover:shadow-sm focus-ring"
-        >
-          <div class="mb-2 text-xs font-semibold tracking-wide text-slate-500 uppercase">
-            {lesson.level}
-          </div>
-          <h2 class="mb-1 text-lg font-bold text-slate-900">{lesson.title}</h2>
-          <p class="text-sm leading-relaxed text-slate-600">{lesson.intro}</p>
-        </a>
+      <!-- The title link stretches over the whole card, so the link is named by the title alone. -->
+      <li
+        class="relative rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-teal-600 hover:shadow-sm has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-teal-700"
+      >
+        <div class="mb-2 text-xs font-semibold tracking-wide text-slate-500 uppercase">
+          {lesson.level}
+        </div>
+        <h2 class="mb-1 text-lg font-bold text-slate-900">
+          <a
+            href={resolve(/** @type {'/'} */ (lessonPath(lesson)))}
+            class="outline-none after:absolute after:inset-0 after:rounded-2xl">{lesson.title}</a
+          >
+        </h2>
+        <p class="text-sm leading-relaxed text-slate-600">{lesson.intro}</p>
       </li>
     {/each}
   </ul>

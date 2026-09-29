@@ -170,7 +170,7 @@
   </div>
 
   <div class="grid gap-4 lg:grid-cols-[1fr_22rem]">
-    <div class="flex flex-col gap-4">
+    <div class="flex flex-col gap-4 lg:col-start-1 lg:row-start-1">
       <div class="rounded-xl border border-slate-200 bg-white p-3">
         <GridBoard
           rows={ROWS}
@@ -211,13 +211,9 @@
       >
         {narration}
       </p>
-
-      <div class="sticky bottom-2 z-10 lg:static">
-        <StepControls {player} />
-      </div>
     </div>
 
-    <div class="flex flex-col gap-4">
+    <div class="flex flex-col gap-4 lg:col-start-2 lg:row-span-2">
       <dl class="grid grid-cols-2 gap-3">
         <div class="rounded-xl border border-slate-200 bg-white p-3">
           <dt class="text-xs text-slate-500">{m.settledLabel}</dt>
@@ -250,6 +246,9 @@
         }))}
       />
       <CodePanel lines={dijkstraPseudocode} active={frame.lines} />
+    </div>
+    <div class="sticky bottom-2 z-10 print:hidden lg:static lg:col-start-1 lg:row-start-2">
+      <StepControls {player} />
     </div>
   </div>
 </LessonLayout>
