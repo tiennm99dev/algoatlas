@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  binaryPseudocode,
   binarySearchTrace,
   decide,
   linearSearchComparisons,
@@ -63,5 +64,13 @@ describe('makeSortedArray', () => {
   it('is strictly increasing', () => {
     const s = makeSortedArray(50);
     expect(s.every((v, i) => i === 0 || s[i - 1] < v)).toBe(true);
+  });
+});
+
+describe('pseudocode coverage', () => {
+  it('found and not-found traces together highlight every line', () => {
+    const frames = [...binarySearchTrace(a, 91), ...binarySearchTrace(a, 2), ...binarySearchTrace(a, 4)];
+    const seen = new Set(frames.flatMap((f) => f.lines));
+    expect([...seen].sort((x, y) => x - y)).toEqual(binaryPseudocode.map((_, i) => i));
   });
 });

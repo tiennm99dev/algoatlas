@@ -19,7 +19,7 @@ If the workflow itself is broken, re-run an earlier successful deployment from t
 
 ## CI
 
-`.github/workflows/ci.yml` runs lint, type check, tests, and build on every PR and push to `main`.
+`.github/workflows/ci.yml` runs lint, format check, type check, tests, and build on every PR and push to `main`. The deploy workflow repeats the same gate before it builds, so a failing commit on `main` is never published.
 
 ## Things to not do
 

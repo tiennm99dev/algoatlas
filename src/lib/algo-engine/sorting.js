@@ -8,12 +8,12 @@
 
 /**
  * @typedef {object} SortFrame
- * @property {'start'|'pick'|'compare'|'swap'|'pass'|'place'|'done'} kind
+ * @property {'start'|'pass-start'|'pick'|'compare'|'swap'|'pass'|'place'|'done'} kind
  * @property {Item[]} items     Array state after this step.
  * @property {number[]} focus   Indices highlighted by this step.
  * @property {number[]} sorted  Indices known to be in final position (bubble)
  *                              or inside the sorted prefix (insertion).
- * @property {number} line      Pseudocode line this step executes.
+ * @property {number[]} lines   Pseudocode lines this step executes.
  * @property {number} comparisons Running total.
  * @property {number} swaps       Running total (moves, for insertion sort).
  * @property {boolean} [swapped]  Compare outcome: whether a swap follows.
@@ -66,30 +66,31 @@ export function bubbleSortTrace(input) {
   /** @param {Omit<SortFrame, 'items'|'sorted'|'comparisons'|'swaps'>} f */
   const push = (f) => frames.push({ ...f, items: a.slice(), sorted, comparisons, swaps });
 
-  push({ kind: 'start', focus: [], line: 0 });
+  push({ kind: 'start', focus: [], lines: [] });
   for (let end = n - 1; end >= 1; end--) {
     let swapped = false;
+    push({ kind: 'pass-start', focus: [end], lines: [0, 1] });
     for (let i = 0; i < end; i++) {
       comparisons++;
       const outOfOrder = a[i].value > a[i + 1].value;
-      push({ kind: 'compare', focus: [i, i + 1], line: 3, swapped: outOfOrder });
+      push({ kind: 'compare', focus: [i, i + 1], lines: [2, 3], swapped: outOfOrder });
       if (outOfOrder) {
         [a[i], a[i + 1]] = [a[i + 1], a[i]];
         swaps++;
         swapped = true;
-        push({ kind: 'swap', focus: [i, i + 1], line: 4 });
+        push({ kind: 'swap', focus: [i, i + 1], lines: [4] });
       }
     }
     if (!swapped) {
       sorted = range(n);
-      push({ kind: 'pass', focus: [], line: 5 });
+      push({ kind: 'pass', focus: [], lines: [5] });
       break;
     }
     sorted = [...sorted, end];
-    push({ kind: 'pass', focus: [end], line: 0 });
+    push({ kind: 'pass', focus: [end], lines: [5] });
   }
   sorted = range(n);
-  push({ kind: 'done', focus: [], line: 6 });
+  push({ kind: 'done', focus: [], lines: [6] });
   return frames;
 }
 
@@ -112,25 +113,27 @@ export function insertionSortTrace(input) {
   /** @param {Omit<SortFrame, 'items'|'sorted'|'comparisons'|'swaps'>} f */
   const push = (f) => frames.push({ ...f, items: a.slice(), sorted, comparisons, swaps });
 
-  push({ kind: 'start', focus: [], line: 0 });
+  push({ kind: 'start', focus: [], lines: [] });
   for (let i = 1; i < n; i++) {
     let j = i - 1;
-    push({ kind: 'pick', focus: [i], line: 1 });
+    push({ kind: 'pick', focus: [i], lines: [0, 1] });
     while (j >= 0) {
       comparisons++;
       const larger = a[j].value > a[j + 1].value;
-      push({ kind: 'compare', focus: [j, j + 1], line: 2, swapped: larger });
+      push({ kind: 'compare', focus: [j, j + 1], lines: [2], swapped: larger });
       if (!larger) break;
       [a[j], a[j + 1]] = [a[j + 1], a[j]];
       swaps++;
-      push({ kind: 'swap', focus: [j, j + 1], line: 3 });
+      // The shifted element joins the sorted run; only the key (now at j) is still moving.
+      sorted = range(i + 1).filter((k) => k !== j);
+      push({ kind: 'swap', focus: [j, j + 1], lines: [3] });
       j--;
     }
     sorted = range(i + 1);
-    push({ kind: 'place', focus: [j + 1], line: 4 });
+    push({ kind: 'place', focus: [j + 1], lines: [4] });
   }
   sorted = range(n);
-  push({ kind: 'done', focus: [], line: 5 });
+  push({ kind: 'done', focus: [], lines: [5] });
   return frames;
 }
 
@@ -143,6 +146,7 @@ export function insertionSortTrace(input) {
  */
 export function makeArray(preset, n, rand = Math.random) {
   const ascending = Array.from({ length: n }, (_, i) => Math.round(((i + 1) / n) * 95) + 5);
+  if (n < 2) return ascending;
   switch (preset) {
     case 'reversed':
       return ascending.reverse();

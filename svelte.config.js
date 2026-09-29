@@ -9,6 +9,21 @@ const config = {
   kit: {
     adapter: adapter(),
     paths: { base },
+    // Hash mode puts a CSP meta tag with script hashes on every prerendered page.
+    // Inline styles stay allowed because Svelte writes style attributes at runtime.
+    csp: {
+      mode: 'hash',
+      directives: {
+        'default-src': ['self'],
+        'script-src': ['self'],
+        'style-src': ['self', 'unsafe-inline'],
+        'img-src': ['self', 'data:'],
+        'font-src': ['self'],
+        'object-src': ['none'],
+        'base-uri': ['self'],
+        'form-action': ['self'],
+      },
+    },
   },
 };
 

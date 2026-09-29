@@ -8,6 +8,6 @@ export function entries() {
 
 /** @type {import('./$types').PageLoad} */
 export function load({ params }) {
-  if (!(params.topic in t().topics)) error(404, 'Unknown topic');
+  if (!Object.hasOwn(t().topics, params.topic)) error(404, 'Unknown topic');
   return { topic: params.topic };
 }

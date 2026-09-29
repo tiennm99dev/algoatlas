@@ -22,7 +22,7 @@
 
 <article class="mx-auto max-w-5xl px-4 py-8">
   <nav class="mb-4 text-sm">
-    <a href={resolve(/** @type {'/'} */ (topicPath(lesson.topic)))} class="text-teal-700 hover:underline">{copy.lessonChrome.backToTopic}</a>
+    <a href={resolve(/** @type {'/'} */ (topicPath(lesson.topic)))} class="focus-ring rounded text-teal-700 hover:underline">{copy.lessonChrome.backToTopic}</a>
   </nav>
 
   <header class="mb-6 max-w-3xl">

@@ -1,6 +1,7 @@
 <script>
   import CodePanel from '$lib/components/code-panel.svelte';
   import LessonLayout from '$lib/components/lesson-layout.svelte';
+  import SegmentedControl from '$lib/components/segmented-control.svelte';
   import StepControls from '$lib/components/step-controls.svelte';
   import { bfsGridTrace, bfsPseudocode, randomWalls } from '$lib/algo-engine/graph.js';
   import { en as m } from '$lib/lessons/bfs-grid/copy.en.js';
@@ -24,8 +25,7 @@
   let walls = $state.raw(new Set(DEFAULT_WALLS));
   let start = $state(DEFAULT_START);
   let goal = $state(DEFAULT_GOAL);
-  /** @type {Tool} */
-  let tool = $state('wall');
+  let tool = $state(/** @type {Tool} */ ('wall'));
   let focusIndex = $state(DEFAULT_START);
   /** @type {HTMLButtonElement[]} */
   const cellRefs = [];
@@ -38,7 +38,11 @@
   const pathSet = $derived(new Set(frame.path));
   const visitedCount = $derived(frame.dist.filter((d) => d >= 0).length);
 
+  /** Shown in place of the narration when an edit is refused. */
+  let notice = $state('');
+
   function rebuild() {
+    notice = '';
     player.load(bfsGridTrace({ rows: ROWS, cols: COLS, walls, start, goal }));
   }
 
@@ -63,7 +67,10 @@
       setWall(cell, !walls.has(cell));
       return;
     }
-    if (walls.has(cell) || cell === start || cell === goal) return;
+    if (walls.has(cell) || cell === start || cell === goal) {
+      notice = m.blockedCell;
+      return;
+    }
     if (tool === 'start') start = cell;
     else goal = cell;
     rebuild();
@@ -77,6 +84,7 @@
 
   /** @param {PointerEvent} e */
   function onPointerDown(e) {
+    if (e.button !== 0) return;
     const cell = cellFromPoint(e);
     if (cell < 0) return;
     e.preventDefault();
@@ -91,6 +99,11 @@
   /** @param {PointerEvent} e */
   function onPointerMove(e) {
     if (painting === null) return;
+    // A release outside the window never reaches pointerup; stop once no button is held.
+    if ((e.buttons & 1) === 0) {
+      painting = null;
+      return;
+    }
     const cell = cellFromPoint(e);
     if (cell >= 0) setWall(cell, painting);
   }
@@ -124,7 +137,7 @@
 
   /** @param {number} cell */
   function cellState(cell) {
-    if (cell === start) return { cls: 'bg-emerald-600 text-white', label: m.legend.start, mark: 'S' };
+    if (cell === start) return { cls: 'bg-emerald-700 text-white', label: m.legend.start, mark: 'S' };
     if (cell === goal) return { cls: 'bg-rose-600 text-white', label: m.legend.goal, mark: 'G' };
     if (walls.has(cell)) return { cls: 'bg-slate-800', label: m.legend.wall, mark: '' };
     const d = frame.dist[cell];
@@ -140,7 +153,7 @@
   }
 
   const legend = [
-    ['bg-emerald-600', m.legend.start],
+    ['bg-emerald-700', m.legend.start],
     ['bg-rose-600', m.legend.goal],
     ['bg-slate-800', m.legend.wall],
     ['bg-state-frontier', m.legend.frontier],
@@ -154,20 +167,15 @@
 
 <LessonLayout lesson={m}>
   <div class="mb-4 flex flex-wrap items-end gap-4">
-    <fieldset>
-      <legend class="mb-1 text-xs font-semibold tracking-wide text-slate-500 uppercase">{m.toolLabel}</legend>
-      <div class="inline-flex rounded-lg border border-slate-300 bg-white p-0.5">
-        {#each TOOLS as tl (tl)}
-          <label class="cursor-pointer rounded-md px-3 py-1.5 text-sm font-medium has-checked:bg-teal-600 has-checked:text-white has-focus-visible:outline-2 has-focus-visible:outline-teal-600">
-            <input type="radio" class="sr-only" name="tool" value={tl} bind:group={tool} />
-            {m.tools[tl]}
-          </label>
-        {/each}
-      </div>
-    </fieldset>
+    <SegmentedControl
+      legend={m.toolLabel}
+      name="tool"
+      options={TOOLS.map((tl) => ({ value: tl, label: m.tools[tl] }))}
+      bind:value={tool}
+    />
     <div class="flex gap-2">
-      <button onclick={scatter} class="rounded-lg bg-slate-700 px-3 py-2 text-sm font-medium text-white hover:bg-slate-600">{m.randomMaze}</button>
-      <button onclick={clearWalls} class="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium hover:bg-slate-100">{m.clearWalls}</button>
+      <button onclick={scatter} class="btn-secondary">{m.randomMaze}</button>
+      <button onclick={clearWalls} class="btn-outline">{m.clearWalls}</button>
     </div>
   </div>
 
@@ -179,26 +187,35 @@
           tabindex="-1"
           aria-label={m.gridLabel}
           class="grid touch-none gap-px overflow-hidden rounded-md border border-slate-200 bg-slate-200 select-none"
-          style="grid-template-columns: repeat({COLS}, minmax(0, 1fr));"
+          style="grid-template-columns: 1.5rem repeat({COLS}, minmax(0, 1fr));"
           onpointerdown={onPointerDown}
           onpointermove={onPointerMove}
         >
+          <!-- Axis numbers let the (row,col) narration be read off the grid; screen readers get coordinates from cell labels instead. -->
+          <div role="row" class="contents">
+            <span class="bg-white" aria-hidden="true"></span>
+            {#each { length: COLS } as _, c (c)}
+              <span class="bg-white text-center text-[10px] leading-5 text-slate-500 tabular-nums" aria-hidden="true">{c}</span>
+            {/each}
+          </div>
           {#each { length: ROWS } as _, r (r)}
             <div role="row" class="contents">
+              <span class="flex items-center justify-center bg-white text-[10px] text-slate-500 tabular-nums" aria-hidden="true">{r}</span>
               {#each { length: COLS } as _, c (c)}
                 {@const cell = at(r, c)}
                 {@const s = cellState(cell)}
-                <button
-                  role="gridcell"
-                  data-cell={cell}
-                  bind:this={cellRefs[cell]}
-                  tabindex={cell === focusIndex ? 0 : -1}
-                  aria-label={m.cellLabel(cell, COLS, s.label)}
-                  class="flex aspect-square items-center justify-center text-[10px] font-semibold tabular-nums transition-colors focus-visible:relative focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-teal-600 sm:text-xs {s.cls}"
-                  onclick={(e) => e.detail === 0 && edit(cell)}
-                  onfocus={() => (focusIndex = cell)}
-                  onkeydown={(e) => onCellKeydown(e, cell)}
-                >{s.mark}</button>
+                <div role="gridcell" class="flex">
+                  <button
+                    data-cell={cell}
+                    bind:this={cellRefs[cell]}
+                    tabindex={cell === focusIndex ? 0 : -1}
+                    aria-label={m.cellLabel(cell, COLS, s.label, walls.has(cell) ? -1 : frame.dist[cell])}
+                    class="flex aspect-square w-full items-center justify-center text-xs font-semibold tabular-nums transition-colors focus-visible:relative focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-slate-900 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-inset {s.cls}"
+                    onclick={(e) => e.detail === 0 && edit(cell)}
+                    onfocus={() => (focusIndex = cell)}
+                    onkeydown={(e) => onCellKeydown(e, cell)}
+                  >{s.mark}</button>
+                </div>
               {/each}
             </div>
           {/each}
@@ -210,8 +227,8 @@
         </ul>
       </div>
 
-      <p class="min-h-12 rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-800" aria-live="polite">
-        {m.describe(frame, COLS)}
+      <p class="min-h-12 rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-800" aria-live={player.playing ? 'off' : 'polite'}>
+        {notice || m.describe(frame, COLS)}
       </p>
 
       <StepControls {player} />
@@ -234,12 +251,12 @@
           {#each frame.queue.slice(0, 18) as cell (cell)}
             <li class="rounded px-1.5 py-0.5 {cell === frame.touched ? 'bg-sky-700 text-white' : 'bg-sky-100 text-sky-900'}">{m.coord(cell, COLS)}</li>
           {:else}
-            <li class="text-slate-400">{m.queueEmpty}</li>
+            <li class="text-slate-500">{m.queueEmpty}</li>
           {/each}
-          {#if frame.queue.length > 18}<li class="text-slate-400">+{frame.queue.length - 18}</li>{/if}
+          {#if frame.queue.length > 18}<li class="text-slate-500">+{frame.queue.length - 18}</li>{/if}
         </ol>
       </div>
-      <CodePanel lines={bfsPseudocode} active={frame.line} />
+      <CodePanel lines={bfsPseudocode} active={frame.lines} />
     </div>
   </div>
 </LessonLayout>

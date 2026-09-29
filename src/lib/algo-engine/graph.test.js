@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { bfsGridTrace, neighbors, randomWalls } from './graph.js';
+import { bfsGridTrace, bfsPseudocode, neighbors, randomWalls } from './graph.js';
 
 describe('neighbors', () => {
   it('stays inside the grid', () => {
@@ -63,5 +63,14 @@ describe('randomWalls', () => {
 
   it('density 0 leaves the grid open', () => {
     expect(randomWalls(4, 4, 0, []).size).toBe(0);
+  });
+});
+
+describe('pseudocode coverage', () => {
+  it('found and no-path traces together highlight every line', () => {
+    const found = bfsGridTrace({ rows: 3, cols: 3, walls: new Set(), start: 0, goal: 8 });
+    const sealed = bfsGridTrace({ rows: 2, cols: 2, walls: new Set([1, 2]), start: 0, goal: 3 });
+    const seen = new Set([...found, ...sealed].flatMap((f) => f.lines));
+    expect([...seen].sort((x, y) => x - y)).toEqual(bfsPseudocode.map((_, i) => i));
   });
 });

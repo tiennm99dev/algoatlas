@@ -2,7 +2,7 @@ export const site = {
   title: 'AlgoAtlas',
   tagline: 'Learn data structures and algorithms by stepping through them',
   description:
-    'AlgoAtlas is an interactive map of data structures and algorithms. Every lesson runs the real algorithm on input you control — step forward, rewind, predict the next move, and watch the cost add up.',
+    'AlgoAtlas is an interactive map of data structures and algorithms. Every lesson runs the real algorithm on input you control — step forward, rewind, and watch the cost add up.',
 };
 
 export const hub = {
@@ -11,14 +11,10 @@ export const hub = {
   how: [
     { title: 'Run it', body: 'The real algorithm runs on your input and records every step.' },
     { title: 'Step it', body: 'Play, pause, rewind, or scrub — with the matching line of pseudocode lit up.' },
-    { title: 'Predict it', body: 'Quiz mode stops before key decisions and asks what happens next.' },
+    { title: 'Change it', body: 'Edit the input and see how the number of steps grows or shrinks.' },
   ],
+  startCta: 'Start with sorting',
   lessonCount: /** @param {number} n */ (n) => (n === 1 ? '1 lesson' : `${n} lessons`),
-};
-
-export const status = {
-  live: 'Open',
-  comingSoon: 'Coming soon',
 };
 
 /** @type {Record<string, {title: string, blurb: string}>} */
@@ -45,8 +41,9 @@ export const lessonChrome = {
   pseudocodeTitle: 'Pseudocode',
   takeawaysTitle: 'Key takeaways',
   complexityTitle: 'Complexity',
-  complexityHead: ['Case', 'Time', 'Why'],
+  complexityHead: ['Case', 'Cost', 'Why'],
   navLabel: 'Main navigation',
+  skipLink: 'Skip to content',
 };
 
 export const controls = {

@@ -1,5 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { bubbleSortTrace, insertionSortTrace, makeArray, toItems } from './sorting.js';
+import {
+  bubblePseudocode,
+  bubbleSortTrace,
+  insertionPseudocode,
+  insertionSortTrace,
+  makeArray,
+  toItems,
+} from './sorting.js';
 
 /** Deterministic LCG so shuffles are reproducible. */
 function seeded(seed = 1) {
@@ -77,5 +84,35 @@ describe('makeArray', () => {
   it('reversed is strictly descending', () => {
     const a = makeArray('reversed', 10);
     expect(a.every((v, i) => i === 0 || a[i - 1] > v)).toBe(true);
+  });
+});
+
+describe('pseudocode coverage', () => {
+  it.each([
+    ['bubble', bubbleSortTrace, bubblePseudocode],
+    ['insertion', insertionSortTrace, insertionPseudocode],
+  ])('%s trace highlights every pseudocode line', (_, trace, code) => {
+    // Random input reaches the swap paths; sorted input reaches bubble's early exit.
+    const frames = [...trace(toItems([5, 1, 4, 2, 3])), ...trace(toItems([1, 2, 3]))];
+    const seen = new Set(frames.flatMap((f) => f.lines));
+    expect([...seen].sort((a, b) => a - b)).toEqual(code.map((_, i) => i));
+  });
+});
+
+describe('insertion sort shading', () => {
+  it('keeps the shifted element shaded and only the key unshaded', () => {
+    const swap = insertionSortTrace(toItems([1, 3, 2])).find((f) => f.kind === 'swap');
+    // [1, 2, 3] after shifting 3 right; key 2 sits at index 1.
+    expect(swap?.sorted).toEqual([0, 2]);
+  });
+});
+
+describe('makeArray edge sizes', () => {
+  it('returns a real value for a single element in every preset', () => {
+    for (const preset of /** @type {const} */ (['random', 'nearly-sorted', 'reversed', 'few-unique'])) {
+      const a = makeArray(preset, 1, seeded(2));
+      expect(a).toHaveLength(1);
+      expect(Number.isFinite(a[0])).toBe(true);
+    }
   });
 });

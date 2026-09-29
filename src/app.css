@@ -11,7 +11,7 @@
   /* Semantic state palette shared by every visualizer. */
   --color-state-compare: #f59e0b;
   --color-state-swap: #e11d48;
-  --color-state-sorted: #059669;
+  --color-state-sorted: #047857;
   --color-state-active: #4f46e5;
   --color-state-frontier: #38bdf8;
   --color-state-visited: #c7d2fe;
@@ -22,6 +22,38 @@
   html {
     -webkit-text-size-adjust: 100%;
   }
+}
+
+/* Shared control tiers so every lesson looks and focuses the same way. */
+@utility focus-ring {
+  &:focus-visible {
+    outline: 2px solid var(--color-teal-700);
+    outline-offset: 2px;
+  }
+}
+
+@utility btn {
+  @apply focus-ring inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-40;
+}
+
+@utility btn-primary {
+  @apply btn bg-teal-700 text-white hover:bg-teal-800;
+}
+
+@utility btn-secondary {
+  @apply btn bg-slate-700 text-white hover:bg-slate-800;
+}
+
+@utility btn-outline {
+  @apply btn border border-slate-300 bg-white text-slate-800 hover:bg-slate-100;
+}
+
+@utility btn-icon {
+  @apply focus-ring inline-flex size-10 items-center justify-center rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40;
+}
+
+@utility field {
+  @apply focus-ring rounded-md border border-slate-300 bg-white px-2 py-1.5 text-sm text-slate-900;
 }
 
 @media (prefers-reduced-motion: reduce) {

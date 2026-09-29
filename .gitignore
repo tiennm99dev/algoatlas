@@ -20,8 +20,6 @@ node_modules/
 # logs
 npm-debug.log*
 
-npm-debug.log*
-
 # tooling
 *.tsbuildinfo
 .eslintcache

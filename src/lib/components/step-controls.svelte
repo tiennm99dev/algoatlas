@@ -2,50 +2,60 @@
   import { t } from '$lib/i18n/index.js';
   import { SPEEDS } from '$lib/player/player.svelte.js';
 
-  /**
-   * @type {{
-   *   player: import('$lib/player/player.svelte.js').Player,
-   *   locked?: boolean,
-   * }}
-   * `locked` blocks moving forward, e.g. while a quiz question is open.
-   */
-  let { player, locked = false } = $props();
+  /** @type {{player: import('$lib/player/player.svelte.js').Player}} */
+  let { player } = $props();
 
   const c = t().controls;
-  const btn =
-    'inline-flex items-center justify-center size-10 rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-teal-600';
+
+  // Stop autoplay when the lesson unmounts so no timer outlives the page.
+  $effect(() => () => player.pause());
 
   /** @param {KeyboardEvent} e */
   function onKeydown(e) {
+    if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
     const el = /** @type {HTMLElement | null} */ (e.target);
-    if (el?.closest('input, select, textarea, button, [role="grid"]')) return;
-    if (e.key === 'ArrowRight' && !locked) player.step();
+    // Form fields and the editable grid own their arrow keys.
+    if (el?.closest('input, select, textarea, [role="grid"]')) return;
+    if (e.key === 'ArrowRight') player.step();
     else if (e.key === 'ArrowLeft') player.back();
-    else if (e.key === ' ' && !locked) player.toggle();
+    // Space on a focused button already activates it natively.
+    else if (e.key === ' ' && !el?.closest('button')) player.toggle();
     else return;
     e.preventDefault();
   }
+
+  // SVG paths on a 24-unit box; text glyphs render as color emoji on some platforms.
+  const icons = {
+    first: 'M6 5h2v14H6zM20 5v14L10 12z',
+    back: 'M15 5v14L6 12z',
+    step: 'M9 5v14l9-7z',
+    last: 'M16 5h2v14h-2zM4 5v14l10-7z',
+    play: 'M8 5v14l11-7z',
+    pause: 'M7 5h4v14H7zM13 5h4v14h-4z',
+  };
 </script>
 
 <svelte:window onkeydown={onKeydown} />
 
+{#snippet icon(/** @type {string} */ d)}
+  <svg viewBox="0 0 24 24" class="size-5 fill-current" aria-hidden="true"><path {d} /></svg>
+{/snippet}
+
 <div class="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-3" role="group" aria-label={c.groupLabel}>
   <div class="flex flex-wrap items-center gap-2">
-    <button class={btn} onclick={() => player.seek(0)} disabled={player.atStart} aria-label={c.first} title={c.first}>⏮</button>
-    <button class={btn} onclick={player.back} disabled={player.atStart} aria-label={c.back} title={c.back}>◀</button>
-    <button
-      class="{btn} w-20 border-teal-600 bg-teal-600 font-semibold text-white hover:bg-teal-700"
-      onclick={player.toggle}
-      disabled={locked}
-      aria-label={player.playing ? c.pause : c.play}
-    >{player.playing ? '⏸ ' + c.pause : '▶ ' + c.play}</button>
-    <button class={btn} onclick={player.step} disabled={player.atEnd || locked} aria-label={c.step} title={c.step}>▶</button>
-    <button class={btn} onclick={() => player.seek(player.frames.length - 1)} disabled={player.atEnd || locked} aria-label={c.last} title={c.last}>⏭</button>
+    <button class="btn-icon" onclick={() => player.seek(0)} disabled={player.atStart} aria-label={c.first} title={c.first}>{@render icon(icons.first)}</button>
+    <button class="btn-icon" onclick={player.back} disabled={player.atStart} aria-label={c.back} title={c.back}>{@render icon(icons.back)}</button>
+    <button class="btn-primary w-28 justify-center" onclick={player.toggle}>
+      {@render icon(player.playing ? icons.pause : icons.play)}
+      {player.playing ? c.pause : c.play}
+    </button>
+    <button class="btn-icon" onclick={player.step} disabled={player.atEnd} aria-label={c.step} title={c.step}>{@render icon(icons.step)}</button>
+    <button class="btn-icon" onclick={() => player.seek(player.frames.length - 1)} disabled={player.atEnd} aria-label={c.last} title={c.last}>{@render icon(icons.last)}</button>
 
     <label class="ml-auto flex items-center gap-2 text-sm text-slate-600">
       {c.speed}
       <select
-        class="rounded-md border border-slate-300 bg-white px-2 py-1"
+        class="field"
         value={player.speed}
         onchange={(e) => (player.speed = Number(e.currentTarget.value))}
       >
@@ -60,14 +70,14 @@
     <span class="shrink-0 tabular-nums">{c.stepOf(player.index + 1, player.frames.length)}</span>
     <input
       type="range"
-      class="w-full accent-teal-600"
+      class="w-full accent-teal-700"
       min="0"
       max={player.frames.length - 1}
       value={player.index}
-      disabled={locked}
       aria-label={c.scrub}
+      aria-valuetext={c.stepOf(player.index + 1, player.frames.length)}
       oninput={(e) => player.seek(Number(e.currentTarget.value))}
     />
   </label>
-  <p class="hidden text-xs text-slate-400 sm:block">{c.shortcuts}</p>
+  <p class="text-xs text-slate-500">{c.shortcuts}</p>
 </div>

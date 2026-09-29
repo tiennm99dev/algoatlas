@@ -1,7 +1,9 @@
 <script>
   import { flip } from 'svelte/animate';
+  import { prefersReducedMotion } from 'svelte/motion';
   import CodePanel from '$lib/components/code-panel.svelte';
   import LessonLayout from '$lib/components/lesson-layout.svelte';
+  import SegmentedControl from '$lib/components/segmented-control.svelte';
   import StepControls from '$lib/components/step-controls.svelte';
   import {
     bubblePseudocode,
@@ -22,10 +24,8 @@
   const traces = { bubble: bubbleSortTrace, insertion: insertionSortTrace };
   const pseudocode = { bubble: bubblePseudocode, insertion: insertionPseudocode };
 
-  /** @type {Algo} */
-  let algo = $state('bubble');
-  /** @type {Preset} */
-  let preset = $state('random');
+  let algo = $state(/** @type {Algo} */ ('bubble'));
+  let preset = $state(/** @type {Preset} */ ('random'));
   let size = $state(12);
   // A fixed first array keeps the prerendered HTML and the hydrated page identical.
   const INITIAL = [42, 17, 88, 5, 63, 29, 71, 12, 95, 36, 54, 24];
@@ -34,23 +34,16 @@
   const player = createPlayer(traces.bubble(toItems(INITIAL)));
   const frame = $derived(player.frame);
   const maxValue = $derived(Math.max(...values, 1));
-
-  let quiz = $state(false);
-  let answered = $state(-1);
-  let right = $state(0);
-  let asked = $state(0);
-  /** @type {{ok: boolean, text: string} | null} */
-  let feedback = $state(null);
-  const awaiting = $derived(quiz && frame.kind === 'compare' && answered !== player.index);
-
-  $effect(() => {
-    if (awaiting) player.pause();
-  });
+  // Final totals of both algorithms on the current array, for side-by-side comparison.
+  const totals = $derived(
+    ALGOS.map((a) => {
+      const last = traces[a](toItems(values)).at(-1);
+      return { algo: a, comparisons: last?.comparisons ?? 0, swaps: last?.swaps ?? 0 };
+    }),
+  );
 
   function rebuild() {
     player.load(traces[algo](toItems(values)));
-    answered = -1;
-    feedback = null;
   }
 
   function regenerate() {
@@ -58,45 +51,49 @@
     rebuild();
   }
 
-  /** @param {boolean} guess */
-  function answer(guess) {
-    const ok = guess === frame.swapped;
-    asked++;
-    if (ok) right++;
-    answered = player.index;
-    feedback = { ok, text: ok ? m.quiz.right : m.quiz.wrong(Boolean(frame.swapped)) };
-  }
-
   /** @param {number} i */
-  function barColor(i) {
+  function barState(i) {
     if (frame.focus.includes(i)) {
-      if (frame.kind === 'swap') return 'bg-state-swap';
-      if (frame.kind === 'compare') return 'bg-state-compare';
-      return 'bg-state-active';
+      if (frame.kind === 'swap') return 'swap';
+      if (frame.kind === 'compare') return 'compare';
+      if (frame.kind !== 'pass' && frame.kind !== 'pass-start') return 'key';
     }
-    return frame.sorted.includes(i) ? 'bg-state-sorted' : 'bg-slate-400';
+    return frame.sorted.includes(i) ? 'sorted' : 'idle';
   }
 
-  const selectClass = 'rounded-md border border-slate-300 bg-white px-2 py-1.5 text-sm';
+  /** @type {Record<string, string>} */
+  const barClass = {
+    swap: 'bg-state-swap',
+    compare: 'bg-state-compare',
+    key: 'bg-state-active',
+    sorted: 'bg-state-sorted',
+    idle: 'bg-slate-400',
+  };
+
+  /** @type {Record<string, string>} */
+  const barMarker = { swap: m.markers.swap, compare: m.markers.compare, sorted: m.markers.sorted };
+
+  const legend = $derived([
+    ['bg-state-compare', `${m.markers.compare} ${m.legend.compare}`],
+    ['bg-state-swap', `${m.markers.swap} ${m.legend.swap}`],
+    ...(algo === 'insertion' ? [['bg-state-active', m.legend.key]] : []),
+    ['bg-state-sorted', `${m.markers.sorted} ${m.legend.sorted}`],
+  ]);
 </script>
 
 <LessonLayout lesson={m}>
   <div class="mb-4 flex flex-wrap items-end gap-4">
-    <fieldset>
-      <legend class="mb-1 text-xs font-semibold tracking-wide text-slate-500 uppercase">{m.algorithmLabel}</legend>
-      <div class="inline-flex rounded-lg border border-slate-300 bg-white p-0.5">
-        {#each ALGOS as a (a)}
-          <label class="cursor-pointer rounded-md px-3 py-1.5 text-sm font-medium has-checked:bg-teal-600 has-checked:text-white has-focus-visible:outline-2 has-focus-visible:outline-teal-600">
-            <input type="radio" class="sr-only" name="algo" value={a} bind:group={algo} onchange={rebuild} />
-            {m.algorithms[a]}
-          </label>
-        {/each}
-      </div>
-    </fieldset>
+    <SegmentedControl
+      legend={m.algorithmLabel}
+      name="algo"
+      options={ALGOS.map((a) => ({ value: a, label: m.algorithms[a] }))}
+      bind:value={algo}
+      onchange={rebuild}
+    />
 
     <label class="flex flex-col gap-1 text-xs font-semibold tracking-wide text-slate-500 uppercase">
       {m.presetLabel}
-      <select class={selectClass} bind:value={preset} onchange={regenerate}>
+      <select class="field" bind:value={preset} onchange={regenerate}>
         {#each PRESETS as p (p)}
           <option value={p}>{m.presets[p]}</option>
         {/each}
@@ -105,58 +102,40 @@
 
     <label class="flex flex-col gap-1 text-xs font-semibold tracking-wide text-slate-500 uppercase">
       {m.sizeLabel}: {size}
-      <input type="range" min="5" max="30" bind:value={size} onchange={regenerate} class="accent-teal-600" />
+      <input type="range" min="5" max="30" bind:value={size} onchange={regenerate} class="accent-teal-700" />
     </label>
 
-    <button onclick={regenerate} class="rounded-lg bg-slate-700 px-4 py-2 text-sm font-medium text-white hover:bg-slate-600">{m.shuffle}</button>
-
-    <label class="ml-auto flex items-center gap-2 text-sm font-medium text-slate-700">
-      <input type="checkbox" bind:checked={quiz} class="size-4 accent-teal-600" />
-      {m.quiz.toggle}
-      {#if quiz}<span class="text-slate-500 tabular-nums">{m.quiz.score(right, asked)}</span>{/if}
-    </label>
+    <button onclick={regenerate} class="btn-secondary">{m.shuffle}</button>
   </div>
 
   <div class="grid gap-4 lg:grid-cols-[1fr_22rem]">
     <div class="flex flex-col gap-4">
       <div class="rounded-xl border border-slate-200 bg-white p-4">
-        <div class="flex h-64 items-end gap-1" role="img" aria-label={m.barsLabel}>
+        <div class="flex h-72 gap-1" role="img" aria-label={m.barsLabel(frame.items.map((it) => it.value), frame.sorted.length)}>
           {#each frame.items as item, i (item.id)}
-            <div class="flex h-full min-w-0 flex-1 flex-col justify-end" animate:flip={{ duration: 200 }}>
-              {#if frame.items.length <= 16}
-                <span class="mb-1 text-center text-xs text-slate-600 tabular-nums">{item.value}</span>
-              {/if}
-              <div class="rounded-t transition-colors {barColor(i)}" style="height: {(item.value / maxValue) * 100}%"></div>
+            {@const state = barState(i)}
+            <!-- Label, bar area, and marker are separate rows so the bar height is a true share of its own area. -->
+            <div class="flex min-w-0 flex-1 flex-col" animate:flip={{ duration: prefersReducedMotion.current ? 0 : 200 }}>
+              <span class="h-5 shrink-0 text-center text-xs text-slate-600 tabular-nums">{frame.items.length <= 20 ? item.value : ''}</span>
+              <div class="relative flex-1">
+                <div class="absolute inset-x-0 bottom-0 rounded-t transition-colors {barClass[state]}" style="height: {(item.value / maxValue) * 100}%"></div>
+              </div>
+              <span class="h-5 shrink-0 text-center text-sm leading-5 font-bold text-slate-700">{barMarker[state] ?? ''}</span>
             </div>
           {/each}
         </div>
         <ul class="mt-3 flex flex-wrap gap-4 text-xs text-slate-600">
-          <li class="flex items-center gap-1.5"><span class="bg-state-compare size-3 rounded-sm"></span>{m.legend.compare}</li>
-          <li class="flex items-center gap-1.5"><span class="bg-state-swap size-3 rounded-sm"></span>{m.legend.swap}</li>
-          <li class="flex items-center gap-1.5"><span class="bg-state-sorted size-3 rounded-sm"></span>{m.legend.sorted}</li>
+          {#each legend as [cls, label] (label)}
+            <li class="flex items-center gap-1.5"><span class="size-3 rounded-sm {cls}"></span>{label}</li>
+          {/each}
         </ul>
       </div>
 
-      {#if awaiting}
-        <div class="rounded-xl border-2 border-state-compare bg-amber-50 p-4">
-          <p class="mb-3 font-medium text-slate-900">
-            {m.quiz.question(frame.items[frame.focus[0]].value, frame.items[frame.focus[1]].value)}
-          </p>
-          <div class="flex gap-2">
-            <button onclick={() => answer(true)} class="rounded-lg bg-rose-600 px-4 py-2 text-sm font-semibold text-white hover:bg-rose-700">{m.quiz.yes}</button>
-            <button onclick={() => answer(false)} class="rounded-lg bg-slate-700 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-600">{m.quiz.no}</button>
-          </div>
-        </div>
-      {:else}
-        <p class="min-h-12 rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-800" aria-live="polite">
-          {#if feedback && answered === player.index}
-            <span class="font-semibold {feedback.ok ? 'text-emerald-700' : 'text-rose-700'}">{feedback.text}</span>
-          {/if}
-          {m.describe(frame, algo)}
-        </p>
-      {/if}
+      <p class="min-h-12 rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-800" aria-live={player.playing ? 'off' : 'polite'}>
+        {m.describe(frame, algo)}
+      </p>
 
-      <StepControls {player} locked={awaiting} />
+      <StepControls {player} />
     </div>
 
     <div class="flex flex-col gap-4">
@@ -170,7 +149,18 @@
           <dd class="text-2xl font-bold tabular-nums">{frame.swaps}</dd>
         </div>
       </dl>
-      <CodePanel lines={pseudocode[algo]} active={frame.line} />
+      <section class="rounded-xl border border-slate-200 bg-white p-3 text-sm">
+        <h2 class="mb-2 text-xs text-slate-500">{m.compareTitle}</h2>
+        <dl class="space-y-1">
+          {#each totals as row (row.algo)}
+            <div class="flex justify-between gap-2 {row.algo === algo ? 'font-semibold text-slate-900' : 'text-slate-600'}">
+              <dt>{m.algorithms[row.algo]}</dt>
+              <dd class="tabular-nums">{m.compareRow(row.comparisons, row.swaps, m.swaps[row.algo])}</dd>
+            </div>
+          {/each}
+        </dl>
+      </section>
+      <CodePanel lines={pseudocode[algo]} active={frame.lines} />
     </div>
   </div>
 </LessonLayout>

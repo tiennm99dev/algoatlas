@@ -9,7 +9,7 @@
  * @property {number} lo
  * @property {number} hi
  * @property {number} mid          -1 when no midpoint is under inspection.
- * @property {number} line
+ * @property {number[]} lines
  * @property {number} comparisons  Running total of array reads.
  */
 
@@ -50,26 +50,26 @@ export function binarySearchTrace(a, target) {
   let hi = a.length - 1;
   let comparisons = 0;
   /** @type {SearchFrame[]} */
-  const frames = [{ kind: 'start', lo, hi, mid: -1, line: 0, comparisons }];
+  const frames = [{ kind: 'start', lo, hi, mid: -1, lines: [0], comparisons }];
 
   while (lo <= hi) {
     const mid = midpoint(lo, hi);
-    frames.push({ kind: 'mid', lo, hi, mid, line: 2, comparisons });
+    frames.push({ kind: 'mid', lo, hi, mid, lines: [1, 2], comparisons });
     comparisons++;
     const move = decide(a, mid, target);
     if (move === 'found') {
-      frames.push({ kind: 'found', lo, hi, mid, line: 3, comparisons });
+      frames.push({ kind: 'found', lo, hi, mid, lines: [3], comparisons });
       return frames;
     }
     if (move === 'go-right') {
       lo = mid + 1;
-      frames.push({ kind: 'go-right', lo, hi, mid, line: 4, comparisons });
+      frames.push({ kind: 'go-right', lo, hi, mid, lines: [4], comparisons });
     } else {
       hi = mid - 1;
-      frames.push({ kind: 'go-left', lo, hi, mid, line: 5, comparisons });
+      frames.push({ kind: 'go-left', lo, hi, mid, lines: [5], comparisons });
     }
   }
-  frames.push({ kind: 'not-found', lo, hi, mid: -1, line: 6, comparisons });
+  frames.push({ kind: 'not-found', lo, hi, mid: -1, lines: [1, 6], comparisons });
   return frames;
 }
 

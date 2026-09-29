@@ -3,8 +3,17 @@ import { en as binaryCopy } from './binary-search/copy.en.js';
 import { en as bfsCopy } from './bfs-grid/copy.en.js';
 
 /**
- * @typedef {{slug: string, topic: string, level: string, title: string,
- *            intro: string, [k: string]: any}} LessonCopy
+ * Fields every lesson copy module provides to the shared layout and hubs.
+ * @typedef {object} LessonCopy
+ * @property {string} slug
+ * @property {string} topic
+ * @property {string} level
+ * @property {string} title
+ * @property {string} intro
+ * @property {string} instruction
+ * @property {string[]} takeaways
+ * @property {string[][]} complexity  Rows of [case, cost, why].
+ * @property {string} nextTeaser
  */
 
 // Order: by topic (sorting → searching → graphs), then by difficulty.

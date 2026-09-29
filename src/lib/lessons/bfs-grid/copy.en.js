@@ -14,6 +14,7 @@ export const en = {
   randomMaze: 'Random walls',
   clearWalls: 'Clear walls',
   gridLabel: 'Grid. Use arrow keys to move, Enter to edit the focused cell.',
+  blockedCell: 'Pick an open cell — start and goal cannot sit on a wall or on each other.',
   queueLabel: 'Queue (front first)',
   queueEmpty: 'empty',
   visitedLabel: 'Visited',
@@ -31,9 +32,10 @@ export const en = {
   coord(cell, cols) {
     return `(${Math.floor(cell / cols)},${cell % cols})`;
   },
-  /** @param {number} cell @param {number} cols @param {string} kind */
-  cellLabel(cell, cols, kind) {
-    return `Row ${Math.floor(cell / cols)}, column ${cell % cols}${kind ? `, ${kind}` : ''}`;
+  /** @param {number} cell @param {number} cols @param {string} kind @param {number} dist */
+  cellLabel(cell, cols, kind, dist) {
+    const where = `Row ${Math.floor(cell / cols)}, column ${cell % cols}`;
+    return `${where}${kind ? `, ${kind}` : ''}${dist >= 0 ? `, distance ${dist}` : ''}`;
   },
   /** @param {BfsFrame} f @param {number} cols */
   describe(f, cols) {
@@ -58,7 +60,7 @@ export const en = {
     'Swap the queue for a stack and you get depth-first search: it still reaches everything, but its first path is rarely the shortest.',
   ],
   complexity: [
-    ['Time', 'O(V + E)', 'Each cell is enqueued once and each edge is checked once.'],
+    ['Time', 'O(V + E)', 'Each cell is enqueued at most once, and each edge is examined at most twice — once from each end.'],
     ['Memory', 'O(V)', 'The visited set and the queue can each hold every cell.'],
   ],
   nextTeaser: 'Next up: depth-first search and Dijkstra’s algorithm on the same grid.',

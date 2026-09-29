@@ -8,7 +8,7 @@ export const en = {
   intro:
     'Two of the simplest ways to sort: bubble sort keeps swapping neighbors that are out of order, insertion sort grows a sorted prefix one card at a time. Both are O(n²) in the worst case — but they behave very differently on data that is almost sorted.',
   instruction:
-    'Pick an algorithm and a starting arrangement, then press play or step through. Turn on quiz mode to predict every comparison before it happens.',
+    'Pick an algorithm and a starting arrangement, then press play or step through. Switch algorithms on the same array and compare the totals.',
   algorithmLabel: 'Algorithm',
   algorithms: { bubble: 'Bubble sort', insertion: 'Insertion sort' },
   presetLabel: 'Starting array',
@@ -22,19 +22,15 @@ export const en = {
   shuffle: 'New array',
   comparisons: 'Comparisons',
   swaps: { bubble: 'Swaps', insertion: 'Shifts' },
-  barsLabel: 'Array being sorted, bar height is the value',
-  legend: { compare: 'Comparing', swap: 'Swapping', sorted: 'Sorted' },
-  quiz: {
-    toggle: 'Quiz mode',
-    question: /** @param {number} x @param {number} y */ (x, y) =>
-      `Comparing ${x} and ${y}. Will they swap?`,
-    yes: 'Swap',
-    no: 'Keep',
-    right: 'Correct!',
-    wrong: /** @param {boolean} swap */ (swap) =>
-      swap ? 'Not quite — the left value is larger, so they swap.' : 'Not quite — they are already in order.',
-    score: /** @param {number} r @param {number} n */ (r, n) => `Score: ${r} / ${n}`,
+  compareTitle: 'Total cost on this array',
+  compareRow: /** @param {number} c @param {number} s @param {string} moves */ (c, s, moves) =>
+    `${c} comparisons · ${s} ${moves.toLowerCase()}`,
+  /** @param {number[]} values @param {number} sortedCount */
+  barsLabel(values, sortedCount) {
+    return `Array: ${values.join(', ')}. ${sortedCount} of ${values.length} in place.`;
   },
+  legend: { compare: 'Comparing', swap: 'Swapping', key: 'Key being inserted', sorted: 'Sorted' },
+  markers: { compare: '?', swap: '⇄', sorted: '✓' },
   /**
    * @param {SortFrame} f
    * @param {'bubble'|'insertion'} algo
@@ -47,6 +43,8 @@ export const en = {
         return algo === 'bubble'
           ? 'Each pass walks left to right and bubbles the largest remaining value to the end.'
           : 'The first element on its own is a sorted prefix. Each step inserts the next element into it.';
+      case 'pass-start':
+        return `New pass: bubble the largest value among indices 0–${i} to index ${i}.`;
       case 'pick':
         return `Take ${v(i)} as the key and slide it left into the sorted prefix.`;
       case 'compare':

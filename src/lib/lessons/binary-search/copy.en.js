@@ -49,8 +49,8 @@ export const en = {
       n <= best
         ? `Found in ${n} probes — as good as binary search (${best}).`
         : `Found in ${n} probes. Binary search needs ${best} — did you always pick the middle?`,
-    missing: /** @param {number} n */ (n) =>
-      `No cells left after ${n} probes — the target is not in the array.`,
+    missing: /** @param {number} n @param {number} best */ (n, best) =>
+      `No cells left after ${n} probes — the target is not in the array. Binary search proves that in ${best}.`,
     restart: 'Try again',
   },
   takeaways: [

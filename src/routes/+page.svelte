@@ -19,14 +19,28 @@
 <section class="mx-auto max-w-5xl px-4 py-16 text-center">
   <h1 class="mb-4 text-4xl font-bold text-slate-900 sm:text-5xl">{copy.site.tagline}</h1>
   <p class="mx-auto max-w-2xl text-lg leading-relaxed text-slate-600">{copy.site.description}</p>
+  <a href={resolve(/** @type {'/'} */ (lessonPath(topics[0].lessons[0])))} class="btn-primary mt-8 px-6 py-3 text-base">{copy.hub.startCta} →</a>
 </section>
 
 <section class="mx-auto max-w-5xl px-4 pb-12">
+  <h2 class="mb-6 text-center text-2xl font-bold text-slate-900">{copy.hub.howTitle}</h2>
+  <ol class="grid gap-6 md:grid-cols-3">
+    {#each copy.hub.how as step, i (step.title)}
+      <li class="rounded-2xl bg-teal-700 p-6 text-teal-50">
+        <div class="mb-2 text-sm font-semibold text-teal-100">{i + 1}</div>
+        <h3 class="mb-1 text-lg font-bold text-white">{step.title}</h3>
+        <p class="text-sm leading-relaxed">{step.body}</p>
+      </li>
+    {/each}
+  </ol>
+</section>
+
+<section class="mx-auto max-w-5xl px-4 pb-20">
   <h2 class="mb-6 text-center text-2xl font-bold text-slate-900">{copy.hub.topicsTitle}</h2>
   <ul class="grid gap-6 md:grid-cols-3">
     {#each topics as topic (topic.key)}
       <li class="flex flex-col rounded-2xl border border-slate-200 bg-white p-6">
-        <a href={resolve(/** @type {'/'} */ (topicPath(topic.key)))} class="group mb-2 flex items-center justify-between">
+        <a href={resolve(/** @type {'/'} */ (topicPath(topic.key)))} class="group focus-ring mb-2 flex items-center justify-between rounded">
           <h3 class="text-lg font-bold text-slate-900 group-hover:text-teal-700">{topic.title}</h3>
           <span class="text-xs text-slate-500">{copy.hub.lessonCount(topic.lessons.length)}</span>
         </a>
@@ -34,7 +48,7 @@
         <ul class="space-y-1 text-sm">
           {#each topic.lessons as lesson (lesson.slug)}
             <li>
-              <a href={resolve(/** @type {'/'} */ (lessonPath(lesson)))} class="font-medium text-teal-700 hover:underline">→ {lesson.title}</a>
+              <a href={resolve(/** @type {'/'} */ (lessonPath(lesson)))} class="focus-ring rounded font-medium text-teal-700 hover:underline">→ {lesson.title}</a>
             </li>
           {/each}
         </ul>
@@ -43,15 +57,3 @@
   </ul>
 </section>
 
-<section class="mx-auto max-w-5xl px-4 pb-20">
-  <h2 class="mb-6 text-center text-2xl font-bold text-slate-900">{copy.hub.howTitle}</h2>
-  <ol class="grid gap-6 md:grid-cols-3">
-    {#each copy.hub.how as step, i (step.title)}
-      <li class="rounded-2xl bg-teal-700 p-6 text-teal-50">
-        <div class="mb-2 text-sm font-semibold text-teal-200">{i + 1}</div>
-        <h3 class="mb-1 text-lg font-bold text-white">{step.title}</h3>
-        <p class="text-sm leading-relaxed">{step.body}</p>
-      </li>
-    {/each}
-  </ol>
-</section>

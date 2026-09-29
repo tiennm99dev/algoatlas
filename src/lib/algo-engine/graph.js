@@ -20,7 +20,7 @@
  * @property {number[]} queue   Frontier, front first.
  * @property {number[]} dist    Distance from start per cell, -1 unvisited.
  * @property {number[]} path    Shortest path start→goal once found.
- * @property {number} line
+ * @property {number[]} lines
  */
 
 export const bfsPseudocode = [
@@ -68,14 +68,14 @@ export function bfsGridTrace({ rows, cols, walls, start, goal }) {
   /** @param {Omit<BfsFrame, 'queue'|'dist'>} f */
   const push = (f) => frames.push({ ...f, queue: queue.slice(head), dist: dist.slice() });
 
-  push({ kind: 'start', current: -1, touched: -1, path: [], line: 0 });
+  push({ kind: 'start', current: -1, touched: -1, path: [], lines: [0] });
   while (head < queue.length) {
     const cell = queue[head++];
-    push({ kind: 'dequeue', current: cell, touched: -1, path: [], line: 2 });
+    push({ kind: 'dequeue', current: cell, touched: -1, path: [], lines: [1, 2] });
     if (cell === goal) {
       const path = [];
       for (let at = goal; at !== -1; at = parent[at]) path.push(at);
-      push({ kind: 'found', current: cell, touched: -1, path: path.reverse(), line: 3 });
+      push({ kind: 'found', current: cell, touched: -1, path: path.reverse(), lines: [3] });
       return frames;
     }
     for (const next of neighbors(cell, rows, cols)) {
@@ -83,10 +83,10 @@ export function bfsGridTrace({ rows, cols, walls, start, goal }) {
       dist[next] = dist[cell] + 1;
       parent[next] = cell;
       queue.push(next);
-      push({ kind: 'enqueue', current: cell, touched: next, path: [], line: 6 });
+      push({ kind: 'enqueue', current: cell, touched: next, path: [], lines: [4, 5, 6] });
     }
   }
-  push({ kind: 'no-path', current: -1, touched: -1, path: [], line: 7 });
+  push({ kind: 'no-path', current: -1, touched: -1, path: [], lines: [1, 7] });
   return frames;
 }
 

@@ -68,6 +68,11 @@ export function createPlayer(initial) {
     /** @param {number} v */
     set speed(v) {
       speed = v;
+      // Reschedule so a faster speed takes effect now, not after the old delay.
+      if (playing) {
+        clear();
+        timer = setTimeout(tick, 1000 / speed);
+      }
     },
     /** Replace the trace, e.g. after the learner edits the input. @param {T[]} next */
     load(next) {
