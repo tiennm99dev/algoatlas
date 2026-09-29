@@ -15,7 +15,7 @@ Production deploys from `main` via `.github/workflows/deploy.yml`.
 2. `git revert <sha>` and push to `main`
 3. The next workflow run redeploys the previous good state
 
-If the workflow itself is broken, re-run an earlier successful deployment from the repository's **Deployments** tab.
+If the workflow itself is broken, open the last successful **Deploy to GitHub Pages** run in the **Actions** tab and choose **Re-run all jobs**; it rebuilds that commit and publishes it.
 
 ## CI
 
@@ -23,5 +23,9 @@ If the workflow itself is broken, re-run an earlier successful deployment from t
 
 ## Things to not do
 
-- Never change `paths.base` in `svelte.config.js` without updating `SITE_BASE` in the deploy workflow.
+- The base path comes from the `SITE_BASE` env var, defaulting to `/algoatlas` in `svelte.config.js`; the deploy workflow sets the same value explicitly. Change both together.
 - Never edit `VERSION` or `package.json` `version` independently — they must agree.
+
+## Dependencies
+
+- `package.json#overrides` pins `cookie` to 0.7.2 because `@sveltejs/kit` still declares `cookie@^0.6.0`, which resolves to a version with an out-of-bounds character bug in cookie name and path parsing (GHSA-pxg6-pf52-xh8x). Drop the override once Kit requires `cookie@^0.7`.

@@ -23,3 +23,7 @@ npm-debug.log*
 # tooling
 *.tsbuildinfo
 .eslintcache
+
+# Claude Code local state
+.claude/settings.local.json
+.claude/agent-memory/

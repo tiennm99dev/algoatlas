@@ -2,6 +2,7 @@
   "name": "algoatlas",
   "version": "0.1.0.0",
   "private": true,
+  "license": "Apache-2.0",
   "type": "module",
   "description": "AlgoAtlas — learn data structures and algorithms by stepping through them. Static site.",
   "scripts": {

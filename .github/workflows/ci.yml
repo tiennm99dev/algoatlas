@@ -28,6 +28,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Version files agree
+        run: test "$(cat VERSION)" = "$(node -p "require('./package.json').version")"
+
       - name: Lint
         run: npm run lint
 

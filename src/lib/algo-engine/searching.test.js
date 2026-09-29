@@ -78,3 +78,17 @@ describe('pseudocode coverage', () => {
     expect([...seen].sort((x, y) => x - y)).toEqual(binaryPseudocode.map((_, i) => i));
   });
 });
+
+describe('edge cases', () => {
+  it('finds one of several equal values', () => {
+    const dup = [1, 2, 2, 2, 3];
+    const last = binarySearchTrace(dup, 2).at(-1);
+    expect(last?.kind).toBe('found');
+    expect(dup[last?.mid ?? -1]).toBe(2);
+  });
+
+  it('reads nothing from an empty array', () => {
+    expect(binarySearchTrace([], 1).map((f) => f.kind)).toEqual(['start', 'not-found']);
+    expect(linearSearchComparisons([], 1)).toBe(0);
+  });
+});

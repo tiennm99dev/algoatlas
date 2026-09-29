@@ -8,7 +8,7 @@ export const en = {
   intro:
     'In a sorted array, one comparison tells you which half the target is in. Throw the other half away and repeat: a million elements take at most 20 comparisons.',
   instruction:
-    'Watch mode runs the algorithm step by step. You-drive mode lets you probe any cell yourself — see if you can beat binary search.',
+    'Watch mode runs the algorithm step by step. You drive mode lets you probe any cell yourself — see if you can beat binary search.',
   modeLabel: 'Mode',
   modes: { watch: 'Watch', drive: 'You drive' },
   targetLabel: 'Target',
@@ -17,8 +17,11 @@ export const en = {
   randomPresent: 'Random target',
   randomAbsent: 'Missing target',
   arrayLabel: 'Sorted array',
-  cellLabel: /** @param {number} i @param {number} v @param {boolean} out */ (i, v, out) =>
-    `Index ${i}, value ${v}${out ? ', ruled out' : ''}`,
+  /** @param {number} i @param {number} v @param {'open'|'out'|'found'} state */
+  cellLabel: (i, v, state) =>
+    `Index ${i}, value ${v}${state === 'out' ? ', ruled out' : state === 'found' ? ', found' : ''}`,
+  legend: { mid: 'Midpoint being read', found: 'Found', out: 'Ruled out', probed: 'Probed by you' },
+  foundMarker: '✓',
   binaryCount: 'Binary search reads',
   linearCount: 'Linear scan reads',
   yourCount: 'Your probes',
@@ -40,7 +43,8 @@ export const en = {
     }
   },
   drive: {
-    prompt: 'Click any cell that is still possible to read its value.',
+    prompt:
+      'Choose any cell that is still possible (click it, or Tab to it and press Enter) to read its value.',
     higher: /** @param {number} v @param {number} t */ (v, t) =>
       `${v} < ${t}: everything left of here is ruled out.`,
     lower: /** @param {number} v @param {number} t */ (v, t) =>

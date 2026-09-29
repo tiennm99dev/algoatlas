@@ -9,12 +9,12 @@
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
   /* Semantic state palette shared by every visualizer. */
-  --color-state-compare: #f59e0b;
+  --color-state-compare: #d97706;
   --color-state-swap: #e11d48;
   --color-state-sorted: #047857;
   --color-state-active: #4f46e5;
   --color-state-frontier: #38bdf8;
-  --color-state-visited: #c7d2fe;
+  --color-state-visited: #a5b4fc;
   --color-state-path: #fbbf24;
 }
 
@@ -49,7 +49,7 @@
 }
 
 @utility btn-icon {
-  @apply focus-ring inline-flex size-10 items-center justify-center rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40;
+  @apply focus-ring inline-flex size-11 items-center justify-center rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40 aria-disabled:cursor-not-allowed aria-disabled:opacity-40 sm:size-10;
 }
 
 @utility field {

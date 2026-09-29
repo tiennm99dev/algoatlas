@@ -15,6 +15,16 @@ All notable changes to **AlgoAtlas** are documented here. Format: [Keep a Change
 - Insertion sort left the just-shifted element unshaded; `makeArray` returned `null` for one element.
 - Unknown topics such as `/constructor/` crashed instead of returning 404.
 - The BFS complexity row claimed each edge is checked once; it is examined from both ends.
+- A refused BFS edit ("Pick an open cell") stayed on screen and hid the narration while stepping; it now shows only on the step it was raised on and clears when the tool changes. With the Walls tool, Enter on the start or goal was silent.
+- Focus fell to the page body when a probed binary-search cell or a step button at the end of the trace became disabled; they are now `aria-disabled` and focus stays put (a probe moves focus to the new midpoint).
+- Pausing and the end of autoplay were never announced; a status line now says where playback stopped. Keyboard grid edits are confirmed in the narration.
+- Space toggled playback anywhere on a lesson page, hijacking page scrolling; it now works only while the visualizer area is focused, arrows still work everywhere.
+- The topic link was marked the current page while inside a lesson; lessons now use `aria-current="true"`, hubs `"page"`.
+- Binary-search cell labels disagreed with the greyed look after the search ended and never named the found cell. The BFS "Visited" stat counted queued cells; it is now "Discovered".
+- Pseudocode lines wrap instead of scrolling; state fills meet 3:1 non-text contrast (darker compare and visited colors, ring on path cells).
+- Topic navigation is visible on phones; segment and icon buttons grow to 44px there; the BFS grid is drawn transposed on phones so cells stay touchable and lets vertical swipes scroll; step controls stick to the bottom on narrow screens.
+- Decorative arrows are hidden from screen readers; the BFS complexity table is headed "Resource" instead of "Case"; the sorting chart label says "sorted" rather than "in place".
+- A Svelte dev warning fired on every BFS mount from `bind:this` into a plain array.
 
 ### Changed
 
@@ -30,6 +40,9 @@ All notable changes to **AlgoAtlas** are documented here. Format: [Keep a Change
 - Deploy workflow runs lint, format check, type check, and tests before building; Pages permissions are scoped to the deploy job; workflow timeouts and CI run cancellation for superseded PR pushes.
 - `format:check` script, `svelte-check --fail-on-warnings`, `engines.node >= 24`, hash-based Content Security Policy.
 - Regression tests for each fix above, pseudocode line coverage, routing, and registry-to-route consistency.
+- CI checks that `VERSION` and `package.json` agree; `license` field; the reason for the `cookie` override is recorded in the runbook.
+- Binary-search legend, ✓ marker on the found cell, and a one-row window strip that stays readable when cells wrap.
+- Tests for long reversed arrays, negative values, duplicate search values, a sealed BFS start, the lesson registry, `aria-current` on nested routes, and the stop announcement.
 
 ## [0.1.0.0] - 2026-09-29
 

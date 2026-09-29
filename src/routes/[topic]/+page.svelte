@@ -18,7 +18,7 @@
 <section class="mx-auto max-w-5xl px-4 py-12">
   <nav class="mb-6 text-sm">
     <a href={resolve('/')} class="focus-ring rounded text-teal-700 hover:underline"
-      >{copy.lessonChrome.backToHub}</a
+      ><span aria-hidden="true">←</span> {copy.lessonChrome.backToHub}</a
     >
   </nav>
 

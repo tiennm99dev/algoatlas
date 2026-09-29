@@ -41,7 +41,7 @@ npm run preview   # serve build/
 - **Shared UI**: button tiers (`btn-primary`, `btn-secondary`, `btn-outline`, `btn-icon`), `field`, and `focus-ring` are Tailwind `@utility` classes in `src/app.css`; `segmented-control.svelte` is the shared radio toggle.
 - **Security**: `svelte.config.js` sets a hash-based Content Security Policy, emitted as a meta tag on every prerendered page.
 - **Lessons**: one `+page.svelte` per lesson, wrapped in `lesson-layout.svelte` (intro, takeaways, complexity table). English copy is colocated in `src/lib/lessons/<slug>/copy.en.js` and registered in `src/lib/lessons/registry.js`; topic hubs are generated from the registry by `src/routes/[topic]/`.
-- **Adding a lesson**: write a trace function plus tests in `algo-engine/`, add `copy.en.js`, register it, and add the route under its topic.
+- **Adding a lesson**: write a trace function plus tests in `algo-engine/`, add `copy.en.js`, register it in `registry.js`, and add the route under its topic. A new topic also needs an entry in `topics` and `topicOrder` in `src/lib/i18n/site.en.js`, which drive the hub pages and prerender entries.
 
 ## License
 

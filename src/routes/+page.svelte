@@ -1,6 +1,6 @@
 <script>
-  import { resolve } from '$app/paths';
   import { t } from '$lib/i18n/index.js';
+  import { resolve } from '$app/paths';
   import { lessonPath, lessonsByTopic, topicPath } from '$lib/lessons/registry.js';
 
   const copy = t();
@@ -21,14 +21,15 @@
   <p class="mx-auto max-w-2xl text-lg leading-relaxed text-slate-600">{copy.site.description}</p>
   <a
     href={resolve(/** @type {'/'} */ (lessonPath(topics[0].lessons[0])))}
-    class="btn-primary mt-8 px-6 py-3 text-base">{copy.hub.startCta} →</a
+    class="btn-primary mt-8 px-6 py-3 text-base"
+    >{copy.hub.startCta} <span aria-hidden="true">→</span></a
   >
 </section>
 
 <section class="mx-auto max-w-5xl px-4 pb-12">
   <h2 class="mb-6 text-center text-2xl font-bold text-slate-900">{copy.hub.howTitle}</h2>
   <ol class="grid gap-6 md:grid-cols-3">
-    {#each copy.hub.how as step, i (step.title)}
+    {#each copy.hub.how as step, i (i)}
       <li class="rounded-2xl bg-teal-700 p-6 text-teal-50">
         <div class="mb-2 text-sm font-semibold text-teal-100">{i + 1}</div>
         <h3 class="mb-1 text-lg font-bold text-white">{step.title}</h3>
@@ -57,7 +58,7 @@
               <a
                 href={resolve(/** @type {'/'} */ (lessonPath(lesson)))}
                 class="focus-ring rounded font-medium text-teal-700 hover:underline"
-                >→ {lesson.title}</a
+                ><span aria-hidden="true">→</span> {lesson.title}</a
               >
             </li>
           {/each}

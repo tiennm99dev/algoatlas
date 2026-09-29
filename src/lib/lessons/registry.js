@@ -12,6 +12,7 @@ import { en as bfsCopy } from './bfs-grid/copy.en.js';
  * @property {string} intro
  * @property {string} instruction
  * @property {string[]} takeaways
+ * @property {string[]} [complexityHead]  Column headers when the default Case/Cost/Why does not fit.
  * @property {string[][]} complexity  Rows of [case, cost, why].
  * @property {string} nextTeaser
  */

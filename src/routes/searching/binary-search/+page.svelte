@@ -9,6 +9,7 @@
     decide,
     linearSearchComparisons,
     makeSortedArray,
+    midpoint,
   } from '$lib/algo-engine/searching.js';
   import { en as m } from '$lib/lessons/binary-search/copy.en.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
@@ -40,6 +41,8 @@
   /** @type {'playing'|'found'|'missing'} */
   let driveStatus = $state('playing');
   let driveMessage = $state(m.drive.prompt);
+  /** @type {HTMLElement | undefined} */
+  let list;
 
   function rebuild() {
     // An emptied number input binds null; keep the last valid target until it is refilled.
@@ -92,37 +95,61 @@
     if (lo > hi) {
       driveStatus = 'missing';
       driveMessage = m.drive.missing(probes.length, binaryReads);
+      return;
     }
+    // The probed cell just left the window; keep focus in the exercise on the natural next probe.
+    /** @type {HTMLElement | null | undefined} */ (
+      list?.querySelector(`[data-index="${midpoint(lo, hi)}"]`)
+    )?.focus();
   }
 
   const windowLo = $derived(mode === 'watch' ? frame.lo : lo);
   const windowHi = $derived(mode === 'watch' ? frame.hi : hi);
   const doneWatching = $derived(frame.kind === 'found' || frame.kind === 'not-found');
 
+  /**
+   * One state per cell drives its color, its label, and its marker, so they never disagree.
+   * @param {number} i
+   * @returns {'open'|'out'|'found'}
+   */
+  function cellState(i) {
+    if (mode === 'watch') {
+      if (frame.kind === 'found' && frame.mid === i) return 'found';
+      return i < frame.lo || i > frame.hi || doneWatching ? 'out' : 'open';
+    }
+    if (driveStatus === 'found' && probes.at(-1) === i) return 'found';
+    return i < lo || i > hi || driveStatus !== 'playing' ? 'out' : 'open';
+  }
+
   /** @param {number} i */
   function cellClass(i) {
-    const hit =
-      mode === 'watch'
-        ? frame.kind === 'found' && frame.mid === i
-        : driveStatus === 'found' && probes.at(-1) === i;
-    if (hit) return 'border-state-sorted bg-state-sorted text-white';
+    const s = cellState(i);
+    if (s === 'found') return 'border-state-sorted bg-state-sorted text-white';
     if (mode === 'watch' && frame.mid === i)
       return 'border-state-active bg-state-active text-white';
     if (mode === 'drive' && probes.includes(i))
       return 'border-slate-300 bg-slate-200 text-slate-600 line-through';
-    const out = i < windowLo || i > windowHi || (mode === 'watch' && doneWatching);
-    return out
-      ? 'border-slate-200 bg-slate-100 text-slate-500'
+    return s === 'out'
+      ? 'border-slate-200 bg-slate-100 text-slate-600'
       : 'border-slate-300 bg-white text-slate-900';
   }
 
   /** @param {number} i */
   function marker(i) {
+    if (cellState(i) === 'found') return m.foundMarker;
     if (mode !== 'watch' || doneWatching) return '';
     return [i === frame.lo && 'lo', i === frame.mid && 'mid', i === frame.hi && 'hi']
       .filter(Boolean)
       .join(' ');
   }
+
+  const legend = $derived([
+    mode === 'watch'
+      ? ['bg-state-active', m.legend.mid]
+      : ['border border-slate-300 bg-slate-200', m.legend.probed],
+    ['bg-state-sorted', m.legend.found],
+    ['border border-slate-200 bg-slate-100', m.legend.out],
+  ]);
 </script>
 
 <LessonLayout lesson={m}>
@@ -163,25 +190,53 @@
   <div class="grid gap-4 lg:grid-cols-[1fr_22rem]">
     <div class="flex flex-col gap-4">
       <div class="rounded-xl border border-slate-200 bg-white p-4">
-        <ol class="flex flex-wrap gap-1.5" aria-label={m.arrayLabel}>
+        <!-- One-row view of the live window, so the halving is visible even when cells wrap onto several rows. -->
+        <div class="relative mb-3 h-2 rounded bg-slate-200" aria-hidden="true">
+          <div
+            class="absolute inset-y-0 rounded bg-teal-700/60"
+            style="left: {(windowLo / values.length) * 100}%; width: {(Math.max(
+              0,
+              windowHi - windowLo + 1,
+            ) /
+              values.length) *
+              100}%"
+          ></div>
+        </div>
+        <ol class="flex flex-wrap gap-1.5" aria-label={m.arrayLabel} bind:this={list}>
           {#each values as v, i (i)}
-            {@const out = i < windowLo || i > windowHi}
+            {@const state = cellState(i)}
+            {@const actionable = mode === 'drive' && state === 'open'}
             <li class="flex w-11 flex-col items-center">
+              <!-- In drive mode a probed cell leaves the window while focused, so it is marked
+                   aria-disabled rather than disabled and probe() ignores it. -->
               <button
-                class="focus-ring flex h-11 w-11 items-center justify-center rounded-lg border-2 font-mono text-sm font-semibold tabular-nums transition-colors {cellClass(
+                data-index={i}
+                class="focus-ring flex h-11 w-11 items-center justify-center rounded-lg border-2 font-mono text-sm font-semibold tabular-nums {cellClass(
                   i,
-                )} {mode === 'drive' && driveStatus === 'playing' && !out
+                )} {actionable
                   ? 'cursor-pointer hover:border-teal-600'
-                  : 'cursor-default'}"
-                disabled={mode !== 'drive' || driveStatus !== 'playing' || out}
-                aria-label={m.cellLabel(i, v, out)}
+                  : 'cursor-default'} {player.speed < 8 ? 'transition-colors' : ''}"
+                disabled={mode !== 'drive'}
+                aria-disabled={mode === 'drive' && !actionable}
+                aria-label={m.cellLabel(i, v, state)}
                 onclick={() => probe(i)}>{v}</button
               >
               <span class="mt-0.5 text-[10px] text-slate-500 tabular-nums">{i}</span>
-              <span class="h-4 text-[10px] font-bold text-state-active">{marker(i)}</span>
+              <span
+                class="h-4 text-[10px] font-bold {state === 'found'
+                  ? 'text-state-sorted'
+                  : 'text-state-active'}">{marker(i)}</span
+              >
             </li>
           {/each}
         </ol>
+        <ul class="mt-3 flex flex-wrap gap-4 text-xs text-slate-600">
+          {#each legend as [cls, label], i (i)}
+            <li class="flex items-center gap-1.5">
+              <span class="size-3 rounded-sm {cls}"></span>{label}
+            </li>
+          {/each}
+        </ul>
       </div>
 
       <p
@@ -192,7 +247,9 @@
       </p>
 
       {#if mode === 'watch'}
-        <StepControls {player} />
+        <div class="sticky bottom-2 z-10 lg:static">
+          <StepControls {player} />
+        </div>
       {:else if driveStatus !== 'playing'}
         <button onclick={rebuild} class="btn-primary self-start">{m.drive.restart}</button>
       {/if}

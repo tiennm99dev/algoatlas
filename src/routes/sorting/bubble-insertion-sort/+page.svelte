@@ -138,18 +138,20 @@
               >
               <div class="relative flex-1">
                 <div
-                  class="absolute inset-x-0 bottom-0 rounded-t transition-colors {barClass[state]}"
+                  class="absolute inset-x-0 bottom-0 rounded-t {barClass[state]} {player.speed < 8
+                    ? 'transition-colors'
+                    : ''}"
                   style="height: {(item.value / maxValue) * 100}%"
                 ></div>
               </div>
               <span class="h-5 shrink-0 text-center text-sm leading-5 font-bold text-slate-700"
-                >{barMarker[state] ?? ''}</span
+                >{frame.items.length <= 20 ? (barMarker[state] ?? '') : ''}</span
               >
             </div>
           {/each}
         </div>
         <ul class="mt-3 flex flex-wrap gap-4 text-xs text-slate-600">
-          {#each legend as [cls, label] (label)}
+          {#each legend as [cls, label], i (i)}
             <li class="flex items-center gap-1.5">
               <span class="size-3 rounded-sm {cls}"></span>{label}
             </li>
@@ -164,7 +166,9 @@
         {m.describe(frame, algo)}
       </p>
 
-      <StepControls {player} />
+      <div class="sticky bottom-2 z-10 lg:static">
+        <StepControls {player} />
+      </div>
     </div>
 
     <div class="flex flex-col gap-4">

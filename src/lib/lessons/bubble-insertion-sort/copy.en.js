@@ -27,7 +27,7 @@ export const en = {
     `${c} comparisons · ${s} ${moves.toLowerCase()}`,
   /** @param {number[]} values @param {number} sortedCount */
   barsLabel(values, sortedCount) {
-    return `Array: ${values.join(', ')}. ${sortedCount} of ${values.length} in place.`;
+    return `Array: ${values.join(', ')}. ${sortedCount} of ${values.length} sorted.`;
   },
   legend: { compare: 'Comparing', swap: 'Swapping', key: 'Key being inserted', sorted: 'Sorted' },
   markers: { compare: '?', swap: '⇄', sorted: '✓' },

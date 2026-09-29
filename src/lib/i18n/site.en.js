@@ -42,8 +42,8 @@ export const topics = {
 export const topicOrder = ['sorting', 'searching', 'graphs'];
 
 export const lessonChrome = {
-  backToTopic: '← All lessons in this topic',
-  backToHub: '← All topics',
+  backToTopic: 'All lessons in this topic',
+  backToHub: 'All topics',
   pseudocodeTitle: 'Pseudocode',
   takeawaysTitle: 'Key takeaways',
   complexityTitle: 'Complexity',
@@ -63,5 +63,8 @@ export const controls = {
   speed: 'Speed',
   scrub: 'Step',
   stepOf: /** @param {number} i @param {number} n */ (i, n) => `Step ${i} of ${n}`,
-  shortcuts: 'Shortcuts: ← → step, Space play/pause',
+  stoppedAt: /** @param {number} i @param {number} n */ (i, n) =>
+    i === n ? `Finished at step ${n} of ${n}.` : `Paused at step ${i} of ${n}.`,
+  shortcuts:
+    'Shortcuts: Left and Right arrows step; Space plays or pauses while the player is focused.',
 };

@@ -27,8 +27,23 @@
   let goal = $state(DEFAULT_GOAL);
   let tool = $state(/** @type {Tool} */ ('wall'));
   let focusIndex = $state(DEFAULT_START);
-  /** @type {HTMLButtonElement[]} */
-  const cellRefs = [];
+  /** @type {HTMLElement | undefined} */
+  let grid;
+
+  // Below the sm breakpoint the grid is drawn transposed (10 across, 16 down) so cells stay
+  // wide enough to touch. Only the drawing changes: cell indices, traces, and labels do not.
+  let transposed = $state(false);
+  $effect(() => {
+    const narrow = window.matchMedia('(max-width: 639px)');
+    const update = () => (transposed = narrow.matches);
+    update();
+    narrow.addEventListener('change', update);
+    return () => narrow.removeEventListener('change', update);
+  });
+  const shownRows = $derived(transposed ? COLS : ROWS);
+  const shownCols = $derived(transposed ? ROWS : COLS);
+  /** Cell index at a drawn position. @param {number} dr @param {number} dc */
+  const shown = (dr, dc) => (transposed ? at(dc, dr) : at(dr, dc));
 
   const player = createPlayer(
     bfsGridTrace({
@@ -42,13 +57,23 @@
   const frame = $derived(player.frame);
   const queueSet = $derived(new Set(frame.queue));
   const pathSet = $derived(new Set(frame.path));
-  const visitedCount = $derived(frame.dist.filter((d) => d >= 0).length);
+  const discoveredCount = $derived(frame.dist.filter((d) => d >= 0).length);
 
-  /** Shown in place of the narration when an edit is refused. */
-  let notice = $state('');
+  /** A message shown in place of the narration, only on the frame it was raised on. */
+  let notice = $state({ text: '', at: -1 });
+  const narration = $derived(notice.at === player.index ? notice.text : m.describe(frame, COLS));
+
+  /** @param {string} text */
+  function say(text) {
+    notice = { text, at: player.index };
+  }
+
+  function clearNotice() {
+    notice = { text: '', at: -1 };
+  }
 
   function rebuild() {
-    notice = '';
+    clearNotice();
     player.load(bfsGridTrace({ rows: ROWS, cols: COLS, walls, start, goal }));
   }
 
@@ -67,19 +92,31 @@
     rebuild();
   }
 
-  /** @param {number} cell */
+  /**
+   * A single deliberate edit (keyboard, or a click with the move tools). Each one is
+   * confirmed in the narration, since recoloring a cell is silent for screen readers.
+   * @param {number} cell
+   */
   function edit(cell) {
+    const here = m.coord(cell, COLS);
     if (tool === 'wall') {
-      setWall(cell, !walls.has(cell));
+      if (cell === start || cell === goal) {
+        say(m.blockedCell);
+        return;
+      }
+      const on = !walls.has(cell);
+      setWall(cell, on);
+      say(on ? m.edits.wallAdded(here) : m.edits.wallRemoved(here));
       return;
     }
     if (walls.has(cell) || cell === start || cell === goal) {
-      notice = m.blockedCell;
+      say(m.blockedCell);
       return;
     }
     if (tool === 'start') start = cell;
     else goal = cell;
     rebuild();
+    say(tool === 'start' ? m.edits.startMoved(here) : m.edits.goalMoved(here));
   }
 
   /** @param {PointerEvent} e */
@@ -118,17 +155,19 @@
   function onCellKeydown(e, cell) {
     const r = Math.floor(cell / COLS);
     const c = cell % COLS;
-    /** @type {Record<string, number>} */
-    const moves = {
-      ArrowUp: r > 0 ? cell - COLS : cell,
-      ArrowDown: r < ROWS - 1 ? cell + COLS : cell,
-      ArrowLeft: c > 0 ? cell - 1 : cell,
-      ArrowRight: c < COLS - 1 ? cell + 1 : cell,
-    };
-    if (!(e.key in moves)) return;
+    // Work in drawn coordinates so the arrows follow the screen when the grid is transposed.
+    let [dr, dc] = transposed ? [c, r] : [r, c];
+    if (e.key === 'ArrowUp') dr--;
+    else if (e.key === 'ArrowDown') dr++;
+    else if (e.key === 'ArrowLeft') dc--;
+    else if (e.key === 'ArrowRight') dc++;
+    else return;
     e.preventDefault();
-    focusIndex = moves[e.key];
-    cellRefs[focusIndex]?.focus();
+    if (dr < 0 || dr >= shownRows || dc < 0 || dc >= shownCols) return;
+    focusIndex = shown(dr, dc);
+    /** @type {HTMLElement | null | undefined} */ (
+      grid?.querySelector(`[data-cell="${focusIndex}"]`)
+    )?.focus();
   }
 
   function scatter() {
@@ -149,12 +188,17 @@
     if (walls.has(cell)) return { cls: 'bg-slate-800', label: m.legend.wall, mark: '' };
     const d = frame.dist[cell];
     const mark = d >= 0 ? String(d) : '';
+    // The path fill is close in luminance to the visited fill, so it also gets an inset ring.
     if (pathSet.has(cell))
-      return { cls: 'bg-state-path text-slate-900', label: m.legend.path, mark };
+      return {
+        cls: 'bg-state-path text-slate-900 ring-2 ring-amber-700 ring-inset',
+        label: m.legend.path,
+        mark,
+      };
     if (cell === frame.current)
       return { cls: 'bg-state-active text-white', label: m.legend.current, mark };
     if (queueSet.has(cell)) {
-      const ring = cell === frame.touched ? ' ring-2 ring-inset ring-sky-700' : '';
+      const ring = cell === frame.touched ? ' ring-2 ring-inset ring-sky-900' : '';
       return { cls: 'bg-state-frontier text-slate-900' + ring, label: m.legend.frontier, mark };
     }
     if (d >= 0) return { cls: 'bg-state-visited text-indigo-900', label: m.legend.visited, mark };
@@ -168,7 +212,7 @@
     ['bg-state-frontier', m.legend.frontier],
     ['bg-state-visited', m.legend.visited],
     ['bg-state-active', m.legend.current],
-    ['bg-state-path', m.legend.path],
+    ['bg-state-path ring-1 ring-amber-700 ring-inset', m.legend.path],
   ];
 </script>
 
@@ -181,6 +225,7 @@
       name="tool"
       options={TOOLS.map((tl) => ({ value: tl, label: m.tools[tl] }))}
       bind:value={tool}
+      onchange={clearNotice}
     />
     <div class="flex gap-2">
       <button onclick={scatter} class="btn-secondary">{m.randomMaze}</button>
@@ -191,38 +236,40 @@
   <div class="grid gap-4 lg:grid-cols-[1fr_22rem]">
     <div class="flex flex-col gap-4">
       <div class="rounded-xl border border-slate-200 bg-white p-3">
+        <!-- touch-pan-y keeps vertical swipes scrolling the page; sideways drags still paint. -->
         <div
           role="grid"
           tabindex="-1"
           aria-label={m.gridLabel}
-          class="grid touch-none gap-px overflow-hidden rounded-md border border-slate-200 bg-slate-200 select-none"
-          style="grid-template-columns: 1.5rem repeat({COLS}, minmax(0, 1fr));"
+          class="grid touch-pan-y gap-px overflow-hidden rounded-md border border-slate-200 bg-slate-200 select-none"
+          style="grid-template-columns: 1.5rem repeat({shownCols}, minmax(0, 1fr));"
+          bind:this={grid}
           onpointerdown={onPointerDown}
           onpointermove={onPointerMove}
         >
-          <!-- Axis numbers let the (row,col) narration be read off the grid; screen readers get coordinates from cell labels instead. -->
-          <div role="row" class="contents">
-            <span class="bg-white" aria-hidden="true"></span>
-            {#each { length: COLS } as _, c (c)}
-              <span
-                class="bg-white text-center text-[10px] leading-5 text-slate-500 tabular-nums"
-                aria-hidden="true">{c}</span
+          <!-- Axis numbers let the (row,col) narration be read off the grid (on phones the row
+               index runs across the top). Screen readers get coordinates from each cell's label
+               instead, so the whole axis row is hidden from them. -->
+          <div class="contents" aria-hidden="true">
+            <span class="bg-white"></span>
+            {#each { length: shownCols } as _, dc (dc)}
+              <span class="bg-white text-center text-[10px] leading-5 text-slate-500 tabular-nums"
+                >{dc}</span
               >
             {/each}
           </div>
-          {#each { length: ROWS } as _, r (r)}
+          {#each { length: shownRows } as _, dr (dr)}
             <div role="row" class="contents">
               <span
                 class="flex items-center justify-center bg-white text-[10px] text-slate-500 tabular-nums"
-                aria-hidden="true">{r}</span
+                aria-hidden="true">{dr}</span
               >
-              {#each { length: COLS } as _, c (c)}
-                {@const cell = at(r, c)}
+              {#each { length: shownCols } as _, dc (dc)}
+                {@const cell = shown(dr, dc)}
                 {@const s = cellState(cell)}
                 <div role="gridcell" class="flex">
                   <button
                     data-cell={cell}
-                    bind:this={cellRefs[cell]}
                     tabindex={cell === focusIndex ? 0 : -1}
                     aria-label={m.cellLabel(
                       cell,
@@ -230,7 +277,10 @@
                       s.label,
                       walls.has(cell) ? -1 : frame.dist[cell],
                     )}
-                    class="flex aspect-square w-full items-center justify-center text-xs font-semibold tabular-nums transition-colors focus-visible:relative focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-slate-900 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-inset {s.cls}"
+                    class="flex aspect-square w-full cursor-pointer items-center justify-center text-xs font-semibold tabular-nums focus-visible:relative focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-slate-900 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-inset {s.cls} {player.speed <
+                    8
+                      ? 'transition-colors'
+                      : ''}"
                     onclick={(e) => e.detail === 0 && edit(cell)}
                     onfocus={() => (focusIndex = cell)}
                     onkeydown={(e) => onCellKeydown(e, cell)}>{s.mark}</button
@@ -241,7 +291,7 @@
           {/each}
         </div>
         <ul class="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-600">
-          {#each legend as [cls, label] (label)}
+          {#each legend as [cls, label], i (i)}
             <li class="flex items-center gap-1.5">
               <span class="size-3 rounded-sm {cls}"></span>{label}
             </li>
@@ -253,17 +303,19 @@
         class="min-h-12 rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-800"
         aria-live={player.playing ? 'off' : 'polite'}
       >
-        {notice || m.describe(frame, COLS)}
+        {narration}
       </p>
 
-      <StepControls {player} />
+      <div class="sticky bottom-2 z-10 lg:static">
+        <StepControls {player} />
+      </div>
     </div>
 
     <div class="flex flex-col gap-4">
       <dl class="grid grid-cols-2 gap-3">
         <div class="rounded-xl border border-slate-200 bg-white p-3">
-          <dt class="text-xs text-slate-500">{m.visitedLabel}</dt>
-          <dd class="text-2xl font-bold tabular-nums">{visitedCount}</dd>
+          <dt class="text-xs text-slate-500">{m.discoveredLabel}</dt>
+          <dd class="text-2xl font-bold tabular-nums">{discoveredCount}</dd>
         </div>
         <div class="rounded-xl border border-slate-200 bg-white p-3">
           <dt class="text-xs text-slate-500">{m.pathLabel}</dt>

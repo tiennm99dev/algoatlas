@@ -1,4 +1,5 @@
 <script>
+  import { untrack } from 'svelte';
   import { t } from '$lib/i18n/index.js';
   import { SPEEDS } from '$lib/player/player.svelte.js';
 
@@ -10,6 +11,17 @@
   // Stop autoplay when the lesson unmounts so no timer outlives the page.
   $effect(() => () => player.pause());
 
+  // The narration is muted while playing, so say once where playback stopped.
+  let stopped = $state('');
+  let wasPlaying = false;
+  $effect(() => {
+    const playing = player.playing;
+    if (wasPlaying && !playing) {
+      stopped = untrack(() => c.stoppedAt(player.index + 1, player.frames.length));
+    }
+    wasPlaying = playing;
+  });
+
   /** @param {KeyboardEvent} e */
   function onKeydown(e) {
     if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
@@ -18,8 +30,10 @@
     if (el?.closest('input, select, textarea, [role="grid"]')) return;
     if (e.key === 'ArrowRight') player.step();
     else if (e.key === 'ArrowLeft') player.back();
-    // Space on a focused button already activates it natively.
-    else if (e.key === ' ' && !el?.closest('button')) player.toggle();
+    // Space toggles only inside the player area so it still scrolls the page elsewhere;
+    // on a focused button it already activates that button natively.
+    else if (e.key === ' ' && el?.closest('[data-player-scope]') && !el.closest('button'))
+      player.toggle();
     else return;
     e.preventDefault();
   }
@@ -41,8 +55,10 @@
   <svg viewBox="0 0 24 24" class="size-5 fill-current" aria-hidden="true"><path {d} /></svg>
 {/snippet}
 
+<!-- Buttons at the trace ends use aria-disabled rather than disabled so focus stays put;
+     the player methods are already no-ops at the bounds. -->
 <div
-  class="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-3"
+  class="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-3 shadow-lg lg:shadow-none"
   role="group"
   aria-label={c.groupLabel}
 >
@@ -50,14 +66,14 @@
     <button
       class="btn-icon"
       onclick={() => player.seek(0)}
-      disabled={player.atStart}
+      aria-disabled={player.atStart}
       aria-label={c.first}
       title={c.first}>{@render icon(icons.first)}</button
     >
     <button
       class="btn-icon"
       onclick={player.back}
-      disabled={player.atStart}
+      aria-disabled={player.atStart}
       aria-label={c.back}
       title={c.back}>{@render icon(icons.back)}</button
     >
@@ -68,14 +84,14 @@
     <button
       class="btn-icon"
       onclick={player.step}
-      disabled={player.atEnd}
+      aria-disabled={player.atEnd}
       aria-label={c.step}
       title={c.step}>{@render icon(icons.step)}</button
     >
     <button
       class="btn-icon"
       onclick={() => player.seek(player.frames.length - 1)}
-      disabled={player.atEnd}
+      aria-disabled={player.atEnd}
       aria-label={c.last}
       title={c.last}>{@render icon(icons.last)}</button
     >
@@ -108,4 +124,5 @@
     />
   </label>
   <p class="text-xs text-slate-500">{c.shortcuts}</p>
+  <p class="sr-only" role="status">{stopped}</p>
 </div>

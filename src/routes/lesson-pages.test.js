@@ -1,18 +1,21 @@
 // @vitest-environment jsdom
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { flushSync, mount, unmount } from 'svelte';
+import { createRawSnippet, flushSync, mount, unmount } from 'svelte';
 import SortPage from './sorting/bubble-insertion-sort/+page.svelte';
 import BinaryPage from './searching/binary-search/+page.svelte';
 import BfsPage from './graphs/bfs-grid/+page.svelte';
-import { load } from './[topic]/+page.js';
+import Layout from './+layout.svelte';
+import { entries, load } from './[topic]/+page.js';
+import { page } from '$app/state';
+import { t } from '$lib/i18n/index.js';
 import { lessonPath, lessons } from '$lib/lessons/registry.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
 
-/** @param {import('svelte').Component<any>} Page */
-function render(Page) {
-  app = mount(Page, { target: document.body });
+/** @param {import('svelte').Component<any>} Page @param {Record<string, any>} [props] */
+function render(Page, props = {}) {
+  app = mount(Page, { target: document.body, props });
   flushSync();
 }
 
@@ -102,6 +105,41 @@ describe('sorting lesson', () => {
     expect(text()).toMatch(/Step 2 of \d+/);
   });
 
+  it('keeps the step buttons focusable at the ends of the trace', () => {
+    render(SortPage);
+    const next = button('Next step');
+    next.focus();
+    click(button('Last step'));
+    expect(next.getAttribute('aria-disabled')).toBe('true');
+    expect(next.disabled).toBe(false);
+    expect(document.activeElement).toBe(next);
+    click(next);
+    expect(text()).toMatch(/Step (\d+) of \1/);
+  });
+
+  it('announces where playback stopped', () => {
+    vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
+    render(SortPage);
+    click(buttonByText('Play'));
+    vi.advanceTimersByTime(500);
+    flushSync();
+    click(buttonByText('Pause'));
+    expect(document.querySelector('[role="status"]')?.textContent).toMatch(
+      /^Paused at step 2 of \d+\.$/,
+    );
+  });
+
+  it('lets Space scroll the page outside the player but toggles playback inside it', () => {
+    render(SortPage);
+    key(document.body, { key: ' ' });
+    expect(buttonByText('Play')).toBeTruthy();
+    const scope = /** @type {HTMLElement} */ (document.querySelector('[data-player-scope]'));
+    key(scope, { key: ' ' });
+    expect(buttonByText('Pause')).toBeTruthy();
+    key(scope, { key: ' ' });
+    expect(buttonByText('Play')).toBeTruthy();
+  });
+
   it('stops autoplay when the lesson unmounts', () => {
     vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
     render(SortPage);
@@ -149,9 +187,21 @@ describe('binary search lesson', () => {
     click(/** @type {HTMLInputElement} */ (document.querySelector('input[value="drive"]')));
     click(button('Index 7, value 31'));
     expect(text()).toContain('31 < 53: everything left of here is ruled out.');
-    expect(button('Index 3, value 14, ruled out').disabled).toBe(true);
+    const out = button('Index 3, value 14, ruled out');
+    expect(out.getAttribute('aria-disabled')).toBe('true');
+    expect(out.disabled).toBe(false);
+    // Focus moves to the midpoint of the new window, indices 8–14.
+    expect(document.activeElement).toBe(button('Index 11, value 53'));
     click(button('Index 11, value 53'));
     expect(text()).toMatch(/Found in 2 probes/);
+    expect(button('Index 11, value 53, found')).toBeTruthy();
+  });
+
+  it('labels every cell ruled out once the watch is over, and names the hit', () => {
+    render(BinaryPage);
+    click(button('Last step'));
+    expect(button('Index 11, value 53, found')).toBeTruthy();
+    expect(button('Index 12, value 58, ruled out')).toBeTruthy();
   });
 });
 
@@ -182,6 +232,57 @@ describe('bfs lesson', () => {
     expect(text()).toContain('Pick an open cell');
   });
 
+  it('drops a refusal notice as soon as the learner steps on', () => {
+    render(BfsPage);
+    click(/** @type {HTMLInputElement} */ (document.querySelector('input[value="start"]')));
+    keyActivate(button('Row 0, column 6, Wall'));
+    expect(text()).toContain('Pick an open cell');
+    click(button('Next step'));
+    expect(text()).not.toContain('Pick an open cell');
+    expect(text()).toContain('Dequeue (4,2)');
+  });
+
+  it('confirms keyboard edits in the narration', () => {
+    render(BfsPage);
+    keyActivate(button('Row 0, column 0'));
+    expect(text()).toContain('Wall added at (0,0).');
+    keyActivate(button('Row 0, column 0, Wall'));
+    expect(text()).toContain('Wall removed at (0,0).');
+    keyActivate(button('Row 4, column 2, Start, distance 0'));
+    expect(text()).toContain('Pick an open cell');
+    click(/** @type {HTMLInputElement} */ (document.querySelector('input[value="goal"]')));
+    expect(text()).not.toContain('Pick an open cell');
+    keyActivate(button('Row 0, column 0'));
+    expect(text()).toContain('Goal moved to (0,0).');
+    expect(button('Row 0, column 0, Goal')).toBeTruthy();
+  });
+
+  it('moves focus with the arrow keys', () => {
+    render(BfsPage);
+    const startCell = button('Row 4, column 2, Start, distance 0');
+    startCell.focus();
+    key(startCell, { key: 'ArrowRight' });
+    expect(document.activeElement).toBe(button('Row 4, column 3'));
+    expect(button('Row 4, column 3').tabIndex).toBe(0);
+    expect(startCell.tabIndex).toBe(-1);
+  });
+
+  it('draws the grid transposed on narrow screens and keeps arrows on-screen', () => {
+    const real = window.matchMedia;
+    window.matchMedia = (q) => ({ ...real(q), matches: q.includes('max-width') });
+    try {
+      render(BfsPage);
+      const grid = /** @type {HTMLElement} */ (document.querySelector('[role="grid"]'));
+      expect(grid.style.gridTemplateColumns).toContain('repeat(10,');
+      const startCell = button('Row 4, column 2, Start, distance 0');
+      startCell.focus();
+      key(startCell, { key: 'ArrowRight' });
+      expect(document.activeElement).toBe(button('Row 5, column 2'));
+    } finally {
+      window.matchMedia = real;
+    }
+  });
+
   it('reports no path when the goal is walled in', () => {
     render(BfsPage);
     // Goal sits at row 5, column 13; seal its four neighbors.
@@ -205,10 +306,43 @@ describe('routing', () => {
     expect(run('sorting')).toEqual({ topic: 'sorting' });
   });
 
+  it('prerenders exactly the ordered topics, and every lesson belongs to one', async () => {
+    const order = t().topicOrder;
+    const generated = await entries();
+    expect(generated.map((e) => e.topic)).toEqual(order);
+    for (const lesson of lessons) expect(order).toContain(lesson.topic);
+  });
+
   it('every registered lesson has a route', () => {
     const routeFiles = import.meta.glob('./**/+page.svelte');
     for (const lesson of lessons) {
       expect(Object.keys(routeFiles)).toContain(`.${lessonPath(lesson)}+page.svelte`);
     }
+  });
+});
+
+describe('site chrome', () => {
+  const children = createRawSnippet(() => ({ render: () => '<p>content</p>' }));
+  /** @param {string} pathname */
+  const currentTopics = (pathname) => {
+    // The test stub holds a plain URL; SvelteKit's type narrows pathname to known routes.
+    page.url = /** @type {any} */ (new URL(pathname, 'http://localhost/'));
+    render(Layout, { children });
+    return [...document.querySelectorAll('nav a')].map((a) => [
+      a.textContent?.trim(),
+      a.getAttribute('aria-current'),
+    ]);
+  };
+
+  it('marks the topic hub as the current page and its lessons as inside it', () => {
+    expect(currentTopics('/sorting/')).toEqual([
+      ['Sorting', 'page'],
+      ['Searching', null],
+      ['Graphs', null],
+    ]);
+  });
+
+  it('does not call a lesson the current page', () => {
+    expect(currentTopics('/sorting/bubble-insertion-sort/')[0]).toEqual(['Sorting', 'true']);
   });
 });

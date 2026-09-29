@@ -129,3 +129,23 @@ describe('makeArray edge sizes', () => {
     }
   });
 });
+
+describe('scale', () => {
+  it.each([
+    ['bubble', bubbleSortTrace],
+    ['insertion', insertionSortTrace],
+  ])('%s sort handles a long reversed array with exactly n(n−1)/2 swaps', (_, trace) => {
+    const n = 200;
+    const values = Array.from({ length: n }, (_, i) => n - i);
+    const frames = trace(toItems(values));
+    expect(finalValues(frames)).toEqual(values.slice().sort((a, b) => a - b));
+    expect(frames.at(-1)?.swaps).toBe((n * (n - 1)) / 2);
+  });
+
+  it('sorts negative and zero values', () => {
+    const values = [0, -5, 3, -5, 2, 0];
+    for (const trace of [bubbleSortTrace, insertionSortTrace]) {
+      expect(finalValues(trace(toItems(values)))).toEqual([-5, -5, 0, 0, 2, 3]);
+    }
+  });
+});

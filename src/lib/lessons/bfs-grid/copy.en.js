@@ -8,7 +8,7 @@ export const en = {
   intro:
     'BFS explores a graph in rings: first every cell one step from the start, then every cell two steps away, and so on. Because of that order, the first time it reaches the goal it has found a shortest path.',
   instruction:
-    'Draw walls by clicking or dragging over the grid, move the start and goal, then play the search. Numbers show each cell’s distance from the start.',
+    'Draw walls by clicking or dragging over the grid, or press Enter on a focused cell. Move the start and goal, then play the search. Numbers show each cell’s distance from the start.',
   toolLabel: 'Edit',
   tools: { wall: 'Walls', start: 'Move start', goal: 'Move goal' },
   randomMaze: 'Random walls',
@@ -17,7 +17,7 @@ export const en = {
   blockedCell: 'Pick an open cell — start and goal cannot sit on a wall or on each other.',
   queueLabel: 'Queue (front first)',
   queueEmpty: 'empty',
-  visitedLabel: 'Visited',
+  discoveredLabel: 'Discovered',
   pathLabel: 'Path length',
   legend: {
     start: 'Start',
@@ -37,9 +37,16 @@ export const en = {
     const where = `Row ${Math.floor(cell / cols)}, column ${cell % cols}`;
     return `${where}${kind ? `, ${kind}` : ''}${dist >= 0 ? `, distance ${dist}` : ''}`;
   },
+  /** Confirmations for keyboard edits, which recolor a cell without changing the narration. */
+  edits: {
+    wallAdded: /** @param {string} at */ (at) => `Wall added at ${at}.`,
+    wallRemoved: /** @param {string} at */ (at) => `Wall removed at ${at}.`,
+    startMoved: /** @param {string} at */ (at) => `Start moved to ${at}.`,
+    goalMoved: /** @param {string} at */ (at) => `Goal moved to ${at}.`,
+  },
   /** @param {BfsFrame} f @param {number} cols */
   describe(f, cols) {
-    const at = (/** @type {number} */ c) => this.coord(c, cols);
+    const at = (/** @type {number} */ c) => en.coord(c, cols);
     switch (f.kind) {
       case 'start':
         return 'Put the start in the queue at distance 0.';
@@ -59,6 +66,7 @@ export const en = {
     'BFS finds shortest paths only when every step costs the same. With weighted edges you need Dijkstra’s algorithm.',
     'Swap the queue for a stack and you get depth-first search: it still reaches everything, but its first path is rarely the shortest.',
   ],
+  complexityHead: ['Resource', 'Cost', 'Why'],
   complexity: [
     [
       'Time',

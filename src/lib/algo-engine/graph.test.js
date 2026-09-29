@@ -80,3 +80,18 @@ describe('pseudocode coverage', () => {
     expect([...seen].sort((x, y) => x - y)).toEqual(bfsPseudocode.map((_, i) => i));
   });
 });
+
+describe('bfsGridTrace with a sealed start', () => {
+  it('discovers only the start and reports no path', () => {
+    // 3×3, start in the middle, all four neighbors walled.
+    const frames = bfsGridTrace({
+      rows: 3,
+      cols: 3,
+      walls: new Set([1, 3, 5, 7]),
+      start: 4,
+      goal: 0,
+    });
+    expect(frames.map((f) => f.kind)).toEqual(['start', 'dequeue', 'no-path']);
+    expect(frames.at(-1)?.dist.filter((d) => d >= 0)).toEqual([0]);
+  });
+});

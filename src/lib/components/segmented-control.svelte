@@ -18,7 +18,7 @@
   <div class="inline-flex rounded-lg border border-slate-300 bg-white p-0.5">
     {#each options as opt (opt.value)}
       <label
-        class="cursor-pointer rounded-md px-3 py-1.5 text-sm font-medium text-slate-800 has-checked:bg-teal-700 has-checked:text-white has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-teal-700"
+        class="cursor-pointer rounded-md px-3 py-2.5 text-sm font-medium sm:py-1.5 text-slate-800 has-checked:bg-teal-700 has-checked:text-white has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-teal-700"
       >
         <input
           type="radio"
