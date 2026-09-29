@@ -1,6 +1,8 @@
 /** @typedef {import('$lib/algo-engine/dfs-grid.js').DfsFrame} DfsFrame */
+import { gridCopy } from '../grid-copy.en.js';
 
 export const en = {
+  ...gridCopy,
   slug: 'dfs-grid',
   topic: 'graphs',
   level: 'Intermediate',
@@ -9,12 +11,8 @@ export const en = {
     'DFS dives down one corridor as far as it can and backs up only when it is stuck. It reaches every cell BFS reaches, but the first path it finds to the goal is usually not the shortest.',
   instruction:
     'Draw walls by clicking or dragging over the grid, or press Enter on a focused cell. Move the start and goal, then play. Numbers show the order in which cells were visited. Compare the DFS path with the BFS shortest path.',
-  toolLabel: 'Edit',
-  tools: { wall: 'Walls', start: 'Move start', goal: 'Move goal' },
   randomMaze: 'Random walls',
   clearWalls: 'Clear walls',
-  gridLabel: 'Grid. Use arrow keys to move, Enter to edit the focused cell.',
-  blockedCell: 'Pick an open cell — start and goal cannot sit on a wall or on each other.',
   stackLabel: 'Stack (top first)',
   stackEmpty: 'empty',
   visitedLabel: 'Visited',
@@ -26,24 +24,13 @@ export const en = {
     wall: 'Wall',
     frontier: 'On the stack',
     visited: 'Visited',
-    current: 'Visiting',
+    current: 'Expanding',
+    stale: 'Stale copy, skipped',
     path: 'DFS path',
   },
-  /** @param {number} cell @param {number} cols */
-  coord(cell, cols) {
-    return `(${Math.floor(cell / cols)},${cell % cols})`;
-  },
-  /** @param {number} cell @param {number} cols @param {string} kind @param {number} order */
-  cellLabel(cell, cols, kind, order) {
-    const where = `Row ${Math.floor(cell / cols)}, column ${cell % cols}`;
-    return `${where}${kind ? `, ${kind}` : ''}${order >= 1 ? `, visit ${order}` : ''}`;
-  },
-  /** Confirmations for keyboard edits, which recolor a cell without changing the narration. */
-  edits: {
-    wallAdded: /** @param {string} at */ (at) => `Wall added at ${at}.`,
-    wallRemoved: /** @param {string} at */ (at) => `Wall removed at ${at}.`,
-    startMoved: /** @param {string} at */ (at) => `Start moved to ${at}.`,
-    goalMoved: /** @param {string} at */ (at) => `Goal moved to ${at}.`,
+  /** @param {number} order */
+  visitNote(order) {
+    return order >= 1 ? `visit ${order}` : '';
   },
   /** @param {DfsFrame} f @param {number} cols */
   describe(f, cols) {

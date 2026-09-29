@@ -40,6 +40,13 @@ function pickAlgo(value) {
   click(/** @type {HTMLInputElement} */ (document.querySelector(`input[value="${value}"]`)));
 }
 
+/** @param {string} label */
+function buttonByText(label) {
+  const el = [...document.querySelectorAll('button')].find((b) => b.textContent?.trim() === label);
+  if (!el) throw new Error(`no button reading ${label}`);
+  return el;
+}
+
 const text = () => document.body.textContent ?? '';
 const scrub = () =>
   /** @type {HTMLInputElement} */ (document.querySelector('input[aria-label="Step"]'));
@@ -89,6 +96,17 @@ describe('merge and quick sort lesson', () => {
     render();
     expect(text()).toMatch(/Merge sort\s*\d+ comparisons · \d+ writes/);
     expect(text()).toMatch(/Quicksort\s*\d+ comparisons · \d+ swaps/);
+    expect(text()).toContain('no equal values on this array');
+  });
+
+  it('claims stability only when the array has equal values', () => {
+    render();
+    expect(text()).not.toContain('equal values kept their order');
+    expect(text()).not.toContain('equal values were reordered');
+    const preset = /** @type {HTMLSelectElement} */ (document.querySelector('select.field'));
+    preset.value = 'few-unique';
+    preset.dispatchEvent(new Event('change', { bubbles: true }));
+    flushSync();
     expect(text()).toContain('equal values kept their order');
   });
 
@@ -98,5 +116,60 @@ describe('merge and quick sort lesson', () => {
     const copy = mergeSortTrace(toItems(INITIAL)).findIndex((f) => f.kind === 'copy');
     seek(copy);
     expect(document.querySelector('[aria-label^="Buffer:"]')).not.toBeNull();
+  });
+
+  it('marks merged runs and the buffer head and taken slots with text', () => {
+    render();
+    const trace = mergeSortTrace(toItems(INITIAL));
+    const runFrame = trace.findIndex((f) => f.runs.length > 0 && f.kind !== 'take');
+    seek(runFrame);
+    const chart = document.querySelector('[role="img"]');
+    expect(chart?.textContent).toContain('▬');
+    expect(chart?.getAttribute('aria-label')).toMatch(/Working on \[\d+–\d+\]\./);
+    expect(text()).toContain('▬ Merged run');
+
+    // A take frame after the first slot is written has a head and a taken slot in the buffer.
+    const take = trace.findIndex(
+      (f) => f.kind === 'take' && f.range && f.range[1] - f.range[0] >= 3 && f.k === f.range[0] + 1,
+    );
+    seek(take);
+    const buffer = document.querySelector('[aria-label^="Buffer:"]');
+    expect(buffer?.textContent).toContain('↑');
+    expect(buffer?.textContent).toContain('✕');
+    expect(buffer?.getAttribute('aria-label')).toMatch(/2 taken\. Next from the/);
+  });
+
+  it('shows the pivot pre-swap as a write on the pivot frame', () => {
+    render();
+    pickAlgo('quick');
+    const preset = /** @type {HTMLSelectElement} */ (
+      document.querySelector('select[name="pivot"]')
+    );
+    preset.value = 'median3';
+    preset.dispatchEvent(new Event('change', { bubbles: true }));
+    flushSync();
+    // Median-of-three on a fresh trace differs per array, so find the frame from what is drawn.
+    const last = /** @type {HTMLInputElement} */ (
+      document.querySelector('input[aria-label="Step"]')
+    );
+    const frames = Number(last.max) + 1;
+    let seen = false;
+    for (let i = 0; i < frames && !seen; i++) {
+      seek(i);
+      if (text().includes('Move the chosen pivot to the end')) {
+        const chart = document.querySelector('[aria-label^="Array:"]');
+        expect((chart?.textContent?.match(/⇄/g) ?? []).length).toBe(2);
+        seen = true;
+      }
+    }
+    expect(seen).toBe(true);
+  });
+
+  it('confirms a new array in the narration and drops it on the next frame', () => {
+    render();
+    click(buttonByText('New array'));
+    expect(text()).toContain('New array loaded.');
+    click(button('Next step'));
+    expect(text()).not.toContain('New array loaded.');
   });
 });

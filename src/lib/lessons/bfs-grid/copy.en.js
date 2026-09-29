@@ -1,6 +1,8 @@
 /** @typedef {import('$lib/algo-engine/graph.js').BfsFrame} BfsFrame */
+import { gridCopy } from '../grid-copy.en.js';
 
 export const en = {
+  ...gridCopy,
   slug: 'bfs-grid',
   topic: 'graphs',
   level: 'Beginner',
@@ -9,16 +11,12 @@ export const en = {
     'BFS explores a graph in rings: first every cell one step from the start, then every cell two steps away, and so on. Because of that order, the first time it reaches the goal it has found a shortest path.',
   instruction:
     'Draw walls by clicking or dragging over the grid, or press Enter on a focused cell. Move the start and goal, then play the search. Numbers show each cell’s distance from the start.',
-  toolLabel: 'Edit',
-  tools: { wall: 'Walls', start: 'Move start', goal: 'Move goal' },
   randomMaze: 'Random walls',
   clearWalls: 'Clear walls',
-  gridLabel: 'Grid. Use arrow keys to move, Enter to edit the focused cell.',
-  blockedCell: 'Pick an open cell — start and goal cannot sit on a wall or on each other.',
   queueLabel: 'Queue (front first)',
   queueEmpty: 'empty',
   discoveredLabel: 'Discovered',
-  pathLabel: 'Path length',
+  pathLabel: 'BFS path length',
   legend: {
     start: 'Start',
     goal: 'Goal',
@@ -26,23 +24,11 @@ export const en = {
     frontier: 'In queue',
     visited: 'Visited',
     current: 'Expanding',
-    path: 'Shortest path',
+    path: 'BFS path',
   },
-  /** @param {number} cell @param {number} cols */
-  coord(cell, cols) {
-    return `(${Math.floor(cell / cols)},${cell % cols})`;
-  },
-  /** @param {number} cell @param {number} cols @param {string} kind @param {number} dist */
-  cellLabel(cell, cols, kind, dist) {
-    const where = `Row ${Math.floor(cell / cols)}, column ${cell % cols}`;
-    return `${where}${kind ? `, ${kind}` : ''}${dist >= 0 ? `, distance ${dist}` : ''}`;
-  },
-  /** Confirmations for keyboard edits, which recolor a cell without changing the narration. */
-  edits: {
-    wallAdded: /** @param {string} at */ (at) => `Wall added at ${at}.`,
-    wallRemoved: /** @param {string} at */ (at) => `Wall removed at ${at}.`,
-    startMoved: /** @param {string} at */ (at) => `Start moved to ${at}.`,
-    goalMoved: /** @param {string} at */ (at) => `Goal moved to ${at}.`,
+  /** @param {number} dist */
+  distanceNote(dist) {
+    return dist >= 0 ? `distance ${dist}` : '';
   },
   /** @param {BfsFrame} f @param {number} cols */
   describe(f, cols) {

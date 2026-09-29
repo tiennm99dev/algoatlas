@@ -32,15 +32,39 @@ export const en = {
   compareTitle: 'Total cost on this array',
   compareRow: /** @param {number} c @param {number} s @param {string} moves */ (c, s, moves) =>
     `${c} comparisons · ${s} ${moves.toLowerCase()}`,
-  stableLabel: /** @param {boolean} ok */ (ok) =>
-    ok ? 'equal values kept their order' : 'equal values were reordered',
-  /** @param {number[]} values @param {number} sortedCount */
-  barsLabel(values, sortedCount) {
-    return `Array: ${values.join(', ')}. ${sortedCount} of ${values.length} sorted.`;
+  /** @param {boolean|null} ok  null when the array has no equal values to keep in order */
+  stableLabel: (ok) =>
+    ok === null
+      ? 'no equal values on this array'
+      : ok
+        ? 'equal values kept their order'
+        : 'equal values were reordered',
+  newArrayNotice: 'New array loaded.',
+  /**
+   * @param {number[]} values
+   * @param {number} sortedCount
+   * @param {[number, number]|null} range  the range the current call is working on
+   */
+  barsLabel(values, sortedCount, range) {
+    const working = range ? ` Working on [${range[0]}–${range[1]}].` : '';
+    return `Array: ${values.join(', ')}. ${sortedCount} of ${values.length} sorted.${working}`;
   },
-  /** @param {number[]} values */
-  auxLabel(values) {
-    return `Buffer: ${values.join(', ')}.`;
+  /**
+   * @param {number[]} values
+   * @param {string} [progress]  which buffer slots are next or already taken
+   */
+  auxLabel(values, progress = '') {
+    return `Buffer: ${values.join(', ')}.${progress ? ` ${progress}` : ''}`;
+  },
+  /** @param {number|null} left @param {number|null} right @param {number} taken */
+  bufferProgress(left, right, taken) {
+    const next = [
+      left === null ? '' : `Next from the left run: ${left}.`,
+      right === null ? '' : `Next from the right run: ${right}.`,
+    ]
+      .filter(Boolean)
+      .join(' ');
+    return `${taken} taken. ${next}`.trim();
   },
   legend: {
     compare: 'Comparing',
@@ -48,9 +72,10 @@ export const en = {
     pivot: 'Pivot',
     run: 'Merged run',
     head: 'Next from each buffer run',
+    taken: 'Already taken from the buffer',
     sorted: 'In final position',
   },
-  markers: { compare: '?', write: '⇄', pivot: 'P', sorted: '✓' },
+  markers: { compare: '?', write: '⇄', pivot: 'P', sorted: '✓', run: '▬', head: '↑', taken: '✕' },
   /**
    * @param {DivideFrame} f
    * @param {'merge'|'quick'} algo
@@ -106,6 +131,7 @@ export const en = {
     'With the last element as pivot, quicksort is quadratic on sorted, reversed, or all-equal input: the recursion goes n levels deep. Median-of-three fixes sorted input but not all-equal input, which needs a three-way partition.',
     'Merge sort pays for its guarantee with an O(n) buffer. Quicksort partitions in place and needs only its call stack, which stays O(log n) if it recurses into the smaller side first.',
   ],
+  complexityHead: ['Case or resource', 'Cost', 'Why'],
   complexity: [
     ['Merge, any input', 'O(n log n)', 'log₂ n levels, n writes per level.'],
     ['Quick, typical', 'O(n log n)', 'A good pivot splits the range into two similar halves.'],

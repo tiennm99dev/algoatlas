@@ -31,11 +31,22 @@
   /** @type {number | null} */
   let draft = $state(45);
   let preset = $state('balanced');
-  let notice = $state('');
+  // Text shown in place of the narration, only on the frame it was raised on.
+  let notice = $state({ text: '', at: -1 });
 
   const player = createPlayer(bstTrace(INITIAL_OPS));
   const frame = $derived(player.frame);
   const finalFrame = $derived(player.frames[player.frames.length - 1]);
+  const narration = $derived(notice.at === player.index ? notice.text : m.describe(frame));
+
+  /** @param {string} text */
+  function say(text) {
+    notice = { text, at: player.index };
+  }
+
+  function clearNotice() {
+    notice = { text: '', at: -1 };
+  }
 
   /** @param {unknown} v */
   const validKey = (v) => typeof v === 'number' && Number.isInteger(v) && v >= 0 && v <= 99;
@@ -58,12 +69,12 @@
   function add(type) {
     if (!validKey(draft)) {
       draft = key;
-      notice = m.keyError;
+      say(m.keyError);
       return;
     }
     key = /** @type {number} */ (draft);
     if (ops.length >= MAX_OPS) {
-      notice = m.logFull;
+      say(m.logFull);
       return;
     }
     if (
@@ -71,10 +82,11 @@
       finalFrame.size >= MAX_NODES &&
       !inorderKeys(finalFrame).includes(key)
     ) {
-      notice = m.full;
+      say(m.full);
       return;
     }
-    notice = '';
+    clearNotice();
+    preset = '';
     const next = [...ops, { type, key }];
     const frames = bstTrace(next);
     ops = next;
@@ -83,19 +95,23 @@
   }
 
   function undo() {
-    notice = '';
+    if (ops.length === 0) return;
+    clearNotice();
+    preset = '';
     setOps(ops.slice(0, -1), 'last');
   }
 
   function reset() {
-    notice = '';
+    if (ops.length === 0) return;
+    clearNotice();
+    preset = '';
     setOps([], 'first');
   }
 
   /** @param {Event & {currentTarget: HTMLSelectElement}} e */
   function loadPreset(e) {
     preset = e.currentTarget.value;
-    notice = '';
+    clearNotice();
     setOps(makeOps(/** @type {'balanced'|'sorted'|'random'} */ (preset), Math.random), 'last');
   }
 
@@ -196,28 +212,22 @@
       <button onclick={() => add('insert')} class="btn-primary">{m.insert}</button>
       <button onclick={() => add('search')} class="btn-secondary">{m.search}</button>
       <button onclick={() => add('delete')} class="btn-outline">{m.remove}</button>
-      <button onclick={undo} class="btn-outline" disabled={ops.length === 0}>{m.undo}</button>
-      <button onclick={reset} class="btn-outline" disabled={ops.length === 0}>{m.reset}</button>
+      <!-- aria-disabled rather than disabled so keyboard focus stays on the button when the log empties. -->
+      <button onclick={undo} class="btn-outline" aria-disabled={ops.length === 0}>{m.undo}</button>
+      <button onclick={reset} class="btn-outline" aria-disabled={ops.length === 0}>{m.reset}</button
+      >
     </div>
 
     <label class="flex flex-col gap-1 text-xs font-semibold tracking-wide text-slate-500 uppercase">
       {m.presetLabel}
       <select name="preset" class="field" value={preset} onchange={loadPreset}>
+        <option value="" disabled>{m.presetPlaceholder}</option>
         {#each PRESETS as p (p)}
           <option value={p}>{m.presets[p]}</option>
         {/each}
       </select>
     </label>
   </div>
-
-  {#if notice}
-    <p
-      class="mb-4 rounded-lg border border-amber-300 bg-amber-50 px-3 py-2 text-sm text-amber-900"
-      role="status"
-    >
-      {notice}
-    </p>
-  {/if}
 
   <div class="grid gap-4 lg:grid-cols-[1fr_22rem]">
     <div class="flex flex-col gap-4">
@@ -278,9 +288,8 @@
         <ul class="mt-3 flex flex-wrap gap-4 text-xs text-slate-600">
           {#each legend as l (l.s)}
             <li class="flex items-center gap-1.5">
-              <span class="size-3 rounded-full border border-slate-700 {l.fill}"></span>
-              {#if l.marker}<span class="font-bold" aria-hidden="true">{l.marker}</span
-                >{/if}{l.label}
+              <span class="size-3 rounded-sm border border-slate-700 {l.fill}"></span>
+              {l.marker ? `${l.marker} ${l.label}` : l.label}
             </li>
           {/each}
         </ul>
@@ -290,7 +299,7 @@
         class="min-h-12 rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-800"
         aria-live={player.playing ? 'off' : 'polite'}
       >
-        {m.describe(frame)}
+        {narration}
       </p>
 
       <div class="sticky bottom-2 z-10 lg:static">
@@ -299,7 +308,7 @@
     </div>
 
     <div class="flex flex-col gap-4">
-      <dl class="grid grid-cols-3 gap-3">
+      <dl class="grid grid-cols-2 gap-3">
         <div class="rounded-xl border border-slate-200 bg-white p-3">
           <dt class="text-xs text-slate-500">{m.stats.comparisons}</dt>
           <dd class="text-2xl font-bold tabular-nums">{frame.comparisons}</dd>
@@ -308,7 +317,7 @@
           <dt class="text-xs text-slate-500">{m.stats.height}</dt>
           <dd class="text-2xl font-bold tabular-nums">{frame.height}</dd>
         </div>
-        <div class="rounded-xl border border-slate-200 bg-white p-3">
+        <div class="col-span-2 rounded-xl border border-slate-200 bg-white p-3">
           <dt class="text-xs text-slate-500">{m.stats.size}</dt>
           <dd class="text-2xl font-bold tabular-nums">{frame.size}</dd>
         </div>

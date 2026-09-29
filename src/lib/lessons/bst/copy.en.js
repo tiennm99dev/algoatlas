@@ -17,6 +17,7 @@ export const en = {
   undo: 'Undo last',
   reset: 'Reset',
   presetLabel: 'Preset',
+  presetPlaceholder: 'Load a preset…',
   presets: { balanced: 'Balanced order', sorted: 'Sorted order', random: 'Random' },
   opsTitle: 'Operations',
   opsEmpty: 'none yet',
@@ -93,10 +94,11 @@ export const en = {
     'Deleting a node with two children copies in its successor (the smallest key in the right subtree), then deletes the successor. That node has at most one child, so the second delete is easy.',
     'An in-order walk (left, node, right) visits the keys in sorted order.',
   ],
+  complexityHead: ['Resource', 'Cost', 'Why'],
   complexity: [
-    ['Balanced', 'O(log n)', 'Height stays about log₂ n.'],
-    ['Worst', 'O(n)', 'Sorted inserts build a single long branch.'],
+    ['Time, balanced', 'O(log n)', 'Height stays about log₂ n.'],
+    ['Time, worst', 'O(n)', 'Sorted inserts build a single long branch.'],
     ['Memory', 'O(n)', 'One node per key.'],
   ],
-  nextTeaser: 'Next up: tree traversals and binary heaps, built on the same tree view.',
+  nextTeaser: 'Next up: breadth-first search on a grid, where a queue finds the shortest path.',
 };

@@ -74,3 +74,12 @@ Then run `npm test` once; failures in files you do not own are reported, not fix
 ## 6. Report
 
 Write `plans/reports/fullstack-developer-260929-<hhmm>-phase-<N>-<slug>.md` and end your reply with `Status: DONE | DONE_WITH_CONCERNS | BLOCKED | NEEDS_CONTEXT`, `Summary:`, `Concerns/Blockers:`. List trace lengths at the size caps (the design aims for under about 400 frames; report if higher).
+
+## 7. House conventions settled after the first batch review
+
+- Notices: every refusal or invalid entry is a notice tied to `player.index`, shown in place of the narration; the field reverts to its last valid value.
+- Legend: every item with a visual glyph shows it as `marker label`; swatches are `size-3 rounded-sm`.
+- Stat cards: `grid-cols-2`, the last card `col-span-2` when the count is odd. Right-column panel headings use the ChipList style (`text-xs text-slate-500`).
+- Grid lessons: the cell being worked on is "Expanding"; a popped stale entry is "Stale copy, skipped"; path labels name the algorithm.
+- Complexity table: supply `complexityHead` whenever a row is not an input case.
+- Palette tokens keep one primary meaning: `state-active` is the element being acted on now (pivot, midpoint, expanding cell, new node), `state-frontier` is queued or pending work, `state-visited` is finished-but-not-final work, `state-sorted` is final or found, `state-compare` and `state-swap` are a read and a write. Known overloads (`state-frontier` for a moved chip or a BST successor) are acceptable when the legend names them.

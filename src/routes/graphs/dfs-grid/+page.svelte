@@ -6,12 +6,11 @@
   import SegmentedControl from '$lib/components/segmented-control.svelte';
   import StepControls from '$lib/components/step-controls.svelte';
   import { dfsGridTrace, dfsPseudocode } from '$lib/algo-engine/dfs-grid.js';
-  import { bfsGridTrace, randomWalls } from '$lib/algo-engine/graph.js';
+  import { bfsGridTrace } from '$lib/algo-engine/graph.js';
   import { en as m } from '$lib/lessons/dfs-grid/copy.en.js';
-  import { createPlayer } from '$lib/player/player.svelte.js';
+  import { createGridEditor } from '$lib/player/grid-editor.svelte.js';
 
-  /** @typedef {keyof typeof m.tools} Tool */
-  const TOOLS = /** @type {Tool[]} */ (Object.keys(m.tools));
+  const TOOLS = /** @type {(keyof typeof m.tools)[]} */ (Object.keys(m.tools));
   const ROWS = 10;
   const COLS = 16;
   const at = (/** @type {number} */ r, /** @type {number} */ c) => r * COLS + c;
@@ -25,102 +24,40 @@
   const DEFAULT_START = at(4, 2);
   const DEFAULT_GOAL = at(5, 13);
 
-  let walls = $state.raw(new Set(DEFAULT_WALLS));
-  let start = $state(DEFAULT_START);
-  let goal = $state(DEFAULT_GOAL);
-  let tool = $state(/** @type {Tool} */ ('wall'));
-
-  const player = createPlayer(
-    dfsGridTrace({
-      rows: ROWS,
-      cols: COLS,
-      walls: new Set(DEFAULT_WALLS),
-      start: DEFAULT_START,
-      goal: DEFAULT_GOAL,
-    }),
-  );
+  const editor = createGridEditor({
+    rows: ROWS,
+    cols: COLS,
+    walls: DEFAULT_WALLS,
+    start: DEFAULT_START,
+    goal: DEFAULT_GOAL,
+    trace: dfsGridTrace,
+    copy: m,
+  });
+  const player = editor.player;
   const frame = $derived(player.frame);
   const stackSet = $derived(new Set(frame.stack));
   const pathSet = $derived(new Set(frame.path));
   // Depends on the grid only, never on the current frame, so stepping does not recompute it.
   const bfsSteps = $derived.by(() => {
-    const last = bfsGridTrace({ rows: ROWS, cols: COLS, walls, start, goal }).at(-1);
+    const last = bfsGridTrace({
+      rows: ROWS,
+      cols: COLS,
+      walls: editor.walls,
+      start: editor.start,
+      goal: editor.goal,
+    }).at(-1);
     return last && last.path.length ? last.path.length - 1 : null;
   });
 
-  /** A message shown in place of the narration, only on the frame it was raised on. */
-  let notice = $state({ text: '', at: -1 });
-  const narration = $derived(notice.at === player.index ? notice.text : m.describe(frame, COLS));
-
-  /** @param {string} text */
-  function say(text) {
-    notice = { text, at: player.index };
-  }
-
-  function clearNotice() {
-    notice = { text: '', at: -1 };
-  }
-
-  function rebuild() {
-    clearNotice();
-    player.load(dfsGridTrace({ rows: ROWS, cols: COLS, walls, start, goal }));
-  }
-
-  /** @param {number} cell @param {boolean} on */
-  function setWall(cell, on) {
-    if (cell === start || cell === goal || walls.has(cell) === on) return;
-    // A fresh copy assigned to $state.raw below; it is never mutated after that.
-    // eslint-disable-next-line svelte/prefer-svelte-reactivity
-    const next = new Set(walls);
-    if (on) next.add(cell);
-    else next.delete(cell);
-    walls = next;
-    rebuild();
-  }
-
-  /**
-   * A single deliberate edit (keyboard, or a click with the move tools). Each one is
-   * confirmed in the narration, since recoloring a cell is silent for screen readers.
-   * @param {number} cell
-   */
-  function edit(cell) {
-    const here = m.coord(cell, COLS);
-    if (tool === 'wall') {
-      if (cell === start || cell === goal) {
-        say(m.blockedCell);
-        return;
-      }
-      const on = !walls.has(cell);
-      setWall(cell, on);
-      say(on ? m.edits.wallAdded(here) : m.edits.wallRemoved(here));
-      return;
-    }
-    if (walls.has(cell) || cell === start || cell === goal) {
-      say(m.blockedCell);
-      return;
-    }
-    if (tool === 'start') start = cell;
-    else goal = cell;
-    rebuild();
-    say(tool === 'start' ? m.edits.startMoved(here) : m.edits.goalMoved(here));
-  }
-
-  function scatter() {
-    walls = randomWalls(ROWS, COLS, 0.28, [start, goal]);
-    rebuild();
-  }
-
-  function clearWalls() {
-    walls = new Set();
-    rebuild();
-  }
+  const narration = $derived(editor.narration(m.describe(frame, COLS)));
 
   /** @param {number} cell */
   function cellLook(cell) {
-    if (cell === start)
+    if (cell === editor.start)
       return { cls: 'bg-emerald-700 text-white', label: m.legend.start, mark: 'S' };
-    if (cell === goal) return { cls: 'bg-rose-600 text-white', label: m.legend.goal, mark: 'G' };
-    if (walls.has(cell)) return { cls: 'bg-slate-800', label: m.legend.wall, mark: '' };
+    if (cell === editor.goal)
+      return { cls: 'bg-rose-600 text-white', label: m.legend.goal, mark: 'G' };
+    if (editor.walls.has(cell)) return { cls: 'bg-slate-800', label: m.legend.wall, mark: '' };
     const d = frame.order[cell];
     const mark = d >= 1 ? String(d) : '';
     // The path fill is close in luminance to the visited fill, so it also gets an inset ring.
@@ -128,6 +65,13 @@
       return {
         cls: 'bg-state-path text-slate-900 ring-2 ring-amber-700 ring-inset',
         label: m.legend.path,
+        mark,
+      };
+    // A skipped pop is a leftover copy of a cell that is already visited, not new work.
+    if (cell === frame.current && frame.kind === 'skip')
+      return {
+        cls: 'bg-state-visited text-indigo-900 ring-2 ring-inset ring-slate-700',
+        label: m.legend.stale,
         mark,
       };
     if (cell === frame.current)
@@ -147,6 +91,7 @@
     ['bg-state-frontier', m.legend.frontier],
     ['bg-state-visited', m.legend.visited],
     ['bg-state-active', m.legend.current],
+    ['bg-state-visited ring-2 ring-slate-700 ring-inset', m.legend.stale],
     ['bg-state-path ring-1 ring-amber-700 ring-inset', m.legend.path],
   ];
 </script>
@@ -157,12 +102,12 @@
       legend={m.toolLabel}
       name="tool"
       options={TOOLS.map((tl) => ({ value: tl, label: m.tools[tl] }))}
-      bind:value={tool}
-      onchange={clearNotice}
+      bind:value={editor.tool}
+      onchange={editor.clearNotice}
     />
     <div class="flex gap-2">
-      <button onclick={scatter} class="btn-secondary">{m.randomMaze}</button>
-      <button onclick={clearWalls} class="btn-outline">{m.clearWalls}</button>
+      <button onclick={editor.scatter} class="btn-secondary">{m.randomMaze}</button>
+      <button onclick={editor.clearWalls} class="btn-outline">{m.clearWalls}</button>
     </div>
   </div>
 
@@ -174,25 +119,15 @@
           cols={COLS}
           cellState={(cell) => {
             const s = cellLook(cell);
-            return {
-              ...s,
-              label: m.cellLabel(cell, COLS, s.label, walls.has(cell) ? -1 : frame.order[cell]),
-            };
+            const order = editor.walls.has(cell) ? -1 : frame.order[cell];
+            return { ...s, label: m.cellLabel(cell, COLS, s.label, m.visitNote(order)) };
           }}
           gridLabel={m.gridLabel}
           initialFocus={DEFAULT_START}
           speed={player.speed}
-          onPaintStart={(cell) => {
-            if (tool !== 'wall') {
-              edit(cell);
-              return null;
-            }
-            const on = !walls.has(cell);
-            setWall(cell, on);
-            return on;
-          }}
-          onPaint={setWall}
-          onEdit={edit}
+          onPaintStart={editor.onPaintStart}
+          onPaint={editor.onPaint}
+          onEdit={editor.edit}
         />
         <ul class="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-600">
           {#each legend as [cls, label], i (i)}
@@ -237,7 +172,7 @@
         emptyText={m.stackEmpty}
         items={frame.stack
           .toReversed()
-          .map((c) => ({ label: m.coord(c, COLS), hot: c === frame.touched }))}
+          .map((c, i) => ({ label: m.coord(c, COLS), hot: i === 0 && c === frame.touched }))}
       />
       <CodePanel lines={dfsPseudocode} active={frame.lines} />
     </div>

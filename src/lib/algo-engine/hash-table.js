@@ -38,7 +38,7 @@ export const MAX_KEY = 999;
 
 export const hashPseudocode = [
   'insert(key):',
-  '  b = hash(key) mod m',
+  '  b = h(key)   // a bucket in 0..m-1',
   '  walk chain b: if an entry equals key, update it and stop',
   '  append key to chain b; n = n + 1',
   '  if n / m > 0.75: grow()',

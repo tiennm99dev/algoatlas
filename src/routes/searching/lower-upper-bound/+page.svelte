@@ -56,7 +56,7 @@
     const present = new Set(values);
     const max = values[values.length - 1];
     let v;
-    // Range runs one below the smallest value and three past the largest, so both ends are reachable.
+    // Draw from 0 up to three past the largest value, so answers at both ends (0 and n) are reachable.
     do v = Math.floor(Math.random() * (max + 4));
     while (present.has(v));
     draft = v;
@@ -203,7 +203,7 @@
       </dl>
 
       <div class="rounded-xl border border-slate-200 bg-white p-3">
-        <h2 class="mb-2 text-sm font-semibold text-slate-800">{m.resultTitle}</h2>
+        <h2 class="mb-2 text-xs text-slate-500">{m.resultTitle}</h2>
         <dl class="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-sm">
           <dt class="text-slate-500">{m.lowerLabel}</dt>
           <dd class="font-mono font-semibold tabular-nums">{done ? lowerAnswer : m.pending}</dd>

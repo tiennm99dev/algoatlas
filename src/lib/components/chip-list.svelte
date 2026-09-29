@@ -1,15 +1,16 @@
 <script>
   /**
    * A titled card listing queue or stack contents as chips. Duplicates are legal, so chips
-   * are keyed by position.
+   * are keyed by position. The hot chip is announced to screen readers as `hotLabel`.
    * @type {{
    *   title: string,
    *   items: {label: string, hot?: boolean}[],
    *   emptyText: string,
    *   limit?: number,
+   *   hotLabel?: string,
    * }}
    */
-  let { title, items, emptyText, limit = 18 } = $props();
+  let { title, items, emptyText, limit = 18, hotLabel = 'current' } = $props();
 </script>
 
 <div class="rounded-xl border border-slate-200 bg-white p-3">
@@ -21,7 +22,7 @@
           ? 'bg-sky-700 text-white'
           : 'bg-sky-100 text-sky-900'}"
       >
-        {item.label}
+        {item.label}{#if item.hot}<span class="sr-only">{` (${hotLabel})`}</span>{/if}
       </li>
     {:else}
       <li class="text-slate-500">{emptyText}</li>

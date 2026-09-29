@@ -137,4 +137,45 @@ describe('binary search tree lesson', () => {
     expect(text()).toContain('none yet');
     expect(text()).toContain('The tree is empty.');
   });
+
+  it('keeps focus on Reset and Undo and marks them aria-disabled when the log is empty', () => {
+    render(Page);
+    const reset = buttonByText('Reset');
+    reset.focus();
+    click(reset);
+    expect(document.activeElement).toBe(reset);
+    expect(reset.getAttribute('aria-disabled')).toBe('true');
+    expect(reset.disabled).toBe(false);
+    const undo = buttonByText('Undo last');
+    expect(undo.getAttribute('aria-disabled')).toBe('true');
+    click(undo);
+    expect(text()).toContain('The tree is empty.');
+  });
+
+  it('shows a refusal in place of the narration and drops it on the next step', () => {
+    render(Page);
+    for (const k of [1, 2, 3, 4, 5, 6, 7, 8, 9]) {
+      commit(keyInput(), String(k));
+      click(buttonByText('Insert'));
+    }
+    const narration = () => document.querySelector('p[aria-live]')?.textContent ?? '';
+    expect(narration()).toContain('The tree is full (15 keys).');
+    click(button('Next step'));
+    expect(narration()).not.toContain('The tree is full');
+  });
+
+  it('lets a preset be applied again after Reset', () => {
+    render(Page);
+    const select = /** @type {HTMLSelectElement} */ (
+      document.querySelector('select[name="preset"]')
+    );
+    commit(select, 'sorted');
+    click(buttonByText('Reset'));
+    expect(select.value).toBe('');
+    commit(select, 'sorted');
+    click(button('Last step'));
+    expect(text()).toContain('height 7');
+    click(buttonByText('Undo last'));
+    expect(select.value).toBe('');
+  });
 });

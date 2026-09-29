@@ -45,8 +45,19 @@ describe('ChipList', () => {
     expect(chips().map((c) => c.classList.contains('bg-sky-700'))).toEqual([false, true]);
   });
 
+  it('announces the hot chip to screen readers and lets the wording change', () => {
+    render({ items: [{ label: 'a' }, { label: 'b', hot: true }] });
+    expect(chips()[0].textContent?.trim()).toBe('a');
+    expect(chips()[1].textContent?.trim()).toBe('b (current)');
+    expect(chips()[1].querySelector('.sr-only')).not.toBeNull();
+    unmount(/** @type {any} */ (app));
+    document.body.innerHTML = '';
+    render({ items: [{ label: 'b', hot: true }], hotLabel: 'newest' });
+    expect(chips()[0].textContent?.trim()).toBe('b (newest)');
+  });
+
   it('renders duplicate labels without a keyed-each error', () => {
     render({ items: [{ label: 'x' }, { label: 'x' }, { label: 'x', hot: true }] });
-    expect(chips().map((c) => c.textContent?.trim())).toEqual(['x', 'x', 'x']);
+    expect(chips().map((c) => c.textContent?.trim())).toEqual(['x', 'x', 'x (current)']);
   });
 });

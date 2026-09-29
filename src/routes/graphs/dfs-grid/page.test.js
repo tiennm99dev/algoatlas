@@ -82,7 +82,7 @@ describe('dfs lesson', () => {
     click(button('Next step'));
     expect(text()).toContain('Push (4,1): open and not visited yet.');
     const stack = [...document.querySelectorAll('ol li')].map((li) => li.textContent?.trim());
-    expect(stack).toContain('(4,1)');
+    expect(stack).toContain('(4,1) (current)');
   });
 
   it('reports no path when the goal is walled in', () => {
@@ -106,5 +106,35 @@ describe('dfs lesson', () => {
     startCell.focus();
     key(startCell, { key: 'ArrowRight' });
     expect(document.activeElement).toBe(button('Row 4, column 3'));
+  });
+
+  it('labels a skipped stale copy as skipped, not as expanding', () => {
+    render(Page);
+    // A walled-in goal makes DFS sweep the open field, where stale copies surface.
+    const clear = [...document.querySelectorAll('button')].find(
+      (b) => b.textContent === 'Clear walls',
+    );
+    click(/** @type {HTMLElement} */ (clear));
+    for (const [r, c] of [
+      [4, 13],
+      [6, 13],
+      [5, 12],
+      [5, 14],
+    ]) {
+      keyActivate(button(`Row ${r}, column ${c}`));
+    }
+    const next = button('Next step');
+    for (let i = 0; i < 400 && !text().includes('so skip it'); i++) click(next);
+    expect(text()).toContain('so skip it');
+    const cell = document.querySelector('button[aria-label*="Stale copy, skipped"]');
+    expect(cell).not.toBeNull();
+    expect(document.querySelector('button[aria-label*="Expanding"]')).toBeNull();
+  });
+
+  it('marks only the top stack entry as the current chip', () => {
+    render(Page);
+    click(button('Next step'));
+    click(button('Next step'));
+    expect(document.querySelectorAll('ol li .sr-only')).toHaveLength(1);
   });
 });

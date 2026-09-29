@@ -21,7 +21,6 @@
 
   const FNS = /** @type {HashFn[]} */ (['mod-prime', 'mod-pow2', 'multiply']);
   const PRESETS = /** @type {Preset[]} */ (['random', 'sequential', 'multiples-of-8', 'custom']);
-  const CHIPS_PER_ROW = 8;
 
   // A fixed first key set keeps the prerendered HTML and the hydrated page identical.
   const INITIAL = [12, 44, 13, 88, 23, 94, 11, 39, 20, 16];
@@ -31,16 +30,29 @@
   let count = $state(INITIAL.length);
   let customText = $state(INITIAL.join(', '));
   let lastValidText = INITIAL.join(', ');
+  let searchKey = 62;
   /** @type {number | null} */
   let searchDraft = $state(62);
-  let notice = $state('');
+
+  /** A message shown in place of the narration, only on the frame it was raised on. */
+  let notice = $state({ text: '', at: -1 });
 
   const player = createPlayer(hashTableTrace(INITIAL, 'mod-prime'));
   const frame = $derived(player.frame);
+  const narration = $derived(notice.at === player.index ? notice.text : m.describe(frame));
+
+  /** @param {string} text */
+  function say(text) {
+    notice = { text, at: player.index };
+  }
+
+  function clearNotice() {
+    notice = { text: '', at: -1 };
+  }
 
   /** @param {number | null} [search] Key to look up after the inserts. */
   function rebuild(search = null) {
-    notice = '';
+    clearNotice();
     const trace = hashTableTrace(keys, fn, search);
     player.load(trace);
     // Land on the lookup so the learner sees the filled table, not the inserts again.
@@ -52,11 +64,12 @@
     keys = makeKeys(preset, count);
     customText = lastValidText = keys.join(', ');
     rebuild();
+    say(m.newKeysLoaded);
   }
 
   function changePreset() {
     if (preset === 'custom') {
-      notice = '';
+      clearNotice();
       return;
     }
     generate();
@@ -65,7 +78,7 @@
   function commitCustom() {
     const parsed = parseKeys(customText);
     if ('error' in parsed) {
-      notice = m.keyErrors[parsed.error];
+      say(m.keyErrors[parsed.error]);
       customText = lastValidText;
       return;
     }
@@ -74,17 +87,24 @@
     rebuild();
   }
 
-  function runSearch() {
+  /** Accept the search field when it holds a valid key; otherwise restore the last valid one. */
+  function commitSearch() {
     if (
       typeof searchDraft !== 'number' ||
       !Number.isInteger(searchDraft) ||
       searchDraft < 0 ||
       searchDraft > MAX_KEY
     ) {
-      notice = m.keyErrors.range;
-      return;
+      searchDraft = searchKey;
+      say(m.keyErrors.range);
+      return false;
     }
-    rebuild(searchDraft);
+    searchKey = searchDraft;
+    return true;
+  }
+
+  function runSearch() {
+    if (commitSearch()) rebuild(searchKey);
   }
 
   /**
@@ -121,10 +141,10 @@
 
   const growing = $derived(frame.kind === 'grow' || frame.kind === 'rehash');
   const legend = $derived([
-    ['bg-state-compare', m.legend.compare],
-    ['bg-state-sorted', m.legend.hit],
-    ['bg-state-active', m.legend.new],
-    ['bg-state-frontier', m.legend.moving],
+    ['bg-state-compare', `${m.marks.compare} ${m.legend.compare}`],
+    ['bg-state-sorted', `${m.marks.hit} ${m.legend.hit}`],
+    ['bg-state-active', `${m.marks.new} ${m.legend.new}`],
+    ['bg-state-frontier', `${m.marks.moved} ${m.legend.moving}`],
   ]);
   const stats = $derived([
     [m.stats.comparisons, String(frame.comparisons)],
@@ -181,19 +201,22 @@
 
     <label class={labelClass}>
       {m.searchLabel}
-      <input type="number" min="0" max={MAX_KEY} class="field w-24" bind:value={searchDraft} />
+      <input
+        type="number"
+        min="0"
+        max={MAX_KEY}
+        class="field w-24"
+        bind:value={searchDraft}
+        onchange={commitSearch}
+      />
     </label>
     <button onclick={runSearch} class="btn-outline">{m.searchButton}</button>
   </div>
 
-  {#if notice}
-    <p role="alert" class="mb-4 rounded-lg bg-rose-50 px-3 py-2 text-sm text-rose-800">{notice}</p>
-  {/if}
-
   <div class="grid gap-4 lg:grid-cols-[1fr_22rem]">
     <div class="flex flex-col gap-4">
       <div class="rounded-xl border border-slate-200 bg-white p-4">
-        <h2 class="mb-2 text-xs font-semibold tracking-wide text-slate-500 uppercase">
+        <h2 class="mb-2 text-xs text-slate-500">
           {m.bucketsLabel}
         </h2>
         <ol
@@ -206,10 +229,10 @@
               <span
                 class="flex flex-wrap items-center gap-1 font-mono text-xs {frame.bucket === b &&
                 frame.kind !== 'rehash'
-                  ? 'rounded ring-2 ring-slate-300'
+                  ? 'rounded ring-2 ring-slate-700'
                   : ''}"
               >
-                {#each chain.slice(0, CHIPS_PER_ROW) as key, i (i)}
+                {#each chain as key, i (i)}
                   {@const s = chipState(b, i)}
                   <span
                     class="rounded px-1.5 py-0.5 tabular-nums {CHIP_CLASS[s]} {player.speed < 8
@@ -222,9 +245,6 @@
                 {:else}
                   <span class="text-slate-400">{m.emptyBucket}</span>
                 {/each}
-                {#if chain.length > CHIPS_PER_ROW}
-                  <span class="text-slate-500">{m.more(chain.length - CHIPS_PER_ROW)}</span>
-                {/if}
               </span>
             </li>
           {/each}
@@ -243,7 +263,7 @@
         class="min-h-12 rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-800"
         aria-live={player.playing ? 'off' : 'polite'}
       >
-        {m.describe(frame)}
+        {narration}
       </p>
 
       <div class="sticky bottom-2 z-10 lg:static">
@@ -253,8 +273,13 @@
 
     <div class="flex flex-col gap-4">
       <dl class="grid grid-cols-2 gap-3">
-        {#each stats as [label, value] (label)}
-          <div class="rounded-xl border border-slate-200 bg-white p-3">
+        {#each stats as [label, value], i (label)}
+          <div
+            class="rounded-xl border border-slate-200 bg-white p-3 {stats.length % 2 === 1 &&
+            i === stats.length - 1
+              ? 'col-span-2'
+              : ''}"
+          >
             <dt class="text-xs text-slate-500">{label}</dt>
             <dd class="text-2xl font-bold tabular-nums">{value}</dd>
           </div>

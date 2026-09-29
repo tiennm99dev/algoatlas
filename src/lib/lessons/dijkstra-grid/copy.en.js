@@ -1,6 +1,8 @@
 /** @typedef {import('$lib/algo-engine/dijkstra-grid.js').DijkstraFrame} DijkstraFrame */
+import { gridCopy } from '../grid-copy.en.js';
 
 export const en = {
+  ...gridCopy,
   slug: 'dijkstra-grid',
   topic: 'graphs',
   level: 'Intermediate',
@@ -9,12 +11,14 @@ export const en = {
     'When some steps cost more than others, the path with the fewest steps is no longer the cheapest. Dijkstra’s algorithm always expands the cheapest known cell next, so when it reaches the goal it has found the cheapest route.',
   instruction:
     'Paint walls and mud, move the start and goal, then play. A step costs the average of the two cells it joins: 1 on open ground, 5 inside mud, 3 onto or off it. Numbers show the cheapest known cost to reach each cell.',
-  toolLabel: 'Edit',
-  tools: { wall: 'Walls', mud: 'Mud', start: 'Move start', goal: 'Move goal' },
+  tools: {
+    wall: gridCopy.tools.wall,
+    mud: 'Mud',
+    start: gridCopy.tools.start,
+    goal: gridCopy.tools.goal,
+  },
   randomTerrain: 'Random terrain',
   clearTerrain: 'Clear',
-  gridLabel: 'Grid. Use arrow keys to move, Enter to edit the focused cell.',
-  blockedCell: 'Pick an open cell — start and goal cannot sit on a wall or on each other.',
   pqLabel: 'Priority queue (cheapest first)',
   pqEmpty: 'empty',
   /** @param {number} cell @param {number} cols @param {number} d */
@@ -23,7 +27,7 @@ export const en = {
   },
   settledLabel: 'Settled',
   relaxLabel: 'Relaxations',
-  costLabel: 'Path cost',
+  costLabel: 'Dijkstra path cost',
   compareTitle: 'Same grid, fewest steps',
   /** @param {number} steps @param {number} cost */
   bfsRoute(steps, cost) {
@@ -40,30 +44,24 @@ export const en = {
     frontier: 'In queue',
     visited: 'Settled',
     current: 'Expanding',
-    path: 'Cheapest path',
+    stale: 'Stale copy, skipped',
+    path: 'Dijkstra path',
     mud: 'Mud (cost 5)',
   },
-  /** @param {number} cell @param {number} cols */
-  coord(cell, cols) {
-    return `(${Math.floor(cell / cols)},${cell % cols})`;
+  /** The hatch that marks mud is visual only, so the label states the cost. @param {boolean} mud */
+  mudNote(mud) {
+    return mud ? 'mud, cost 5' : '';
   },
-  /**
-   * The hatch that marks mud is visual only, so the label states the cost.
-   * @param {number} cell @param {number} cols @param {string} kind @param {boolean} mud
-   * @param {number} dist
-   */
-  cellLabel(cell, cols, kind, mud, dist) {
-    const where = `Row ${Math.floor(cell / cols)}, column ${cell % cols}`;
-    return `${where}${kind ? `, ${kind}` : ''}${mud ? ', mud, cost 5' : ''}${dist >= 0 ? `, best cost ${dist}` : ''}`;
+  /** @param {number} dist */
+  costNote(dist) {
+    return dist >= 0 ? `best cost ${dist}` : '';
   },
   /** Confirmations for keyboard edits, which recolor a cell without changing the narration. */
   edits: {
-    wallAdded: /** @param {string} at */ (at) => `Wall added at ${at}.`,
-    wallRemoved: /** @param {string} at */ (at) => `Wall removed at ${at}.`,
+    ...gridCopy.edits,
     mudAdded: /** @param {string} at */ (at) => `Mud added at ${at}.`,
     mudRemoved: /** @param {string} at */ (at) => `Mud removed at ${at}.`,
-    startMoved: /** @param {string} at */ (at) => `Start moved to ${at}.`,
-    goalMoved: /** @param {string} at */ (at) => `Goal moved to ${at}.`,
+    terrainCleared: 'The mud under it was cleared.',
   },
   /** @param {DijkstraFrame} f @param {number} cols */
   describe(f, cols) {

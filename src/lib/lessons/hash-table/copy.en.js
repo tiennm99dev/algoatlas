@@ -19,6 +19,7 @@ export const en = {
     'A bad table size ruins a good-looking hash: with m a power of two, k mod m keeps only the last bits, so multiples of 8 all land in the same few buckets. A prime m, or the multiplication method, spreads them.',
     'A search for a missing key costs the whole chain; a hit stops at the key’s position.',
   ],
+  complexityHead: ['Operation', 'Cost', 'Why'],
   complexity: [
     ['Average', 'O(1)', 'Chains stay short while the load factor is bounded.'],
     ['Worst', 'O(n)', 'Every key hashes to one bucket.'],
@@ -51,6 +52,7 @@ export const en = {
   customLabel: 'Keys (comma-separated)',
   countLabel: 'Count',
   newKeys: 'New keys',
+  newKeysLoaded: 'New keys loaded.',
   searchLabel: 'Search for',
   searchButton: 'Search',
   keyErrors: {
@@ -69,10 +71,6 @@ export const en = {
   pendingLabel: 'Waiting to rehash',
   pendingEmpty: 'none left',
   emptyBucket: 'empty',
-  /** @param {number} n */
-  more(n) {
-    return `+${n}`;
-  },
   legend: {
     compare: 'Comparing',
     hit: 'Found',

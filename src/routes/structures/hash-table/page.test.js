@@ -118,4 +118,49 @@ describe('hash table lesson', () => {
     expect(text().match(/Step \d+ of \d+/)?.[0]).toBe(before);
     expect(field('input[type="text"]').value).toBe('12, 44, 13, 88, 23, 94, 11, 39, 20, 16');
   });
+
+  it('shows a refusal in the narration and drops it after the next step', () => {
+    render();
+    commit(field('select[name="preset"]'), 'custom');
+    commit(field('input[type="text"]'), '5, -3');
+    expect(document.querySelector('[role="alert"]')).toBeNull();
+    const narration = document.querySelector('p[aria-live]');
+    expect(narration?.textContent).toContain('Keys must be whole numbers from 0 to 999.');
+    click(button('Next step'));
+    expect(document.querySelector('p[aria-live]')?.textContent).not.toContain('Keys must be');
+  });
+
+  it('confirms new keys in the narration', () => {
+    render();
+    click(buttonByText('New keys'));
+    expect(document.querySelector('p[aria-live]')?.textContent).toContain('New keys loaded.');
+  });
+
+  it('keeps the last valid search key when the entry is invalid', () => {
+    render();
+    const input = field('input[type="number"]');
+    commit(input, '1500');
+    expect(input.value).toBe('62');
+    expect(text()).toContain('Keys must be whole numbers from 0 to 999.');
+    commit(input, '39');
+    commit(input, '');
+    expect(input.value).toBe('39');
+    click(buttonByText('Search'));
+    expect(text()).toContain('Search 39: hash to bucket');
+  });
+
+  it('draws the hit chip at the end of a long colliding chain', () => {
+    render();
+    commit(field('select[name="preset"]'), 'custom');
+    const keys = Array.from({ length: 22 }, (_, i) => i * 47);
+    commit(field('input[type="text"]'), keys.join(', '));
+    commit(field('input[type="number"]'), '987');
+    click(buttonByText('Search'));
+    toEnd();
+    expect(text()).toContain('Found 987 at position 21');
+    const hit = [...document.querySelectorAll('ol[aria-label="Buckets"] span.sr-only')].find((e) =>
+      e.textContent?.includes('found'),
+    );
+    expect(hit?.parentElement?.textContent).toContain('987');
+  });
 });

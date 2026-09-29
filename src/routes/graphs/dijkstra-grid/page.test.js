@@ -86,4 +86,51 @@ describe('dijkstra lesson', () => {
     click(button('Last step'));
     expect(text()).toContain('walls cut it off');
   });
+
+  it('moving the start onto mud clears its cost and says so', () => {
+    render();
+    pickTool('start');
+    keyActivate(button('Row 4, column 7, mud, cost 5'));
+    expect(text()).toContain('Start moved to (4,7). The mud under it was cleared.');
+    // No mud is announced under the start.
+    expect(button('Row 4, column 7, Start, best cost 0')).toBeTruthy();
+    const next = button('Next step');
+    for (let i = 0; i < 20 && !text().includes('(4,8) is open and unreached'); i++) click(next);
+    // The first hop into the neighboring mud costs 3 (the average of 1 and 5), not 5.
+    expect(text()).toContain('(4,8) is open and unreached — its cost is 3 via (4,7)');
+  });
+
+  it('moving the goal onto mud clears its cost too', () => {
+    render();
+    pickTool('goal');
+    keyActivate(button('Row 4, column 8, mud, cost 5'));
+    expect(button('Row 4, column 8, Goal')).toBeTruthy();
+    expect(text()).toContain('The mud under it was cleared.');
+  });
+
+  it('labels a stale pop as skipped, not as expanding', () => {
+    render();
+    const next = button('Next step');
+    for (let i = 0; i < 600 && !text().includes('a stale entry, skip it'); i++) click(next);
+    expect(text()).toContain('a stale entry, skip it');
+    expect(document.querySelector('button[aria-label*="Stale copy, skipped"]')).not.toBeNull();
+    expect(document.querySelector('button[aria-label*="Expanding"]')).toBeNull();
+  });
+
+  it('lights only the live queue entry of the touched cell', () => {
+    render();
+    const next = button('Next step');
+    for (let i = 0; i < 600; i++) {
+      click(next);
+      const chips = [...document.querySelectorAll('ol li')];
+      const labels = chips.map((c) => c.textContent?.replace(/ \(current\)$/, '').trim());
+      const hot = chips.filter((c) => c.querySelector('.sr-only'));
+      if (hot.length && new Set(labels.map((l) => l?.split(' ')[0])).size < labels.length) {
+        // A duplicate cell is queued: exactly one of its entries is hot.
+        expect(hot).toHaveLength(1);
+        return;
+      }
+    }
+    throw new Error('no duplicate entry was ever queued alongside a hot chip');
+  });
 });

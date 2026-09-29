@@ -32,13 +32,15 @@
   const INITIAL = [42, 17, 88, 5, 63, 29, 71, 12, 95, 36, 54, 24];
 
   /**
-   * Equal values keep their input order (ids ascend within each run of equals).
+   * Whether equal values kept their input order (ids ascend within each run of equals), or
+   * null when no value repeats, since stability cannot show on such an array.
    * @param {import('$lib/algo-engine/merge-quick-sort.js').DivideFrame} last
+   * @returns {boolean|null}
    */
   function isStable(last) {
-    return last.items.every(
-      (it, i) => i === 0 || last.items[i - 1].value !== it.value || last.items[i - 1].id < it.id,
-    );
+    const pairs = last.items.slice(1).map((it, i) => [last.items[i], it]);
+    if (!pairs.some(([a, b]) => a.value === b.value)) return null;
+    return pairs.every(([a, b]) => a.value !== b.value || a.id < b.id);
   }
 
   /** @param {number[]} values @param {PivotRule} pivotRule */
@@ -54,7 +56,7 @@
         algo: a,
         comparisons: last?.comparisons ?? 0,
         moves: last?.swaps ?? 0,
-        stable: last ? isStable(last) : true,
+        stable: last ? isStable(last) : null,
       };
     });
     return { traces, totals };
@@ -66,18 +68,40 @@
   const player = createPlayer(first.traces.merge);
   const frame = $derived(player.frame);
 
+  /** A message shown in place of the narration, only on the frame it was raised on. */
+  let notice = $state({ text: '', at: -1 });
+  const narration = $derived(notice.at === player.index ? notice.text : m.describe(frame, algo));
+
+  /** @param {string} text */
+  function say(text) {
+    notice = { text, at: player.index };
+  }
+
+  function clearNotice() {
+    notice = { text: '', at: -1 };
+  }
+
   /** @param {number[]} values */
   function rebuild(values) {
+    clearNotice();
     built = build(values, rule);
     player.load(built.traces[algo]);
   }
 
   function regenerate() {
+    clearNotice();
     rebuild(makeArray(preset, size));
+  }
+
+  // Reloading lands on frame 0, so an unchanged narration would give no feedback.
+  function newArray() {
+    regenerate();
+    say(m.newArrayNotice);
   }
 
   // Switching algorithm keeps the traces (and totals) already computed for this array.
   function switchAlgo() {
+    clearNotice();
     player.load(built.traces[algo]);
   }
 
@@ -92,6 +116,8 @@
   /** @param {number} i */
   function barState(i) {
     const kind = frame.kind;
+    // With two bars in focus the pivot was just swapped to the end of the range.
+    if (kind === 'pivot' && frame.focus.length === 2 && frame.focus.includes(i)) return 'write';
     if (frame.focus.includes(i)) {
       if (kind === 'take' || kind === 'swap') return 'write';
       if (kind === 'scan' && i !== frame.pivot) return 'compare';
@@ -118,6 +144,7 @@
     compare: m.markers.compare,
     pivot: m.markers.pivot,
     sorted: m.markers.sorted,
+    run: m.markers.run,
   };
 
   /** The buffer row spans the whole array; only slots lo..hi hold buffer items. */
@@ -127,16 +154,41 @@
     return frame.items.map((_, i) => (i >= range[0] && i <= range[1] ? aux[i - range[0]] : null));
   });
 
-  /** @param {number} i */
-  function auxState(i) {
+  /** @param {number} i @returns {'head'|'taken'|'waiting'} */
+  function auxKind(i) {
     const left = i <= mid;
-    if ((left && i === frame.i) || (!left && i === frame.j)) {
-      return 'bg-slate-400 ring-2 ring-state-active ring-inset';
-    }
+    if ((left && i === frame.i) || (!left && i === frame.j)) return 'head';
     const [lo] = frame.range ?? [0];
     const taken = left ? i >= lo && i < frame.i : i > mid && i < frame.j;
-    return taken ? 'bg-slate-200' : 'bg-slate-400';
+    return taken ? 'taken' : 'waiting';
   }
+
+  /** @type {Record<string, string>} */
+  const auxClass = {
+    head: 'bg-slate-400 ring-2 ring-state-active ring-inset',
+    taken: 'bg-slate-200',
+    waiting: 'bg-slate-400',
+  };
+
+  /** @type {Record<string, string>} */
+  const auxMarker = { head: m.markers.head, taken: m.markers.taken, waiting: '' };
+
+  /** Screen-reader summary of which buffer slots are next and how many are taken. */
+  const bufferProgress = $derived.by(() => {
+    const { aux, range } = frame;
+    if (!aux || !range) return '';
+    const [lo, hi] = range;
+    const slots = Array.from({ length: hi - lo + 1 }, (_, k) => lo + k);
+    const head = (/** @type {boolean} */ left) =>
+      slots.find((i) => auxKind(i) === 'head' && i <= mid === left);
+    const value = (/** @type {number|undefined} */ i) =>
+      i === undefined ? null : aux[i - lo].value;
+    return m.bufferProgress(
+      value(head(true)),
+      value(head(false)),
+      slots.filter((i) => auxKind(i) === 'taken').length,
+    );
+  });
 
   const chips = $derived.by(() => {
     const ranges = frame.stack.map(([lo, hi]) => m.rangeChip(lo, hi));
@@ -149,8 +201,12 @@
     merging
       ? [
           ['bg-state-swap', `${m.markers.write} ${m.legend.write}`],
-          ['bg-slate-400 ring-2 ring-state-active ring-inset', m.legend.head],
-          ['bg-state-visited', m.legend.run],
+          [
+            'bg-slate-400 ring-2 ring-state-active ring-inset',
+            `${m.markers.head} ${m.legend.head}`,
+          ],
+          ['bg-slate-200', `${m.markers.taken} ${m.legend.taken}`],
+          ['bg-state-visited', `${m.markers.run} ${m.legend.run}`],
           ['bg-state-sorted', `${m.markers.sorted} ${m.legend.sorted}`],
         ]
       : [
@@ -206,7 +262,7 @@
       </label>
     {/if}
 
-    <button onclick={regenerate} class="btn-secondary">{m.shuffle}</button>
+    <button onclick={newArray} class="btn-secondary">{m.shuffle}</button>
   </div>
 
   <div class="grid gap-4 lg:grid-cols-[1fr_22rem]">
@@ -218,12 +274,17 @@
           markerOf={(i) => barMarker[barState(i)] ?? ''}
           dimmed={(i) => !!frame.range && (i < frame.range[0] || i > frame.range[1])}
           aux={auxRow}
-          auxStateOf={auxState}
+          auxStateOf={(i) => auxClass[auxKind(i)]}
+          auxMarkerOf={(i) => auxMarker[auxKind(i)]}
           ariaLabel={m.barsLabel(
             frame.items.map((it) => it.value),
             frame.sorted.length,
+            frame.range,
           )}
-          auxLabel={m.auxLabel((frame.aux ?? []).map((it) => it.value))}
+          auxLabel={m.auxLabel(
+            (frame.aux ?? []).map((it) => it.value),
+            bufferProgress,
+          )}
           speed={player.speed}
         />
         <ul class="mt-3 flex flex-wrap gap-4 text-xs text-slate-600">
@@ -239,7 +300,7 @@
         class="min-h-12 rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-800"
         aria-live={player.playing ? 'off' : 'polite'}
       >
-        {m.describe(frame, algo)}
+        {narration}
       </p>
 
       <div class="sticky bottom-2 z-10 lg:static">

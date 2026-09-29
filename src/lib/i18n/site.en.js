@@ -39,7 +39,7 @@ export const topics = {
   },
   graphs: {
     title: 'Graphs',
-    blurb: 'Explore grids and networks layer by layer to find shortest paths.',
+    blurb: 'Explore grids with BFS, DFS, and Dijkstra to find paths and cheapest routes.',
   },
 };
 

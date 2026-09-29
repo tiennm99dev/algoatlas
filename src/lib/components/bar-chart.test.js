@@ -45,14 +45,27 @@ describe('BarChart', () => {
     expect(document.body.textContent?.trim()).toBe('');
   });
 
-  it('dims only the columns the callback selects', () => {
+  it('dims only the bars the callback selects, never the value labels', () => {
     render({ ...base, items: makeItems(4), dimmed: (/** @type {number} */ i) => i % 2 === 1 });
-    expect(columns().map((c) => c.classList.contains('opacity-40'))).toEqual([
-      false,
-      true,
-      false,
-      true,
-    ]);
+    expect(
+      columns().map((c) => c.querySelector('.rounded-t')?.classList.contains('opacity-40')),
+    ).toEqual([false, true, false, true]);
+    for (const c of columns()) {
+      expect(c.classList.contains('opacity-40')).toBe(false);
+      expect(c.firstElementChild?.classList.contains('opacity-40')).toBe(false);
+    }
+  });
+
+  it('shows aux markers only for filled slots when asked', () => {
+    render({
+      ...base,
+      items: makeItems(3),
+      aux: [{ id: 9, value: 3 }, null, { id: 8, value: 1 }],
+      auxLabel: 'buffer',
+      auxMarkerOf: () => 'H',
+    });
+    const cols = [...(document.querySelector('[aria-label="buffer"]')?.children ?? [])];
+    expect(cols.map((c) => c.lastElementChild?.textContent)).toEqual(['H', '', 'H']);
   });
 
   it('draws an aux row with an empty column for null slots', () => {
