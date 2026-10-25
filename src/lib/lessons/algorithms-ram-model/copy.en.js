@@ -80,7 +80,7 @@ export const en = {
   },
   takeaways: [
     'An algorithm is a finite sequence of exact, unambiguous steps that ends with the right output for every valid input.',
-    'The word-RAM model charges one step for each assignment, comparison, arithmetic operation, memory read and jump, on words of about log₂ n bits. Counting those steps measures an algorithm independently of the computer.',
+    'The word-RAM model charges one step for each primitive operation on a word of at least log₂ n bits: an assignment, comparison, arithmetic operation, memory read or jump. This toy machine folds each variable read into the operation that uses it. Counting steps measures an algorithm independently of the computer.',
     'The loop does 5n + 4 steps, so its cost grows in proportion to n; the formula always does 5 steps.',
     'Correctness comes first: the buggy loop is even a little faster, but it returns the wrong answer, so its speed is worthless.',
     'Try n = 30 with Loop, then Formula: 154 steps against 5, and the gap widens with every extra n.',

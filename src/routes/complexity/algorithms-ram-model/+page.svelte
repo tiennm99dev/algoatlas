@@ -97,7 +97,7 @@
   </form>
 
   <div class="grid gap-4 lg:grid-cols-[1fr_22rem]">
-    <div class="flex flex-col gap-4 lg:col-start-1 lg:row-start-1">
+    <div class="flex min-w-0 flex-col gap-4 lg:col-start-1 lg:row-start-1">
       <div class="rounded-xl border border-slate-200 bg-white p-4">
         <h2 class="mb-3 text-xs font-semibold tracking-wide text-slate-500 uppercase">
           {m.memoryTitle}
@@ -153,7 +153,7 @@
       </p>
     </div>
 
-    <div class="flex flex-col gap-4 lg:col-start-2 lg:row-span-2">
+    <div class="flex min-w-0 flex-col gap-4 lg:col-start-2 lg:row-span-2">
       <dl class="grid grid-cols-2 gap-3">
         {#each statKeys as k (k)}
           <div class="rounded-xl border border-slate-200 bg-white p-3">

@@ -108,7 +108,7 @@ export const en = {
     'f(n) = Ω(g(n)) is the matching lower bound, f(n) ≥ c·g(n) for every n ≥ n₀; Θ means both, so f and g grow at the same rate.',
     'Only the dominant term matters: in 3n² + 20n + 50 the n² term takes over as n grows, so the whole sum is Θ(n²) and the constants 3, 20, 50 drop out.',
     'From slowest to fastest: 1 < log n < n < n log n < n² < 2ⁿ. On the log-scale plot 2ⁿ is a straight line that leaves every polynomial behind.',
-    'Try a = 0, b = 100, c = 1000 against n²: f starts far above n², yet the ratio sinks toward 0, so f = O(n²) but not Θ(n²).',
+    'Try a = 0, b = 100, c = 1000 against n² with largest n 40: f starts far above n², yet the ratio falls from 1,100 at n = 1 to about 3 at n = 40 and keeps falling toward 0, so f = O(n²) but not Θ(n²).',
   ],
   complexityHead: ['Notation', 'Meaning', 'Definition'],
   complexity: [
