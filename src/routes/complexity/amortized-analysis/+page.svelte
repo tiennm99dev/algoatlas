@@ -109,8 +109,9 @@
     c === 0 && r === frame.i && frame.kind !== 'call' ? 'active' : '';
 
   // Chart geometry: one bar per increment, cost and Φ share the axis 0..k.
-  const BAR = 12;
+  // Bars widen for short runs so a few increments still fill the card.
   const GAP = 4;
+  const BAR = $derived(Math.max(12, Math.min(32, Math.floor(600 / frame.m) - GAP)));
   const LEFT = 26;
   const TOP = 14;
   const PLOT_H = 110;
