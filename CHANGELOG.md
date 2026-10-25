@@ -10,6 +10,9 @@ All notable changes to **AlgoAtlas** are documented here. Format: [Keep a Change
 - The home page groups topics by level and shows how many of each topic's lessons are ready; topic hubs list the planned lessons as coming soon. The header links to the three levels.
 - Every unwritten lesson has a `noindex` stub page listing what it will cover and its planned interaction; topic hub cards link to it. The old `/structures/bst/` and `/graphs/dijkstra-grid/` URLs redirect to the lessons' new paths without script.
 - `npm run stubs [-- <topic>] [--strict]` reports unwritten lessons per topic.
+- A practice block for answer-checked questions (number, choice, multi, text, order) with hints, solutions, and a per-viewer solved tick; review lessons are built on it.
+- Shared SVG visualizers for upcoming lessons: array strip with pointers and windows, linked list, stack and queue, tree and forest, heap, union-find forest, editable graph canvas, and DP table, all keyboard accessible.
+- A lesson-author brief in `.claude/skills/write-lesson/SKILL.md`.
 
 ### Changed
 
