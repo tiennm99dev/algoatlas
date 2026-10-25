@@ -4,7 +4,6 @@ import { createRawSnippet, flushSync, mount, tick, unmount } from 'svelte';
 import SortPage from './sorting/bubble-insertion-sort/+page.svelte';
 import BinaryPage from './searching/binary-search/+page.svelte';
 import BfsPage from './graphs/bfs-grid/+page.svelte';
-import DijkstraPage from './shortest-paths/dijkstra-grid/+page.svelte';
 import HubPage from './[topic]/+page.svelte';
 import HomePage from './+page.svelte';
 import Layout from './+layout.svelte';
@@ -12,7 +11,18 @@ import { entries, load } from './[topic]/+page.js';
 import { page } from '$app/state';
 import { t } from '$lib/i18n/index.js';
 import { lessonPath, lessons } from '$lib/lessons/registry.js';
-import { levels } from '$lib/curriculum/index.js';
+import { findLesson, levels } from '$lib/curriculum/index.js';
+
+// Lesson pages load on demand, so the path tests can render whichever lessons are first and last.
+const lessonPages =
+  /** @type {Record<string, () => Promise<{ default: import('svelte').Component<any> }>>} */ (
+    import.meta.glob('./*/*/+page.svelte')
+  );
+
+/** @param {{ topic: string, slug: string }} lesson */
+async function pageOf(lesson) {
+  return (await lessonPages[`.${lessonPath(lesson)}+page.svelte`]()).default;
+}
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -326,6 +336,19 @@ describe('routing', () => {
       expect(Object.keys(routeFiles)).toContain(`.${lessonPath(lesson)}+page.svelte`);
     }
   });
+
+  it('every lesson route is a curriculum lesson under its own topic, with registered copy', () => {
+    const routes = Object.keys(lessonPages).filter((file) => !file.startsWith('./['));
+    for (const file of routes) {
+      const [, topic, slug] = file.split('/');
+      expect(findLesson(slug)?.chapter.slug, file).toBe(topic);
+      expect(
+        lessons.some((l) => l.slug === slug),
+        file,
+      ).toBe(true);
+    }
+    expect(routes).toHaveLength(lessons.length);
+  });
 });
 
 describe('site chrome', () => {
@@ -373,8 +396,8 @@ describe('site chrome', () => {
     const hrefs = () =>
       [...(nav()?.querySelectorAll('a') ?? [])].map((a) => a.getAttribute('href'));
 
-    it('has no previous link on the first lesson and links to the second as next', () => {
-      render(SortPage);
+    it('has no previous link on the first lesson and links to the second as next', async () => {
+      render(await pageOf(lessons[0]));
       const links = hrefs();
       expect(links).toHaveLength(1);
       expect(links[0]).toMatch(new RegExp(`${lessonPath(lessons[1])}$`));
@@ -391,9 +414,9 @@ describe('site chrome', () => {
       expect(links[1]).toMatch(new RegExp(`${lessonPath(lessons[at + 1])}$`));
     });
 
-    it('ends the path on the last lesson with the teaser and a link home', () => {
-      render(DijkstraPage);
+    it('ends the path on the last lesson with the teaser and a link home', async () => {
       const last = lessons[lessons.length - 1];
+      render(await pageOf(last));
       const links = hrefs();
       expect(links).toHaveLength(2);
       expect(links[0]).toMatch(new RegExp(`${lessonPath(lessons[lessons.length - 2])}$`));
@@ -446,7 +469,11 @@ describe('site chrome', () => {
     expect(cards.map((c) => c.title)).toEqual(plan.map((l) => l.title));
     // Every card links to its page; unwritten lessons open their stub page.
     expect(cards.map((c) => c.href)).toEqual(plan.map((l) => `/trees/${l.slug}/`));
-    expect(cards.filter((c) => !c.soon).map((c) => c.title)).toEqual(['Binary search tree']);
+    const written = plan.filter((p) => lessons.some((l) => l.slug === p.slug));
+    expect(cards.filter((c) => !c.soon).map((c) => c.title)).toEqual(
+      written.map((p) => lessons.find((l) => l.slug === p.slug)?.title),
+    );
+    expect(cards.filter((c) => !c.soon).map((c) => c.title)).toContain('Binary search tree');
   });
 });
 
@@ -469,15 +496,20 @@ describe('home page', () => {
         (li) => li.querySelector('h4')?.textContent?.trim() === 'Sorting',
       )
     );
-    expect(sorting.textContent).toContain('2 of 8 lessons ready');
+    const written = lessons.filter((l) => l.topic === 'sorting');
+    const planned = levels[0].chapters.find((c) => c.slug === 'sorting')?.lessons.length;
+    expect(sorting.textContent).toContain(`${written.length} of ${planned} lessons ready`);
     const links = [...sorting.querySelectorAll(':scope ul a')].map((a) => a.getAttribute('href'));
-    expect(links).toEqual(['/sorting/bubble-insertion-sort/', '/sorting/merge-quick-sort/']);
+    expect(links).toEqual(written.map(lessonPath));
+    expect(links).toContain('/sorting/bubble-insertion-sort/');
   });
 
   it('starts the path at the first written lesson', () => {
     render(HomePage);
     const cta = /** @type {HTMLAnchorElement} */ (document.querySelector('a.btn-primary'));
     expect(cta.getAttribute('href')).toBe(lessonPath(lessons[0]));
-    expect(cta.textContent).toContain('Start with sorting');
+    expect(cta.textContent).toContain(
+      `Start with ${t().topics[lessons[0].topic].title.toLowerCase()}`,
+    );
   });
 });

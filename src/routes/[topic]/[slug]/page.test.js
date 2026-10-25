@@ -9,6 +9,7 @@ import { lessonRouteFile, stubReport } from '$lib/curriculum/stubs.js';
 import { levels } from '$lib/curriculum/index.js';
 import { lessonPath, lessons } from '$lib/lessons/registry.js';
 import { hasStaticRoute } from '$lib/lessons/static-routes.js';
+import { t } from '$lib/i18n/index.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -32,6 +33,28 @@ function render(data) {
 }
 
 const pathOf = (/** @type {{ topic: string, slug: string }} */ e) => `/${e.topic}/${e.slug}/`;
+
+/** @param {string | undefined} slug */
+function neighborOf(slug) {
+  const entry = slug === undefined ? undefined : findLesson(slug);
+  return (
+    entry && {
+      title: entry.lesson.title,
+      path: pathOf({ topic: entry.chapter.slug, slug: entry.lesson.slug }),
+    }
+  );
+}
+
+// The sample is the first unwritten lesson with a neighbor on both sides, so these tests keep
+// working as lessons get written; once none is left there is no stub page to test.
+const sampleSlug = lessonOrder.find((slug, i) => {
+  const entry = /** @type {NonNullable<ReturnType<typeof findLesson>>} */ (findLesson(slug));
+  return i > 0 && i < lessonOrder.length - 1 && !hasStaticRoute(entry.chapter.slug, slug);
+});
+const sample = sampleSlug === undefined ? undefined : findLesson(sampleSlug);
+const sampleAt = sampleSlug === undefined ? -1 : lessonOrder.indexOf(sampleSlug);
+const sampleTopic = sample?.chapter.slug ?? '';
+const sampleLesson = sample?.lesson.slug ?? '';
 
 describe('stub route entries', () => {
   const generated = /** @type {{ topic: string, slug: string }[]} */ (entries());
@@ -59,42 +82,51 @@ describe('stub route entries', () => {
     const report = stubReport(levels, hasStaticRoute);
     const stubs = report.flatMap((l) => l.topics.flatMap((t) => t.stubs));
     expect(stubs).toHaveLength(lessonOrder.length - lessons.length);
+    const plan = /** @type {import('$lib/curriculum/index.js').Chapter} */ (
+      chapters.find((c) => c.slug === 'trees')
+    );
     const trees = stubReport(levels, hasStaticRoute, 'trees');
     expect(trees).toHaveLength(1);
     expect(trees[0].topics).toEqual([
       {
         topic: 'trees',
         title: 'Trees',
-        planned: 5,
-        stubs: ['binary-trees', 'tree-traversals', 'nary-trees', 'practice-trees'],
+        planned: plan.lessons.length,
+        stubs: plan.lessons.filter((l) => !hasStaticRoute('trees', l.slug)).map((l) => l.slug),
       },
     ]);
+    expect(trees[0].topics[0].stubs).not.toContain('bst');
     expect(lessonRouteFile('trees', 'bst')).toBe('src/routes/trees/bst/+page.svelte');
   });
 });
 
-describe('stub route load', () => {
+describe.skipIf(!sample)('stub route load', () => {
   it('returns the curriculum entry with its book-order neighbors', () => {
-    const { stub } = run('trees', 'tree-traversals');
-    expect(stub.topic).toBe('trees');
-    expect(stub.lesson).toBe(findLesson('tree-traversals')?.lesson);
-    expect(stub.prev).toEqual({
-      title: 'Binary trees and terminology',
-      path: '/trees/binary-trees/',
-    });
-    expect(stub.next).toEqual({ title: 'Binary search tree', path: '/trees/bst/' });
+    const { stub } = run(sampleTopic, sampleLesson);
+    expect(stub.topic).toBe(sampleTopic);
+    expect(stub.lesson).toBe(sample?.lesson);
+    expect(stub.prev).toEqual(neighborOf(lessonOrder[sampleAt - 1]));
+    expect(stub.next).toEqual(neighborOf(lessonOrder[sampleAt + 1]));
+    expect(stub.prev).toBeDefined();
+    expect(stub.next).toBeDefined();
   });
 
   it('has no neighbor past either end of the curriculum', () => {
-    expect(run('complexity', lessonOrder[0]).stub.prev).toBeUndefined();
+    const first = lessonOrder[0];
+    if (!hasStaticRoute('complexity', first)) {
+      expect(run('complexity', first).stub.prev).toBeUndefined();
+    }
     const last = /** @type {string} */ (lessonOrder.at(-1));
-    expect(run(/** @type {any} */ (findLesson(last)).chapter.slug, last).stub.next).toBeUndefined();
+    const lastTopic = /** @type {any} */ (findLesson(last)).chapter.slug;
+    if (!hasStaticRoute(lastTopic, last)) expect(run(lastTopic, last).stub.next).toBeUndefined();
   });
 
   it('returns 404 for unknown, misplaced, or written lessons', () => {
-    expect(() => run('trees', 'nope')).toThrow();
-    expect(() => run('sorting', 'tree-traversals')).toThrow();
+    expect(() => run(sampleTopic, 'nope')).toThrow();
+    const elsewhere = chapters.find((c) => c.slug !== sampleTopic)?.slug ?? '';
+    expect(() => run(elsewhere, sampleLesson)).toThrow();
     expect(() => run('trees', 'bst')).toThrow();
+    for (const lesson of lessons) expect(() => run(lesson.topic, lesson.slug)).toThrow();
     expect(() => run('constructor', 'constructor')).toThrow();
   });
 });
@@ -131,13 +163,15 @@ describe('moved lessons', () => {
   });
 });
 
-describe('stub page', () => {
+describe.skipIf(!sample)('stub page', () => {
   it('shows the title, kind, key ideas, planned interaction, and a coming-soon badge', () => {
-    render(run('trees', 'tree-traversals'));
-    const plan = /** @type {any} */ (findLesson('tree-traversals')).lesson;
+    render(run(sampleTopic, sampleLesson));
+    const plan = /** @type {any} */ (sample).lesson;
     const text = document.body.textContent ?? '';
     expect(document.querySelector('h1')?.textContent).toBe(plan.title);
-    expect(text).toContain('Trees · Lesson');
+    expect(text).toContain(
+      `${t().topics[sampleTopic].title} · ${t().stub.kinds[/** @type {'theory'} */ (plan.kind)]}`,
+    );
     expect(text).toContain('Coming soon');
     const ideas = [...document.querySelectorAll('section ul li')].map((li) => li.textContent);
     expect(ideas).toEqual(plan.keyIdeas);
@@ -149,14 +183,20 @@ describe('stub page', () => {
   });
 
   it('links back to its topic and to both neighbors', () => {
-    render(run('trees', 'tree-traversals'));
+    render(run(sampleTopic, sampleLesson));
     const hrefs = [...document.querySelectorAll('a')].map((a) => a.getAttribute('href'));
-    expect(hrefs).toEqual(['/trees/', '/trees/binary-trees/', '/trees/bst/']);
+    expect(hrefs).toEqual([
+      `/${sampleTopic}/`,
+      neighborOf(lessonOrder[sampleAt - 1])?.path,
+      neighborOf(lessonOrder[sampleAt + 1])?.path,
+    ]);
   });
 
   it('links home when the curriculum ends', () => {
     const last = /** @type {string} */ (lessonOrder.at(-1));
-    render(run(/** @type {any} */ (findLesson(last)).chapter.slug, last));
+    const lastTopic = /** @type {any} */ (findLesson(last)).chapter.slug;
+    if (hasStaticRoute(lastTopic, last)) return;
+    render(run(lastTopic, last));
     const nav = document.querySelector('nav[aria-label="Lesson navigation"]');
     expect(nav?.textContent).toContain('All topics');
     expect(nav?.textContent).not.toContain('Next lesson');

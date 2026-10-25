@@ -68,7 +68,7 @@ describe('curriculum', () => {
   });
 
   it('places every written lesson in the curriculum under its own topic', () => {
-    expect(lessons).toHaveLength(9);
+    expect(lessons.length).toBeGreaterThanOrEqual(9);
     for (const lesson of lessons) expect(findLesson(lesson.slug)?.chapter.slug).toBe(lesson.topic);
   });
 });

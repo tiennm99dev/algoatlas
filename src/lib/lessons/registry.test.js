@@ -1,32 +1,42 @@
 import { describe, expect, it } from 'vitest';
 import { t } from '$lib/i18n/index.js';
-import { lessonOrder } from '$lib/curriculum/index.js';
+import { chapters, lessonOrder } from '$lib/curriculum/index.js';
+import { hasStaticRoute } from './static-routes.js';
 import { lessonPath, lessons, lessonsByTopic, topicPath } from './registry.js';
 
 describe('registry', () => {
   it('groups lessons by topic in registry order', () => {
     const grouped = lessons.map((l) => l.topic).flatMap((topic) => lessonsByTopic(topic));
     expect(new Set(grouped)).toEqual(new Set(lessons));
-    expect(lessonsByTopic('sorting').map((l) => l.slug)).toEqual([
-      'bubble-insertion-sort',
-      'merge-quick-sort',
-    ]);
-    expect(lessonsByTopic('trees').map((l) => l.slug)).toEqual(['bst']);
+    for (const chapter of chapters) {
+      const written = chapter.lessons.filter((p) => lessons.some((l) => l.slug === p.slug));
+      expect(lessonsByTopic(chapter.slug).map((l) => l.slug)).toEqual(written.map((p) => p.slug));
+    }
+    expect(lessonsByTopic('sorting').map((l) => l.slug)).toEqual(
+      expect.arrayContaining(['bubble-insertion-sort', 'merge-quick-sort']),
+    );
+    expect(lessonsByTopic('trees').map((l) => l.slug)).toContain('bst');
     expect(lessonsByTopic('nope')).toEqual([]);
   });
 
-  it('discovers every copy module and orders the lessons by the curriculum', () => {
-    expect(lessons.map((l) => l.slug)).toEqual([
-      'bubble-insertion-sort',
-      'merge-quick-sort',
-      'binary-search',
-      'lower-upper-bound',
-      'hash-table',
-      'bst',
-      'bfs-grid',
-      'dfs-grid',
-      'dijkstra-grid',
-    ]);
+  it('discovers a copy module for exactly the lessons with a route, in curriculum order', () => {
+    const routed = chapters.flatMap((c) =>
+      c.lessons.filter((l) => hasStaticRoute(c.slug, l.slug)).map((l) => l.slug),
+    );
+    expect(lessons.map((l) => l.slug)).toEqual(routed);
+    expect(routed).toEqual(
+      expect.arrayContaining([
+        'bubble-insertion-sort',
+        'merge-quick-sort',
+        'binary-search',
+        'lower-upper-bound',
+        'hash-table',
+        'bst',
+        'bfs-grid',
+        'dfs-grid',
+        'dijkstra-grid',
+      ]),
+    );
     const positions = lessons.map((l) => lessonOrder.indexOf(l.slug));
     expect(positions).toEqual([...positions].sort((a, b) => a - b));
   });
@@ -56,7 +66,9 @@ describe('registry', () => {
   });
 
   it('builds directory-style paths with trailing slashes', () => {
-    expect(lessonPath(lessons[0])).toBe('/sorting/bubble-insertion-sort/');
+    expect(lessonPath({ topic: 'sorting', slug: 'bubble-insertion-sort' })).toBe(
+      '/sorting/bubble-insertion-sort/',
+    );
     expect(topicPath('graphs')).toBe('/graphs/');
   });
 
