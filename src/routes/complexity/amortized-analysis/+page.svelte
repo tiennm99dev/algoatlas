@@ -11,6 +11,7 @@
     MAX_BITS,
     MAX_OPS,
     MIN_BITS,
+    aggregateFlips,
     counterTrace,
     incrementPseudocode,
   } from '$lib/algo-engine/amortized-analysis.js';
@@ -350,7 +351,9 @@
             stateOf={aggregateState}
             speed={player.speed}
           />
-          <p class="mt-2 tabular-nums">{m.aggregate.sum(finished, frame.total)}</p>
+          <p class="mt-2 tabular-nums">
+            {m.aggregate.sum(finished, aggregateFlips(finished, frame.k), frame.total)}
+          </p>
         {:else if method === 'accounting'}
           <h2 class="mb-2 text-xs text-slate-500">{m.accounting.title}</h2>
           <p>{m.accounting.rule}</p>

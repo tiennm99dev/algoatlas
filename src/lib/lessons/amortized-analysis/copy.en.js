@@ -71,11 +71,20 @@ export const en = {
     cols: ['flips', '⌊t/2ⁱ⌋'],
     /** @param {number} i */
     row: (i) => `bit ${i}`,
-    /** @param {number} t @param {number} total */
-    sum: (t, total) =>
-      t === 0
-        ? 'Bit i flips every 2ⁱ increments, so after t increments it has flipped ⌊t/2ⁱ⌋ times.'
-        : `Total = Σ ⌊${t}/2ⁱ⌋ = ${total} < 2 × ${t} = ${2 * t}, so the average is ${num(total / t)} flips per increment.`,
+    /**
+     * @param {number} t  Finished increments.
+     * @param {number} bound  Σ ⌊t/2ⁱ⌋, the flips of those t increments.
+     * @param {number} total  Flips so far, including the increment running now.
+     */
+    sum: (t, bound, total) => {
+      const running =
+        total > bound
+          ? ` Increment ${t + 1} is running and has made ${plural(total - bound, 'flip')} so far.`
+          : '';
+      return t === 0
+        ? `Bit i flips every 2ⁱ increments, so after t increments it has flipped ⌊t/2ⁱ⌋ times.${running}`
+        : `After ${plural(t, 'increment')}: Σ ⌊${t}/2ⁱ⌋ = ${bound} < 2 × ${t} = ${2 * t} flips, an average of ${num(bound / t)} per increment.${running}`;
+    },
   },
   accounting: {
     title: 'Accounting: a credit bank',

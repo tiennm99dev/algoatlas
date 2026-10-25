@@ -133,7 +133,11 @@ export const en = {
     ['A fixed number of statements', 'O(1)', 'Unchanged.'],
     ['A variable halved or doubled until it hits n', 'O(log n)', 'Grows by about 1.'],
     ['One loop to n, or a loop with a constant inner loop', 'O(n)', 'About × 2.'],
-    ['n passes of a halving loop; halves split recursively', 'O(n log n)', 'A bit over × 2.'],
+    [
+      'n passes of a doubling or halving loop; recursive halving with n work per level',
+      'O(n log n)',
+      'A bit over × 2.',
+    ],
     ['Two nested loops to n, or to i', 'O(n²)', 'About × 4.'],
     ['Two recursive calls on n − 1 and n − 2', 'O(2ⁿ)', 'The ratio itself keeps growing.'],
   ],

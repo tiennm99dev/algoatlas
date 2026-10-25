@@ -112,9 +112,17 @@ describe('amortized analysis lesson', () => {
     expect(text()).toContain('0011₂ = 3');
     pickMethod('aggregate');
     expect(document.querySelector(`[aria-label="${m.aggregate.tableAria}"]`)).not.toBeNull();
-    expect(text()).toContain('Total = Σ ⌊3/2ⁱ⌋ = 4 < 2 × 3 = 6');
+    expect(text()).toContain('After 3 increments: Σ ⌊3/2ⁱ⌋ = 4 < 2 × 3 = 6 flips');
     pickMethod('potential');
     expect(text()).toContain('Σ ĉ = 6 = Σ c + Φ − Φ₀ = 4 + 2 − 0');
+  });
+
+  it('keeps the aggregate sum to finished increments while one is running', () => {
+    render();
+    pickMethod('aggregate');
+    stepUntil('Bit 0 is 1: reset it');
+    expect(text()).toContain('After 1 increment: Σ ⌊1/2ⁱ⌋ = 1 < 2 × 1 = 2 flips');
+    expect(text()).toContain('Increment 2 is running and has made 1 flip so far.');
   });
 
   it('keeps the last valid values and submits with Enter', () => {
