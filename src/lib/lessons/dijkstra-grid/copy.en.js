@@ -4,7 +4,7 @@ import { gridCopy } from '../grid-copy.en.js';
 export const en = {
   ...gridCopy,
   slug: 'dijkstra-grid',
-  topic: 'graphs',
+  topic: 'shortest-paths',
   level: 'Intermediate',
   title: 'Dijkstra’s algorithm on a grid',
   intro:

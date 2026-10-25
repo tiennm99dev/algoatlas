@@ -19,32 +19,15 @@ export const hub = {
       body: 'Edit the input and see how the number of steps grows or shrinks.',
     },
   ],
-  startCta: 'Start with sorting',
-  lessonCount: /** @param {number} n */ (n) => (n === 1 ? '1 lesson' : `${n} lessons`),
+  /** @param {string} topic */
+  startCta: (topic) => `Start with ${topic.toLowerCase()}`,
+  /** @param {number} level */
+  levelLabel: (level) => `Level ${level}`,
+  /** @param {number} ready @param {number} planned */
+  lessonCount: (ready, planned) =>
+    `${ready} of ${planned} ${planned === 1 ? 'lesson' : 'lessons'} ready`,
+  comingSoon: 'Coming soon',
 };
-
-/** @type {Record<string, {title: string, blurb: string}>} */
-export const topics = {
-  sorting: {
-    title: 'Sorting',
-    blurb: 'Put things in order, and see why some ways cost far more comparisons than others.',
-  },
-  searching: {
-    title: 'Searching',
-    blurb: 'Find a value fast by throwing away half of the candidates at every step.',
-  },
-  structures: {
-    title: 'Data structures',
-    blurb: 'Store data so that adding, finding, and removing stay fast as it grows.',
-  },
-  graphs: {
-    title: 'Graphs',
-    blurb:
-      'Explore grids with breadth-first, depth-first, and Dijkstra’s search to find paths and cheapest routes.',
-  },
-};
-
-export const topicOrder = ['sorting', 'searching', 'structures', 'graphs'];
 
 export const lessonChrome = {
   backToTopic: /** @param {string} title */ (title) => `All lessons in ${title}`,

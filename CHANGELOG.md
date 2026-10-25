@@ -4,6 +4,16 @@ All notable changes to **AlgoAtlas** are documented here. Format: [Keep a Change
 
 ## [Unreleased]
 
+### Added
+
+- A curriculum of three levels and 34 topics (`src/lib/curriculum/dsa.json`), imported from a syllabus manifest by `scripts/import-curriculum.js`. Topics, their order, and the lesson order now come from it.
+- The home page groups topics by level and shows how many of each topic's lessons are ready; topic hubs list the planned lessons as coming soon. The header links to the three levels.
+
+### Changed
+
+- Lessons register themselves: `registry.js` discovers every `copy.en.js` and orders them by the curriculum.
+- The binary search tree moved to `/trees/bst/` and Dijkstra on a grid to `/shortest-paths/dijkstra-grid/`. The "Data structures" topic is now "Hashing".
+
 ### Fixed
 
 - Binary search narration, counters, and you-drive checks used the target while it was still being typed ("31 < 5", "31 < null"); they now use the committed target.

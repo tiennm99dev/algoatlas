@@ -1,13 +1,19 @@
 <script>
   import { resolve } from '$app/paths';
   import { t } from '$lib/i18n/index.js';
+  import { chapters } from '$lib/curriculum/index.js';
   import { lessonPath, lessonsByTopic } from '$lib/lessons/registry.js';
 
   let { data } = $props();
 
   const copy = t();
   const topic = $derived(copy.topics[data.topic]);
-  const lessons = $derived(lessonsByTopic(data.topic));
+  // Every curriculum lesson in book order; the ones nobody has written yet show as coming soon.
+  const items = $derived.by(() => {
+    const written = lessonsByTopic(data.topic);
+    const plan = chapters.find((c) => c.slug === data.topic)?.lessons ?? [];
+    return plan.map((p) => ({ plan: p, lesson: written.find((l) => l.slug === p.slug) }));
+  });
 </script>
 
 <svelte:head>
@@ -28,22 +34,32 @@
   </header>
 
   <ul class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-    {#each lessons as lesson (lesson.slug)}
-      <!-- The title link stretches over the whole card, so the link is named by the title alone. -->
-      <li
-        class="relative rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-teal-600 hover:shadow-sm has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-teal-700"
-      >
-        <div class="mb-2 text-xs font-semibold tracking-wide text-slate-500 uppercase">
-          {lesson.level}
-        </div>
-        <h2 class="mb-1 text-lg font-bold text-slate-900">
-          <a
-            href={resolve(/** @type {'/'} */ (lessonPath(lesson)))}
-            class="outline-none after:absolute after:inset-0 after:rounded-2xl">{lesson.title}</a
-          >
-        </h2>
-        <p class="text-sm leading-relaxed text-slate-600">{lesson.intro}</p>
-      </li>
+    {#each items as { plan, lesson } (plan.slug)}
+      {#if lesson}
+        <!-- The title link stretches over the whole card, so the link is named by the title alone. -->
+        <li
+          class="relative rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-teal-600 hover:shadow-sm has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-teal-700"
+        >
+          <div class="mb-2 text-xs font-semibold tracking-wide text-slate-500 uppercase">
+            {lesson.level}
+          </div>
+          <h2 class="mb-1 text-lg font-bold text-slate-900">
+            <a
+              href={resolve(/** @type {'/'} */ (lessonPath(lesson)))}
+              class="outline-none after:absolute after:inset-0 after:rounded-2xl">{lesson.title}</a
+            >
+          </h2>
+          <p class="text-sm leading-relaxed text-slate-600">{lesson.intro}</p>
+        </li>
+      {:else}
+        <li class="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-5">
+          <div class="mb-2 text-xs font-semibold tracking-wide text-slate-500 uppercase">
+            {copy.hub.comingSoon}
+          </div>
+          <h2 class="mb-1 text-lg font-bold text-slate-600">{plan.title}</h2>
+          <p class="text-sm leading-relaxed text-slate-500">{plan.interactiveIdea}</p>
+        </li>
+      {/if}
     {/each}
   </ul>
 </section>

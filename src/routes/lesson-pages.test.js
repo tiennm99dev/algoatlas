@@ -4,13 +4,15 @@ import { createRawSnippet, flushSync, mount, tick, unmount } from 'svelte';
 import SortPage from './sorting/bubble-insertion-sort/+page.svelte';
 import BinaryPage from './searching/binary-search/+page.svelte';
 import BfsPage from './graphs/bfs-grid/+page.svelte';
-import DijkstraPage from './graphs/dijkstra-grid/+page.svelte';
+import DijkstraPage from './shortest-paths/dijkstra-grid/+page.svelte';
 import HubPage from './[topic]/+page.svelte';
+import HomePage from './+page.svelte';
 import Layout from './+layout.svelte';
 import { entries, load } from './[topic]/+page.js';
 import { page } from '$app/state';
 import { t } from '$lib/i18n/index.js';
 import { lessonPath, lessons } from '$lib/lessons/registry.js';
+import { levels } from '$lib/curriculum/index.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -339,21 +341,28 @@ describe('site chrome', () => {
     ]);
   };
 
-  it('marks the topic hub as the current page and its lessons as inside it', () => {
+  it('links each level to its home section and marks the level of the open topic', () => {
     expect(currentTopics('/sorting/')).toEqual([
-      ['Sorting', 'page'],
-      ['Searching', null],
-      ['Data structures', null],
-      ['Graphs', null],
+      ['Level 1: Foundations', 'true'],
+      ['Level 2: Core algorithms', null],
+      ['Level 3: Advanced topics', null],
     ]);
+    const hrefs = [...document.querySelectorAll('nav a')].map((a) => a.getAttribute('href'));
+    expect(hrefs).toEqual(['/#level-1', '/#level-2', '/#level-3']);
   });
 
-  it('does not call a lesson the current page', () => {
-    expect(currentTopics('/sorting/bubble-insertion-sort/')[0]).toEqual(['Sorting', 'true']);
+  it('marks the level of an open lesson and nothing on the home page', () => {
+    expect(currentTopics('/shortest-paths/dijkstra-grid/')[1]).toEqual([
+      'Level 2: Core algorithms',
+      'true',
+    ]);
+    unmount(/** @type {Record<string, any>} */ (app));
+    app = null;
+    expect(currentTopics('/').every(([, current]) => current === null)).toBe(true);
   });
 
-  it('marks the current topic with more than colour', () => {
-    currentTopics('/sorting/');
+  it('marks the current level with more than colour', () => {
+    currentTopics('/sorting/bubble-insertion-sort/');
     const link = /** @type {HTMLElement} */ (document.querySelector('nav a[aria-current]'));
     expect(link.className).toContain('aria-[current]:font-semibold');
     expect(link.className).toContain('aria-[current]:underline');
@@ -421,5 +430,49 @@ describe('site chrome', () => {
     render(HubPage, { data: { topic: 'sorting' } });
     const names = [...document.querySelectorAll('li a')].map((a) => a.textContent?.trim());
     expect(names).toEqual(lessons.filter((l) => l.topic === 'sorting').map((l) => l.title));
+  });
+
+  it('lists every planned lesson of a topic in book order and links only the written ones', () => {
+    render(HubPage, { data: { topic: 'trees' } });
+    const cards = [...document.querySelectorAll('section > ul > li')].map((li) => ({
+      title: li.querySelector('h2')?.textContent?.trim(),
+      linked: li.querySelector('a') !== null,
+    }));
+    const plan = levels[0].chapters.find((c) => c.slug === 'trees')?.lessons ?? [];
+    expect(cards.map((c) => c.title)).toEqual(plan.map((l) => l.title));
+    expect(cards.filter((c) => c.linked).map((c) => c.title)).toEqual(['Binary search tree']);
+    expect(text()).toContain('Coming soon');
+  });
+});
+
+describe('home page', () => {
+  it('groups every topic under its level, in curriculum order', () => {
+    render(HomePage);
+    const sections = [...document.querySelectorAll('section[id^="level-"]')];
+    expect(sections.map((el) => el.id)).toEqual(['level-1', 'level-2', 'level-3']);
+    sections.forEach((el, i) => {
+      const titles = [...el.querySelectorAll('h4')].map((h) => h.textContent?.trim());
+      expect(titles).toEqual(levels[i].chapters.map((c) => c.title));
+      expect(el.querySelector('h3')?.textContent).toContain(levels[i].title);
+    });
+  });
+
+  it('counts written against planned lessons and links the written ones', () => {
+    render(HomePage);
+    const sorting = /** @type {HTMLElement} */ (
+      [...document.querySelectorAll('li')].find(
+        (li) => li.querySelector('h4')?.textContent?.trim() === 'Sorting',
+      )
+    );
+    expect(sorting.textContent).toContain('2 of 8 lessons ready');
+    const links = [...sorting.querySelectorAll(':scope ul a')].map((a) => a.getAttribute('href'));
+    expect(links).toEqual(['/sorting/bubble-insertion-sort/', '/sorting/merge-quick-sort/']);
+  });
+
+  it('starts the path at the first written lesson', () => {
+    render(HomePage);
+    const cta = /** @type {HTMLAnchorElement} */ (document.querySelector('a.btn-primary'));
+    expect(cta.getAttribute('href')).toBe(lessonPath(lessons[0]));
+    expect(cta.textContent).toContain('Start with sorting');
   });
 });

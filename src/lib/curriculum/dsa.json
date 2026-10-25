@@ -1,0 +1,1953 @@
+{
+  "subject": "dsa",
+  "levels": [
+    {
+      "level": 1,
+      "title": "Foundations",
+      "chapters": [
+        {
+          "no": 1,
+          "title": "Complexity analysis",
+          "slug": "complexity",
+          "strand": "analysis",
+          "blurb": "Count the steps an algorithm takes and describe how that count grows with the input.",
+          "lessons": [
+            {
+              "no": 1,
+              "title": "Algorithms and the RAM model",
+              "slug": "algorithms-ram-model",
+              "kind": "theory",
+              "keyIdeas": [
+                "what an algorithm is",
+                "word-RAM cost model",
+                "correctness vs efficiency"
+              ],
+              "interactiveIdea": "Step counter that tallies primitive operations as a small loop runs on a toy RAM machine."
+            },
+            {
+              "no": 2,
+              "title": "Asymptotic notation: Big-O, Omega, Theta",
+              "slug": "asymptotic-notation",
+              "kind": "theory",
+              "keyIdeas": ["growth rates", "dominant terms", "O, Omega, Theta bounds"],
+              "interactiveIdea": "Draggable log-scale plot comparing n, n log n, n^2 and 2^n with a slider for n."
+            },
+            {
+              "no": 3,
+              "title": "Analysing loops and recursion",
+              "slug": "analysing-loops-recursion",
+              "kind": "theory",
+              "keyIdeas": ["nested loop counting", "recurrence relations", "recursion trees"],
+              "interactiveIdea": "Recursion-tree builder that expands T(n) level by level and sums the cost per level."
+            },
+            {
+              "no": 4,
+              "title": "Best, worst and average case",
+              "slug": "best-worst-average-case",
+              "kind": "theory",
+              "keyIdeas": ["input-dependent cost", "worst-case guarantees", "expected cost"],
+              "interactiveIdea": "Run linear search on random, best and worst inputs and plot the comparison counts."
+            },
+            {
+              "no": 5,
+              "title": "Space complexity",
+              "slug": "space-complexity",
+              "kind": "theory",
+              "keyIdeas": ["auxiliary space", "call-stack depth", "in-place algorithms"],
+              "interactiveIdea": "Memory bar that grows with the call stack while a recursive function runs."
+            },
+            {
+              "no": 6,
+              "title": "Amortized analysis: aggregate, accounting, potential",
+              "slug": "amortized-analysis",
+              "kind": "theory",
+              "keyIdeas": [
+                "aggregate method",
+                "accounting method with credits",
+                "potential function"
+              ],
+              "interactiveIdea": "Binary counter whose increments deposit and spend credit coins, with a running potential graph."
+            },
+            {
+              "no": 7,
+              "title": "Practice: estimating running time",
+              "slug": "practice-complexity",
+              "kind": "practice",
+              "keyIdeas": ["count operations", "match code to growth class"],
+              "interactiveIdea": "Quiz cards: drag each code snippet to its Big-O bucket and check the answer."
+            }
+          ]
+        },
+        {
+          "no": 2,
+          "title": "Arrays and strings",
+          "slug": "arrays-strings",
+          "strand": "linear-structures",
+          "blurb": "Work with contiguous data: growable arrays, two pointers, sliding windows, and prefix sums.",
+          "lessons": [
+            {
+              "no": 1,
+              "title": "Static and dynamic arrays",
+              "slug": "static-dynamic-arrays",
+              "kind": "theory",
+              "keyIdeas": ["contiguous memory", "index access O(1)", "resizing by doubling"],
+              "interactiveIdea": "Animated array that doubles capacity on push, showing copy cost and spare slots."
+            },
+            {
+              "no": 2,
+              "title": "Amortized analysis of dynamic arrays",
+              "slug": "amortized-dynamic-arrays",
+              "kind": "theory",
+              "keyIdeas": ["aggregate method", "accounting method", "O(1) amortized append"],
+              "interactiveIdea": "Coin bank counter that charges each append and spends coins when the array resizes."
+            },
+            {
+              "no": 3,
+              "title": "Two pointers",
+              "slug": "two-pointers",
+              "kind": "theory",
+              "keyIdeas": ["converging pointers", "sorted-array pair search", "in-place partition"],
+              "interactiveIdea": "Two coloured pointers moving inward over a sorted array to find a target sum."
+            },
+            {
+              "no": 4,
+              "title": "Sliding window",
+              "slug": "sliding-window",
+              "kind": "theory",
+              "keyIdeas": [
+                "fixed and variable windows",
+                "running aggregate",
+                "O(n) subarray scans"
+              ],
+              "interactiveIdea": "Resizable highlighted window sliding over an array with its running sum shown."
+            },
+            {
+              "no": 5,
+              "title": "Prefix sums and difference arrays",
+              "slug": "prefix-sums",
+              "kind": "theory",
+              "keyIdeas": ["cumulative sums", "O(1) range sum", "range updates via differences"],
+              "interactiveIdea": "Array with its prefix-sum row; select a range to see the two-lookup subtraction."
+            },
+            {
+              "no": 6,
+              "title": "String basics and manipulation",
+              "slug": "string-basics",
+              "kind": "theory",
+              "keyIdeas": [
+                "characters and encodings",
+                "immutability",
+                "builder vs concatenation cost"
+              ],
+              "interactiveIdea": "String builder demo contrasting repeated concatenation copies with a growing buffer."
+            },
+            {
+              "no": 7,
+              "title": "Practice: array and string problems",
+              "slug": "practice-arrays-strings",
+              "kind": "practice",
+              "keyIdeas": ["choose two pointers or window", "prefix-sum tricks"],
+              "interactiveIdea": "Problem runner where the learner picks a technique and watches it solve sample inputs."
+            }
+          ]
+        },
+        {
+          "no": 3,
+          "title": "Sorting",
+          "slug": "sorting",
+          "strand": "sorting-searching",
+          "blurb": "Put things in order, and see why some ways cost far more comparisons than others.",
+          "lessons": [
+            {
+              "no": 1,
+              "title": "Bubble sort & insertion sort",
+              "slug": "bubble-insertion-sort",
+              "kind": "theory",
+              "keyIdeas": ["adjacent swaps", "shifting into a sorted prefix", "O(n^2) comparisons"],
+              "interactiveIdea": "Bar chart that steps through bubble and insertion sort, highlighting compares and swaps."
+            },
+            {
+              "no": 2,
+              "title": "Selection sort and stability",
+              "slug": "selection-sort-stability",
+              "kind": "theory",
+              "keyIdeas": ["select the minimum", "stable vs unstable sorts", "in-place sorting"],
+              "interactiveIdea": "Cards with equal keys in different colours to show whether a sort keeps their order."
+            },
+            {
+              "no": 3,
+              "title": "Merge sort & quicksort",
+              "slug": "merge-quick-sort",
+              "kind": "theory",
+              "keyIdeas": [
+                "divide and conquer",
+                "merging sorted halves",
+                "partition around a pivot"
+              ],
+              "interactiveIdea": "Split-and-merge tree view beside a partition animation with a pivot selector."
+            },
+            {
+              "no": 4,
+              "title": "Heapsort",
+              "slug": "heapsort",
+              "kind": "theory",
+              "keyIdeas": ["build a max-heap", "repeated extract-max", "in-place O(n log n)"],
+              "interactiveIdea": "Linked array and tree views of a heap shrinking as the max is swapped to the end."
+            },
+            {
+              "no": 5,
+              "title": "Comparison sort lower bound",
+              "slug": "comparison-sort-lower-bound",
+              "kind": "theory",
+              "keyIdeas": ["decision trees", "log2(n!) leaves", "Omega(n log n)"],
+              "interactiveIdea": "Interactive decision tree for sorting three items, counting leaves and depth."
+            },
+            {
+              "no": 6,
+              "title": "Counting sort and radix sort",
+              "slug": "counting-radix-sort",
+              "kind": "theory",
+              "keyIdeas": ["counting keys", "stable digit passes", "linear-time sorting"],
+              "interactiveIdea": "Buckets filling digit by digit as radix sort passes over the numbers."
+            },
+            {
+              "no": 7,
+              "title": "Sorting applications",
+              "slug": "sorting-applications",
+              "kind": "theory",
+              "keyIdeas": ["deduplication", "interval scheduling by start", "custom comparators"],
+              "interactiveIdea": "Interval list that becomes mergeable once sorted, with a comparator toggle."
+            },
+            {
+              "no": 8,
+              "title": "Practice: choosing a sort",
+              "slug": "practice-sorting",
+              "kind": "practice",
+              "keyIdeas": ["match sort to constraints", "stability and memory trade-offs"],
+              "interactiveIdea": "Race panel running several sorts on the same input, with input-shape presets."
+            }
+          ]
+        },
+        {
+          "no": 4,
+          "title": "Searching",
+          "slug": "searching",
+          "strand": "sorting-searching",
+          "blurb": "Find a value fast by throwing away half of the candidates at every step.",
+          "lessons": [
+            {
+              "no": 1,
+              "title": "Linear search",
+              "slug": "linear-search",
+              "kind": "theory",
+              "keyIdeas": ["sequential scan", "sentinel", "O(n) worst case"],
+              "interactiveIdea": "Pointer scanning an unsorted array with a running comparison counter."
+            },
+            {
+              "no": 2,
+              "title": "Binary search",
+              "slug": "binary-search",
+              "kind": "theory",
+              "keyIdeas": ["halving the interval", "sorted input", "O(log n)"],
+              "interactiveIdea": "Low, mid and high markers narrowing over a sorted array toward the target."
+            },
+            {
+              "no": 3,
+              "title": "Lower bound & upper bound",
+              "slug": "lower-upper-bound",
+              "kind": "theory",
+              "keyIdeas": ["first position >= x", "first position > x", "counting equal keys"],
+              "interactiveIdea": "Sorted array with duplicates where both bounds are found and the equal range is shaded."
+            },
+            {
+              "no": 4,
+              "title": "Binary search on the answer",
+              "slug": "binary-search-on-answer",
+              "kind": "theory",
+              "keyIdeas": ["monotone predicate", "search over values", "feasibility check"],
+              "interactiveIdea": "Predicate strip of false/true cells where the boundary is located by halving."
+            },
+            {
+              "no": 5,
+              "title": "Ternary search",
+              "slug": "ternary-search",
+              "kind": "theory",
+              "keyIdeas": ["unimodal functions", "discarding a third", "real-valued search"],
+              "interactiveIdea": "Plot of a unimodal function with two probes closing in on the peak."
+            },
+            {
+              "no": 6,
+              "title": "Practice: searching problems",
+              "slug": "practice-searching",
+              "kind": "practice",
+              "keyIdeas": ["spot a monotone predicate", "off-by-one boundaries"],
+              "interactiveIdea": "Boundary debugger that shows where a buggy binary search loops or misses."
+            }
+          ]
+        },
+        {
+          "no": 5,
+          "title": "Linked lists",
+          "slug": "linked-lists",
+          "strand": "linear-structures",
+          "blurb": "Chain nodes with pointers so that inserting and removing in the middle stays cheap.",
+          "lessons": [
+            {
+              "no": 1,
+              "title": "Singly linked lists",
+              "slug": "singly-linked-lists",
+              "kind": "theory",
+              "keyIdeas": ["nodes and pointers", "insert and delete at head", "O(n) access"],
+              "interactiveIdea": "Node boxes with arrows that rewire live as insert and delete run."
+            },
+            {
+              "no": 2,
+              "title": "Doubly and circular linked lists",
+              "slug": "doubly-circular-lists",
+              "kind": "theory",
+              "keyIdeas": ["prev and next pointers", "sentinel nodes", "O(1) removal given a node"],
+              "interactiveIdea": "Doubly linked chain where removing a node shows both pointer updates."
+            },
+            {
+              "no": 3,
+              "title": "Linked list techniques",
+              "slug": "linked-list-techniques",
+              "kind": "theory",
+              "keyIdeas": ["reversal", "fast and slow pointers", "cycle detection (Floyd)"],
+              "interactiveIdea": "Tortoise and hare pointers racing around a list with a cycle until they meet."
+            },
+            {
+              "no": 4,
+              "title": "Practice: linked list problems",
+              "slug": "practice-linked-lists",
+              "kind": "practice",
+              "keyIdeas": ["merge two lists", "find the middle", "remove nth from end"],
+              "interactiveIdea": "Pointer sandbox where the learner steps through solutions on custom lists."
+            }
+          ]
+        },
+        {
+          "no": 6,
+          "title": "Stacks and queues",
+          "slug": "stacks-queues",
+          "strand": "linear-structures",
+          "blurb": "Add and remove at the ends: last in, first out, or first in, first out.",
+          "lessons": [
+            {
+              "no": 1,
+              "title": "Stacks",
+              "slug": "stacks",
+              "kind": "theory",
+              "keyIdeas": ["LIFO", "push and pop", "array or list implementation"],
+              "interactiveIdea": "Stack of plates that animates push and pop with the top pointer."
+            },
+            {
+              "no": 2,
+              "title": "Queues and deques",
+              "slug": "queues-deques",
+              "kind": "theory",
+              "keyIdeas": ["FIFO", "circular buffer", "double-ended queue"],
+              "interactiveIdea": "Circular buffer ring with head and tail indices wrapping around."
+            },
+            {
+              "no": 3,
+              "title": "Stack applications",
+              "slug": "stack-applications",
+              "kind": "theory",
+              "keyIdeas": ["balanced brackets", "expression evaluation", "call stack"],
+              "interactiveIdea": "Bracket checker that pushes and pops as each character is read."
+            },
+            {
+              "no": 4,
+              "title": "Monotonic stack and queue",
+              "slug": "monotonic-stack-queue",
+              "kind": "theory",
+              "keyIdeas": ["next greater element", "sliding window maximum", "amortized O(n)"],
+              "interactiveIdea": "Bars with a monotonic stack beside them that pops shorter bars as each new bar arrives."
+            },
+            {
+              "no": 5,
+              "title": "Practice: stacks and queues",
+              "slug": "practice-stacks-queues",
+              "kind": "practice",
+              "keyIdeas": ["queue from two stacks", "min-stack"],
+              "interactiveIdea": "Two-stack queue visualiser showing when elements transfer between stacks."
+            }
+          ]
+        },
+        {
+          "no": 7,
+          "title": "Hashing",
+          "slug": "structures",
+          "strand": "linear-structures",
+          "blurb": "Turn a key into a bucket number so that adding, finding, and removing take about one step.",
+          "lessons": [
+            {
+              "no": 1,
+              "title": "Hash table",
+              "slug": "hash-table",
+              "kind": "theory",
+              "keyIdeas": ["hash function to bucket", "collisions", "average O(1) lookup"],
+              "interactiveIdea": "Buckets that fill as keys are inserted, with the hash value of each key shown."
+            },
+            {
+              "no": 2,
+              "title": "Collision resolution: chaining vs open addressing",
+              "slug": "collision-resolution",
+              "kind": "theory",
+              "keyIdeas": ["separate chaining", "linear and quadratic probing", "double hashing"],
+              "interactiveIdea": "Side-by-side table using chaining and probing on the same key sequence."
+            },
+            {
+              "no": 3,
+              "title": "Load factor and rehashing",
+              "slug": "load-factor-rehashing",
+              "kind": "theory",
+              "keyIdeas": ["load factor alpha", "resize threshold", "amortized rehash cost"],
+              "interactiveIdea": "Load-factor gauge that triggers a rehash animation when it crosses the threshold."
+            },
+            {
+              "no": 4,
+              "title": "Designing hash functions",
+              "slug": "hash-functions",
+              "kind": "theory",
+              "keyIdeas": ["uniform distribution", "universal hashing", "adversarial inputs"],
+              "interactiveIdea": "Histogram of bucket counts for a weak versus a good hash on the same keys."
+            },
+            {
+              "no": 5,
+              "title": "Sets, maps and frequency counting",
+              "slug": "sets-maps-counting",
+              "kind": "theory",
+              "keyIdeas": ["set membership", "key-value maps", "counting with hashes"],
+              "interactiveIdea": "Word stream feeding a live frequency map sorted by count."
+            },
+            {
+              "no": 6,
+              "title": "Practice: hashing problems",
+              "slug": "practice-hashing",
+              "kind": "practice",
+              "keyIdeas": ["two-sum with a map", "grouping by key"],
+              "interactiveIdea": "Problem runner that shows the hash map contents after each step."
+            }
+          ]
+        },
+        {
+          "no": 8,
+          "title": "Recursion",
+          "slug": "recursion",
+          "strand": "paradigms",
+          "blurb": "Solve a problem by solving smaller copies of itself, and prove it works by induction.",
+          "lessons": [
+            {
+              "no": 1,
+              "title": "Recursion basics",
+              "slug": "recursion-basics",
+              "kind": "theory",
+              "keyIdeas": ["base case", "recursive case", "call stack frames"],
+              "interactiveIdea": "Call-stack panel that pushes and pops frames for factorial and Fibonacci."
+            },
+            {
+              "no": 2,
+              "title": "Recursion and induction",
+              "slug": "recursion-induction",
+              "kind": "theory",
+              "keyIdeas": ["proof by induction", "loop invariants", "correctness arguments"],
+              "interactiveIdea": "Invariant checker that highlights the invariant before and after each loop step."
+            },
+            {
+              "no": 3,
+              "title": "Practice: recursive thinking",
+              "slug": "practice-recursion",
+              "kind": "practice",
+              "keyIdeas": ["towers of Hanoi", "generate subsets"],
+              "interactiveIdea": "Towers of Hanoi board solved recursively with the call tree alongside."
+            }
+          ]
+        },
+        {
+          "no": 9,
+          "title": "Trees",
+          "slug": "trees",
+          "strand": "trees",
+          "blurb": "Organise data in branches, walk it in every order, and keep keys sorted in a search tree.",
+          "lessons": [
+            {
+              "no": 1,
+              "title": "Binary trees and terminology",
+              "slug": "binary-trees",
+              "kind": "theory",
+              "keyIdeas": [
+                "root, leaf, depth, height",
+                "full and complete trees",
+                "array representation"
+              ],
+              "interactiveIdea": "Editable tree that labels depth and height of each node as nodes are added."
+            },
+            {
+              "no": 2,
+              "title": "Tree traversals",
+              "slug": "tree-traversals",
+              "kind": "theory",
+              "keyIdeas": ["preorder, inorder, postorder", "level order", "iterative traversal"],
+              "interactiveIdea": "Traversal player that numbers nodes in visit order for each traversal type."
+            },
+            {
+              "no": 3,
+              "title": "Binary search tree",
+              "slug": "bst",
+              "kind": "theory",
+              "keyIdeas": [
+                "BST ordering property",
+                "search, insert, delete",
+                "height decides cost"
+              ],
+              "interactiveIdea": "BST that animates search paths and the three delete cases."
+            },
+            {
+              "no": 4,
+              "title": "N-ary trees and tree recursion",
+              "slug": "nary-trees",
+              "kind": "theory",
+              "keyIdeas": ["children lists", "subtree sizes", "tree diameter"],
+              "interactiveIdea": "General tree where subtree sizes bubble up from the leaves."
+            },
+            {
+              "no": 5,
+              "title": "Practice: tree problems",
+              "slug": "practice-trees",
+              "kind": "practice",
+              "keyIdeas": ["validate a BST", "lowest common ancestor in a BST"],
+              "interactiveIdea": "Tree sandbox where the learner checks a BST and finds ancestors by clicking."
+            }
+          ]
+        },
+        {
+          "no": 10,
+          "title": "Heaps and priority queues",
+          "slug": "heaps",
+          "strand": "trees",
+          "blurb": "Keep the smallest item on top so that a priority queue serves it in logarithmic time.",
+          "lessons": [
+            {
+              "no": 1,
+              "title": "Binary heaps",
+              "slug": "binary-heaps",
+              "kind": "theory",
+              "keyIdeas": ["heap property", "sift up and sift down", "array-backed tree"],
+              "interactiveIdea": "Synced array and tree views of a heap during insert and extract."
+            },
+            {
+              "no": 2,
+              "title": "Building a heap in linear time",
+              "slug": "build-heap",
+              "kind": "theory",
+              "keyIdeas": ["bottom-up heapify", "O(n) build", "why not O(n log n)"],
+              "interactiveIdea": "Bottom-up heapify animation with a cost counter per level."
+            },
+            {
+              "no": 3,
+              "title": "Priority queue applications",
+              "slug": "priority-queue-applications",
+              "kind": "theory",
+              "keyIdeas": ["top-k elements", "merge k sorted lists", "event scheduling"],
+              "interactiveIdea": "Merge-k-lists animation pulling the smallest head from a min-heap."
+            },
+            {
+              "no": 4,
+              "title": "Practice: heap problems",
+              "slug": "practice-heaps",
+              "kind": "practice",
+              "keyIdeas": ["running median with two heaps", "k closest points"],
+              "interactiveIdea": "Two-heap balance view keeping the running median of a stream."
+            }
+          ]
+        },
+        {
+          "no": 11,
+          "title": "Graph basics and traversal",
+          "slug": "graphs",
+          "strand": "graphs",
+          "blurb": "Model connections as nodes and edges, then explore them breadth-first and depth-first.",
+          "lessons": [
+            {
+              "no": 1,
+              "title": "Graph representations",
+              "slug": "graph-representations",
+              "kind": "theory",
+              "keyIdeas": [
+                "vertices and edges",
+                "adjacency list vs matrix",
+                "directed and weighted graphs"
+              ],
+              "interactiveIdea": "Editable graph with synced adjacency list and matrix panels."
+            },
+            {
+              "no": 2,
+              "title": "Breadth-first search on a grid",
+              "slug": "bfs-grid",
+              "kind": "theory",
+              "keyIdeas": [
+                "queue frontier",
+                "layers by distance",
+                "shortest path in unweighted graphs"
+              ],
+              "interactiveIdea": "Grid where BFS floods outward layer by layer from the start cell."
+            },
+            {
+              "no": 3,
+              "title": "Depth-first search on a grid",
+              "slug": "dfs-grid",
+              "kind": "theory",
+              "keyIdeas": [
+                "stack or recursion",
+                "backtracking along paths",
+                "discovery and finish order"
+              ],
+              "interactiveIdea": "Grid where DFS dives down one path and backtracks at dead ends."
+            },
+            {
+              "no": 4,
+              "title": "Connected components and flood fill",
+              "slug": "connected-components",
+              "kind": "theory",
+              "keyIdeas": ["component labelling", "flood fill", "counting islands"],
+              "interactiveIdea": "Island map that colours each component as flood fill reaches it."
+            },
+            {
+              "no": 5,
+              "title": "Topological sort",
+              "slug": "topological-sort",
+              "kind": "theory",
+              "keyIdeas": ["DAGs", "Kahn's algorithm", "DFS finish order"],
+              "interactiveIdea": "Task dependency DAG whose nodes peel off in topological order."
+            },
+            {
+              "no": 6,
+              "title": "Bipartite check and cycle detection",
+              "slug": "bipartite-cycles",
+              "kind": "theory",
+              "keyIdeas": ["two-colouring", "back edges", "directed vs undirected cycles"],
+              "interactiveIdea": "Graph that tries to 2-colour itself and highlights the odd cycle when it fails."
+            },
+            {
+              "no": 7,
+              "title": "Practice: traversal problems",
+              "slug": "practice-graph-traversal",
+              "kind": "practice",
+              "keyIdeas": ["choose BFS or DFS", "multi-source BFS"],
+              "interactiveIdea": "Grid puzzles where the learner picks BFS or DFS and compares visit counts."
+            }
+          ]
+        },
+        {
+          "no": 12,
+          "title": "Review: foundations",
+          "slug": "review-foundations",
+          "strand": "review",
+          "blurb": "Check what you learned across the foundations before moving on to core algorithms.",
+          "lessons": [
+            {
+              "no": 1,
+              "title": "Review: foundations",
+              "slug": "review-foundations-lesson",
+              "kind": "review",
+              "keyIdeas": [
+                "complexity of core operations",
+                "choosing a structure",
+                "sorting and searching recap"
+              ],
+              "interactiveIdea": "Mixed quiz that asks which structure or algorithm fits each scenario, with instant feedback."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "title": "Core algorithms",
+      "chapters": [
+        {
+          "no": 1,
+          "title": "Shortest paths",
+          "slug": "shortest-paths",
+          "strand": "graphs",
+          "blurb": "Find the cheapest route through a weighted graph with Dijkstra, Bellman-Ford, and friends.",
+          "lessons": [
+            {
+              "no": 1,
+              "title": "Weighted graphs and shortest-path properties",
+              "slug": "shortest-path-properties",
+              "kind": "theory",
+              "keyIdeas": ["path weight", "relaxation", "optimal substructure"],
+              "interactiveIdea": "Edge relaxation demo where tightening one edge updates the distance labels."
+            },
+            {
+              "no": 2,
+              "title": "Dijkstra’s algorithm on a grid",
+              "slug": "dijkstra-grid",
+              "kind": "theory",
+              "keyIdeas": ["min-priority queue", "non-negative weights", "settled cells"],
+              "interactiveIdea": "Weighted grid where Dijkstra settles cells in order of distance."
+            },
+            {
+              "no": 3,
+              "title": "Dijkstra on general graphs",
+              "slug": "dijkstra-general",
+              "kind": "theory",
+              "keyIdeas": ["binary-heap implementation", "O((V+E) log V)", "lazy deletion"],
+              "interactiveIdea": "Graph view with the priority queue contents shown beside each step."
+            },
+            {
+              "no": 4,
+              "title": "0-1 BFS and DAG shortest paths",
+              "slug": "zero-one-bfs-dag",
+              "kind": "theory",
+              "keyIdeas": [
+                "deque for 0/1 weights",
+                "relax in topological order",
+                "longest path in a DAG"
+              ],
+              "interactiveIdea": "Deque panel pushing 0-edges to the front and 1-edges to the back."
+            },
+            {
+              "no": 5,
+              "title": "Bellman-Ford",
+              "slug": "bellman-ford",
+              "kind": "theory",
+              "keyIdeas": [
+                "V-1 rounds of relaxation",
+                "negative weights",
+                "negative-cycle detection"
+              ],
+              "interactiveIdea": "Round-by-round relaxation table that flags a negative cycle in round V."
+            },
+            {
+              "no": 6,
+              "title": "Floyd-Warshall",
+              "slug": "floyd-warshall",
+              "kind": "theory",
+              "keyIdeas": ["all-pairs shortest paths", "intermediate vertex k", "O(V^3)"],
+              "interactiveIdea": "Distance matrix that updates as each intermediate vertex k is allowed."
+            },
+            {
+              "no": 7,
+              "title": "Johnson’s algorithm",
+              "slug": "johnson-algorithm",
+              "kind": "theory",
+              "keyIdeas": [
+                "reweighting with potentials",
+                "Bellman-Ford then Dijkstra",
+                "sparse all-pairs"
+              ],
+              "interactiveIdea": "Before-and-after edge weights showing how potentials remove negative weights."
+            },
+            {
+              "no": 8,
+              "title": "A* search",
+              "slug": "a-star",
+              "kind": "theory",
+              "keyIdeas": ["heuristic h(n)", "admissible and consistent", "f = g + h"],
+              "interactiveIdea": "Grid comparing cells expanded by Dijkstra and A* with a heuristic toggle."
+            },
+            {
+              "no": 9,
+              "title": "Practice: shortest-path problems",
+              "slug": "practice-shortest-paths",
+              "kind": "practice",
+              "keyIdeas": ["pick the right algorithm", "state-space graphs"],
+              "interactiveIdea": "Scenario cards where the learner picks an algorithm and sees it run."
+            }
+          ]
+        },
+        {
+          "no": 2,
+          "title": "Union-find",
+          "slug": "union-find",
+          "strand": "structures",
+          "blurb": "Merge groups and ask whether two items share one, in almost constant time.",
+          "lessons": [
+            {
+              "no": 1,
+              "title": "Disjoint set union",
+              "slug": "disjoint-set-union",
+              "kind": "theory",
+              "keyIdeas": ["find and union", "representative roots", "dynamic connectivity"],
+              "interactiveIdea": "Forest of sets that merges as union operations are applied."
+            },
+            {
+              "no": 2,
+              "title": "Union by rank and path compression",
+              "slug": "union-by-rank-path-compression",
+              "kind": "theory",
+              "keyIdeas": ["rank heuristic", "path compression", "inverse Ackermann time"],
+              "interactiveIdea": "Tall tree flattening under path compression with a find-cost counter."
+            },
+            {
+              "no": 3,
+              "title": "Practice: union-find problems",
+              "slug": "practice-union-find",
+              "kind": "practice",
+              "keyIdeas": ["count components online", "detect a cycle while adding edges"],
+              "interactiveIdea": "Edge stream that colours components and flags the edge closing a cycle."
+            }
+          ]
+        },
+        {
+          "no": 3,
+          "title": "Minimum spanning trees",
+          "slug": "mst",
+          "strand": "graphs",
+          "blurb": "Connect every node with the least total edge weight, using Kruskal’s and Prim’s algorithms.",
+          "lessons": [
+            {
+              "no": 1,
+              "title": "Cut property and MST basics",
+              "slug": "mst-cut-property",
+              "kind": "theory",
+              "keyIdeas": ["spanning trees", "cut property", "cycle property"],
+              "interactiveIdea": "Draggable cut across a graph highlighting the lightest crossing edge."
+            },
+            {
+              "no": 2,
+              "title": "Kruskal’s algorithm",
+              "slug": "kruskal",
+              "kind": "theory",
+              "keyIdeas": ["sort edges by weight", "union-find to avoid cycles", "O(E log E)"],
+              "interactiveIdea": "Sorted edge list feeding a graph where accepted edges join components."
+            },
+            {
+              "no": 3,
+              "title": "Prim’s algorithm",
+              "slug": "prim",
+              "kind": "theory",
+              "keyIdeas": [
+                "grow one tree",
+                "priority queue of crossing edges",
+                "dense vs sparse graphs"
+              ],
+              "interactiveIdea": "Tree growing from a start vertex, adding the cheapest frontier edge each step."
+            },
+            {
+              "no": 4,
+              "title": "Practice: MST problems",
+              "slug": "practice-mst",
+              "kind": "practice",
+              "keyIdeas": ["minimum bottleneck path", "second-best MST"],
+              "interactiveIdea": "Graph editor where the learner predicts the MST and checks it."
+            }
+          ]
+        },
+        {
+          "no": 4,
+          "title": "Advanced graph algorithms",
+          "slug": "advanced-graphs",
+          "strand": "graphs",
+          "blurb": "Find strongly connected parts, weak links, Euler tours, and solve 2-SAT with graphs.",
+          "lessons": [
+            {
+              "no": 1,
+              "title": "Strongly connected components",
+              "slug": "strongly-connected-components",
+              "kind": "theory",
+              "keyIdeas": ["Kosaraju", "Tarjan low-link", "condensation DAG"],
+              "interactiveIdea": "Directed graph that collapses into its condensation DAG after SCCs are found."
+            },
+            {
+              "no": 2,
+              "title": "Bridges and articulation points",
+              "slug": "bridges-articulation-points",
+              "kind": "theory",
+              "keyIdeas": ["DFS tree", "low-link values", "critical edges and vertices"],
+              "interactiveIdea": "DFS tree with tin/low labels that marks bridges in red."
+            },
+            {
+              "no": 3,
+              "title": "Eulerian paths and circuits",
+              "slug": "eulerian-paths",
+              "kind": "theory",
+              "keyIdeas": ["degree conditions", "Hierholzer's algorithm", "every edge once"],
+              "interactiveIdea": "Pen tracing an Euler circuit edge by edge as Hierholzer splices cycles."
+            },
+            {
+              "no": 4,
+              "title": "2-SAT",
+              "slug": "two-sat",
+              "kind": "theory",
+              "keyIdeas": [
+                "implication graph",
+                "SCC-based satisfiability",
+                "assignment from topological order"
+              ],
+              "interactiveIdea": "Clause list that builds an implication graph and reports a satisfying assignment."
+            },
+            {
+              "no": 5,
+              "title": "Practice: advanced graph problems",
+              "slug": "practice-advanced-graphs",
+              "kind": "practice",
+              "keyIdeas": ["network reliability", "dependency cycles"],
+              "interactiveIdea": "Network map where removing a node shows which parts disconnect."
+            }
+          ]
+        },
+        {
+          "no": 5,
+          "title": "Divide and conquer",
+          "slug": "divide-and-conquer",
+          "strand": "paradigms",
+          "blurb": "Split a problem in parts, solve each, combine the answers, and read the cost off the master theorem.",
+          "lessons": [
+            {
+              "no": 1,
+              "title": "Divide and conquer and the master theorem",
+              "slug": "master-theorem",
+              "kind": "theory",
+              "keyIdeas": ["divide, conquer, combine", "recurrence a T(n/b) + f(n)", "three cases"],
+              "interactiveIdea": "Master-theorem calculator with a recursion tree that recolours by dominant level."
+            },
+            {
+              "no": 2,
+              "title": "Counting inversions",
+              "slug": "counting-inversions",
+              "kind": "theory",
+              "keyIdeas": ["merge-sort extension", "cross inversions", "O(n log n)"],
+              "interactiveIdea": "Merge step that counts inversions as elements cross from right to left."
+            },
+            {
+              "no": 3,
+              "title": "Quickselect and median of medians",
+              "slug": "quickselect",
+              "kind": "theory",
+              "keyIdeas": [
+                "k-th order statistic",
+                "expected linear time",
+                "worst-case linear selection"
+              ],
+              "interactiveIdea": "Partition animation that discards one side each round to find the k-th element."
+            },
+            {
+              "no": 4,
+              "title": "Karatsuba and Strassen",
+              "slug": "karatsuba-strassen",
+              "kind": "theory",
+              "keyIdeas": [
+                "fewer recursive multiplications",
+                "O(n^1.585)",
+                "matrix multiplication"
+              ],
+              "interactiveIdea": "Multiplication tree comparing four versus three recursive products."
+            },
+            {
+              "no": 5,
+              "title": "Closest pair of points",
+              "slug": "closest-pair",
+              "kind": "theory",
+              "keyIdeas": ["split by x", "strip of width 2d", "O(n log n)"],
+              "interactiveIdea": "Point cloud with the dividing line and strip where cross pairs are checked."
+            },
+            {
+              "no": 6,
+              "title": "Practice: divide and conquer problems",
+              "slug": "practice-divide-and-conquer",
+              "kind": "practice",
+              "keyIdeas": ["maximum subarray", "majority element"],
+              "interactiveIdea": "Split view where the learner writes the combine step and checks it on samples."
+            }
+          ]
+        },
+        {
+          "no": 6,
+          "title": "Greedy algorithms",
+          "slug": "greedy",
+          "strand": "paradigms",
+          "blurb": "Make the best local choice at every step, and learn when that is enough for the best answer.",
+          "lessons": [
+            {
+              "no": 1,
+              "title": "Greedy choice and exchange arguments",
+              "slug": "greedy-exchange-argument",
+              "kind": "theory",
+              "keyIdeas": ["greedy-choice property", "exchange argument", "when greedy fails"],
+              "interactiveIdea": "Counterexample explorer showing coin change succeed and fail for different coin sets."
+            },
+            {
+              "no": 2,
+              "title": "Interval scheduling",
+              "slug": "interval-scheduling",
+              "kind": "theory",
+              "keyIdeas": ["earliest finish time", "activity selection", "interval partitioning"],
+              "interactiveIdea": "Timeline of intervals where the earliest-finishing compatible one is picked each step."
+            },
+            {
+              "no": 3,
+              "title": "Huffman coding",
+              "slug": "huffman-coding",
+              "kind": "theory",
+              "keyIdeas": ["prefix-free codes", "merge two least frequent", "optimal code length"],
+              "interactiveIdea": "Frequency nodes merging into a Huffman tree with code bits on edges."
+            },
+            {
+              "no": 4,
+              "title": "Fractional knapsack and scheduling with deadlines",
+              "slug": "fractional-knapsack",
+              "kind": "theory",
+              "keyIdeas": ["value per weight", "job sequencing", "matroid intuition"],
+              "interactiveIdea": "Knapsack filling by value density with a fraction bar on the last item."
+            },
+            {
+              "no": 5,
+              "title": "Practice: greedy problems",
+              "slug": "practice-greedy",
+              "kind": "practice",
+              "keyIdeas": ["prove or disprove greedy", "jump game"],
+              "interactiveIdea": "Puzzle cards where the learner tests a greedy rule against random cases."
+            }
+          ]
+        },
+        {
+          "no": 7,
+          "title": "Dynamic programming",
+          "slug": "dynamic-programming",
+          "strand": "paradigms",
+          "blurb": "Break a problem into overlapping subproblems and reuse each answer instead of recomputing it.",
+          "lessons": [
+            {
+              "no": 1,
+              "title": "Memoization and tabulation",
+              "slug": "memoization-tabulation",
+              "kind": "theory",
+              "keyIdeas": ["overlapping subproblems", "top-down vs bottom-up", "Fibonacci"],
+              "interactiveIdea": "Fibonacci call tree that collapses into a table once memoization is on."
+            },
+            {
+              "no": 2,
+              "title": "The SRTBOT framework",
+              "slug": "srtbot-framework",
+              "kind": "theory",
+              "keyIdeas": [
+                "subproblems and relations",
+                "topological order",
+                "base cases and original problem"
+              ],
+              "interactiveIdea": "Guided form that walks through the six SRTBOT steps for a chosen problem."
+            },
+            {
+              "no": 3,
+              "title": "1D DP: climbing stairs, coin change, house robber",
+              "slug": "dp-one-dimensional",
+              "kind": "theory",
+              "keyIdeas": [
+                "state as a prefix",
+                "transition from smaller states",
+                "counting vs optimising"
+              ],
+              "interactiveIdea": "Row of DP cells filling left to right with arrows to the cells each one uses."
+            },
+            {
+              "no": 4,
+              "title": "Longest increasing subsequence",
+              "slug": "longest-increasing-subsequence",
+              "kind": "theory",
+              "keyIdeas": ["O(n^2) DP", "patience sorting", "O(n log n) with binary search"],
+              "interactiveIdea": "Patience-sorting piles beside the sequence, rebuilding the LIS at the end."
+            },
+            {
+              "no": 5,
+              "title": "Longest common subsequence and edit distance",
+              "slug": "lcs-edit-distance",
+              "kind": "theory",
+              "keyIdeas": [
+                "2D table over prefixes",
+                "insert, delete, replace",
+                "path reconstruction"
+              ],
+              "interactiveIdea": "2D grid filling cell by cell, then tracing the optimal alignment path."
+            },
+            {
+              "no": 6,
+              "title": "0/1 knapsack and subset sum",
+              "slug": "knapsack-subset-sum",
+              "kind": "theory",
+              "keyIdeas": ["capacity dimension", "pseudo-polynomial time", "space optimisation"],
+              "interactiveIdea": "Knapsack table with an item and capacity slider showing take or skip choices."
+            },
+            {
+              "no": 7,
+              "title": "Interval DP: matrix chain and rod cutting",
+              "slug": "interval-dp",
+              "kind": "theory",
+              "keyIdeas": ["DP over intervals", "split point k", "fill by length"],
+              "interactiveIdea": "Triangular table filling by interval length with the best split highlighted."
+            },
+            {
+              "no": 8,
+              "title": "Grid and path DP",
+              "slug": "grid-path-dp",
+              "kind": "theory",
+              "keyIdeas": ["paths in a grid", "minimum path sum", "obstacles"],
+              "interactiveIdea": "Editable grid where each cell shows the number of paths or the best cost to reach it."
+            },
+            {
+              "no": 9,
+              "title": "Practice: dynamic programming problems",
+              "slug": "practice-dynamic-programming",
+              "kind": "practice",
+              "keyIdeas": ["define the state", "find the transition"],
+              "interactiveIdea": "State designer where the learner proposes a recurrence and tests it on small inputs."
+            }
+          ]
+        },
+        {
+          "no": 8,
+          "title": "Backtracking",
+          "slug": "backtracking",
+          "strand": "paradigms",
+          "blurb": "Search every possibility, and prune the branches that cannot lead to a solution.",
+          "lessons": [
+            {
+              "no": 1,
+              "title": "Backtracking and the search tree",
+              "slug": "backtracking-search-tree",
+              "kind": "theory",
+              "keyIdeas": ["choose, explore, unchoose", "state-space tree", "pruning"],
+              "interactiveIdea": "State-space tree that grows and prunes branches as choices fail."
+            },
+            {
+              "no": 2,
+              "title": "Permutations, combinations and subsets",
+              "slug": "permutations-subsets",
+              "kind": "theory",
+              "keyIdeas": [
+                "generating all arrangements",
+                "avoiding duplicates",
+                "output-sensitive cost"
+              ],
+              "interactiveIdea": "Generator panel listing permutations as the recursion picks and unpicks items."
+            },
+            {
+              "no": 3,
+              "title": "N-queens and Sudoku",
+              "slug": "n-queens-sudoku",
+              "kind": "theory",
+              "keyIdeas": ["constraint checks", "placing and undoing", "pruning by constraints"],
+              "interactiveIdea": "Chess board placing queens and backing up when a conflict appears."
+            },
+            {
+              "no": 4,
+              "title": "Branch and bound",
+              "slug": "branch-and-bound",
+              "kind": "theory",
+              "keyIdeas": ["bounds to prune", "best-first search", "optimisation problems"],
+              "interactiveIdea": "Search tree where branches with a bound worse than the best found are greyed out."
+            },
+            {
+              "no": 5,
+              "title": "Practice: backtracking problems",
+              "slug": "practice-backtracking",
+              "kind": "practice",
+              "keyIdeas": ["word search", "combination sum"],
+              "interactiveIdea": "Grid word-search where the path explores and retreats letter by letter."
+            }
+          ]
+        },
+        {
+          "no": 9,
+          "title": "Balanced search trees",
+          "slug": "balanced-bst",
+          "strand": "trees",
+          "blurb": "Keep search trees shallow with rotations and splits, so every operation stays logarithmic.",
+          "lessons": [
+            {
+              "no": 1,
+              "title": "Why balance matters",
+              "slug": "why-balance-matters",
+              "kind": "theory",
+              "keyIdeas": ["degenerate BSTs", "height O(log n)", "rotations"],
+              "interactiveIdea": "Insert sorted keys into a plain BST and an AVL tree and compare their heights."
+            },
+            {
+              "no": 2,
+              "title": "AVL trees",
+              "slug": "avl-trees",
+              "kind": "theory",
+              "keyIdeas": [
+                "balance factor",
+                "single and double rotations",
+                "height-balanced invariant"
+              ],
+              "interactiveIdea": "AVL tree that shows balance factors and animates the rotation that fixes them."
+            },
+            {
+              "no": 3,
+              "title": "Red-black trees",
+              "slug": "red-black-trees",
+              "kind": "theory",
+              "keyIdeas": ["colour rules", "recolour and rotate", "black height"],
+              "interactiveIdea": "Red-black tree inserting keys with recolouring and rotation steps narrated."
+            },
+            {
+              "no": 4,
+              "title": "B-trees",
+              "slug": "b-trees",
+              "kind": "theory",
+              "keyIdeas": ["multi-way nodes", "split and merge", "disk-friendly access"],
+              "interactiveIdea": "B-tree of order 3 splitting nodes upward as keys are inserted."
+            },
+            {
+              "no": 5,
+              "title": "Treaps and skip lists",
+              "slug": "treaps-skip-lists",
+              "kind": "theory",
+              "keyIdeas": ["randomised balance", "heap priorities", "probabilistic levels"],
+              "interactiveIdea": "Skip list with coin-flip levels and a search path that drops level by level."
+            },
+            {
+              "no": 6,
+              "title": "Ordered maps and augmented trees",
+              "slug": "augmented-trees",
+              "kind": "theory",
+              "keyIdeas": ["order statistics", "subtree size augmentation", "interval trees"],
+              "interactiveIdea": "Tree with subtree sizes that answers rank and k-th smallest queries."
+            },
+            {
+              "no": 7,
+              "title": "Practice: balanced tree problems",
+              "slug": "practice-balanced-bst",
+              "kind": "practice",
+              "keyIdeas": ["choose a balanced structure", "rank queries"],
+              "interactiveIdea": "Operation sequence runner comparing BST, AVL and skip list costs."
+            }
+          ]
+        },
+        {
+          "no": 10,
+          "title": "Review: core algorithms",
+          "slug": "review-core",
+          "strand": "review",
+          "blurb": "Check what you learned across the core algorithms before moving on to advanced topics.",
+          "lessons": [
+            {
+              "no": 1,
+              "title": "Review: core algorithms",
+              "slug": "review-core-lesson",
+              "kind": "review",
+              "keyIdeas": [
+                "graph algorithm selection",
+                "paradigm recognition",
+                "balanced trees recap"
+              ],
+              "interactiveIdea": "Mixed quiz that maps problem statements to paradigms and algorithms."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "title": "Advanced topics",
+      "chapters": [
+        {
+          "no": 1,
+          "title": "Range query structures",
+          "slug": "range-queries",
+          "strand": "structures",
+          "blurb": "Answer sums and minimums over any range, and update values, in logarithmic time.",
+          "lessons": [
+            {
+              "no": 1,
+              "title": "Sparse table",
+              "slug": "sparse-table",
+              "kind": "theory",
+              "keyIdeas": ["power-of-two ranges", "O(1) idempotent queries", "O(n log n) build"],
+              "interactiveIdea": "Table of overlapping power-of-two blocks covering a selected range."
+            },
+            {
+              "no": 2,
+              "title": "Fenwick tree",
+              "slug": "fenwick-tree",
+              "kind": "theory",
+              "keyIdeas": ["lowbit indexing", "prefix sums with updates", "O(log n) operations"],
+              "interactiveIdea": "Fenwick array with the index jumps of update and query drawn as arcs."
+            },
+            {
+              "no": 3,
+              "title": "Segment tree",
+              "slug": "segment-tree",
+              "kind": "theory",
+              "keyIdeas": ["recursive range splits", "point update, range query", "merge function"],
+              "interactiveIdea": "Segment tree that lights up the nodes covering a dragged query range."
+            },
+            {
+              "no": 4,
+              "title": "Lazy propagation",
+              "slug": "lazy-propagation",
+              "kind": "theory",
+              "keyIdeas": ["range updates", "pending tags", "push down"],
+              "interactiveIdea": "Segment tree with lazy tags that push down only when a query needs them."
+            },
+            {
+              "no": 5,
+              "title": "Sqrt decomposition and Mo’s algorithm",
+              "slug": "sqrt-decomposition",
+              "kind": "theory",
+              "keyIdeas": ["blocks of size sqrt(n)", "offline query ordering", "O((n+q) sqrt n)"],
+              "interactiveIdea": "Array split into blocks with a query range covering partial and full blocks."
+            },
+            {
+              "no": 6,
+              "title": "Practice: range query problems",
+              "slug": "practice-range-queries",
+              "kind": "practice",
+              "keyIdeas": ["choose Fenwick or segment tree", "range min and sum"],
+              "interactiveIdea": "Query workload builder that compares the cost of each structure."
+            }
+          ]
+        },
+        {
+          "no": 2,
+          "title": "Tries and string algorithms",
+          "slug": "string-algorithms",
+          "strand": "strings",
+          "blurb": "Search, index, and compress text with tries, KMP, hashing, and suffix arrays.",
+          "lessons": [
+            {
+              "no": 1,
+              "title": "Tries",
+              "slug": "tries",
+              "kind": "theory",
+              "keyIdeas": ["prefix tree", "insert and search", "autocomplete"],
+              "interactiveIdea": "Trie that grows as words are typed and highlights matching prefixes."
+            },
+            {
+              "no": 2,
+              "title": "String hashing and Rabin-Karp",
+              "slug": "rabin-karp",
+              "kind": "theory",
+              "keyIdeas": ["polynomial rolling hash", "collision probability", "substring search"],
+              "interactiveIdea": "Rolling-hash window sliding over text with the hash updated each step."
+            },
+            {
+              "no": 3,
+              "title": "Prefix function and KMP",
+              "slug": "kmp",
+              "kind": "theory",
+              "keyIdeas": ["failure function", "no backtracking in text", "O(n + m)"],
+              "interactiveIdea": "Pattern with its prefix-function array and the fallback jump on a mismatch."
+            },
+            {
+              "no": 4,
+              "title": "Boyer-Moore",
+              "slug": "boyer-moore",
+              "kind": "theory",
+              "keyIdeas": ["bad-character rule", "right-to-left scanning", "sublinear skips"],
+              "interactiveIdea": "Pattern sliding over text with the skip distance shown at each mismatch."
+            },
+            {
+              "no": 5,
+              "title": "Z-function",
+              "slug": "z-function",
+              "kind": "theory",
+              "keyIdeas": ["Z-box", "longest prefix match", "pattern matching"],
+              "interactiveIdea": "Z-box window sliding over the string as Z values are computed."
+            },
+            {
+              "no": 6,
+              "title": "Aho-Corasick",
+              "slug": "aho-corasick",
+              "kind": "theory",
+              "keyIdeas": ["trie with failure links", "multi-pattern search", "output links"],
+              "interactiveIdea": "Trie with dashed failure links and the active state moving as text is read."
+            },
+            {
+              "no": 7,
+              "title": "Suffix arrays and LCP",
+              "slug": "suffix-arrays",
+              "kind": "theory",
+              "keyIdeas": ["sorted suffixes", "prefix doubling", "Kasai LCP"],
+              "interactiveIdea": "List of sorted suffixes with LCP bars between neighbours."
+            },
+            {
+              "no": 8,
+              "title": "Manacher’s algorithm",
+              "slug": "manacher",
+              "kind": "theory",
+              "keyIdeas": ["palindromic radii", "mirror trick", "O(n) longest palindrome"],
+              "interactiveIdea": "Palindrome radii drawn as arcs with the current centre and mirror shown."
+            },
+            {
+              "no": 9,
+              "title": "Regular expressions and NFA simulation",
+              "slug": "regular-expressions-nfa",
+              "kind": "theory",
+              "keyIdeas": ["regex to NFA", "epsilon transitions", "simulating the set of states"],
+              "interactiveIdea": "Regex typed by the learner builds an NFA graph that lights up active states as input is read."
+            },
+            {
+              "no": 10,
+              "title": "Data compression: run-length, Huffman and LZW",
+              "slug": "data-compression",
+              "kind": "theory",
+              "keyIdeas": ["run-length encoding", "prefix-free codes", "LZW dictionary growth"],
+              "interactiveIdea": "Text box whose compressed bit stream and LZW dictionary grow side by side."
+            },
+            {
+              "no": 11,
+              "title": "Practice: string problems",
+              "slug": "practice-string-algorithms",
+              "kind": "practice",
+              "keyIdeas": ["choose the right matcher", "palindromes and periods"],
+              "interactiveIdea": "Text playground running several matchers on the same input with step counts."
+            }
+          ]
+        },
+        {
+          "no": 3,
+          "title": "Number theory",
+          "slug": "number-theory",
+          "strand": "math",
+          "blurb": "Compute with divisibility, primes, and modular arithmetic, the tools behind RSA.",
+          "lessons": [
+            {
+              "no": 1,
+              "title": "GCD and extended Euclid",
+              "slug": "gcd-extended-euclid",
+              "kind": "theory",
+              "keyIdeas": [
+                "Euclidean algorithm",
+                "Bezout coefficients",
+                "linear Diophantine equations"
+              ],
+              "interactiveIdea": "Rectangle tiling that shrinks by squares as the Euclidean algorithm runs."
+            },
+            {
+              "no": 2,
+              "title": "Modular arithmetic and fast exponentiation",
+              "slug": "modular-exponentiation",
+              "kind": "theory",
+              "keyIdeas": ["congruences", "binary exponentiation", "O(log n) power"],
+              "interactiveIdea": "Exponent bits lighting up as repeated squaring builds the power."
+            },
+            {
+              "no": 3,
+              "title": "Modular inverse and Chinese remainder theorem",
+              "slug": "modular-inverse-crt",
+              "kind": "theory",
+              "keyIdeas": [
+                "inverse via Euclid or Fermat",
+                "system of congruences",
+                "combining moduli"
+              ],
+              "interactiveIdea": "Clock faces for each modulus that align on the CRT solution."
+            },
+            {
+              "no": 4,
+              "title": "Sieve of Eratosthenes and factorisation",
+              "slug": "sieve-factorisation",
+              "kind": "theory",
+              "keyIdeas": ["crossing out multiples", "smallest prime factor", "O(n log log n)"],
+              "interactiveIdea": "Number grid crossing out multiples prime by prime."
+            },
+            {
+              "no": 5,
+              "title": "Primality testing",
+              "slug": "primality-testing",
+              "kind": "theory",
+              "keyIdeas": ["trial division", "Fermat test", "Miller-Rabin"],
+              "interactiveIdea": "Witness tester that shows Miller-Rabin rounds for a chosen number."
+            },
+            {
+              "no": 6,
+              "title": "Combinatorics: binomials and Catalan numbers",
+              "slug": "combinatorics",
+              "kind": "theory",
+              "keyIdeas": ["Pascal's triangle", "n choose k mod p", "Catalan structures"],
+              "interactiveIdea": "Pascal's triangle that colours entries and links Catalan numbers to bracket sequences."
+            },
+            {
+              "no": 7,
+              "title": "Public-key cryptography and RSA",
+              "slug": "rsa-cryptography",
+              "kind": "theory",
+              "keyIdeas": [
+                "key generation",
+                "encryption with modular powers",
+                "why factoring is hard"
+              ],
+              "interactiveIdea": "Toy RSA with small primes where learners encrypt and decrypt a number step by step."
+            },
+            {
+              "no": 8,
+              "title": "Practice: number theory problems",
+              "slug": "practice-number-theory",
+              "kind": "practice",
+              "keyIdeas": ["modular counting", "divisor sums"],
+              "interactiveIdea": "Calculator sandbox that checks answers to modular problems step by step."
+            }
+          ]
+        },
+        {
+          "no": 4,
+          "title": "Computational geometry",
+          "slug": "geometry",
+          "strand": "geometry",
+          "blurb": "Reason about points, segments, and polygons with exact orientation tests and sweeps.",
+          "lessons": [
+            {
+              "no": 1,
+              "title": "Points, vectors and orientation",
+              "slug": "geometry-orientation",
+              "kind": "theory",
+              "keyIdeas": ["dot and cross product", "orientation test", "precision issues"],
+              "interactiveIdea": "Three draggable points with a live cross-product sign and turn direction."
+            },
+            {
+              "no": 2,
+              "title": "Segment intersection",
+              "slug": "segment-intersection",
+              "kind": "theory",
+              "keyIdeas": ["orientation-based test", "collinear cases", "intersection point"],
+              "interactiveIdea": "Two draggable segments that turn red when they intersect."
+            },
+            {
+              "no": 3,
+              "title": "Polygon area and point in polygon",
+              "slug": "polygon-area",
+              "kind": "theory",
+              "keyIdeas": ["shoelace formula", "ray casting", "winding number"],
+              "interactiveIdea": "Editable polygon with the shoelace terms and a ray-cast point test."
+            },
+            {
+              "no": 4,
+              "title": "Convex hull",
+              "slug": "convex-hull",
+              "kind": "theory",
+              "keyIdeas": ["Graham scan", "Andrew's monotone chain", "O(n log n)"],
+              "interactiveIdea": "Point cloud where the hull is built and concave turns are popped off."
+            },
+            {
+              "no": 5,
+              "title": "Sweep line algorithms",
+              "slug": "sweep-line",
+              "kind": "theory",
+              "keyIdeas": ["events sorted by x", "active set", "segment intersections"],
+              "interactiveIdea": "Vertical sweep line moving across segments with the active set listed."
+            },
+            {
+              "no": 6,
+              "title": "Range trees and orthogonal range search",
+              "slug": "range-trees",
+              "kind": "theory",
+              "keyIdeas": ["2D range queries", "tree of trees", "fractional cascading idea"],
+              "interactiveIdea": "Draggable query rectangle over points with the visited range-tree nodes highlighted."
+            },
+            {
+              "no": 7,
+              "title": "Practice: geometry problems",
+              "slug": "practice-geometry",
+              "kind": "practice",
+              "keyIdeas": ["robust comparisons", "hull applications"],
+              "interactiveIdea": "Geometry sandbox where the learner places points and checks predictions."
+            }
+          ]
+        },
+        {
+          "no": 5,
+          "title": "Network flows and matching",
+          "slug": "flows",
+          "strand": "graphs",
+          "blurb": "Push the most flow through a network, and use it to match pairs and find minimum cuts.",
+          "lessons": [
+            {
+              "no": 1,
+              "title": "Flow networks and Ford-Fulkerson",
+              "slug": "ford-fulkerson",
+              "kind": "theory",
+              "keyIdeas": [
+                "capacities and flow conservation",
+                "residual graph",
+                "augmenting paths"
+              ],
+              "interactiveIdea": "Flow network with residual edges and an augmenting path pushed each step."
+            },
+            {
+              "no": 2,
+              "title": "Edmonds-Karp and Dinic",
+              "slug": "edmonds-karp-dinic",
+              "kind": "theory",
+              "keyIdeas": ["BFS augmenting paths", "level graphs", "blocking flows"],
+              "interactiveIdea": "Level graph view showing blocking flows pushed phase by phase."
+            },
+            {
+              "no": 3,
+              "title": "Max-flow min-cut theorem",
+              "slug": "max-flow-min-cut",
+              "kind": "theory",
+              "keyIdeas": ["s-t cuts", "cut capacity", "finding the min cut"],
+              "interactiveIdea": "Final residual graph with the reachable set shaded and cut edges marked."
+            },
+            {
+              "no": 4,
+              "title": "Bipartite matching",
+              "slug": "bipartite-matching",
+              "kind": "theory",
+              "keyIdeas": ["reduction to max flow", "augmenting paths (Kuhn)", "Hopcroft-Karp"],
+              "interactiveIdea": "Two columns of vertices where matches flip along augmenting paths."
+            },
+            {
+              "no": 5,
+              "title": "Min-cost flow and the assignment problem",
+              "slug": "min-cost-flow",
+              "kind": "theory",
+              "keyIdeas": ["costs on edges", "successive shortest paths", "Hungarian algorithm"],
+              "interactiveIdea": "Cost matrix where the Hungarian algorithm adjusts potentials to find an assignment."
+            },
+            {
+              "no": 6,
+              "title": "Practice: flow modelling",
+              "slug": "practice-flows",
+              "kind": "practice",
+              "keyIdeas": ["model problems as flows", "vertex capacities"],
+              "interactiveIdea": "Modelling canvas where the learner builds a flow network for a word problem."
+            }
+          ]
+        },
+        {
+          "no": 6,
+          "title": "Advanced dynamic programming",
+          "slug": "advanced-dp",
+          "strand": "paradigms",
+          "blurb": "Extend dynamic programming to subsets, trees, and digits, and make it run faster.",
+          "lessons": [
+            {
+              "no": 1,
+              "title": "Bitmask DP and travelling salesman",
+              "slug": "bitmask-dp",
+              "kind": "theory",
+              "keyIdeas": ["subsets as bitmasks", "Held-Karp", "O(2^n n^2)"],
+              "interactiveIdea": "Bitmask table showing visited cities as lit bits in each state."
+            },
+            {
+              "no": 2,
+              "title": "DP on trees",
+              "slug": "tree-dp",
+              "kind": "theory",
+              "keyIdeas": ["post-order states", "rerooting", "maximum independent set"],
+              "interactiveIdea": "Tree where each node shows include and exclude values computed from children."
+            },
+            {
+              "no": 3,
+              "title": "Digit DP",
+              "slug": "digit-dp",
+              "kind": "theory",
+              "keyIdeas": ["tight flag", "count numbers with a property", "position by position"],
+              "interactiveIdea": "Digit-by-digit state machine with the tight constraint highlighted."
+            },
+            {
+              "no": 4,
+              "title": "DP optimisations",
+              "slug": "dp-optimisations",
+              "kind": "theory",
+              "keyIdeas": ["monotone queue", "convex hull trick", "divide and conquer DP, Knuth"],
+              "interactiveIdea": "Lines on a plot where the convex hull trick keeps only the lower envelope."
+            },
+            {
+              "no": 5,
+              "title": "Practice: advanced DP problems",
+              "slug": "practice-advanced-dp",
+              "kind": "practice",
+              "keyIdeas": ["state compression", "choose an optimisation"],
+              "interactiveIdea": "Problem runner that compares naive and optimised DP run times."
+            }
+          ]
+        },
+        {
+          "no": 7,
+          "title": "Trees: advanced techniques",
+          "slug": "tree-techniques",
+          "strand": "trees",
+          "blurb": "Answer path and ancestor queries on trees by lifting, decomposing, and splitting them.",
+          "lessons": [
+            {
+              "no": 1,
+              "title": "Lowest common ancestor and binary lifting",
+              "slug": "lca-binary-lifting",
+              "kind": "theory",
+              "keyIdeas": ["ancestor jump table", "Euler tour + RMQ", "O(log n) queries"],
+              "interactiveIdea": "Tree with power-of-two jump pointers used to lift two nodes to their LCA."
+            },
+            {
+              "no": 2,
+              "title": "Heavy-light decomposition",
+              "slug": "heavy-light-decomposition",
+              "kind": "theory",
+              "keyIdeas": ["heavy edges", "path to O(log n) chains", "segment tree over chains"],
+              "interactiveIdea": "Tree coloured into heavy chains with a path query split across them."
+            },
+            {
+              "no": 3,
+              "title": "Centroid decomposition",
+              "slug": "centroid-decomposition",
+              "kind": "theory",
+              "keyIdeas": ["centroid of a tree", "recursive split", "path counting"],
+              "interactiveIdea": "Tree that removes its centroid and recurses, building the centroid tree."
+            },
+            {
+              "no": 4,
+              "title": "Practice: advanced tree problems",
+              "slug": "practice-tree-techniques",
+              "kind": "practice",
+              "keyIdeas": ["path queries", "distance queries"],
+              "interactiveIdea": "Query panel that runs path queries on a tree with HLD and naive approaches."
+            }
+          ]
+        },
+        {
+          "no": 8,
+          "title": "Algebraic and randomised algorithms",
+          "slug": "algebraic-randomised",
+          "strand": "math",
+          "blurb": "Speed up algebra with FFT and matrix tricks, and let randomness make algorithms simple.",
+          "lessons": [
+            {
+              "no": 1,
+              "title": "Matrix exponentiation",
+              "slug": "matrix-exponentiation",
+              "kind": "theory",
+              "keyIdeas": ["linear recurrences", "fast power of matrices", "Fibonacci in O(log n)"],
+              "interactiveIdea": "Matrix squaring steps that compute a large Fibonacci number."
+            },
+            {
+              "no": 2,
+              "title": "Fast Fourier transform",
+              "slug": "fast-fourier-transform",
+              "kind": "theory",
+              "keyIdeas": ["polynomial multiplication", "roots of unity", "O(n log n)"],
+              "interactiveIdea": "Butterfly diagram showing FFT combining evaluations at roots of unity."
+            },
+            {
+              "no": 3,
+              "title": "Matrix operations: LUP decomposition",
+              "slug": "lup-decomposition",
+              "kind": "theory",
+              "keyIdeas": ["Gaussian elimination", "LU and LUP factors", "solving linear systems"],
+              "interactiveIdea": "Matrix that is reduced row by row into L, U and a permutation."
+            },
+            {
+              "no": 4,
+              "title": "Linear programming and the simplex method",
+              "slug": "linear-programming",
+              "kind": "theory",
+              "keyIdeas": ["feasible region", "objective function", "simplex pivoting", "duality"],
+              "interactiveIdea": "2D feasible polygon with the simplex walk moving vertex to vertex toward the optimum."
+            },
+            {
+              "no": 5,
+              "title": "Randomised algorithms",
+              "slug": "randomised-algorithms",
+              "kind": "theory",
+              "keyIdeas": ["Las Vegas vs Monte Carlo", "randomised quicksort", "expected analysis"],
+              "interactiveIdea": "Repeated runs of randomised quicksort plotting the distribution of comparisons."
+            },
+            {
+              "no": 6,
+              "title": "Universal and perfect hashing",
+              "slug": "universal-perfect-hashing",
+              "kind": "theory",
+              "keyIdeas": [
+                "universal hash families",
+                "expected collisions",
+                "two-level perfect hashing"
+              ],
+              "interactiveIdea": "Keys hashed by randomly drawn functions, with collision counts averaged over many draws."
+            },
+            {
+              "no": 7,
+              "title": "Game theory: Nim and Sprague-Grundy",
+              "slug": "sprague-grundy",
+              "kind": "theory",
+              "keyIdeas": ["winning and losing positions", "Grundy numbers", "XOR of piles"],
+              "interactiveIdea": "Playable Nim board that shows the XOR and the winning move."
+            },
+            {
+              "no": 8,
+              "title": "Practice: algebraic and randomised problems",
+              "slug": "practice-algebraic-randomised",
+              "kind": "practice",
+              "keyIdeas": ["recurrence to matrix", "big-number multiplication"],
+              "interactiveIdea": "Recurrence builder that turns a linear recurrence into its matrix."
+            }
+          ]
+        },
+        {
+          "no": 9,
+          "title": "Complexity theory and intractability",
+          "slug": "intractability",
+          "strand": "analysis",
+          "blurb": "Recognise problems that are likely too hard to solve exactly, and what to do about them.",
+          "lessons": [
+            {
+              "no": 1,
+              "title": "P, NP and reductions",
+              "slug": "p-np-reductions",
+              "kind": "theory",
+              "keyIdeas": ["decision problems", "polynomial-time reductions", "verifiers"],
+              "interactiveIdea": "Reduction diagram turning an instance of one problem into another."
+            },
+            {
+              "no": 2,
+              "title": "NP-completeness",
+              "slug": "np-completeness",
+              "kind": "theory",
+              "keyIdeas": ["Cook-Levin", "SAT, 3-SAT, vertex cover", "proving NP-hardness"],
+              "interactiveIdea": "Map of classic NP-complete problems linked by reduction arrows."
+            },
+            {
+              "no": 3,
+              "title": "Approximation algorithms",
+              "slug": "approximation-algorithms",
+              "kind": "theory",
+              "keyIdeas": ["approximation ratio", "vertex cover 2-approx", "greedy set cover"],
+              "interactiveIdea": "Graph where the 2-approximate vertex cover is compared with the optimum."
+            },
+            {
+              "no": 4,
+              "title": "Fixed-parameter algorithms",
+              "slug": "fixed-parameter-algorithms",
+              "kind": "theory",
+              "keyIdeas": ["parameterised complexity", "bounded search trees", "kernelisation"],
+              "interactiveIdea": "Vertex-cover search tree whose depth is capped by the parameter k."
+            },
+            {
+              "no": 5,
+              "title": "Practice: reductions and hardness",
+              "slug": "practice-intractability",
+              "kind": "practice",
+              "keyIdeas": [
+                "choosing a reduction source",
+                "exact vs approximate",
+                "recognising NP-hard problems"
+              ],
+              "interactiveIdea": "Problem cards to sort into polynomial, NP-complete or approximable."
+            }
+          ]
+        },
+        {
+          "no": 10,
+          "title": "Advanced heaps and integer structures",
+          "slug": "advanced-heaps",
+          "strand": "structures",
+          "blurb": "Go beyond binary heaps with Fibonacci heaps and van Emde Boas trees.",
+          "lessons": [
+            {
+              "no": 1,
+              "title": "Binomial and Fibonacci heaps",
+              "slug": "fibonacci-heaps",
+              "kind": "theory",
+              "keyIdeas": ["mergeable heaps", "lazy consolidation", "O(1) amortized decrease-key"],
+              "interactiveIdea": "Forest of heap-ordered trees that consolidates when extract-min runs."
+            },
+            {
+              "no": 2,
+              "title": "van Emde Boas trees",
+              "slug": "van-emde-boas",
+              "kind": "theory",
+              "keyIdeas": [
+                "universe of size u",
+                "recursive sqrt(u) clusters",
+                "O(log log u) operations"
+              ],
+              "interactiveIdea": "Bit universe split into clusters and summary, with a successor query traced through levels."
+            },
+            {
+              "no": 3,
+              "title": "Practice: advanced heaps",
+              "slug": "practice-advanced-heaps",
+              "kind": "practice",
+              "keyIdeas": [
+                "choosing a priority queue",
+                "Dijkstra with Fibonacci heaps",
+                "integer keys"
+              ],
+              "interactiveIdea": "Operation mix sliders comparing binary, Fibonacci and vEB costs."
+            }
+          ]
+        },
+        {
+          "no": 11,
+          "title": "Other models of computation",
+          "slug": "computation-models",
+          "strand": "analysis",
+          "blurb": "See how algorithms change on many processors, many machines, caches, and unknown input.",
+          "lessons": [
+            {
+              "no": 1,
+              "title": "Multithreaded algorithms",
+              "slug": "multithreaded-algorithms",
+              "kind": "theory",
+              "keyIdeas": ["fork-join parallelism", "work and span", "parallel merge sort"],
+              "interactiveIdea": "Computation DAG with work and span counters as the thread count changes."
+            },
+            {
+              "no": 2,
+              "title": "Distributed algorithms",
+              "slug": "distributed-algorithms",
+              "kind": "theory",
+              "keyIdeas": [
+                "synchronous rounds",
+                "leader election and symmetry breaking",
+                "distributed BFS trees"
+              ],
+              "interactiveIdea": "Network of nodes exchanging messages round by round to elect a leader."
+            },
+            {
+              "no": 3,
+              "title": "Cache-oblivious algorithms",
+              "slug": "cache-oblivious-algorithms",
+              "kind": "theory",
+              "keyIdeas": ["external-memory model", "block transfers", "recursive layouts"],
+              "interactiveIdea": "Memory grid counting cache misses for row-major vs recursive matrix traversal."
+            },
+            {
+              "no": 4,
+              "title": "Online algorithms and competitive analysis",
+              "slug": "online-algorithms",
+              "kind": "theory",
+              "keyIdeas": ["competitive ratio", "ski rental", "paging and LRU"],
+              "interactiveIdea": "Ski-rental game where the learner decides each day and sees the ratio to the optimum."
+            },
+            {
+              "no": 5,
+              "title": "Practice: choosing a model",
+              "slug": "practice-computation-models",
+              "kind": "practice",
+              "keyIdeas": ["parallel vs sequential", "memory hierarchy costs", "online vs offline"],
+              "interactiveIdea": "Scenario cards matched to the right model and algorithm."
+            }
+          ]
+        },
+        {
+          "no": 12,
+          "title": "Review: advanced topics",
+          "slug": "review-advanced",
+          "strand": "review",
+          "blurb": "Check what you learned across the advanced topics.",
+          "lessons": [
+            {
+              "no": 1,
+              "title": "Review: advanced algorithms",
+              "slug": "review-advanced-lesson",
+              "kind": "review",
+              "keyIdeas": [
+                "structure and algorithm selection",
+                "complexity limits",
+                "problem-solving recap"
+              ],
+              "interactiveIdea": "Mixed quiz covering advanced structures, strings, flows and complexity classes."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

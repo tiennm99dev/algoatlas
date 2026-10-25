@@ -3,16 +3,26 @@
   import { asset, resolve } from '$app/paths';
   import { page } from '$app/state';
   import { t } from '$lib/i18n/index.js';
+  import { levels } from '$lib/curriculum/index.js';
   import { topicPath } from '$lib/lessons/registry.js';
 
   let { children } = $props();
   const copy = t();
 
-  /** "page" only on the hub itself; lessons inside the topic are "true". @param {string} href */
-  function current(href) {
+  // One link per level, to its section of the home page; 34 topics would not fit a header.
+  const sections = levels.map((l) => ({
+    level: l.level,
+    title: l.title,
+    topics: l.chapters.map((c) => resolve(/** @type {'/'} */ (topicPath(c.slug)))),
+  }));
+
+  /**
+   * A level is "true" while a topic hub or lesson inside it is open; it is never the page itself.
+   * @param {string[]} topicHrefs
+   */
+  function current(topicHrefs) {
     const path = page.url.pathname;
-    if (path === href) return 'page';
-    return path.startsWith(href) ? 'true' : undefined;
+    return topicHrefs.some((href) => path.startsWith(href)) ? 'true' : undefined;
   }
 </script>
 
@@ -35,13 +45,14 @@
       </a>
       <nav aria-label={copy.lessonChrome.navLabel}>
         <ul class="flex flex-wrap gap-4 text-sm font-medium text-slate-600">
-          {#each copy.topicOrder as key (key)}
-            {@const href = resolve(/** @type {'/'} */ (topicPath(key)))}
+          {#each sections as section (section.level)}
             <li>
               <a
-                {href}
+                href="{resolve('/')}#level-{section.level}"
                 class="focus-ring rounded hover:text-teal-700 aria-[current]:font-semibold aria-[current]:text-teal-700 aria-[current]:underline aria-[current]:decoration-2 aria-[current]:underline-offset-4"
-                aria-current={current(href)}>{copy.topics[key].title}</a
+                aria-current={current(section.topics)}
+                ><span class="text-slate-500">{copy.hub.levelLabel(section.level)}:</span>
+                {section.title}</a
               >
             </li>
           {/each}

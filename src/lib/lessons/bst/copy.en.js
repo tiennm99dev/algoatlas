@@ -3,7 +3,7 @@
 
 export const en = {
   slug: 'bst',
-  topic: 'structures',
+  topic: 'trees',
   level: 'Intermediate',
   title: 'Binary search tree',
   intro:
