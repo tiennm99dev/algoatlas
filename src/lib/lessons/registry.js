@@ -41,7 +41,10 @@ export function lessonsByTopic(topic) {
   return lessons.filter((l) => l.topic === topic);
 }
 
-/** @param {LessonCopy} lesson */
+/**
+ * Path of a lesson page, written or not.
+ * @param {{ topic: string, slug: string }} lesson
+ */
 export function lessonPath(lesson) {
   return `/${lesson.topic}/${lesson.slug}/`;
 }

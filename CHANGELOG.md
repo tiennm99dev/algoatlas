@@ -8,6 +8,8 @@ All notable changes to **AlgoAtlas** are documented here. Format: [Keep a Change
 
 - A curriculum of three levels and 34 topics (`src/lib/curriculum/dsa.json`), imported from a syllabus manifest by `scripts/import-curriculum.js`. Topics, their order, and the lesson order now come from it.
 - The home page groups topics by level and shows how many of each topic's lessons are ready; topic hubs list the planned lessons as coming soon. The header links to the three levels.
+- Every unwritten lesson has a `noindex` stub page listing what it will cover and its planned interaction; topic hub cards link to it. The old `/structures/bst/` and `/graphs/dijkstra-grid/` URLs redirect to the lessons' new paths without script.
+- `npm run stubs [-- <topic>] [--strict]` reports unwritten lessons per topic.
 
 ### Changed
 

@@ -429,19 +429,24 @@ describe('site chrome', () => {
   it('names each hub card link by the lesson title only', () => {
     render(HubPage, { data: { topic: 'sorting' } });
     const names = [...document.querySelectorAll('li a')].map((a) => a.textContent?.trim());
-    expect(names).toEqual(lessons.filter((l) => l.topic === 'sorting').map((l) => l.title));
+    const plan = levels[0].chapters.find((c) => c.slug === 'sorting')?.lessons ?? [];
+    expect(names).toEqual(
+      plan.map((p) => lessons.find((l) => l.slug === p.slug)?.title ?? p.title),
+    );
   });
 
-  it('lists every planned lesson of a topic in book order and links only the written ones', () => {
+  it('lists every planned lesson of a topic in book order and marks the unwritten ones', () => {
     render(HubPage, { data: { topic: 'trees' } });
     const cards = [...document.querySelectorAll('section > ul > li')].map((li) => ({
       title: li.querySelector('h2')?.textContent?.trim(),
-      linked: li.querySelector('a') !== null,
+      href: li.querySelector('a')?.getAttribute('href'),
+      soon: li.textContent?.includes('Coming soon') ?? false,
     }));
     const plan = levels[0].chapters.find((c) => c.slug === 'trees')?.lessons ?? [];
     expect(cards.map((c) => c.title)).toEqual(plan.map((l) => l.title));
-    expect(cards.filter((c) => c.linked).map((c) => c.title)).toEqual(['Binary search tree']);
-    expect(text()).toContain('Coming soon');
+    // Every card links to its page; unwritten lessons open their stub page.
+    expect(cards.map((c) => c.href)).toEqual(plan.map((l) => `/trees/${l.slug}/`));
+    expect(cards.filter((c) => !c.soon).map((c) => c.title)).toEqual(['Binary search tree']);
   });
 });
 

@@ -52,11 +52,21 @@
           <p class="text-sm leading-relaxed text-slate-600">{lesson.intro}</p>
         </li>
       {:else}
-        <li class="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-5">
+        <!-- Unwritten lessons stay clickable: their stub page lists what the lesson will cover. -->
+        <li
+          class="relative rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-5 transition hover:border-teal-600 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-teal-700"
+        >
           <div class="mb-2 text-xs font-semibold tracking-wide text-slate-500 uppercase">
             {copy.hub.comingSoon}
           </div>
-          <h2 class="mb-1 text-lg font-bold text-slate-600">{plan.title}</h2>
+          <h2 class="mb-1 text-lg font-bold text-slate-600">
+            <a
+              href={resolve(
+                /** @type {'/'} */ (lessonPath({ topic: data.topic, slug: plan.slug })),
+              )}
+              class="outline-none after:absolute after:inset-0 after:rounded-2xl">{plan.title}</a
+            >
+          </h2>
           <p class="text-sm leading-relaxed text-slate-500">{plan.interactiveIdea}</p>
         </li>
       {/if}

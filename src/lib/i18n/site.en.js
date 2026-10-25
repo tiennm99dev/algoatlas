@@ -29,6 +29,22 @@ export const hub = {
   comingSoon: 'Coming soon',
 };
 
+export const stub = {
+  /** @type {Record<import('$lib/curriculum/index.js').LessonKind, string>} */
+  kinds: { theory: 'Lesson', practice: 'Practice', review: 'Review' },
+  /** @param {string} title */
+  metaDescription: (title) => `${title} is a planned AlgoAtlas lesson that is not written yet.`,
+  notice: 'This lesson is planned but not written yet. Here is what it will cover.',
+  keyIdeasTitle: 'This lesson will cover',
+  interactiveTitle: 'Planned interaction',
+};
+
+export const moved = {
+  title: 'This lesson has moved',
+  body: 'The lesson now lives at a new address. Your browser should take you there on its own.',
+  link: 'Go to the lesson',
+};
+
 export const lessonChrome = {
   backToTopic: /** @param {string} title */ (title) => `All lessons in ${title}`,
   backToHub: 'All topics',
