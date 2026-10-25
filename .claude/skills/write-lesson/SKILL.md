@@ -217,8 +217,15 @@ Per kind:
   every topic of the level and at least three exercise types. The complexity table summarises
   the level's key costs (`complexityHead: ['Structure or algorithm', 'Cost', 'Why']`).
 
-The page test runs `exerciseProblems` (from `answer-check.js`) over every question and expects
-`[]`, so a malformed quiz fails `npm test`.
+Put the questions in `copy.en.js` as `practice` and pass `exercises={m.practice}` to the
+block. `src/lib/lessons/lesson-content.test.js` checks every written lesson on its own: the
+curriculum title, the layout copy, `step-controls` on theory pages, and, for practice and review
+lessons (or any lesson with `practice`), the minimums above and `exerciseProblems` over every
+question, so a malformed or short quiz fails `npm test` whatever the page test does.
+
+The shared tests (`registry.test.js`, `curriculum.test.js`, `lesson-pages.test.js`, the stub
+route test) derive their expectations from the curriculum and the written routes, so adding a
+lesson never needs an edit there. If one fails, your lesson broke an invariant: fix the lesson.
 
 ## 9. Page test (`page.test.js`)
 

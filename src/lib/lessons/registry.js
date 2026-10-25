@@ -14,6 +14,8 @@ import { findLesson, lessonOrder } from '$lib/curriculum/index.js';
  * @property {string[]} [complexityHead]  Column headers when the default Case/Cost/Why does not fit.
  * @property {string[][]} complexity  Rows of [case, cost, why].
  * @property {string} nextTeaser
+ * @property {import('$lib/components/answer-check.js').Exercise[]} [practice]  Answer-checked
+ *   questions for the page's practice block; required for practice and review lessons.
  */
 
 // A lesson registers itself by adding `<slug>/copy.en.js`; the curriculum decides its place.
