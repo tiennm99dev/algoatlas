@@ -109,7 +109,13 @@
     return m.readLine(selected, frame.base, ELEMENT_BYTES, addressOf(frame.base, selected), v);
   });
 
-  const average = $derived(frame.writes === 0 ? 0 : (frame.writes + frame.copies) / frame.writes);
+  // A push that is resizing counts as started, so its copies are not spread over the
+  // pushes that already finished.
+  const started = $derived(
+    frame.writes +
+      (frame.kind === 'allocate' || frame.kind === 'copy' || frame.kind === 'free' ? 1 : 0),
+  );
+  const average = $derived(started === 0 ? 0 : (frame.writes + frame.copies) / started);
   const pushChips = $derived(
     Array.from({ length: frame.n }, (_, k) => ({
       label: String(pushedValue(k + 1)),

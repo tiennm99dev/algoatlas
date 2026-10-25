@@ -186,7 +186,7 @@ export function partitionTrace(values, pivot) {
     state.swapped = [i, j];
     state.left++;
     state.right--;
-    push('swap', [3, 4, 5, 6, 7]);
+    push('swap', [2, 3, 4, 5, 6, 7]);
   }
   state.swapped = null;
   state.boundary = state.left;

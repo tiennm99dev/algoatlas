@@ -4,8 +4,8 @@
 /** @param {number} k @param {string} word @param {string} [many] */
 const plural = (k, word, many = `${word}s`) => `${k} ${k === 1 ? word : many}`;
 
-/** One decimal place unless whole. @param {number} x */
-const num = (x) => (Number.isInteger(x) ? String(x) : x.toFixed(1));
+/** Two decimal places unless whole, as on the steps-per-push card. @param {number} x */
+const num = (x) => (Number.isInteger(x) ? String(x) : x.toFixed(2));
 
 export const en = {
   slug: 'static-dynamic-arrays',

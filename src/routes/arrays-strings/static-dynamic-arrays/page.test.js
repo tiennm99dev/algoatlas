@@ -85,6 +85,15 @@ function practice() {
 }
 
 describe('static and dynamic arrays lesson', () => {
+  it('counts a resizing push as started in the steps per push', () => {
+    render();
+    stepUntil('Copy A[0]');
+    // Pushes 1 and 2 wrote, push 3 has made one copy: 3 steps over 3 started pushes.
+    expect(stat(m.stats.average)).toBe('1');
+    stepUntil('Push 3: write');
+    expect(stat(m.stats.average)).toBe('1.67');
+  });
+
   it('doubles from capacity 2 through 9 pushes', () => {
     render();
     expect(narration()).toContain('An empty dynamic array with capacity 2 at address 1000.');
