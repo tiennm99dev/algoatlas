@@ -79,6 +79,7 @@ describe('linear search lesson', () => {
 
   it('the sentinel variant keeps one bound check', () => {
     render();
+    expect(stat('worst')).toBe('10');
     click(/** @type {HTMLElement} */ (document.querySelector('input[value="sentinel"]')));
     expect(text()).toContain('as a sentinel');
     expect(text()).toContain('a[n] = x; i = 0');
@@ -86,6 +87,8 @@ describe('linear search lesson', () => {
     expect(text()).toContain('this is a real copy: return 6.');
     expect(stat('comparisons')).toBe('7');
     expect(stat('bound-checks')).toBe('1');
+    // A miss also compares the sentinel copy of x.
+    expect(stat('worst')).toBe('11');
   });
 
   it('a missing target costs n comparisons and n + 1 bound checks', () => {

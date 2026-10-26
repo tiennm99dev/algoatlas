@@ -25,10 +25,10 @@ export const en = {
   instruction:
     'Pick a version, then step through its run on the target. The Every target row runs the version on each whole number from one below the smallest value to one above the largest; click a cell to load that target. Compare the code with version A, the correct one.',
   takeaways: [
-    'Pick one window convention and keep it everywhere. Closed [lo, hi] goes with hi = n − 1, while lo <= hi, lo = mid + 1 and hi = mid − 1.',
+    'Spot the monotone predicate first. On a sorted array, “a[i] ≥ x” is false, false, …, then true, true, …, and comparing a[mid] with x asks which side of that boundary mid is on. Any yes-or-no test with that shape, over indices or over answer values, can be binary searched.',
     'while lo < hi on a closed window stops one cell early: when the window shrinks to a single cell, that cell is never read, so x there is missed.',
-    'An update that can leave the window unchanged loops forever. lo = mid does this when hi = lo + 1, because floor((lo + hi) / 2) = lo; hi = mid does it when lo = hi.',
-    'Every update must shrink the window and every read must stay inside the array. Test the edges: x below all values, above all, in the first and last cell, and a one-element array.',
+    'An update that can leave the window unchanged loops forever. lo = mid does this when hi ≤ lo + 1, because then floor((lo + hi) / 2) = lo; hi = mid does it when lo = hi.',
+    'Pick one window convention and keep it everywhere: closed [lo, hi] goes with hi = n − 1, while lo <= hi, lo = mid + 1 and hi = mid − 1. Then test the edges: x below all values, above all, in the first and last cell, and a one-element array.',
     'Try the array 5 alone: each buggy version fails on exactly one of the targets 4, 5 and 6.',
   ],
   complexityHead: ['Version', 'Cost', 'Why'],
@@ -46,7 +46,7 @@ export const en = {
     [
       'C: lo = mid',
       'Unbounded',
-      'When a[mid] < x and hi = lo + 1, mid = lo and the window stays [lo, lo + 1].',
+      'When a[mid] < x and hi ≤ lo + 1, mid = lo and lo = mid leaves the window unchanged.',
     ],
     [
       'D: hi = n',
@@ -179,6 +179,25 @@ export const en = {
       ],
       solution:
         'Version B: lo = hi = 0 from the start, so while lo < hi never runs and it returns −1. C and E only fail on the missing targets 6 and 4, and D on 6.',
+    },
+    {
+      type: 'multi',
+      prompt:
+        'Which of these yes-or-no tests are monotone over the range shown, false up to some point and true from then on, so that binary search can find their boundary?',
+      options: [
+        'a[i] ≥ x, for i from 0 to n − 1 on the sorted array of this page',
+        'a[i] == x, for i from 0 to n − 1 on the same array',
+        'k² ≥ 50, for whole numbers k from 0 to 50',
+        'k is even, for whole numbers k from 0 to 50',
+        'a truck of capacity c ships the parcels in D days, for c from max(w) to sum(w)',
+      ],
+      answers: [0, 2, 4],
+      hints: [
+        'Write the test’s answers out as a row of ✕ and ✓. Monotone means one ✕ run, then one ✓ run.',
+        'a[i] == x is true only on the copies of x, so ✓ cells can be followed by ✕ again.',
+      ],
+      solution:
+        'a[i] ≥ x stays true once the sorted values reach x; k² ≥ 50 turns true at k = 8 and stays true; a capacity that works leaves room at any larger capacity. a[i] == x is ✕ ✓ ✕ around the copies of x, and “k is even” flips back and forth, so neither has a single boundary.',
     },
     {
       type: 'choice',

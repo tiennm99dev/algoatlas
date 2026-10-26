@@ -257,7 +257,9 @@
         </div>
         <div class="rounded-xl border border-slate-200 bg-white p-3">
           <dt class="text-xs text-slate-500">{m.stats.worst}</dt>
-          <dd class="text-2xl font-bold text-slate-500 tabular-nums">{n}</dd>
+          <dd class="text-2xl font-bold text-slate-500 tabular-nums" data-testid="worst">
+            {sentinel ? n + 1 : n}
+          </dd>
         </div>
       </dl>
 

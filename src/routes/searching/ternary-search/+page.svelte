@@ -129,8 +129,11 @@
           min={PEAK_MIN}
           max={PEAK_MAX}
           step="0.1"
-          bind:value={peak}
-          onchange={rebuild}
+          value={peak}
+          oninput={(e) => {
+            peak = Number(e.currentTarget.value);
+            rebuild();
+          }}
           class="focus-ring rounded accent-teal-700"
         />
       </label>

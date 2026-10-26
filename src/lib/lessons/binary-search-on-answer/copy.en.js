@@ -27,7 +27,7 @@ export const en = {
     [
       'Binary search on capacities',
       'O(n log S)',
-      'About log₂ S checks, where S = sum(w) is the size of the range.',
+      'At most about log₂ S checks: the range max(w) to sum(w) holds at most S = sum(w) capacities.',
     ],
     ['Trying every capacity upward', 'O(n · S)', 'Up to S checks before the first true.'],
     ['Memory', 'O(1)', 'lo, hi, mid and the running load.'],

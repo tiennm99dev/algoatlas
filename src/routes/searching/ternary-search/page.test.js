@@ -99,6 +99,17 @@ describe('ternary search lesson', () => {
     expect(text()).toMatch(/x = 1\.(19|20|21)\d/);
   });
 
+  it('dragging the peak slider rebuilds the run before the drag ends', () => {
+    render();
+    const slider = /** @type {HTMLInputElement} */ (document.querySelector('input[name="peak"]'));
+    slider.value = '4.5';
+    slider.dispatchEvent(new Event('input', { bubbles: true }));
+    flushSync();
+    expect(text()).toContain('Peak at x = 4.5');
+    click(button('Last step'));
+    expect(text()).toMatch(/x = 4\.(49|50|51)\d/);
+  });
+
   it('two peaks hides the slider and explains the miss', () => {
     render();
     click(radio('shape', 'two-peaks'));

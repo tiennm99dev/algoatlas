@@ -222,11 +222,9 @@
             viewBox="-12 0 {stripW + 24} {stripH}"
             role="img"
             aria-label={m.stripLabel(range.lo, range.hi, frame.lo, frame.hi)}
-            class="mx-auto block h-auto"
-            style="width: {stripW + 24}px; max-width: 100%; min-width: {Math.min(
-              stripW + 24,
-              360,
-            )}px"
+            width={stripW + 24}
+            height={stripH}
+            class="mx-auto block max-w-none"
             data-testid="strip"
           >
             {#each caps as cap (cap)}
