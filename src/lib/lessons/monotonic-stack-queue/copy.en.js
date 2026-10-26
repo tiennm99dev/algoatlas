@@ -131,7 +131,7 @@ export const en = {
   complexityHead: ['Problem', 'Cost', 'Why'],
   complexity: [
     ['Next greater element', 'O(n)', 'n pushes and at most n pops in total.'],
-    ['Sliding window maximum', 'O(n)', 'Each index enters and leaves the deque once.'],
+    ['Sliding window maximum', 'O(n)', 'Each index enters the deque once and leaves at most once.'],
     [
       'One step, worst case',
       'O(n)',

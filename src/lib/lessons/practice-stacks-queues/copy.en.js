@@ -185,7 +185,15 @@ export const en = {
     {
       type: 'text',
       prompt: 'What is the amortized cost of a dequeue in the two-stack queue?',
-      accept: ['O(1)', 'constant', 'O(1) amortized'],
+      accept: [
+        'O(1)',
+        'constant',
+        'constant time',
+        'O(1) amortized',
+        'amortized O(1)',
+        'O(1) amortised',
+        'amortised O(1)',
+      ],
       hints: ['Count how many times one item can be poured over its whole life.'],
       solution:
         'O(1): each item is pushed and popped at most twice in total, so n operations cost O(n) together, even though one dequeue can pour O(n) items.',
