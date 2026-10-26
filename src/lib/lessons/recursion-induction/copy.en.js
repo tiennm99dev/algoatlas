@@ -202,27 +202,19 @@ export const en = {
     'Passing tests is not a proof. The buggy insertion sort is right on every sorted input, and the buggy sum is right whenever a[0] = 0, but the invariant check catches both.',
     'Tick “Introduce a bug” on Insertion sort, then try the Sorted and Reversed presets: which one exposes the bug, and at which pass?',
   ],
-  complexityHead: ['Program', 'Cost', 'Why'],
+  complexityHead: ['Program', 'Time / memory', 'Why'],
   complexity: [
     [
       'Sum or max loop',
-      'O(n) time, O(1) memory',
+      'O(n) / O(1)',
       'One pass over a. The invariant is reasoning; it costs nothing when the program runs.',
     ],
-    [
-      'Insertion sort',
-      'O(n²) time, O(1) memory',
-      'Inserting a[i] can shift all i values before it.',
-    ],
-    [
-      'Recursive sum',
-      'O(n) time, O(n) memory',
-      'n + 1 calls, all on the stack at the deepest point.',
-    ],
+    ['Insertion sort', 'O(n²) / O(1)', 'Inserting a[i] can shift all i values before it.'],
+    ['Recursive sum', 'O(n) / O(n)', 'n + 1 calls, all on the stack at the deepest point.'],
     [
       'Checking the invariant every pass',
-      'O(n) per check, O(n²) total',
-      'Each check rescans the prefix: useful while testing, too slow to leave in.',
+      'O(n²) / O(1)',
+      'Each of the n checks rescans up to n values: useful while testing, too slow to leave in.',
     ],
   ],
   practiceTitle: 'Check yourself',
