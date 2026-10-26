@@ -335,7 +335,7 @@ export const en = {
   },
   takeaways: [
     'Ask what the answer is made of: two single positions (two pointers), one run of consecutive values (sliding window), or the sums of many ranges (prefix sums).',
-    'Two pointers need a reason to throw away one end at every step: sorted order for a pair sum, mirror symmetry for a palindrome. That turns n(n − 1)/2 checks into at most n − 1.',
+    'Two pointers need a reason to throw away one end at every step: sorted order for a pair sum, mirror symmetry for a palindrome. For a pair sum that turns n(n − 1)/2 checks into at most n − 1.',
     'A sliding window needs a running total that updates in O(1). A variable window also needs a sum that never shrinks as the window grows, which values ≥ 0 guarantee.',
     'Prefix sums pay O(n) once and then answer any range in O(1). They shine with many queries, but they do not speed up a search that still tries O(n²) ranges.',
     'Try the shortest-run sample with all three techniques that work: 11 steps for the window, 17 for brute force and 23 for prefix sums. Then pick Pointers to read why it does not fit.',
@@ -435,12 +435,12 @@ export const en = {
     {
       type: 'choice',
       prompt:
-        'An app answers 100 000 range-sum queries on an array of 1 000 000 values that never changes. Which technique fits best?',
+        'An app answers 100,000 range-sum queries on an array of 1,000,000 values that never changes. Which technique fits best?',
       options: ['Two pointers', 'Sliding window', 'Prefix sums', 'Brute force'],
       answer: 2,
       hints: ['Compare O(n + q) with O(q·n) for these sizes.'],
       solution:
-        'Prefix sums cost about 1 000 000 steps to build and then one subtraction per query: about 1 100 000 steps. Summing each range could take up to 100 000 × 1 000 000 steps.',
+        'Prefix sums cost about 1,000,000 steps to build and then one subtraction per query: about 1,100,000 steps. Summing each range could take up to 100,000 × 1,000,000 steps.',
     },
     {
       type: 'choice',

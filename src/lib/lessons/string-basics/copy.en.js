@@ -95,7 +95,7 @@ export const en = {
   inspectSummary: (chars, utf8, utf16) =>
     `${plural(chars, 'character')} (code points), ${plural(utf8, 'UTF-8 byte')}, ${plural(utf16, 'UTF-16 unit')}. JavaScript’s length and Java’s length() count UTF-16 units, so they say ${utf16}.`,
   inspectNote:
-    'UTF-8 spends 1 byte on ASCII, 2 on most accented Latin letters such as ă or ơ, 3 on letters like ệ and on most other scripts, and 4 on emoji. A code point above U+FFFF needs two UTF-16 units, a surrogate pair.',
+    'UTF-8 spends 1 byte on ASCII, 2 on most accented Latin letters such as ă or ơ and on Greek, Cyrillic, Arabic and Hebrew, 3 on letters like ệ and on Chinese, Japanese, Thai and most other scripts, and 4 on emoji. A code point above U+FFFF needs two UTF-16 units, a surrogate pair.',
   practiceTitle: 'Check yourself',
   /** @param {StringFrame} f */
   describe(f) {
