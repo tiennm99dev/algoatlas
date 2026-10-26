@@ -156,13 +156,10 @@ export const en = {
   ],
   complexityHead: ['Problem', 'Cost', 'Why'],
   complexity: [
-    [
-      'Merge two sorted lists',
-      'O(n + m) time, O(1) memory',
-      'Each step links one node; nodes are reused.',
-    ],
-    ['Find the middle', 'O(n) time, O(1) memory', 'fast crosses the list once.'],
-    ['Remove nth from end', 'O(n) time, O(1) memory', 'One pass with a fixed gap of n.'],
+    ['Merge two sorted lists', 'O(n + m)', 'Each step links one node.'],
+    ['Find the middle', 'O(n)', 'fast crosses the list once.'],
+    ['Remove nth from end', 'O(n)', 'One pass with a fixed gap of n.'],
+    ['Extra memory', 'O(1)', 'A few pointers; nodes are relinked, never copied.'],
   ],
   practiceTitle: 'Practice problems',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */

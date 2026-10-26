@@ -113,14 +113,11 @@ export const en = {
   ],
   complexityHead: ['Technique', 'Cost', 'Why'],
   complexity: [
-    ['Reverse in place', 'O(n) time, O(1) memory', 'One pass; each arrow flips once.'],
-    [
-      'Floyd: detect a cycle',
-      'O(n) time, O(1) memory',
-      'They meet within μ + λ rounds, at most n.',
-    ],
-    ['Floyd: find the cycle start', 'O(n) time, O(1) memory', 'μ more steps of both pointers.'],
-    ['Hash set of visited nodes', 'O(n) time, O(n) memory', 'The simple alternative to Floyd.'],
+    ['Reverse in place', 'O(n)', 'One pass; each arrow flips once.'],
+    ['Floyd: detect a cycle', 'O(n)', 'They meet within μ + λ rounds, at most n.'],
+    ['Floyd: find the cycle start', 'O(n)', 'μ more steps of both pointers.'],
+    ['Extra memory', 'O(1)', 'Reversal keeps three pointers, Floyd two.'],
+    ['Hash set of visited nodes', 'O(n) memory', 'The simple alternative to Floyd.'],
   ],
   practiceTitle: 'Check yourself',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
