@@ -10,7 +10,7 @@ export const en = {
   summary:
     'Step through heapsort on a linked tree and array view: build a max-heap, then swap the maximum to the end and sift down until the array is sorted.',
   instruction:
-    'Type up to 15 values or pick a starting array, then step through. The tree and the array below it are the same data: slot i has children 2i + 1 and 2i + 2. Watch the faded sorted tail grow from the right.',
+    'Type up to 15 values, or pick a starting array and press New array for a fresh one, then step through. The tree and the array below it are the same data: slot i has children 2i + 1 and 2i + 2. Watch the faded sorted tail grow from the right.',
   valuesLabel: 'Values',
   presetLabel: 'Starting array',
   presets: {
@@ -24,6 +24,7 @@ export const en = {
     range: 'Every value must be from 0 to 99.',
     count: 'Type from 2 to 15 values.',
   },
+  newArrayButton: 'New array',
   newArrayNotice: 'New array loaded.',
   heapTitle: 'Heap as a tree and as an array',
   /** @param {number[]} values @param {number} size */

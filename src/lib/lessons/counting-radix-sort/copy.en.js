@@ -47,7 +47,7 @@ export const en = {
     budget: 'n + k + n',
     passes: 'Passes',
     moves: 'Moves',
-    perPass: 'n per pass, in and out',
+    perPass: 'Moves per pass: n in, n out',
   },
   legend: {
     read: 'Being read',
@@ -58,7 +58,7 @@ export const en = {
     arrived: 'Just collected or dropped',
     sorted: 'Sorted',
   },
-  markers: { read: '?', write: '⇄', done: '✓' },
+  markers: { read: '?', write: '⇄', done: '✓', dropped: '↓', arrived: '⇄', sorted: '✓' },
   states: {
     read: 'being read',
     write: 'just written',

@@ -93,9 +93,17 @@ export const en = {
       case 'keep':
         return `The smallest card, ${at(f.i)}, is already in slot ${f.i}. Nothing moves.`;
       case 'swap':
-        return `Swap slots ${f.i} and ${f.from}: ${at(f.i)} goes to the front, and ${at(f.from)} jumps to slot ${f.from}, over every card in between.`;
-      case 'shift':
-        return `Take ${at(f.i)} out of slot ${f.from}, shift the ${f.from - f.i} cards in between one slot right, and put it in slot ${f.i}. No card jumps over another.`;
+        return f.from - f.i > 1
+          ? `Swap slots ${f.i} and ${f.from}: ${at(f.i)} goes to the front, and ${at(f.from)} jumps to slot ${f.from}, over every card in between.`
+          : `Swap slots ${f.i} and ${f.from}: ${at(f.i)} goes to the front, and ${at(f.from)} moves one slot right.`;
+      case 'shift': {
+        const moved = f.from - f.i;
+        const which =
+          moved === 1
+            ? `the card in slot ${f.i}`
+            : `the ${moved} cards in slots ${f.i} to ${f.from - 1}`;
+        return `Take ${at(f.i)} out of slot ${f.from}, shift ${which} one slot right, and put it in slot ${f.i}. No card jumps over another.`;
+      }
       case 'done': {
         const totals = `Sorted with ${f.comparisons} ${f.comparisons === 1 ? 'comparison' : 'comparisons'} and ${f.writes} ${f.writes === 1 ? 'slot' : 'slots'} written.`;
         const groups = equalKeyOrder(f.items);

@@ -79,7 +79,7 @@ export const en = {
     kept: 'Kept',
     skipped: 'Skipped repeat',
   },
-  markers: { current: '▶', kept: '✓', skipped: '✕' },
+  markers: { current: '▶', kept: '✓', skipped: '✕', open: '…', closed: '✓' },
   states: { current: 'being scanned', kept: 'kept', skipped: 'skipped' },
   /** @param {number} i @param {number} value @param {string} state */
   cellLabel: (i, value, state) => `Slot ${i}: ${value}${state ? `, ${state}` : ''}`,
@@ -103,7 +103,10 @@ export const en = {
       case 'open':
         return `Open the first block with ${span(x)}.`;
       case 'extend':
-        return `${span(x)} starts at ${x.start}, not after the block’s end: they overlap, so the block becomes ${last ? span(last) : ''}.`;
+        // Without a sort by start, x can end before the block starts: the scan still joins it.
+        return last && x.end < last.start
+          ? `${span(x)} starts at ${x.start}, not after the block’s end, so the scan joins it to the block. But it ends before the block starts at ${last.start}: they do not really overlap, and the block stays ${span(last)}.`
+          : `${span(x)} starts at ${x.start}, not after the block’s end: they overlap, so the block becomes ${last ? span(last) : ''}.`;
       case 'new':
         return `${span(x)} starts at ${x.start}, after the block ends at ${prev ? prev.end : ''}: a gap, so open a new block.`;
       case 'done': {

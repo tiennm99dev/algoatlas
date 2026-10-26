@@ -107,7 +107,7 @@ describe('selection sort and stability lesson', () => {
     expect(text()).toContain('Swap slots 0 and 3: 1a goes to the front, and 3a jumps to slot 3');
     pickVariant('shift');
     for (let i = 0; i < 7; i++) click(button('Next step'));
-    expect(text()).toContain('shift the 3 cards in between one slot right');
+    expect(text()).toContain('shift the 3 cards in slots 0 to 2 one slot right');
   });
 
   it('loads typed keys and tags the repeats', () => {

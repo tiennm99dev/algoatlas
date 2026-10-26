@@ -107,7 +107,13 @@
     })[/** @type {string} */ (s)] ?? '';
   /** @param {VisualState} s */
   const stateMarker = (s) =>
-    s === 'compare' ? m.markers.read : s === 'swap' ? m.markers.write : '';
+    s === 'compare'
+      ? m.markers.read
+      : s === 'swap'
+        ? m.markers.write
+        : s === 'sorted'
+          ? m.markers.done
+          : '';
 
   /** @param {number} i @returns {VisualState} */
   function inputState(i) {
@@ -161,13 +167,13 @@
         ? [
             ['compare', m.markers.read, m.legend.read],
             ['swap', m.markers.write, m.legend.write],
-            ['sorted', '', m.legend.done],
+            ['sorted', m.markers.done, m.legend.done],
           ]
         : [
             ['compare', '', m.legend.drop],
-            ['visited', '', m.legend.dropped],
-            ['swap', '', m.legend.arrived],
-            ['sorted', '', m.legend.sorted],
+            ['visited', m.markers.dropped, m.legend.dropped],
+            ['swap', m.markers.arrived, m.legend.arrived],
+            ['sorted', m.markers.sorted, m.legend.sorted],
           ]
     ),
   );
@@ -213,7 +219,7 @@
               values={cf.input.map((it) => it.value)}
               ariaLabel={m.inputAria}
               stateOf={inputState}
-              markerOf={(i) => tagOf(i)}
+              markerOf={(i) => `${stateMarker(inputState(i))}${tagOf(i)}`}
               labelOf={(i) =>
                 m.cellLabel(i, `${cf.input[i].value}${tagOf(i)}`, stateName(inputState(i)))}
               speed={player.speed}
@@ -242,7 +248,7 @@
               stateOf={outputState}
               markerOf={(p) => {
                 const it = cf.output[p];
-                return it ? `${tagOf(it.id)}` : '';
+                return it ? `${stateMarker(outputState(p))}${tagOf(it.id)}` : '';
               }}
               labelOf={(p) => {
                 const it = cf.output[p];
@@ -265,10 +271,18 @@
               values={rf.items.map((it) => it.value)}
               ariaLabel={m.arrayAria}
               stateOf={radixState}
-              markerOf={(i) =>
-                rf.kind === 'drop' && i === rf.i
-                  ? String(digitAt(rf.items[i].value, rf.place))
-                  : ''}
+              markerOf={(i) => {
+                if (rf.kind === 'drop' && i === rf.i)
+                  return String(digitAt(rf.items[i].value, rf.place));
+                const s = radixState(i);
+                return s === 'visited'
+                  ? m.markers.dropped
+                  : s === 'swap'
+                    ? m.markers.arrived
+                    : s === 'sorted'
+                      ? m.markers.sorted
+                      : '';
+              }}
               labelOf={(i) => m.cellLabel(i, String(rf.items[i].value), stateName(radixState(i)))}
               speed={player.speed}
             />

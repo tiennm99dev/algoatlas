@@ -114,7 +114,10 @@
     /** @type {Role[]} */
     const roles = [];
     const moving = frame.kind === 'swap' || frame.kind === 'shift';
-    if (moving && (k === frame.i || k === frame.from)) roles.push('moved');
+    // A swap writes two slots; a shift writes every slot from i to where the minimum was.
+    const written =
+      frame.kind === 'shift' ? k >= frame.i && k <= frame.from : k === frame.i || k === frame.from;
+    if (moving && written) roles.push('moved');
     if (frame.kind === 'compare' && k === frame.j) roles.push('compare');
     if (!moving && k === frame.min) roles.push('min');
     if (k === frame.i && frame.kind !== 'done') roles.push('current');

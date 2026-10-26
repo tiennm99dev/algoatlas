@@ -111,6 +111,7 @@
         {/each}
       </select>
     </label>
+    <button type="button" class="btn-secondary" onclick={loadPreset}>{m.newArrayButton}</button>
   </form>
 
   <div class="grid gap-4 lg:grid-cols-[1fr_22rem]">

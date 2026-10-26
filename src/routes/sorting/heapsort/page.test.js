@@ -130,6 +130,15 @@ describe('heapsort lesson', () => {
     expect(build.at(-1)?.swaps).toBe(0);
   });
 
+  it('loads a fresh array from the selected preset with the New array button', () => {
+    render();
+    const before = valuesInput().value;
+    click(buttonByText(m.newArrayButton));
+    expect(text()).toContain('New array loaded.');
+    expect(valuesInput().value).not.toBe(before);
+    expect(valuesInput().value.split(', ')).toHaveLength(before.split(', ').length);
+  });
+
   it('steps with the keyboard shortcut', () => {
     render();
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));

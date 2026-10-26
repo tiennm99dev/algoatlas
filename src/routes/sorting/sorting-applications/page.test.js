@@ -107,6 +107,12 @@ describe('sorting applications lesson', () => {
     expect(text()).toContain('Wrong: the correct merge is 1–6, 8–10, 12–18.');
     expect(text()).toContain('✕ wrong merge');
     pick('by', 'none');
+    click(button('Next step'));
+    click(button('Next step'));
+    click(button('Next step'));
+    expect(text()).toContain(
+      'But it ends before the block starts at 8: they do not really overlap, and the block stays 8–10.',
+    );
     click(button('Last step'));
     expect(blocksLabel()).toBe('Merged blocks: 8–10, 15–18.');
   });

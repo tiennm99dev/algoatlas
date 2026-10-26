@@ -94,6 +94,15 @@
   /** @param {number} t */
   const pct = (t) => `${(t / MAX_TIME) * 100}%`;
 
+  // The label goes after the bar, else before it; a long bar with room on neither side
+  // carries the label inside, on a light chip so it reads on any fill.
+  /** @param {Interval} x */
+  function labelStyle(x) {
+    if (x.end <= MAX_TIME * 0.7) return `left: ${pct(x.end)}`;
+    if (x.start >= MAX_TIME * 0.3) return `right: calc(100% - ${pct(x.start)})`;
+    return `left: ${pct(x.start)}; background: rgb(255 255 255 / 0.85); border-radius: 0.25rem`;
+  }
+
   /** Block index each scanned interval went into, by interval id. */
   const blockOf = $derived(
     new Map(
@@ -158,10 +167,10 @@
     /** @type {[VisualState, string, string][]} */ (
       mode === 'merge'
         ? [
-            ['active', '', m.legend.current],
+            ['active', m.markers.current, m.legend.current],
             ['visited', '', m.legend.scanned],
-            ['frontier', '', m.legend.open],
-            ['sorted', '', m.legend.closed],
+            ['frontier', m.markers.open, m.legend.open],
+            ['sorted', m.markers.closed, m.legend.closed],
           ]
         : [
             ['active', m.markers.current, m.legend.current],
@@ -246,9 +255,7 @@
                     'active'
                       ? 'font-bold'
                       : ''}"
-                    style={x.end > MAX_TIME * 0.7
-                      ? `right: calc(100% - ${pct(x.start)})`
-                      : `left: ${pct(x.end)}`}
+                    style={labelStyle(x)}
                   >
                     {m.span(x)}{blockOf.has(x.id) && s !== ''
                       ? ` ${m.blockMarker(/** @type {number} */ (blockOf.get(x.id)))}`
@@ -278,6 +285,7 @@
                   style="left: {pct(b.start)}; width: {pct(b.end - b.start)}"
                 >
                   {m.blockMarker(k)}
+                  {blockState(k) === 'frontier' ? m.markers.open : m.markers.closed}
                 </li>
               {/each}
             </ol>
