@@ -158,7 +158,7 @@
       (kind === 'push-high' && side === 'high') ||
       (kind === 'move-up' && side === 'high') ||
       (kind === 'move-down' && side === 'low');
-    return into ? mf[side].indexOf(/** @type {number} */ (mf.value)) : -1;
+    return into ? mf.slot : -1;
   }
 
   /** @param {'low'|'high'} side @param {number} i @returns {VisualState} */

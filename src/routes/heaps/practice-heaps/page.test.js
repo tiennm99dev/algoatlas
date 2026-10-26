@@ -125,6 +125,11 @@ describe('practice heaps lesson', () => {
     expect(text()).toContain('Keep the 3 closest points in a max-heap');
     click(button('Next step'));
     expect(text()).toContain('Read A (1, 2): distance² = 1² + 2² = 5.');
+    click(button('Next step'));
+    click(button('Next step'));
+    click(button('Next step'));
+    click(button('Next step'));
+    expect(text()).toContain('Read C (-2, -2): distance² = (-2)² + (-2)² = 8.');
     click(button('Last step'));
     expect(text()).toContain('The 3 closest: D, G, A.');
     expect(svgLabel('Points:')).toContain('A (1, 2)');

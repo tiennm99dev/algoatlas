@@ -51,6 +51,34 @@ describe('running median', () => {
     }
   });
 
+  it('records the slot a pushed or moved value settles in, even among equal values', () => {
+    const rand = seeded(9);
+    for (let t = 0; t < 100; t++) {
+      const stream = Array.from({ length: MAX_STREAM }, () => Math.floor(rand() * 4));
+      const frames = medianTrace(stream);
+      for (let i = 1; i < frames.length; i++) {
+        const f = frames[i];
+        const side =
+          f.kind === 'push-low' || f.kind === 'move-down'
+            ? 'low'
+            : f.kind === 'push-high' || f.kind === 'move-up'
+              ? 'high'
+              : null;
+        if (!side) {
+          expect(f.slot).toBe(-1);
+          continue;
+        }
+        expect(f[side][f.slot]).toBe(f.value);
+        // A push or a move adds exactly one value to that side.
+        const before = frames[i - 1][side];
+        expect(f[side]).toHaveLength(before.length + 1);
+      }
+    }
+    // The third 4 lands in slot 1 of low, behind an equal 4 at the root.
+    const equal = medianTrace([4, 4, 4]);
+    expect(equal.filter((f) => f.kind === 'push-low').map((f) => f.slot)).toEqual([0, 1, 1]);
+  });
+
   it('moves values between the heaps on a known stream', () => {
     const frames = medianTrace([1, 2, 3, 4, 5]);
     expect(frames.at(-1)?.moves).toBe(2);
@@ -197,6 +225,12 @@ describe('parsing and presets', () => {
       points: [
         { x: 1, y: 2 },
         { x: -3, y: 0 },
+      ],
+    });
+    expect(parsePoints('(\u22122, 1) (0, \u22125)')).toEqual({
+      points: [
+        { x: -2, y: 1 },
+        { x: 0, y: -5 },
       ],
     });
     expect(parsePoints('(1, 2) 7')).toEqual({ error: 'format' });

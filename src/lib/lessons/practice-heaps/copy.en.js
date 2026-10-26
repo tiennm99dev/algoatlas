@@ -6,6 +6,8 @@
 const pointName = (i) => 'ABCDEFGHIJKL'[i] ?? String(i + 1);
 /** @param {Point} p */
 const coords = (p) => `(${p.x}, ${p.y})`;
+/** A coordinate squared, with a negative one in brackets: (−2)². @param {number} v */
+const sq = (v) => (v < 0 ? `(${v})²` : `${v}²`);
 
 export const en = {
   slug: 'practice-heaps',
@@ -13,7 +15,7 @@ export const en = {
   level: 'Intermediate',
   title: 'Practice: heap problems',
   intro:
-    'Two classic heap problems. A running median splits the stream into two halves: a max-heap of the smaller half and a min-heap of the larger half, kept the same size, so the median sits on their tops. The k closest points keep a max-heap of size k, whose root is the farthest point still in the answer.',
+    'Two classic heap problems. A running median splits the stream into two halves: a max-heap of the smaller half and a min-heap of the larger half, with sizes kept equal or low one ahead, so the median sits on their tops. The k closest points keep a max-heap of size k, whose root is the farthest point still in the answer.',
   summary:
     'Keep the running median of a stream with two balanced heaps and find the k closest points to the origin with a size-k max-heap, then answer questions with the widget.',
   instruction:
@@ -132,7 +134,9 @@ export const en = {
       case 'start':
         return `Keep the ${k} closest points in a max-heap by distance², which avoids square roots. Its root is the farthest point kept.`;
       case 'read':
-        return `Read ${name} ${p ? coords(p) : ''}: distance² = ${p?.x}² + ${p?.y}² = ${d}.`;
+        return p
+          ? `Read ${name} ${coords(p)}: distance² = ${sq(p.x)} + ${sq(p.y)} = ${d}.`
+          : `Read ${name}.`;
       case 'push':
         return `The heap holds fewer than ${k}, so push ${name}.`;
       case 'replace':
@@ -162,19 +166,16 @@ export const en = {
     ['Read the median', 'O(1)', 'It is low’s top, or the mean of both tops.'],
     [
       'Running median by sorting each time',
-      'O(n log n) per value',
-      'Re-sorting the prefix wastes the work already done.',
+      'O(n log n)',
+      'Per value: re-sorting the prefix wastes the work already done.',
     ],
     [
       'K closest of n points',
       'O(n log k)',
       'One comparison per point and a sift of O(log k) when it enters.',
     ],
-    [
-      'Memory',
-      'O(n) for the median, O(k) for k closest',
-      'The two halves hold every value; the k-heap only the winners.',
-    ],
+    ['Memory, running median', 'O(n)', 'The two halves together hold every value.'],
+    ['Memory, k closest', 'O(k)', 'The heap holds only the k winners.'],
   ],
   practiceTitle: 'Practice',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */

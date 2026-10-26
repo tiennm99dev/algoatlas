@@ -24,6 +24,7 @@
  * @property {number[]} high  Min-heap array of the larger half.
  * @property {number} index  Stream position being handled; -1 when none.
  * @property {number | null} value  The value read or moved.
+ * @property {number} slot  Where the pushed or moved value settled in its heap; -1 when none.
  * @property {number | null} median  The median after this value; null before the first.
  * @property {number[]} medians  Medians reported so far.
  * @property {number} moves  Values moved between the heaps so far.
@@ -98,7 +99,7 @@ function makeHeap(before) {
   return {
     a,
     counter,
-    /** @param {T} item */
+    /** @param {T} item @returns {number} the slot it settled in */
     push(item) {
       a.push(item);
       let i = a.length - 1;
@@ -108,6 +109,7 @@ function makeHeap(before) {
         [a[i], a[p]] = [a[p], a[i]];
         i = p;
       }
+      return i;
     },
     /** @returns {T} */
     pop() {
@@ -148,6 +150,7 @@ export function medianTrace(stream) {
     frames.push({
       index: -1,
       value: null,
+      slot: -1,
       ...f,
       low: low.a.slice(),
       high: high.a.slice(),
@@ -162,24 +165,24 @@ export function medianTrace(stream) {
     push({ kind: 'read', lines: [0], index, value: x });
     heapOps++;
     if (low.a.length === 0 || x <= low.a[0]) {
-      low.push(x);
-      push({ kind: 'push-low', lines: [1], index, value: x });
+      const slot = low.push(x);
+      push({ kind: 'push-low', lines: [1], index, value: x, slot });
     } else {
-      high.push(x);
-      push({ kind: 'push-high', lines: [2], index, value: x });
+      const slot = high.push(x);
+      push({ kind: 'push-high', lines: [2], index, value: x, slot });
     }
     if (low.a.length > high.a.length + 1) {
       const y = low.pop();
-      high.push(y);
+      const slot = high.push(y);
       heapOps += 2;
       moves++;
-      push({ kind: 'move-up', lines: [3], index, value: y });
+      push({ kind: 'move-up', lines: [3], index, value: y, slot });
     } else if (high.a.length > low.a.length) {
       const y = high.pop();
-      low.push(y);
+      const slot = low.push(y);
       heapOps += 2;
       moves++;
-      push({ kind: 'move-down', lines: [4], index, value: y });
+      push({ kind: 'move-down', lines: [4], index, value: y, slot });
     }
     median = low.a.length > high.a.length ? low.a[0] : (low.a[0] + high.a[0]) / 2;
     medians.push(median);
@@ -263,11 +266,13 @@ export function parseMedianStream(text) {
 }
 
 /**
- * Reads points written as (x, y) pairs, for example `(1, 2) (-3, 0)`.
- * @param {string} text
+ * Reads points written as (x, y) pairs, for example `(1, 2) (-3, 0)`. A typographic minus
+ * (−) counts as a minus sign, so copied examples parse.
+ * @param {string} input
  * @returns {{points: Point[]} | {error: 'format'|'range'|'count'|'duplicate'}}
  */
-export function parsePoints(text) {
+export function parsePoints(input) {
+  const text = input.replace(/\u2212/g, '-');
   const rest = text.replace(/\(\s*(-?\d+)\s*,\s*(-?\d+)\s*\)/g, '').replace(/[\s,;]/g, '');
   const matches = [...text.matchAll(/\(\s*(-?\d+)\s*,\s*(-?\d+)\s*\)/g)];
   if (rest !== '' || matches.length === 0) return { error: 'format' };
