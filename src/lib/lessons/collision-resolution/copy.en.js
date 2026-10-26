@@ -143,7 +143,9 @@ export const en = {
       case 'probe':
         return f.search
           ? `Probe i = ${i}: slot ${slot} holds ${f.slots[slot]}, not ${k}. Keep probing.`
-          : `Probe i = ${i}: slot ${slot} holds ${f.slots[slot]}. A collision, so try i = ${i + 1}.`;
+          : i === 10
+            ? `Probe i = 10: slot ${slot} holds ${f.slots[slot]}. A collision, and that was the last probe.`
+            : `Probe i = ${i}: slot ${slot} holds ${f.slots[slot]}. A collision, so try i = ${i + 1}.`;
       case 'place':
         return i === 0
           ? `Probe i = 0: slot ${slot} is empty, so ${k} goes into its home slot.`

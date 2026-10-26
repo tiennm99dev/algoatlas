@@ -2,6 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
+import { collisionTrace } from '$lib/algo-engine/collision-resolution.js';
 import { en as m } from '$lib/lessons/collision-resolution/copy.en.js';
 import Page from './+page.svelte';
 
@@ -156,10 +157,23 @@ describe('collision resolution lesson', () => {
     expect(narration()).toBe(m.keyErrors.count);
     const search = field('input[name="search"]');
     commit(search, '150');
+    search.form?.requestSubmit();
+    flushSync();
     expect(search.value).toBe('34');
+    expect(narration()).toBe(m.keyErrors.range);
+    expect(document.body.textContent).toMatch(/Step 1 of/);
     commit(keys, '3, 14');
     click(button('Last step'));
     expect(slotCell(4)).toBe('14');
+  });
+
+  it('does not promise another probe after the last one', () => {
+    const trace = collisionTrace([0, 11, 22, 33, 44, 55, 66], 'quadratic');
+    const last = trace[trace.findIndex((f) => f.kind === 'fail') - 1];
+    expect(last.attempt).toBe(10);
+    expect(m.describe(last, 'quadratic')).toBe(
+      'Probe i = 10: slot 1 holds 11. A collision, and that was the last probe.',
+    );
   });
 
   it('says a search was cleared when the method changes', () => {

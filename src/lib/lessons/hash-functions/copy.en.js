@@ -26,15 +26,23 @@ export const en = {
     'Universal hashing draws h(k) = ((a·k + b) mod p) mod m at random with a prime p larger than every key. Then any two distinct keys collide with chance at most 1/m, whatever the keys are. Some draws are unlucky for some keys, but none is unlucky on average.',
     'Load “Attack” with k mod 16, then type a = 3 and b = 5: that draw happens to be bad for multiples of 16. Press “New a, b” a few times and compare the colliding pairs with the expected value.',
   ],
-  complexityHead: ['Hash', 'Expected chain length', 'Why'],
+  complexityHead: ['Hash and keys', 'Cost', 'Why'],
   complexity: [
-    ['Uniform (ideal)', 'O(1 + α)', 'Each key lands in any bucket with chance 1/m, independently.'],
+    [
+      'Uniform (ideal)',
+      'O(1 + α)',
+      'Expected search: each key lands in any bucket with chance 1/m, independently.',
+    ],
     [
       'Universal, any fixed keys',
       'O(1 + α)',
-      'Each pair collides with chance ≤ 1/m over the random choice of a, b.',
+      'Expected search: each pair collides with chance ≤ 1/m over the random choice of a, b.',
     ],
-    ['Fixed, adversarial keys', 'O(n)', 'The adversary picks keys that all share one bucket.'],
+    [
+      'Fixed, adversarial keys',
+      'O(n)',
+      'Search: the adversary picks keys that all share one bucket, so one chain holds them all.',
+    ],
     ['Computing h(k)', 'O(1)', 'A multiply, an add and two remainders.'],
   ],
   nextTeaser:

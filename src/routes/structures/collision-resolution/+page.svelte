@@ -89,7 +89,10 @@
     rebuild();
   }
 
-  function commitSearch() {
+  // The search field commits only when the search runs: Enter fires change before submit, so
+  // a change handler that reverted a bad value would let the submit search the old key and
+  // hide the refusal.
+  function runSearch() {
     if (
       typeof searchDraft !== 'number' ||
       !Number.isInteger(searchDraft) ||
@@ -98,14 +101,10 @@
     ) {
       searchDraft = searchKey;
       say(m.keyErrors.range);
-      return false;
+      return;
     }
     searchKey = searchDraft;
-    return true;
-  }
-
-  function runSearch() {
-    if (commitSearch()) rebuild(searchKey);
+    rebuild(searchKey);
   }
 
   /**
@@ -213,6 +212,7 @@
     </label>
     <form
       class="flex items-end gap-2"
+      novalidate
       onsubmit={(e) => {
         e.preventDefault();
         runSearch();
@@ -227,7 +227,6 @@
           max={MAX_KEY}
           class="field w-24"
           bind:value={searchDraft}
-          onchange={commitSearch}
         />
       </label>
       <button type="submit" class="btn-outline">{m.searchButton}</button>
