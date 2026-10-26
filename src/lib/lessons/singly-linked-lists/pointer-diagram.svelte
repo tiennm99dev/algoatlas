@@ -116,7 +116,10 @@
     for (const r of rows) {
       const stacks = placed.filter((p) => byId.get(p.id)?.row === r).map((p) => p.stack + 1);
       const band = (stacks.length ? Math.max(...stacks) : 0) * POINTER_H;
-      const arcs = links.some((l) => l.from.row === r && l.kind === 'prev' && l.route !== 'lane')
+      const arcs = links.some(
+        (l) =>
+          l.from.row === r && l.kind === 'prev' && (l.route === 'curve' || l.route === 'around'),
+      )
         ? ABOVE_BAND
         : 0;
       y += band + arcs;
@@ -143,7 +146,10 @@
   /** Height of the arc band above a node's row, which its pointer labels sit over. @param {number} id */
   function arcsAbove(id) {
     const row = byId.get(id)?.row;
-    return links.some((l) => l.from.row === row && l.kind === 'prev' && l.route !== 'lane')
+    return links.some(
+      (l) =>
+        l.from.row === row && l.kind === 'prev' && (l.route === 'curve' || l.route === 'around'),
+    )
       ? ABOVE_BAND
       : 0;
   }
