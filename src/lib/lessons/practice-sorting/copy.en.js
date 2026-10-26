@@ -141,7 +141,7 @@ export const en = {
         const last = f.lanes.filter((l) => l.comparisons === worst);
         const firstText = `${list(first.map((l) => SORT_NAMES[l.id]))} finished first with ${plural(first[0]?.comparisons ?? 0, 'comparison', 'comparisons')}`;
         if (first.length === f.lanes.length) return `All six sorted. ${firstText}: a dead heat.`;
-        return `All six sorted. ${firstText}; ${list(last.map((l) => SORT_NAMES[l.id]))} needed ${worst}. Try another shape: the order changes.`;
+        return `All six sorted. ${firstText}; ${list(last.map((l) => SORT_NAMES[l.id]))} needed ${plural(worst, 'comparison', 'comparisons')}. Try another shape: the order changes.`;
       }
     }
   },
@@ -168,7 +168,7 @@ export const en = {
       'O(n²)',
       'O(n log n) on average; O(log n) stack on average, O(n) at worst; not stable.',
     ],
-    ['Heapsort', 'O(n log n)', 'The same on every input; O(1) extra; not stable.'],
+    ['Heapsort', 'O(n log n)', 'O(n log n) on average too; O(1) extra; not stable.'],
   ],
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
   practice: [
