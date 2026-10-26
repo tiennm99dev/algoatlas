@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit';
-import { chapters, findLesson, lessonOrder } from '$lib/curriculum/index.js';
+import { chapters, findLesson } from '$lib/curriculum/index.js';
 import { findRedirect, legacyRedirects } from '$lib/curriculum/legacy-redirects.js';
-import { lessonPath } from '$lib/lessons/registry.js';
+import { lessonNeighbors } from '$lib/lessons/registry.js';
 import { hasStaticRoute } from '$lib/lessons/static-routes.js';
 
 /**
@@ -19,17 +19,6 @@ export function entries() {
   return [...stubs, ...moved];
 }
 
-/** @param {string | undefined} slug */
-function neighbor(slug) {
-  const entry = slug === undefined ? undefined : findLesson(slug);
-  return (
-    entry && {
-      title: entry.lesson.title,
-      path: lessonPath({ topic: entry.chapter.slug, slug: entry.lesson.slug }),
-    }
-  );
-}
-
 /** @type {import('./$types').PageServerLoad} */
 export function load({ params }) {
   const redirect = findRedirect(params.topic, params.slug);
@@ -40,13 +29,13 @@ export function load({ params }) {
     error(404, 'Unknown lesson');
   }
   // Stubs link to their neighbors in book order, written or not, so every page is reachable.
-  const at = lessonOrder.indexOf(entry.lesson.slug);
+  const { prev, next } = lessonNeighbors(entry.lesson.slug);
   return {
     stub: {
       topic: entry.chapter.slug,
       lesson: entry.lesson,
-      prev: neighbor(lessonOrder[at - 1]),
-      next: neighbor(lessonOrder[at + 1]),
+      prev,
+      next,
     },
   };
 }

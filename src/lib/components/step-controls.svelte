@@ -2,6 +2,7 @@
   import { tick, untrack } from 'svelte';
   import { t } from '$lib/i18n/index.js';
   import { SPEEDS } from '$lib/player/player.svelte.js';
+  import { playerKey } from './step-keys.js';
 
   /** @type {{player: import('$lib/player/player.svelte.js').Player}} */
   let { player } = $props();
@@ -27,17 +28,9 @@
 
   /** @param {KeyboardEvent} e */
   function onKeydown(e) {
-    if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
-    const el = /** @type {HTMLElement | null} */ (e.target);
-    // Form fields and the editable grid own their arrow keys.
-    if (el?.closest('input, select, textarea, [role="grid"]')) return;
-    if (e.key === 'ArrowRight') player.step();
-    else if (e.key === 'ArrowLeft') player.back();
-    // Space toggles only inside the player area so it still scrolls the page elsewhere;
-    // on a focused button it already activates that button natively.
-    else if (e.key === ' ' && el?.closest('[data-player-scope]') && !el.closest('button'))
-      player.toggle();
-    else return;
+    const action = playerKey(e, e.target instanceof Element ? e.target : null);
+    if (action === null) return;
+    player[action]();
     e.preventDefault();
   }
 

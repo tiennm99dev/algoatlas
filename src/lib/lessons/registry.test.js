@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { t } from '$lib/i18n/index.js';
 import { chapters, lessonOrder } from '$lib/curriculum/index.js';
 import { hasStaticRoute } from './static-routes.js';
-import { lessonPath, lessons, lessonsByTopic, topicPath } from './registry.js';
+import { lessonNeighbors, lessonPath, lessons, lessonsByTopic, topicPath } from './registry.js';
 
 describe('registry', () => {
   it('groups lessons by topic in registry order', () => {
@@ -77,6 +77,26 @@ describe('registry', () => {
       expect(lesson.slug).toMatch(/^[a-z0-9-]+$/);
       expect(lesson.takeaways.length).toBeGreaterThan(0);
       for (const row of lesson.complexity) expect(row).toHaveLength(3);
+    }
+  });
+
+  it('links each lesson to its curriculum neighbours, stubs included', () => {
+    for (let i = 1; i < lessonOrder.length - 1; i++) {
+      const { prev, next } = lessonNeighbors(lessonOrder[i]);
+      expect(prev?.path).toMatch(new RegExp(`/${lessonOrder[i - 1]}/$`));
+      expect(next?.path).toMatch(new RegExp(`/${lessonOrder[i + 1]}/$`));
+    }
+    expect(lessonNeighbors(lessonOrder[0]).prev).toBeUndefined();
+    expect(lessonNeighbors(/** @type {string} */ (lessonOrder.at(-1))).next).toBeUndefined();
+    expect(lessonNeighbors('no-such-lesson')).toEqual({ prev: undefined, next: undefined });
+    const written = new Set(lessons.map((l) => l.slug));
+    const beforeStub = lessonOrder.findIndex(
+      (s, i) => written.has(s) && i + 1 < lessonOrder.length && !written.has(lessonOrder[i + 1]),
+    );
+    if (beforeStub !== -1) {
+      expect(lessonNeighbors(lessonOrder[beforeStub]).next?.path).toContain(
+        lessonOrder[beforeStub + 1],
+      );
     }
   });
 });

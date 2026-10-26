@@ -10,8 +10,8 @@ import Layout from './+layout.svelte';
 import { entries, load } from './[topic]/+page.js';
 import { page } from '$app/state';
 import { t } from '$lib/i18n/index.js';
-import { lessonPath, lessons } from '$lib/lessons/registry.js';
-import { findLesson, levels } from '$lib/curriculum/index.js';
+import { lessonNeighbors, lessonPath, lessons } from '$lib/lessons/registry.js';
+import { findLesson, lessonOrder, levels } from '$lib/curriculum/index.js';
 
 // Lesson pages load on demand, so the path tests can render whichever lessons are first and last.
 const lessonPages =
@@ -396,35 +396,38 @@ describe('site chrome', () => {
     const hrefs = () =>
       [...(nav()?.querySelectorAll('a') ?? [])].map((a) => a.getAttribute('href'));
 
-    it('has no previous link on the first lesson and links to the second as next', async () => {
-      render(await pageOf(lessons[0]));
+    it('links the next lesson in curriculum order, stub or not, as the teaser does', async () => {
+      const first = lessons[0];
+      render(await pageOf(first));
       const links = hrefs();
-      expect(links).toHaveLength(1);
-      expect(links[0]).toMatch(new RegExp(`${lessonPath(lessons[1])}$`));
-      expect(nav()?.textContent).toContain(lessons[0].nextTeaser);
-      expect(nav()?.textContent).not.toContain('Previous lesson');
+      const { prev, next } = lessonNeighbors(first.slug);
+      expect(links).toHaveLength((prev ? 1 : 0) + (next ? 1 : 0));
+      if (next) expect(links.at(-1)).toMatch(new RegExp(`${next.path}$`));
+      expect(nav()?.textContent).toContain(first.nextTeaser);
     });
 
-    it('links a middle lesson to its registry neighbors', () => {
+    it('links a middle lesson to its curriculum neighbors', () => {
       render(BinaryPage);
-      const at = lessons.findIndex((l) => l.slug === 'binary-search');
+      const at = lessonOrder.indexOf('binary-search');
       const links = hrefs();
       expect(links).toHaveLength(2);
-      expect(links[0]).toMatch(new RegExp(`${lessonPath(lessons[at - 1])}$`));
-      expect(links[1]).toMatch(new RegExp(`${lessonPath(lessons[at + 1])}$`));
+      expect(links[0]).toMatch(new RegExp(`/${lessonOrder[at - 1]}/$`));
+      expect(links[1]).toMatch(new RegExp(`/${lessonOrder[at + 1]}/$`));
     });
 
-    it('ends the path on the last lesson with the teaser and a link home', async () => {
+    it('sends the last written lesson on to the next curriculum lesson, even a stub', async () => {
       const last = lessons[lessons.length - 1];
       render(await pageOf(last));
       const links = hrefs();
-      expect(links).toHaveLength(2);
-      expect(links[0]).toMatch(new RegExp(`${lessonPath(lessons[lessons.length - 2])}$`));
-      expect(links[1]).toMatch(/\/$/);
-      expect(links[1]).not.toContain(last.slug);
+      const { next } = lessonNeighbors(last.slug);
       expect(nav()?.textContent).toContain(last.nextTeaser);
-      expect(nav()?.textContent).toContain('All topics');
-      expect(nav()?.textContent).not.toContain('Next lesson');
+      if (next) {
+        expect(links.at(-1)).toMatch(new RegExp(`${next.path}$`));
+        expect(nav()?.textContent).toContain('Next lesson');
+      } else {
+        expect(links.at(-1)).toMatch(/\/$/);
+        expect(nav()?.textContent).toContain('All topics');
+      }
     });
 
     it('names the back link after the topic and leads the banner with "Try it:"', () => {

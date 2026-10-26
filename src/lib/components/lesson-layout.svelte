@@ -1,7 +1,7 @@
 <script>
   import { t } from '$lib/i18n/index.js';
   import { resolve } from '$app/paths';
-  import { lessonPath, lessons, topicPath } from '$lib/lessons/registry.js';
+  import { lessonNeighbors, topicPath } from '$lib/lessons/registry.js';
 
   /**
    * @type {{
@@ -14,10 +14,11 @@
   const copy = t();
   const topic = $derived(copy.topics[lesson.topic]);
   const complexityHead = $derived(lesson.complexityHead ?? copy.lessonChrome.complexityHead);
-  // Previous and next follow the global registry order, so the lessons form one path.
-  const at = $derived(lessons.findIndex((l) => l.slug === lesson.slug));
-  const prev = $derived(lessons[at - 1]);
-  const next = $derived(lessons[at + 1]);
+  // Previous and next follow the curriculum order, stubs included, so the next link is the
+  // lesson `nextTeaser` names and the lessons form one path with the stub pages.
+  const neighbors = $derived(lessonNeighbors(lesson.slug));
+  const prev = $derived(neighbors.prev);
+  const next = $derived(neighbors.next);
 </script>
 
 <svelte:head>
@@ -95,7 +96,7 @@
   >
     {#if prev}
       <a
-        href={resolve(/** @type {'/'} */ (lessonPath(prev)))}
+        href={resolve(/** @type {'/'} */ (prev.path))}
         class="focus-ring rounded-xl border border-slate-200 bg-white p-4 hover:border-teal-600"
       >
         <span class="block text-xs text-slate-500"
@@ -106,7 +107,7 @@
     {/if}
     {#if next}
       <a
-        href={resolve(/** @type {'/'} */ (lessonPath(next)))}
+        href={resolve(/** @type {'/'} */ (next.path))}
         class="focus-ring rounded-xl border border-teal-200 bg-teal-50 p-4 hover:border-teal-600 sm:col-start-2 sm:text-right"
       >
         <span class="block text-xs text-teal-800"

@@ -6,6 +6,8 @@
 
   const title = t().lessonChrome.pseudocodeTitle;
   const headingId = $props.id();
+  // Line numbers take the width of the longest one, so 10 and up never wrap.
+  const gutter = $derived(`${String(lines.length).length}ch`);
 </script>
 
 <section
@@ -28,8 +30,10 @@
           : ''}"
         aria-current={on ? 'step' : undefined}
       >
-        <span class="w-4 shrink-0 text-right text-slate-500 select-none" aria-hidden="true"
-          >{i + 1}</span
+        <span
+          class="shrink-0 text-right whitespace-nowrap text-slate-500 tabular-nums select-none"
+          style:min-width={gutter}
+          aria-hidden="true">{i + 1}</span
         ><span class="min-w-0">{line}</span>
       </li>
     {/each}
