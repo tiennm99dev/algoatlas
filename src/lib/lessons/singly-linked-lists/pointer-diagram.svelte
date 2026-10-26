@@ -315,7 +315,7 @@
     role={onselect ? 'group' : 'img'}
     aria-label={ariaLabel}
     class="block h-auto"
-    style="width: {vbW}px; max-width: 100%; min-width: {Math.min(vbW, 360)}px"
+    style="width: {vbW}px; max-width: 100%; min-width: {Math.round(vbW * 0.8)}px"
   >
     <defs>
       {#each MARKERS as mk (mk.hot)}
