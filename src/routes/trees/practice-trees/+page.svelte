@@ -139,7 +139,8 @@
     }
     const k = slots[i];
     const tag = (k === picks[0] ? m.markers.p : '') + (k === picks[1] ? m.markers.q : '');
-    return s === 'sorted' ? `${tag}${m.markers.sorted}` : tag;
+    const mark = s === 'sorted' || s === 'active' || s === 'path' ? m.markers[s] : '';
+    return `${tag}${mark}`;
   }
 
   /** @param {number} i */
@@ -236,8 +237,8 @@
             ['swap', `${m.markers.swap} ${m.legend.swap}`],
           ]
         : [
-            ['active', m.legend.active],
-            ['path', m.legend.path],
+            ['active', `${m.markers.active} ${m.legend.active}`],
+            ['path', `${m.markers.path} ${m.legend.path}`],
             ['sorted', `${m.markers.sorted} ${m.legend.sorted}`],
           ]
     ),

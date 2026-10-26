@@ -70,7 +70,7 @@ export const en = {
     frontier: '…',
     visited: '✓',
     swap: '✗',
-    path: '',
+    path: '•',
     sorted: '★',
     p: 'p',
     q: 'q',
