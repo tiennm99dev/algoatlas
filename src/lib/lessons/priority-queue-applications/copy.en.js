@@ -44,6 +44,9 @@ export const en = {
   listAria: (j, values) => `List ${listName(j)}: ${values.join(', ') || 'empty'}.`,
   /** @param {number} i @param {number} value @param {string} state */
   cellLabel: (i, value, state) => `Position ${i}: ${value}${state ? `, ${state}` : ''}`,
+  /** @param {number} i @param {number} value @param {number} list @param {string} state */
+  outCellLabel: (i, value, list, state) =>
+    `Position ${i}: ${value} from list ${listName(list)}, ${state}`,
   headPointer: 'head',
   nextPointer: 'next',
   listsTitle: 'Input lists',
@@ -71,8 +74,9 @@ export const en = {
     active: 'Just pushed or popped',
     frontier: 'Head waiting in the heap',
     visited: 'Already merged',
-    sorted: 'Output',
+    sorted: 'Output, marked with the list it came from',
   },
+  outMarker: 'A–E',
   legendTopK: {
     active: 'Value read now, or where it settled',
     compare: 'Heap minimum: the kth largest so far',

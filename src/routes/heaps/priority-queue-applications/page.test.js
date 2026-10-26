@@ -78,6 +78,8 @@ describe('priority queue applications lesson', () => {
     click(button('Last step'));
     expect(svgLabel('Output')).toBe('Output: 1, 2, 3, 4, 5, 6, 7, 8, 9.');
     expect(text()).toContain('Merged 9 values with 18 heap operations');
+    const titles = [...document.querySelectorAll('title')].map((t) => t.textContent);
+    expect(titles).toContain('Position 8: 9 from list A, in the output');
     expect(text()).toContain('The heap is empty.');
   });
 

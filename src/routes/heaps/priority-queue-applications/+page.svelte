@@ -175,7 +175,7 @@
 
   const outValues = $derived(mf ? mf.out.map((e) => e.value) : []);
   /** @param {number} i @returns {VisualState} */
-  const outState = (i) => (mf?.kind === 'pop' && i === outValues.length - 1 ? 'active' : '');
+  const outState = (i) => (mf?.kind === 'pop' && i === outValues.length - 1 ? 'active' : 'sorted');
 
   /** @param {number} i @returns {VisualState} */
   function streamState(i) {
@@ -335,7 +335,10 @@
                 values={outValues}
                 ariaLabel={m.outAria(outValues)}
                 stateOf={outState}
-                markerOf={(i) => (outState(i) ? m.markers.active : m.listName(mf.out[i].list))}
+                markerOf={(i) =>
+                  outState(i) === 'active' ? m.markers.active : m.listName(mf.out[i].list)}
+                labelOf={(i) =>
+                  m.outCellLabel(i, outValues[i], mf.out[i].list, stateName(outState(i)))}
                 speed={player.speed}
               />
             {:else}
@@ -348,7 +351,7 @@
           {#each legend as [s, label] (s)}
             <li class="flex items-center gap-1.5">
               <span class="size-3 rounded-sm border border-slate-700 {STATE_BG[s]}"></span>
-              {marker(s)}
+              {problem === 'merge' && s === 'sorted' ? m.outMarker : marker(s)}
               {label}
             </li>
           {/each}
