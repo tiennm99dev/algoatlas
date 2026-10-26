@@ -104,6 +104,8 @@ describe('recursion and induction lesson', () => {
     commit(field('select[name="preset"]'), 'sorted');
     click(button('Last step'));
     expect(byTest('failed')).toBe('0');
+    expect(narration()).toContain('All 6 checks held on this input, yet the bug is still there');
+    expect(narration()).not.toContain('by the same reasoning');
     commit(field('select[name="preset"]'), 'reversed');
     click(button('Last step'));
     expect(byTest('answer')).toContain('9, 0, 2, 4, 7');

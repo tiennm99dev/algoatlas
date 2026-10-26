@@ -185,9 +185,11 @@ export const en = {
       case 'done': {
         const answer = f.program === 'insertion' ? list(f.items) : num(f.acc ?? 0);
         const checks =
-          f.failed === 0
-            ? `All ${f.passed} checks held, so the argument goes through for this input and, by the same reasoning, for every input.`
-            : `${f.failed} of ${f.passed + f.failed} checks failed.`;
+          f.failed > 0
+            ? `${f.failed} of ${f.passed + f.failed} checks failed.`
+            : f.buggy
+              ? `All ${f.passed} checks held on this input, yet the bug is still there: the argument has to work for every input, and on other inputs the buggy line breaks the invariant.`
+              : `All ${f.passed} checks held, so the argument goes through for this input and, by the same reasoning, for every input.`;
         const wrong = f.correct
           ? ''
           : ` The right answer is ${f.program === 'insertion' ? 'the sorted array' : num(f.expected ?? 0)}.`;
@@ -199,7 +201,7 @@ export const en = {
     'A loop invariant is a statement about the loop variables that is true before the first pass (initialization) and stays true after every pass (maintenance).',
     'On exit (termination) the invariant plus the stopping condition, here i = n, gives exactly the result you wanted.',
     'Induction proves a recursion the same way: prove the base case, then assume the smaller call is right and show the current call is right too.',
-    'Passing tests is not a proof. The buggy insertion sort is right on every sorted input, and the buggy sum is right whenever a[0] = 0, but the invariant check catches both.',
+    'Passing tests is not a proof. The buggy insertion sort is right on every sorted input, and the buggy sum is right whenever a[0] = 0; every check passes on those inputs too. Only the argument, which must hold for every input, rules the bugs out.',
     'Tick “Introduce a bug” on Insertion sort, then try the Sorted and Reversed presets: which one exposes the bug, and at which pass?',
   ],
   complexityHead: ['Program', 'Time / memory', 'Why'],

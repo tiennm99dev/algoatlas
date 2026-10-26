@@ -161,8 +161,8 @@ export const en = {
     ['Subsets, time', 'O(n·2ⁿ)', '2ⁿ⁺¹ − 1 calls, and each of the 2ⁿ outputs lists up to n items.'],
     [
       'Subsets, memory',
-      'O(n)',
-      'n + 1 calls deep, plus the chosen list; the output itself is not counted.',
+      'O(n²)',
+      'n + 1 calls deep, each keeping its own copy of chosen. One shared list, undone after each call, cuts it to O(n).',
     ],
   ],
   practiceTitle: 'Practice',
