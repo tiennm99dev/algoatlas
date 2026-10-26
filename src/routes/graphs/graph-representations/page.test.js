@@ -123,6 +123,19 @@ describe('graph representations lesson', () => {
       'Neighbours of D: B, E. The matrix scans all 5 cells of row D; the list reads just its 2 entries.',
     );
     expect(matrixCell(3, 0).getAttribute('aria-label')).toContain('selected row');
+    // The answer describes the finished panels, so the player shows them too.
+    expect(statValue(m.stats.listEntries)).toBe('12');
+    expect(listRows()[3]).toBe('D → B, E (selected)');
+  });
+
+  it('a vertex press whose click lands on the canvas still selects the vertex', () => {
+    render();
+    const at = { bubbles: true, clientX: 40, clientY: 40 };
+    vertex(1).dispatchEvent(new MouseEvent('pointerdown', at));
+    // With pointer capture on the canvas, the browser sends the click to the svg.
+    /** @type {Element} */ (vertex(1).closest('svg')).dispatchEvent(new MouseEvent('click', at));
+    flushSync();
+    expect(text()).toContain('Neighbours of B: A, C, D.');
   });
 
   it('a matrix cell answers an edge test, also from the keyboard', () => {

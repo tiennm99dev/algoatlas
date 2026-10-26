@@ -76,7 +76,7 @@
   const names = $derived(order.map((id) => nodes.find((n) => n.id === id)?.label ?? letter(id)));
   const selectedRow = $derived(selected === null ? -1 : order.indexOf(selected));
 
-  /** Rebuilds after any change to the graph or the options and jumps to the finished panels. */
+  /** Rebuilds after any change to the graph or the options, from the first step. */
   function rebuild() {
     edges = cleanEdges(edges, directed);
     if (selected !== null && !nodes.some((n) => n.id === selected)) selected = null;
@@ -113,8 +113,14 @@
     notice = { text, at: player.index };
   }
 
+  /** The queries describe the finished panels, so show them before answering. */
+  function showFinished() {
+    player.seek(player.frames.length - 1);
+  }
+
   /** @param {number} id */
   function selectVertex(id) {
+    showFinished();
     selected = id;
     cell = null;
     const row = order.indexOf(id);
@@ -124,9 +130,32 @@
 
   /** @param {number} r @param {number} c */
   function selectCell(r, c) {
+    showFinished();
     cell = [r, c];
     selected = order[r];
     say(m.edgeQuery(names[r], names[c], last.matrix[r][c], last.lists[r].length));
+  }
+
+  /**
+   * The canvas captures the pointer on a vertex press so it can drag, and browsers then send
+   * the click to the canvas instead of the vertex. Recover that click as a vertex selection
+   * when the press barely moved.
+   */
+  let press = /** @type {{id: number, x: number, y: number} | null} */ (null);
+
+  /** @param {PointerEvent} e */
+  function notePress(e) {
+    const g = e.target instanceof Element ? e.target.closest('[data-node]') : null;
+    press = g ? { id: Number(g.getAttribute('data-node')), x: e.clientX, y: e.clientY } : null;
+  }
+
+  /** @param {MouseEvent} e */
+  function recoverClick(e) {
+    const p = press;
+    press = null;
+    // A click that reached the vertex itself was already handled by the canvas.
+    if (!p || (e.target instanceof Element && e.target.closest('[data-node]'))) return;
+    if (Math.hypot(e.clientX - p.x, e.clientY - p.y) < 3) selectVertex(p.id);
   }
 
   const narration = $derived(
@@ -201,21 +230,25 @@
         <h2 class="mb-2 text-xs font-semibold tracking-wide text-slate-500 uppercase">
           {m.graphTitle}
         </h2>
-        <GraphCanvas
-          bind:nodes
-          bind:edges
-          ariaLabel={m.graphAria}
-          {directed}
-          {weighted}
-          editable
-          maxNodes={MAX_NODES}
-          {nodeState}
-          {edgeState}
-          onselect={selectVertex}
-          {selected}
-          onchange={onGraphChange}
-          speed={player.speed}
-        />
+        <!-- Pointer presses reach the canvas's own handlers; this only recovers lost clicks. -->
+        <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
+        <div onpointerdowncapture={notePress} onclick={recoverClick}>
+          <GraphCanvas
+            bind:nodes
+            bind:edges
+            ariaLabel={m.graphAria}
+            {directed}
+            {weighted}
+            editable
+            maxNodes={MAX_NODES}
+            {nodeState}
+            {edgeState}
+            onselect={selectVertex}
+            {selected}
+            onchange={onGraphChange}
+            speed={player.speed}
+          />
+        </div>
         <ul class="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-600">
           {#each legend as [cls, label], i (i)}
             <li class="flex items-center gap-1.5">
