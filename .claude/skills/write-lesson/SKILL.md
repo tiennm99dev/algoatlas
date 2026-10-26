@@ -44,6 +44,12 @@ engines, configs, `package.json`, `README.md` or `CHANGELOG.md`. Import existing
 components read-only. If a lesson truly needs a change to a shared file, work around it inside
 your page or engine and report it under Concerns; shared helpers are promoted between batches.
 
+A lesson never imports from another lesson's route, engine or copy (`../<other-slug>/...`,
+`$lib/algo-engine/<other-slug>.js` that another lesson owns): lessons are independent and
+may be rewritten. Use a shared component from `src/lib/components/`, or, when two of your
+lessons need the same helper, put it in one engine and report it under Concerns so it can
+be promoted.
+
 ## 3. Engine and trace contract
 
 `src/lib/algo-engine/<slug>.js` is pure and DOM-free, JSDoc typed (`checkJs` + `strict`).
@@ -160,6 +166,11 @@ All in `src/lib/components/`. Read the JSDoc on each `$props()` before use; stat
 `frontier`, `visited`, `path`). Every visualizer is SVG, names itself to screen readers
 (`ariaLabel`, per-element titles, overridable with `labelOf`), and, when given `onselect`,
 turns its elements into a roving-focus set of buttons (arrows move, Enter or Space picks).
+Those buttons are `role="button"` cells, and `step-controls` leaves arrow keys pressed on them
+(or already handled with `preventDefault`) to the visualizer, so a custom roving widget should
+use `role="button"` cells or call `preventDefault` on the arrows it handles. Previous and next
+lesson links follow the curriculum order, stubs included, so `nextTeaser` must describe the
+very next curriculum lesson.
 
 | Component | Use it for | Key props |
 | --- | --- | --- |
@@ -269,7 +280,9 @@ npm run stubs -- <topic>        # must report 0 stubs
 git diff --name-only main...HEAD   # only your owned paths (section 2)
 ```
 
-Then spot-check one lesson with agent-browser at 390 px and 1280 px: the widget responds to
+Serve the build with `npm run preview`. `vite preview` caches the file list of `build/` when
+it starts, so stop and restart it after every rebuild before any browser check; otherwise it
+serves stale pages or 404s for new ones. Then spot-check one lesson with agent-browser at 390 px and 1280 px: the widget responds to
 pointer and keyboard, stepping works, one quiz answer right and one wrong with a hint (when
 the page has a practice block), and no console errors.
 
