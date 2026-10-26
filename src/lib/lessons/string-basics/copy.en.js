@@ -90,7 +90,7 @@ export const en = {
   },
   inspectHead: ['Char', 'Code point', 'UTF-8 bytes', 'UTF-16 units'],
   /** @param {string} c */
-  showChar: (c) => (c === ' ' ? '␠' : c),
+  showChar: (c) => (c === ' ' ? '(space)' : c),
   /** @param {number} chars @param {number} utf8 @param {number} utf16 */
   inspectSummary: (chars, utf8, utf16) =>
     `${plural(chars, 'character')} (code points), ${plural(utf8, 'UTF-8 byte')}, ${plural(utf16, 'UTF-16 unit')}. JavaScript’s length and Java’s length() count UTF-16 units, so they say ${utf16}.`,
@@ -144,8 +144,8 @@ export const en = {
     ['One s + p', 'O(len(s) + len(p))', 'Both strings are copied into a new one.'],
     [
       'Join k pieces with s = s + p',
-      'O(k·n), O(n²) for single characters',
-      'Step i copies everything joined so far.',
+      'O(k·n)',
+      'Step i copies everything joined so far; n single characters give O(n²).',
     ],
     [
       'Join with a builder',
