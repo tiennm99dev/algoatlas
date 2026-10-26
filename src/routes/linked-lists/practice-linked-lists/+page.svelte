@@ -74,6 +74,13 @@
       say(m.listErrors[parsed.error]);
       return;
     }
+    const current = which === 'a' ? listA : listB;
+    // Enter fires change and then submit; an unchanged list must not rebuild and wipe a notice.
+    if (parsed.values.join(',') === current.join(',')) {
+      if (which === 'a') textA = current.join(', ');
+      else textB = current.join(', ');
+      return;
+    }
     if (which === 'a') {
       listA = parsed.values;
       textA = parsed.values.join(', ');
@@ -92,6 +99,7 @@
       say(m.nError(listA.length));
       return;
     }
+    if (x === n) return;
     n = x;
     rebuild();
   }

@@ -93,6 +93,14 @@ describe('practice: linked list problems', () => {
     expect(input('list-b').value).toBe('1, 6, 7, 12');
   });
 
+  it('keeps the refusal on screen when Enter submits a bad list', () => {
+    render();
+    commit(input('list-b'), '9, 3');
+    input('list-b').form?.requestSubmit();
+    flushSync();
+    expect(narration()).toBe(m.listErrors.unsorted);
+  });
+
   it('answers the first practice question in the sandbox', () => {
     render();
     commit(input('list-a'), '1, 4, 6');
@@ -135,6 +143,9 @@ describe('practice: linked list problems', () => {
     commit(input('n'), '4');
     expect(narration()).toBe(m.nError(3));
     expect(input('n').value).toBe('3');
+    input('n').form?.requestSubmit();
+    flushSync();
+    expect(narration()).toBe(m.nError(3));
   });
 
   it('sorts list A when switching back to merge', () => {

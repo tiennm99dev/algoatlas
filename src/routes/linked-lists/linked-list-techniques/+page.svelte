@@ -57,8 +57,10 @@
       say(m.valueErrors[parsed.error]);
       return;
     }
-    values = parsed.values;
     valuesText = parsed.values.join(', ');
+    // Enter fires change and then submit; an unchanged list must not rebuild and wipe a notice.
+    if (parsed.values.join(',') === values.join(',')) return;
+    values = parsed.values;
     if (cycleTo >= values.length) cycleTo = values.length - 1;
     rebuild();
   }

@@ -4,6 +4,10 @@
 /** @param {TechFrame} f @param {number} slot */
 const v = (f, slot) => (slot < 0 ? 'null' : String(f.values[slot]));
 
+/** A count with its noun, singular for 1. */
+/** @param {number | undefined} n @param {string} one @param {string} many */
+const count = (n, one, many) => `${n} ${n === 1 ? one : many}`;
+
 export const en = {
   slug: 'linked-list-techniques',
   topic: 'linked-lists',
@@ -85,9 +89,9 @@ export const en = {
       case 'move':
         return `Round ${f.steps}: slow steps to ${v(f, f.slow)}, fast jumps two to ${v(f, f.fast)}.`;
       case 'meet':
-        return `slow and fast meet at ${v(f, f.met)} after ${f.steps} rounds, so there is a cycle. Inside it fast gains exactly one node per round, so it can never jump over slow.`;
+        return `slow and fast meet at ${v(f, f.met)} after ${count(f.steps, 'round', 'rounds')}, so there is a cycle. Inside it fast gains exactly one node per round, so it can never jump over slow.`;
       case 'no-cycle':
-        return `fast reached the end of the list after ${f.steps} rounds: a list that ends in null has no cycle.`;
+        return `fast reached the end of the list after ${count(f.steps, 'round', 'rounds')}: a list that ends in null has no cycle.`;
       case 'reset':
         return 'Phase 2: move slow back to the head and keep fast at the meeting point. Both are now the same number of steps from the cycle start.';
       case 'move2':
@@ -98,10 +102,10 @@ export const en = {
         if (f.algo === 'reverse')
           return f.head === -1
             ? 'Nothing to reverse.'
-            : `head = prev = ${v(f, f.head)}. The list is reversed with ${f.moves} arrow flips and three extra pointers.`;
+            : `head = prev = ${v(f, f.head)}. The list is reversed with ${count(f.moves, 'arrow flip', 'arrow flips')} and three extra pointers.`;
         return f.entry >= 0
-          ? `The cycle starts at #${f.entry} (${v(f, f.entry)}), found with ${f.moves} pointer moves and two extra pointers.`
-          : `No cycle, found with ${f.moves} pointer moves and two extra pointers.`;
+          ? `The cycle starts at #${f.entry} (${v(f, f.entry)}), found with ${count(f.moves, 'pointer move', 'pointer moves')} and two extra pointers.`
+          : `No cycle, found with ${count(f.moves, 'pointer move', 'pointer moves')} and two extra pointers.`;
     }
   },
   takeaways: [

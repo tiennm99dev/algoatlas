@@ -4,6 +4,10 @@
 /** @param {SinglyFrame} f @param {number} slot */
 const valueAt = (f, slot) => f.nodes[slot]?.value;
 
+/** A count with its noun, singular for 1. */
+/** @param {number | undefined} n @param {string} one @param {string} many */
+const count = (n, one, many) => `${n} ${n === 1 ? one : many}`;
+
 export const en = {
   slug: 'singly-linked-lists',
   topic: 'linked-lists',
@@ -82,7 +86,7 @@ export const en = {
       case 'start':
         return f.length === 0
           ? 'The list is empty: head is null.'
-          : `The list holds ${f.length} nodes.`;
+          : `The list holds ${count(f.length, 'node', 'nodes')}.`;
       case 'create':
         return f.nodes[f.fresh].next === -1
           ? `Make a node for ${v}. The list is empty, so its next is null.`
@@ -96,19 +100,19 @@ export const en = {
           ? `Head moves to the old head’s next, which is null. The list is now empty.`
           : `Head moves to the old head’s next, ${valueAt(f, f.head)}. The old first node is no longer reachable.`;
       case 'free':
-        return `The cut-out node is freed. The list has ${f.length} nodes.`;
+        return `The cut-out node is freed. The list has ${count(f.length, 'node', 'nodes')}.`;
       case 'walk-start':
         return f.cur === -1
           ? 'cur starts at head, which is null.'
-          : `cur starts at head, ${valueAt(f, f.cur)}. To reach index ${f.op?.index} it must follow ${f.op?.index} next pointers.`;
+          : `cur starts at head, ${valueAt(f, f.cur)}. To reach index ${f.op?.index} it must follow ${count(f.op?.index, 'next pointer', 'next pointers')}.`;
       case 'walk':
         return f.cur === -1
           ? `Hop ${f.steps}: cur fell off the end of the list.`
           : `Hop ${f.steps}: cur = cur.next, now at ${valueAt(f, f.cur)}.`;
       case 'found':
-        return `Index ${f.op?.index} holds ${valueAt(f, f.cur)}, reached after ${f.steps} hops. There is no shortcut: access by index is O(n).`;
+        return `Index ${f.op?.index} holds ${valueAt(f, f.cur)}, reached after ${count(f.steps, 'hop', 'hops')}. There is no shortcut: access by index is O(n).`;
       case 'out-of-range':
-        return `Index ${f.op?.index} is past the end: the list has only ${f.length} nodes.`;
+        return `Index ${f.op?.index} is past the end: the list has only ${count(f.length, 'node', 'nodes')}.`;
       case 'scan-start':
         return f.cur === -1
           ? `cur starts at head, which is null, so ${v} cannot be in the list.`
@@ -122,7 +126,7 @@ export const en = {
           ? 'prev moves to cur, and cur moves to null: the end of the list.'
           : `prev moves to cur, and cur moves on to ${valueAt(f, f.cur)}.`;
       case 'miss':
-        return `${v} is not in the list, after ${f.steps} hops.`;
+        return `${v} is not in the list, after ${count(f.steps, 'hop', 'hops')}.`;
       case 'unlink':
         return f.prev === -1
           ? `${v} is the first node, so head skips it: head = cur.next. One pointer write.`
@@ -130,7 +134,7 @@ export const en = {
       case 'done':
         return f.length === 0
           ? 'Done. The list is empty.'
-          : `Done. The list holds ${f.length} nodes.`;
+          : `Done. The list holds ${count(f.length, 'node', 'nodes')}.`;
     }
   },
   takeaways: [

@@ -8,6 +8,10 @@ const name = (f, id) => (id === -2 ? 'S' : id === -1 ? 'null' : String(f.nodes[i
 /** @param {DoublyFrame} f @param {'next'|'prev'} field */
 const of = (f, field) => (f.node >= 0 ? f.nodes[f.node][field] : -1);
 
+/** A count with its noun, singular for 1. */
+/** @param {number | undefined} n @param {string} one @param {string} many */
+const count = (n, one, many) => `${n} ${n === 1 ? one : many}`;
+
 export const en = {
   slug: 'doubly-circular-lists',
   topic: 'linked-lists',
@@ -126,13 +130,13 @@ export const en = {
       case 'unlink-prev':
         return `${name(f, of(f, 'next'))}.prev = ${name(f, of(f, 'prev'))}: walking backward skips ${v} too.`;
       case 'free':
-        return `${v} is freed after ${f.writes} pointer writes. The list holds ${f.length} nodes.`;
+        return `${v} is freed after ${count(f.writes, 'pointer write', 'pointer writes')}. The list holds ${count(f.length, 'node', 'nodes')}.`;
       case 'missing':
         return 'That node is no longer in the list, so there is nothing to remove.';
       case 'done':
         return sentinel
-          ? `Done. ${f.length} nodes around the sentinel, and ${f.special} special cases.`
-          : `Done. ${f.length} nodes, and ${f.special} special cases for a null end.`;
+          ? `Done. ${count(f.length, 'node', 'nodes')} around the sentinel, and ${count(f.special, 'special case', 'special cases')}.`
+          : `Done. ${count(f.length, 'node', 'nodes')}, and ${count(f.special, 'special case', 'special cases')} for a null end.`;
     }
   },
   takeaways: [

@@ -142,6 +142,15 @@ describe('linked list techniques lesson', () => {
     expect(narration()).toBe(m.valueErrors.count);
   });
 
+  it('keeps the refusal on screen when Enter submits a bad list', () => {
+    render();
+    commit(input('values'), 'a, b');
+    input('values').form?.requestSubmit();
+    flushSync();
+    expect(narration()).toBe(m.valueErrors.format);
+    expect(input('values').value).toBe('3, 8, 5, 1, 9, 6, 2');
+  });
+
   it('keeps the cycle inside a shorter list', () => {
     render();
     commit(input('values'), '4, 7');

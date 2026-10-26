@@ -29,6 +29,10 @@ const listOf = (f) => {
   return out;
 };
 
+/** A count with its noun, singular for 1. */
+/** @param {number | undefined} n @param {string} one @param {string} many */
+const count = (n, one, many) => `${n} ${n === 1 ? one : many}`;
+
 export const en = {
   slug: 'practice-linked-lists',
   topic: 'linked-lists',
@@ -130,21 +134,21 @@ export const en = {
       case 'move':
         return `slow steps to ${v(f, f.slow)}, fast jumps two to ${v(f, f.fast)}.`;
       case 'gap':
-        return `fast moves to ${v(f, f.fast)}: now ${f.moves} of ${n} steps ahead of slow.`;
+        return `fast moves to ${v(f, f.fast)}: now ${f.moves} of ${count(n, 'step', 'steps')} ahead of slow.`;
       case 'slide':
         return `Both move one: slow at ${v(f, f.slow)}, fast at ${v(f, f.fast)}. The gap stays ${n}.`;
       case 'unlink':
         return `fast is on the last node, so slow.next (${v(f, f.removed)}) is the ${ordinal(n)} from the end. slow.next = slow.next.next skips it.`;
       case 'done':
         if (f.problem === 'merge')
-          return `Merged: ${listOf(f).join(' → ')}. ${f.comparisons} comparisons and no new nodes.`;
+          return `Merged: ${listOf(f).join(' → ')}. ${count(f.comparisons, 'comparison', 'comparisons')} and no new nodes.`;
         if (f.problem === 'middle') {
           const len = f.values.length;
           return len % 2 === 0
-            ? `fast cannot jump two more, so slow is on the middle: ${v(f, f.slow)}, the second of the two middle nodes of ${len}.`
+            ? `fast ran off the end, so slow is on the middle: ${v(f, f.slow)}, the second of the two middle nodes of ${len}.`
             : `fast is on the last node, so slow is on the middle: ${v(f, f.slow)}, node ${f.slow + 1} of ${len}.`;
         }
-        return `Return dummy.next: ${listOf(f).join(' → ') || 'empty'}. One pass, ${f.moves} pointer moves.`;
+        return `Return dummy.next: ${listOf(f).join(' → ') || 'empty'}. One pass, ${count(f.moves, 'pointer move', 'pointer moves')}.`;
     }
   },
   takeaways: [
