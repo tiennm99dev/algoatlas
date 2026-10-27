@@ -100,6 +100,8 @@ export const en = {
         'theta(n log n)',
         'n log n',
         'nlogn',
+        'O(n * log n)',
+        'O(n·log n)',
       ],
       hints: [
         'Draw the recursion tree: how much work does each level do, and how many levels are there?',
@@ -205,7 +207,7 @@ export const en = {
     {
       type: 'number',
       prompt:
-        'Searching. Binary search runs on a sorted array of 1,000 items. In the worst case, how many middle items does it probe before it finds the target or reports it missing?',
+        'Searching. Binary search runs on a sorted array of 1,000 items. In the worst case, how many middle items does it probe in total, counting the last one, until it finds the target or reports it missing?',
       answer: 10,
       unit: 'probes',
       hints: [
@@ -249,7 +251,7 @@ export const en = {
       type: 'text',
       prompt:
         'Stacks. Run push 1, push 2, pop, push 3, push 4, pop, pop on an empty stack. Which values come out, in order? Separate them with commas.',
-      accept: ['2, 4, 3', '2 4 3', '2;4;3'],
+      accept: ['2, 4, 3', '2 4 3', '2;4;3', '[2, 4, 3]'],
       hints: [
         'A pop always takes the most recently pushed value that is still there.',
         'After push 3, push 4 the stack is 1, 3, 4 from bottom to top.',
