@@ -43,7 +43,7 @@ export const en = {
   },
   legend: {
     source: 'Source',
-    read: 'u, read now',
+    read: 'u read now, or v kept',
     write: 'v, label lowered now',
     exact: 'Label equals true distance',
     edgeNow: 'Edge relaxed now',

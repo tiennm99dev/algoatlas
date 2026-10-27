@@ -98,7 +98,7 @@ export const en = {
   },
   takeaways: [
     'Dijkstra settles the unsettled vertex with the smallest label. With non-negative weights no later route can undercut it, so its label is final the moment it is popped.',
-    'A binary min-heap of (distance, vertex) pairs gives that vertex in O(log V). Each successful relaxation pushes one entry, so there are at most E + 1 pushes and pops (2E + 1 when each undirected edge counts both ways).',
+    'A binary min-heap of (distance, vertex) pairs gives that vertex in O(log V). Each successful relaxation pushes one entry, so there are at most E + 1 pushes, and as many pops. On an undirected graph an edge can succeed from only one end: when the second end is expanded, the first end is already settled with a label no larger.',
     'Lazy deletion: instead of a decrease-key operation, push a new entry and leave the old one. When a popped entry’s distance is larger than the vertex’s label, it is stale and is skipped.',
     'The total is O((V + E) log V). For a dense graph, scanning an array for the minimum gives O(V²), which can be better.',
     'Try it: change the weight of A — C from 1 to 5 and watch how many stale entries remain, then pick a different source.',

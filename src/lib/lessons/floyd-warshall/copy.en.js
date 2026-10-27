@@ -3,6 +3,9 @@
 /** @param {number} d */
 const show = (d) => (d === Infinity ? '∞' : String(d).replace('-', '−'));
 
+/** A summand: a negative number goes in brackets, as in 1 + (−2). @param {number} d */
+const term = (d) => (d < 0 && d !== -Infinity ? `(${show(d)})` : show(d));
+
 export const en = {
   slug: 'floyd-warshall',
   topic: 'shortest-paths',
@@ -79,7 +82,7 @@ export const en = {
     const i = names[f.i] ?? '';
     const j = names[f.j] ?? '';
     const ik = f.k >= 0 && f.i >= 0 ? show(f.dist[f.i][f.k]) : '';
-    const kj = f.k >= 0 && f.j >= 0 ? show(f.dist[f.k][f.j]) : '';
+    const kj = f.k >= 0 && f.j >= 0 ? term(f.dist[f.k][f.j]) : '';
     switch (f.kind) {
       case 'start':
         return 'Start with direct edges only: dist[i][j] is the edge weight, 0 on the diagonal, ∞ where there is no edge.';

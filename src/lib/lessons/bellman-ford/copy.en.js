@@ -3,6 +3,9 @@
 /** @param {number} d */
 const show = (d) => (d === Infinity ? '∞' : String(d).replace('-', '−'));
 
+/** A summand: a negative number goes in brackets, as in 1 + (−2). @param {number} d */
+const term = (d) => (d < 0 && d !== -Infinity ? `(${show(d)})` : show(d));
+
 export const en = {
   slug: 'bellman-ford',
   topic: 'shortest-paths',
@@ -13,7 +16,7 @@ export const en = {
   summary:
     'Watch Bellman-Ford fill a round-by-round table of distance labels and flag a negative cycle in round V.',
   instruction:
-    'Step through the rounds and watch the table fill: row i holds the labels after round i. Pick “Negative cycle”, or type a negative weight such as 0 on D → A, to see round V find an edge that can still be relaxed.',
+    'Step through the rounds and watch the table fill: row i holds the labels after round i. Pick “Negative cycle”, or lower the weight of D → A to 0 or less, to see round V find an edge that can still be relaxed.',
   presetLabel: 'Graph',
   presets: {
     negative: 'Negative edges, no cycle',
@@ -81,7 +84,7 @@ export const en = {
     const v = names[f.neighbor] ?? '';
     const n = names.length;
     const head = `Edge ${u} → ${v} (weight ${show(f.weight)}):`;
-    const sum = `${show(f.dist[f.current])} + ${show(f.weight)} = ${show(f.dist[f.current] + f.weight)}`;
+    const sum = `${show(f.dist[f.current])} + ${term(f.weight)} = ${show(f.dist[f.current] + f.weight)}`;
     switch (f.kind) {
       case 'start':
         return `Set the source’s label to 0 and every other label to ∞. With ${n} vertices, at most ${Math.max(0, n - 1)} rounds are needed.`;

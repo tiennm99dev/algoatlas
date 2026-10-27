@@ -134,7 +134,7 @@ describe('Bellman-Ford lesson', () => {
     commit(presetSelect(), 'cycle');
     click(button('Last step'));
     expect(text()).toContain(
-      'Edge B → C (weight −2): 1 + −2 = −1 < 1: after V − 1 rounds an edge can still be relaxed, so a negative cycle is reachable. Following the parent links finds A → B → D → A.',
+      'Edge B → C (weight −2): 1 + (−2) = −1 < 1: after V − 1 rounds an edge can still be relaxed, so a negative cycle is reachable. Following the parent links finds A → B → D → A.',
     );
     expect(statValue(m.stats.round)).toBe('V (check)');
     expect(row('V')).toEqual(['0', '−3', '1', '1', '−2']);

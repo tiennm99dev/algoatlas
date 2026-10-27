@@ -4,6 +4,9 @@
 /** @param {number} d */
 const show = (d) => (d === Infinity ? '∞' : d === -Infinity ? '−∞' : String(d).replace('-', '−'));
 
+/** A summand: a negative number goes in brackets, as in 1 + (−2). @param {number} d */
+const term = (d) => (d < 0 && d !== -Infinity ? `(${show(d)})` : show(d));
+
 export const en = {
   slug: 'zero-one-bfs-dag',
   topic: 'shortest-paths',
@@ -109,7 +112,7 @@ export const en = {
     const u = names[f.current] ?? '';
     const v = names[f.neighbor] ?? '';
     const none = longest ? '−∞' : '∞';
-    const sum = `${show(f.dist[f.current])} + ${show(f.weight)} = ${show(f.dist[f.current] + f.weight)}`;
+    const sum = `${show(f.dist[f.current])} + ${term(f.weight)} = ${show(f.dist[f.current] + f.weight)}`;
     switch (f.kind) {
       case 'start':
         return `Sort the DAG topologically: ${f.order.map((i) => names[i]).join(', ')}. Every edge points from left to right in this order.`;
