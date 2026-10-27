@@ -108,7 +108,7 @@ export const en = {
       unit: 'sets',
       hints: ['Read the Sets card, or count the trees in the forest. Lonely elements count too.'],
       solution:
-        'The groups are {0, 1, 2, 3}, {4, 5, 6}, and the singletons {7}, {8}, {9}: 5 sets. Four unions merged sets and one union found its two elements already together.',
+        'The groups are {0, 1, 2, 3}, {4, 5, 6}, and the singletons {7}, {8}, {9}: 5 sets. Five unions merged two sets each (10 − 5 = 5), and union(0, 2) found its elements already together.',
     },
     {
       type: 'number',

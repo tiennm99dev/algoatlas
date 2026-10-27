@@ -89,7 +89,7 @@ export const en = {
         if (compress && f.moved.length > 0)
           return `Every element on the path now points at ${r}, so the next find from here climbs 1 link. Return ${r}.`;
         if (compress) return `The path is already flat, so nothing moves. Return ${r}.`;
-        return `Return ${r}. Nothing changes, so the next find from ${start} climbs the same ${links(f.path.length - 1)}.`;
+        return `Return ${r}. Without compression the path stays as it was, so the walk from ${start} keeps all ${links(f.path.length - 1)}.`;
       case 'same-set':
         return `Both roots are ${f.ra}: ${op?.a} and ${op?.b} are already in the same set.`;
       case 'swap':
