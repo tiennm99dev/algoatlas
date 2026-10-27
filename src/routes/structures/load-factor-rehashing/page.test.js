@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { afterEach, beforeAll, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
 import { en as m } from '$lib/lessons/load-factor-rehashing/copy.en.js';
@@ -7,13 +7,6 @@ import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
 let app = null;
-
-// The bar chart animates reordered bars with the Web Animations API, which jsdom lacks.
-beforeAll(() => {
-  const proto = /** @type {any} */ (Element.prototype);
-  proto.getAnimations ??= () => [];
-  proto.animate ??= () => ({ cancel() {}, finished: Promise.resolve(), onfinish: null });
-});
 
 function render() {
   app = mount(Page, { target: document.body });
