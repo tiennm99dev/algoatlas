@@ -53,16 +53,18 @@
     {@render children()}
   </div>
 
+  <!-- min-w-0 lets each grid item shrink below its content, so a long word or a wide
+       complexity table scrolls inside its own box instead of widening the page at 390 px. -->
   <div class="mt-10 grid gap-8 md:grid-cols-2">
-    <section>
+    <section class="min-w-0">
       <h2 class="mb-3 text-lg font-bold text-slate-900">{copy.lessonChrome.takeawaysTitle}</h2>
-      <ul class="list-disc space-y-2 pl-5 leading-relaxed text-slate-700">
+      <ul class="list-disc space-y-2 pl-5 leading-relaxed break-words text-slate-700">
         {#each lesson.takeaways as item, i (i)}
           <li>{item}</li>
         {/each}
       </ul>
     </section>
-    <section>
+    <section class="min-w-0">
       <h2 class="mb-3 text-lg font-bold text-slate-900">{copy.lessonChrome.complexityTitle}</h2>
       <p class="mb-3 text-xs text-slate-500">{copy.lessonChrome.complexityNote}</p>
       <div class="overflow-x-auto rounded-lg border border-slate-200">
@@ -78,7 +80,8 @@
             {#each lesson.complexity as [kase, big, why], i (i)}
               <tr class="border-t border-slate-200">
                 <td class="px-3 py-2 text-slate-700">{kase}</td>
-                <td class="px-3 py-2 font-mono font-semibold whitespace-nowrap text-slate-900"
+                <td
+                  class="px-3 py-2 font-mono font-semibold [overflow-wrap:anywhere] text-slate-900"
                   >{big}</td
                 >
                 <td class="px-3 py-2 text-slate-600">{why}</td>

@@ -170,6 +170,18 @@ describe('sorting lesson', () => {
   });
 });
 
+describe('lesson layout at phone width', () => {
+  it('lets the takeaways and complexity boxes shrink and the cost column wrap', () => {
+    render(BinaryPage);
+    const sections = [...document.querySelectorAll('article > div.grid > section')];
+    expect(sections).toHaveLength(2);
+    for (const s of sections) expect(s.classList.contains('min-w-0')).toBe(true);
+    const cost = document.querySelector('tbody td:nth-child(2)');
+    expect(cost?.className).not.toContain('whitespace-nowrap');
+    expect(cost?.className).toContain('[overflow-wrap:anywhere]');
+  });
+});
+
 describe('binary search lesson', () => {
   it('watch mode reaches the target', () => {
     render(BinaryPage);
