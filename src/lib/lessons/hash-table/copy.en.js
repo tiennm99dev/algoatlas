@@ -33,7 +33,7 @@ export const en = {
     ],
   ],
   nextTeaser:
-    'Next up: binary search trees, which keep keys in order so you can also ask for the smallest, largest, or next key.',
+    'Next up: collision resolution, comparing chaining with open addressing for when two keys land in the same bucket.',
 
   hashLabel: 'Hash',
   hashes: {

@@ -65,5 +65,5 @@ export const en = {
     ['Memory', 'O(V)', 'The visited set and the queue can each hold every cell.'],
   ],
   nextTeaser:
-    'Next up: depth-first search on the same grid, then Dijkstra’s algorithm when some cells cost more to cross.',
+    'Next up: depth-first search on a grid, which follows one path as deep as it can before backing up.',
 };

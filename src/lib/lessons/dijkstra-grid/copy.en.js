@@ -106,5 +106,5 @@ export const en = {
     ['Memory', 'O(V + E)', 'The queue can hold one entry per relaxation, stale ones included.'],
   ],
   nextTeaser:
-    'That is every lesson so far. A* search, which aims Dijkstra at the goal with a distance estimate, is next on the roadmap.',
+    'Next up: Dijkstra on general graphs, the same algorithm on any weighted graph stored as adjacency lists.',
 };

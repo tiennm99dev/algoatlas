@@ -25,7 +25,8 @@ export const en = {
     ['Counting x', 'O(log n)', 'Two searches: upper − lower.'],
     ['Memory', 'O(1)', 'Only lo, hi, and mid.'],
   ],
-  nextTeaser: 'Next up: hash tables, which find a key in O(1) on average with no sorting at all.',
+  nextTeaser:
+    'Next up: binary search on the answer, which guesses the answer itself and halves the range of guesses.',
   variantLabel: 'Search for',
   variants: { lower: 'Lower bound', upper: 'Upper bound' },
   targetLabel: 'Target x',

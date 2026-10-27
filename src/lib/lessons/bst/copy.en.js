@@ -106,5 +106,6 @@ export const en = {
     ['Time, worst', 'O(n)', 'Sorted inserts build a single long branch.'],
     ['Memory', 'O(n)', 'One node per key.'],
   ],
-  nextTeaser: 'Next up: breadth-first search on a grid, where a queue finds the shortest path.',
+  nextTeaser:
+    'Next up: N-ary trees and tree recursion, where a node may have any number of children and one recursive call per child does the work.',
 };

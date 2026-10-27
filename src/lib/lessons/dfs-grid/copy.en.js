@@ -73,5 +73,6 @@ export const en = {
       'The stack can hold a duplicate entry per edge until the stale ones are skipped.',
     ],
   ],
-  nextTeaser: 'Next up: Dijkstra’s algorithm, for when some cells cost more to cross than others.',
+  nextTeaser:
+    'Next up: connected components and flood fill, where repeated searches label every separate region of the grid.',
 };

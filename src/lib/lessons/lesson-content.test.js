@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { findLesson } from '$lib/curriculum/index.js';
+import { findLesson, lessonOrder } from '$lib/curriculum/index.js';
 import { lessonPath, lessons } from './registry.js';
 
 // Page sources, read as text, show which shared building blocks a lesson page uses.
@@ -26,6 +26,41 @@ const minimums = {
   practice: { questions: 5, types: 1 },
   review: { questions: 10, types: 3 },
 };
+
+/**
+ * Lower case, `&` as 'and', typographic apostrophes as `'` and runs of spaces as one, so a
+ * title and the sentence that mentions it compare as plain words.
+ * @param {string} s
+ */
+const words = (s) =>
+  s.toLowerCase().replace(/&/g, 'and').replace(/[’‘]/g, "'").replace(/\s+/g, ' ').trim();
+
+/**
+ * The words of a lesson title that its teaser must contain: the part before a colon
+ * ('Amortized analysis' of 'Amortized analysis: aggregate, …'), or for 'Practice: …' and
+ * 'Review: …' titles, both the kind and the part after the colon.
+ * @param {string} title
+ * @returns {string[]}
+ */
+function titleWords(title) {
+  const [head, ...rest] = words(title).split(':');
+  const tail = rest.join(':').trim();
+  return (head === 'practice' || head === 'review') && tail ? [head, tail] : [head.trim()];
+}
+
+describe('next-lesson teasers', () => {
+  it.each(lessons.map((l) => [l.slug, l]))(
+    '%s names the next lesson in curriculum order',
+    (_, lesson) => {
+      const next = findLesson(lessonOrder[lessonOrder.indexOf(lesson.slug) + 1] ?? '');
+      if (!next) return;
+      const teaser = words(lesson.nextTeaser);
+      for (const part of titleWords(next.lesson.title)) {
+        expect(teaser, `${lesson.slug} → ${next.lesson.title}`).toContain(part);
+      }
+    },
+  );
+});
 
 describe.each(lessons.map((l) => [l.slug, l]))('lesson %s', (_, lesson) => {
   const plan = /** @type {NonNullable<ReturnType<typeof findLesson>>} */ (findLesson(lesson.slug));

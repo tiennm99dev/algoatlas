@@ -170,13 +170,14 @@ Those buttons are `role="button"` cells, and `step-controls` leaves arrow keys p
 (or already handled with `preventDefault`) to the visualizer, so a custom roving widget should
 use `role="button"` cells or call `preventDefault` on the arrows it handles. Previous and next
 lesson links follow the curriculum order, stubs included, so `nextTeaser` must describe the
-very next curriculum lesson.
+very next curriculum lesson and name it by its title (`lesson-content.test.js` checks this).
 
 | Component | Use it for | Key props |
 | --- | --- | --- |
 | `array-strip` | arrays, two pointers, sliding windows, prefix sums, strings | `values`, `stateOf(i)`, `markerOf(i)`, `pointers: {name, index}[]` (index = length means one past the end), `windows: {from, to, label}[]` (half-open), `dimmed(i)`, `onselect(i)`, `selected` |
 | `linked-list-view` | singly, doubly, circular lists | `nodes: {id, label, state?, marker?}[]`, `pointers` (index = length points at null), `doubly`, `circular`, `onselect(i)` |
 | `stack-queue-view` | stacks (column), queues and deques (row) | `kind`, `items: {label, state?, marker?}[]` bottom→top or front→back, `capacity` (dashed spare slots) |
+| `ring-buffer` | a circular buffer drawn as a ring (circular queues, deques) | `labels`, `head`, `tail`, `headLabel`, `tailLabel`, `titleOf(i)`, `stateOf(i)`, `markerOf(i)`, `dimmed(i)` |
 | `tree-view` | BSTs, AVL, tries, recursion trees, n-ary trees, forests | `roots: TreeNode[]` (`{id, label, children, state?, marker?, note?, edgeLabel?}`), `binary` (children `[left, right]`, `null` for none), `onselect(id)`, `selected` |
 | `heap-view` | binary heaps, heapsort | `values`, `size` (slots past it are the sorted tail), `stateOf(i)`, `markerOf(i)`, `onselect(i)`; draws the tree and the array |
 | `union-find-forest` | disjoint sets | `parent`, `stateOf(i)`, `noteOf(i)` (rank or size), `showParentRow`, `onselect(i)` |

@@ -135,5 +135,5 @@ export const en = {
     },
   ],
   nextTeaser:
-    'Next up: Big-O, Omega and Theta, which keep only how the step count grows and drop the constants.',
+    'Next up: asymptotic notation, where Big-O, Omega and Theta keep only how the step count grows and drop the constants.',
 };

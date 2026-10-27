@@ -184,5 +184,5 @@ export const en = {
     ],
   ],
   nextTeaser:
-    'Next up: binary search. Once an array is sorted, finding a value takes about log₂ n steps.',
+    'Next up: heapsort, which sorts in place in O(n log n) by building a heap and taking its top again and again.',
 };

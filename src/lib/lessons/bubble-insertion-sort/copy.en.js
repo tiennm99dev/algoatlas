@@ -79,5 +79,5 @@ export const en = {
     ['Worst', 'O(n²)', 'Reversed: every pair of elements must swap once.'],
   ],
   nextTeaser:
-    'Next up: merge sort and quicksort, two divide-and-conquer ways past O(n²) on the same array.',
+    'Next up: selection sort and stability, where a sort that swaps far-apart items can change the order of equal keys.',
 };
