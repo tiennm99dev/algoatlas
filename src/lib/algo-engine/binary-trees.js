@@ -6,6 +6,15 @@
  * checks whether the tree is full and complete.
  */
 
+import {
+  childrenOf,
+  filled,
+  lastFilled,
+  leftOf,
+  parentOf,
+  rightOf,
+} from '$lib/components/slot-tree.js';
+
 /** Deepest level a node may sit on; four levels fill at most 15 slots. */
 export const MAX_DEPTH = 3;
 export const SLOTS = 2 ** (MAX_DEPTH + 1) - 1;
@@ -42,29 +51,6 @@ export const binaryTreePseudocode = [
  * @property {number} arrayLength  Slots up to and including the last filled one.
  * @property {number[]} lines
  */
-
-/** @param {number} i */
-export const leftOf = (i) => 2 * i + 1;
-/** @param {number} i */
-export const rightOf = (i) => 2 * i + 2;
-/** @param {number} i */
-export const parentOf = (i) => (i === 0 ? -1 : Math.floor((i - 1) / 2));
-/** @param {number} i */
-export const depthOf = (i) => Math.floor(Math.log2(i + 1));
-
-/** @param {Slots} slots @param {number} i */
-export const filled = (slots, i) => i >= 0 && i < slots.length && slots[i] !== null;
-
-/** @param {Slots} slots @param {number} i @returns {number[]} present children, left first */
-export function childrenOf(slots, i) {
-  return [leftOf(i), rightOf(i)].filter((c) => filled(slots, c));
-}
-
-/** @param {Slots} slots */
-export function lastFilled(slots) {
-  for (let i = slots.length - 1; i >= 0; i--) if (slots[i] !== null) return i;
-  return -1;
-}
 
 /** An empty slot array. @returns {Slots} */
 export const emptySlots = () => Array.from({ length: SLOTS }, () => null);

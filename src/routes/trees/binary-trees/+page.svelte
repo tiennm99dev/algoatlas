@@ -14,13 +14,10 @@
     addChild,
     binaryTreePseudocode,
     binaryTreeTrace,
-    filled,
-    leftOf,
     makeTree,
-    parentOf,
     removeSubtree,
-    rightOf,
   } from '$lib/algo-engine/binary-trees.js';
+  import { filled, leftOf, parentOf, rightOf } from '$lib/components/slot-tree.js';
   import { en as m } from '$lib/lessons/binary-trees/copy.en.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 

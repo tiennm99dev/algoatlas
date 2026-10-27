@@ -2,6 +2,7 @@
   import ChipList from '$lib/components/chip-list.svelte';
   import CodePanel from '$lib/components/code-panel.svelte';
   import GraphCanvas from '$lib/components/graph-canvas.svelte';
+  import { graphShape, letter } from '$lib/components/graph-editor.js';
   import LessonLayout from '$lib/components/lesson-layout.svelte';
   import PracticeBlock from '$lib/components/practice-block.svelte';
   import StepControls from '$lib/components/step-controls.svelte';
@@ -19,9 +20,6 @@
   /** @typedef {import('$lib/components/graph-editor.js').GraphNode} GraphNode */
   /** @typedef {import('$lib/components/graph-editor.js').GraphEdge} GraphEdge */
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */
-
-  /** @param {number} id */
-  const letter = (id) => (id < 26 ? String.fromCharCode(65 + id) : `V${id}`);
 
   /** @type {GraphNode[]} */
   const DEFAULT_NODES = [
@@ -63,13 +61,10 @@
   const frame = $derived(player.frame);
   const narration = $derived(notice.at === player.index ? notice.text : m.describe(frame, names));
 
-  /** @param {GraphNode[]} ns @param {GraphEdge[]} es */
-  const shape = (ns, es) =>
-    JSON.stringify([ns.map((n) => n.id), es.map((e) => [e.from, e.to, e.weight])]);
-  let built = shape(DEFAULT_NODES, DEFAULT_EDGES);
+  let built = graphShape(DEFAULT_NODES, DEFAULT_EDGES);
 
   function rebuild() {
-    built = shape(nodes, edges);
+    built = graphShape(nodes, edges);
     notice = { text: '', at: -1 };
     player.load(build());
   }
@@ -80,7 +75,7 @@
     edges = g.edges;
     if (!nodes.some((n) => n.id === sourceId)) sourceId = order[0] ?? 0;
     // Dragging a vertex only moves the drawing; keep the current step.
-    if (shape(nodes, edges) !== built) rebuild();
+    if (graphShape(nodes, edges) !== built) rebuild();
   }
 
   function reset() {

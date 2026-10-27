@@ -7,6 +7,8 @@
  * larger, and stops where they split (or where it meets one of them).
  */
 
+import { filled, formatSlots, parseSlots } from '$lib/components/slot-tree.js';
+
 export const MAX_SLOTS = 15;
 export const MAX_KEY = 99;
 
@@ -67,41 +69,24 @@ export const lcaPseudocode = [
  */
 
 /** @param {KeySlots} s @param {number} i */
-export const filled = (s, i) => i >= 0 && i < s.length && s[i] !== null;
-
-/** @param {KeySlots} s @param {number} i */
 const key = (s, i) => /** @type {number} */ (s[i]);
 
 /**
  * Reads keys in array order: comma- or space-separated whole numbers 0–99, `-` for an empty
  * slot. Trailing empty slots are dropped.
  * @param {string} text
- * @returns {{ slots: KeySlots } | { error: 'empty' | 'count' | 'format' | 'duplicate' | 'orphan' }}
+ * @returns {{ slots: KeySlots } | { error: import('$lib/components/slot-tree.js').SlotError }}
  */
 export function parseKeys(text) {
-  const parts = text
-    .split(/[\s,]+/)
-    .map((p) => p.trim())
-    .filter(Boolean);
-  while (parts.length && parts[parts.length - 1] === '-') parts.pop();
-  if (parts.length === 0) return { error: 'empty' };
-  if (parts.length > MAX_SLOTS) return { error: 'count' };
-  if (parts.some((p) => p !== '-' && !(/^\d{1,2}$/.test(p) && Number(p) <= MAX_KEY)))
-    return { error: 'format' };
-  /** @type {KeySlots} */
-  const slots = parts.map((p) => (p === '-' ? null : Number(p)));
-  const keys = slots.filter((k) => k !== null);
-  if (new Set(keys).size !== keys.length) return { error: 'duplicate' };
-  if (slots[0] === null) return { error: 'orphan' };
-  for (let i = 1; i < slots.length; i++)
-    if (slots[i] !== null && slots[Math.floor((i - 1) / 2)] === null) return { error: 'orphan' };
-  return { slots };
+  return parseSlots(text, {
+    max: MAX_SLOTS,
+    isEntry: (p) => /^\d{1,2}$/.test(p) && Number(p) <= MAX_KEY,
+    toValue: Number,
+  });
 }
 
 /** @param {KeySlots} slots */
-export function formatKeys(slots) {
-  return slots.map((s) => (s === null ? '-' : String(s))).join(', ');
-}
+export const formatKeys = formatSlots;
 
 /** Slots in inorder. @param {KeySlots} s @returns {number[]} */
 export function inorder(s) {

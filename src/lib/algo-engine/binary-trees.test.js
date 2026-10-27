@@ -6,16 +6,13 @@ import {
   addChild,
   binaryTreePseudocode,
   binaryTreeTrace,
-  childrenOf,
-  depthOf,
   emptySlots,
   isTree,
-  lastFilled,
   makeTree,
   nextLabel,
-  parentOf,
   removeSubtree,
 } from './binary-trees.js';
+import { childrenOf, depthOf, lastFilled, parentOf } from '$lib/components/slot-tree.js';
 
 /** Deterministic LCG so sequences are reproducible. */
 function seeded(seed = 1) {

@@ -189,8 +189,14 @@ very next curriculum lesson and name it by its title (`lesson-content.test.js` c
 | `segmented-control` | a radio toggle (algorithm, variant, tool) | `legend`, `name`, `options`, `bind:value` |
 | `practice-block` | answer-checked questions | `exercises`, `id` (the lesson slug), `title?` |
 
-`graph-editor.js` (pure edit operations) and `tree-layout.js` (`layoutForest`,
-`heapForest`, `parentForest`) are importable by engines and tests too.
+`graph-editor.js` (pure edit operations, plus `letter(id)` for vertex names A, B, … and
+`graphShape(nodes, edges, weights?)`, the string a page compares to decide whether an edit
+changed what its trace depends on) and `tree-layout.js` (`layoutForest`, `heapForest`,
+`parentForest`) are importable by engines and tests too, as are `slot-tree.js` (binary trees
+in the array layout: `leftOf`, `rightOf`, `parentOf`, `depthOf`, `filled`, `childrenOf`,
+`lastFilled`, and `parseSlots`/`formatSlots` for a tree typed in array order) and
+`item-heap.js` (`makeHeap(before)`, a binary heap over any items that counts comparisons).
+Use these instead of writing your own copy in an engine or page.
 
 ## 8. Practice block and lesson kinds
 

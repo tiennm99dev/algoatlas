@@ -16,7 +16,7 @@
     makeDequeOps,
   } from '$lib/algo-engine/queues-deques.js';
   import { en as m } from '$lib/lessons/queues-deques/copy.en.js';
-  import RingBuffer from '$lib/lessons/queues-deques/ring-buffer.svelte';
+  import RingBuffer from '$lib/components/ring-buffer.svelte';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/queues-deques.js').DequeOp} DequeOp */

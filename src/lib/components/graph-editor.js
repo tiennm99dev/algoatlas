@@ -21,6 +21,28 @@
  * @typedef {{ width: number, height: number, margin: number }} Bounds
  */
 
+/**
+ * The letter a page labels vertex `id` with: A to Z, then V26, V27, ….
+ * @param {number} id
+ */
+export function letter(id) {
+  return id < 26 ? String.fromCharCode(65 + id) : `V${id}`;
+}
+
+/**
+ * What a graph's trace depends on, as a string to compare: vertex ids and edges (with their
+ * weights unless `weights` is false), not positions, so dragging a vertex never rebuilds it.
+ * @param {GraphNode[]} nodes
+ * @param {GraphEdge[]} edges
+ * @param {boolean} [weights]
+ */
+export function graphShape(nodes, edges, weights = true) {
+  return JSON.stringify([
+    nodes.map((n) => n.id),
+    edges.map((e) => (weights ? [e.from, e.to, e.weight] : [e.from, e.to])),
+  ]);
+}
+
 /** @param {GraphNode} node */
 export function nodeName(node) {
   return node.label ?? String(node.id);

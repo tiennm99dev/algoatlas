@@ -6,6 +6,8 @@
  * position of "visit node" changes between the three. Level order uses a FIFO queue instead.
  */
 
+import { filled, formatSlots, parseSlots } from '$lib/components/slot-tree.js';
+
 /** Four levels of the array layout. */
 export const MAX_SLOTS = 15;
 export const MAX_LABEL = 2;
@@ -67,39 +69,22 @@ export const traversalPseudocode = {
  * @property {number[]} lines
  */
 
-/** @param {Slots} slots @param {number} i */
-const has = (slots, i) => i < slots.length && slots[i] !== null && slots[i] !== undefined;
-
 /**
  * Reads a tree written in array order: comma- or space-separated labels, `-` for an empty
  * slot. Trailing empty slots are dropped.
  * @param {string} text
- * @returns {{ slots: Slots } | { error: 'empty' | 'count' | 'format' | 'duplicate' | 'orphan' }}
+ * @returns {{ slots: Slots } | { error: import('$lib/components/slot-tree.js').SlotError }}
  */
 export function parseTree(text) {
-  const parts = text
-    .split(/[\s,]+/)
-    .map((p) => p.trim())
-    .filter(Boolean);
-  while (parts.length && parts[parts.length - 1] === '-') parts.pop();
-  if (parts.length === 0) return { error: 'empty' };
-  if (parts.length > MAX_SLOTS) return { error: 'count' };
-  if (parts.some((p) => p !== '-' && !/^[A-Za-z0-9+*/×÷−^]{1,2}$/.test(p)))
-    return { error: 'format' };
-  const labels = parts.filter((p) => p !== '-');
-  if (new Set(labels).size !== labels.length) return { error: 'duplicate' };
-  /** @type {Slots} */
-  const slots = parts.map((p) => (p === '-' ? null : p));
-  if (slots[0] === null) return { error: 'orphan' };
-  for (let i = 1; i < slots.length; i++)
-    if (slots[i] !== null && slots[Math.floor((i - 1) / 2)] === null) return { error: 'orphan' };
-  return { slots };
+  return parseSlots(text, {
+    max: MAX_SLOTS,
+    isEntry: (p) => /^[A-Za-z0-9+*/×÷−^]{1,2}$/.test(p),
+    toValue: (p) => p,
+  });
 }
 
 /** Writes slots back in the text form parseTree reads. @param {Slots} slots */
-export function formatTree(slots) {
-  return slots.map((s) => s ?? '-').join(', ');
-}
+export const formatTree = formatSlots;
 
 /**
  * Reference traversal by plain recursion (level order by levels), used as the oracle and to
@@ -110,12 +95,12 @@ export function traversalOrder(slots, order) {
   /** @type {number[]} */
   const out = [];
   if (order === 'level') {
-    for (let i = 0; i < slots.length; i++) if (has(slots, i)) out.push(i);
+    for (let i = 0; i < slots.length; i++) if (filled(slots, i)) out.push(i);
     return out;
   }
   /** @param {number} i */
   const go = (i) => {
-    if (!has(slots, i)) return;
+    if (!filled(slots, i)) return;
     if (order === 'pre') out.push(i);
     go(2 * i + 1);
     if (order === 'in') out.push(i);
@@ -162,7 +147,7 @@ export function traversalTrace(slots, order) {
 
   /** @param {number} slot @param {boolean} visit */
   function add(slot, visit) {
-    if (!visit && !has(slots, slot)) return;
+    if (!visit && !filled(slots, slot)) return;
     work.push({ slot, visit });
     pushes++;
     peak = Math.max(peak, work.length);
@@ -184,7 +169,7 @@ export function traversalTrace(slots, order) {
     if (order === 'level') {
       emit(i);
       push('visit', i, [1, 2, 3]);
-      if (has(slots, 2 * i + 1) || has(slots, 2 * i + 2)) {
+      if (filled(slots, 2 * i + 1) || filled(slots, 2 * i + 2)) {
         add(2 * i + 1, false);
         add(2 * i + 2, false);
         push('enqueue', i, [4]);

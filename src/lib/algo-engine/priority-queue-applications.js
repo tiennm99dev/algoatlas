@@ -10,6 +10,8 @@
  * when it beats the heap's minimum, which it then replaces.
  */
 
+import { makeHeap } from '$lib/components/item-heap.js';
+
 /**
  * @typedef {{value: number, list: number}} HeadEntry
  * @typedef {'merge'|'top-k'} PqProblem
@@ -67,65 +69,6 @@ export const topKPseudocode = [
   '    else: skip x            // too small for the top k',
   '  return the heap           // its min is the kth largest',
 ];
-
-/**
- * A binary min-heap over any items, counting comparisons.
- * @template T
- * @param {(a: T, b: T) => boolean} less
- */
-function makeHeap(less) {
-  /** @type {T[]} */
-  const a = [];
-  const counter = { comparisons: 0 };
-  /** @param {number} x @param {number} y */
-  const lt = (x, y) => {
-    counter.comparisons++;
-    return less(a[x], a[y]);
-  };
-  /** @param {number} i */
-  function siftDown(i) {
-    for (;;) {
-      const l = 2 * i + 1;
-      if (l >= a.length) return i;
-      let c = l;
-      if (l + 1 < a.length && lt(l + 1, l)) c = l + 1;
-      if (!lt(c, i)) return i;
-      [a[i], a[c]] = [a[c], a[i]];
-      i = c;
-    }
-  }
-  return {
-    a,
-    counter,
-    /** @param {T} item @returns {number} the slot it settled in */
-    push(item) {
-      a.push(item);
-      let i = a.length - 1;
-      while (i > 0) {
-        const p = Math.floor((i - 1) / 2);
-        if (!lt(i, p)) break;
-        [a[i], a[p]] = [a[p], a[i]];
-        i = p;
-      }
-      return i;
-    },
-    /** @returns {T} */
-    pop() {
-      const top = a[0];
-      const last = /** @type {T} */ (a.pop());
-      if (a.length) {
-        a[0] = last;
-        siftDown(0);
-      }
-      return top;
-    },
-    /** @param {T} item @returns {number} */
-    replaceTop(item) {
-      a[0] = item;
-      return siftDown(0);
-    },
-  };
-}
 
 /**
  * @param {number[][]} lists  Each list sorted in non-decreasing order.

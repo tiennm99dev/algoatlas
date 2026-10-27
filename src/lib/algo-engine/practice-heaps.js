@@ -11,6 +11,8 @@
  * Ties on distance keep the earlier point.
  */
 
+import { makeHeap } from '$lib/components/item-heap.js';
+
 /**
  * @typedef {'median'|'closest'} HeapProblem
  * @typedef {{x: number, y: number}} Point
@@ -69,65 +71,6 @@ export const closestPseudocode = [
   '    else: skip p              // farther than all k kept',
   '  return the heap',
 ];
-
-/**
- * A binary heap whose root is the item `before` puts first, counting comparisons.
- * @template T
- * @param {(a: T, b: T) => boolean} before
- */
-function makeHeap(before) {
-  /** @type {T[]} */
-  const a = [];
-  const counter = { comparisons: 0 };
-  /** @param {number} x @param {number} y */
-  const first = (x, y) => {
-    counter.comparisons++;
-    return before(a[x], a[y]);
-  };
-  /** @param {number} i */
-  function siftDown(i) {
-    for (;;) {
-      const l = 2 * i + 1;
-      if (l >= a.length) return;
-      let c = l;
-      if (l + 1 < a.length && first(l + 1, l)) c = l + 1;
-      if (!first(c, i)) return;
-      [a[i], a[c]] = [a[c], a[i]];
-      i = c;
-    }
-  }
-  return {
-    a,
-    counter,
-    /** @param {T} item @returns {number} the slot it settled in */
-    push(item) {
-      a.push(item);
-      let i = a.length - 1;
-      while (i > 0) {
-        const p = Math.floor((i - 1) / 2);
-        if (!first(i, p)) break;
-        [a[i], a[p]] = [a[p], a[i]];
-        i = p;
-      }
-      return i;
-    },
-    /** @returns {T} */
-    pop() {
-      const top = a[0];
-      const last = /** @type {T} */ (a.pop());
-      if (a.length) {
-        a[0] = last;
-        siftDown(0);
-      }
-      return top;
-    },
-    /** @param {T} item */
-    replaceTop(item) {
-      a[0] = item;
-      siftDown(0);
-    },
-  };
-}
 
 /**
  * @param {number[]} stream
