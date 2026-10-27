@@ -93,6 +93,38 @@ describe('GraphCanvas', () => {
     expect(onselect).toHaveBeenLastCalledWith(2);
   });
 
+  it('selects a node on a press that does not move, even when the click goes to the canvas', () => {
+    const onselect = vi.fn();
+    render({ editable: true, onselect });
+    svg().setPointerCapture = () => {};
+    const at = { bubbles: true, button: 0, clientX: 40, clientY: 40 };
+    node(2).dispatchEvent(new MouseEvent('pointerdown', at));
+    svg().dispatchEvent(new MouseEvent('pointerup', at));
+    svg().dispatchEvent(new MouseEvent('click', at));
+    flushSync();
+    expect(onselect).toHaveBeenCalledTimes(1);
+    expect(onselect).toHaveBeenLastCalledWith(2);
+    // When the click does reach the node, the release already acted, so it is not repeated.
+    node(1).dispatchEvent(new MouseEvent('pointerdown', at));
+    svg().dispatchEvent(new MouseEvent('pointerup', at));
+    node(1).dispatchEvent(new MouseEvent('click', at));
+    flushSync();
+    expect(onselect).toHaveBeenCalledTimes(2);
+    expect(onselect).toHaveBeenLastCalledWith(1);
+  });
+
+  it('does not select a node that was dragged', () => {
+    const onselect = vi.fn();
+    render({ editable: true, onselect });
+    node(2).dispatchEvent(
+      new MouseEvent('pointerdown', { bubbles: true, clientX: 40, clientY: 40 }),
+    );
+    svg().dispatchEvent(new MouseEvent('pointermove', { bubbles: true, clientX: 90, clientY: 40 }));
+    svg().dispatchEvent(new MouseEvent('pointerup', { bubbles: true, clientX: 90, clientY: 40 }));
+    flushSync();
+    expect(onselect).toHaveBeenCalledTimes(0);
+  });
+
   it('adds nodes until the cap and reports each change', () => {
     const onchange = vi.fn();
     render({ editable: true, maxNodes: 4, onchange });

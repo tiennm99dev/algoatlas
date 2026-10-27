@@ -131,9 +131,11 @@ describe('graph representations lesson', () => {
   it('a vertex press whose click lands on the canvas still selects the vertex', () => {
     render();
     const at = { bubbles: true, clientX: 40, clientY: 40 };
+    const canvas = /** @type {Element} */ (vertex(1).closest('svg'));
     vertex(1).dispatchEvent(new MouseEvent('pointerdown', at));
-    // With pointer capture on the canvas, the browser sends the click to the svg.
-    /** @type {Element} */ (vertex(1).closest('svg')).dispatchEvent(new MouseEvent('click', at));
+    // With pointer capture on the canvas, the browser sends the release and click to the svg.
+    canvas.dispatchEvent(new MouseEvent('pointerup', at));
+    canvas.dispatchEvent(new MouseEvent('click', at));
     flushSync();
     expect(text()).toContain('Neighbours of B: A, C, D.');
   });

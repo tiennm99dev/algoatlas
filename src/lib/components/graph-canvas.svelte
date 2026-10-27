@@ -183,10 +183,12 @@
     focusNode(next);
   }
 
-  // Pointer drags move a node in the select tool; a press that barely moves is a click.
+  // Pointer drags move a node in the move tool; a press that barely moves is a click. The
+  // canvas captures the pointer so a drag keeps going off the node, and browsers then send
+  // the release's click to the canvas, not the node, so the release itself acts on the node.
   let drag = /** @type {{id: number, x: number, y: number, moved: boolean} | null} */ (null);
-  /** The node a drag just ended on, so the click that follows the release does not act. */
-  let dragged = /** @type {number | null} */ (null);
+  /** The node a press just ended on, so the click that may follow the release does not act. */
+  let released = /** @type {number | null} */ (null);
 
   /** @param {PointerEvent} e */
   function toCanvas(e) {
@@ -198,34 +200,39 @@
 
   /** @param {PointerEvent} e @param {number} id */
   function onNodePointerDown(e, id) {
+    released = null;
     if (e.button !== 0 || !editable || tool !== 'move') return;
-    const p = toCanvas(e);
-    if (!p) return;
-    drag = { id, ...p, moved: false };
-    dragged = null;
+    drag = { id, x: e.clientX, y: e.clientY, moved: false };
     svg?.setPointerCapture?.(e.pointerId);
   }
 
   /** @param {PointerEvent} e */
   function onPointerMove(e) {
     if (!drag) return;
+    if (!drag.moved && Math.hypot(e.clientX - drag.x, e.clientY - drag.y) < 3) return;
+    drag.moved = true;
     const p = toCanvas(e);
     if (!p) return;
-    if (!drag.moved && Math.hypot(p.x - drag.x, p.y - drag.y) < 3) return;
-    drag.moved = true;
     commit(moveNode({ nodes, edges }, drag.id, p, bounds));
   }
 
-  function endDrag() {
-    if (drag?.moved) dragged = drag.id;
+  function onPointerUp() {
+    const press = drag;
+    drag = null;
+    if (!press) return;
+    released = press.id;
+    if (!press.moved) act(press.id);
+  }
+
+  function cancelDrag() {
     drag = null;
   }
 
   /** @param {number} id */
   function onNodeClick(id) {
-    const wasDrag = dragged === id;
-    dragged = null;
-    if (!wasDrag) act(id);
+    const handled = released === id;
+    released = null;
+    if (!handled) act(id);
   }
 
   /** @param {number} i */
@@ -398,8 +405,8 @@
     style="max-width: {width * 1.25}px"
     class="mx-auto block h-auto w-full touch-none rounded-lg border border-slate-200 bg-slate-50 select-none"
     onpointermove={onPointerMove}
-    onpointerup={endDrag}
-    onpointercancel={endDrag}
+    onpointerup={onPointerUp}
+    onpointercancel={cancelDrag}
   >
     <defs>
       <marker
