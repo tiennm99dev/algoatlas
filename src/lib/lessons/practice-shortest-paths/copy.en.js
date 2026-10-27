@@ -235,7 +235,22 @@ export const en = {
       type: 'text',
       prompt:
         'Trading loop: pick Bellman-Ford and step to the end. Which cycle does it report? Type its vertices in order, starting from A.',
-      accept: ['A, B, C', 'A B C', 'ABC', 'A → B → C', 'A → B → C → A', 'A->B->C', 'A->B->C->A'],
+      accept: [
+        'A, B, C',
+        'A, B, C, A',
+        'A B C',
+        'A B C A',
+        'ABC',
+        'ABCA',
+        'A → B → C',
+        'A → B → C → A',
+        'A→B→C',
+        'A→B→C→A',
+        'A->B->C',
+        'A->B->C->A',
+        'A-B-C',
+        'A-B-C-A',
+      ],
       hints: ['Its weights add up to 2 + (−3) + (−1).'],
       solution:
         'A → B → C → A weighs 2 − 3 − 1 = −2. Every lap makes a path cheaper, so no shortest path to A, B, C or T exists.',

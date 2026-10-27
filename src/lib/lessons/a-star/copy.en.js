@@ -108,7 +108,7 @@ export const en = {
     {
       type: 'number',
       prompt:
-        'On the starting grid, how many cells does h = 0 (Dijkstra) expand before it reaches the goal?',
+        'On the starting grid, how many cells does h = 0 (Dijkstra) expand in all, the goal included?',
       answer: 118,
       unit: 'cells',
       tolerance: 0,
@@ -118,7 +118,8 @@ export const en = {
     },
     {
       type: 'number',
-      prompt: 'On the same grid, how many cells does A* with the Manhattan heuristic expand?',
+      prompt:
+        'On the same grid, how many cells does A* with the Manhattan heuristic expand, the goal included?',
       answer: 36,
       unit: 'cells',
       tolerance: 0,
