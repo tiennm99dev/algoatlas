@@ -17,6 +17,8 @@
  * Vertices are numbered by their position in `ids` sorted ascending.
  */
 
+import { cycleFrom, indexEdges } from './weighted-edges.js';
+
 /** Largest graph the lesson draws. */
 export const MAX_NODES = 6;
 /** Weights range from −MAX_WEIGHT to MAX_WEIGHT. */
@@ -69,50 +71,11 @@ export const johnsonPseudocode = [
 ];
 
 /**
- * @param {number[]} ids
- * @param {JohnsonEdge[]} edges
- */
-function prepare(ids, edges) {
-  const sorted = ids.slice().sort((a, b) => a - b);
-  const index = new Map(sorted.map((id, i) => [id, i]));
-  /** @type {{u: number, v: number, w: number, edge: number}[]} */
-  const list = [];
-  edges.forEach((e, k) => {
-    const u = index.get(e.from);
-    const v = index.get(e.to);
-    if (u !== undefined && v !== undefined && u !== v)
-      list.push({ u, v, w: e.weight ?? 1, edge: k });
-  });
-  return { n: sorted.length, list };
-}
-
-/**
- * Follows parent links back from a vertex an edge could still improve, lands on the cycle after
- * n steps, and lists the cycle in edge order, smallest vertex first.
- * @param {number[]} parent
- * @param {number} start
- * @param {number} n
- */
-function cycleFrom(parent, start, n) {
-  let x = start;
-  for (let i = 0; i < n && x >= 0; i++) x = parent[x];
-  if (x < 0) return [];
-  const cycle = [x];
-  for (let y = parent[x]; y !== x; y = parent[y]) {
-    if (y < 0 || cycle.length > n) return [];
-    cycle.push(y);
-  }
-  cycle.reverse();
-  const at = cycle.indexOf(Math.min(...cycle));
-  return [...cycle.slice(at), ...cycle.slice(0, at)];
-}
-
-/**
  * @param {{ ids: number[], edges: JohnsonEdge[] }} input
  * @returns {JohnsonFrame[]}
  */
 export function johnsonTrace({ ids, edges }) {
-  const { n, list } = prepare(ids, edges);
+  const { n, list } = indexEdges(ids, edges);
   const h = new Array(n).fill(Infinity);
   // q is vertex n of the extended graph, with h[q] = 0. Its edges never change after round 1.
   const hParent = new Array(n).fill(-1);

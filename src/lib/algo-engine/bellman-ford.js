@@ -9,6 +9,8 @@
  * Vertices are numbered by their position in `ids` sorted ascending; edges keep their order.
  */
 
+import { cycleFrom, indexEdges } from './weighted-edges.js';
+
 /** Largest graph the lesson draws. */
 export const MAX_NODES = 7;
 /** Weights range from −MAX_WEIGHT to MAX_WEIGHT. */
@@ -54,51 +56,11 @@ export const bellmanFordPseudocode = [
 ];
 
 /**
- * @param {number[]} ids
- * @param {BfEdge[]} edges
- */
-function prepare(ids, edges) {
-  const sorted = ids.slice().sort((a, b) => a - b);
-  const index = new Map(sorted.map((id, i) => [id, i]));
-  /** @type {{u: number, v: number, w: number, edge: number}[]} */
-  const list = [];
-  edges.forEach((e, k) => {
-    const u = index.get(e.from);
-    const v = index.get(e.to);
-    if (u !== undefined && v !== undefined && u !== v)
-      list.push({ u, v, w: e.weight ?? 1, edge: k });
-  });
-  return { n: sorted.length, list };
-}
-
-/**
- * Follows parent links from a vertex that a round-V edge could still improve, lands on the
- * cycle after n steps, and lists the cycle in edge order, smallest vertex first.
- * @param {number[]} parent  Parent links with the improving edge applied.
- * @param {number} start
- * @param {number} n
- */
-export function cycleFrom(parent, start, n) {
-  let x = start;
-  for (let i = 0; i < n && x >= 0; i++) x = parent[x];
-  if (x < 0) return [];
-  const cycle = [x];
-  for (let y = parent[x]; y !== x; y = parent[y]) {
-    if (y < 0 || cycle.length > n) return [];
-    cycle.push(y);
-  }
-  cycle.reverse();
-  // Start at the smallest vertex so the same cycle always reads the same way.
-  const at = cycle.indexOf(Math.min(...cycle));
-  return [...cycle.slice(at), ...cycle.slice(0, at)];
-}
-
-/**
  * @param {{ ids: number[], edges: BfEdge[], source: number }} input  `source` is a vertex index.
  * @returns {BellmanFordFrame[]}
  */
 export function bellmanFordTrace({ ids, edges, source }) {
-  const { n, list } = prepare(ids, edges);
+  const { n, list } = indexEdges(ids, edges);
   const dist = new Array(n).fill(Infinity);
   const parent = new Array(n).fill(-1);
   if (source >= 0 && source < n) dist[source] = 0;

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { MAX_NODES, bellmanFordPseudocode, bellmanFordTrace, cycleFrom } from './bellman-ford.js';
+import { MAX_NODES, bellmanFordPseudocode, bellmanFordTrace } from './bellman-ford.js';
 
 /** Deterministic LCG so random graphs are reproducible. */
 function seeded(seed = 1) {
@@ -151,14 +151,6 @@ describe('Bellman-Ford', () => {
     frames[2].dist[0] = 99;
     expect(frames[3].table[1][1]).not.toBe(99);
     expect(frames[3].dist[0]).toBe(0);
-  });
-});
-
-describe('cycle walk', () => {
-  it('lands on the cycle and lists it in edge order', () => {
-    // 0 → 1 → 2 → 3 → 1: parent links point backwards along the edges.
-    expect(cycleFrom([-1, 3, 1, 2], 2, 4)).toEqual([1, 2, 3]);
-    expect(cycleFrom([-1, 0], 1, 2)).toEqual([]);
   });
 });
 

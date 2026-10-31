@@ -13,6 +13,8 @@
  * Vertices are numbered by their position in `ids` sorted ascending; edges keep their order.
  */
 
+import { cycleFrom, indexEdges } from './weighted-edges.js';
+
 /** Largest graph the lesson draws. */
 export const MAX_NODES = 10;
 /** Weights range from −MAX_WEIGHT to MAX_WEIGHT. */
@@ -84,24 +86,6 @@ export const pseudocode = {
 };
 
 /**
- * @param {number[]} ids
- * @param {SpEdge[]} edges
- */
-function prepare(ids, edges) {
-  const sorted = ids.slice().sort((a, b) => a - b);
-  const index = new Map(sorted.map((id, i) => [id, i]));
-  /** @type {{u: number, v: number, w: number, edge: number}[]} */
-  const list = [];
-  edges.forEach((e, k) => {
-    const u = index.get(e.from);
-    const v = index.get(e.to);
-    if (u !== undefined && v !== undefined && u !== v)
-      list.push({ u, v, w: e.weight ?? 1, edge: k });
-  });
-  return { n: sorted.length, list };
-}
-
-/**
  * Builds frames that share the bookkeeping every algorithm needs.
  * @param {number} n
  */
@@ -144,7 +128,7 @@ function recorder(n) {
 
 /** @param {SpInput} input */
 function bfs({ ids, edges, source }) {
-  const { n, list } = prepare(ids, edges);
+  const { n, list } = indexEdges(ids, edges);
   const { state: st, frames, push } = recorder(n);
   if (source >= 0 && source < n) {
     st.dist[source] = 0;
@@ -175,7 +159,7 @@ function bfs({ ids, edges, source }) {
 
 /** @param {SpInput} input */
 function dijkstra({ ids, edges, source }) {
-  const { n, list } = prepare(ids, edges);
+  const { n, list } = indexEdges(ids, edges);
   const { state: st, frames, push } = recorder(n);
   const isSettled = new Array(n).fill(false);
   if (source >= 0 && source < n) {
@@ -212,31 +196,12 @@ function dijkstra({ ids, edges, source }) {
 }
 
 /**
- * Follows parent links back from a vertex an edge could still improve, lands on the cycle after
- * n steps, and lists the cycle in edge order, smallest vertex first.
- * @param {number[]} parent @param {number} start @param {number} n
- */
-function cycleFrom(parent, start, n) {
-  let x = start;
-  for (let i = 0; i < n && x >= 0; i++) x = parent[x];
-  if (x < 0) return [];
-  const cycle = [x];
-  for (let y = parent[x]; y !== x; y = parent[y]) {
-    if (y < 0 || cycle.length > n) return [];
-    cycle.push(y);
-  }
-  cycle.reverse();
-  const at = cycle.indexOf(Math.min(...cycle));
-  return [...cycle.slice(at), ...cycle.slice(0, at)];
-}
-
-/**
  * Bellman-Ford. Only the relaxations that lower a label get a frame; the checks counter still
  * counts every edge looked at, so the cost stays visible without hundreds of frames.
  * @param {SpInput} input
  */
 function bellmanFord({ ids, edges, source }) {
-  const { n, list } = prepare(ids, edges);
+  const { n, list } = indexEdges(ids, edges);
   const { state: st, frames, push } = recorder(n);
   if (source >= 0 && source < n) st.dist[source] = 0;
   push({ kind: 'start', lines: [0] });
@@ -293,7 +258,7 @@ export function shortestPathTrace(input) {
  * @returns {Algo}
  */
 export function recommend({ ids, edges }) {
-  const { list } = prepare(ids, edges);
+  const { list } = indexEdges(ids, edges);
   if (list.some((e) => e.w < 0)) return 'bellman-ford';
   if (list.every((e) => e.w === list[0].w && e.w > 0)) return 'bfs';
   return 'dijkstra';
