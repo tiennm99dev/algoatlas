@@ -192,3 +192,15 @@ describe('counting inversions lesson', () => {
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });
+
+describe('take-left narration', () => {
+  it('mentions the tie rule only when the two heads are equal', () => {
+    const takes = (/** @type {number[]} */ a) =>
+      inversionTrace(a)
+        .filter((f) => f.kind === 'take-left' && f.j < f.right.length)
+        .map((f) => m.describe(f));
+    expect(takes([1, 2])).toEqual([expect.stringContaining('1 < R[0] = 2')]);
+    expect(takes([1, 2])[0]).not.toContain('Ties');
+    expect(takes([3, 3])).toEqual([expect.stringContaining('Ties go left')]);
+  });
+});

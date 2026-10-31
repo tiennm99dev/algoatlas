@@ -89,7 +89,9 @@ export const en = {
         const v = f.left[f.i - 1];
         if (f.j === f.right.length)
           return `R is used up: write ${v} to slot ${f.k}. No value from R jumps it, so +0.`;
-        return `L[${f.i - 1}] = ${v} ≤ R[${f.j}] = ${f.right[f.j]}: write ${v} to slot ${f.k}. Ties go left, so equal values never count. +0.`;
+        return v === f.right[f.j]
+          ? `L[${f.i - 1}] = ${v} = R[${f.j}]: write ${v} to slot ${f.k}. Ties go left, so equal values never count. +0.`
+          : `L[${f.i - 1}] = ${v} < R[${f.j}] = ${f.right[f.j]}: write ${v} to slot ${f.k}. No value from R jumps it, so +0.`;
       }
       case 'take-right': {
         const v = f.right[f.j - 1];
