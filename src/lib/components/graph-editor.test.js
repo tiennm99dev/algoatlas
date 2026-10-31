@@ -7,6 +7,7 @@ import {
   moveNode,
   nextNodeId,
   nodeName,
+  notePlace,
   removeEdge,
   removeNode,
   toggleEdge,
@@ -93,5 +94,64 @@ describe('graph editor', () => {
     expect(moved.nodes[2]).toEqual({ id: 2, x: 180, y: 51 });
     expect(degree(triangle.edges, 1)).toBe(2);
     expect(degree(triangle.edges, 0)).toBe(1);
+  });
+});
+
+describe('notePlace', () => {
+  /** @param {[number, number][]} pairs @returns {Graph} */
+  const star = (pairs) => ({
+    nodes: [
+      { id: 0, x: 100, y: 100 },
+      { id: 1, x: 100, y: 200 },
+      { id: 2, x: 100, y: 0 },
+      { id: 3, x: 200, y: 100 },
+      { id: 4, x: 0, y: 100 },
+    ],
+    edges: pairs.map(([from, to]) => ({ from, to })),
+  });
+
+  it('puts the note below a node with nothing coming in from below', () => {
+    expect(notePlace(star([[2, 0]]), 0, 18)).toEqual({ x: 100, y: 127, anchor: 'middle' });
+    expect(notePlace(star([]), 0, 18)).toEqual({ x: 100, y: 127, anchor: 'middle' });
+  });
+
+  it('moves the note off an arrow that comes in from below', () => {
+    expect(notePlace(star([[1, 0]]), 0, 18)).toEqual({ x: 100, y: 73, anchor: 'middle' });
+  });
+
+  it('takes a side when edges come from above and below, and a diagonal when all four are taken', () => {
+    expect(
+      notePlace(
+        star([
+          [1, 0],
+          [0, 2],
+        ]),
+        0,
+        18,
+      ),
+    ).toEqual({ x: 122, y: 100, anchor: 'start' });
+    const spot = notePlace(
+      star([
+        [1, 0],
+        [2, 0],
+        [3, 0],
+        [0, 4],
+      ]),
+      0,
+      18,
+    );
+    expect(spot.anchor).toBe('start');
+    expect(spot.x).toBeGreaterThan(100);
+    expect(spot.y).toBeGreaterThan(100);
+  });
+
+  it('keeps every chosen spot at least 40° from the edges when there is room', () => {
+    const g = star([
+      [1, 0],
+      [0, 3],
+    ]);
+    const spot = notePlace(g, 0, 18);
+    const angle = (Math.atan2(spot.y - 100, spot.x - 100) * 180) / Math.PI;
+    for (const deg of [90, 0]) expect(Math.abs(angle - deg)).toBeGreaterThanOrEqual(40);
   });
 });

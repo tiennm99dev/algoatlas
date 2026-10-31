@@ -7,6 +7,7 @@
     findEdge,
     moveNode,
     nodeName,
+    notePlace,
     removeEdge,
     removeNode,
     toggleEdge,
@@ -340,10 +341,11 @@
     >
   {/if}
   {#if note}
+    {@const spot = notePlace({ nodes, edges }, n.id, R)}
     <text
-      x={n.x}
-      y={n.y + R + 9}
-      text-anchor="middle"
+      x={spot.x}
+      y={spot.y}
+      text-anchor={spot.anchor}
       dominant-baseline="central"
       font-size="10"
       stroke="white"

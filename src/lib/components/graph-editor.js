@@ -186,3 +186,45 @@ export function moveNode(graph, id, to, { width, height, margin }) {
 export function degree(edges, id) {
   return edges.reduce((d, e) => d + (e.from === id ? 1 : 0) + (e.to === id ? 1 : 0), 0);
 }
+
+/**
+ * Where to put a node's note so it clears the edges at the node: below when nothing comes in
+ * from there, else the first clear side in the order above, right, left and the diagonals,
+ * else the side with the most room. A side is clear when every edge leaves the node at least
+ * 40° away from it. Returns the text position and its `text-anchor`.
+ * @param {Graph} graph
+ * @param {number} id
+ * @param {number} r  Node radius.
+ * @returns {{ x: number, y: number, anchor: 'start' | 'middle' | 'end' }}
+ */
+export function notePlace(graph, id, r) {
+  const at = graph.nodes.find((n) => n.id === id);
+  if (!at) return { x: 0, y: 0, anchor: 'middle' };
+  /** @type {number[]} */
+  const ways = [];
+  for (const e of graph.edges) {
+    const other = e.from === id ? e.to : e.to === id ? e.from : null;
+    const n = other === null ? undefined : graph.nodes.find((m) => m.id === other);
+    if (n && n !== at) ways.push(Math.atan2(n.y - at.y, n.x - at.x));
+  }
+  const d = r + 9;
+  const k = Math.SQRT1_2 * (r + 6);
+  /** @type {{ angle: number, x: number, y: number, anchor: 'start' | 'middle' | 'end' }[]} */
+  const sides = [
+    { angle: 90, x: 0, y: d, anchor: 'middle' },
+    { angle: -90, x: 0, y: -d, anchor: 'middle' },
+    { angle: 0, x: r + 4, y: 0, anchor: 'start' },
+    { angle: 180, x: -(r + 4), y: 0, anchor: 'end' },
+    { angle: 45, x: k, y: k + 4, anchor: 'start' },
+    { angle: 135, x: -k, y: k + 4, anchor: 'end' },
+    { angle: -45, x: k, y: -k - 4, anchor: 'start' },
+    { angle: -135, x: -k, y: -k - 4, anchor: 'end' },
+  ];
+  /** Smallest angle in degrees between a side and any edge. @param {number} deg */
+  const room = (deg) =>
+    Math.min(180, ...ways.map((w) => Math.abs((((w * 180) / Math.PI - deg + 540) % 360) - 180)));
+  const best =
+    sides.find((s) => room(s.angle) >= 40) ??
+    sides.reduce((a, b) => (room(b.angle) > room(a.angle) ? b : a));
+  return { x: at.x + best.x, y: at.y + best.y, anchor: best.anchor };
+}
