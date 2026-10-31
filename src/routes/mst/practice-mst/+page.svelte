@@ -79,8 +79,12 @@
           target: order.indexOf(targetId),
         });
   const player = createPlayer(build());
-  const bf = $derived(mode === 'bottleneck' ? /** @type {BottleneckFrame} */ (player.frame) : null);
-  const sf = $derived(mode === 'second' ? /** @type {SecondBestFrame} */ (player.frame) : null);
+  /** The mode the loaded trace was built for; `mode` can change a moment before the rebuild. */
+  let traced = $state(/** @type {Mode} */ ('predict'));
+  const bf = $derived(
+    traced === 'bottleneck' ? /** @type {BottleneckFrame} */ (player.frame) : null,
+  );
+  const sf = $derived(traced === 'second' ? /** @type {SecondBestFrame} */ (player.frame) : null);
   const narration = $derived(
     notice.at === player.index && mode !== 'predict'
       ? notice.text
@@ -104,6 +108,7 @@
     notice = { text: '', at: -1 };
     verdict = null;
     player.load(build());
+    traced = mode;
   }
 
   /** @param {{nodes: GraphNode[], edges: GraphEdge[]}} g */
@@ -245,7 +250,10 @@
             [m.stats.checked, sf.checked],
             [m.stats.best, m.show(sf.best)],
           ]
-        : [],
+        : [
+            [m.stats.picked, `${picked.length} / ${Math.max(0, order.length - 1)}`],
+            [m.stats.yourWeight, pickedWeight],
+          ],
   );
 
   const legend = $derived(

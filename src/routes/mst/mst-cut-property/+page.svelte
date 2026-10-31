@@ -73,8 +73,10 @@
       ? cutTrace({ ids: order, edges, side })
       : cycleTrace({ ids: order, edges, edge: testEdge });
   const player = createPlayer(build());
-  const cutFrame = $derived(mode === 'cut' ? /** @type {CutFrame} */ (player.frame) : null);
-  const cycleFrame = $derived(mode === 'cycle' ? /** @type {CycleFrame} */ (player.frame) : null);
+  /** The mode the loaded trace was built for; `mode` can change a moment before the rebuild. */
+  let traced = $state(/** @type {Mode} */ ('cut'));
+  const cutFrame = $derived(traced === 'cut' ? /** @type {CutFrame} */ (player.frame) : null);
+  const cycleFrame = $derived(traced === 'cycle' ? /** @type {CycleFrame} */ (player.frame) : null);
   const narration = $derived(
     notice.at === player.index
       ? notice.text
@@ -91,6 +93,7 @@
     built = graphShape(nodes, edges);
     notice = { text: '', at: -1 };
     player.load(build());
+    traced = mode;
   }
 
   /** @param {{nodes: GraphNode[], edges: GraphEdge[]}} g */

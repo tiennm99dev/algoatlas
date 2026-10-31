@@ -112,6 +112,9 @@ describe('MST problems lesson', () => {
     expect(text()).toContain('A spanning tree on 6 vertices has exactly 5 edges. You picked 2');
     for (const e of ['B — D', 'C — E', 'E — F']) tick(e);
     expect(text()).toContain('5 of 5 edges picked, total weight 19.');
+    expect(statValue(m.stats.picked)).toBe('5 / 5');
+    expect(statValue(m.stats.yourWeight)).toBe('19');
+    expect(statValue(m.stats.mst)).toBeUndefined();
     click(buttonByText(m.check));
     expect(text()).toContain(
       'A spanning tree of weight 19, but the minimum is 18. Hint: D — E (7) closes a cycle with your tree on which C — E (8) is heavier. Swap them to save 1.',

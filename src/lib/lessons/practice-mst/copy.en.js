@@ -86,6 +86,8 @@ export const en = {
   /** @param {EdgeInfo} add @param {EdgeInfo} drop @param {number} w @param {string[]} names */
   swapChip: (add, drop, w, names) => `+${edgeName(add, names)} −${edgeName(drop, names)} → ${w}`,
   stats: {
+    picked: 'Edges picked',
+    yourWeight: 'Your tree weight',
     considered: 'Edges considered',
     bottleneck: 'Bottleneck',
     pathEdges: 'Edges on the path',
@@ -242,14 +244,14 @@ export const en = {
         'Why is the path between s and t in a minimum spanning tree a minimum bottleneck path?',
       options: [
         'Because the MST path is always the shortest path.',
-        'If some s–t path had all edges lighter than the MST path’s heaviest edge f, removing f would split the tree, and a lighter edge of that path would cross the cut, contradicting the cut property.',
+        'If some s–t path had all edges lighter than the MST path’s heaviest edge f, removing f would split the tree, and swapping f for a lighter edge of that path that crosses the split would give a lighter spanning tree.',
         'Because the MST uses the lightest edge of the graph.',
         'It is not: Dijkstra is needed for bottleneck paths.',
       ],
       answer: 1,
       hints: ['Remove the heaviest tree edge on the path. What does that do to the tree?'],
       solution:
-        'Removing f splits the tree into two parts, with s on one side and t on the other. Any s–t path must cross that cut. If all its edges were lighter than f, a lighter crossing edge would exist, so f would not be in the MST. The MST path is not always the shortest path: A → B → C has total 5 against 4 for A — C.',
+        'Removing f splits the tree into two parts, with s on one side and t on the other. Any s–t path must cross that cut. If all its edges were lighter than f, one of them crosses that cut, and swapping f for it gives a spanning tree lighter than the minimum, which is impossible. The MST path is not always the shortest path: A → B → C has total 5 against 4 for A — C.',
     },
   ],
   nextTeaser:
