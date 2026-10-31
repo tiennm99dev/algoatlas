@@ -374,20 +374,24 @@
                   class={STATE_TEXT[s]}
                   aria-hidden="true">{m.letter(p.id)}</text
                 >
-                {#if m.markers[s]}
-                  <text
-                    x={p.x + 3.6}
-                    y={sy(p.y) - 3.2}
-                    font-size="3"
-                    font-weight="700"
-                    stroke="white"
-                    stroke-width="0.8"
-                    paint-order="stroke"
-                    class="fill-slate-900"
-                    aria-hidden="true">{m.markers[s]}</text
-                  >
-                {/if}
               </g>
+            {/each}
+            <!-- Markers go on top, so a neighbouring point never hides one. -->
+            {#each points as p (p.id)}
+              {@const s = pointState(p.id)}
+              {#if m.markers[s]}
+                <text
+                  x={p.x + 3.6}
+                  y={sy(p.y) - 3.2}
+                  font-size="3"
+                  font-weight="700"
+                  stroke="white"
+                  stroke-width="0.8"
+                  paint-order="stroke"
+                  class="pointer-events-none fill-slate-900 {faded(p.id) ? 'opacity-40' : ''}"
+                  aria-hidden="true">{m.markers[s]}</text
+                >
+              {/if}
             {/each}
           </svg>
         </ScrollFrame>
