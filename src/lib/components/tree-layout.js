@@ -127,6 +127,23 @@ export function treeNeighbor(layout, id, key) {
 }
 
 /**
+ * The order to draw nodes in: the ids already drawn keep their places, ids that left drop out
+ * and new ids follow in layout order. A keyed list in this order never moves an element when
+ * the tree changes shape, so a focused node keeps keyboard focus (moving a DOM element blurs
+ * it). The first drawing is plain layout order.
+ * @param {(string | number)[]} previous  The order of the last drawing.
+ * @param {(string | number)[]} ids  The ids of the new layout, in layout order.
+ * @returns {(string | number)[]}
+ */
+export function stableOrder(previous, ids) {
+  const present = new Set(ids);
+  const kept = previous.filter((id) => present.has(id));
+  const seen = new Set(kept);
+  for (const id of ids) if (!seen.has(id)) kept.push(id);
+  return kept;
+}
+
+/**
  * The implicit binary tree of an array heap: slot i has children 2i + 1 and 2i + 2. Only the
  * first `size` slots belong to the heap (heapsort parks sorted values after them).
  * @param {(number | string)[]} values

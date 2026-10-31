@@ -1,7 +1,7 @@
 <script>
   import { t } from '$lib/i18n/index.js';
   import ScrollFrame from './scroll-frame.svelte';
-  import { layoutForest, treeNeighbor } from './tree-layout.js';
+  import { layoutForest, stableOrder, treeNeighbor } from './tree-layout.js';
   import { STATE_FILL, STATE_TEXT, stateStroke } from './visual-state.js';
 
   /** @typedef {import('./tree-layout.js').TreeNode} TreeNode */
@@ -48,6 +48,18 @@
 
   /** @param {string | number} id */
   const placed = (id) => /** @type {PlacedNode} */ (layout.byId.get(id));
+
+  /** Ids in the order of the last drawing; plain, since only `drawn` reads and writes it. */
+  /** @type {(string | number)[]} */
+  let order = [];
+  // Nodes keep their DOM places when the shape changes, so the focused one stays focused.
+  const drawn = $derived.by(() => {
+    order = stableOrder(
+      order,
+      layout.nodes.map((p) => p.id),
+    );
+    return order.map(placed);
+  });
   /** @param {PlacedNode} p */
   const cx = (p) => p.x * COL + COL / 2;
   /** @param {PlacedNode} p */
@@ -82,7 +94,7 @@
     const next = treeNeighbor(layout, id, e.key);
     if (next === null) return;
     focusId = next;
-    const i = layout.nodes.findIndex((p) => p.id === next);
+    const i = drawn.findIndex((p) => p.id === next);
     /** @type {SVGElement | null | undefined} */ (
       svg?.querySelector(`[data-node="${i}"]`)
     )?.focus();
@@ -181,7 +193,7 @@
           >
         {/if}
       {/each}
-      {#each layout.nodes as p, i (p.id)}
+      {#each drawn as p, i (p.id)}
         {#if onselect}
           <g
             data-node={i}

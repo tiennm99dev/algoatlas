@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { heapForest, layoutForest, parentForest, treeNeighbor } from './tree-layout.js';
+import {
+  heapForest,
+  layoutForest,
+  parentForest,
+  stableOrder,
+  treeNeighbor,
+} from './tree-layout.js';
 
 /** @typedef {import('./tree-layout.js').TreeNode} TreeNode */
 
@@ -96,5 +102,16 @@ describe('parentForest', () => {
     expect(forest[0].children?.[0]?.children?.map((c) => c?.id)).toEqual([2]);
     expect(forest[1].children?.map((c) => c?.id)).toEqual([4]);
     expect(forest[2].note).toBe('r5');
+  });
+});
+
+describe('stableOrder', () => {
+  it('starts in layout order', () => {
+    expect(stableOrder([], [3, 0, 1])).toEqual([3, 0, 1]);
+  });
+
+  it('keeps drawn ids in place, drops gone ones and appends new ones', () => {
+    expect(stableOrder([0, 1, 2, 3], [3, 0, 1, 2])).toEqual([0, 1, 2, 3]);
+    expect(stableOrder([0, 1, 2], [2, 5, 0])).toEqual([0, 2, 5]);
   });
 });

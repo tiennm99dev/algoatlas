@@ -4,6 +4,7 @@ import { flushSync, mount, unmount } from 'svelte';
 import TreeView from './tree-view.svelte';
 import HeapView from './heap-view.svelte';
 import UnionFindForest from './union-find-forest.svelte';
+import { reactiveProps } from '../../test-support/reactive-props.svelte.js';
 
 /** @typedef {import('./tree-layout.js').TreeNode} TreeNode */
 
@@ -123,6 +124,24 @@ describe('UnionFindForest', () => {
     expect(document.querySelector('svg')?.getAttribute('aria-label')).toBe('4 elements in 2 sets.');
     expect(document.body.textContent).toContain('r1');
     expect(document.body.textContent).toContain('parent');
+  });
+
+  it('keeps keyboard focus on the same element when the trees change shape', () => {
+    const props = reactiveProps({ parent: [0, 0, 1, 3], onselect: vi.fn() });
+    render(UnionFindForest, props);
+    const node = byLabel('3 is a root');
+    node.focus();
+    expect(document.activeElement).toBe(node);
+    // Union puts 0's tree under 3, so 3 now heads the only tree and is laid out first.
+    props.parent = [3, 0, 1, 3];
+    flushSync();
+    expect(document.activeElement?.getAttribute('aria-label')).toBe('3 is a root');
+    // A find on the root leaves its tree as it is and focus where it was.
+    props.parent = [3, 0, 1, 3];
+    flushSync();
+    expect(document.activeElement?.getAttribute('aria-label')).toBe('3 is a root');
+    press(/** @type {Element} */ (document.activeElement), 'ArrowDown');
+    expect(document.activeElement?.getAttribute('aria-label')).toBe('parent of 0 is 3');
   });
 
   it('hides the parent row on request', () => {
