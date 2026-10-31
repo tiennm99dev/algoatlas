@@ -82,7 +82,11 @@ export const en = {
         if (f.isBridge && f.isCut)
           return `${head} > tin[${u}] = ${t}: nothing under ${v} climbs back to ${u}, so ${u} — ${v} is a bridge and ${u} is an articulation point.`;
         if (f.isBridge)
-          return `${head} > tin[${u}] = ${t}: nothing under ${v} climbs back to ${u}, so ${u} — ${v} is a bridge. ${u} is the root, so the root rule decides whether it is a cut vertex.`;
+          return `${head} > tin[${u}] = ${t}: nothing under ${v} climbs back to ${u}, so ${u} — ${v} is a bridge. ${
+            f.current === f.root
+              ? `${u} is the root, so the root rule decides whether it is a cut vertex.`
+              : `${u} is already an articulation point.`
+          }`;
         if (f.isCut)
           return `${head} ≥ tin[${u}] = ${t}: ${v}’s subtree reaches ${u} but nothing above it, so removing ${u} cuts it off. ${u} is an articulation point.`;
         if (f.low[f.other] >= t)
