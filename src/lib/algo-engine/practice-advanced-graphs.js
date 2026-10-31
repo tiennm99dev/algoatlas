@@ -57,6 +57,8 @@ export const failurePseudocode = [
  * @property {number[]} comp     Component number per module (from 1), 0 when not found yet.
  * @property {number} count      Components found so far.
  * @property {number[]} popped   Modules of the component completed on this frame.
+ * @property {boolean} blocked   `scc`: the component is a cycle or needs, directly or not, a
+ *   module on one, so it cannot be built.
  * @property {number[][]} cycles Components of two or more modules found so far.
  * @property {number[]} order    Modules in the order their components completed.
  * @property {number} checks     Dependencies examined so far.
@@ -197,10 +199,15 @@ export function cycleTrace({ ids, edges }) {
 
   /** @type {CycleFrame[]} */
   const frames = [];
-  /** @param {Pick<CycleFrame, 'kind'|'lines'> & Partial<Pick<CycleFrame, 'current'|'popped'>>} f */
+  /** Per component number - 1: it is a cycle or needs a module on one. */
+  /** @type {boolean[]} */
+  const blockedComp = [];
+
+  /** @param {Pick<CycleFrame, 'kind'|'lines'> & Partial<Pick<CycleFrame, 'current'|'popped'|'blocked'>>} f */
   const push = (f) =>
     frames.push({
       current: -1,
+      blocked: false,
       ...f,
       popped: f.popped ? f.popped.slice() : [],
       tin: tin.slice(),
@@ -239,7 +246,12 @@ export function cycleTrace({ ids, edges }) {
       order.push(w);
     } while (w !== u);
     if (popped.length > 1) cycles.push(popped.slice().sort((a, b) => a - b));
-    push({ kind: 'scc', current: u, popped, lines: popped.length > 1 ? [3, 4] : [3] });
+    // Everything a component needs outside itself completed earlier (sinks first).
+    const blocked =
+      popped.length > 1 ||
+      popped.some((w) => out[w].some((x) => comp[x] !== count && blockedComp[comp[x] - 1]));
+    blockedComp.push(blocked);
+    push({ kind: 'scc', current: u, popped, blocked, lines: popped.length > 1 ? [3, 4] : [3] });
   }
 
   push({ kind: 'start', lines: [0] });

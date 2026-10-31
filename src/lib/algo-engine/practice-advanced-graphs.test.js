@@ -180,6 +180,25 @@ describe('cycle trace', () => {
     expect(last?.checks).toBe(MODULES.edges.length);
   });
 
+  it('marks modules that need a cycle as blocked, and only those', () => {
+    const blocked = cycleTrace(MODULES)
+      .filter((f) => f.kind === 'scc')
+      .map((f) => [f.current, f.blocked]);
+    // A needs B and F, B needs the cycle C D E: all blocked.
+    expect(blocked).toEqual([
+      [6, true],
+      [2, true],
+      [1, true],
+      [0, true],
+    ]);
+    const free = cycleTrace({ ids: [0, 1, 2], edges: [{ from: 0, to: 1 }] });
+    expect(free.filter((f) => f.kind === 'scc').map((f) => f.blocked)).toEqual([
+      false,
+      false,
+      false,
+    ]);
+  });
+
   it('gives a build order once the cycles are broken', () => {
     // Drop E → C and G → F.
     const g = { ids: MODULES.ids, edges: MODULES.edges.filter((_, k) => k !== 4 && k !== 7) };

@@ -121,7 +121,9 @@ export const en = {
       case 'scc':
         return f.popped.length > 1
           ? `Component ${join(names, f.popped)}: these ${f.popped.length} modules need each other, a dependency cycle. None of them can be built first.`
-          : `Component ${u} on its own: everything it needs is already placed, so it can be built now.`;
+          : f.blocked
+            ? `Component ${u} on its own: ${u} is on no cycle, but it needs a module on a dependency cycle, so it cannot be built either.`
+            : `Component ${u} on its own: everything it needs is already placed, so it can be built now.`;
       case 'done':
         return f.cycles.length
           ? `Done: ${count(f.cycles.length, 'dependency cycle', 'dependency cycles')} on ${f.cycles.flat().length} modules. Remove one edge of each cycle to get a build order.`
