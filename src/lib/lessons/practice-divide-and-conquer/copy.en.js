@@ -145,7 +145,7 @@ export const en = {
     sorted: 'Returned the right value for its range',
     swap: 'Returned a wrong value for its range',
     idle: 'Not called yet',
-    compare: 'Cells read by this step',
+    compare: 'In the best crossing run, or a copy of a counted candidate',
   },
   windows: { left: 'left', right: 'right', suffix: 'suffix', prefix: 'prefix' },
   stats: {
