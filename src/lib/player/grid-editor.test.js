@@ -124,6 +124,26 @@ describe('createGridEditor', () => {
     expect(editor.walls.has(3)).toBe(false);
   });
 
+  it('resets to the starting walls, start and goal, keeping the tool', () => {
+    const { editor, trace } = make();
+    editor.tool = 'start';
+    editor.edit(1);
+    editor.tool = 'goal';
+    editor.edit(18);
+    editor.tool = 'wall';
+    editor.edit(2);
+    editor.edit(7);
+    editor.player.step();
+    editor.reset();
+    expect([...editor.walls]).toEqual([7]);
+    expect(editor.start).toBe(0);
+    expect(editor.goal).toBe(19);
+    expect(editor.tool).toBe('wall');
+    expect(editor.player.index).toBe(0);
+    expect(editor.narration('x')).toBe('x');
+    expect(trace.mock.lastCall?.[0]).toMatchObject({ start: 0, goal: 19 });
+  });
+
   it('treats a press with a move tool as a single edit', () => {
     const { editor } = make();
     editor.tool = 'goal';
@@ -182,6 +202,14 @@ describe('createGridEditor', () => {
       editor.clearWalls();
       expect(editor.walls.size).toBe(0);
       expect(mud.size).toBe(0);
+    });
+
+    it('reset removes the terrain too', () => {
+      const { mud, layer } = mudLayer();
+      const { editor } = make({ terrain: layer });
+      editor.reset();
+      expect(mud.size).toBe(0);
+      expect([...editor.walls]).toEqual([7]);
     });
   });
 });

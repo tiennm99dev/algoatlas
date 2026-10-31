@@ -166,6 +166,16 @@ export function createGridEditor({
     rebuild();
   }
 
+  /** Puts back the starting walls, start and goal, drops all terrain, and rebuilds. */
+  function reset() {
+    // eslint-disable-next-line svelte/prefer-svelte-reactivity
+    walls = new Set(first);
+    start = s0;
+    goal = g0;
+    terrain?.reset();
+    rebuild();
+  }
+
   return {
     player,
     get walls() {
@@ -191,6 +201,7 @@ export function createGridEditor({
     clearNotice,
     scatter,
     clearWalls,
+    reset,
     edit,
     /** Start a pointer stroke: a single edit for the move tools, else a paint value. @param {number} cell */
     onPaintStart(cell) {

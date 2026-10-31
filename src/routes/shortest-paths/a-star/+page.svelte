@@ -82,22 +82,6 @@
     );
   }
 
-  /** Puts back the starting walls, start and goal through the editor's own edits. */
-  function resetGrid() {
-    const tool = editor.tool;
-    editor.clearWalls();
-    // Park the start in a corner first, so the goal can always reach its own cell.
-    editor.tool = 'start';
-    if (editor.start !== DEFAULT_START) editor.edit(editor.goal === at(0, 0) ? at(0, 1) : at(0, 0));
-    editor.tool = 'goal';
-    if (editor.goal !== DEFAULT_GOAL) editor.edit(DEFAULT_GOAL);
-    editor.tool = 'start';
-    if (editor.start !== DEFAULT_START) editor.edit(DEFAULT_START);
-    for (const cell of DEFAULT_WALLS) editor.onPaint(cell, true);
-    editor.tool = tool;
-    rerun();
-  }
-
   /** @param {number} cell */
   function numberAt(cell) {
     if (editor.walls.has(cell)) return null;
@@ -169,7 +153,7 @@
     />
     <div class="flex gap-2">
       <button type="button" onclick={editor.clearWalls} class="btn-outline">{m.clearWalls}</button>
-      <button type="button" onclick={resetGrid} class="btn-outline">{m.resetGrid}</button>
+      <button type="button" onclick={editor.reset} class="btn-outline">{m.resetGrid}</button>
     </div>
   </div>
 
