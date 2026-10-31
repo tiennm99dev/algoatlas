@@ -19,8 +19,10 @@ below passes.
 3. Two reference lessons, end to end (engine, test, copy, page, page test):
    - `bst` (trees): an operations log, an SVG tree, undo/reset, presets, notices.
    - `merge-quick-sort` (sorting): two algorithms behind one toggle, aux row, call stack.
-   - Grid lessons (`bfs-grid`, `dfs-grid`, `dijkstra-grid`) share `grid-board.svelte`,
-     `src/lib/player/grid-editor.svelte.js` and `src/lib/lessons/grid-copy.en.js`.
+   - Grid lessons (`bfs-grid`, `dfs-grid`, `dijkstra-grid`, `a-star`) share
+     `grid-board.svelte`, `src/lib/player/grid-editor.svelte.js` and
+     `src/lib/lessons/grid-copy.en.js`. The editor's `reset()` puts back the starting walls,
+     start and goal (a "Reset grid" button); never rebuild them through its edits.
 4. `README.md` sections Lessons and Architecture.
 
 ## 2. Files you own
@@ -178,10 +180,10 @@ very next curriculum lesson and name it by its title (`lesson-content.test.js` c
 | `linked-list-view` | singly, doubly, circular lists | `nodes: {id, label, state?, marker?}[]`, `pointers` (index = length points at null), `doubly`, `circular`, `onselect(i)` |
 | `stack-queue-view` | stacks (column), queues and deques (row) | `kind`, `items: {label, state?, marker?}[]` bottom→top or front→back, `capacity` (dashed spare slots) |
 | `ring-buffer` | a circular buffer drawn as a ring (circular queues, deques) | `labels`, `head`, `tail`, `headLabel`, `tailLabel`, `titleOf(i)`, `stateOf(i)`, `markerOf(i)`, `dimmed(i)` |
-| `tree-view` | BSTs, AVL, tries, recursion trees, n-ary trees, forests | `roots: TreeNode[]` (`{id, label, children, state?, marker?, note?, edgeLabel?}`), `binary` (children `[left, right]`, `null` for none), `onselect(id)`, `selected` |
+| `tree-view` | BSTs, AVL, tries, recursion trees, n-ary trees, forests | `roots: TreeNode[]` (`{id, label, children, state?, marker?, note?, edgeLabel?}`), `binary` (children `[left, right]`, `null` for none), `onselect(id)`, `selected`; keyboard focus stays on the same node id when the shape changes, so keep ids stable across frames |
 | `heap-view` | binary heaps, heapsort | `values`, `size` (slots past it are the sorted tail), `stateOf(i)`, `markerOf(i)`, `onselect(i)`; draws the tree and the array |
 | `union-find-forest` | disjoint sets | `parent`, `stateOf(i)`, `noteOf(i)` (rank or size), `showParentRow`, `onselect(i)` |
-| `graph-canvas` | any graph at fixed positions; editable input graphs | `nodes: {id, x, y, label?}[]`, `edges: {from, to, weight?}[]` (both `bind:`), `directed`, `weighted`, `editable` (tools: select and drag, connect or disconnect, delete, add node; Shift+arrow nudges), `nodeState(id)`, `edgeState(edge)`, `markerOf`, `noteOf`, `onselect(id)`, `onchange(graph)`, `maxNodes`, `width`, `height` |
+| `graph-canvas` | any graph at fixed positions; editable input graphs | `nodes: {id, x, y, label?}[]`, `edges: {from, to, weight?}[]` (both `bind:`), `directed`, `weighted`, `editable` (tools: select and drag, connect or disconnect, delete, add node; Shift+arrow nudges), `nodeState(id)`, `edgeState(edge)`, `markerOf`, `noteOf` (placed below the node, or on a side clear of its edges), `onselect(id)`, `onchange(graph)`, `maxNodes`, `width`, `height` |
 | `dp-table` | DP tables, matrices, distance tables | `values: (number \| string \| null)[][]` (`null` = not filled), `rowHeaders`, `colHeaders`, `stateOf(r, c)`, `markerOf(r, c)`, `arrows: {from: [r, c], to: [r, c]}[]` (dependencies), `onselect(r, c)`, `selected` |
 | `bar-chart` | value bars for sorting, with an optional buffer row | `items: {id, value}[]`, `stateOf`, `markerOf`, `aux` |
 | `chip-list` | queue, stack or log contents as chips in the side panel | `title`, `items: {label, hot?}[]`, `emptyText`, `limit` |
@@ -196,7 +198,10 @@ changed what its trace depends on) and `tree-layout.js` (`layoutForest`, `heapFo
 in the array layout: `leftOf`, `rightOf`, `parentOf`, `depthOf`, `filled`, `childrenOf`,
 `lastFilled`, and `parseSlots`/`formatSlots` for a tree typed in array order) and
 `item-heap.js` (`makeHeap(before)`, a binary heap over any items that counts comparisons).
-Use these instead of writing your own copy in an engine or page.
+Edge-list shortest-path engines share `src/lib/algo-engine/weighted-edges.js`: `indexEdges(ids,
+edges)` numbers the vertices and lists the edges by index, and `cycleFrom(parent, start, n)`
+reads a negative cycle out of the parent links. Use these instead of writing your own copy
+in an engine or page.
 
 ## 8. Practice block and lesson kinds
 
@@ -287,6 +292,10 @@ npm run stubs -- <topic>        # must report 0 stubs
 git diff --name-only main...HEAD   # only your owned paths (section 2)
 ```
 
+When you were given only some lessons of a topic that has later parts, the stubs gate is
+checked for your lessons, not the whole topic: none of your slugs may appear in the list
+`npm run stubs -- <topic>` prints, and the later parts' stubs remain.
+
 Serve the build with `npm run preview`. `vite preview` caches the file list of `build/` when
 it starts, so stop and restart it after every rebuild before any browser check; otherwise it
 serves stale pages or 404s for new ones. Then spot-check one lesson with agent-browser at 390 px and 1280 px: the widget responds to
@@ -300,6 +309,10 @@ the page has a practice block), and no console errors.
 - Never put plan names, phase or step numbers, batch or audit labels in code comments, test
   names or commit messages. Explain behaviour directly.
 - No AI attribution, no `Co-Authored-By` trailer.
+- Start every commit from a clean index: run `git status` first and stage only that
+  commit's paths (`git add <paths>`), so a deletion or rename left staged is not swept into
+  an earlier commit. Each commit must build on its own: lint, check, tests and build pass at
+  that commit, not only at the last one.
 - Do not push. Do not touch files outside your owned paths, even to fix formatting.
 
 End your reply with:
