@@ -38,14 +38,14 @@ export const MAX_COORD = 99;
  */
 
 export const closestPseudocode = [
-  'closest(P):                     // P sorted by x; returns the smallest distance',
+  'closest(P):  // P sorted by x; returns the smallest distance',
   '  if |P| ≤ 3: check every pair and return the smallest',
-  '  mid = ⌊|P| / 2⌋; line: x = P[mid].x         // split by x',
+  '  mid = ⌊|P| / 2⌋; line: x = P[mid].x  // split by x',
   '  dL = closest(P[0..mid − 1]); dR = closest(P[mid..])',
   '  d = min(dL, dR)',
-  '  S = points with |x − line| < d, in y order   // strip of width 2d',
+  '  S = points with |x − line| < d, in y order  // strip of width 2d',
   '  for each p in S, and each later q while q.y − p.y < d:',
-  '    if dist(p, q) < d: d = dist(p, q)          // a closer pair crosses the line',
+  '    if dist(p, q) < d: d = dist(p, q)  // a closer pair crosses the line',
   '  return d',
   'sort the points by x once; answer = closest(all points)',
 ];

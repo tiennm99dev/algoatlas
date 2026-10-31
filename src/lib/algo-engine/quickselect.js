@@ -46,23 +46,23 @@ export const GROUP = 5;
 /** @param {PivotRule} rule */
 export function selectPseudocode(rule) {
   const choose = {
-    last: '    p = hi                               // the last value is the pivot',
+    last: '    p = hi  // the last value is the pivot',
     random: '    p = random index in lo..hi; swap(a[p], a[hi])',
     mom: '    p = medianOfMedians(a, lo, hi); swap(a[p], a[hi])',
   }[rule];
   const lines = [
-    'select(a, k):                     // the k-th smallest, k from 1',
+    'select(a, k):  // the k-th smallest, k from 1',
     '  lo = 0; hi = n − 1',
     '  while lo < hi:',
     choose,
     '    i = lo − 1',
     '    for j = lo to hi − 1:',
     '      if a[j] <= a[hi]: i = i + 1; swap(a[i], a[j])',
-    '    swap(a[i + 1], a[hi]); p = i + 1     // the pivot’s final place',
+    '    swap(a[i + 1], a[hi]); p = i + 1  // the pivot’s final place',
     '    if p = k − 1: return a[p]',
-    '    if k − 1 < p: hi = p − 1             // discard p..hi',
-    '    else: lo = p + 1                     // discard lo..p',
-    '  return a[lo]                          // one value left: the answer',
+    '    if k − 1 < p: hi = p − 1  // discard p..hi',
+    '    else: lo = p + 1  // discard lo..p',
+    '  return a[lo]  // one value left: the answer',
   ];
   if (rule !== 'mom') return lines;
   return [
@@ -70,7 +70,7 @@ export function selectPseudocode(rule) {
     'medianOfMedians(a, lo, hi):',
     '  cut a[lo..hi] into groups of 5 (the last may be smaller)',
     '  sort each group and take its lower median',
-    '  return the index of select(medians, ⌈m / 2⌉)   // recursive',
+    '  return the index of select(medians, ⌈m / 2⌉)  // recursive',
   ];
 }
 

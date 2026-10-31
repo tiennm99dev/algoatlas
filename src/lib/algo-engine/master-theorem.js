@@ -57,7 +57,7 @@ export const masterPseudocode = [
   'for each level i = 0 to k − 1:',
   '  level cost = aⁱ · f(n / bⁱ)',
   'leaves: aᵏ = n^(log_b a) calls of size 1, cost 1 each',
-  'c = log_b a          // the leaves grow like n^c',
+  'c = log_b a  // the leaves grow like n^c',
   'compare d with c:',
   '  d < c: case 1, the leaves dominate → Θ(n^c)',
   '  d = c and p ≥ 0: case 2, every level counts → Θ(n^c · (log n)^(p+1))',

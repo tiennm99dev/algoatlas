@@ -40,7 +40,7 @@ export const MAX_VALUE = 99;
  */
 
 export const inversionPseudocode = [
-  'sortCount(a, lo, hi):          // sorts a[lo..hi], returns its inversions',
+  'sortCount(a, lo, hi):  // sorts a[lo..hi], returns its inversions',
   '  if lo >= hi: return 0',
   '  mid = floor((lo + hi) / 2)',
   '  inv = sortCount(a, lo, mid) + sortCount(a, mid + 1, hi)',

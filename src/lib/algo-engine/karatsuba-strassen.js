@@ -37,21 +37,21 @@ export const MAX_DIGITS = 6;
 
 export const fourPseudocode = [
   'multiply(x, y):',
-  '  if x < 10 and y < 10: return x · y            // one digit product',
+  '  if x < 10 and y < 10: return x · y  // one digit product',
   '  m = floor(digits / 2)',
   '  split x = x₁·10^m + x₀ and y = y₁·10^m + y₀',
   '  a = multiply(x₁, y₁);  b = multiply(x₁, y₀)',
-  '  c = multiply(x₀, y₁);  d = multiply(x₀, y₀)    // four products',
+  '  c = multiply(x₀, y₁);  d = multiply(x₀, y₀)  // four products',
   '  return a·10^(2m) + (b + c)·10^m + d',
 ];
 
 export const threePseudocode = [
   'multiply(x, y):',
-  '  if x < 10 and y < 10: return x · y            // one digit product',
+  '  if x < 10 and y < 10: return x · y  // one digit product',
   '  m = floor(digits / 2)',
   '  split x = x₁·10^m + x₀ and y = y₁·10^m + y₀',
   '  z₂ = multiply(x₁, y₁);  z₀ = multiply(x₀, y₀)',
-  '  z₁ = multiply(x₁ + x₀, y₁ + y₀) − z₂ − z₀    // one product, not two',
+  '  z₁ = multiply(x₁ + x₀, y₁ + y₀) − z₂ − z₀  // one product, not two',
   '  return z₂·10^(2m) + z₁·10^m + z₀',
 ];
 
