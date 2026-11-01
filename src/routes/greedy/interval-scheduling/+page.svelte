@@ -320,8 +320,9 @@
                 stroke-dasharray="4 3"
               />
               <text
-                x={x(line.t) + 3}
+                x={line.t > span / 2 ? x(line.t) - 3 : x(line.t) + 3}
                 y={TOP - 6}
+                text-anchor={line.t > span / 2 ? 'end' : 'start'}
                 class="fill-slate-900 font-mono text-[10px]"
                 aria-hidden="true">{line.label} = {line.t}</text
               >
