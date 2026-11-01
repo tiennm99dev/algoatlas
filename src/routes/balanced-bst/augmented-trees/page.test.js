@@ -211,6 +211,21 @@ describe('ordered maps and augmented trees lesson', () => {
     expect(stat('comparisons')).toBe('3');
   });
 
+  it('keeps a number line label on the drawing when a long interval starts near zero', () => {
+    render();
+    click(intervalRadio());
+    commit(input('low'), '0');
+    commit(input('high'), '90');
+    click(buttonByText('Reset'));
+    click(buttonByText('Insert'));
+    stepTo('The tree has 1 interval');
+    const label = [...document.querySelectorAll('[data-testid="number-line"] text')].find(
+      (t) => t.textContent === '[0, 90]',
+    );
+    expect(label?.getAttribute('text-anchor')).toBe('start');
+    expect(Number(label?.getAttribute('x'))).toBeGreaterThan(0);
+  });
+
   it('inserts and deletes typed intervals and refuses reversed endpoints', () => {
     render();
     click(intervalRadio());

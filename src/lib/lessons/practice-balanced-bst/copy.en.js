@@ -76,7 +76,6 @@ export const en = {
   nodeLabel: (key, state) => `Key ${key}${state ? `, ${state}` : ''}`,
   /** @param {number} level */
   levelHead: (level) => `L${level}`,
-  skipHeadCell: 'head',
   /** @param {number} levels @param {string} list */
   skipLabel: (levels, list) => `Skip list with ${plural(levels, 'level')}. Towers: ${list}.`,
   /** @param {number} key @param {number} height */
@@ -154,7 +153,7 @@ export const en = {
     ['Memory', 'O(n)', 'All three use one node per key; a skip list averages 2 links per key.'],
   ],
   nextTeaser:
-    'Next up: Review: core algorithms, a quiz across everything from sorting to balanced trees.',
+    'Next up: Review: core algorithms, a quiz across everything from shortest paths to balanced trees.',
   practiceTitle: 'Practice problems',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
   practice: [
@@ -174,7 +173,7 @@ export const en = {
     {
       type: 'number',
       prompt:
-        'On the same preset, what does the AVL tree’s dearest single operation cost? That is the “worst” value on its card.',
+        'On the same preset, what does the AVL tree’s most expensive single operation cost? That is the “worst” value on its card.',
       answer: 4,
       unit: 'comparisons',
       hints: ['Read the AVL card at the last step. Compare its height with this value.'],

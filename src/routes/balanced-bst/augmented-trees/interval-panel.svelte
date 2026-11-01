@@ -297,7 +297,7 @@
           role="img"
           aria-label={m.lineLabel(spans, query ? m.span(query.lo, query.hi) : null)}
           class="mx-auto block h-auto w-full"
-          style="min-width: 360px"
+          style="min-width: 560px"
           data-testid="number-line"
         >
           {#if query}
@@ -326,7 +326,10 @@
             {@const role = roleOf(frame, slot)}
             {@const state = role ? ROLE_STATE[role] : ''}
             {@const y = LINE_TOP + i * LINE_ROW}
+            <!-- The label goes after the bar, before it when the bar nearly reaches the right
+                 edge, and inside it when the bar also starts too close to the left edge. -->
             {@const flip = n.high > 75}
+            {@const inside = flip && n.key < 12}
             <rect
               x={lineX(n.key)}
               {y}
@@ -337,9 +340,9 @@
               class="{state ? STATE_FILL[state] : 'fill-slate-200'} {stateStroke(state)}"
             />
             <text
-              x={flip ? lineX(n.key) - 4 : lineX(n.high) + 6}
+              x={inside ? lineX(n.key) + 4 : flip ? lineX(n.key) - 4 : lineX(n.high) + 6}
               y={y + 10}
-              text-anchor={flip ? 'end' : 'start'}
+              text-anchor={flip && !inside ? 'end' : 'start'}
               font-size="11"
               font-weight={state ? 700 : 400}
               stroke="white"

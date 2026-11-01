@@ -293,7 +293,7 @@ export const en = {
     'An ordered map (Java’s TreeMap, C++’s std::map) is a balanced tree underneath. Keeping keys sorted is what buys floor, ceiling, in-order scans and range queries, which a hash table cannot do.',
     'Store size in each node. For select, s = size(left) + 1 is the current node’s position within its subtree: stop if k = s, go left if k < s, otherwise subtract s from k and go right. Rank adds s every time the walk turns right.',
     'A field can be kept up to date cheaply when it depends only on the node and its two children. Each change touches one path, and a rotation recomputes just two nodes, so inserts and deletes stay O(log n). A node’s rank cannot be stored this way: inserting a new smallest key would change every rank.',
-    'An interval tree orders intervals by low endpoint and stores the largest high endpoint in each subtree. If left.max ≥ lo, going left is safe: when the left has no overlap, the interval reaching left.max must start after the query ends, and everything to the right starts later still.',
+    'An interval tree orders intervals by low endpoint and stores the largest high endpoint in each subtree. If left.max ≥ lo, going left is safe: when the left has no overlap, the interval reaching left.max must start after the query ends, and nothing to the right starts any earlier.',
     'Try the “Long interval” preset: the only match for [80, 85] is [10, 90], far to the left by low endpoint, and the stored max leads straight to it. Then count how many keys of “Rank and select” lie in a range, using two rank queries.',
   ],
   complexityHead: ['Operation', 'Cost', 'Why'],
@@ -368,7 +368,7 @@ export const en = {
       unit: 'nodes',
       hints: ['Step to the rotation and read the narration.'],
       solution:
-        'Only 20 and 10 change children, so only their sizes are recomputed. The subtree above sees the same set of keys, so its size is unchanged.',
+        'Only 20 and 10 change children, so only their sizes are recomputed. Any node above them would still hold the same keys, so its size would not change.',
     },
     {
       type: 'multi',
@@ -403,7 +403,7 @@ export const en = {
         'At a node that does not overlap the query, left.max ≥ lo. Why can the search safely skip the right subtree if the left has no overlap?',
       options: [
         'Because every interval on the right is shorter',
-        'Because the interval reaching left.max must start after the query ends, and everything on the right starts later still',
+        'Because the interval reaching left.max must start after the query ends, and nothing on the right starts any earlier',
         'Because the right subtree’s max is always smaller than the left’s',
         'Because a balanced tree has at most one overlap',
       ],

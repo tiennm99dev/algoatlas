@@ -54,7 +54,7 @@ export const runnerPseudocode = [
  * @typedef {object} StructureStats
  * @property {number} cost  Comparisons of this operation.
  * @property {number} total  Comparisons so far.
- * @property {number} worst  The dearest single operation so far.
+ * @property {number} worst  The most expensive single operation so far.
  * @property {number} height  Tree height, or skip list levels in use.
  * @property {number[]} path  Keys compared by this operation.
  */
