@@ -10,6 +10,9 @@
  * target; the trace shows each finished component rather than every DFS step.
  */
 
+import { arcLists, neighbourLists } from './graph-adjacency.js';
+import { tarjanScc } from './tarjan.js';
+
 /** Variables in the lesson’s formulas. */
 export const VARS = 4;
 /** Most clauses a formula may have. */
@@ -105,41 +108,15 @@ export function twoSatTrace({ vars, clauses }) {
     push({ kind: 'clause', clause: k, added, lines: [0] });
   });
 
-  /** @type {number[][]} */
-  const out = Array.from({ length: n }, () => []);
-  for (const e of edges) out[e.from].push(e.to);
-  for (const l of out) l.sort((x, y) => x - y);
-
-  const tin = new Array(n).fill(-1);
-  const low = new Array(n).fill(0);
-  const onStack = new Array(n).fill(false);
-  /** @type {number[]} */
-  const stack = [];
-  let time = 0;
-  /** @param {number} u */
-  function connect(u) {
-    tin[u] = low[u] = time++;
-    stack.push(u);
-    onStack[u] = true;
-    for (const v of out[u]) {
-      if (tin[v] === -1) {
-        connect(v);
-        low[u] = Math.min(low[u], low[v]);
-      } else if (onStack[v]) low[u] = Math.min(low[u], tin[v]);
-    }
-    if (low[u] !== tin[u]) return;
-    count++;
-    const popped = [];
-    let w;
-    do {
-      w = /** @type {number} */ (stack.pop());
-      onStack[w] = false;
-      comp[w] = count;
-      popped.push(w);
-    } while (w !== u);
-    push({ kind: 'scc', popped, lines: [1] });
-  }
-  for (let l = 0; l < n; l++) if (tin[l] === -1) connect(l);
+  const literals = Array.from({ length: n }, (_, l) => l);
+  const out = neighbourLists(arcLists(literals, edges, true).out);
+  tarjanScc(out, {
+    root(_, popped) {
+      count++;
+      for (const w of popped) comp[w] = count;
+      push({ kind: 'scc', popped, lines: [1] });
+    },
+  });
 
   for (let x = 0; x < vars; x++) {
     if (comp[2 * x] === comp[2 * x + 1]) {

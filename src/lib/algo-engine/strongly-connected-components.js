@@ -12,6 +12,8 @@
  * Vertices are numbered by ascending id; each vertex tries its out-edges (or, in Kosaraju's
  * second pass, its in-edges) in order of the other end's number.
  */
+import { arcLists } from './graph-adjacency.js';
+import { sccState, tarjanScc } from './tarjan.js';
 import { indexEdges } from './weighted-edges.js';
 
 /** Largest graph the lesson draws; a complete graph on 8 vertices stays under 400 frames. */
@@ -72,39 +74,13 @@ export const kosarajuPseudocode = [
   'every vertex is in exactly one SCC',
 ];
 
-/**
- * @param {number[]} ids
- * @param {SccEdge[]} edges
- */
-function adjacency(ids, edges) {
-  const { n, list } = indexEdges(ids, edges);
-  /** @type {{to: number, edge: number}[][]} */
-  const out = Array.from({ length: n }, () => []);
-  /** @type {{to: number, edge: number}[][]} */
-  const inn = Array.from({ length: n }, () => []);
-  for (const { u, v, edge } of list) {
-    out[u].push({ to: v, edge });
-    inn[v].push({ to: u, edge });
-  }
-  const byEnd = (/** @type {{to: number, edge: number}} */ a, /** @type {typeof a} */ b) =>
-    a.to - b.to || a.edge - b.edge;
-  for (const l of out) l.sort(byEnd);
-  for (const l of inn) l.sort(byEnd);
-  return { n, out, inn };
-}
-
 /** @param {number} n */
 function makeState(n) {
   return {
-    tin: new Array(n).fill(-1),
-    low: new Array(n).fill(-1),
+    ...sccState(n),
     status: new Array(n).fill(0),
-    comp: new Array(n).fill(0),
-    /** @type {number[]} */
-    stack: [],
     /** @type {number[]} */
     finished: [],
-    count: 0,
     edgesSeen: 0,
   };
 }
@@ -142,55 +118,39 @@ function pusher(s, frames) {
  * @returns {SccFrame[]}
  */
 export function tarjanTrace({ ids, edges }) {
-  const { n, out } = adjacency(ids, edges);
+  const { n, out } = arcLists(ids, edges, true);
   const s = makeState(n);
-  const onStack = new Array(n).fill(false);
-  let time = 0;
   /** @type {SccFrame[]} */
   const frames = [];
   const push = pusher(s, frames);
 
-  /** @param {number} u @param {number[]} callLines */
-  function connect(u, callLines) {
-    s.tin[u] = s.low[u] = time++;
-    s.status[u] = 1;
-    s.stack.push(u);
-    onStack[u] = true;
-    push({ kind: 'enter', current: u, lines: [...callLines, 1, 2] });
-    for (const { to: v, edge } of out[u]) {
-      s.edgesSeen++;
-      if (s.tin[v] === -1) {
-        push({ kind: 'edge', current: u, other: v, edge, edgeKind: 'tree', lines: [3, 4] });
-        connect(v, [4]);
-        s.low[u] = Math.min(s.low[u], s.low[v]);
-        push({ kind: 'return', current: u, other: v, edge, edgeKind: 'tree', lines: [4] });
-      } else if (onStack[v]) {
-        s.low[u] = Math.min(s.low[u], s.tin[v]);
-        push({ kind: 'edge', current: u, other: v, edge, edgeKind: 'stack', lines: [3, 5] });
-      } else {
-        push({ kind: 'edge', current: u, other: v, edge, edgeKind: 'done', lines: [3] });
-      }
-    }
-    if (s.low[u] === s.tin[u]) {
-      s.count++;
-      const popped = [];
-      let w;
-      do {
-        w = /** @type {number} */ (s.stack.pop());
-        onStack[w] = false;
-        s.comp[w] = s.count;
-        s.status[w] = 2;
-        popped.push(w);
-      } while (w !== u);
-      push({ kind: 'root', current: u, popped, lines: [6, 7] });
-    } else {
-      s.status[u] = 2;
-      push({ kind: 'keep', current: u, lines: [6] });
-    }
-  }
-
   push({ kind: 'start', lines: [0] });
-  for (let v = 0; v < n; v++) if (s.tin[v] === -1) connect(v, [0]);
+  tarjanScc(
+    out,
+    {
+      enter(u, top) {
+        s.status[u] = 1;
+        push({ kind: 'enter', current: u, lines: [top ? 0 : 4, 1, 2] });
+      },
+      edge(u, { to: v, edge }, kind) {
+        s.edgesSeen++;
+        const lines = kind === 'tree' ? [3, 4] : kind === 'stack' ? [3, 5] : [3];
+        push({ kind: 'edge', current: u, other: v, edge, edgeKind: kind, lines });
+      },
+      back(u, { to: v, edge }) {
+        push({ kind: 'return', current: u, other: v, edge, edgeKind: 'tree', lines: [4] });
+      },
+      root(u, popped) {
+        for (const w of popped) s.status[w] = 2;
+        push({ kind: 'root', current: u, popped, lines: [6, 7] });
+      },
+      keep(u) {
+        s.status[u] = 2;
+        push({ kind: 'keep', current: u, lines: [6] });
+      },
+    },
+    s,
+  );
   push({ kind: 'done', lines: [8] });
   return frames;
 }
@@ -200,7 +160,7 @@ export function tarjanTrace({ ids, edges }) {
  * @returns {SccFrame[]}
  */
 export function kosarajuTrace({ ids, edges }) {
-  const { n, out, inn } = adjacency(ids, edges);
+  const { n, out, inn } = arcLists(ids, edges, true);
   const s = makeState(n);
   let time = 0;
   /** @type {SccFrame[]} */

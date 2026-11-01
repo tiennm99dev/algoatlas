@@ -200,8 +200,14 @@ in the array layout: `leftOf`, `rightOf`, `parentOf`, `depthOf`, `filled`, `chil
 `item-heap.js` (`makeHeap(before)`, a binary heap over any items that counts comparisons).
 Edge-list shortest-path engines share `src/lib/algo-engine/weighted-edges.js`: `indexEdges(ids,
 edges)` numbers the vertices and lists the edges by index, and `cycleFrom(parent, start, n)`
-reads a negative cycle out of the parent links. Use these instead of writing your own copy
-in an engine or page.
+reads a negative cycle out of the parent links. Graph engines build adjacency with
+`src/lib/algo-engine/graph-adjacency.js`: `arcLists(ids, edges, directed)` gives
+`{ n, out, inn }`, each list of `{ to, edge }` sorted by the other end, and
+`neighbourLists(lists)` keeps only the ends. Strongly connected components go through
+`src/lib/algo-engine/tarjan.js`: `tarjanScc(out, hooks, sccState(n))` runs Tarjan's
+algorithm and calls `enter`, `edge` (`tree`, `stack` or `done`), `back`, `root` and `keep`
+so a trace records its frames from the live `tin`, `low`, `stack` and `comp`. Use these
+instead of writing your own copy in an engine or page.
 
 ## 8. Practice block and lesson kinds
 

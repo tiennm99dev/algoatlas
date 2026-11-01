@@ -11,7 +11,8 @@
  * Vertices are numbered by ascending id; neighbours and dependencies are tried in order of
  * their number.
  */
-import { indexEdges } from './weighted-edges.js';
+import { arcLists, neighbourLists } from './graph-adjacency.js';
+import { sccState, tarjanScc } from './tarjan.js';
 
 /** Largest graph the lesson draws; both traces stay well under 400 frames at the cap. */
 export const MAX_NODES = 8;
@@ -74,19 +75,6 @@ export const cyclePseudocode = [
   'no cycle: the order the components were completed in is a build order',
 ];
 
-/** @param {number[]} ids @param {PlainEdge[]} edges */
-function undirected(ids, edges) {
-  const { n, list } = indexEdges(ids, edges);
-  /** @type {number[][]} */
-  const adj = Array.from({ length: n }, () => []);
-  for (const { u, v } of list) {
-    adj[u].push(v);
-    adj[v].push(u);
-  }
-  for (const l of adj) l.sort((a, b) => a - b);
-  return { n, adj };
-}
-
 /**
  * Pieces of a network, optionally without one node (union-find over the links).
  * @param {number} n @param {number[][]} adj @param {number} skip
@@ -110,7 +98,8 @@ function pieces(n, adj, skip) {
  * @returns {FailureFrame[]}
  */
 export function failureTrace({ ids, edges, failed }) {
-  const { n, adj } = undirected(ids, edges);
+  const { n, out } = arcLists(ids, edges, false);
+  const adj = neighbourLists(out);
   const sorted = ids.slice().sort((a, b) => a - b);
   const f = sorted.indexOf(failed);
   const before = pieces(n, adj, -1);
@@ -177,24 +166,13 @@ export function failureTrace({ ids, edges, failed }) {
  * @returns {CycleFrame[]}
  */
 export function cycleTrace({ ids, edges }) {
-  const { n, list } = indexEdges(ids, edges);
-  /** @type {number[][]} */
-  const out = Array.from({ length: n }, () => []);
-  for (const { u, v } of list) out[u].push(v);
-  for (const l of out) l.sort((a, b) => a - b);
-
-  const tin = new Array(n).fill(-1);
-  const low = new Array(n).fill(-1);
-  const comp = new Array(n).fill(0);
-  const onStack = new Array(n).fill(false);
-  /** @type {number[]} */
-  const stack = [];
+  const { n, out: arcs } = arcLists(ids, edges, true);
+  const out = neighbourLists(arcs);
+  const s = sccState(n);
   /** @type {number[][]} */
   const cycles = [];
   /** @type {number[]} */
   const order = [];
-  let time = 0;
-  let count = 0;
   let checks = 0;
 
   /** @type {CycleFrame[]} */
@@ -210,52 +188,41 @@ export function cycleTrace({ ids, edges }) {
       blocked: false,
       ...f,
       popped: f.popped ? f.popped.slice() : [],
-      tin: tin.slice(),
-      low: low.slice(),
-      stack: stack.slice(),
-      comp: comp.slice(),
-      count,
+      tin: s.tin.slice(),
+      low: s.low.slice(),
+      stack: s.stack.slice(),
+      comp: s.comp.slice(),
+      count: s.count,
       cycles: cycles.map((c) => c.slice()),
       order: order.slice(),
       checks,
     });
 
-  /** @param {number} u */
-  function connect(u) {
-    tin[u] = low[u] = time++;
-    stack.push(u);
-    onStack[u] = true;
-    push({ kind: 'enter', current: u, lines: [1, 2] });
-    for (const v of out[u]) {
-      checks++;
-      if (tin[v] === -1) {
-        connect(v);
-        low[u] = Math.min(low[u], low[v]);
-      } else if (onStack[v]) low[u] = Math.min(low[u], tin[v]);
-    }
-    if (low[u] !== tin[u]) return;
-    count++;
-    /** @type {number[]} */
-    const popped = [];
-    let w;
-    do {
-      w = /** @type {number} */ (stack.pop());
-      onStack[w] = false;
-      comp[w] = count;
-      popped.push(w);
-      order.push(w);
-    } while (w !== u);
-    if (popped.length > 1) cycles.push(popped.slice().sort((a, b) => a - b));
-    // Everything a component needs outside itself completed earlier (sinks first).
-    const blocked =
-      popped.length > 1 ||
-      popped.some((w) => out[w].some((x) => comp[x] !== count && blockedComp[comp[x] - 1]));
-    blockedComp.push(blocked);
-    push({ kind: 'scc', current: u, popped, blocked, lines: popped.length > 1 ? [3, 4] : [3] });
-  }
-
   push({ kind: 'start', lines: [0] });
-  for (let v = 0; v < n; v++) if (tin[v] === -1) connect(v);
+  tarjanScc(
+    out,
+    {
+      enter(u) {
+        push({ kind: 'enter', current: u, lines: [1, 2] });
+      },
+      edge() {
+        checks++;
+      },
+      root(u, popped) {
+        order.push(...popped);
+        if (popped.length > 1) cycles.push(popped.slice().sort((a, b) => a - b));
+        // Everything a component needs outside itself completed earlier (sinks first).
+        const blocked =
+          popped.length > 1 ||
+          popped.some((w) =>
+            out[w].some((x) => s.comp[x] !== s.count && blockedComp[s.comp[x] - 1]),
+          );
+        blockedComp.push(blocked);
+        push({ kind: 'scc', current: u, popped, blocked, lines: popped.length > 1 ? [3, 4] : [3] });
+      },
+    },
+    s,
+  );
   push({ kind: 'done', lines: [5] });
   return frames;
 }

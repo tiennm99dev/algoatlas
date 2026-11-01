@@ -12,7 +12,7 @@
  * end’s number, and skips only the very edge it was entered by, so the parent is skipped
  * by edge, not by vertex.
  */
-import { indexEdges } from './weighted-edges.js';
+import { arcLists } from './graph-adjacency.js';
 
 /** Largest graph the lesson draws; a complete graph on 8 vertices stays under 400 frames. */
 export const MAX_NODES = 8;
@@ -67,15 +67,8 @@ export const cutPseudocode = [
  * @param {CutEdge[]} edges
  */
 export function undirectedAdjacency(ids, edges) {
-  const { n, list } = indexEdges(ids, edges);
-  /** @type {{to: number, edge: number}[][]} */
-  const adj = Array.from({ length: n }, () => []);
-  for (const { u, v, edge } of list) {
-    adj[u].push({ to: v, edge });
-    adj[v].push({ to: u, edge });
-  }
-  for (const l of adj) l.sort((a, b) => a.to - b.to || a.edge - b.edge);
-  return { n, adj };
+  const { n, out } = arcLists(ids, edges, false);
+  return { n, adj: out };
 }
 
 /**
