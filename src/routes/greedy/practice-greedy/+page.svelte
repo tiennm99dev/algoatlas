@@ -123,7 +123,8 @@
       if (b < 0) return '';
       return frame.kind === 'boat' && b === frame.boats.length - 1 ? 'boat' : 'done';
     }
-    if (i === frame.i && frame.kind === 'stuck') return 'stuck';
+    // The done frame of a failed run keeps the cell the rule got stuck on.
+    if (i === frame.i && (frame.kind === 'stuck' || (done && !reachedEnd))) return 'stuck';
     if (reachedEnd && i === n - 1) return 'goal';
     if (i === frame.i && !done) return 'current';
     if (rule === 'wrong') return frame.path.includes(i) ? 'path' : '';
@@ -153,6 +154,17 @@
     }
     const kind = cellKind(i);
     return kind ? m.markers[kind] : '';
+  }
+
+  /** @param {number} i */
+  function labelOf(i) {
+    const kind = cellKind(i);
+    const state = kind ? m.legend[kind] : '';
+    if (puzzle === 'boats') {
+      const b = frame.boats.findIndex((boat) => boat.includes(i));
+      return m.personLabel(frame.values[i], b, state);
+    }
+    return m.cellLabel(i, frame.values[i], state);
   }
 
   const legend = $derived(
@@ -252,6 +264,7 @@
           ariaLabel={m.stripAria(frame.values)}
           stateOf={(i) => STATE[cellKind(i)]}
           {markerOf}
+          {labelOf}
           {pointers}
           {windows}
           speed={player.speed}

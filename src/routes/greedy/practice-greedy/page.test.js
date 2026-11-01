@@ -106,6 +106,8 @@ describe('greedy practice lesson', () => {
       'The rule answers no, but the right answer is yes: a counterexample',
     );
     expect(stat('Rule’s answer')).toBe('no');
+    const titles = [...document.querySelectorAll('svg title')].map((t) => t.textContent);
+    expect(titles).toContain('Cell 2: 0, Stuck here');
   });
 
   it('switches to the farthest-reach rule, which is right here', () => {

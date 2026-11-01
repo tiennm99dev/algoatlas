@@ -81,6 +81,11 @@ export const en = {
   random: 'Random input',
   newInputNotice: 'New input loaded.',
   answer,
+  /** @param {number} i @param {number} value @param {string} state */
+  cellLabel: (i, value, state) => `Cell ${i}: ${value}${state ? `, ${state}` : ''}`,
+  /** @param {number} weight @param {number} boat 0-based, -1 before boarding @param {string} state */
+  personLabel: (weight, boat, state) =>
+    `Weight ${weight}${boat >= 0 ? `, boat ${boat + 1}` : ''}${state ? `, ${state}` : ''}`,
   /** @param {number[]} values */
   stripAria: (values) => `Cells: ${values.join(', ')}.`,
   pointers: { i: 'i', end: 'end', far: 'far' },
