@@ -58,19 +58,17 @@ export const huffmanPseudocode = [
 const shown = (ch) => (/\s/.test(ch) ? '␣' : ch);
 
 /**
- * Reads `symbol:frequency` pairs separated by commas or spaces, such as `a:45, b:13`.
+ * Reads `symbol:frequency` pairs separated by commas or spaces, such as `a:45, b:13`. The
+ * symbol is any one visible character, so `,:2` and `::1` (a comma, a colon) read back what
+ * `countSymbols` and `formatFrequencies` write for a text with punctuation.
  * @param {string} text
  * @returns {{symbols: SymbolFreq[]} | {error: 'format'|'range'|'count'|'duplicate'}}
  */
 export function parseFrequencies(text) {
-  const tokens = text.split(/[\s,;]+/).filter(Boolean);
-  if (tokens.length === 0 || !tokens.every((t) => /^[^\s:,;]:\d+$/u.test(t))) {
-    return { error: 'format' };
-  }
-  const symbols = tokens.map((t) => {
-    const colon = t.lastIndexOf(':');
-    return { symbol: t.slice(0, colon), freq: Number(t.slice(colon + 1)) };
-  });
+  const pairs = [...text.matchAll(/(?<![^\s,;])(\S):(\d+)(?![^\s,;])/gu)];
+  const rest = text.replace(/(?<![^\s,;])\S:\d+(?![^\s,;])/gu, '');
+  if (pairs.length === 0 || !/^[\s,;]*$/.test(rest)) return { error: 'format' };
+  const symbols = pairs.map((p) => ({ symbol: p[1], freq: Number(p[2]) }));
   if (symbols.some((s) => s.freq < 1 || s.freq > MAX_FREQ)) return { error: 'range' };
   if (new Set(symbols.map((s) => s.symbol)).size !== symbols.length) return { error: 'duplicate' };
   if (symbols.length < MIN_N || symbols.length > MAX_N) return { error: 'count' };

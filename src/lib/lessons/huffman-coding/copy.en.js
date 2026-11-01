@@ -109,7 +109,7 @@ export const en = {
     'A prefix-free code is a binary tree with the symbols at the leaves: a code is the path from the root, 0 for left and 1 for right. Because no symbol sits on another’s path, a bit string decodes from left to right with no separators.',
     'The cost of a code is Σ frequency × code length. Each merge pushes every symbol under the new node one level deeper, so the total is also the sum of the merged weights.',
     'Greedy choice: in some optimal tree the two least frequent symbols are siblings at the deepest level, since swapping a deeper symbol with a rarer one never adds bits. Merging them and solving the smaller problem is then safe, which is the exchange argument behind Huffman’s algorithm.',
-    'With a min-heap the n − 1 merges cost O(n log n). Equal counts give a balanced tree, no better than a fixed-length code; skewed counts such as powers of two give codes of 1, 2, 3, … bits.',
+    'With a min-heap the n − 1 merges cost O(n log n). Equal counts on a power-of-two number of symbols give a balanced tree, no better than a fixed-length code; skewed counts such as powers of two give codes of 1, 2, 3, … bits.',
     'Count “abracadabra”: Huffman needs 23 bits where a fixed 3-bit code needs 33. Then load “Four equal counts” and see both costs agree.',
   ],
   complexityHead: ['Step', 'Cost', 'Why'],

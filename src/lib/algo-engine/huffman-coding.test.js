@@ -144,6 +144,13 @@ describe('reading frequencies', () => {
       ],
     });
     expect(parseFrequencies('a=4')).toEqual({ error: 'format' });
+    expect(parseFrequencies('a:45:3 b:1')).toEqual({ error: 'format' });
+    expect(parseFrequencies(',:1, ::2')).toEqual({
+      symbols: [
+        { symbol: ',', freq: 1 },
+        { symbol: ':', freq: 2 },
+      ],
+    });
     expect(parseFrequencies('a:0 b:2')).toEqual({ error: 'range' });
     expect(parseFrequencies('a:1 a:2')).toEqual({ error: 'duplicate' });
     expect(parseFrequencies('a:1')).toEqual({ error: 'count' });
@@ -166,6 +173,9 @@ describe('reading frequencies', () => {
         { symbol: '␣', freq: 1 },
       ],
     });
+    const punctuated = countSymbols('hi, you: ok');
+    if (!('symbols' in punctuated)) throw new Error('expected symbols');
+    expect(parseFrequencies(formatFrequencies(punctuated.symbols))).toEqual(punctuated);
     expect(countSymbols('')).toEqual({ error: 'empty' });
     expect(countSymbols('aaaa')).toEqual({ error: 'count' });
     expect(countSymbols('abcdefghijk')).toEqual({ error: 'count' });
