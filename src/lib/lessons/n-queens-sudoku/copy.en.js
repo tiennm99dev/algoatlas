@@ -147,7 +147,7 @@ export const en = {
     }
   },
   takeaways: [
-    'A constraint check at the moment of placing is the same as pruning: it removes every completed board that would have started that way. With no checks, 8-queens has 8⁸ = 16,777,216 boards to look at. The search here tests 876 squares.',
+    'A constraint check at the moment of placing is the same as pruning: it removes every completed board that would have started that way. With no checks, 8-queens has 8⁸ = 16,777,216 boards, and the first solution in order is board 1,299,852. The search here reaches it after testing 876 squares.',
     'Placing and undoing must be exact opposites. In N-queens, that means clearing the column and both diagonal flags. Any state left behind silently breaks later branches.',
     'The checks are fast because of the state kept. The two diagonals are r − c and r + c, so one flag per column and per diagonal answers “is this square attacked?” in O(1).',
     'Choosing a good order makes a big difference. Sudoku solvers usually fill the most constrained cell next, the one with the fewest digits left, which fails sooner and so prunes earlier. This lesson’s simple left-to-right order is easier to follow, but slower.',
@@ -205,7 +205,7 @@ export const en = {
       unit: 'squares',
       hints: ['Set n to 8, stay on First solution and read Squares tested.'],
       solution:
-        'The search tests 876 squares, places 113 queens and takes back 105, then stops at 0 4 7 5 2 6 1 3. Nearly 17 million boards with no checks shrink to under a thousand tests.',
+        'The search tests 876 squares, places 113 queens and takes back 105, then stops at 0 4 7 5 2 6 1 3. With no checks, this solution would be board 1,299,852 in the same order, so well over a million boards shrink to under a thousand tests.',
     },
     {
       type: 'number',

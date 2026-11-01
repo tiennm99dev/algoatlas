@@ -168,7 +168,10 @@
   /** @param {number} r @param {number} c */
   function seekCell(r, c) {
     const at = wordPlayer.frames.findIndex((f) => f.r === r && f.c === c);
-    if (at < 0) return;
+    if (at < 0) {
+      refuse(m.neverChecked);
+      return;
+    }
     wordPlayer.pause();
     wordPlayer.seek(at);
   }

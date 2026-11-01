@@ -30,7 +30,7 @@
   const FIRST = GEN_PRESETS[0];
 
   let mode = $state(FIRST.mode);
-  let unique = $state(/** @type {'on'|'off'} */ ('off'));
+  let unique = $state(/** @type {'on'|'off'} */ (FIRST.unique ? 'on' : 'off'));
   let items = $state(FIRST.items);
   let k = $state(FIRST.k);
   let preset = $state(FIRST.key);
@@ -38,7 +38,7 @@
   let kText = $state(String(FIRST.k));
   let notice = $state({ text: '', at: -1 });
 
-  const player = createPlayer(genTrace(FIRST.mode, FIRST.items, { k: FIRST.k, unique: false }));
+  const player = createPlayer(genTrace(FIRST.mode, FIRST.items, FIRST));
   const frame = $derived(player.frame);
   const narration = $derived(notice.at === player.index ? notice.text : m.describe(frame));
 
@@ -69,7 +69,7 @@
     mode = p.mode;
     items = p.items;
     k = p.k;
-    unique = p.key === 'abc' ? 'off' : 'on';
+    unique = p.unique ? 'on' : 'off';
     itemsText = p.items.join(' ');
     kText = String(p.k);
     rebuild();

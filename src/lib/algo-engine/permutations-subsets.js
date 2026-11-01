@@ -44,7 +44,7 @@ const MAX_LABEL = 2;
 
 /** @type {{key: string, mode: GenMode, items: string[], k: number, unique: boolean}[]} */
 export const GEN_PRESETS = [
-  { key: 'abc', mode: 'perm', items: ['A', 'B', 'C'], k: 2, unique: true },
+  { key: 'abc', mode: 'perm', items: ['A', 'B', 'C'], k: 2, unique: false },
   { key: 'aab', mode: 'perm', items: ['A', 'A', 'B'], k: 2, unique: true },
   { key: 'five', mode: 'comb', items: ['A', 'B', 'C', 'D', 'E'], k: 3, unique: true },
   { key: 'twins', mode: 'subset', items: ['1', '2', '2'], k: 2, unique: true },
@@ -105,13 +105,16 @@ export function parseItems(text, max) {
 }
 
 /**
- * Sorts items so equal ones are adjacent: numbers by value, then the rest in code-point order.
+ * Sorts items so equal ones are adjacent: numbers first, by value, then the rest in code-point
+ * order. Numbers of equal value (1 and 01) are still different labels, so they fall back to
+ * code-point order too.
  * @param {string[]} items
  */
 export function sortItems(items) {
   const numeric = (/** @type {string} */ s) => /^\d+$/.test(s);
   return items.slice().sort((a, b) => {
-    if (numeric(a) && numeric(b)) return Number(a) - Number(b);
+    if (numeric(a) !== numeric(b)) return numeric(a) ? -1 : 1;
+    if (numeric(a) && Number(a) !== Number(b)) return Number(a) - Number(b);
     return a < b ? -1 : a > b ? 1 : 0;
   });
 }

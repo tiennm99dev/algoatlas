@@ -197,9 +197,8 @@
     const here = f.r === r && f.c === c;
     /** @type {VisualState} */
     let state = '';
-    if (f.kind === 'clash' && here) state = 'swap';
+    if ((f.kind === 'clash' || f.kind === 'dead') && here) state = 'compare';
     else if (f.kind === 'remove' && here) state = 'visited';
-    else if (f.kind === 'dead' && here) state = 'compare';
     else if (here) state = 'active';
     else if (!given && v !== 0) state = f.solved ? 'sorted' : 'path';
     return {

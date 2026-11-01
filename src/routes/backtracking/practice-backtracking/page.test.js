@@ -127,6 +127,12 @@ describe('practice: backtracking problems lesson', () => {
     expect(narration()).toContain('Cell (1, 2)');
   });
 
+  it('says so when a cell the search never reached is picked', () => {
+    render();
+    click(cell(1, 0));
+    expect(narration()).toBe(m.neverChecked);
+  });
+
   it('solves combination sum and shows the results', () => {
     render();
     toSum();

@@ -51,6 +51,7 @@ export const en = {
   gridAria: (rows, cols) => `Letter grid, ${rows} rows by ${cols} columns.`,
   /** @param {number} r @param {number} c @param {string} letter @param {string} state */
   gridCell: (r, c, letter, state) => `Row ${r}, column ${c}: ${letter}${state ? `, ${state}` : ''}`,
+  neverChecked: 'The search never reached that cell, so there is no step to jump to.',
   gridNote: 'A path moves up, down, left or right, and uses each cell at most once.',
   cellStates: {
     now: 'checked now',
@@ -88,7 +89,7 @@ export const en = {
   sumTitle: 'Numbers, sorted',
   sumAria: 'The numbers, sorted. Each may be used any number of times.',
   /** @param {number} i @param {number} v @param {number} times */
-  sumCell: (i, v, times) => `Number ${v} at index ${i}, used ${times} times`,
+  sumCell: (i, v, times) => `Number ${v} at index ${i}, used ${plural(times, 'time', 'times')}`,
   treeTitle: 'Recursion tree',
   treeNote: 'A circle shows what is still to reach. The edge says which number was picked.',
   treeAria: 'Recursion tree of combination sum, built as it runs.',

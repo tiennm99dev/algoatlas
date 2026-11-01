@@ -194,6 +194,12 @@ describe('helpers', () => {
     expect(sortItems(['10', '9', '2'])).toEqual(['2', '9', '10']);
   });
 
+  it('keeps equal items adjacent when numbers and mixed labels meet', () => {
+    expect(sortItems(['2', '10', '1a', '2'])).toEqual(['2', '2', '10', '1a']);
+    expect(sortItems(['1', '01', '1'])).toEqual(['01', '1', '1']);
+    expect(last('perm', ['2', '10', '1a', '2'], { unique: true }).outputs).toHaveLength(12);
+  });
+
   it('counts arrangements', () => {
     expect(factorial(0)).toBe(1);
     expect(factorial(4)).toBe(24);
