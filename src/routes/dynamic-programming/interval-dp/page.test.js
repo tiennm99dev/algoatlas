@@ -2,6 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
+import { INTERVAL_PRESETS, intervalTrace, orderCount } from '$lib/algo-engine/interval-dp.js';
 import { en as m } from '$lib/lessons/interval-dp/copy.en.js';
 import Page from './+page.svelte';
 
@@ -137,6 +138,18 @@ describe('interval DP lesson', () => {
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
     flushSync();
     expect(narration()).toContain('Length 1');
+  });
+
+  it('stores practice answers that the engine reproduces', () => {
+    /** @param {number} i @returns {number} */
+    const stored = (i) => /** @type {{answer: number}} */ (m.practice[i]).answer;
+    const [three, , six] = INTERVAL_PRESETS.matrix;
+    expect(intervalTrace('matrix', three.input).at(-1)?.result).toBe(stored(0));
+    const chain = intervalTrace('matrix', six.input).at(-1);
+    expect(chain?.table[1][4]).toBe(stored(1));
+    expect(chain?.tried).toBe(stored(2));
+    expect(intervalTrace('rod', INTERVAL_PRESETS.rod[1].input).at(-1)?.result).toBe(stored(4));
+    expect(orderCount('matrix', 6)).toBe(stored(6));
   });
 
   it('checks a practice answer, wrong then right, with a hint', () => {

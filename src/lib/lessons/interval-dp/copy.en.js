@@ -214,7 +214,7 @@ export const en = {
       prompt: 'In the 6-matrix example p = 30, 35, 15, 5, 10, 20, 25, what is m[2][5]?',
       answer: 7125,
       unit: 'multiplications',
-      hints: ['Load the 6 matrices example and click row 2, column 5.'],
+      hints: ['Load the 6 matrices example and click row A2, column A5.'],
       solution:
         'The best split is after A3: m[2][3] + m[4][5] + 35·5·20 = 2625 + 1000 + 3500 = 7125.',
     },
@@ -244,7 +244,6 @@ export const en = {
       type: 'number',
       prompt: 'A rod of 8 has prices 1, 5, 8, 9, 10, 17, 17, 20. What is the best price?',
       answer: 22,
-      unit: 'money',
       hints: ['Load the Rod of 8 example and step to the end.'],
       solution:
         'Cut it into pieces of 2 and 6: p[2] + p[6] = 5 + 17 = 22, against 20 for selling whole.',

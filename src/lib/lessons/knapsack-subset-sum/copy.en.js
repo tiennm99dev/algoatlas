@@ -146,9 +146,14 @@ export const en = {
   pending: '…',
   /** @param {KnapProblem} p @param {number|null} v */
   answerText: (p, v) => (v === null ? '…' : p === 'knapsack' ? String(v) : v ? 'Yes' : 'No'),
-  /** @param {number} n @param {number} w @param {number} bits @param {number} w2 */
-  pseudoNote: (n, w, bits, w2) =>
-    `Pseudo-polynomial: W = ${w} takes ${plural(bits, 'bit', 'bits')} to write and the table has ${(n + 1) * (w + 1)} cells. One more bit, W = ${w2}, gives ${(n + 1) * (w2 + 1)}.`,
+  /** @param {KnapProblem} p @param {number} n @param {number} w @param {number} bits */
+  pseudoNote: (p, n, w, bits) => {
+    const name = p === 'knapsack' ? 'W' : 'T';
+    const note = `Pseudo-polynomial: ${name} = ${w} takes ${plural(bits, 'bit', 'bits')} to write and the full table has ${(n + 1) * (w + 1)} cells.`;
+    if (w === 0) return note;
+    const longer = 2 * w + 1;
+    return `${note} One more bit, ${name} = ${longer}, gives ${(n + 1) * (longer + 1)}.`;
+  },
   /** @param {KnapFrame} f */
   describe(f) {
     const knap = f.problem === 'knapsack';

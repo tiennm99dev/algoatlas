@@ -135,7 +135,7 @@ export const en = {
             ? `The first column has only the cell above: ${here} = ${above.value}.`
             : `The first row has only the cell to the left: ${here} = ${left?.value}.`;
         }
-        if (v === Infinity) return `Both ways in are blocked, so no path reaches it: ${here} = ∞.`;
+        if (v === Infinity) return `Every way in is blocked, so no path reaches it: ${here} = ∞.`;
         const c = f.grid[f.r][f.c];
         if (above && left)
           return `Cost ${c}. Above is ${num(above.value)}, left is ${num(left.value)}. Keep the ${f.move === 'up' ? 'one above' : 'left one'}: ${here} = ${c} + ${num(f.move === 'up' ? above.value : left.value)} = ${v}.`;
@@ -209,12 +209,12 @@ export const en = {
     {
       type: 'number',
       prompt:
-        'In the Greedy trap, 1 2 9 / 5 9 9 / 1 1 1, how much does always taking the cheaper next cell overpay?',
+        'In the Greedy trap, 1 2 9 / 5 9 9 / 1 1 1, how much does always taking the cheaper next cell overpay, going down on a tie?',
       answer: 5,
       unit: 'cost',
-      hints: ['Compare the Cheapest cost stat with the stat beside it.'],
+      hints: ['Compare the Cheapest cost stat with the Always the cheaper next step stat.'],
       solution:
-        'The cheaper-next walk goes 1, 2, 9, 1, 1 for 14. The table goes 1, 5, 1, 1, 1 for 9. It overpays by 5.',
+        'The cheaper-next walk goes 1, 2, then down at the tie of 9 and 9, then 1, 1 for 14. The table goes 1, 5, 1, 1, 1 for 9. It overpays by 5.',
     },
     {
       type: 'choice',

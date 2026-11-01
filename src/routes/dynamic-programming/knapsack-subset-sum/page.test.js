@@ -2,6 +2,12 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
+import {
+  KNAP_PRESETS,
+  MAX_CAPACITY,
+  greedyValue,
+  knapTrace,
+} from '$lib/algo-engine/knapsack-subset-sum.js';
 import { en as m } from '$lib/lessons/knapsack-subset-sum/copy.en.js';
 import Page from './+page.svelte';
 
@@ -163,6 +169,37 @@ describe('knapsack and subset sum lesson', () => {
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
     flushSync();
     expect(narration()).toBe('Base case: row 0 has no items, so every capacity holds value 0.');
+  });
+
+  it('states the pseudo-polynomial note for the target and for an empty capacity', () => {
+    render();
+    commit(field('input[name="capacity"]'), '0');
+    expect(byTest('pseudo-note')).toContain('W = 0 takes 1 bit');
+    expect(byTest('pseudo-note')).not.toContain('One more bit');
+    click(/** @type {Element} */ (document.querySelector('input[name="problem"][value="subset"]')));
+    expect(byTest('pseudo-note')).toContain('T = 9 takes 4 bits');
+    expect(byTest('pseudo-note')).toContain('One more bit, T = 19');
+  });
+
+  it('moves the slider readout when a cell of row 0 is clicked', () => {
+    render();
+    click(cell(0, 3));
+    expect(byTest('slider-cell')).toBe(m.sliderValue(0, 3));
+    expect(field('input[name="slider-capacity"]').value).toBe('3');
+  });
+
+  it('stores practice answers that the engine reproduces', () => {
+    /** @param {number} i @returns {number} */
+    const stored = (i) => /** @type {{answer: number}} */ (m.practice[i]).answer;
+    const [small, trap, single] = KNAP_PRESETS.knapsack;
+    const table = knapTrace('knapsack', 'table', small.items, small.capacity).at(-1);
+    expect(table?.result).toBe(stored(0));
+    expect(table?.shown[3][6]).toBe(stored(1));
+    expect(7 * (MAX_CAPACITY + 1)).toBe(stored(2));
+    const upward = knapTrace('knapsack', 'row-up', single.items, single.capacity).at(-1);
+    expect(upward?.result).toBe(stored(4));
+    const best = knapTrace('knapsack', 'table', trap.items, trap.capacity).at(-1);
+    expect(Number(best?.result) - greedyValue(trap.items, trap.capacity)).toBe(stored(5));
   });
 
   it('checks a practice answer, wrong then right, with a hint', () => {

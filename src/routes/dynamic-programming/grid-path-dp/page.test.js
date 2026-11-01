@@ -98,6 +98,16 @@ describe('grid and path DP lesson', () => {
     expect(byTest('answer')).toBe('28');
   });
 
+  it('resets an edited grid to the example it came from', () => {
+    render();
+    commit(field('select[name="preset"]'), 'pillar');
+    click(cell(0, 0, 1));
+    expect(field('select[name="preset"]').value).toBe('');
+    click(buttonByText(m.resetGrid));
+    expect(field('select[name="preset"]').value).toBe('pillar');
+    expect(field('input[name="rows"]').value).toBe('3');
+  });
+
   it('edits the grid with the keyboard', () => {
     render();
     commit(field('select[name="preset"]'), 'pillar');

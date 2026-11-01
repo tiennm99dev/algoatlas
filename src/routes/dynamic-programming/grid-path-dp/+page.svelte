@@ -38,7 +38,7 @@
   let mode = $state(/** @type {GridMode} */ ('count'));
   let tool = $state(/** @type {Tool} */ ('wall'));
   let grid = $state(FIRST.grid);
-  let base = $state(FIRST.grid);
+  let base = $state(FIRST.key);
   let preset = $state(FIRST.key);
   let rowsText = $state(String(FIRST.grid.length));
   let colsText = $state(String(FIRST.grid[0].length));
@@ -65,17 +65,10 @@
   function loadPreset(key) {
     const p = GRID_PRESETS.find((x) => x.key === key) ?? FIRST;
     preset = p.key;
+    base = p.key;
     grid = p.grid;
-    base = p.grid;
     rowsText = String(p.grid.length);
     colsText = String(p.grid[0].length);
-    rebuild();
-  }
-
-  function reset() {
-    grid = base;
-    rowsText = String(base.length);
-    colsText = String(base[0].length);
     rebuild();
   }
 
@@ -247,7 +240,9 @@
         {/each}
       </select>
     </label>
-    <button type="button" class="btn-secondary" onclick={reset}>{m.resetGrid}</button>
+    <button type="button" class="btn-secondary" onclick={() => loadPreset(base)}
+      >{m.resetGrid}</button
+    >
   </form>
 
   <div class="grid gap-4 lg:grid-cols-[1fr_22rem]">

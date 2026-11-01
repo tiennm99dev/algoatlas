@@ -117,6 +117,8 @@
       i === 0 ? f.kind === 'base' : f.kind === 'fill' && f.i === i && f.c === c,
     );
     if (at < 0) return;
+    pickI = i;
+    pickC = c;
     player.pause();
     player.seek(at);
   }
@@ -351,10 +353,10 @@
         {/if}
         <p class="mt-3 text-xs text-slate-600" data-testid="pseudo-note">
           {m.pseudoNote(
+            frame.problem,
             frame.items.length,
             frame.capacity,
             capacityBits(frame.capacity),
-            2 * frame.capacity + 1,
           )}
         </p>
       </div>
