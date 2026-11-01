@@ -198,7 +198,7 @@ export const en = {
     'O and T: the original problem may be one subproblem, B(0), or a combination, the largest x(i). Time is the number of subproblems times the work per subproblem.',
     'Load the bowling example and press Show on R, then step: watch which of skip, hit one and hit a pair wins each cell, and try a row where every pin is negative.',
   ],
-  complexityHead: ['Step', 'Cost', 'Why'],
+  complexityHead: ['Problem', 'Cost', 'Why'],
   complexity: [
     ['Bowling, time', 'O(n)', 'n + 1 subproblems, each comparing at most 3 options.'],
     ['Bowling, memory', 'O(n)', 'One table cell per suffix; only the last two are needed at once.'],

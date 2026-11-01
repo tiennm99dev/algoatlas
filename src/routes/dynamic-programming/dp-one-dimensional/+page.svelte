@@ -131,7 +131,7 @@
     current: 'active',
     read: 'compare',
     chosen: 'compare',
-    base: 'swap',
+    base: 'active',
     answer: 'sorted',
     path: 'path',
     '': '',

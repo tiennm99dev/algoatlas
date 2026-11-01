@@ -79,7 +79,7 @@ export const en = {
       case 'start':
         return f.method === 'dp'
           ? `Find the LIS of ${plural(a.length, 'value', 'values')}. L[i] will be the length of the longest increasing subsequence that ends at a[i].`
-          : `Deal ${plural(a.length, 'value', 'values')} onto piles, left to right. A value goes on the leftmost pile whose top is at least as big, so each pile falls from bottom to top and the tops rise from left to right.`;
+          : `Deal ${plural(a.length, 'value', 'values')} onto piles, left to right. A value goes on the leftmost pile whose top is at least as big, so no pile ever rises from bottom to top and the tops rise from left to right.`;
       case 'begin':
         return `Index ${f.i}, value ${v(f.i)}: on its own it is a run of length 1, so L[${f.i}] = 1. Now check every earlier value.`;
       case 'compare': {
@@ -182,21 +182,21 @@ export const en = {
         'Patience sorting puts a value on the leftmost pile whose top is ≥ the value. Why ≥ and not >?',
       options: [
         'It makes the binary search faster.',
-        'Equal values then share a pile, so they never count as increasing: the subsequence stays strict.',
+        'An equal value then covers that top instead of starting a pile to its right, so equal values never extend each other: the subsequence stays strict.',
         'It makes no difference to the answer.',
         'So that every pile has the same height.',
       ],
       answer: 1,
       hints: ['Type 2, 2, 2 and count the piles.'],
       solution:
-        'With ≥, an equal value covers the top it equals instead of starting a new pile to its right. Two equal values can never be on piles k and k + 1, so they never form part of the same increasing run. With > you would compute the longest non-decreasing subsequence.',
+        'With ≥, a value starts a new pile only when it is bigger than every top, and its back pointer goes to a top strictly smaller than it, so every rebuilt run strictly rises. On 2, 2, 2 each 2 covers the one before and there is a single pile. With >, each 2 would start a new pile to the right of the last, and you would compute the longest non-decreasing subsequence instead.',
     },
     {
       type: 'multi',
       prompt: 'Which statements about the piles are always true during patience sorting?',
       options: [
         'The pile tops increase from left to right.',
-        'Each pile falls from bottom to top.',
+        'No pile ever rises from bottom to top.',
         'The top cards, read left to right, are an LIS.',
         'The number of piles is the length of the LIS so far.',
       ],
@@ -205,7 +205,7 @@ export const en = {
         'Load the example and look at the tops after 3 is dealt: are 3, 21, 33, 41, 60, 80 a subsequence in the original order?',
       ],
       solution:
-        'A value only covers a top at least as big, so piles fall and tops rise, and a new pile appears exactly when a value beats every top. But the tops need not be in sequence order: at the end of the example the top of pile 0 is 3, the last value. That is why back pointers rebuild the LIS.',
+        'A value only covers a top at least as big, so no pile rises and the tops strictly rise, and a new pile appears exactly when a value beats every top. But the tops need not be in sequence order: at the end of the example the top of pile 0 is 3, the last value. That is why back pointers rebuild the LIS.',
     },
   ],
   nextTeaser:
