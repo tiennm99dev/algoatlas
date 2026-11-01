@@ -76,11 +76,13 @@ export const en = {
     parent: 'P parent',
     uncle: 'U uncle',
     grand: 'G grandparent',
+    compare: '? key compared on the walk down',
     path: 'walked path',
     pivot: '↓ rotated down',
     bh: 'bh: black height, counting the NIL but not the node',
   },
   roles: {
+    compare: '?',
     z: 'z',
     parent: 'P',
     uncle: 'U',
@@ -88,6 +90,7 @@ export const en = {
     pivot: '↓',
   },
   roleNames: {
+    compare: 'compared',
     z: 'node being repaired',
     parent: 'parent',
     uncle: 'uncle',
@@ -134,7 +137,7 @@ export const en = {
       case 'parent-black':
         return `The parent of ${k(f.z)} is black, so every rule holds and no more work is needed.`;
       case 'paint-root':
-        return `The root is red, so paint it black. This is the only step that makes the black height grow.`;
+        return `The root is red, so paint it black. That adds one black node to every path at once, so all the black counts stay equal.`;
       case 'done':
         return f.size === 0
           ? en.emptyTree
@@ -228,7 +231,7 @@ export const en = {
       prompt:
         'Insert 1, 2, 3, 4, 5, 6, 7 in that order. What is the final height of the red-black tree?',
       answer: 4,
-      hints: ['Type the keys one by one, or read the height after each step.'],
+      hints: ['Press Reset first, then type the keys one by one and read the height card.'],
       solution:
         'The tree ends with root 2 and height 4, on the path 2 → 4 → 6 → 7. An AVL tree with the same inserts reaches height 3, since its rules are stricter.',
     },

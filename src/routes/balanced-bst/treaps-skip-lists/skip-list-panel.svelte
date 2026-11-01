@@ -22,15 +22,16 @@
   /** @typedef {'active'|'path'|'compare'|'found'} Role */
 
   /**
-   * The skip list half of the lesson. The page owns the player and the log so they survive a
+   * The skip list half of the lesson. The page owns the player, the log and the preset so they survive a
    * switch to the treap and back.
    * @type {{
    *   player: ReturnType<typeof import('$lib/player/player.svelte.js').createPlayer<SkipFrame>>,
    *   ops: SkipOp[],
+   *   preset: string,
    *   controls: import('svelte').Snippet,
    * }}
    */
-  let { player, ops = $bindable(), controls } = $props();
+  let { player, ops = $bindable(), preset = $bindable(), controls } = $props();
 
   const PRESETS = /** @type {const} */ (['towers', 'flat', 'random']);
   const COL = 44;
@@ -48,7 +49,6 @@
   /** @type {number | null} */
   let draft = $state(45);
   let tower = $state('coin');
-  let preset = $state('towers');
   // Text shown in place of the narration, only on the frame it was raised on.
   let notice = $state({ text: '', at: -1 });
 
@@ -139,7 +139,9 @@
     if (f.newTower === column && column >= 0) return 'found';
     if (f.kind === 'found' && f.next === column && column >= 0) return 'found';
     if (f.at === column && f.level === level && f.kind !== 'done') return 'active';
-    if (f.next === column && column >= 0 && f.level === level && f.kind !== 'done')
+    // A drop has already left the level on which the next key was compared.
+    const compared = f.kind === 'drop' ? f.level + 1 : f.level;
+    if (f.next === column && column >= 0 && compared === level && f.kind !== 'done')
       return 'compare';
     return f.path.some((p) => p.at === column && p.level === level) ? 'path' : null;
   }

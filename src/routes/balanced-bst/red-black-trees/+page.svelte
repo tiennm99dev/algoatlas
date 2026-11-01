@@ -24,6 +24,7 @@
   /** @typedef {import('$lib/components/tree-layout.js').TreeNode} TreeNode */
 
   const PRESETS = /** @type {const} */ (['clrs', 'uncle', 'inner', 'outer', 'sorted', 'random']);
+  const WALK_KINDS = ['visit', 'go-left', 'go-right', 'found', 'dup'];
   const COL = 48;
   const ROW = 68;
   const R = 17;
@@ -138,10 +139,11 @@
   const vbH = $derived(Math.max(1, layout.levels) * ROW);
   const fade = $derived(player.speed < 8 ? 'transition-colors' : '');
 
-  /** @param {number} slot @returns {'z'|'parent'|'uncle'|'grand'|'pivot'|''} */
+  /** @param {number} slot @returns {'compare'|'z'|'parent'|'uncle'|'grand'|'pivot'|''} */
   function roleOf(slot) {
     if (frame.pivot === slot) return 'pivot';
-    if (frame.z === slot) return 'z';
+    // On the walk down `z` is only the node being compared; the repair has not started.
+    if (frame.z === slot) return WALK_KINDS.includes(frame.kind) ? 'compare' : 'z';
     if (frame.parent === slot) return 'parent';
     if (frame.uncle === slot) return 'uncle';
     if (frame.grand === slot) return 'grand';
@@ -351,6 +353,9 @@
           <li class="flex items-center gap-1.5">
             <span class="size-3 rounded-sm border border-slate-950 bg-slate-900"></span>{m.legend
               .black}
+          </li>
+          <li class="flex items-center gap-1.5">
+            <span class="size-3 rounded-full border-2 border-teal-600"></span>{m.legend.compare}
           </li>
           <li class="flex items-center gap-1.5">
             <span class="size-3 rounded-full border-2 border-teal-600"></span>{m.legend.z},

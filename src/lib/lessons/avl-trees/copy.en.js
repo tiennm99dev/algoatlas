@@ -161,7 +161,7 @@ export const en = {
     'A factor of +2 points at the left child, −2 at the right. If the child leans the same way or is even, one rotation fixes it (LL, RR). If it leans the opposite way, a first rotation straightens the bend and a second one fixes it (LR, RL).',
     'The fewest keys in a tree of height h obey N(h) = N(h − 1) + N(h − 2) + 1, a Fibonacci-like growth. So h stays below about 1.44 log₂(n + 2), and every operation is O(log n).',
     'After an insert one repair is enough, because it puts the subtree back at its old height. A delete can shorten the subtree, so it may rotate at many levels on the way up.',
-    'Try “Delete rotating twice”: 12 keys form the shortest possible tree of height 5, and removing 80 makes 70 and then the root rebalance. Then load “Sorted keys” and count the rotations.',
+    'Try “Delete rotating twice”: 12 keys form the sparsest possible tree of height 5, and removing 80 makes 70 and then the root rebalance. Then load “Sorted keys” and count the rotations.',
   ],
   complexityHead: ['Operation', 'Cost', 'Why'],
   complexity: [
@@ -281,11 +281,11 @@ export const en = {
     {
       type: 'number',
       prompt:
-        'Load “Delete rotating twice” and step to the end. How many single rotations does the final delete spend?',
+        'Load “Delete rotating twice” and step to the last frame of the final delete, one before the end. How many single rotations has it spent?',
       answer: 3,
       unit: 'rotations',
       hints: [
-        'Read “Rotations (this operation)” on the last frame of the delete.',
+        'Read “Rotations (this operation)” there; the very last frame belongs to no operation and shows 0.',
         'The first repair is a double rotation.',
       ],
       solution:

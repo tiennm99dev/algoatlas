@@ -19,6 +19,8 @@
   const TREAP_OPS = makeTreapOps('shuffled');
   let skipOps = $state.raw(SKIP_OPS);
   let treapOps = $state.raw(TREAP_OPS);
+  let skipPreset = $state('towers');
+  let treapPreset = $state('shuffled');
   let mode = $state('skip');
 
   const MODE_OPTIONS = [
@@ -38,13 +40,13 @@
   </div>
 
   {#if mode === 'skip'}
-    <SkipListPanel player={skipPlayer} bind:ops={skipOps}>
+    <SkipListPanel player={skipPlayer} bind:ops={skipOps} bind:preset={skipPreset}>
       {#snippet controls()}
         <StepControls player={skipPlayer} />
       {/snippet}
     </SkipListPanel>
   {:else}
-    <TreapPanel player={treapPlayer} bind:ops={treapOps}>
+    <TreapPanel player={treapPlayer} bind:ops={treapOps} bind:preset={treapPreset}>
       {#snippet controls()}
         <StepControls player={treapPlayer} />
       {/snippet}

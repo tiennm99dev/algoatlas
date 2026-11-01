@@ -58,13 +58,15 @@ export const en = {
     read: '? read',
     path: 'read earlier',
     found: '✓ found',
+    changed: '* changed now',
     broken: '! too many or too few keys',
     partner: '+ other node involved',
     moved: 'Key that moved',
   },
-  markers: { read: '?', found: '✓', broken: '!', partner: '+', path: '' },
+  markers: { read: '?', changed: '*', found: '✓', broken: '!', partner: '+', path: '' },
   roleNames: {
     read: 'being read',
+    changed: 'changed now',
     found: 'found',
     broken: 'over or under the limit',
     partner: 'other node involved',
@@ -172,7 +174,7 @@ export const en = {
         'Adding 70 splits a leaf and then its parent.',
       ],
       solution:
-        'Key 30 splits a leaf once, key 50 splits a leaf once, and key 70 splits a leaf and then the level-two node, which adds a root. That makes 1 + 1 + 2 = 4.',
+        'Key 30 splits a leaf once, key 50 splits a leaf once, and key 70 splits a leaf and then the overflowing root, which adds a new root. That makes 1 + 1 + 2 = 4.',
     },
     {
       type: 'choice',

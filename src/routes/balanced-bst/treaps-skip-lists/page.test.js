@@ -299,4 +299,48 @@ describe('treaps and skip lists lesson', () => {
     expect(q.textContent).toContain('Correct!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
+
+  it('marks the compared key on the level it was read from, even after the drop', () => {
+    render(Page);
+    click(button('Next step'));
+    expect(narration()).toContain('On level 4 the next is 80');
+    const title = (/** @type {string} */ id) =>
+      document.querySelector(`g[data-cell="${id}"] title`)?.textContent ?? '';
+    expect(title('7-4')).toContain('compared');
+    expect(title('7-3')).not.toContain('compared');
+  });
+
+  it('says a tower at the cap stops flipping', () => {
+    render(Page);
+    commit(keyInput(), '45');
+    commit(towerSelect(), '5');
+    click(buttonByText('Insert'));
+    stepTo('the cap in this widget');
+    click(button('Next step'));
+    expect(narration()).toContain('Link the new tower');
+  });
+
+  it('keeps each structure’s preset across a switch', () => {
+    render(Page);
+    commit(presetSelect(), 'flat');
+    pickMode('treap');
+    commit(presetSelect(), 'chain');
+    pickMode('skip');
+    expect(presetSelect().value).toBe('flat');
+    commit(keyInput(), '45');
+    click(buttonByText('Search'));
+    pickMode('treap');
+    expect(presetSelect().value).toBe('chain');
+    pickMode('skip');
+    expect(presetSelect().value).toBe('');
+  });
+
+  it('narrates a rotation down through an only child', () => {
+    render(Page);
+    pickMode('treap');
+    commit(presetSelect(), 'chain');
+    commit(keyInput(), '10');
+    click(buttonByText('Delete'));
+    stepTo('child 20 moves up and 10 moves down');
+  });
 });

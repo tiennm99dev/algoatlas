@@ -1,3 +1,5 @@
+import { MAX_TOWER } from '$lib/algo-engine/treaps-skip-lists.js';
+
 /** @typedef {import('$lib/algo-engine/treaps-skip-lists.js').SkipFrame} SkipFrame */
 /** @typedef {import('$lib/algo-engine/treaps-skip-lists.js').SkipOp} SkipOp */
 /** @typedef {import('$lib/algo-engine/treaps-skip-lists.js').TreapFrame} TreapFrame */
@@ -15,7 +17,7 @@ export const en = {
   level: 'Advanced',
   title: 'Treaps and skip lists',
   intro:
-    'Instead of strict balance rules, these structures use randomness. A skip list stacks sorted linked lists, with each key’s tower height set by coin flips, so a search rides the high levels and drops down. A treap gives each key a random priority and keeps the tree a BST by key and a heap by priority. Both reach O(log n) expected time, whatever the insert order.',
+    'Instead of strict balance rules, these structures use randomness. A skip list stacks sorted linked lists, with each key’s tower height set by coin flips, so a search rides the high levels and drops down. A treap gives each key a random priority and keeps the tree a BST by key and a min-heap by priority, so the smallest priority is the root. Both reach O(log n) expected time, whatever the insert order.',
   summary:
     'Step through coin-flip skip list towers and a search that drops level by level, then watch random priorities rotate a treap into shape.',
   instruction:
@@ -153,9 +155,10 @@ export const en = {
       case 'flip': {
         const heads = f.flips.at(-1);
         const height = f.flips.filter(Boolean).length + 1;
-        return heads
+        if (!heads) return `Tails: the tower stops at height ${height}.`;
+        return height < MAX_TOWER
           ? `Heads: the tower grows to height ${height}. Flip again.`
-          : `Tails: the tower stops at height ${height}.`;
+          : `Heads: the tower grows to height ${height}, the cap in this widget, so there is no more flipping.`;
       }
       case 'link':
         return `Link the new tower for ${key}, with the positions remembered on each drop as its left neighbours.`;
@@ -198,7 +201,7 @@ export const en = {
       case 'rotate-up':
         return `Parent ${other?.key} has priority ${other?.priority}, larger than ${f.nodes[f.current].priority}. Rotate ${f.direction}: ${at} moves up.`;
       case 'rotate-down':
-        return `Rotate ${f.direction}: child ${other?.key}, the one with the smaller priority, moves up and ${at} moves down.`;
+        return `Rotate ${f.direction}: child ${other?.key} moves up and ${at} moves down. When there are two children, the smaller priority goes up, which keeps the heap order.`;
       case 'remove':
         return `The node is a leaf now, so remove it. The treap holds ${plural(f.size, 'key')}.`;
       case 'done':
@@ -210,7 +213,7 @@ export const en = {
   takeaways: [
     'A skip list’s bottom level holds all the keys in order. Each key’s tower grows one level per heads, so about half the keys reach level 2, a quarter reach level 3, and so on, for about log₂ n levels.',
     'A search moves right while the next key is smaller and drops otherwise. A level visits only about two nodes in expectation, which gives O(log n) expected time, without any rotations.',
-    'A treap is a BST by key and a heap by priority at the same time. With distinct priorities there is exactly one such tree for a set of pairs, whatever the insert order.',
+    'A treap is a BST by key and a heap by priority at the same time; here it is a min-heap, so a smaller priority sits nearer the root. With distinct priorities there is exactly one such tree for a set of pairs, whatever the insert order.',
     'Because priorities are random and not set by the input, an adversary can’t force a bad shape through the insert order. The tree looks like a BST built from a random insert order, with expected height O(log n).',
     'Try “Well-spread towers” against “No tall towers” in the skip list: searching 70 costs 6 comparisons against 7, and the gap widens with size. In the treap, compare “Sorted keys, mixed priorities” (height 4) with “Sorted keys, rising priorities” (height 7), then load “Same pairs, other order”.',
   ],
@@ -322,7 +325,8 @@ export const en = {
     },
     {
       type: 'multi',
-      prompt: 'Which statements are true of treaps with distinct priorities?',
+      prompt:
+        'Which statements are true of this lesson’s min-heap treaps with distinct priorities?',
       options: [
         'The set of (key, priority) pairs fixes the shape of the tree',
         'The node with the smallest priority is the root',

@@ -212,4 +212,14 @@ describe('B-trees lesson', () => {
     expect(q.textContent).toContain('Correct!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
+
+  it('marks a node being read apart from a node just changed', () => {
+    render(Page);
+    const title = () => document.querySelector('g[data-node] title')?.textContent ?? '';
+    stepTo('Read a node');
+    click(button('Next step'));
+    stepTo('Add 20 to the leaf');
+    expect(title()).toContain('changed now');
+    expect(title()).not.toContain('being read');
+  });
 });

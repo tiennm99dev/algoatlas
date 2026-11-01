@@ -23,15 +23,16 @@
   /** @typedef {'compare'|'path'|'added'|'up'|'down'|'ok'} Role */
 
   /**
-   * The treap half of the lesson. The page owns the player and the log so they survive a
+   * The treap half of the lesson. The page owns the player, the log and the preset so they survive a
    * switch to the skip list and back.
    * @type {{
    *   player: ReturnType<typeof import('$lib/player/player.svelte.js').createPlayer<TreapFrame>>,
    *   ops: TreapOp[],
+   *   preset: string,
    *   controls: import('svelte').Snippet,
    * }}
    */
-  let { player, ops = $bindable(), controls } = $props();
+  let { player, ops = $bindable(), preset = $bindable(), controls } = $props();
 
   const PRESETS = /** @type {const} */ (['shuffled', 'reordered', 'chain', 'random']);
   /** @type {Record<Role, import('$lib/components/visual-state.js').VisualState>} */
@@ -51,7 +52,6 @@
   let draft = $state(45);
   /** @type {number | null} */
   let priorityDraft = $state(null);
-  let preset = $state('shuffled');
   // Text shown in place of the narration, only on the frame it was raised on.
   let notice = $state({ text: '', at: -1 });
 

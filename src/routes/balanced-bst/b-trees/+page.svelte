@@ -24,7 +24,7 @@
 
   /** @typedef {import('$lib/algo-engine/b-trees.js').BOp} BOp */
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */
-  /** @typedef {'read'|'found'|'broken'|'partner'|'path'} Role */
+  /** @typedef {'read'|'changed'|'found'|'broken'|'partner'|'path'} Role */
 
   const PRESETS = /** @type {const} */ (['grow', 'mixed', 'merge', 'random']);
   const CELL = 32;
@@ -35,6 +35,7 @@
   /** @type {Record<Role, VisualState>} */
   const ROLE_STATE = {
     read: 'compare',
+    changed: 'active',
     found: 'sorted',
     broken: 'swap',
     partner: 'frontier',
@@ -145,7 +146,7 @@
       if (f.kind === 'read') return 'read';
       if (f.kind === 'overflow' || f.kind === 'underflow') return 'broken';
       if (f.kind === 'found' || f.kind === 'dup') return 'found';
-      return 'read';
+      return 'changed';
     }
     if (id === f.partner) return 'partner';
     return f.path.includes(id) ? 'path' : null;
@@ -203,7 +204,7 @@
     ['height', m.stats.height, frame.height],
     ['size', m.stats.size, frame.size],
   ]);
-  const LEGEND = /** @type {const} */ (['read', 'path', 'found', 'broken', 'partner']);
+  const LEGEND = /** @type {const} */ (['read', 'path', 'changed', 'found', 'broken', 'partner']);
 </script>
 
 <LessonLayout lesson={m}>

@@ -201,4 +201,24 @@ describe('red-black trees lesson', () => {
     expect(q.textContent).toContain('Correct!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
+
+  it('labels a node on the walk down as compared, and z only during the repair', () => {
+    render(Page);
+    stepTo('Compare 2 with 11');
+    const titles = () =>
+      [...document.querySelectorAll('g[data-color] title')].map((t) => t.textContent);
+    expect(titles().some((t) => t?.includes('compared'))).toBe(true);
+    expect(titles().some((t) => t?.includes('node being repaired'))).toBe(false);
+    stepTo('is red and so is its parent');
+    expect(titles().some((t) => t?.includes('node being repaired'))).toBe(true);
+  });
+
+  it('leaves the black height of the root alone when it paints the root black', () => {
+    render(Page);
+    commit(presetSelect(), 'uncle');
+    stepTo('The uncle is red');
+    expect(stat('black-height')).toBe('2');
+    stepTo('The root is red, so paint it black');
+    expect(stat('black-height')).toBe('2');
+  });
 });
