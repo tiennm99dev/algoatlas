@@ -103,13 +103,17 @@
       say(parsed.error === 'length' ? errors.textLength : errors[parsed.error]);
       return;
     }
-    if (parsed.word.length < pattern.length) {
+    if (parsed.word.length < pattern.length && mode === 'search') {
       textDraft = text;
       say(errors.patternTooLong);
       return;
     }
     textDraft = parsed.word;
     if (parsed.word === text) return;
+    // This mode hides the pattern, so it must not refuse a text: the pattern shortens to fit.
+    if (parsed.word.length < pattern.length) {
+      pattern = patternDraft = pattern.slice(0, parsed.word.length);
+    }
     text = parsed.word;
     preset = '';
     rebuild();

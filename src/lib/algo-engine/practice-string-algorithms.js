@@ -79,7 +79,7 @@ export const structurePseudocode = [
   'T = S with # around every letter, C = 0, R = 0',
   'for i = 0 to |T| − 1:',
   '  P[i] = i < R ? min(R − i, P[2C − i]) : 0',
-  '  while T[i − P[i] − 1] == T[i + P[i] + 1]: P[i] = P[i] + 1',
+  '  while T[i − P[i] − 1] == T[i + P[i] + 1], both inside T: P[i] = P[i] + 1',
   '  if i + P[i] > R: C = i, R = i + P[i]',
   'the longest palindrome has length max P[i]',
 ];

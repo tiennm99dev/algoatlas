@@ -226,6 +226,51 @@ describe('practice: string problems lesson', () => {
     expect(stat('period')).toBe('2');
   });
 
+  it('accepts a text shorter than the hidden pattern and shortens the pattern to fit', () => {
+    render();
+    commit(presetSelect(), 'periodic');
+    structureMode();
+    commit(field('text'), 'aaaa');
+    expect(field('text').value).toBe('aaaa');
+    expect(stat('palindromes')).toBe('10');
+    const radio = /** @type {HTMLInputElement} */ (
+      document.querySelector('input[name="mode"][value="search"]')
+    );
+    click(radio);
+    expect(field('pattern').value).toBe('abca');
+    expect(stat('kmp-matches')).toBe('0');
+    expect(narration()).toContain('Cheapest');
+  });
+
+  it('names the last centre as the end of the text, not a letter past it', () => {
+    render();
+    structureMode();
+    commit(field('text'), 'aba');
+    click(button('First step'));
+    const seen = [];
+    for (let i = 0; i < structureTrace('aba').length; i++) {
+      seen.push(narration());
+      click(button('Next step'));
+    }
+    expect(seen).toContain('Centre on the end: 0 comparisons, and no palindrome.');
+    expect(seen.some((s) => s.includes('gap before letter 3'))).toBe(false);
+  });
+
+  it('reports a Z-function match on the comparison that completes it', () => {
+    render();
+    commit(presetSelect(), 'periodic');
+    click(button('Watch Z-function'));
+    click(button('First step'));
+    const seen = [];
+    for (let i = 0; i < 80; i++) {
+      click(button('Next step'));
+      seen.push(narration());
+    }
+    expect(seen).toContain(
+      'The $ after P stops the run against T[6]. All 6 letters agreed, so P occurs at 0.',
+    );
+  });
+
   it('keeps each mode on its own step when switching back', () => {
     render();
     click(button('First step'));

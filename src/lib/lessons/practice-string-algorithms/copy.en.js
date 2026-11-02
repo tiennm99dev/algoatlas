@@ -54,7 +54,11 @@ function stepText(f, id) {
     case 'roll-in':
       return `T[${i}] = ${T[i]} enters: the window at ${r.shift} now hashes to ${r.hash}.`;
     case 'compare':
-      if (j === P.length) return `The $ after P stops the run against T[${i}].`;
+      if (j === P.length) {
+        return r.found >= 0
+          ? `The $ after P stops the run against T[${i}]. All ${P.length} letters agreed, so P occurs at ${r.found}.`
+          : `The $ after P stops the run against T[${i}].`;
+      }
       return r.found >= 0
         ? `P[${j}] = ${P[j]} against T[${i}] = ${T[i]}: equal, and P occurs at ${r.found}.`
         : `P[${j}] = ${P[j]} against T[${i}] = ${T[i]}: ${verdict}.`;
@@ -63,9 +67,12 @@ function stepText(f, id) {
   }
 }
 
-/** Where a centre of T sits in the text. @param {number} i */
-const spot = (i) =>
-  i % 2 === 1 ? `letter ${(i - 1) / 2}` : i === 0 ? 'the start' : `the gap before letter ${i / 2}`;
+/** Where a centre of T sits in a text of n letters. @param {number} i @param {number} n */
+const spot = (i, n) => {
+  if (i % 2 === 1) return `letter ${(i - 1) / 2}`;
+  if (i === 0) return 'the start';
+  return i === 2 * n ? 'the end' : `the gap before letter ${i / 2}`;
+};
 
 /** The palindrome of the text a centre stands for. @param {string} s @param {number} c @param {number} r */
 const palindrome = (s, c, r) => s.slice((c - r) / 2, (c - r) / 2 + r);
@@ -144,7 +151,7 @@ export const en = {
   searchRoles: {
     equal: 'Equal',
     miss: 'Different',
-    read: 'Hashed',
+    read: 'Read for a hash or the skip table',
     found: 'In a match',
   },
   searchMarkers: { equal: '✓', miss: '✗', read: '#', found: '★' },
@@ -220,8 +227,8 @@ export const en = {
         const known = f.reused > 0 ? `${f.reused} known from the mirror, ` : '';
         const spent = `${known}${plural(f.read, 'comparison', 'comparisons')}`;
         return f.value > 0
-          ? `Centre on ${spot(f.i)}: ${spent}, and the palindrome is “${palindrome(S, f.i, f.value)}”, length ${f.value}.`
-          : `Centre on ${spot(f.i)}: ${spent}, and no palindrome.`;
+          ? `Centre on ${spot(f.i, n)}: ${spent}, and the palindrome is “${palindrome(S, f.i, f.value)}”, length ${f.value}.`
+          : `Centre on ${spot(f.i, n)}: ${spent}, and no palindrome.`;
       }
       case 'done':
         return `Longest palindrome: “${palindrome(S, f.bestCentre, f.best)}”, length ${f.best}, out of ${plural(f.palindromes, 'palindromic substring', 'palindromic substrings')}. Smallest period: ${f.period}.`;
@@ -256,7 +263,7 @@ export const en = {
     [
       'Boyer-Moore, bad-character rule',
       'About O(n / m) at best, O(n · m) worst',
-      'Long patterns over a large alphabet. The good-suffix rule of the full algorithm repairs the worst case.',
+      'Long patterns over a large alphabet. The full algorithm’s good-suffix rule, with Galil’s refinement, brings the worst case down to O(n + m).',
     ],
     [
       'Z-function',
