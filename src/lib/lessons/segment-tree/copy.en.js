@@ -91,7 +91,7 @@ export const en = {
   pending: '—',
   /** @param {SegSpan[]} spans @param {(number|null)[]} tree @param {SegMerge} merge */
   coverLine: (spans, tree, merge) =>
-    `Cover: ${spans.map((s) => `${range(s.lo, s.hi)} = ${show(/** @type {number} */ (tree[s.v]))}`).join(', ')}. ${en.merges[merge]} of these ${plural(spans.length, 'node')}.`,
+    `Cover: ${spans.map((s) => `${range(s.lo, s.hi)} = ${show(/** @type {number} */ (tree[s.v]))}`).join(', ')}. ${en.merges[merge]} of ${plural(spans.length, 'node')}.`,
   practiceTitle: 'Check yourself',
   /** @param {SegFrame} f */
   describe(f) {

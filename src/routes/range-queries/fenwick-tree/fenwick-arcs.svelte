@@ -94,6 +94,8 @@
 
   // svelte-ignore state_referenced_locally
   let focusIndex = $state(Math.max(1, selected));
+  // The array can shrink under a remembered index, and one cell must stay in the tab order.
+  const tabStop = $derived(Math.min(focusIndex, n));
   /** @type {SVGSVGElement | undefined} */
   let svg = $state();
 
@@ -281,7 +283,7 @@
       <g
         data-index={i}
         role="button"
-        tabindex={i === focusIndex ? 0 : -1}
+        tabindex={i === tabStop ? 0 : -1}
         aria-label={labelOf(i)}
         aria-pressed={i === selected}
         class="cursor-pointer outline-none [&:focus-visible>rect]:stroke-teal-700 [&:focus-visible>rect]:stroke-[3]"

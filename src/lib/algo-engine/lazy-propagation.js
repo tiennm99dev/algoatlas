@@ -16,6 +16,9 @@ export const MAX_VALUE = 99;
 export const MAX_OPS = 8;
 
 export const lazyPseudocode = [
+  'build(v, lo, hi):',
+  '  if lo == hi: sum[v] = a[lo]; return',
+  '  build both children; sum[v] = sum[2v] + sum[2v + 1]',
   'apply(v, lo, hi, x):',
   '  sum[v] = sum[v] + x · (hi − lo + 1)',
   '  if lo < hi: tag[v] = tag[v] + x',
@@ -217,7 +220,7 @@ export function lazyTrace(values, ops) {
     node = v;
     pullValue(v);
     value = sum[v];
-    emit('build-pull', [9]);
+    emit('build-pull', [2]);
   };
   build(1, 0, n - 1);
   value = null;
@@ -234,7 +237,7 @@ export function lazyTrace(values, ops) {
     pushedTo = [2 * v, 2 * v + 1];
     pushed = x;
     value = null;
-    emit('push', [3, 4]);
+    emit('push', [6, 7]);
     pushedTo = [];
     pushed = 0;
   };
@@ -246,17 +249,17 @@ export function lazyTrace(values, ops) {
     value = null;
     if (r < lo || hi < l) {
       outside.push(v);
-      emit('outside', [5, 6]);
+      emit('outside', [8, 9]);
       return;
     }
     if (l <= lo && hi <= r) {
       covered.push(v);
       applyTo(v, lo, hi, x);
-      emit('apply', [0, 1, 2, 7]);
+      emit('apply', [3, 4, 5, 10]);
       return;
     }
     split.push(v);
-    emit('split', [8]);
+    emit('split', [11]);
     const mid = Math.floor((lo + hi) / 2);
     pushDown(v, lo, hi, mid);
     add(2 * v, lo, mid, l, r, x);
@@ -266,7 +269,7 @@ export function lazyTrace(values, ops) {
     writes++;
     totalWrites++;
     value = sum[v];
-    emit('pull', [9]);
+    emit('pull', [12]);
   };
 
   /** @param {number} v @param {number} lo @param {number} hi @param {number} l @param {number} r @returns {number} */
@@ -276,25 +279,25 @@ export function lazyTrace(values, ops) {
     if (r < lo || hi < l) {
       outside.push(v);
       value = 0;
-      emit('outside', [10, 11]);
+      emit('outside', [13, 14]);
       return 0;
     }
     if (l <= lo && hi <= r) {
       covered.push(v);
       value = /** @type {number} */ (sum[v]);
-      emit('cover', [12]);
+      emit('cover', [15]);
       return value;
     }
     split.push(v);
     value = null;
-    emit('split', [13]);
+    emit('split', [16]);
     const mid = Math.floor((lo + hi) / 2);
     pushDown(v, lo, hi, mid);
     const left = query(2 * v, lo, mid, l, r);
     const right = query(2 * v + 1, mid + 1, hi, l, r);
     node = v;
     value = left + right;
-    emit('return', [13]);
+    emit('return', [16]);
     return value;
   };
 
@@ -319,7 +322,7 @@ export function lazyTrace(values, ops) {
       result = query(1, 0, n - 1, next.l, next.r);
       node = 0;
       value = result;
-      emit('answer', [13]);
+      emit('answer', [16]);
     }
   }
 

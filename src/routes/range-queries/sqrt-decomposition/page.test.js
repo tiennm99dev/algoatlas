@@ -76,6 +76,21 @@ const tradeOff = () => document.querySelector('[data-testid="trade-off"]')?.text
 
 const openMo = () => click(/** @type {Element} */ (document.querySelector('input[value="mo"]')));
 
+/**
+ * Press Enter in a field the way a browser does it: leaving the field fires its change event.
+ * @param {HTMLInputElement} el @param {string} value
+ */
+function pressEnter(el, value) {
+  el.value = value;
+  el.dispatchEvent(new Event('input', { bubbles: true }));
+  el.addEventListener('blur', () => el.dispatchEvent(new Event('change', { bubbles: true })), {
+    once: true,
+  });
+  el.focus();
+  el.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }));
+  flushSync();
+}
+
 describe('sqrt decomposition lesson: blocks', () => {
   it('opens on the first query and walks loose cells and whole blocks', () => {
     render();
@@ -186,6 +201,61 @@ describe('sqrt decomposition lesson: blocks', () => {
     expect(input('r').value).toBe('2');
     expect(opsCard()).toContain('sum(2, 2)');
     expect(opsCard()).not.toContain('set(5, 0)');
+  });
+
+  it('keeps a refusal on Enter and runs no operation', () => {
+    render();
+    const before = opsCard();
+    pressEnter(input('l'), '99');
+    expect(text()).toContain(m.rangeError(16));
+    expect(opsCard()).toBe(before);
+    pressEnter(input('block'), '99');
+    expect(text()).toContain(m.blockError(16));
+    expect(opsCard()).toBe(before);
+  });
+
+  it('runs the action of the field Enter was pressed in, and none for the block size', () => {
+    render();
+    pressEnter(input('value'), '7');
+    expect(opsCard()).toContain('set(5, 7)');
+    pressEnter(input('r'), '9');
+    expect(opsCard()).toContain('sum(2, 9)');
+    const before = opsCard();
+    pressEnter(input('block'), '3');
+    expect(input('block').value).toBe('3');
+    expect(opsCard().replace(' (running now)', '')).toBe(before.replace(' (running now)', ''));
+  });
+
+  it('does not claim more loose cells than the array has', () => {
+    render();
+    commit(input('block'), '16');
+    expect(tradeOff()).toContain('the costliest range needs 15 reads');
+    expect(tradeOff()).not.toMatch(/30|1 blocks/);
+  });
+
+  it('counts the cells of a short last block', () => {
+    render();
+    commit(input('values'), '1, 2, 3, 4, 5');
+    commit(input('block'), '3');
+    commit(input('l'), '3');
+    commit(input('r'), '4');
+    click(buttonByText(m.queryButton));
+    next(1);
+    expect(text()).toContain('instead of 2 cells');
+  });
+
+  it('keeps the fields inside a shortened array after switching away and back', () => {
+    render();
+    commit(input('values'), '1, 2, 3');
+    openMo();
+    click(/** @type {Element} */ (document.querySelector('input[value="blocks"]')));
+    expect(Number(input('r').value)).toBeLessThanOrEqual(2);
+    expect(Number(input('l').value)).toBeLessThanOrEqual(Number(input('r').value));
+    expect(Number(input('index').value)).toBeLessThanOrEqual(2);
+    const before = opsCard();
+    click(buttonByText(m.queryButton));
+    expect(text()).not.toContain(m.rangeError(3));
+    expect(opsCard()).not.toBe(before);
   });
 });
 

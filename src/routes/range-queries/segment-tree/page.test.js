@@ -83,6 +83,21 @@ function drag(from, to) {
   flushSync();
 }
 
+/**
+ * Press Enter in a field the way a browser does it: leaving the field fires its change event.
+ * @param {HTMLInputElement} el @param {string} value
+ */
+function pressEnter(el, value) {
+  el.value = value;
+  el.dispatchEvent(new Event('input', { bubbles: true }));
+  el.addEventListener('blur', () => el.dispatchEvent(new Event('change', { bubbles: true })), {
+    once: true,
+  });
+  el.focus();
+  el.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }));
+  flushSync();
+}
+
 describe('segment tree lesson', () => {
   it('opens on the finished query with its cover lit', () => {
     render();
@@ -95,7 +110,7 @@ describe('segment tree lesson', () => {
     render();
     drag(2, 5);
     expect(inRange()).toEqual([2, 3, 4, 5]);
-    expect(coverLine()).toContain('[2, 3] = 5, [4, 5] = 12. Sum of these 2 nodes.');
+    expect(coverLine()).toContain('[2, 3] = 5, [4, 5] = 12. Sum of 2 nodes.');
     expect(text()).toContain('query[2, 5] = 17');
     drag(5, 0);
     expect(inRange()).toEqual([0, 1, 2, 3, 4, 5]);
@@ -235,6 +250,39 @@ describe('segment tree lesson', () => {
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     send();
     expect(q.textContent).toContain('Correct!');
+  });
+
+  it('keeps a refusal on Enter and runs no operation', () => {
+    render();
+    const before = text().match(/set\(/g)?.length ?? 0;
+    pressEnter(input('index'), '99');
+    expect(text()).toContain(m.indexError(8));
+    pressEnter(input('values'), 'abc');
+    expect(text()).toContain(m.valueErrors.format);
+    expect(text().match(/set\(/g)?.length ?? 0).toBe(before);
+  });
+
+  it('sets a value on Enter, and adds no operation for new values', () => {
+    render();
+    pressEnter(input('value'), '8');
+    expect(text()).toContain('set(4, 8)');
+    pressEnter(input('values'), '1, 2, 3, 4, 5, 6');
+    expect(input('values').value).toBe('1, 2, 3, 4, 5, 6');
+    expect(text().match(/set\(4, 8\)/g)).toHaveLength(1);
+  });
+
+  it('keeps a cell in the tab order when the array shrinks', () => {
+    render();
+    /** @type {HTMLElement} */ (dragRow().querySelector('[data-index="7"]')).focus();
+    flushSync();
+    commit(input('values'), '1, 2, 3');
+    expect(dragRow().querySelectorAll('[tabindex="0"]')).toHaveLength(1);
+  });
+
+  it('counts a one-node cover in the singular', () => {
+    render();
+    drag(0, 7);
+    expect(coverLine()).toContain('Sum of 1 node.');
   });
 });
 

@@ -93,6 +93,7 @@
       return;
     }
     if (ops.length >= MAX_OPS) {
+      anchor = -1;
       say(m.logFull);
       return;
     }
@@ -161,6 +162,28 @@
       return;
     }
     setOps([...ops, { type: 'set', i: index, x: newValue }], 'op');
+  }
+
+  /** The action Enter runs in a field; a field that is not listed only commits. */
+  const ENTER_ACTIONS = /** @type {Record<string, () => void>} */ ({
+    index: setPoint,
+    value: setPoint,
+  });
+
+  /**
+   * Enter commits the field through its own change handler, then runs that field's action, unless
+   * the commit raised a notice. The browser would otherwise submit the form after the field has
+   * reverted, which hides the refusal behind an operation nobody asked for.
+   * @param {KeyboardEvent} e
+   */
+  function enterField(e) {
+    const field = e.target;
+    if (e.key !== 'Enter' || !(field instanceof HTMLInputElement) || field.type === 'radio') return;
+    e.preventDefault();
+    const before = notice;
+    field.blur();
+    field.focus();
+    if (notice === before) ENTER_ACTIONS[field.name]?.();
   }
 
   function undo() {
@@ -242,8 +265,10 @@
 </script>
 
 <LessonLayout lesson={m}>
+  <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
   <form
     class="mb-4 flex flex-wrap items-end gap-4"
+    onkeydown={enterField}
     onsubmit={(e) => {
       e.preventDefault();
       setPoint();

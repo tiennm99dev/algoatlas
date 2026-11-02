@@ -19,7 +19,7 @@ export const en = {
   level: 'Advanced',
   title: 'Lazy propagation',
   intro:
-    'A plain segment tree changes one value at a time, so adding to a whole range would touch up to 2n − 1 nodes. Lazy propagation stops at the nodes that fit inside the range and leaves a tag saying “your children still owe this”. The tag moves down only when a later operation needs to go below that node, so range updates and range queries both take O(log n).',
+    'A plain segment tree changes one value at a time, so adding to a whole range would touch up to 2n − 1 nodes. Lazy propagation stops at the nodes that fit inside the range and leaves a tag saying “your children are still owed this”. The tag moves down only when a later operation needs to go below that node, so range updates and range queries both take O(log n).',
   summary:
     'Add to whole ranges in O(log n) by leaving pending tags on a segment tree, and watch them push down only when a query needs to go deeper.',
   instruction:
@@ -146,7 +146,7 @@ export const en = {
       case 'answer':
         return `The sum of ${asked} is ${show(/** @type {number} */ (f.result))}, after ${plural(f.pushes, 'push', 'pushes')}. Tags elsewhere are still waiting.`;
       case 'done':
-        return `Done: the updates changed ${plural(f.totalWrites, 'node sum')} in total; without tags they would have changed ${f.totalEager}.`;
+        return `Done: the updates and push-downs changed ${plural(f.totalWrites, 'node sum')} in total; without tags the updates alone would have changed ${f.totalEager}.`;
     }
   },
   takeaways: [

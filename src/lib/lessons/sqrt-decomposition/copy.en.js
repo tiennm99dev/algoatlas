@@ -19,7 +19,7 @@ export const en = {
   summary:
     'Answer range queries through blocks of about √n cells, then reorder offline queries with Mo’s algorithm to keep a sliding window’s moves small.',
   instruction:
-    'In Blocks, click two cells (or type l and r) to run a query, and watch it read loose cells at the ends and whole blocks in between. Change the block size and watch the worst case grow on both sides of √n. In Mo’s algorithm, step through the window and compare the sorted moves with the typed order.',
+    'In Blocks, click two cells (or type l and r) to run a query, and watch it read loose cells at the ends and whole blocks in between. Change the block size and watch the worst case climb as s moves far from √n in either direction. In Mo’s algorithm, step through the window and compare the sorted moves with the typed order.',
   modeLabel: 'Technique',
   modes: { blocks: 'Blocks', mo: 'Mo’s algorithm' },
   valuesLabel: 'Values',
@@ -73,7 +73,7 @@ export const en = {
   sumLabel: (b, v) => `Block ${b} sum = ${show(v)}`,
   /** @param {number} n @param {number} s @param {number} worst */
   tradeOff: (n, s, worst) =>
-    `With n = ${n} and s = ${s}, the costliest range needs ${worst} reads: up to ${2 * (s - 1)} loose cells and ${Math.ceil(n / s)} blocks.`,
+    `With n = ${n} and s = ${s}, the costliest range needs ${worst} reads, counting its loose cells and whole blocks.`,
   show,
   /** @param {BlockOp} op */
   opChip: (op) => (op.type === 'query' ? `sum(${op.l}, ${op.r})` : `set(${op.i}, ${show(op.x)})`),
@@ -140,7 +140,7 @@ export const en = {
       case 'read-cell':
         return `Cell ${f.at} cannot use a whole block here, so read it: ${show(f.items[f.at])}. Total = ${show(f.total)}.`;
       case 'read-block':
-        return `Block ${f.block} fits inside the range, so read its stored sum ${show(f.sums[f.block])} instead of ${plural(s, 'cell')}. Total = ${show(f.total)}.`;
+        return `Block ${f.block} fits inside the range, so read its stored sum ${show(f.sums[f.block])} instead of ${plural(Math.min(s, f.items.length - f.block * s), 'cell')}. Total = ${show(f.total)}.`;
       case 'answer':
         return `The sum is ${show(/** @type {number} */ (f.result))}, from ${plural(f.reads, 'read')} instead of ${f.scan}.`;
       case 'set':
@@ -177,7 +177,7 @@ export const en = {
     'The structure is easy to adapt: a block can store a sum, a minimum, or a sorted copy. It is slower than a segment tree’s O(log n), but it handles questions with no simple merge.',
     'Mo’s algorithm is offline: it needs all queries first, then sorts them by (⌊l / s⌋, r). Within a block the right end only moves right, and the left end moves at most s per query.',
     'With O(1) add and remove and s ≈ √n, the window’s total work is O((n + q)·√n). Answers go back to each query’s original slot, so the reordering stays hidden from the user.',
-    'Try the block size at 1 and then at n on 16 values: the worst case is 16 and then 15 reads, against 8 at s = 4. In Mo’s algorithm, compare both move counts on “Jumping left and right” and on “Nested ranges”.',
+    'Try the block size at 1 and then at n on 16 values: the worst case is 16 and then 15 reads, against 8 at s = 4. (s = 3 needs only 7: small constants shift the exact best, not the O(√n) shape.) In Mo’s algorithm, compare both move counts on “Jumping left and right” and on “Nested ranges”.',
   ],
   complexityHead: ['Operation', 'Cost', 'Why'],
   complexity: [
@@ -188,7 +188,7 @@ export const en = {
     [
       'Mo: all moves',
       'O((n + q)·√n)',
-      'The left end moves at most s per query, and the right end at most n per block, over about √n blocks.',
+      'Within a block the left end moves at most s per query, and the right end at most n per block, over about √n blocks.',
     ],
     ['Memory', 'O(n)', 'The array and √n block sums, or the array and the value counts for Mo.'],
   ],
@@ -196,10 +196,11 @@ export const en = {
   practice: [
     {
       type: 'number',
-      prompt: 'What block size balances the costs for n = 100?',
+      prompt: 'What block size does the s ≈ √n rule give for n = 100?',
       answer: 10,
-      hints: ['The balance point is about √n.'],
-      solution: '√100 = 10, which gives 10 blocks of 10 cells.',
+      hints: ['Loose cells grow with s and whole blocks with n / s. They match near √n.'],
+      solution:
+        '√100 = 10, which gives 10 blocks of 10 cells: at most 18 loose cells and 10 stored sums.',
     },
     {
       type: 'number',
@@ -271,6 +272,15 @@ export const en = {
         'O((n+q)sqrt(n))',
         'O((n+q)*sqrt(n))',
         'O((n + q) sqrt n)',
+        'O((n+q)*√n)',
+        'O((n+q)·sqrt(n))',
+        'O((n+q)·sqrt n)',
+        'O(√n(n+q))',
+        'O(sqrt(n)(n+q))',
+        'O(n√n+q√n)',
+        '(n+q)√n',
+        '(n+q)sqrt(n)',
+        '(n+q) sqrt n',
       ],
       hints: [
         'The left end moves about √n per query. The right end sweeps n per block, over about √n blocks.',

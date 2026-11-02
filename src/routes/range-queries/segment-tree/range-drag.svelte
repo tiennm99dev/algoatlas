@@ -22,6 +22,8 @@
   /** @type {HTMLDivElement | undefined} */
   let row = $state();
   let focusIndex = $state(0);
+  // The array can shrink under a remembered index, and one cell must stay in the tab order.
+  const tabStop = $derived(Math.min(focusIndex, values.length - 1));
   // Plain, because only the pointer handlers read it.
   let dragFrom = -1;
 
@@ -85,7 +87,7 @@
     <div
       data-index={i}
       role="button"
-      tabindex={i === focusIndex ? 0 : -1}
+      tabindex={i === tabStop ? 0 : -1}
       aria-label={labelOf(i)}
       aria-pressed={inside}
       class="focus-ring flex h-14 min-w-0 flex-1 flex-col items-center justify-center rounded-md border text-sm font-semibold tabular-nums {inside

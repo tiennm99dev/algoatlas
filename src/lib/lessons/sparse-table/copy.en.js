@@ -117,10 +117,16 @@ export const en = {
       case 'right':
         return `Right block: st[${f.level}][${f.rightAt}] covers a[${f.rightAt}..${f.rightAt + size - 1}] and holds ${f.rightValue}. The blocks share ${plural(f.overlap, 'cell')}.`;
       case 'combine':
+        if (f.op === 'sum' && f.result === f.truth) {
+          return `Sum gives ${f.leftValue} + ${f.rightValue} = ${f.result}, which is right only because the ${plural(f.overlap, 'shared cell')} here add up to 0. They still counted twice: sum is not idempotent.`;
+        }
         return f.op === 'sum'
           ? `Sum gives ${f.leftValue} + ${f.rightValue} = ${f.result}, but the true sum is ${f.truth}: the ${plural(f.overlap, 'shared cell')} counted twice. Sum is not idempotent.`
           : `${name}(${f.leftValue}, ${f.rightValue}) = ${f.result}. Reading the ${plural(f.overlap, 'shared cell')} twice changes nothing, because ${name}(x, x) = x.`;
       case 'done':
+        if (f.op === 'sum' && f.result === f.truth) {
+          return `Done: 2 reads and the right answer ${f.result}, by luck: shared cells that add up to 0 hide the double count. Any other shared values would break it.`;
+        }
         return f.op === 'sum'
           ? `Done: 2 reads, wrong answer ${f.result} instead of ${f.truth}. Sum needs another structure, such as prefix sums or a Fenwick tree.`
           : `Done: the answer ${f.result} took 2 reads instead of ${plural(f.r - f.l + 1, 'read')}, and any other range also takes 2.`;
@@ -130,7 +136,7 @@ export const en = {
     'st[k][i] stores the answer for the 2^k cells starting at i. Each block is two half-length blocks merged: st[k][i] = op(st[k − 1][i], st[k − 1][i + 2^(k − 1)]).',
     'Any range of length len fits two blocks of size 2^k, with k = ⌊log₂ len⌋: one starts at l and one ends at r. Because 2·2^k > len, together they cover the range, and they always share at least one cell.',
     'The overlap is safe only for an idempotent operation, where op(x, x) = x: min, max, gcd, bitwise AND and OR. Sum and product count the shared cells twice.',
-    'The table is static. Changing one value can invalidate up to O(n log n) cells, so an array that changes needs a Fenwick tree or a segment tree.',
+    'The table is static. Changing one value can invalidate O(n) of its cells, and the simple repair is a full O(n log n) rebuild, so an array that changes needs a Fenwick tree or a segment tree.',
     'Try Sum on the range l = 1, r = 6: the blocks a[1..4] and a[3..6] share a[3] and a[4]. The result is too large by exactly those two values. Then switch back to Min.',
   ],
   complexityHead: ['Operation', 'Cost', 'Why'],

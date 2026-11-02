@@ -67,6 +67,25 @@ function next(k) {
   for (let i = 0; i < k; i++) click(button('Next step'));
 }
 
+/**
+ * Press Enter in a field the way a browser does it: leaving the field fires its change event.
+ * @param {HTMLInputElement} el @param {string} value
+ */
+function pressEnter(el, value) {
+  el.value = value;
+  el.dispatchEvent(new Event('input', { bubbles: true }));
+  el.addEventListener('blur', () => el.dispatchEvent(new Event('change', { bubbles: true })), {
+    once: true,
+  });
+  el.focus();
+  el.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }));
+  flushSync();
+}
+
+const opsCard = () =>
+  [...document.querySelectorAll('h2')].find((h) => h.textContent === m.opsTitle)?.parentElement
+    ?.textContent ?? '';
+
 describe('Fenwick tree lesson', () => {
   it('opens on the first prefix query and walks its jumps', () => {
     render();
@@ -224,6 +243,37 @@ describe('Fenwick tree lesson', () => {
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     send();
     expect(q.textContent).toContain('Correct!');
+  });
+
+  it('keeps a refusal on Enter and runs no operation', () => {
+    render();
+    const before = opsCard();
+    pressEnter(input('index'), '99');
+    expect(text()).toContain(m.indexError(8));
+    expect(opsCard()).toBe(before);
+    pressEnter(input('values'), 'abc');
+    expect(text()).toContain(m.valueErrors.format);
+    expect(opsCard()).toBe(before);
+  });
+
+  it('runs the action of the field Enter was pressed in, and none for new values', () => {
+    render();
+    pressEnter(input('index'), '4');
+    expect(opsCard()).toContain('prefix(4)');
+    pressEnter(input('delta'), '2');
+    expect(opsCard()).toContain('add(4, 2)');
+    const before = opsCard();
+    pressEnter(input('values'), '1, 2, 3, 4, 5, 6, 7, 8, 9');
+    expect(input('values').value).toBe('1, 2, 3, 4, 5, 6, 7, 8, 9');
+    expect(opsCard().replace(' (running now)', '')).toBe(before.replace(' (running now)', ''));
+  });
+
+  it('keeps a cell in the tab order when the array shrinks', () => {
+    render();
+    cell(8).focus();
+    flushSync();
+    commit(input('values'), '1, 2, 3');
+    expect(document.querySelectorAll('[data-index][tabindex="0"]')).toHaveLength(1);
   });
 });
 

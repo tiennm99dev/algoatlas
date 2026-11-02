@@ -116,6 +116,7 @@
       say(m.noBlockNotice(k, i, frame.items.length));
       return;
     }
+    notice = { text: '', at: -1 };
     inspected = { k, i };
   }
 

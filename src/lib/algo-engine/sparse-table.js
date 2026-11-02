@@ -83,8 +83,11 @@ export function foldRange(a, l, r, op) {
  * @returns {{ values: number[] } | { error: 'format' | 'range' | 'count' }}
  */
 export function parseSparseValues(text) {
-  const tokens = text.split(/[\s,]+/).filter(Boolean);
-  if (tokens.length === 0 || !tokens.every((s) => /^\d+$/.test(s))) return { error: 'format' };
+  const tokens = text
+    .replace(/[−–]/g, '-')
+    .split(/[\s,]+/)
+    .filter(Boolean);
+  if (tokens.length === 0 || !tokens.every((s) => /^-?\d+$/.test(s))) return { error: 'format' };
   const values = tokens.map(Number);
   if (values.some((v) => v < MIN_VALUE || v > MAX_VALUE)) return { error: 'range' };
   if (values.length > MAX_N) return { error: 'count' };

@@ -41,12 +41,14 @@
   // The fields start from what the page kept; later edits flow back through the bindings.
   let valuesText = $state(values.join(', '));
   let sDraft = $state(/** @type {number | null} */ (blockSize));
-  let l = $state(2);
-  let lDraft = $state(/** @type {number | null} */ (2));
-  let r = $state(13);
-  let rDraft = $state(/** @type {number | null} */ (13));
-  let index = $state(5);
-  let indexDraft = $state(/** @type {number | null} */ (5));
+  // This panel remounts on every switch back, and the array may have shrunk meanwhile.
+  const startLast = values.length - 1;
+  let r = $state(Math.min(13, startLast));
+  let rDraft = $state(/** @type {number | null} */ (Math.min(13, startLast)));
+  let l = $state(Math.min(2, startLast));
+  let lDraft = $state(/** @type {number | null} */ (Math.min(2, startLast)));
+  let index = $state(Math.min(5, startLast));
+  let indexDraft = $state(/** @type {number | null} */ (Math.min(5, startLast)));
   let newValue = $state(0);
   let valueDraft = $state(/** @type {number | null} */ (0));
   let anchor = $state(-1);
@@ -170,6 +172,30 @@
     rebuild([...ops, { type: 'set', i: index, x: newValue }], 'op');
   }
 
+  /** The action Enter runs in a field; a field that is not listed only commits. */
+  const ENTER_ACTIONS = /** @type {Record<string, () => void>} */ ({
+    l: queryOp,
+    r: queryOp,
+    index: setOp,
+    value: setOp,
+  });
+
+  /**
+   * Enter commits the field through its own change handler, then runs that field's action, unless
+   * the commit raised a notice. The browser would otherwise submit the form after the field has
+   * reverted, which hides the refusal behind an operation nobody asked for.
+   * @param {KeyboardEvent} e
+   */
+  function enterField(e) {
+    const field = e.target;
+    if (e.key !== 'Enter' || !(field instanceof HTMLInputElement) || field.type === 'radio') return;
+    e.preventDefault();
+    const before = notice;
+    field.blur();
+    field.focus();
+    if (notice === before) ENTER_ACTIONS[field.name]?.();
+  }
+
   function undo() {
     if (ops.length > 0) rebuild(ops.slice(0, -1), 'end');
   }
@@ -248,9 +274,10 @@
   ]);
 </script>
 
-<!-- Enter in a field submits the form, which runs the sum query. -->
+<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 <form
   class="mb-4 flex flex-wrap items-end gap-4"
+  onkeydown={enterField}
   onsubmit={(e) => {
     e.preventDefault();
     queryOp();

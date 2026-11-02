@@ -161,6 +161,29 @@
     setOps([], false);
   }
 
+  /** The action Enter runs in a field; a field that is not listed only commits. */
+  const ENTER_ACTIONS = /** @type {Record<string, () => void>} */ ({
+    index: prefixOp,
+    delta: addOp,
+    from: rangeOp,
+  });
+
+  /**
+   * Enter commits the field through its own change handler, then runs that field's action, unless
+   * the commit raised a notice. The browser would otherwise submit the form after the field has
+   * reverted, which hides the refusal behind an operation nobody asked for.
+   * @param {KeyboardEvent} e
+   */
+  function enterField(e) {
+    const field = e.target;
+    if (e.key !== 'Enter' || !(field instanceof HTMLInputElement) || field.type === 'radio') return;
+    e.preventDefault();
+    const before = notice;
+    field.blur();
+    field.focus();
+    if (notice === before) ENTER_ACTIONS[field.name]?.();
+  }
+
   /** @param {number} i */
   function pick(i) {
     index = indexDraft = i;
@@ -233,9 +256,10 @@
 </script>
 
 <LessonLayout lesson={m}>
-  <!-- Enter in a field submits the form, which runs the prefix query on the index. -->
+  <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
   <form
     class="mb-4 flex flex-wrap items-end gap-4"
+    onkeydown={enterField}
     onsubmit={(e) => {
       e.preventDefault();
       prefixOp();

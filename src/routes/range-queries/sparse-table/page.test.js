@@ -172,6 +172,32 @@ describe('sparse table lesson', () => {
     send();
     expect(q.textContent).toContain('Correct!');
   });
+
+  it('does not call a sum wrong when the shared cells add up to 0', () => {
+    render();
+    commit(input('values'), '1, 0, 1');
+    commit(input('l'), '0');
+    commit(input('r'), '2');
+    click(/** @type {Element} */ (document.querySelector('input[value="sum"]')));
+    click(button('Last step'));
+    expect(text()).toContain('the right answer 2, by luck');
+    expect(text()).not.toContain('wrong answer');
+  });
+
+  it('clears a refusal when a valid table cell is inspected next', () => {
+    render();
+    click(button('Last step'));
+    click(tableCell(m.tableCellLabel(3, 1, null, false, '')));
+    expect(text()).toContain('No block here');
+    click(tableCell(m.tableCellLabel(0, 1, 2, true, '')));
+    expect(text()).not.toContain('No block here');
+  });
+
+  it('names a negative value as out of range', () => {
+    render();
+    commit(input('values'), '3, −1');
+    expect(text()).toContain(m.valueErrors.range);
+  });
 });
 
 describe('sparse table practice answers', () => {

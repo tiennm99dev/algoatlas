@@ -66,6 +66,21 @@ function next(k) {
   for (let i = 0; i < k; i++) click(button('Next step'));
 }
 
+/**
+ * Press Enter in a field the way a browser does it: leaving the field fires its change event.
+ * @param {HTMLInputElement} el @param {string} value
+ */
+function pressEnter(el, value) {
+  el.value = value;
+  el.dispatchEvent(new Event('input', { bubbles: true }));
+  el.addEventListener('blur', () => el.dispatchEvent(new Event('change', { bubbles: true })), {
+    once: true,
+  });
+  el.focus();
+  el.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }));
+  flushSync();
+}
+
 describe('lazy propagation lesson', () => {
   it('opens on the first update, which stops at the root with a tag', () => {
     render();
@@ -141,10 +156,10 @@ describe('lazy propagation lesson', () => {
     render();
     click(buttonByText(m.undo));
     expect(opsCard()).not.toContain('query(5, 5)');
-    expect(text()).toContain('Done: the updates changed');
+    expect(text()).toContain('Done: the updates and push-downs changed');
     click(buttonByText(m.reset));
     expect(opsCard()).not.toContain('add(0, 7, 5)');
-    expect(text()).toContain('Done: the updates changed 0 node sums');
+    expect(text()).toContain('Done: the updates and push-downs changed 0 node sums');
   });
 
   it('refuses bad input and keeps the last valid value', () => {
@@ -200,6 +215,28 @@ describe('lazy propagation lesson', () => {
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     send();
     expect(q.textContent).toContain('Correct!');
+  });
+
+  it('keeps a refusal on Enter and runs no operation', () => {
+    render();
+    const before = opsCard();
+    pressEnter(input('r'), '99');
+    expect(text()).toContain(m.rangeError(8));
+    expect(opsCard()).toBe(before);
+    pressEnter(input('x'), '500');
+    expect(text()).toContain(m.xError);
+    expect(opsCard()).toBe(before);
+  });
+
+  it('runs the action of the field Enter was pressed in, and none for new values', () => {
+    render();
+    pressEnter(input('r'), '6');
+    expect(opsCard()).toContain('query(2, 6)');
+    pressEnter(input('x'), '4');
+    expect(opsCard()).toContain('add(2, 6, 4)');
+    const before = opsCard();
+    pressEnter(input('values'), '1, 2, 3, 4, 5, 6, 7, 8, 9');
+    expect(opsCard().replace(' (running now)', '')).toBe(before.replace(' (running now)', ''));
   });
 });
 

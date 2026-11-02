@@ -19,7 +19,7 @@ export const en = {
   level: 'Intermediate',
   title: 'Fenwick tree',
   intro:
-    'A Fenwick tree, also called a binary indexed tree, keeps prefix sums while values change. It is a single array where each cell sums a block of values, and the block’s length is the lowest set bit of the cell’s index. Reads and updates each jump through at most log₂ n cells.',
+    'A Fenwick tree, also called a binary indexed tree, keeps prefix sums while values change. It is a single array where each cell sums a block of values, and the block’s length is the lowest set bit of the cell’s index. Reads and updates each jump through about log₂ n cells at most.',
   summary:
     'Update values and read prefix sums in O(log n) with one array, jumping between cells by the lowest set bit of the index.',
   instruction:
@@ -145,7 +145,7 @@ export const en = {
   takeaways: [
     'lowbit(i) = i & −i is the lowest set bit of i. t[i] stores the sum of a[i − lowbit(i) + 1..i], so odd cells hold one value and t[8] holds eight.',
     'prefix(i) adds t[i] and clears the lowest bit, which moves to the block just before the one read. It takes one step per set bit of i.',
-    'add(i, delta) adds delta to t[i] and adds the lowest bit, which moves to the next block that contains i. The lowest bit grows every time, so there are at most log₂ n steps.',
+    'add(i, delta) adds delta to t[i] and adds the lowest bit, which moves to the next block that contains i. The lowest bit grows every time, so there are at most ⌊log₂ n⌋ + 1 steps.',
     'A range sum is prefix(r) − prefix(l − 1). That subtraction is why this works for sum but not directly for min or max, which have no inverse.',
     'Try the prefix and update of index 8 on 8 values: prefix(8) reads only t[8], because 8 = 1000₂ has one set bit. Then try index 7 = 0111₂, which reads 3 cells, and compare with add at 1, which writes 4.',
   ],
