@@ -49,6 +49,7 @@ export const en = {
   spfMark: (spf) => `${spf}`,
   markers: { unit: '–', current: 'p', prime: '★', factor: '↓' },
   legend: {
+    unit: '– 1: neither prime nor composite',
     current: 'p Crossing now',
     first: 'Crossed out now',
     again: 'Crossed out again',
@@ -83,7 +84,7 @@ export const en = {
           ? `Cross out ${j} = ${p}·${j / p}. It is the first time, so its smallest prime factor is ${p}.`
           : `${j} = ${p}·${j / p} was already crossed out by ${f.spf[j]}. This crossing is wasted work.`;
       case 'stop':
-        return `${p}·${p} = ${p * p} is past ${n}, so any composite up to ${n} already has a smaller factor crossed out. All that remain are prime: ${plural(f.primes.length, 'prime', 'primes')}.`;
+        return `${p}·${p} = ${p * p} is past ${n}, so every composite up to ${n} has already been crossed out by a smaller prime. All that remain are prime: ${plural(f.primes.length, 'prime', 'primes')}.`;
       case 'factorStart':
         return `Now factorise x = ${x} with the table: keep dividing by the smallest prime factor.`;
       case 'factor': {
