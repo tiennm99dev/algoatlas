@@ -66,6 +66,8 @@ export const en = {
         ? `No word starts with ${prefix[0]}.`
         : `“${read}” is in the trie, but no word continues with ${prefix[matched]}.`;
     }
+    if (words.length === 0)
+      return `“${prefix}” is in the trie, but no stored word starts with it yet.`;
     return `“${prefix}” starts ${plural(words.length, 'word', 'words')}: ${words.join(', ')}.`;
   },
   /** @param {number} nodes @param {number} words */

@@ -103,7 +103,9 @@ export const en = {
         if (f.afterMatch) {
           return f.badAt < 0
             ? 'The match ends at the end of the text, so move by 1 and stop.'
-            : `Line up the next letter, ${f.badLetter}, with its rightmost copy in P: skip ${f.skip}.`;
+            : f.badLetter in f.last
+              ? `Line up the next letter, ${f.badLetter}, with its rightmost copy in P: skip ${f.skip}.`
+              : `The next letter, ${f.badLetter}, is not in P, so jump past it: skip ${f.skip}.`;
         }
         const at = f.last[f.badLetter] ?? -1;
         if (at < 0)

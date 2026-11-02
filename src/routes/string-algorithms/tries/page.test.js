@@ -77,8 +77,12 @@ const chipsOf = (/** @type {string} */ title) => {
 };
 
 describe('tries lesson', () => {
-  it('starts on the empty root and steps to the finished preset', () => {
+  it('opens on the finished preset with the typed word lit, and rewinds to the empty root', () => {
     render();
+    expect(stat('nodes')).toBe('10');
+    expect(node('Prefix car,').getAttribute('aria-label')).toContain('matches what you typed');
+    expect(chipsOf(m.resultsTitle)).toEqual(['car', 'card', 'care']);
+    click(button('First step'));
     expect(narration()).toBe('The trie starts as a single empty root.');
     expect(stat('nodes')).toBe('0');
     click(button('Next step'));
@@ -131,6 +135,18 @@ describe('tries lesson', () => {
     click(button('Previous step'));
     expect(narration()).toBe('Autocomplete found 4 words after touching 6 nodes.');
     expect(chipsOf(m.resultsTitle)).toEqual(['car', 'card', 'care', 'cat']);
+  });
+
+  it('never claims a negative saving or an empty word list while a word is going in', () => {
+    render();
+    click(button('First step'));
+    for (let i = 0; i < 40; i++) {
+      click(button('Next step'));
+      expect(document.body.textContent).not.toMatch(/saves -/);
+      expect(stat('live')).not.toContain('starts 0 words');
+    }
+    toLast();
+    expect(document.body.textContent).toContain('Sharing prefixes saves 10 nodes');
   });
 
   it('follows typed letters live, before any operation runs', () => {

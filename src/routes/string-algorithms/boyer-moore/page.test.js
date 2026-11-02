@@ -103,13 +103,31 @@ describe('Boyer-Moore lesson', () => {
     expect(stat('naive')).toBe('12');
   });
 
+  it('lines up a next letter the pattern has after a match', () => {
+    render();
+    commit(field('text'), 'abaab');
+    commit(field('pattern'), 'ab');
+    stepUntil('occurs at 0');
+    click(button('Next step'));
+    expect(narration()).toBe('Line up the next letter, a, with its rightmost copy in P: skip 2.');
+  });
+
+  it('jumps past a next letter the pattern lacks after a match', () => {
+    render();
+    commit(field('text'), 'abxab');
+    commit(field('pattern'), 'ab');
+    stepUntil('occurs at 0');
+    click(button('Next step'));
+    expect(narration()).toBe('The next letter, x, is not in P, so jump past it: skip 3.');
+  });
+
   it('reports matches and skips by the letter past the window', () => {
     render();
     commit(field('preset'), 'matches');
     stepUntil('occurs at 0');
     expect(titles().some((t) => t.includes('full match'))).toBe(true);
     click(button('Next step'));
-    expect(narration()).toBe('Line up the next letter, c, with its rightmost copy in P: skip 5.');
+    expect(narration()).toBe('The next letter, c, is not in P, so jump past it: skip 5.');
     toLast();
     expect(narration()).toContain('3 matches');
   });

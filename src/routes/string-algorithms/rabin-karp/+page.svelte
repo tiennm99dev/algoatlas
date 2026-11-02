@@ -378,7 +378,7 @@
         <div class="rounded-xl border border-slate-200 bg-white p-3">
           <dt class="text-xs text-slate-500">{m.stats.expected}</dt>
           <dd class="text-2xl font-bold tabular-nums" data-testid="expected">
-            {expected.toFixed(expected < 0.01 ? 4 : 2)}
+            {expected < 0.01 ? expected.toPrecision(2) : expected.toFixed(2)}
           </dd>
         </div>
       </dl>

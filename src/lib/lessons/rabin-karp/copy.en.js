@@ -51,7 +51,7 @@ export const en = {
     hashing: 'being hashed',
     read: 'being compared',
     match: 'confirmed match',
-    miss: 'hash or letter disagrees',
+    miss: 'letters disagree',
     spurious: 'spurious hit',
   },
   markers: { window: '', hashing: '#', read: '?', match: '✓', miss: '✗', spurious: '~' },
@@ -96,7 +96,7 @@ export const en = {
       case 'high':
         return `The first letter of a window is worth b^(m − 1) = ${f.base}^${m - 1}, which is ${f.high} mod ${f.mod}.`;
       case 'hash-letter':
-        return `Feed letter ${f.at} into both hashes: multiply by ${f.base}, add its value. hash(P) = ${f.patternHash}${f.windowHash === null ? '' : `, hash(window) = ${f.windowHash}`}.`;
+        return `Feed letter ${f.at} into ${f.windowHash === null ? 'hash(P)' : 'both hashes'}: multiply by ${f.base}, add its value. hash(P) = ${f.patternHash}${f.windowHash === null ? '' : `, hash(window) = ${f.windowHash}`}.`;
       case 'too-long':
         return 'The pattern is longer than the text, so no window exists.';
       case 'check':
@@ -165,7 +165,7 @@ export const en = {
       unit: 'hits',
       hints: ['Base 10 is a multiple of 5, so every term but the last letter vanishes mod 5.'],
       solution:
-        'Only the last letter counts, so a window hits when it ends in a letter worth 1 mod 5, which is a or f. Windows cba at 2, baa at 5 and aca at 7 are spurious; aba at 4 is the one real match.',
+        'Only the last letter counts, so a window hits when it ends in a letter worth 1 mod 5, which among these letters means a. Windows cba at 2, baa at 5 and aca at 7 are spurious; aba at 4 is the one real match.',
     },
     {
       type: 'choice',

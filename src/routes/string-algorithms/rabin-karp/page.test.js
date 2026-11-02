@@ -141,7 +141,9 @@ describe('Rabin-Karp lesson', () => {
     stepUntil('no window exists');
     toLast();
     expect(stat('checks')).toBe('0');
-    expect(stat('expected')).toBe('0.0000');
+    expect(stat('expected')).toBe('0.0');
+    commit(field('preset'), 'large');
+    expect(stat('expected')).toBe('0.000017');
   });
 
   it('checks a practice answer, wrong then right, with a hint', () => {

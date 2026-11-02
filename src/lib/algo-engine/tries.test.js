@@ -121,6 +121,15 @@ describe('trie trace', () => {
     expect(ofOp(frames, 4).at(-1)?.steps).toBe(6);
   });
 
+  it('counts the letters and nodes of stored words together, never a word still going in', () => {
+    for (const f of trieTrace(makeTrieOps('shared'))) {
+      expect(f.storedNodeCount).toBeLessThanOrEqual(f.letterCount);
+    }
+    const creating = trieTrace([{ type: 'insert', word: 'dog' }]).find((f) => f.kind === 'create');
+    expect(creating?.nodeCount).toBe(2);
+    expect(creating?.storedNodeCount).toBe(0);
+  });
+
   it('never aliases frames', () => {
     const frames = trieTrace(inserts(['ab', 'ac']));
     const snapshot = JSON.stringify(frames.at(-2));

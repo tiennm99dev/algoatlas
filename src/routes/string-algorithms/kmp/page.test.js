@@ -93,10 +93,25 @@ describe('KMP lesson', () => {
     commit(field('preset'), 'overlap');
     stepUntil('occurs at 0');
     expect(titles().some((t) => t.includes('full match'))).toBe(true);
+    expect(titles()).toContain('Pattern row column 0: a, full match');
+    expect(titles()).toContain('Pattern row column 3: b, full match');
     click(button('Next step'));
     expect(narration()).toContain('To catch overlaps');
+    // The border ab stays under the text letters it matched, at columns 2 and 3.
+    expect(titles()).toContain('Pattern row column 2: a, border kept after the jump');
+    expect(titles()).toContain('Pattern row column 3: b, border kept after the jump');
     toLast();
     expect(stat('comparisons')).toBe('8');
+  });
+
+  it('says plainly when a fallback keeps no letters', () => {
+    render();
+    commit(field('text'), 'abcx');
+    commit(field('pattern'), 'abcd');
+    stepUntil('Fall back');
+    expect(narration()).toBe(
+      'Fall back: π[2] = 0. No part of what matched can start a match, so slide P right by 3. Index i stays at 3.',
+    );
   });
 
   it('rebuilds on a typed text and pattern', () => {

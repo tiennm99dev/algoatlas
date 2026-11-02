@@ -52,6 +52,8 @@
   let notice = $state({ text: '', at: -1 });
 
   const player = createPlayer(trieTrace(INITIAL_OPS));
+  // Open on the finished trie, as a preset does, so the typed word has a path to light up.
+  player.seek(player.frames.length - 1);
   const frame = $derived(player.frame);
   const finalFrame = $derived(player.frames[player.frames.length - 1]);
   const narration = $derived(notice.at === player.index ? notice.text : m.describe(frame));
@@ -296,7 +298,7 @@
           <dd class="text-2xl font-bold tabular-nums" data-testid="nodes">{frame.nodeCount - 1}</dd>
         </div>
       </dl>
-      <p class="text-sm text-slate-600">{m.saved(frame.letterCount, frame.nodeCount - 1)}</p>
+      <p class="text-sm text-slate-600">{m.saved(frame.letterCount, frame.storedNodeCount)}</p>
       <div class="rounded-xl border border-slate-200 bg-white p-3">
         <h2 class="mb-1 text-xs text-slate-500">{m.liveTitle}</h2>
         <p class="text-sm text-slate-800" data-testid="live">

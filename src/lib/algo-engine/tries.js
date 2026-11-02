@@ -50,11 +50,14 @@ export const triePseudocode = [
  * @property {number[]} path  Nodes walked by this operation, from the root.
  * @property {number[]} subtree  complete: the nodes below the prefix, in depth-first order.
  * @property {string} letter  The letter read now, empty when none.
- * @property {string[]} results  complete: the words reported so far.
+ * @property {string[]} results  complete: the words reported so far; done: those of the last
+ *   complete in the log.
  * @property {number} steps  Nodes this operation touched below the root.
  * @property {number} nodeCount  Nodes, root included.
  * @property {number} wordCount
  * @property {number} letterCount  Letters across all stored words.
+ * @property {number} storedNodeCount  Nodes below the root that those words use, so a word still
+ *   being inserted counts in neither this nor letterCount.
  * @property {number[]} lines
  */
 
@@ -141,6 +144,9 @@ export function trieTrace(ops) {
   const nodes = [{ id: 0, letter: '', parent: -1, isWord: false, next: {} }];
   let wordCount = 0;
   let letterCount = 0;
+  let storedNodeCount = 0;
+  /** @type {string[]} */
+  let lastResults = [];
   /** @type {TrieFrame[]} */
   const frames = [];
 
@@ -165,6 +171,7 @@ export function trieTrace(ops) {
       nodeCount: nodes.length,
       wordCount,
       letterCount,
+      storedNodeCount,
       lines,
     });
 
@@ -214,6 +221,7 @@ export function trieTrace(ops) {
         end.isWord = true;
         wordCount++;
         letterCount += op.word.length;
+        storedNodeCount = nodes.length - 1;
         emit('mark', [5]);
       }
     } else if (op.type === 'search') {
@@ -231,10 +239,11 @@ export function trieTrace(ops) {
         push('collect', opIndex, [12], { ...tail, current: id, results });
       }
       push('collected', opIndex, [11], { ...tail, results });
+      lastResults = results;
     }
   });
 
-  push('done', -1, []);
+  push('done', -1, [], { results: lastResults });
   return frames;
 }
 

@@ -99,7 +99,10 @@
   const top = $derived(building ? frame.pattern : frame.text);
   const pl = $derived(frame.pattern.length);
   const cols = $derived(Math.max(frame.text.length, pl));
-  const offset = $derived(frame.i - frame.k);
+  // Comparing, P[k] sits under index i. After a match or its fallback, i is already read, so the
+  // k letters that count end at i.
+  const settled = $derived(frame.kind === 'match' || frame.kind === 'advance');
+  const offset = $derived(frame.i - frame.k + (settled ? 1 : 0));
   // No alignment exists before the first comparison or after the last one.
   const aligned = $derived(!['start', 'search-start', 'done', 'build-store'].includes(frame.kind));
   const showUnder = $derived(aligned && !(building && frame.i === 0));
@@ -117,9 +120,10 @@
     const { kind, i } = frame;
     if (kind === 'match') return c > i - pl && c <= i ? 'found' : '';
     if (kind === 'build-store') return r === 0 && c === i ? 'matched' : '';
+    if (kind === 'advance') return c >= offset && c <= i ? 'border' : '';
     if (!showUnder) return '';
     if (c >= offset && c < i) {
-      return kind === 'fall' || kind === 'build-fall' || kind === 'advance' ? 'border' : 'matched';
+      return kind === 'fall' || kind === 'build-fall' ? 'border' : 'matched';
     }
     if (c !== i) return '';
     if (kind === 'compare' || kind === 'build-compare') return frame.equal ? 'equal' : 'miss';

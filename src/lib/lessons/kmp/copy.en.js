@@ -91,6 +91,8 @@ export const en = {
       }
       case 'build-fall':
       case 'fall':
+        if (k === 0)
+          return `Fall back: π[${f.fallFrom - 1}] = 0. No part of what matched can start a match, so slide P right by ${f.fallFrom}. Index i stays at ${i}.`;
         return `Fall back: π[${f.fallFrom - 1}] = ${k}. The last ${plural(k, 'letter', 'letters')} of what matched ${k === 1 ? 'is' : 'are'} also the first ${plural(k, 'letter', 'letters')} of P, so keep ${k === 1 ? 'it' : 'them'} and slide P right by ${f.fallFrom - k}. Index i stays at ${i}.`;
       case 'build-store':
         return `So π[${i}] = ${k}: the first ${i + 1} letters of P have a border of length ${k}.`;
@@ -105,7 +107,7 @@ export const en = {
     }
   },
   takeaways: [
-    'π[i] is the length of the longest proper prefix of P[0..i] that is also a suffix of it, called its longest border.',
+    'π[i], also called the failure function, is the length of the longest proper prefix of P[0..i] that is also a suffix of it: its longest border.',
     'After a mismatch with q letters matched, those letters are known without reading the text again, so q can jump straight to π[q − 1].',
     'The text index only moves forward. Each comparison either advances i or shrinks q, and q cannot shrink more often than it grew, so the search takes at most 2n comparisons.',
     'Building π is the same algorithm with the pattern searching itself, so it costs O(m).',
