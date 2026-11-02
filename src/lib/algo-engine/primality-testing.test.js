@@ -189,8 +189,8 @@ describe('liarCounts', () => {
     }
   });
 
-  it('lets every base through on a prime', () => {
-    expect(liarCounts(97)).toEqual({ bases: 94, fermat: 94, miller: 94 });
+  it('reports no liars on a prime, where every passing base tells the truth', () => {
+    for (const n of [5, 7, 97, 4999]) expect(liarCounts(n)).toBe(null);
   });
 
   it('declines even, tiny and very large n', () => {

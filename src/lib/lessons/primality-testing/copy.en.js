@@ -151,17 +151,17 @@ export const en = {
   complexity: [
     [
       'Trial division',
-      'O(√n) divisions',
+      'O(√n)',
       'A composite n has a divisor at most √n. Exact, but hopeless for 100-digit numbers.',
     ],
     [
       'Fermat, k bases',
-      'O(k log n) multiplications',
-      'One fast power per base. Carmichael numbers can fool it.',
+      'O(k log n)',
+      'One fast power of about 2·log₂ n multiplications per base. Carmichael numbers can fool it.',
     ],
     [
       'Miller-Rabin, k bases',
-      'O(k log n) multiplications',
+      'O(k log n)',
       'One fast power plus at most s squarings per base. Error at most 4⁻ᵏ on random bases.',
     ],
     ['Memory', 'O(1)', 'Only x and the counters. This page keeps the rows so you can read them.'],

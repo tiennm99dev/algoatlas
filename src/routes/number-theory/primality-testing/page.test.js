@@ -136,6 +136,8 @@ describe('primality testing lesson', () => {
     toLast();
     expect(stat('verdict')).toBe('Composite');
     expect(stat('liars')).toBe(m.liarsNone);
+    commit(field('n'), '97');
+    expect(stat('liars')).toBe(m.liarsNone);
     commit(field('n'), '5');
     commit(field('bases'), '7');
     stepUntil('outside 2 to n − 2');

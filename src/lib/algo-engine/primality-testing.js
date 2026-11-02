@@ -138,8 +138,9 @@ function strongPass(a, n, s, d) {
 }
 
 /**
- * How many bases from 2 to n − 2 each test lets through. For an odd n up to MAX_SCAN_N;
- * null otherwise, or when n has no such bases.
+ * How many bases from 2 to n − 2 each test wrongly lets through. For an odd composite n up to
+ * MAX_SCAN_N; null otherwise, as a base that passes on a prime tells the truth. A prime is the only
+ * n every base passes, since strong liars are at most a quarter of the bases on a composite.
  * @param {number} n
  * @returns {{ bases: number, fermat: number, miller: number } | null}
  */
@@ -151,7 +152,7 @@ export function liarCounts(n) {
     if (powMod(a, n - 1, n).value === 1) fermat++;
     if (strongPass(a, n, s, d)) miller++;
   }
-  return { bases: n - 3, fermat, miller };
+  return miller === n - 3 ? null : { bases: n - 3, fermat, miller };
 }
 
 /**
