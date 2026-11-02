@@ -179,7 +179,7 @@
   }
 
   const tableMode = $derived(frame.mode);
-  const tableValues = $derived(frame.rows.map((row) => row.map(String)));
+  const tableValues = $derived(frame.rows.map((row) => row.map(m.cellText)));
 
   /** @param {number} r @param {number} col @returns {CellRole | ''} */
   function cellRole(r, col) {
@@ -496,7 +496,13 @@
               {frame.mode === 'fermat' ? m.stats.multiplications : m.stats.gcd}
             </dt>
             <dd class="text-2xl font-bold tabular-nums" data-testid="extra">
-              {frame.mode === 'fermat' ? frame.multiplications : frame.g}
+              {#if frame.mode === 'fermat'}
+                {frame.multiplications}
+              {:else if frame.kind === 'found' || frame.kind === 'none' || frame.kind === 'done'}
+                {frame.g}
+              {:else}
+                …
+              {/if}
             </dd>
           </div>
         </dl>

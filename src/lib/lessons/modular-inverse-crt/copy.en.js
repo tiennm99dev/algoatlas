@@ -68,6 +68,8 @@ export const en = {
     now: '→ Being solved',
     later: '· Waiting',
   },
+  /** Text for a table cell, so a negative number reads with a typographic minus. @param {number|string|null} v */
+  cellText: (v) => (typeof v === 'number' ? num(v) : String(v ?? '')),
   tableTitle: {
     euclid: 'Rows keep r ≡ t·a (mod m)',
     fermat: 'Squaring toward a^(p − 2)',
@@ -136,6 +138,7 @@ export const en = {
     const row = /** @type {number[]} */ (f.rows.at(-1));
     switch (f.kind) {
       case 'start':
+        if (a % m === 0) return `Find the inverse of ${a} modulo ${m} with Fermat’s theorem.`;
         return `${m} is prime, so a^${m - 1} ≡ 1 (mod ${m}) and a^${m - 2} is the inverse. Compute it by squaring, from e = ${m - 2}.`;
       case 'bit':
         return row[1] === 1
@@ -189,17 +192,17 @@ export const en = {
   complexity: [
     [
       'Inverse by Euclid',
-      'O(log m) divisions',
+      'O(log m)',
       'The same divisions as gcd(a, m), and it works for any modulus.',
     ],
     [
       'Inverse by Fermat',
-      'O(log p) multiplications',
+      'O(log p)',
       'Fast power with exponent p − 2. The modulus must be prime.',
     ],
     [
       'System of k congruences',
-      'O(k log M) divisions',
+      'O(k log M)',
       'One gcd and one inverse for each merge, where M is the final modulus.',
     ],
     [

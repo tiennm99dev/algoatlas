@@ -148,6 +148,24 @@ describe('modular inverse and CRT lesson', () => {
     expect(narration()).toContain('share the factor 2');
   });
 
+  it('holds back the gcd until Euclid has found it', () => {
+    render();
+    click(radio('task', 'inverse'));
+    expect(stat('extra')).toBe('…');
+    toLast();
+    expect(stat('extra')).toBe('1');
+  });
+
+  it('opens Fermat on zero with a start frame before refusing it', () => {
+    render();
+    click(radio('task', 'inverse'));
+    click(radio('method', 'fermat'));
+    commit(field('a'), '14');
+    expect(narration()).toBe('Find the inverse of 14 modulo 7 with Fermat’s theorem.');
+    toLast();
+    expect(stat('inverse')).toBe('none');
+  });
+
   it('finds an inverse by Fermat, and refuses a composite modulus', () => {
     render();
     click(radio('task', 'inverse'));

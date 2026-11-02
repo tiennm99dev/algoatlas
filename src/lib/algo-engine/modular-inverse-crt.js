@@ -237,6 +237,7 @@ export function fermatInverseTrace(a0, p) {
     });
 
   if (a === 0) {
+    push('start', [0], 0);
     push('none', [0], 0);
     push('done', [], 0);
     return frames;

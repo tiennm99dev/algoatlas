@@ -108,7 +108,7 @@ describe('inverse by Fermat', () => {
 
   it('refuses zero', () => {
     const f = fermatInverseTrace(14, 7);
-    expect(f.map((x) => x.kind)).toEqual(['none', 'done']);
+    expect(f.map((x) => x.kind)).toEqual(['start', 'none', 'done']);
   });
 
   it('matches Euclid on a prime modulus', () => {
