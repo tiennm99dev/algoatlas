@@ -35,6 +35,7 @@ export const en = {
   /** @param {number} max */
   cError: (max) => `c must be a whole number from −${max} to ${max}.`,
   boardTitle: 'Cutting the rectangle into squares',
+  boardScroll: 'The rectangle, which scrolls when it is too tall to fit',
   /** @param {number} a @param {number} b @param {number} count @param {number} left */
   boardAria: (a, b, count, left) =>
     `A rectangle ${a} wide and ${b} tall, with ${plural(count, 'square', 'squares')} cut off and an area of ${left} left.`,
@@ -53,6 +54,8 @@ export const en = {
     final: '★ Side equals the gcd',
     rest: 'Dashed: left to cut',
   },
+  /** Text for a table cell, so a negative number reads with a typographic minus. @param {number|string|null} v */
+  cellText: (v) => (typeof v === 'number' ? num(v) : String(v ?? '')),
   tableTitle: 'The table: every row has r = s·a + t·b',
   tableHead: ['r', 'q', 's', 't'],
   /** @param {number} a @param {number} b */
@@ -68,6 +71,8 @@ export const en = {
     g: 'gcd(a, b)',
     bezout: 'Bézout x, y',
   },
+  /** @param {GcdFrame} f */
+  bezoutValue: (f) => (f.g === null ? '—' : `${num(Number(f.x))}, ${num(Number(f.y))}`),
   equationTitle: 'Integer solutions',
   /** @param {GcdFrame} f */
   equation(f) {
@@ -120,17 +125,17 @@ export const en = {
   complexity: [
     [
       'Euclid’s algorithm',
-      'O(log min(a, b)) divisions',
+      'O(log min(a, b))',
       'After any two divisions the larger number has at least halved, so the numbers shrink fast.',
     ],
     [
       'By subtraction only',
-      'O(max(a, b) / g) steps',
+      'O(max(a, b) / g)',
       'One subtraction per square: for a = 999 and b = 1 that is 999 squares against 1 division.',
     ],
     [
       'Extended Euclid',
-      'O(log min(a, b)) divisions',
+      'O(log min(a, b))',
       'The same divisions, with a constant amount of extra work for s and t on each.',
     ],
     [

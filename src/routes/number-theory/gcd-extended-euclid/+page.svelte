@@ -102,12 +102,7 @@
   }
 
   // The drawing fits a box, but a long thin rectangle keeps its short side readable and scrolls.
-  const scale = $derived(
-    Math.min(
-      Math.max(Math.min(DRAW_WIDTH / a, DRAW_HEIGHT / b), 8 / Math.min(a, b)),
-      DRAW_HEIGHT / b,
-    ),
-  );
+  const scale = $derived(Math.max(Math.min(DRAW_WIDTH / a, DRAW_HEIGHT / b), 8 / Math.min(a, b)));
   const drawW = $derived(a * scale);
   const drawH = $derived(b * scale);
 
@@ -118,7 +113,7 @@
   }
 
   const headValues = $derived(
-    frame.rows.map((row) => [row.r, row.q ?? '', row.s, row.t].map((v) => String(v))),
+    frame.rows.map((row) => [row.r, row.q, row.s, row.t].map(m.cellText)),
   );
 
   /** @param {number} r @param {number} col @returns {CellRole | ''} */
@@ -198,69 +193,79 @@
         <h2 class="mb-2 text-xs font-semibold tracking-wide text-slate-500 uppercase">
           {m.boardTitle}
         </h2>
-        <ScrollFrame>
-          <svg
-            viewBox="-1 -1 {drawW + 2} {drawH + 2}"
-            role="img"
-            aria-label={m.boardAria(a, b, frame.squares.length, leftArea)}
-            class="mx-auto block h-auto"
-            style="width: {drawW + 2}px; max-width: {drawW > DRAW_WIDTH ? 'none' : '100%'}"
-          >
-            {#each frame.squares as sq, i (i)}
-              {@const role = squareRole(sq)}
-              {@const size = sq.side * scale}
-              {@const state = SQUARE_STATE[role]}
-              <g>
-                <title>{m.squareLabel(sq.side, sq.step, m.states[role])}</title>
-                <rect
-                  x={sq.x * scale}
-                  y={sq.y * scale}
-                  width={size}
-                  height={size}
-                  stroke-width={role === 'earlier' ? 1 : 2}
-                  class="{STATE_FILL[state]} stroke-slate-900"
-                />
-                {#if size >= 16}
-                  <text
-                    x={sq.x * scale + size / 2}
-                    y={sq.y * scale + size / 2}
-                    text-anchor="middle"
-                    dominant-baseline="central"
-                    font-size={Math.min(14, size / 2.2)}
-                    font-weight="600"
-                    class={STATE_TEXT[state]}>{m.markers[role]}{sq.side}</text
-                  >
-                {/if}
-              </g>
-            {/each}
-            {#if leftArea > 0}
-              {@const w = frame.rest.w * scale}
-              {@const h = frame.rest.h * scale}
-              <g>
-                <title>{m.restLabel(frame.rest.w, frame.rest.h)}</title>
-                <rect
-                  x={frame.rest.x * scale}
-                  y={frame.rest.y * scale}
-                  width={w}
-                  height={h}
-                  stroke-width="1.5"
-                  stroke-dasharray="5 4"
-                  class="fill-slate-50 stroke-slate-500"
-                />
-                {#if w >= 40 && h >= 16}
-                  <text
-                    x={frame.rest.x * scale + w / 2}
-                    y={frame.rest.y * scale + h / 2}
-                    text-anchor="middle"
-                    dominant-baseline="central"
-                    font-size="12"
-                    class="fill-slate-600">{m.restText(frame.rest.w, frame.rest.h)}</text
-                  >
-                {/if}
-              </g>
-            {/if}
-          </svg>
-        </ScrollFrame>
+        <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+        <div
+          class="focus-ring overflow-y-auto rounded"
+          style="max-height: {DRAW_HEIGHT + 2}px"
+          tabindex={drawH > DRAW_HEIGHT ? 0 : undefined}
+          role="group"
+          aria-label={m.boardScroll}
+          data-testid="board-scroll"
+        >
+          <ScrollFrame>
+            <svg
+              viewBox="-1 -1 {drawW + 2} {drawH + 2}"
+              role="img"
+              aria-label={m.boardAria(a, b, frame.squares.length, leftArea)}
+              class="mx-auto block h-auto"
+              style="width: {drawW + 2}px; max-width: {drawW > DRAW_WIDTH ? 'none' : '100%'}"
+            >
+              {#each frame.squares as sq, i (i)}
+                {@const role = squareRole(sq)}
+                {@const size = sq.side * scale}
+                {@const state = SQUARE_STATE[role]}
+                <g>
+                  <title>{m.squareLabel(sq.side, sq.step, m.states[role])}</title>
+                  <rect
+                    x={sq.x * scale}
+                    y={sq.y * scale}
+                    width={size}
+                    height={size}
+                    stroke-width={role === 'earlier' ? 1 : 2}
+                    class="{STATE_FILL[state]} stroke-slate-900"
+                  />
+                  {#if size >= 16}
+                    <text
+                      x={sq.x * scale + size / 2}
+                      y={sq.y * scale + size / 2}
+                      text-anchor="middle"
+                      dominant-baseline="central"
+                      font-size={Math.min(14, size / 2.2)}
+                      font-weight="600"
+                      class={STATE_TEXT[state]}>{m.markers[role]}{sq.side}</text
+                    >
+                  {/if}
+                </g>
+              {/each}
+              {#if leftArea > 0}
+                {@const w = frame.rest.w * scale}
+                {@const h = frame.rest.h * scale}
+                <g>
+                  <title>{m.restLabel(frame.rest.w, frame.rest.h)}</title>
+                  <rect
+                    x={frame.rest.x * scale}
+                    y={frame.rest.y * scale}
+                    width={w}
+                    height={h}
+                    stroke-width="1.5"
+                    stroke-dasharray="5 4"
+                    class="fill-slate-50 stroke-slate-500"
+                  />
+                  {#if w >= 40 && h >= 16}
+                    <text
+                      x={frame.rest.x * scale + w / 2}
+                      y={frame.rest.y * scale + h / 2}
+                      text-anchor="middle"
+                      dominant-baseline="central"
+                      font-size="12"
+                      class="fill-slate-600">{m.restText(frame.rest.w, frame.rest.h)}</text
+                    >
+                  {/if}
+                </g>
+              {/if}
+            </svg>
+          </ScrollFrame>
+        </div>
         <ul class="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-600">
           {#each SQUARE_ROLES as role (role)}
             <li class="flex items-center gap-1.5">
@@ -332,7 +337,7 @@
         <div class="rounded-xl border border-slate-200 bg-white p-3">
           <dt class="text-xs text-slate-500">{m.stats.bezout}</dt>
           <dd class="text-2xl font-bold tabular-nums" data-testid="bezout">
-            {frame.g === null ? '—' : `${frame.x}, ${frame.y}`}
+            {m.bezoutValue(frame)}
           </dd>
         </div>
       </dl>

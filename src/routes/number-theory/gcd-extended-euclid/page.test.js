@@ -68,7 +68,7 @@ describe('GCD and extended Euclid lesson', () => {
     expect(stat('divisions')).toBe('5');
     expect(stat('subtractions')).toBe('13');
     expect(stat('g')).toBe('2');
-    expect(stat('bezout')).toBe('-9, 47');
+    expect(stat('bezout')).toBe('−9, 47');
     expect(stat('solution')).toContain('x = 1, y = −5');
     expect(titles()).toContain('Square of side 2, cut by division 5, side equals the gcd');
     expect(titles().some((t) => t.startsWith('Part left'))).toBe(false);
@@ -88,6 +88,19 @@ describe('GCD and extended Euclid lesson', () => {
     expect(stat('g')).toBe('3');
     expect(stat('solution')).toContain('No solution');
     expect(narration()).toContain('no solution');
+  });
+
+  it('keeps a tall thin rectangle readable by scrolling it', () => {
+    render();
+    const box = () =>
+      /** @type {HTMLElement} */ (document.querySelector('[data-testid="board-scroll"]'));
+    expect(box().hasAttribute('tabindex')).toBe(false);
+    commit(field('a'), '1');
+    commit(field('b'), '999');
+    expect(box().getAttribute('tabindex')).toBe('0');
+    expect(Number(box().querySelector('svg')?.getAttribute('viewBox')?.split(' ')[2])).toBeCloseTo(
+      10,
+    );
   });
 
   it('shows the swap when a is smaller than b', () => {
