@@ -71,7 +71,7 @@ export const en = {
   treeLegend: '★ Just merged',
   lzwTitle: 'LZW',
   lzwNote:
-    'The dictionary starts with all 256 single characters, codes 0 to 255, and adds one entry per code emitted. The decoder rebuilds it, so it is never sent.',
+    'The dictionary starts with all 256 single characters, codes 0 to 255, and adds one entry with each code it emits except the last. The decoder rebuilds it, so it is never sent.',
   /** @param {string} w */
   lzwCurrent: (w) => (w ? `Growing string w: ${w}` : 'Growing string w is empty'),
   lzwOutput: 'Codes emitted',
@@ -101,7 +101,9 @@ export const en = {
         const c = f.text[f.i];
         const run = f.runEmitted
           ? `Run-length closes a run and starts one for ${c}.`
-          : `Run-length extends the run of ${c}.`;
+          : f.i === 0
+            ? `Run-length starts a run of ${c}.`
+            : `Run-length extends the run of ${c}.`;
         const code = `Huffman emits ${f.codes[c]}.`;
         const last = f.dictionary.at(-1);
         const lzw =

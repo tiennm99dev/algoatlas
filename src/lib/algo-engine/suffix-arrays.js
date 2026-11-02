@@ -19,7 +19,7 @@ export const suffixPseudocode = [
   'for i = 0 to n − 1, in text order:',
   '  if rank[i] == 0: h = 0; continue',
   '  j = SA[rank[i] − 1]   // the neighbour above',
-  '  while s[i + h] == s[j + h]: h = h + 1',
+  '  while s[i + h] == s[j + h], both inside s: h = h + 1',
   '  LCP[rank[i]] = h',
   '  if h > 0: h = h − 1',
 ];

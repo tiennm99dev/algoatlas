@@ -2,7 +2,7 @@
  * Regular expressions over the letters a to z, with `.`, `|`, `*`, `+`, `?` and brackets. Thompson's
  * construction turns one into an NFA: every letter adds one state and one edge, and every
  * operator adds a few states and ε edges, so the size stays linear. Running it keeps
- * the set of states the machine could be in, so each input letter costs at most one pass over
+ * the set of states the machine could be in, so each input letter costs at most two passes over
  * the edges and there is no backtracking. A piece enters at an existing state and always
  * leaves through a fresh one, and loops only re-enter a state made inside that piece.
  */

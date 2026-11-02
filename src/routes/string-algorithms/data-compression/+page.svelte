@@ -185,7 +185,9 @@
           {/each}
         </ul>
       </div>
+    </div>
 
+    <div class="flex min-w-0 flex-col gap-4 lg:col-start-1 lg:row-start-3">
       <div class="min-w-0 rounded-xl border border-slate-200 bg-white p-4">
         <h2 class="mb-1 text-sm font-semibold text-slate-800">{m.runTitle}</h2>
         <p class="mb-2 text-xs text-slate-600">{m.runNote}</p>
@@ -251,7 +253,7 @@
       </div>
     </div>
 
-    <div class="flex min-w-0 flex-col gap-4 lg:col-start-2 lg:row-span-2">
+    <div class="flex min-w-0 flex-col gap-4 lg:col-start-2 lg:row-span-3 lg:row-start-1">
       <CodePanel lines={compressionPseudocode} active={frame.lines} />
     </div>
     <div class="sticky bottom-2 z-10 print:hidden lg:static lg:col-start-1 lg:row-start-2">

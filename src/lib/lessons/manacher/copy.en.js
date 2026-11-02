@@ -86,7 +86,8 @@ export const en = {
       case 'start':
         return `Put # between the letters: T = ${t}. Now every palindrome has a centre, whether its length is odd or even.`;
       case 'outside':
-        return i === r && r > 0
+        if (r === 0) return `No palindrome reaches past i = ${i} yet, so start from radius 0.`;
+        return i === r
           ? `i = ${i} is at the right end R, so nothing is known yet: start from radius 0.`
           : `i = ${i} is past the furthest palindrome, so nothing is known yet: start from radius 0.`;
       case 'inside':

@@ -103,7 +103,7 @@ describe('Data compression lesson', () => {
     stepUntil('Now read the text');
     click(button('Next step'));
     expect(narration()).toBe(
-      'a: Run-length extends the run of a. Huffman emits 1. LZW already knows a, so it keeps growing.',
+      'a: Run-length starts a run of a. Huffman emits 1. LZW already knows a, so it keeps growing.',
     );
     expect(stat('raw')).toBe('8 bits');
     expect(stat('huff')).toBe(m.bitsValue(1));
