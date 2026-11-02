@@ -4,7 +4,7 @@ export const en = {
   level: 'Advanced',
   title: 'Review: core algorithms',
   intro:
-    'This quiz mixes questions from every chapter of the core algorithms: shortest paths, union-find, minimum spanning trees, advanced graphs, divide and conquer, greedy algorithms, dynamic programming, backtracking and balanced search trees. Most questions describe a problem and ask which algorithm or paradigm fits it, because recognising the shape of a problem is the skill these chapters build.',
+    'This quiz mixes questions from every chapter of the core algorithms: shortest paths, union-find, minimum spanning trees, advanced graphs, divide and conquer, greedy algorithms, dynamic programming, backtracking and balanced search trees. Many questions describe a problem and ask which algorithm or paradigm fits it, because recognising the shape of a problem is the skill these chapters build; the rest have you run an algorithm by hand.',
   summary:
     'A mixed quiz over the core algorithms level: choosing a graph algorithm, recognising a paradigm from a problem statement, and a recap of balanced search trees.',
   instruction:
@@ -174,7 +174,7 @@ export const en = {
     {
       type: 'number',
       prompt:
-        'Shortest paths. A project’s tasks form a DAG with durations on the edges: A→B 3, A→C 2, B→D 4, C→D 6, D→E 1. What is the length of the longest path from A to E, the time the project needs?',
+        'Shortest paths. A project’s tasks form a DAG with durations in days on the edges: A→B 3, A→C 2, B→D 4, C→D 6, D→E 1. What is the length of the longest path from A to E, the time the project needs?',
       answer: 9,
       unit: 'days',
       hints: [
@@ -625,7 +625,7 @@ export const en = {
         'Many split choices lead to the same prefix, so subproblems overlap.',
       ],
       solution:
-        'Let can[i] say whether the first i letters split into words; can[i] is true when can[j] holds and the piece from j to i is a word. Longest-first can fail: “aaaa” with “aaa” and “aa” needs “aa” + “aa”. A split in half may cut through a word.',
+        'Let can[i] say whether the first i letters split into words; can[i] is true when some j has can[j] true and the piece from j to i is a word. Longest-first can fail: “aaaa” with “aaa” and “aa” needs “aa” + “aa”. A split in half may cut through a word.',
     },
     {
       type: 'choice',
@@ -648,6 +648,24 @@ export const en = {
     {
       type: 'choice',
       prompt:
+        'Paradigms. Each job takes one time slot, pays a profit and must finish by its deadline. You want the most total profit, and you can show that keeping the most profitable job that still fits never hurts. Which paradigm fits?',
+      options: [
+        'Backtracking over every order of the jobs',
+        'Divide and conquer: solve each half of the timeline on its own',
+        'Dynamic programming over every set of jobs',
+        'Greedy: by falling profit, each job in the latest free slot by its deadline',
+      ],
+      answer: 3,
+      hints: [
+        'The prompt already gives you a proof that one choice is safe.',
+        'A safe choice never needs to be taken back, so no search or table is needed.',
+      ],
+      solution:
+        'A choice proved safe by an exchange argument is the mark of greedy: one sort and one pass give the best schedule. Backtracking and DP over job sets would also find it, but in exponential time, and splitting the timeline ignores that a job may use any slot up to its deadline.',
+    },
+    {
+      type: 'choice',
+      prompt:
         'Paradigms. In an array of 100,000 numbers, count the pairs i < j with a[i] > 2 · a[j] in O(n log n). Which approach fits?',
       options: [
         'Prim’s algorithm over the indices',
@@ -661,7 +679,7 @@ export const en = {
         'Once both halves are sorted, two moving pointers count the cross pairs in linear time.',
       ],
       solution:
-        'Each pair is inside the left half, inside the right half, or across the split. Recursion handles the first two; with both halves sorted, a pointer counts the cross pairs in O(n) per level, so T(n) = 2T(n/2) + O(n) = O(n log n). Nested loops take 10¹⁰ steps at worst.',
+        'Each pair is inside the left half, inside the right half, or across the split. Recursion handles the first two; with both halves sorted, a pointer counts the cross pairs in O(n) per level, so T(n) = 2T(n/2) + O(n) = O(n log n). Nested loops try about 5 × 10⁹ pairs.',
     },
   ],
 };
