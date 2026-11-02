@@ -43,7 +43,7 @@ export const en = {
     skipped: '· Is 0: skipped',
   },
   squaresTitle: 'Squares built so far',
-  squaresHead: { k: 'k', power: 'Power', x: 'a^power mod m', bit: 'Bit', used: 'In result' },
+  squaresHead: { k: 'k', power: 'Power', x: 'Value mod m', bit: 'Bit', used: 'In result' },
   /** @param {number} power */
   powerName: (power) => `a^${power}`,
   usedYes: '✓ used',
@@ -102,7 +102,7 @@ export const en = {
     ],
     [
       'Binary exponentiation',
-      'O(log e) multiplications',
+      'O(log e)',
       'e halves each round, so the loop runs once per bit: one squaring, plus one multiplication if the bit is 1.',
     ],
     [
