@@ -10,6 +10,9 @@
  * Leaves have no children, so they never hold a tag.
  */
 
+import { treeSpans } from './segment-spans.js';
+import { parseValueList } from './parse-values.js';
+
 export const MAX_N = 12;
 export const MIN_VALUE = -99;
 export const MAX_VALUE = 99;
@@ -74,25 +77,8 @@ export const lazyPseudocode = [
  * @property {number[]} lines
  */
 
-/**
- * Every node of the tree over n values, in pre-order.
- * @param {number} n
- * @returns {LazySpan[]}
- */
-export function lazySpans(n) {
-  /** @type {LazySpan[]} */
-  const out = [];
-  /** @param {number} v @param {number} lo @param {number} hi */
-  const go = (v, lo, hi) => {
-    out.push({ v, lo, hi });
-    if (lo === hi) return;
-    const mid = Math.floor((lo + hi) / 2);
-    go(2 * v, lo, mid);
-    go(2 * v + 1, mid + 1, hi);
-  };
-  go(1, 0, n - 1);
-  return out;
-}
+/** The nodes of the tree in pre-order. */
+export const lazySpans = treeSpans;
 
 /**
  * How many nodes contain any of a[l..r]: the sums an update without tags must change.
@@ -108,15 +94,7 @@ export function eagerWrites(n, l, r) {
  * @returns {{ values: number[] } | { error: 'format' | 'range' | 'count' }}
  */
 export function parseLazyValues(text) {
-  const tokens = text
-    .replace(/[−–]/g, '-')
-    .split(/[\s,]+/)
-    .filter(Boolean);
-  if (tokens.length === 0 || !tokens.every((s) => /^-?\d+$/.test(s))) return { error: 'format' };
-  const values = tokens.map(Number);
-  if (values.some((v) => v < MIN_VALUE || v > MAX_VALUE)) return { error: 'range' };
-  if (values.length > MAX_N) return { error: 'count' };
-  return { values };
+  return parseValueList(text, { min: MIN_VALUE, max: MAX_VALUE, maxN: MAX_N, signed: true });
 }
 
 /**

@@ -7,6 +7,8 @@
  * at least about 3n/10 values out of the larger side, which makes the worst case linear.
  */
 
+import { parseValueList } from './parse-values.js';
+
 export const MIN_N = 2;
 export const MAX_N = 20;
 export const MAX_VALUE = 99;
@@ -80,12 +82,7 @@ export function selectPseudocode(rule) {
  * @returns {{values: number[]} | {error: 'format'|'range'|'count'}}
  */
 export function parseSelectValues(text) {
-  const tokens = text.split(/[\s,]+/).filter(Boolean);
-  if (tokens.length === 0 || !tokens.every((s) => /^\d+$/.test(s))) return { error: 'format' };
-  const values = tokens.map(Number);
-  if (values.some((v) => v > MAX_VALUE)) return { error: 'range' };
-  if (values.length < MIN_N || values.length > MAX_N) return { error: 'count' };
-  return { values };
+  return parseValueList(text, { max: MAX_VALUE, minN: MIN_N, maxN: MAX_N });
 }
 
 /**

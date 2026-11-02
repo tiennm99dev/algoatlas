@@ -127,6 +127,7 @@ export const visuals = {
     frontier: 'pending',
     visited: 'visited',
     path: 'on the path',
+    pruned: 'pruned',
   },
   scroller: 'Drawing, scrolls sideways',
   /** @param {number} i @param {string} value @param {string} state */

@@ -6,6 +6,8 @@
  * sort takes a comparator, so the learner can see a wrong key give a wrong answer.
  */
 
+import { parseValueList } from './parse-values.js';
+
 /** @typedef {{id: number, start: number, end: number}} Interval */
 /** @typedef {{start: number, end: number, ids: number[]}} Block */
 /** @typedef {'start'|'end'|'none'} Comparator */
@@ -187,12 +189,7 @@ export function mergeTrace(input, by) {
  * @returns {{values: number[]} | {error: 'format'|'range'|'count'}}
  */
 export function parseValues(text) {
-  const tokens = text.split(/[\s,]+/).filter(Boolean);
-  if (tokens.length === 0 || !tokens.every((s) => /^\d+$/.test(s))) return { error: 'format' };
-  const values = tokens.map(Number);
-  if (values.some((v) => v > MAX_VALUE)) return { error: 'range' };
-  if (values.length < 2 || values.length > MAX_VALUES) return { error: 'count' };
-  return { values };
+  return parseValueList(text, { max: MAX_VALUE, minN: 2, maxN: MAX_VALUES });
 }
 
 /**

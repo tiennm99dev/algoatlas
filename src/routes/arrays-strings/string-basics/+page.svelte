@@ -1,4 +1,5 @@
 <script>
+  import { wholeInRange } from '$lib/components/numeric-field.js';
   import ArrayStrip from '$lib/components/array-strip.svelte';
   import ChipList from '$lib/components/chip-list.svelte';
   import CodePanel from '$lib/components/code-panel.svelte';
@@ -59,9 +60,6 @@
 
   const modeOptions = JOIN_MODES.map((v) => ({ value: v, label: m.modes[v] }));
 
-  /** @param {unknown} v @param {number} lo @param {number} hi */
-  const whole = (v, lo, hi) => typeof v === 'number' && Number.isInteger(v) && v >= lo && v <= hi;
-
   /** @param {string} text */
   function say(text) {
     notice = { text, at: player.index };
@@ -85,7 +83,7 @@
   }
 
   function commitCapacity() {
-    if (whole(capacityDraft, MIN_CAPACITY, MAX_CAPACITY)) {
+    if (wholeInRange(capacityDraft, MIN_CAPACITY, MAX_CAPACITY)) {
       capacity = /** @type {number} */ (capacityDraft);
       rebuild();
     } else {

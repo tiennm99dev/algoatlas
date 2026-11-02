@@ -1,4 +1,5 @@
 <script>
+  import { createFieldGuard, enterField } from '$lib/components/numeric-field.js';
   import ChipList from '$lib/components/chip-list.svelte';
   import CodePanel from '$lib/components/code-panel.svelte';
   import LessonLayout from '$lib/components/lesson-layout.svelte';
@@ -48,9 +49,14 @@
   const valid = (v) =>
     typeof v === 'number' && Number.isInteger(v) && v >= MIN_VALUE && v <= MAX_VALUE;
 
+  const valueField = createFieldGuard();
+
   function commitValue() {
-    if (valid(valueDraft)) value = /** @type {number} */ (valueDraft);
-    else valueDraft = value;
+    if (valueField.commit(valid(valueDraft))) value = /** @type {number} */ (valueDraft);
+    else {
+      valueDraft = value;
+      say(m.valueError);
+    }
   }
 
   /** @param {DequeOp[]} next @param {'first'|'last'|'op'} at */
@@ -67,7 +73,7 @@
   function add(type) {
     const adding = type === 'push-back' || type === 'push-front';
     if (adding) {
-      if (!valid(valueDraft)) {
+      if (valueField.refused() || !valid(valueDraft)) {
         valueDraft = value;
         say(m.valueError);
         return;
@@ -143,7 +149,9 @@
 
 <LessonLayout lesson={m}>
   <!-- Enter in the value field submits the form, which enqueues; the other buttons never submit. -->
+  <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
   <form
+    onkeydown={(e) => enterField(e, { value: () => add('push-back') })}
     class="mb-4 flex flex-wrap items-end gap-4"
     onsubmit={(e) => {
       e.preventDefault();

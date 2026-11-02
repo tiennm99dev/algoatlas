@@ -159,6 +159,7 @@
     const s = cellState(r, c);
     const state = {
       '': '',
+      pruned: '',
       path: m.states.negative,
       swap: m.states.write,
       active: m.states.kept,

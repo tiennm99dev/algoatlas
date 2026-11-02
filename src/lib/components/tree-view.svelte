@@ -39,6 +39,8 @@
   const ROW = 64;
   const R = 17;
   const TOP = R + 10;
+  // A wide tree keeps its labels readable and scrolls inside the card instead of shrinking.
+  const MIN_SCALE = 0.85;
 
   const layout = $derived(layoutForest(roots, { binary }));
   const vbW = $derived(Math.max(1, layout.columns) * COL);
@@ -162,19 +164,21 @@
       role={onselect ? 'group' : 'img'}
       aria-label={onselect ? `${ariaLabel} ${v.treeKeys}` : ariaLabel}
       class="mx-auto block h-auto"
-      style="width: {vbW * 1.15}px; max-width: 100%; min-width: {Math.min(vbW * 0.85, 360)}px"
+      style="width: {vbW * 1.15}px; max-width: 100%; min-width: {vbW * MIN_SCALE}px"
     >
       {#each layout.edges as e (e.to)}
         {@const a = placed(e.from)}
         {@const b = placed(e.to)}
         {@const onPath = (b.node.state ?? '') === 'path' && (a.node.state ?? '') === 'path'}
+        {@const cut = b.node.state === 'pruned'}
         <line
           x1={cx(a)}
           y1={cy(a)}
           x2={cx(b)}
           y2={cy(b)}
-          class={onPath ? 'stroke-amber-500' : 'stroke-slate-400'}
+          class={onPath ? 'stroke-amber-500' : cut ? 'stroke-slate-300' : 'stroke-slate-400'}
           stroke-width={onPath ? 3 : 1.5}
+          stroke-dasharray={cut ? '4 3' : undefined}
           aria-hidden="true"
         />
         {#if e.label}

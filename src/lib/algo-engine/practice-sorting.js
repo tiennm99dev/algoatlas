@@ -16,6 +16,7 @@
  * slot with itself is skipped and costs nothing.
  */
 
+import { parseValueList } from './parse-values.js';
 import { equalKeyOrder, toCards } from './selection-sort-stability.js';
 
 /** @typedef {import('./selection-sort-stability.js').Card} Card */
@@ -121,12 +122,7 @@ export const racePseudocode = [
  * @returns {{values: number[]} | {error: 'format' | 'range' | 'count'}}
  */
 export function parseValues(text) {
-  const tokens = text.split(/[\s,]+/).filter(Boolean);
-  if (tokens.length === 0 || !tokens.every((s) => /^\d+$/.test(s))) return { error: 'format' };
-  const values = tokens.map(Number);
-  if (values.some((v) => v < MIN_VALUE || v > MAX_VALUE)) return { error: 'range' };
-  if (values.length < MIN_N || values.length > MAX_N) return { error: 'count' };
-  return { values };
+  return parseValueList(text, { min: MIN_VALUE, max: MAX_VALUE, minN: MIN_N, maxN: MAX_N });
 }
 
 /**

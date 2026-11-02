@@ -10,6 +10,7 @@
  * when it beats the heap's minimum, which it then replaces.
  */
 
+import { parseValueList } from './parse-values.js';
 import { makeHeap } from '$lib/components/item-heap.js';
 
 /**
@@ -206,12 +207,7 @@ export const formatLists = (lists) => lists.map((l) => l.join(', ')).join(' / ')
  * @returns {{values: number[]} | {error: 'format'|'range'|'count'}}
  */
 export function parseStream(text) {
-  const tokens = text.split(/[\s,]+/).filter(Boolean);
-  if (tokens.length === 0 || !tokens.every((s) => /^\d+$/.test(s))) return { error: 'format' };
-  const values = tokens.map(Number);
-  if (values.some((v) => v > MAX_VALUE)) return { error: 'range' };
-  if (values.length > MAX_STREAM) return { error: 'count' };
-  return { values };
+  return parseValueList(text, { max: MAX_VALUE, maxN: MAX_STREAM });
 }
 
 /**

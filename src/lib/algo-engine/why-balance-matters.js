@@ -5,6 +5,8 @@
  * rotation shows as two. Keys are unique; a repeated key in the input is ignored.
  */
 
+import { balanceFactor, refreshHeight, rotateLeft, rotateRight } from './balanced-core.js';
+
 export const MAX_KEYS = 15;
 export const MIN_KEY = 0;
 export const MAX_KEY = 99;
@@ -66,37 +68,6 @@ export function heightOf(node) {
 /** @param {BalanceNode | null} node @returns {number[]} */
 export function inorderKeys(node) {
   return node ? [...inorderKeys(node.left), node.key, ...inorderKeys(node.right)] : [];
-}
-
-/** @param {BalanceNode | null} node */
-const stored = (node) => (node ? node.height : 0);
-
-/** @param {BalanceNode} node */
-function refresh(node) {
-  node.height = 1 + Math.max(stored(node.left), stored(node.right));
-}
-
-/** @param {BalanceNode} node */
-const skew = (node) => stored(node.left) - stored(node.right);
-
-/** @param {BalanceNode} x */
-function rotateLeft(x) {
-  const y = /** @type {BalanceNode} */ (x.right);
-  x.right = y.left;
-  y.left = x;
-  refresh(x);
-  refresh(y);
-  return y;
-}
-
-/** @param {BalanceNode} x */
-function rotateRight(x) {
-  const y = /** @type {BalanceNode} */ (x.left);
-  x.left = y.right;
-  y.right = x;
-  refresh(x);
-  refresh(y);
-  return y;
 }
 
 /**
@@ -188,7 +159,7 @@ export function whyBalanceTrace(input) {
     const path = inAvl.path;
     for (let i = path.length - 1; i >= 0; i--) {
       let node = path[i];
-      refresh(node);
+      refreshHeight(node);
       const parent = i > 0 ? path[i - 1] : null;
       /** @param {BalanceNode} top @param {BalanceNode} old */
       const relink = (top, old) => {
@@ -196,12 +167,12 @@ export function whyBalanceTrace(input) {
         else if (parent.left === old) parent.left = top;
         else parent.right = top;
       };
-      const lean = skew(node);
+      const lean = balanceFactor(node);
       if (Math.abs(lean) < 2) continue;
 
       if (lean > 0) {
         const child = /** @type {BalanceNode} */ (node.left);
-        if (skew(child) < 0) {
+        if (balanceFactor(child) < 0) {
           const up = rotateLeft(child);
           node.left = up;
           rotations++;
@@ -224,7 +195,7 @@ export function whyBalanceTrace(input) {
         });
       } else {
         const child = /** @type {BalanceNode} */ (node.right);
-        if (skew(child) > 0) {
+        if (balanceFactor(child) > 0) {
           const up = rotateRight(child);
           node.right = up;
           rotations++;

@@ -5,6 +5,8 @@
  * new root down. The sorted tail grows from the right.
  */
 
+import { parseValueList } from './parse-values.js';
+
 /**
  * @typedef {object} HeapFrame
  * @property {'start'|'sift'|'children'|'compare'|'swap'|'leaf'|'extract'|'done'} kind
@@ -43,12 +45,7 @@ export const heapsortPseudocode = [
  * @returns {{values: number[]} | {error: 'format'|'range'|'count'}}
  */
 export function parseHeapValues(text) {
-  const tokens = text.split(/[\s,]+/).filter(Boolean);
-  if (tokens.length === 0 || !tokens.every((s) => /^\d+$/.test(s))) return { error: 'format' };
-  const values = tokens.map(Number);
-  if (values.some((v) => v < MIN_VALUE || v > MAX_VALUE)) return { error: 'range' };
-  if (values.length < 2 || values.length > MAX_N) return { error: 'count' };
-  return { values };
+  return parseValueList(text, { min: MIN_VALUE, max: MAX_VALUE, minN: 2, maxN: MAX_N });
 }
 
 /**

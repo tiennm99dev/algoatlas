@@ -1,4 +1,5 @@
 <script>
+  import { wholeInRange } from '$lib/components/numeric-field.js';
   import ArrayStrip from '$lib/components/array-strip.svelte';
   import ChipList from '$lib/components/chip-list.svelte';
   import CodePanel from '$lib/components/code-panel.svelte';
@@ -44,9 +45,6 @@
 
   const growthOptions = GROWTHS.map((g) => ({ value: g, label: m.growths[g] }));
 
-  /** @param {unknown} v @param {number} lo @param {number} hi */
-  const whole = (v, lo, hi) => typeof v === 'number' && Number.isInteger(v) && v >= lo && v <= hi;
-
   function rebuild() {
     notice = { text: '', at: -1 };
     selected = -1;
@@ -54,7 +52,7 @@
   }
 
   function commitCapacity() {
-    if (whole(capacityDraft, MIN_CAPACITY, MAX_CAPACITY)) {
+    if (wholeInRange(capacityDraft, MIN_CAPACITY, MAX_CAPACITY)) {
       capacity = /** @type {number} */ (capacityDraft);
       rebuild();
     } else {
@@ -64,7 +62,7 @@
   }
 
   function commitPushes() {
-    if (whole(pushesDraft, 0, MAX_PUSHES)) {
+    if (wholeInRange(pushesDraft, 0, MAX_PUSHES)) {
       pushes = /** @type {number} */ (pushesDraft);
       rebuild();
     } else {

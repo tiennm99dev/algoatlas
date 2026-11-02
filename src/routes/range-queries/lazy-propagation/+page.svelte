@@ -1,4 +1,5 @@
 <script>
+  import { enterField, wholeInRange } from '$lib/components/numeric-field.js';
   import ArrayStrip from '$lib/components/array-strip.svelte';
   import ChipList from '$lib/components/chip-list.svelte';
   import CodePanel from '$lib/components/code-panel.svelte';
@@ -54,9 +55,6 @@
   const n = $derived(frame.items.length);
   const narration = $derived(notice.at === player.index ? notice.text : m.describe(frame));
 
-  /** @param {unknown} v @param {number} lo @param {number} hi */
-  const whole = (v, lo, hi) => typeof v === 'number' && Number.isInteger(v) && v >= lo && v <= hi;
-
   /** @param {string} text */
   function say(text) {
     notice = { text, at: player.index };
@@ -99,8 +97,8 @@
   function commitRange() {
     const last = n - 1;
     if (
-      whole(lDraft, 0, last) &&
-      whole(rDraft, 0, last) &&
+      wholeInRange(lDraft, 0, last) &&
+      wholeInRange(rDraft, 0, last) &&
       /** @type {number} */ (lDraft) <= /** @type {number} */ (rDraft)
     ) {
       l = /** @type {number} */ (lDraft);
@@ -115,7 +113,7 @@
 
   /** @returns {boolean} Whether the field held a valid value. */
   function commitX() {
-    if (whole(xDraft, MIN_VALUE, MAX_VALUE)) {
+    if (wholeInRange(xDraft, MIN_VALUE, MAX_VALUE)) {
       x = /** @type {number} */ (xDraft);
       return true;
     }
@@ -157,22 +155,6 @@
     r: queryOp,
     x: addOp,
   });
-
-  /**
-   * Enter commits the field through its own change handler, then runs that field's action, unless
-   * the commit raised a notice. The browser would otherwise submit the form after the field has
-   * reverted, which hides the refusal behind an operation nobody asked for.
-   * @param {KeyboardEvent} e
-   */
-  function enterField(e) {
-    const field = e.target;
-    if (e.key !== 'Enter' || !(field instanceof HTMLInputElement) || field.type === 'radio') return;
-    e.preventDefault();
-    const before = notice;
-    field.blur();
-    field.focus();
-    if (notice === before) ENTER_ACTIONS[field.name]?.();
-  }
 
   /** Two picks fill the range fields: the first anchors, the second closes. @param {number} i */
   function pick(i) {
@@ -272,7 +254,7 @@
   <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
   <form
     class="mb-4 flex flex-wrap items-end gap-4"
-    onkeydown={enterField}
+    onkeydown={(e) => enterField(e, ENTER_ACTIONS, () => notice)}
     onsubmit={(e) => {
       e.preventDefault();
       queryOp();

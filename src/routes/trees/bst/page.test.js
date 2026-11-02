@@ -1,6 +1,7 @@
 // @vitest-environment jsdom
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
+import { en } from '$lib/lessons/bst/copy.en.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -106,6 +107,35 @@ describe('binary search tree lesson', () => {
     click(buttonByText('Undo last'));
     click(button('Last step'));
     expect(text()).toContain('Tree has 7 keys, height 3.');
+  });
+
+  it('refuses an operation asked for right after an out-of-range key', () => {
+    render(Page);
+    commit(keyInput(), '45');
+    const before = treeLabel();
+    commit(keyInput(), '150');
+    click(buttonByText('Search'));
+    expect(text()).toContain(en.keyError);
+    expect(treeLabel()).toBe(before);
+    expect(keyInput().value).toBe('45');
+  });
+
+  it('refuses on Enter too, and shows why', () => {
+    render(Page);
+    const before = treeLabel();
+    const input = keyInput();
+    input.focus();
+    input.value = '150';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    input.addEventListener('blur', () =>
+      input.dispatchEvent(new Event('change', { bubbles: true })),
+    );
+    input.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }),
+    );
+    flushSync();
+    expect(text()).toContain(en.keyError);
+    expect(treeLabel()).toBe(before);
   });
 
   it('keeps the last valid key when the field is emptied or out of range', () => {

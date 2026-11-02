@@ -1,4 +1,5 @@
 <script>
+  import { createFieldGuard, enterField } from '$lib/components/numeric-field.js';
   import ChipList from '$lib/components/chip-list.svelte';
   import CodePanel from '$lib/components/code-panel.svelte';
   import TreeView from '$lib/components/tree-view.svelte';
@@ -71,13 +72,19 @@
   const validPriority = (v) =>
     typeof v === 'number' && Number.isInteger(v) && v >= MIN_PRIORITY && v <= MAX_PRIORITY;
 
+  const keyField = createFieldGuard();
+  const priorityField = createFieldGuard();
+
   function commitKey() {
-    if (validKey(draft)) key = /** @type {number} */ (draft);
-    else draft = key;
+    if (keyField.commit(validKey(draft))) key = /** @type {number} */ (draft);
+    else {
+      draft = key;
+      say(m.keyError);
+    }
   }
 
   function commitPriority() {
-    if (priorityDraft !== null && !validPriority(priorityDraft)) {
+    if (!priorityField.commit(priorityDraft === null || validPriority(priorityDraft))) {
       priorityDraft = null;
       say(m.priorityError);
     }
@@ -85,9 +92,13 @@
 
   /** @param {TreapOp['type']} type */
   function add(type) {
-    if (!validKey(draft)) {
+    if (keyField.refused() || !validKey(draft)) {
       draft = key;
       say(m.keyError);
+      return;
+    }
+    if (priorityField.refused()) {
+      say(m.priorityError);
       return;
     }
     key = /** @type {number} */ (draft);
@@ -210,7 +221,9 @@
 </script>
 
 <!-- Enter in the key field submits the form, which inserts; the other buttons never submit. -->
+<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 <form
+  onkeydown={(e) => enterField(e, { key: () => add('insert'), priority: () => add('insert') })}
   class="mb-4 flex flex-wrap items-end gap-4"
   onsubmit={(e) => {
     e.preventDefault();

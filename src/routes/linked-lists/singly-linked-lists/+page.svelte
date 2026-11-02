@@ -1,4 +1,5 @@
 <script>
+  import { createFieldGuard, enterField, wholeInRange } from '$lib/components/numeric-field.js';
   import ChipList from '$lib/components/chip-list.svelte';
   import CodePanel from '$lib/components/code-panel.svelte';
   import LessonLayout from '$lib/components/lesson-layout.svelte';
@@ -51,17 +52,25 @@
     notice = { text, at: player.index };
   }
 
-  /** @param {unknown} v @param {number} lo @param {number} hi */
-  const inRange = (v, lo, hi) => typeof v === 'number' && Number.isInteger(v) && v >= lo && v <= hi;
+  const valueField = createFieldGuard();
+  const indexField = createFieldGuard();
 
   function commitValue() {
-    if (inRange(valueDraft, MIN_VALUE, MAX_VALUE)) value = /** @type {number} */ (valueDraft);
-    else valueDraft = value;
+    if (valueField.commit(wholeInRange(valueDraft, MIN_VALUE, MAX_VALUE))) {
+      value = /** @type {number} */ (valueDraft);
+    } else {
+      valueDraft = value;
+      say(m.valueError);
+    }
   }
 
   function commitIndex() {
-    if (inRange(indexDraft, 0, MAX_NODES - 1)) index = /** @type {number} */ (indexDraft);
-    else indexDraft = index;
+    if (indexField.commit(wholeInRange(indexDraft, 0, MAX_NODES - 1))) {
+      index = /** @type {number} */ (indexDraft);
+    } else {
+      indexDraft = index;
+      say(m.indexError);
+    }
   }
 
   /** @param {SinglyOp[]} next @param {'first'|'last'|'op'} at */
@@ -77,12 +86,12 @@
   /** @param {SinglyOp['type']} type */
   function add(type) {
     const needsValue = type === 'insert-head' || type === 'delete';
-    if (needsValue && !inRange(valueDraft, MIN_VALUE, MAX_VALUE)) {
+    if (needsValue && (valueField.refused() || !wholeInRange(valueDraft, MIN_VALUE, MAX_VALUE))) {
       valueDraft = value;
       say(m.valueError);
       return;
     }
-    if (type === 'get' && !inRange(indexDraft, 0, MAX_NODES - 1)) {
+    if (type === 'get' && (indexField.refused() || !wholeInRange(indexDraft, 0, MAX_NODES - 1))) {
       indexDraft = index;
       say(m.indexError);
       return;
@@ -207,7 +216,9 @@
 
 <LessonLayout lesson={m}>
   <!-- Enter in a field submits the form, which inserts at the head; the other buttons never submit. -->
+  <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
   <form
+    onkeydown={(e) => enterField(e, { value: () => add('insert-head'), index: () => add('get') })}
     class="mb-4 flex flex-wrap items-end gap-4"
     onsubmit={(e) => {
       e.preventDefault();

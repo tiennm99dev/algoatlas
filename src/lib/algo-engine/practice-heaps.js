@@ -11,6 +11,7 @@
  * Ties on distance keep the earlier point.
  */
 
+import { parseValueList } from './parse-values.js';
 import { makeHeap } from '$lib/components/item-heap.js';
 
 /**
@@ -200,12 +201,7 @@ export function closestTrace(points, k) {
  * @returns {{values: number[]} | {error: 'format'|'range'|'count'}}
  */
 export function parseMedianStream(text) {
-  const tokens = text.split(/[\s,]+/).filter(Boolean);
-  if (tokens.length === 0 || !tokens.every((s) => /^\d+$/.test(s))) return { error: 'format' };
-  const values = tokens.map(Number);
-  if (values.some((v) => v > MAX_VALUE)) return { error: 'range' };
-  if (values.length > MAX_STREAM) return { error: 'count' };
-  return { values };
+  return parseValueList(text, { max: MAX_VALUE, maxN: MAX_STREAM });
 }
 
 /**

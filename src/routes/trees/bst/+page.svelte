@@ -1,4 +1,5 @@
 <script>
+  import { createFieldGuard, enterField } from '$lib/components/numeric-field.js';
   import ChipList from '$lib/components/chip-list.svelte';
   import CodePanel from '$lib/components/code-panel.svelte';
   import LessonLayout from '$lib/components/lesson-layout.svelte';
@@ -54,9 +55,14 @@
   /** @param {unknown} v */
   const validKey = (v) => typeof v === 'number' && Number.isInteger(v) && v >= 0 && v <= 99;
 
+  const keyField = createFieldGuard();
+
   function commitKey() {
-    if (validKey(draft)) key = /** @type {number} */ (draft);
-    else draft = key;
+    if (keyField.commit(validKey(draft))) key = /** @type {number} */ (draft);
+    else {
+      draft = key;
+      say(m.keyError);
+    }
   }
 
   /** Replace the log and rebuild; `at` picks the frame to show. @param {BstOp[]} next @param {'first'|'last'|number} at */
@@ -70,7 +76,7 @@
 
   /** @param {BstOp['type']} type */
   function add(type) {
-    if (!validKey(draft)) {
+    if (keyField.refused() || !validKey(draft)) {
       draft = key;
       say(m.keyError);
       return;
@@ -202,7 +208,9 @@
 
 <LessonLayout lesson={m}>
   <!-- Enter in the key field submits the form, which inserts; the other buttons never submit. -->
+  <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
   <form
+    onkeydown={(e) => enterField(e, { key: () => add('insert') })}
     class="mb-4 flex flex-wrap items-end gap-4"
     onsubmit={(e) => {
       e.preventDefault();

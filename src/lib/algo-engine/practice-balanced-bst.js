@@ -7,6 +7,14 @@
  * costs one search walk. Rank is 1 plus the number of smaller keys.
  */
 
+import {
+  balanceFactor,
+  refreshHeight,
+  rollHeight,
+  rotateLeft,
+  rotateRight,
+} from './balanced-core.js';
+
 export const MAX_OPS = 40;
 export const MAX_LIVE_KEYS = 15;
 export const MIN_KEY = 0;
@@ -89,14 +97,6 @@ export const runnerPseudocode = [
 /** @param {TreeNode | null} n */
 const heightOf = (n) => (n ? n.height : 0);
 
-/** @param {TreeNode} n */
-function refresh(n) {
-  n.height = 1 + Math.max(heightOf(n.left), heightOf(n.right));
-}
-
-/** @param {TreeNode} n */
-const balanceOf = (n) => heightOf(n.left) - heightOf(n.right);
-
 /** A binary search tree that repairs its balance after each change when `balanced` is set. @param {boolean} balanced */
 function makeTree(balanced) {
   /** @type {TreeNode | null} */
@@ -104,41 +104,31 @@ function makeTree(balanced) {
   let rotations = 0;
 
   /** @param {TreeNode} n */
-  function rotateRight(n) {
-    const up = /** @type {TreeNode} */ (n.left);
-    n.left = up.right;
-    up.right = n;
-    refresh(n);
-    refresh(up);
+  function liftLeft(n) {
     rotations++;
-    return up;
+    return rotateRight(n);
   }
 
   /** @param {TreeNode} n */
-  function rotateLeft(n) {
-    const up = /** @type {TreeNode} */ (n.right);
-    n.right = up.left;
-    up.left = n;
-    refresh(n);
-    refresh(up);
+  function liftRight(n) {
     rotations++;
-    return up;
+    return rotateLeft(n);
   }
 
   /** @param {TreeNode} n @returns {TreeNode} */
   function fix(n) {
-    refresh(n);
+    refreshHeight(n);
     if (!balanced) return n;
-    const bf = balanceOf(n);
+    const bf = balanceFactor(n);
     if (bf === 2) {
       const child = /** @type {TreeNode} */ (n.left);
-      if (balanceOf(child) < 0) n.left = rotateLeft(child);
-      return rotateRight(n);
+      if (balanceFactor(child) < 0) n.left = liftRight(child);
+      return liftLeft(n);
     }
     if (bf === -2) {
       const child = /** @type {TreeNode} */ (n.right);
-      if (balanceOf(child) > 0) n.right = rotateRight(child);
-      return rotateLeft(n);
+      if (balanceFactor(child) > 0) n.right = liftLeft(child);
+      return liftRight(n);
     }
     return n;
   }
@@ -196,13 +186,6 @@ function makeTree(balanced) {
       return copy(root);
     },
   };
-}
-
-/** One coin-flip tower height: 1 plus the heads before the first tails, capped. @param {() => number} rand */
-function rollHeight(rand) {
-  let height = 1;
-  while (height < MAX_TOWER && rand() < 0.5) height++;
-  return height;
 }
 
 /** @param {SkipTower[]} towers @param {number} key */

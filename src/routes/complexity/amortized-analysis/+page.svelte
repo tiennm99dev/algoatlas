@@ -1,4 +1,5 @@
 <script>
+  import { wholeInRange } from '$lib/components/numeric-field.js';
   import ArrayStrip from '$lib/components/array-strip.svelte';
   import CodePanel from '$lib/components/code-panel.svelte';
   import DpTable from '$lib/components/dp-table.svelte';
@@ -43,16 +44,13 @@
     'potential',
   ]).map((v) => ({ value: v, label: m.methods[v] }));
 
-  /** @param {unknown} v @param {number} lo @param {number} hi */
-  const whole = (v, lo, hi) => typeof v === 'number' && Number.isInteger(v) && v >= lo && v <= hi;
-
   function rebuild() {
     notice = { text: '', at: -1 };
     player.load(counterTrace(k, ops));
   }
 
   function commitK() {
-    if (whole(kDraft, MIN_BITS, MAX_BITS)) {
+    if (wholeInRange(kDraft, MIN_BITS, MAX_BITS)) {
       k = /** @type {number} */ (kDraft);
       rebuild();
     } else {
@@ -62,7 +60,7 @@
   }
 
   function commitOps() {
-    if (whole(opsDraft, 1, MAX_OPS)) {
+    if (wholeInRange(opsDraft, 1, MAX_OPS)) {
       ops = /** @type {number} */ (opsDraft);
       rebuild();
     } else {

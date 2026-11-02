@@ -1,4 +1,5 @@
 <script>
+  import { wholeInRange } from '$lib/components/numeric-field.js';
   import ArrayStrip from '$lib/components/array-strip.svelte';
   import CodePanel from '$lib/components/code-panel.svelte';
   import LessonLayout from '$lib/components/lesson-layout.svelte';
@@ -65,9 +66,6 @@
 
   const techniqueOptions = TECHNIQUES.map((t) => ({ value: t, label: m.techniques[t] }));
 
-  /** @param {unknown} v @param {number} lo @param {number} hi */
-  const whole = (v, lo, hi) => typeof v === 'number' && Number.isInteger(v) && v >= lo && v <= hi;
-
   /** @param {string} text */
   function say(text) {
     notice = { text, at: player.index };
@@ -133,7 +131,7 @@
         : problem === 'max-window'
           ? [1, current.values.length]
           : [1, MAX_TARGET];
-    if (whole(targetDraft, lo, hi)) {
+    if (wholeInRange(targetDraft, lo, hi)) {
       setInput({ ...clone(current), target: /** @type {number} */ (targetDraft) });
     } else {
       targetDraft = current.target;
@@ -193,6 +191,7 @@
   /** @type {Record<VisualState, string>} */
   const stateNames = {
     '': '',
+    pruned: '',
     compare: m.states.read,
     swap: m.states.written,
     sorted: m.states.answer,
@@ -204,6 +203,7 @@
   /** @type {Record<VisualState, string>} */
   const markers = {
     '': '',
+    pruned: '',
     compare: m.markers.read,
     swap: m.markers.written,
     sorted: m.markers.answer,

@@ -1,4 +1,5 @@
 <script>
+  import { wholeInRange } from '$lib/components/numeric-field.js';
   import ArrayStrip from '$lib/components/array-strip.svelte';
   import CodePanel from '$lib/components/code-panel.svelte';
   import LessonLayout from '$lib/components/lesson-layout.svelte';
@@ -41,16 +42,13 @@
     label: m.methods[v],
   }));
 
-  /** @param {unknown} v @param {number} lo @param {number} hi */
-  const whole = (v, lo, hi) => typeof v === 'number' && Number.isInteger(v) && v >= lo && v <= hi;
-
   function rebuild() {
     notice = { text: '', at: -1 };
     player.load(appendTrace(n, charge));
   }
 
   function commitN() {
-    if (whole(nDraft, 1, MAX_APPENDS)) {
+    if (wholeInRange(nDraft, 1, MAX_APPENDS)) {
       n = /** @type {number} */ (nDraft);
       rebuild();
     } else {
@@ -60,7 +58,7 @@
   }
 
   function commitCharge() {
-    if (whole(chargeDraft, MIN_CHARGE, MAX_CHARGE)) {
+    if (wholeInRange(chargeDraft, MIN_CHARGE, MAX_CHARGE)) {
       charge = /** @type {number} */ (chargeDraft);
       rebuild();
     } else {

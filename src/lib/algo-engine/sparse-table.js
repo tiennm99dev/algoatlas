@@ -9,6 +9,8 @@
  * operation, where op(x, x) = x, such as min, max or gcd. Sum is included to show the failure.
  */
 
+import { parseValueList } from './parse-values.js';
+
 export const MAX_N = 16;
 export const MIN_VALUE = 0;
 export const MAX_VALUE = 99;
@@ -83,15 +85,7 @@ export function foldRange(a, l, r, op) {
  * @returns {{ values: number[] } | { error: 'format' | 'range' | 'count' }}
  */
 export function parseSparseValues(text) {
-  const tokens = text
-    .replace(/[−–]/g, '-')
-    .split(/[\s,]+/)
-    .filter(Boolean);
-  if (tokens.length === 0 || !tokens.every((s) => /^-?\d+$/.test(s))) return { error: 'format' };
-  const values = tokens.map(Number);
-  if (values.some((v) => v < MIN_VALUE || v > MAX_VALUE)) return { error: 'range' };
-  if (values.length > MAX_N) return { error: 'count' };
-  return { values };
+  return parseValueList(text, { min: MIN_VALUE, max: MAX_VALUE, maxN: MAX_N, signed: true });
 }
 
 /**

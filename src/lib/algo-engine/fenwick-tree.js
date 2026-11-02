@@ -9,6 +9,8 @@
  * - build: push each t[i] once into its parent t[i + lowbit(i)], which takes O(n).
  */
 
+import { parseValueList } from './parse-values.js';
+
 export const MAX_N = 16;
 export const MIN_VALUE = -99;
 export const MAX_VALUE = 99;
@@ -72,15 +74,7 @@ export const blockStart = (i) => i - lowbit(i) + 1;
  * @returns {{ values: number[] } | { error: 'format' | 'range' | 'count' }}
  */
 export function parseFenwickValues(text) {
-  const tokens = text
-    .replace(/[−–]/g, '-')
-    .split(/[\s,]+/)
-    .filter(Boolean);
-  if (tokens.length === 0 || !tokens.every((s) => /^-?\d+$/.test(s))) return { error: 'format' };
-  const values = tokens.map(Number);
-  if (values.some((v) => v < MIN_VALUE || v > MAX_VALUE)) return { error: 'range' };
-  if (values.length > MAX_N) return { error: 'count' };
-  return { values };
+  return parseValueList(text, { min: MIN_VALUE, max: MAX_VALUE, maxN: MAX_N, signed: true });
 }
 
 /**

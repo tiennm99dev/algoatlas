@@ -99,7 +99,7 @@
     active: 'active',
     frontier: 'frontier',
     expanded: 'visited',
-    pruned: '',
+    pruned: 'pruned',
     over: '',
   };
 
@@ -155,7 +155,7 @@
     ['frontier', m.legend.frontier],
     ['visited', m.legend.expanded],
     ['path', m.legend.path],
-    ['', `${m.markers.pruned} ${m.legend.pruned}`],
+    ['pruned', `${m.markers.pruned} ${m.legend.pruned}`],
   ]);
 </script>
 

@@ -20,7 +20,7 @@
   } from '$lib/algo-engine/n-queens-sudoku.js';
   import { en as m } from '$lib/lessons/n-queens-sudoku/copy.en.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
-  import PuzzleBoard from './puzzle-board.svelte';
+  import PuzzleBoard from '$lib/components/puzzle-board.svelte';
 
   /** @typedef {import('$lib/algo-engine/n-queens-sudoku.js').QueensGoal} QueensGoal */
   /** @typedef {import('$lib/algo-engine/n-queens-sudoku.js').QueensFrame} QueensFrame */

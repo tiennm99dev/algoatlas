@@ -1,4 +1,5 @@
 <script>
+  import { createFieldGuard, enterField, wholeInRange } from '$lib/components/numeric-field.js';
   import ChipList from '$lib/components/chip-list.svelte';
   import CodePanel from '$lib/components/code-panel.svelte';
   import LessonLayout from '$lib/components/lesson-layout.svelte';
@@ -78,25 +79,31 @@
     setOps(ops, 'last');
   }
 
+  const valueField = createFieldGuard();
+
   function commitValue() {
     const v = valueDraft;
-    if (typeof v === 'number' && Number.isInteger(v) && v >= MIN_VALUE && v <= MAX_VALUE) value = v;
-    else valueDraft = value;
+    if (valueField.commit(wholeInRange(v, MIN_VALUE, MAX_VALUE))) {
+      value = /** @type {number} */ (v);
+    } else {
+      valueDraft = value;
+      say(m.valueError);
+    }
   }
 
   /** @param {'push-front'|'push-back'} type */
   function insert(type) {
     const v = valueDraft;
-    if (!(typeof v === 'number' && Number.isInteger(v) && v >= MIN_VALUE && v <= MAX_VALUE)) {
+    if (valueField.refused() || !wholeInRange(v, MIN_VALUE, MAX_VALUE)) {
       valueDraft = value;
       say(m.valueError);
       return;
     }
-    value = v;
+    value = /** @type {number} */ (v);
     if (ops.length >= MAX_OPS) return say(m.logFull);
     if (finalFrame.length >= MAX_NODES) return say(m.full);
     preset = '';
-    setOps([...ops, { type, value: v }], 'op');
+    setOps([...ops, { type, value: /** @type {number} */ (v) }], 'op');
   }
 
   function remove() {
@@ -213,7 +220,9 @@
 </script>
 
 <LessonLayout lesson={m}>
+  <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
   <form
+    onkeydown={(e) => enterField(e, { value: () => insert('push-back') })}
     class="mb-4 flex flex-wrap items-end gap-4"
     onsubmit={(e) => {
       e.preventDefault();

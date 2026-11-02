@@ -5,8 +5,8 @@
  *
  * `active` is the element acted on now, `frontier` queued or pending work, `visited` finished
  * but not final, `sorted` final or found, `compare` and `swap` a read and a write, `path` the
- * answer path. `''` is the plain resting state.
- * @typedef {'' | 'compare' | 'swap' | 'sorted' | 'active' | 'frontier' | 'visited' | 'path'} VisualState
+ * answer path, `pruned` a branch cut off, greyed out. `''` is the plain resting state.
+ * @typedef {'' | 'compare' | 'swap' | 'sorted' | 'active' | 'frontier' | 'visited' | 'path' | 'pruned'} VisualState
  */
 
 /** @type {Record<VisualState, string>} */
@@ -19,6 +19,7 @@ export const STATE_FILL = {
   frontier: 'fill-state-frontier',
   visited: 'fill-state-visited',
   path: 'fill-state-path',
+  pruned: 'fill-slate-200',
 };
 
 /** @type {Record<VisualState, string>} */
@@ -31,6 +32,7 @@ export const STATE_BG = {
   frontier: 'bg-state-frontier',
   visited: 'bg-state-visited',
   path: 'bg-state-path',
+  pruned: 'bg-slate-200',
 };
 
 /** Text on each fill, chosen to reach 4.5:1. @type {Record<VisualState, string>} */
@@ -43,11 +45,13 @@ export const STATE_TEXT = {
   frontier: 'fill-slate-900',
   visited: 'fill-slate-900',
   path: 'fill-slate-900',
+  pruned: 'fill-slate-600',
 };
 
 /** Outline for a shape in each state: resting shapes get a light edge, marked ones a dark one. */
 /** @param {VisualState} state */
 export function stateStroke(state) {
+  if (state === 'pruned') return 'stroke-slate-400';
   return state === '' ? 'stroke-slate-400' : 'stroke-slate-900';
 }
 

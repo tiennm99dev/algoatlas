@@ -5,9 +5,9 @@ description: Write AlgoAtlas lessons for one curriculum topic (chapter): engine 
 
 # Write AlgoAtlas lessons for one topic
 
-You fill every stub of **one topic** (a chapter of `src/lib/curriculum/dsa.json`). Another agent
-may be writing a different topic in a parallel worktree at the same time, so you stay strictly
-inside the files you own. Done means `npm run stubs -- <topic>` reports 0 and every batch check
+You fill every stub of **one topic** (a chapter of `src/lib/curriculum/dsa.json`). You work on
+`main` in the shared checkout, one writer or reviewer at a time, so you stay strictly inside the
+files you own. Done means `npm run stubs -- <topic>` reports 0 and every batch check
 below passes.
 
 ## 1. Read first
@@ -152,10 +152,13 @@ House rules:
 
 - Fields commit on `change` and keep the last valid value when emptied or invalid. Every
   refusal (bad key, full structure) is a notice tied to `player.index`, shown in place of the
-  narration, and the field reverts.
+  narration, and the field reverts. `change` fires just before the click or Enter that asks for
+  an operation, so use `numeric-field.js`: `createFieldGuard()` per field (`guard.commit(ok)` in
+  the change handler, `guard.refused()` first in the operation), `enterField(e, actions)` on the
+  form's `onkeydown` and `wholeInRange`. A bad value then refuses the operation and says why.
 - State is never colour-only: every coloured state also has a marker, label or text, and the
   legend shows `marker label` with `size-3 rounded-sm` swatches.
-- Palette meanings: `active` acted on now, `frontier` queued or pending, `visited` finished but
+- Palette meanings: `pruned` a branch cut off (grey), `active` acted on now, `frontier` queued or pending, `visited` finished but
   not final, `sorted` final or found, `compare` a read, `swap` a write, `path` the answer path.
 - Keyboard: everything the pointer can do, the keyboard can do. Buttons use `aria-disabled`
   instead of `disabled` when focus would otherwise be lost.
@@ -190,6 +193,7 @@ very next curriculum lesson and name it by its title (`lesson-content.test.js` c
 | `grid-board` | editable grids (walls, terrain) | see the grid lessons |
 | `segmented-control` | a radio toggle (algorithm, variant, tool) | `legend`, `name`, `options`, `bind:value` |
 | `practice-block` | answer-checked questions | `exercises`, `id` (the lesson slug), `title?` |
+| `puzzle-board` | a chess or Sudoku board of buttons | `size`, `boxSide?`, `checkered?`, `cellOf`, `ariaLabel`, `onselect` |
 
 `graph-editor.js` (pure edit operations, plus `letter(id)` for vertex names A, B, … and
 `graphShape(nodes, edges, weights?)`, the string a page compares to decide whether an edit
@@ -198,6 +202,11 @@ changed what its trace depends on) and `tree-layout.js` (`layoutForest`, `heapFo
 in the array layout: `leftOf`, `rightOf`, `parentOf`, `depthOf`, `filled`, `childrenOf`,
 `lastFilled`, and `parseSlots`/`formatSlots` for a tree typed in array order) and
 `item-heap.js` (`makeHeap(before)`, a binary heap over any items that counts comparisons).
+Engines read a typed list of whole numbers with `parse-values.js` (`parseValueList`), never a
+copy. Balanced trees share `balanced-core.js` (`rotateLeft`, `rotateRight`, `refreshHeight`,
+`balanceFactor`, and the skip list's `rollHeight` and `MAX_TOWER`), and segment trees
+`segment-spans.js` (`treeSpans`). `tree-view` keeps a readable minimum width and scrolls inside
+its card, so a wide tree never shrinks its labels.
 Edge-list shortest-path engines share `src/lib/algo-engine/weighted-edges.js`: `indexEdges(ids,
 edges)` numbers the vertices and lists the edges by index, and `cycleFrom(parent, start, n)`
 reads a negative cycle out of the parent links. Graph engines build adjacency with
@@ -295,7 +304,7 @@ npm run check                   # zero errors and zero warnings
 npm test
 npm run build
 npm run stubs -- <topic>        # must report 0 stubs
-git diff --name-only main...HEAD   # only your owned paths (section 2)
+git status --short              # only your owned paths (section 2)
 ```
 
 When you were given only some lessons of a topic that has later parts, the stubs gate is

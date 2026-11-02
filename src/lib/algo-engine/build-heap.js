@@ -7,6 +7,8 @@
  * bottom-up work is cheap exactly where most nodes are: near the leaves.
  */
 
+import { parseValueList } from './parse-values.js';
+
 /**
  * @typedef {'bottom-up'|'one-by-one'} BuildMethod
  * @typedef {'random'|'ascending'|'descending'} BuildPreset
@@ -86,12 +88,7 @@ export function levelCaps(n, method) {
  * @returns {{values: number[]} | {error: 'format'|'range'|'count'}}
  */
 export function parseBuildValues(text) {
-  const tokens = text.split(/[\s,]+/).filter(Boolean);
-  if (tokens.length === 0 || !tokens.every((s) => /^\d+$/.test(s))) return { error: 'format' };
-  const values = tokens.map(Number);
-  if (values.some((v) => v < MIN_VALUE || v > MAX_VALUE)) return { error: 'range' };
-  if (values.length < MIN_N || values.length > MAX_N) return { error: 'count' };
-  return { values };
+  return parseValueList(text, { min: MIN_VALUE, max: MAX_VALUE, minN: MIN_N, maxN: MAX_N });
 }
 
 /**

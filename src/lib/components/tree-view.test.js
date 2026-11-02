@@ -149,3 +149,23 @@ describe('UnionFindForest', () => {
     expect(document.querySelectorAll('svg')).toHaveLength(1);
   });
 });
+
+describe('wide trees and pruned branches', () => {
+  /** @param {number} n */
+  const row = (n) => Array.from({ length: n }, (_, i) => ({ id: i, label: String(i) }));
+
+  it('keeps a readable minimum width however wide the tree is', () => {
+    render(TreeView, { roots: [{ id: 'r', label: 'r', children: row(71) }], ariaLabel: 'wide' });
+    const svg = /** @type {SVGSVGElement} */ (document.querySelector('svg'));
+    expect(parseFloat(svg.style.minWidth)).toBeGreaterThan(71 * 44 * 0.8);
+  });
+
+  it('greys out a pruned node and dashes the edge to it', () => {
+    render(TreeView, {
+      roots: [{ id: 'r', label: 'r', children: [{ id: 'c', label: 'c', state: 'pruned' }] }],
+      ariaLabel: 'cut',
+    });
+    expect(document.querySelector('circle.fill-slate-200')).not.toBeNull();
+    expect(document.querySelector('line')?.getAttribute('stroke-dasharray')).toBe('4 3');
+  });
+});

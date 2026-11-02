@@ -1,4 +1,5 @@
 <script>
+  import { enterField, wholeInRange } from '$lib/components/numeric-field.js';
   import ArrayStrip from '$lib/components/array-strip.svelte';
   import ChipList from '$lib/components/chip-list.svelte';
   import CodePanel from '$lib/components/code-panel.svelte';
@@ -59,9 +60,6 @@
   const s = $derived(frame.blockSize);
   const narration = $derived(notice.at === player.index ? notice.text : m.describeBlocks(frame));
 
-  /** @param {unknown} v @param {number} lo @param {number} hi */
-  const whole = (v, lo, hi) => typeof v === 'number' && Number.isInteger(v) && v >= lo && v <= hi;
-
   /** @param {string} text */
   function say(text) {
     notice = { text, at: player.index };
@@ -102,7 +100,7 @@
   }
 
   function commitBlockSize() {
-    if (whole(sDraft, 1, n)) {
+    if (wholeInRange(sDraft, 1, n)) {
       blockSize = /** @type {number} */ (sDraft);
       rebuild(ops, 'op');
     } else {
@@ -119,8 +117,8 @@
   /** @returns {boolean} Whether both fields hold a valid range. */
   function commitRange() {
     if (
-      whole(lDraft, 0, n - 1) &&
-      whole(rDraft, 0, n - 1) &&
+      wholeInRange(lDraft, 0, n - 1) &&
+      wholeInRange(rDraft, 0, n - 1) &&
       /** @type {number} */ (lDraft) <= /** @type {number} */ (rDraft)
     ) {
       l = /** @type {number} */ (lDraft);
@@ -135,7 +133,7 @@
 
   /** @returns {boolean} Whether the field held a valid index. */
   function commitIndex() {
-    if (whole(indexDraft, 0, n - 1)) {
+    if (wholeInRange(indexDraft, 0, n - 1)) {
       index = /** @type {number} */ (indexDraft);
       return true;
     }
@@ -146,7 +144,7 @@
 
   /** @returns {boolean} Whether the field held a valid value. */
   function commitValue() {
-    if (whole(valueDraft, MIN_VALUE, MAX_VALUE)) {
+    if (wholeInRange(valueDraft, MIN_VALUE, MAX_VALUE)) {
       newValue = /** @type {number} */ (valueDraft);
       return true;
     }
@@ -179,22 +177,6 @@
     index: setOp,
     value: setOp,
   });
-
-  /**
-   * Enter commits the field through its own change handler, then runs that field's action, unless
-   * the commit raised a notice. The browser would otherwise submit the form after the field has
-   * reverted, which hides the refusal behind an operation nobody asked for.
-   * @param {KeyboardEvent} e
-   */
-  function enterField(e) {
-    const field = e.target;
-    if (e.key !== 'Enter' || !(field instanceof HTMLInputElement) || field.type === 'radio') return;
-    e.preventDefault();
-    const before = notice;
-    field.blur();
-    field.focus();
-    if (notice === before) ENTER_ACTIONS[field.name]?.();
-  }
 
   function undo() {
     if (ops.length > 0) rebuild(ops.slice(0, -1), 'end');
@@ -277,7 +259,7 @@
 <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 <form
   class="mb-4 flex flex-wrap items-end gap-4"
-  onkeydown={enterField}
+  onkeydown={(e) => enterField(e, ENTER_ACTIONS, () => notice)}
   onsubmit={(e) => {
     e.preventDefault();
     queryOp();

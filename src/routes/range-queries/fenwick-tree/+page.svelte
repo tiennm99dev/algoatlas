@@ -1,4 +1,5 @@
 <script>
+  import { enterField, wholeInRange } from '$lib/components/numeric-field.js';
   import ChipList from '$lib/components/chip-list.svelte';
   import CodePanel from '$lib/components/code-panel.svelte';
   import LessonLayout from '$lib/components/lesson-layout.svelte';
@@ -52,9 +53,6 @@
   const n = $derived(frame.t.length - 1);
   const narration = $derived(notice.at === player.index ? notice.text : m.describe(frame, n));
 
-  /** @param {unknown} v @param {number} lo @param {number} hi */
-  const whole = (v, lo, hi) => typeof v === 'number' && Number.isInteger(v) && v >= lo && v <= hi;
-
   /** @param {string} text */
   function say(text) {
     notice = { text, at: player.index };
@@ -93,7 +91,7 @@
 
   /** @returns {boolean} Whether the field held a valid value. */
   function commitIndex() {
-    if (whole(indexDraft, 1, n)) {
+    if (wholeInRange(indexDraft, 1, n)) {
       index = /** @type {number} */ (indexDraft);
       return true;
     }
@@ -104,7 +102,7 @@
 
   /** @returns {boolean} Whether the field held a valid value. */
   function commitFrom() {
-    if (whole(fromDraft, 1, n)) {
+    if (wholeInRange(fromDraft, 1, n)) {
       from = /** @type {number} */ (fromDraft);
       return true;
     }
@@ -115,7 +113,7 @@
 
   /** @returns {boolean} Whether the field held a valid value. */
   function commitDelta() {
-    if (whole(deltaDraft, MIN_VALUE, MAX_VALUE)) {
+    if (wholeInRange(deltaDraft, MIN_VALUE, MAX_VALUE)) {
       delta = /** @type {number} */ (deltaDraft);
       return true;
     }
@@ -168,22 +166,6 @@
     from: rangeOp,
   });
 
-  /**
-   * Enter commits the field through its own change handler, then runs that field's action, unless
-   * the commit raised a notice. The browser would otherwise submit the form after the field has
-   * reverted, which hides the refusal behind an operation nobody asked for.
-   * @param {KeyboardEvent} e
-   */
-  function enterField(e) {
-    const field = e.target;
-    if (e.key !== 'Enter' || !(field instanceof HTMLInputElement) || field.type === 'radio') return;
-    e.preventDefault();
-    const before = notice;
-    field.blur();
-    field.focus();
-    if (notice === before) ENTER_ACTIONS[field.name]?.();
-  }
-
   /** @param {number} i */
   function pick(i) {
     index = indexDraft = i;
@@ -218,7 +200,12 @@
   /** @param {number} i */
   function labelOf(i) {
     const s = stateOf(i);
-    return m.cellLabel(i, frame.t[i], blockStart(i), s ? m.states[s] : '');
+    return m.cellLabel(
+      i,
+      frame.t[i],
+      blockStart(i),
+      s ? m.states[/** @type {keyof typeof m.states} */ (s)] : '',
+    );
   }
 
   // The jumps made so far by this operation, plus the one being taken now.
@@ -259,7 +246,7 @@
   <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
   <form
     class="mb-4 flex flex-wrap items-end gap-4"
-    onkeydown={enterField}
+    onkeydown={(e) => enterField(e, ENTER_ACTIONS, () => notice)}
     onsubmit={(e) => {
       e.preventDefault();
       prefixOp();

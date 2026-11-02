@@ -1,4 +1,5 @@
 <script>
+  import { createFieldGuard, enterField } from '$lib/components/numeric-field.js';
   import ChipList from '$lib/components/chip-list.svelte';
   import CodePanel from '$lib/components/code-panel.svelte';
   import LessonLayout from '$lib/components/lesson-layout.svelte';
@@ -50,14 +51,22 @@
   /** @param {unknown} v */
   const valid = (v) => typeof v === 'number' && Number.isInteger(v) && v >= 0 && v < N;
 
+  const elementField = createFieldGuard();
+
   function commitA() {
-    if (valid(draftA)) a = /** @type {number} */ (draftA);
-    else draftA = a;
+    if (elementField.commit(valid(draftA))) a = /** @type {number} */ (draftA);
+    else {
+      draftA = a;
+      say(m.elementError);
+    }
   }
 
   function commitB() {
-    if (valid(draftB)) b = /** @type {number} */ (draftB);
-    else draftB = b;
+    if (elementField.commit(valid(draftB))) b = /** @type {number} */ (draftB);
+    else {
+      draftB = b;
+      say(m.elementError);
+    }
   }
 
   /** @param {DsuOp[]} next @param {'first'|'last'|'new'} at */
@@ -83,7 +92,7 @@
   /** @param {DsuOp['type']} type */
   function add(type) {
     const needsB = type !== 'find';
-    if (!valid(draftA) || (needsB && !valid(draftB))) {
+    if (elementField.refused() || !valid(draftA) || (needsB && !valid(draftB))) {
       draftA = a;
       draftB = b;
       say(m.elementError);
@@ -150,7 +159,9 @@
 
 <LessonLayout lesson={m}>
   <!-- Enter in a field submits the form, which runs union; the other buttons never submit. -->
+  <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
   <form
+    onkeydown={(e) => enterField(e, { a: () => add('union'), b: () => add('union') })}
     class="mb-4 flex flex-wrap items-end gap-4"
     onsubmit={(e) => {
       e.preventDefault();

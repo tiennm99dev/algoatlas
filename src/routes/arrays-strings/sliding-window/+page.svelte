@@ -1,4 +1,5 @@
 <script>
+  import { wholeInRange } from '$lib/components/numeric-field.js';
   import ArrayStrip from '$lib/components/array-strip.svelte';
   import CodePanel from '$lib/components/code-panel.svelte';
   import LessonLayout from '$lib/components/lesson-layout.svelte';
@@ -45,9 +46,6 @@
     label: m.modes[v],
   }));
 
-  /** @param {unknown} v @param {number} lo @param {number} hi */
-  const whole = (v, lo, hi) => typeof v === 'number' && Number.isInteger(v) && v >= lo && v <= hi;
-
   /** @param {string} text */
   function say(text) {
     notice = { text, at: player.index };
@@ -78,7 +76,7 @@
   }
 
   function commitK() {
-    if (whole(kDraft, 1, values.length)) {
+    if (wholeInRange(kDraft, 1, values.length)) {
       k = /** @type {number} */ (kDraft);
       rebuild();
     } else {
@@ -88,7 +86,7 @@
   }
 
   function commitS() {
-    if (whole(sDraft, 1, MAX_TARGET)) {
+    if (wholeInRange(sDraft, 1, MAX_TARGET)) {
       s = /** @type {number} */ (sDraft);
       rebuild();
     } else {
@@ -123,6 +121,7 @@
   /** @type {Record<VisualState, string>} */
   const stateNames = {
     '': '',
+    pruned: '',
     compare: m.states.leave,
     swap: m.states.enter,
     sorted: m.states.best,

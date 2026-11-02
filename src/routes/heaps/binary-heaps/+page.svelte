@@ -1,4 +1,5 @@
 <script>
+  import { createFieldGuard, enterField } from '$lib/components/numeric-field.js';
   import ChipList from '$lib/components/chip-list.svelte';
   import CodePanel from '$lib/components/code-panel.svelte';
   import HeapView from '$lib/components/heap-view.svelte';
@@ -59,9 +60,14 @@
   const validValue = (v) =>
     typeof v === 'number' && Number.isInteger(v) && v >= MIN_VALUE && v <= MAX_VALUE;
 
+  const valueField = createFieldGuard();
+
   function commitValue() {
-    if (validValue(draft)) value = /** @type {number} */ (draft);
-    else draft = value;
+    if (valueField.commit(validValue(draft))) value = /** @type {number} */ (draft);
+    else {
+      draft = value;
+      say(m.valueError);
+    }
   }
 
   /** Replace the log and rebuild; `at` is the frame to show. @param {HeapOp[]} next @param {'first'|'last'|'new'} at */
@@ -76,7 +82,7 @@
   }
 
   function insert() {
-    if (!validValue(draft)) {
+    if (valueField.refused() || !validValue(draft)) {
       draft = value;
       say(m.valueError);
       return;
@@ -150,7 +156,9 @@
 
 <LessonLayout lesson={m}>
   <!-- Enter in the value field submits the form, which inserts; the other buttons never submit. -->
+  <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
   <form
+    onkeydown={(e) => enterField(e, { value: () => insert() })}
     class="mb-4 flex flex-wrap items-end gap-4"
     onsubmit={(e) => {
       e.preventDefault();

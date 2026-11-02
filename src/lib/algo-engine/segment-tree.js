@@ -9,6 +9,9 @@
  * The fully-inside nodes are the range's canonical cover: at most two per level.
  */
 
+import { treeSpans } from './segment-spans.js';
+import { parseValueList } from './parse-values.js';
+
 export const MAX_N = 12;
 export const MIN_VALUE = -99;
 export const MAX_VALUE = 99;
@@ -86,25 +89,7 @@ export function foldRange(a, l, r, merge) {
   return acc;
 }
 
-/**
- * Every node of the tree over n values, in pre-order.
- * @param {number} n
- * @returns {SegSpan[]}
- */
-export function treeSpans(n) {
-  /** @type {SegSpan[]} */
-  const out = [];
-  /** @param {number} v @param {number} lo @param {number} hi */
-  const go = (v, lo, hi) => {
-    out.push({ v, lo, hi });
-    if (lo === hi) return;
-    const mid = Math.floor((lo + hi) / 2);
-    go(2 * v, lo, mid);
-    go(2 * v + 1, mid + 1, hi);
-  };
-  go(1, 0, n - 1);
-  return out;
-}
+export { treeSpans };
 
 /**
  * The nodes that answer a query: the ones fully inside [l, r] whose parents are not.
@@ -135,15 +120,7 @@ export function canonicalCover(n, l, r) {
  * @returns {{ values: number[] } | { error: 'format' | 'range' | 'count' }}
  */
 export function parseSegmentValues(text) {
-  const tokens = text
-    .replace(/[−–]/g, '-')
-    .split(/[\s,]+/)
-    .filter(Boolean);
-  if (tokens.length === 0 || !tokens.every((s) => /^-?\d+$/.test(s))) return { error: 'format' };
-  const values = tokens.map(Number);
-  if (values.some((v) => v < MIN_VALUE || v > MAX_VALUE)) return { error: 'range' };
-  if (values.length > MAX_N) return { error: 'count' };
-  return { values };
+  return parseValueList(text, { min: MIN_VALUE, max: MAX_VALUE, maxN: MAX_N, signed: true });
 }
 
 /**

@@ -1,4 +1,5 @@
 <script>
+  import { createFieldGuard, enterField } from '$lib/components/numeric-field.js';
   import ChipList from '$lib/components/chip-list.svelte';
   import CodePanel from '$lib/components/code-panel.svelte';
   import LessonLayout from '$lib/components/lesson-layout.svelte';
@@ -70,14 +71,19 @@
   const validKey = (v) =>
     typeof v === 'number' && Number.isInteger(v) && v >= MIN_KEY && v <= MAX_KEY;
 
+  const keyField = createFieldGuard();
+
   function commitKey() {
-    if (validKey(draft)) key = /** @type {number} */ (draft);
-    else draft = key;
+    if (keyField.commit(validKey(draft))) key = /** @type {number} */ (draft);
+    else {
+      draft = key;
+      say(m.keyError);
+    }
   }
 
   /** @param {BOp['type']} type */
   function add(type) {
-    if (!validKey(draft)) {
+    if (keyField.refused() || !validKey(draft)) {
       draft = key;
       say(m.keyError);
       return;
@@ -209,7 +215,9 @@
 
 <LessonLayout lesson={m}>
   <!-- Enter in the key field submits the form, which inserts; the other buttons never submit. -->
+  <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
   <form
+    onkeydown={(e) => enterField(e, { key: () => add('insert') })}
     class="mb-4 flex flex-wrap items-end gap-4"
     onsubmit={(e) => {
       e.preventDefault();
@@ -264,6 +272,19 @@
   <div class="grid gap-4 lg:grid-cols-[1fr_22rem]">
     <div class="flex min-w-0 flex-col gap-4 lg:col-start-1 lg:row-start-1">
       <div class="rounded-xl border border-slate-200 bg-white p-4">
+        <ul class="mb-3 flex flex-wrap gap-4 text-xs text-slate-600">
+          {#each LEGEND as l (l)}
+            <li class="flex items-center gap-1.5">
+              <span class="size-3 rounded-sm border border-slate-700 {STATE_BG[ROLE_STATE[l]]}"
+              ></span>
+              {m.legend[l]}
+            </li>
+          {/each}
+          <li class="flex items-center gap-1.5">
+            <span class="size-3 rounded-sm border border-slate-700 bg-state-active"></span>
+            <span class="underline">{m.legend.moved}</span>
+          </li>
+        </ul>
         {#if drawn.length === 0}
           <p class="py-6 text-center text-sm text-slate-500">{m.emptyTree}</p>
         {:else}
@@ -344,19 +365,6 @@
             </svg>
           </ScrollFrame>
         {/if}
-        <ul class="mt-3 flex flex-wrap gap-4 text-xs text-slate-600">
-          {#each LEGEND as l (l)}
-            <li class="flex items-center gap-1.5">
-              <span class="size-3 rounded-sm border border-slate-700 {STATE_BG[ROLE_STATE[l]]}"
-              ></span>
-              {m.legend[l]}
-            </li>
-          {/each}
-          <li class="flex items-center gap-1.5">
-            <span class="size-3 rounded-sm border border-slate-700 bg-state-active"></span>
-            <span class="underline">{m.legend.moved}</span>
-          </li>
-        </ul>
       </div>
       <p
         class="min-h-12 rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-800"

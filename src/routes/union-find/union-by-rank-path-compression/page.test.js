@@ -157,6 +157,9 @@ describe('union by rank and path compression lesson', () => {
     render();
     commit(field('a'), '20');
     expect(field('a').value).toBe('0');
+    // The first click follows the refused value, so it is refused too and adds nothing.
+    click(buttonByText('Find a'));
+    expect(narration()).toBe(m.elementError);
     for (let i = 0; i < 6; i++) click(buttonByText('Find a'));
     expect(narration()).toBe(m.logFull);
     click(buttonByText('Undo last'));

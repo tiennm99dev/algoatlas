@@ -1,4 +1,5 @@
 <script>
+  import { wholeInRange } from '$lib/components/numeric-field.js';
   import ArrayStrip from '$lib/components/array-strip.svelte';
   import CodePanel from '$lib/components/code-panel.svelte';
   import LessonLayout from '$lib/components/lesson-layout.svelte';
@@ -47,9 +48,6 @@
     label: m.modes[v],
   }));
 
-  /** @param {unknown} v @param {number} lo @param {number} hi */
-  const whole = (v, lo, hi) => typeof v === 'number' && Number.isInteger(v) && v >= lo && v <= hi;
-
   /** @param {string} text */
   function say(text) {
     notice = { text, at: player.index };
@@ -73,7 +71,7 @@
   }
 
   function commitTarget() {
-    if (whole(targetDraft, 2 * MIN_VALUE, 2 * MAX_VALUE)) {
+    if (wholeInRange(targetDraft, 2 * MIN_VALUE, 2 * MAX_VALUE)) {
       target = /** @type {number} */ (targetDraft);
       rebuild();
     } else {
@@ -83,7 +81,7 @@
   }
 
   function commitPivot() {
-    if (whole(pivotDraft, MIN_VALUE, MAX_VALUE)) {
+    if (wholeInRange(pivotDraft, MIN_VALUE, MAX_VALUE)) {
       pivot = /** @type {number} */ (pivotDraft);
       rebuild();
     } else {

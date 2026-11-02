@@ -12,6 +12,8 @@
  *   slides out of the window.
  */
 
+import { parseValueList } from './parse-values.js';
+
 export const MAX_N = 12;
 export const MIN_VALUE = 1;
 export const MAX_VALUE = 99;
@@ -150,12 +152,7 @@ export function monoTrace(mode, items, k = 0) {
  * @returns {{ values: number[] } | { error: 'format' | 'range' | 'count' }}
  */
 export function parseMonoValues(text) {
-  const tokens = text.split(/[\s,]+/).filter(Boolean);
-  if (tokens.length === 0 || !tokens.every((t) => /^\d+$/.test(t))) return { error: 'format' };
-  const values = tokens.map(Number);
-  if (values.some((v) => v < MIN_VALUE || v > MAX_VALUE)) return { error: 'range' };
-  if (values.length > MAX_N) return { error: 'count' };
-  return { values };
+  return parseValueList(text, { min: MIN_VALUE, max: MAX_VALUE, maxN: MAX_N });
 }
 
 /**

@@ -1,8 +1,8 @@
 <script>
-  import ScrollFrame from '$lib/components/scroll-frame.svelte';
-  import { STATE_FILL, STATE_TEXT, stateStroke } from '$lib/components/visual-state.js';
+  import ScrollFrame from './scroll-frame.svelte';
+  import { STATE_FILL, STATE_TEXT, stateStroke } from './visual-state.js';
 
-  /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */
+  /** @typedef {import('./visual-state.js').VisualState} VisualState */
 
   /**
    * A square board of buttons with row and column numbers, drawn as a chess board or with heavy

@@ -7,6 +7,8 @@
  * half is lo..mid.
  */
 
+import { parseValueList } from './parse-values.js';
+
 export const MIN_N = 2;
 export const MAX_N = 16;
 export const MAX_VALUE = 99;
@@ -58,12 +60,7 @@ export const inversionPseudocode = [
  * @returns {{values: number[]} | {error: 'format'|'range'|'count'}}
  */
 export function parseInversionValues(text) {
-  const tokens = text.split(/[\s,]+/).filter(Boolean);
-  if (tokens.length === 0 || !tokens.every((s) => /^\d+$/.test(s))) return { error: 'format' };
-  const values = tokens.map(Number);
-  if (values.some((v) => v > MAX_VALUE)) return { error: 'range' };
-  if (values.length < MIN_N || values.length > MAX_N) return { error: 'count' };
-  return { values };
+  return parseValueList(text, { max: MAX_VALUE, minN: MIN_N, maxN: MAX_N });
 }
 
 /** Every pair i < j with a[i] > a[j], checked one by one: the O(n²) oracle. @param {number[]} a */

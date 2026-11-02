@@ -100,7 +100,7 @@
     active: 'active',
     open: 'path',
     finished: 'visited',
-    pruned: '',
+    pruned: 'pruned',
     found: 'sorted',
     dead: 'visited',
   };
@@ -138,7 +138,7 @@
     ['path', m.legend.open],
     ['visited', m.legend.finished],
     ['sorted', `${m.markers.found} ${m.legend.found}`],
-    ['', `${m.markers.pruned} ${m.legend.pruned}`],
+    ['pruned', `${m.markers.pruned} ${m.legend.pruned}`],
   ]);
 </script>
 

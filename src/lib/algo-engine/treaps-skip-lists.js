@@ -6,11 +6,13 @@
  * pure and an undo replays the same structure.
  */
 
+import { MAX_TOWER, rollHeight } from './balanced-core.js';
+
 export const MAX_OPS = 24;
 export const MIN_KEY = 0;
 export const MAX_KEY = 99;
 export const MAX_SKIP_KEYS = 12;
-export const MAX_TOWER = 5;
+export { MAX_TOWER, rollHeight };
 export const MAX_TREAP_KEYS = 12;
 export const MAX_TREAP_OPS = 20;
 export const MIN_PRIORITY = 0;
@@ -102,16 +104,6 @@ export const treapPseudocode = [
  * @property {number} size
  * @property {number[]} lines
  */
-
-/**
- * One coin-flip tower height: 1 plus the heads before the first tails, capped.
- * @param {() => number} [rand]
- */
-export function rollHeight(rand = Math.random) {
-  let height = 1;
-  while (height < MAX_TOWER && rand() < 0.5) height++;
-  return height;
-}
 
 /**
  * @param {SkipOp[]} ops

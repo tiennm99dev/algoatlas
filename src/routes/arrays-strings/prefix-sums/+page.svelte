@@ -1,4 +1,5 @@
 <script>
+  import { wholeInRange } from '$lib/components/numeric-field.js';
   import ArrayStrip from '$lib/components/array-strip.svelte';
   import CodePanel from '$lib/components/code-panel.svelte';
   import LessonLayout from '$lib/components/lesson-layout.svelte';
@@ -53,9 +54,6 @@
     label: m.modes[v],
   }));
 
-  /** @param {unknown} v @param {number} lo @param {number} hi */
-  const whole = (v, lo, hi) => typeof v === 'number' && Number.isInteger(v) && v >= lo && v <= hi;
-
   /** @param {string} text */
   function say(text) {
     notice = { text, at: player.index };
@@ -91,8 +89,8 @@
   function commitRange() {
     const last = values.length - 1;
     if (
-      whole(lDraft, 0, last) &&
-      whole(rDraft, 0, last) &&
+      wholeInRange(lDraft, 0, last) &&
+      wholeInRange(rDraft, 0, last) &&
       /** @type {number} */ (lDraft) <= /** @type {number} */ (rDraft)
     ) {
       l = /** @type {number} */ (lDraft);
