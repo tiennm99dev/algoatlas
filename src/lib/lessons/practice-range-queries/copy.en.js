@@ -106,6 +106,8 @@ export const en = {
   noValue: '—',
   rangeTitle: 'Where this operation lands',
   rangeIdle: 'No operation on this step.',
+  rangeRead: 'cells a query covers',
+  rangeWrite: 'cell a set changes',
   /** @param {WorkloadOp} op */
   rangeCaption(op) {
     if (op.type === 'set') return `${opText(op)}: one cell changes.`;
@@ -129,7 +131,7 @@ export const en = {
       const best = stats[f.cheapest[0]].total;
       const out = IDS.filter((id) => stats[id].out).map((id) => NAMES[id]);
       const left = out.length > 0 ? ` Out of the running: ${list(out)}.` : '';
-      return `Cheapest: ${list(f.cheapest.map((id) => NAMES[id]))} with ${count(best)} touches.${left}`;
+      return `Cheapest: ${list(f.cheapest.map((id) => NAMES[id]))} with ${count(best)} ${best === 1 ? 'touch' : 'touches'}.${left}`;
     }
     const op = /** @type {WorkloadOp} */ (f.op);
     const head = f.truth === null ? `${opText(op)}.` : `${opText(op)} is ${count(f.truth)}.`;
@@ -146,8 +148,8 @@ export const en = {
     'Ask two questions first. Does the array change? Do you need sums, minimums or both? Prefix sums and a sparse table are hard to beat on an array that never changes, and sets ruin either of them.',
     'For sums with point sets, choose a Fenwick tree. It costs O(log n) like a segment tree but walks short chains, so it touches far less, and it needs one small array and a few lines of code.',
     'For range minimums with sets, or anything a Fenwick tree cannot subtract, choose a segment tree. It works with any merge function, and one tree can hold the sum and the minimum together.',
-    'Constants and build costs matter. On a small array or short ranges a plain array beats all of them, and a few queries may not repay an expensive build. A big-O class says how the cost grows, not who wins at your size.',
-    'Load “Mins and sets” at n = 1,024 and note the winner, then lower n to 16. Then load “Sums and sets” and move sums into sets to watch how the Fenwick tree’s lead changes.',
+    'Constants and build costs matter. On a small array or short ranges a plain array can beat all of them, and a few queries may not repay an expensive build. A big-O class says how the cost grows, not who wins at your size.',
+    'Load “Mins and sets” at n = 1,024 and note the winner, then lower n to 16. Then put n back to 1,024, load “Sums and sets” and move sums into sets: near 50 sums, sqrt blocks pass the Fenwick tree.',
   ],
   complexityHead: ['Structure', 'Cost', 'Why'],
   complexity: [
@@ -271,7 +273,7 @@ export const en = {
       type: 'text',
       prompt:
         'Keep n = 1,024 and load “Short ranges and sets”, where no range is longer than 8 cells. Which structure wins?',
-      accept: ['plain array', 'array', 'the plain array', 'plain'],
+      accept: ['plain array', 'array', 'the plain array', 'a plain array', 'plain'],
       hints: ['Compare what a scan of at most 8 cells costs with what a tree walk costs.'],
       solution:
         'The plain array totals 863 touches: at most 8 reads per query and one write per set, with nothing to build. Every other structure still standing spends more on its build alone.',

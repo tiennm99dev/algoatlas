@@ -12,9 +12,10 @@
  * - Fenwick tree: a sum walks two chains of lowest set bits; a set walks one. A plain Fenwick
  *   tree answers prefixes, so it has no range minimum either.
  * - Segment tree: one touch per node visited, including calls that return at once because their
- *   node lies outside the range. A node holds both the sum and the minimum.
- * - Sqrt blocks: blocks of ⌊√n⌋ cells. A query reads loose cells and whole blocks. A set writes
- *   the cell and its block and, only when the workload asks for minimums, rereads the block.
+ *   node lies outside the range. A node holds a sum, a minimum or both, as the workload asks.
+ * - Sqrt blocks: blocks of ⌊√n⌋ cells, each with a sum, a minimum or both, as the workload asks.
+ *   A query reads loose cells and whole blocks. A set writes the cell and what its block holds
+ *   and, only when the workload asks for minimums, rereads the block.
  *
  * A structure that meets a query it cannot answer drops out and stops counting.
  */
@@ -223,8 +224,8 @@ function fenwickTree(values) {
   };
 }
 
-/** @param {number[]} values @returns {Structure} */
-function segmentTree(values) {
+/** @param {number[]} values @param {number} fields  Numbers each node holds. @returns {Structure} */
+function segmentTree(values, fields) {
   const n = values.length;
   /** @type {number[]} */
   const sums = [];
@@ -272,7 +273,7 @@ function segmentTree(values) {
 
   return {
     build: 2 * n - 1,
-    slots: 2 * n - 1,
+    slots: fields * (2 * n - 1),
     sum: (l, r) => query(sums, (x, y) => x + y, 0, l, r),
     min: (l, r) => query(mins, Math.min, Infinity, l, r),
     set(i, x) {
@@ -296,8 +297,13 @@ function segmentTree(values) {
   };
 }
 
-/** @param {number[]} values @param {boolean} needsMin @returns {Structure} */
-function sqrtBlocks(values, needsMin) {
+/**
+ * @param {number[]} values
+ * @param {boolean} needsMin
+ * @param {number} fields  Numbers each block holds.
+ * @returns {Structure}
+ */
+function sqrtBlocks(values, needsMin, fields) {
   const a = values.slice();
   const n = a.length;
   const s = Math.floor(Math.sqrt(n));
@@ -330,8 +336,8 @@ function sqrtBlocks(values, needsMin) {
   }
 
   return {
-    build: n + blocks,
-    slots: blocks,
+    build: n + fields * blocks,
+    slots: fields * blocks,
     sum: (l, r) => query(sums, (x, y) => x + y, 0, l, r),
     min: (l, r) => query(mins, Math.min, Infinity, l, r),
     set(i, v) {
@@ -341,7 +347,7 @@ function sqrtBlocks(values, needsMin) {
       if (!needsMin) return 2;
       const cells = cellsOf(b);
       mins[b] = Math.min(...cells);
-      return 2 + cells.length;
+      return 1 + fields + cells.length;
     },
   };
 }
@@ -355,14 +361,16 @@ function sqrtBlocks(values, needsMin) {
 export function workloadTrace(n, ops) {
   const values = startValues(n);
   const needsMin = ops.some((op) => op.type === 'min');
+  const needsBoth = needsMin && ops.some((op) => op.type === 'sum');
+  const fields = needsBoth ? 2 : 1;
   /** @type {Record<StructureId, Structure>} */
   const live = {
     plain: plainArray(values),
     prefix: prefixSums(values),
     sparse: sparseTable(values),
     fenwick: fenwickTree(values),
-    segment: segmentTree(values),
-    sqrt: sqrtBlocks(values, needsMin),
+    segment: segmentTree(values, fields),
+    sqrt: sqrtBlocks(values, needsMin, fields),
   };
 
   const stats = /** @type {Record<StructureId, StructureStats>} */ ({});

@@ -320,6 +320,23 @@ describe('practice: range query problems lesson', () => {
     expect(q.textContent).not.toContain('Not quite');
   });
 
+  it('names a single touch in the singular', () => {
+    render();
+    commit(field('ops'), 'u0=5');
+    expect(document.body.textContent).toContain('Plain array with 1 touch.');
+  });
+
+  it('the suggested experiment shows sqrt blocks passing the Fenwick tree as sums become sets', () => {
+    render();
+    expect(stat('cheapest')).toBe('Fenwick tree');
+    commit(field('sums'), '75');
+    commit(field('sets'), '225');
+    expect(stat('cheapest')).toBe('Fenwick tree');
+    commit(field('sums'), '50');
+    commit(field('sets'), '250');
+    expect(stat('cheapest')).toBe('Sqrt blocks');
+  });
+
   it('every stored practice answer and quoted total is what the widget shows', () => {
     render();
     const [fenwickTotal, gap, minsWinner, smallWinner, standing, chain, shortWinner] = m.practice;

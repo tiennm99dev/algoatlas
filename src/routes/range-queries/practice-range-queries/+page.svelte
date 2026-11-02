@@ -385,6 +385,16 @@
             ></div>
           </div>
           <p class="mt-2 text-xs text-slate-600">{m.rangeCaption(frame.op)}</p>
+          <ul class="mt-2 flex flex-wrap gap-4 text-xs text-slate-600">
+            <li class="flex items-center gap-1.5">
+              <span class="size-3 rounded-sm border border-slate-700 {STATE_BG.compare}"></span>
+              {m.rangeRead}
+            </li>
+            <li class="flex items-center gap-1.5">
+              <span class="size-3 rounded-sm border border-slate-700 {STATE_BG.swap}"></span>
+              {m.rangeWrite}
+            </li>
+          </ul>
         {:else}
           <p class="text-xs text-slate-600">{m.rangeIdle}</p>
         {/if}

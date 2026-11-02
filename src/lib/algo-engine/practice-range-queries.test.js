@@ -118,6 +118,16 @@ describe('workload trace', () => {
     expect(stats.fenwick.slots).toBe(n);
     expect(stats.sparse.slots).toBe(54);
     expect(stats.sqrt.slots).toBe(4);
+    expect(stats.segment.slots).toBe(2 * n - 1);
+  });
+
+  it('stores and writes two numbers per node and block when the workload asks for both', () => {
+    const n = 16;
+    const [, built, set] = workloadTrace(n, ops('u1=5 s0-1 m0-1', n));
+    expect(built.stats.segment.slots).toBe(2 * (2 * n - 1));
+    expect(built.stats.sqrt.slots).toBe(8);
+    expect(built.stats.sqrt.build).toBe(n + 8);
+    expect(set.stats.sqrt.cost).toBe(3 + 4);
   });
 
   it('counts a Fenwick build as one write per cell and one push per cell with a parent', () => {
