@@ -195,11 +195,7 @@ export const en = {
       'O(log m)',
       'The same divisions as gcd(a, m), and it works for any modulus.',
     ],
-    [
-      'Inverse by Fermat',
-      'O(log p)',
-      'Fast power with exponent p − 2. The modulus must be prime.',
-    ],
+    ['Inverse by Fermat', 'O(log p)', 'Fast power with exponent p − 2. The modulus must be prime.'],
     [
       'System of k congruences',
       'O(k log M)',
