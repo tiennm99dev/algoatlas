@@ -485,7 +485,7 @@
             {#each scale as row (row.digits)}
               <tr class="border-t border-slate-100">
                 <td class="px-2 py-1">{row.digits}</td>
-                <td class="px-2 py-1">{row.trials}</td>
+                <td class="px-2 py-1 whitespace-nowrap">{row.trials}</td>
                 <td class="px-2 py-1">{row.time}</td>
               </tr>
             {/each}

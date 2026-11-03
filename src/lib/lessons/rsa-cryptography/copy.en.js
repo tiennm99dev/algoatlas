@@ -98,7 +98,7 @@ export const en = {
         const row = f.euclid[f.euclid.length - 1];
         return f.euclid.length === 2
           ? `Run extended Euclid on φ and e. The first rows are r = φ with t = 0, and r = e with t = 1.`
-          : `Quotient ${row.q} gives r = ${row.r} and t = ${row.t}.${row.r === 1 ? ' The remainder is 1, so t is the inverse of e.' : ''}`;
+          : `Quotient ${row.q} gives r = ${row.r} and t = ${String(row.t).replace('-', '−')}.${row.r === 1 ? ' The remainder is 1, so t is the inverse of e.' : ''}`;
       }
       case 'private':
         return `d = ${big(/** @type {number} */ (d))}, the last t reduced mod φ. Check: e·d ≡ 1 (mod φ).`;

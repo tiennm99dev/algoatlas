@@ -83,6 +83,12 @@ describe('RSA lesson, owner view', () => {
     expect(narration()).toContain('equals M = 65');
   });
 
+  it('writes a negative coefficient with a true minus sign', () => {
+    render();
+    while (!narration().startsWith('Quotient')) next();
+    expect(narration()).toBe('Quotient 183 gives r = 9 and t = −183.');
+  });
+
   it('shows the exponent bits while powering', () => {
     render();
     const frames = rsaTrace(61, 53, 17, 65);
