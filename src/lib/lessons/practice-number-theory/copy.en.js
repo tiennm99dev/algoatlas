@@ -10,7 +10,7 @@ export const en = {
   level: 'Intermediate',
   title: 'Practice: number theory problems',
   intro:
-    'Many contest problems reduce to counting with remainders or summing over divisors. This sandbox runs four classic techniques one step at a time and checks your working: compute the next running total yourself, and the step only moves on when it is right. The calculator beside it does the modular arithmetic on the way.',
+    'Many contest problems reduce to counting with remainders or summing over divisors. This sandbox runs four classic techniques one step at a time and checks your working: compute the next running total yourself, and Check moves on only when it is right. The calculator beside it does the modular arithmetic on the way.',
   summary:
     'Practise divisor sums and modular counting in a step-by-step sandbox that checks each running total you compute, with a modular calculator alongside.',
   instruction:
@@ -63,6 +63,7 @@ export const en = {
   },
   askCheck: 'Check',
   askIdle: 'Nothing to work out at this step. Press Next step.',
+  askDone: 'Finished. Type a new input or pick another problem.',
   askEmpty: 'Type a whole number first.',
   /** @param {number} value */
   askRight: (value) => `Correct: the total is ${big(value)}.`,
@@ -105,9 +106,9 @@ export const en = {
             return `Count subarrays whose sum is divisible by ${f.m}. seen[0] starts at 1 for the empty prefix, because two equal prefix remainders bound one such subarray.`;
         }
       case 'factor':
-        return `${big(f.d)}^${f.e} exactly divides n. Its divisors contribute 1 + … + ${big(f.d)}^${f.e} = ${big(f.count)} to σ and ${f.e + 1} to τ. What is σ now?`;
+        return `${big(f.d)}^${f.e} exactly divides n. It multiplies σ by 1 + … + ${big(f.d)}^${f.e} = ${big(f.count)} and τ by ${f.e + 1}. What is σ now?`;
       case 'apply':
-        return `σ = ${big(f.total)} and τ = ${f.tau}.`;
+        return `σ = ${big(f.total)} and τ = ${big(f.tau)}.`;
       case 'term':
         return `d = ${f.d} divides ⌊${f.input} / ${f.d}⌋ = ${f.count} of the numbers up to ${f.input}, so it adds ${f.d}·${f.count}. What is the total now?`;
       case 'add':
@@ -121,9 +122,9 @@ export const en = {
       case 'done':
         switch (f.puzzle) {
           case 'divisors':
-            return `σ(${big(f.input)}) = ${big(f.total)} and τ(${big(f.input)}) = ${f.tau}.`;
+            return `σ(${big(f.input)}) = ${big(f.total)} and τ(${big(f.input)}) = ${big(f.tau)}.`;
           case 'rangeSum':
-            return `σ(1) + … + σ(${f.input}) = ${big(f.total)}, in ${f.steps} rounds.`;
+            return `σ(1) + … + σ(${f.input}) = ${big(f.total)}, in ${f.steps} ${f.steps === 1 ? 'round' : 'rounds'}.`;
           case 'pairs':
             return `${f.total} ${f.total === 1 ? 'pair sums' : 'pairs sum'} to a multiple of ${f.m}.`;
           default:

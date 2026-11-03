@@ -425,7 +425,7 @@
             <button type="submit" class="btn-secondary">{m.askCheck}</button>
           </form>
         {:else}
-          <p class="text-sm text-slate-600">{m.askIdle}</p>
+          <p class="text-sm text-slate-600">{player.atEnd ? m.askDone : m.askIdle}</p>
         {/if}
         <p
           class="mt-2 min-h-5 text-sm font-medium text-slate-800"
@@ -485,7 +485,7 @@
       </label>
       <label class="flex flex-col gap-1 text-sm text-slate-700">
         {m.calcFields.op}
-        <select name="calc-op" class="field" bind:value={calcOp}>
+        <select name="calc-op" class="field" bind:value={calcOp} onchange={() => (calcNotice = '')}>
           {#each CALC_OPS as op (op)}
             <option value={op}>{m.calcOps[op]}</option>
           {/each}

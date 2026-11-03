@@ -88,6 +88,8 @@ describe('number theory sandbox', () => {
     expect(stat('rows')).toContain('1,170');
     expect(stat('brute')).toBe('360');
     expect(document.body.textContent).toContain('180');
+    expect(document.body.textContent).toContain(m.askDone);
+    expect(document.body.textContent).not.toContain(m.askIdle);
   });
 
   it('checks the learner’s running total before moving on', () => {
@@ -194,7 +196,25 @@ describe('number theory sandbox', () => {
   });
 });
 
+describe('sum of σ(i) narration', () => {
+  it('uses the singular for one round', () => {
+    render();
+    commit(field('puzzle'), 'rangeSum');
+    commit(field('limit'), '1');
+    toLast();
+    expect(narration()).toContain('in 1 round.');
+  });
+});
+
 describe('modular calculator', () => {
+  it('shows the new result when the operation changes after a refusal', () => {
+    render();
+    commit(field('calc-a'), '-1');
+    expect(stat('calc')).toBe(m.calcValueError(1_000_000_000));
+    commit(field('calc-op'), 'add');
+    expect(stat('calc')).toBe('5 + 3 ≡ 1 (mod 7)');
+  });
+
   it('computes each operation and says when there is no inverse', () => {
     render();
     expect(stat('calc')).toBe('5 ÷ 3 ≡ 4 (mod 7), using 3⁻¹ ≡ 5');
