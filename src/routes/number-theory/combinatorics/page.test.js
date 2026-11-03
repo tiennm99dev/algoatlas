@@ -134,6 +134,29 @@ describe('combinatorics lesson, Pascal view', () => {
   });
 });
 
+describe('combinatorics lesson, narration and mirror', () => {
+  it('uses the singular for one cell and one addition', () => {
+    render();
+    commit(field('rows'), '0');
+    toLast();
+    expect(narration()).toContain('Done: 1 cell with 0 additions');
+    commit(field('rows'), '2');
+    toLast();
+    expect(narration()).toContain('Done: 6 cells with 1 addition,');
+  });
+
+  it('marks no mirror until both cells are filled', () => {
+    render();
+    const cell = (/** @type {string} */ name) =>
+      /** @type {HTMLElement} */ (document.querySelector(`[data-cell][aria-label^="${name}"]`));
+    cell('C(4, 1)').dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    flushSync();
+    expect(titles().join()).not.toContain(m.cellStates.mirror);
+    toLast();
+    expect(titles().join()).toContain(m.cellStates.mirror);
+  });
+});
+
 describe('combinatorics lesson, Lucas view', () => {
   it('walks C(1000, 300) mod 13 digit by digit', () => {
     render();
@@ -151,6 +174,25 @@ describe('combinatorics lesson, Lucas view', () => {
     expect(stat('result')).toBe('10');
     expect(stat('digits')).toBe('3');
     expect(stat('pascal-cells')).toBe('501,501');
+  });
+
+  it('counts the cells of a full triangle exactly past 2⁵³', () => {
+    render();
+    pickMode('lucas');
+    commit(field('lucas-preset'), 'huge');
+    expect(stat('pascal-cells')).toBe('500,000,001,500,000,001');
+  });
+
+  it('says there are no digits for C(0, 0)', () => {
+    render();
+    pickMode('lucas');
+    commit(field('n'), '0');
+    commit(field('k'), '0');
+    expect(document.body.textContent).toContain(m.digitsNone);
+    expect(document.body.textContent).not.toContain(m.digitsEmpty);
+    toLast();
+    expect(narration()).toContain('with no digits to read');
+    expect(stat('result')).toBe('1');
   });
 
   it('stops at zero as soon as a digit of k is larger', () => {
@@ -203,6 +245,15 @@ describe('combinatorics lesson, Catalan view', () => {
     pickMode('brackets');
     expect(document.body.textContent).toContain(m.treeEmpty);
     toLast();
+    expect(document.body.textContent).not.toContain(m.treeEmpty);
+  });
+
+  it('says the tree of zero pairs has no nodes', () => {
+    render();
+    pickMode('brackets');
+    commit(field('pairs'), '0');
+    toLast();
+    expect(document.body.textContent).toContain(m.treeNone);
     expect(document.body.textContent).not.toContain(m.treeEmpty);
   });
 

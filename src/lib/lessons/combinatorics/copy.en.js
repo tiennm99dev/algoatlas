@@ -34,8 +34,8 @@ export const en = {
   viewLegend: 'Cells show',
   views: { exact: 'Exact values', mod: 'Remainders mod p' },
   pascalPresets: {
-    small: '6 rows, mod 2',
-    sierpinski: '15 rows, mod 2',
+    small: 'Rows 0 to 6, mod 2',
+    sierpinski: 'Rows 0 to 15, mod 2',
     primeRow: 'Row 7, mod 7',
   },
   lucasPresets: {
@@ -117,16 +117,17 @@ export const en = {
         const b = /** @type {number} */ (f.table[f.n - 1][f.k]);
         const sum = a + b;
         return reduced
-          ? `C(${f.n}, ${f.k}) = ${a % p} + ${b % p} ≡ ${sum % p} (mod ${p}). Reducing as you add keeps every number below p.`
+          ? `C(${f.n}, ${f.k}) ≡ ${a % p} + ${b % p} ≡ ${sum % p} (mod ${p}). Reducing as you add keeps every number below p.`
           : `C(${f.n}, ${f.k}) = C(${f.n - 1}, ${f.k - 1}) + C(${f.n - 1}, ${f.k}) = ${a} + ${b} = ${sum}.`;
       }
       case 'done':
-        return `Done: ${f.filled} cells with ${f.additions} additions, about N²/2 in all. Now select a cell.`;
+        return `Done: ${f.filled} ${f.filled === 1 ? 'cell' : 'cells'} with ${f.additions} ${f.additions === 1 ? 'addition' : 'additions'}, about N²/2 in all. Now select a cell.`;
     }
   },
 
   digitsTitle: 'n and k in base p, lowest digit first',
   digitsEmpty: 'Step to read the first digit.',
+  digitsNone: 'n and k are both 0, so there are no digits to read.',
   digitsHead: { pos: 'Digit', ni: 'nᵢ', ki: 'kᵢ', term: 'C(nᵢ, kᵢ) mod p' },
   /** @param {number} ni @param {number} ki */
   termZero: (ni, ki) => `0, since ${ki} > ${ni}`,
@@ -139,9 +140,9 @@ export const en = {
       return `fact[${f.ni}]·inv[${f.ki}]·inv[${f.ni - f.ki}] = ${f.factN}·${f.invK}·${f.invD} ≡ ${f.term}`;
     }
     if (f.kind === 'done' && f.result !== 0)
-      return `C(${f.n0}, ${f.k0}) ≡ ${f.result} (mod ${f.p})`;
+      return `C(${big(f.n0)}, ${big(f.k0)}) ≡ ${f.result} (mod ${f.p})`;
     if (f.result === 0 && f.kind !== 'start') {
-      return `C(${f.n0}, ${f.k0}) ≡ 0 (mod ${f.p})`;
+      return `C(${big(f.n0)}, ${big(f.k0)}) ≡ 0 (mod ${f.p})`;
     }
     return `C(n, k) ≡ ∏ C(nᵢ, kᵢ) (mod ${f.p})`;
   },
@@ -155,6 +156,9 @@ export const en = {
   describeLucas(f) {
     switch (f.kind) {
       case 'start':
+        if (f.n0 === 0 && f.k0 === 0) {
+          return `Find C(0, 0) mod ${f.p}. n and k are both 0, so there are no digits and the result stays 1.`;
+        }
         if (f.k0 > f.n0) {
           return `Find C(${big(f.n0)}, ${big(f.k0)}) mod ${f.p}. Since k > n there is no way to pick, and the digits will show it: some digit of k must be larger.`;
         }
@@ -168,7 +172,9 @@ export const en = {
       case 'multiply':
         return `C(${f.ni}, ${f.ki}) ≡ ${f.term}, so result = ${f.before}·${f.term} mod ${f.p} = ${f.result}. Drop the digit from n and k.`;
       case 'done':
-        return `C(${big(f.n0)}, ${big(f.k0)}) mod ${f.p} = ${f.result}, from ${f.rows.length} base-${f.p} ${f.rows.length === 1 ? 'digit' : 'digits'}.`;
+        return f.rows.length === 0
+          ? `C(0, 0) mod ${f.p} = 1, with no digits to read.`
+          : `C(${big(f.n0)}, ${big(f.k0)}) mod ${f.p} = ${f.result}, from ${f.rows.length} base-${f.p} ${f.rows.length === 1 ? 'digit' : 'digits'}.`;
     }
   },
 
@@ -180,6 +186,7 @@ export const en = {
   treeTitle: 'The last sequence as a binary tree, from (left)right',
   treeAria: 'The binary tree of the sequence last output.',
   treeEmpty: 'Finish a sequence to see its tree.',
+  treeNone: 'With no pairs, the tree has no nodes.',
   foundTitle: 'Sequences output',
   foundEmpty: 'none yet',
   catalanTitle: 'Catalan numbers C₀, C₁, C₂, …',
@@ -215,7 +222,7 @@ export const en = {
     'For one value with n < p, use C(n, k) = n!·(k!)⁻¹·((n − k)!)⁻¹ mod p, with the inverses from Fermat’s little theorem. Division has no direct meaning mod p, so inverses replace it.',
     'When n ≥ p, n! contains the factor p and the formula breaks. Lucas’s theorem saves it: write n and k in base p, and C(n, k) ≡ ∏ C(nᵢ, kᵢ) (mod p).',
     'Cₙ = C(2n, n) − C(2n, n + 1) = C(2n, n)/(n + 1). There are C(2n, n) arrangements, and reflecting the bad part of a path that dips below the baseline matches the bad ones with C(2n, n + 1).',
-    'Try “15 rows, mod 2” and step to the end: the unmarked cells, the odd ones, draw Sierpiński’s triangle. Then try n = 3 in the Catalan view and see the same 5 as binary trees.',
+    'Try “Rows 0 to 15, mod 2” and step to the end: the unmarked cells, the odd ones, draw Sierpiński’s triangle. Then try n = 3 in the Catalan view and see the same 5 as binary trees.',
   ],
   complexityHead: ['Method', 'Cost', 'Why'],
   complexity: [

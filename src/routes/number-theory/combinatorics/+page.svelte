@@ -210,7 +210,12 @@
 
   /** @param {number} r @param {number} c */
   const isMirror = (r, c) =>
-    selected !== null && selected[0] === r && selected[1] === r - c && selected[1] !== c;
+    pickedValue !== null &&
+    selected !== null &&
+    selected[0] === r &&
+    selected[1] === r - c &&
+    selected[1] !== c &&
+    pf.table[r][c] !== null;
 
   /** @param {number} r @param {number} c @returns {CellRole} */
   function cellRole(r, c) {
@@ -257,7 +262,8 @@
   const lucasRow = $derived(
     lf.kind === 'digit' || lf.kind === 'zero' || lf.kind === 'multiply' ? lf.rows.length - 1 : -1,
   );
-  const lucasCells = $derived(((lf.n0 + 1) * (lf.n0 + 2)) / 2);
+  // At n = 10⁹ the count is past 2⁵³, where a plain number would round it.
+  const lucasCells = $derived(((BigInt(lf.n0) + 1n) * (BigInt(lf.n0) + 2n)) / 2n);
 
   const STEP_X = 28;
   const STEP_Y = 24;
@@ -475,7 +481,9 @@
             {m.digitsTitle}
           </h2>
           {#if lf.rows.length === 0}
-            <p class="text-sm text-slate-500">{m.digitsEmpty}</p>
+            <p class="text-sm text-slate-500">
+              {lf.n0 === 0 && lf.k0 === 0 ? m.digitsNone : m.digitsEmpty}
+            </p>
           {:else}
             <ScrollFrame>
               <table class="w-full text-right text-sm tabular-nums">
@@ -610,7 +618,7 @@
             roots={treeRoots}
             binary
             ariaLabel={m.treeAria}
-            emptyText={m.treeEmpty}
+            emptyText={bf.n === 0 ? m.treeNone : m.treeEmpty}
             speed={player.speed}
           />
         </div>
