@@ -121,7 +121,7 @@ export const en = {
     'The monotone chain runs the scan twice, once for the lower chain and once for the upper, then joins them. It needs no angle comparison, which makes it the easier one to write without bugs.',
     'Each point is pushed once per pass and popped at most once, so the scan is O(n). The sort is the O(n log n) part, and in general it cannot be beaten, because a hull algorithm can be used to sort.',
     'Popping on cross ≤ 0 drops points that are collinear with an edge. To keep them, pop only on cross < 0, and take care with ties on the last ray of a Graham scan.',
-    'Load “Every point a corner”, and note the pops stay at 0. Then load the zigzag and compare how many pops each method needs on the same points.',
+    'Load “Every point a corner”: Graham scan pops nothing, yet the monotone chain still pops, because its lower pass pushes the upper corners before they are popped. Then load the zigzag and compare the pops of both methods on the same points.',
   ],
   complexityHead: ['Part', 'Cost', 'Why'],
   complexity: [
