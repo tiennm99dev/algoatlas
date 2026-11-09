@@ -128,7 +128,10 @@ with every `LessonCopy` field from `src/lib/lessons/registry.js`:
 Plus every label the page shows (buttons, fields, legend, stat names, notices, aria labels)
 and `describe(frame, ...)` returning the narration for every frame `kind`. No user-facing
 string lives in the page or the engine. Plain English, short sentences, Unicode symbols
-(`≤`, `→`, `log₂ n`), curly apostrophes as in the reference copy.
+(`≤`, `→`, `log₂ n`), curly apostrophes as in the reference copy. Any Vietnamese text uses the new tone-mark
+style: in an open syllable ending in `oa`, `oe` or `uy` the mark sits on the last vowel (hoá,
+khoẻ, thuỷ, never hóa, khỏe, thủy); `src/lib/components/tone-marks.test.js` rejects the old
+style.
 
 ## 6. Page (`+page.svelte`)
 
