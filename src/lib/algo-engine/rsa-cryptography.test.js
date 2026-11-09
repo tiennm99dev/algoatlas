@@ -6,8 +6,6 @@ import {
   attackPseudocode,
   attackTrace,
   euclidRows,
-  gcd,
-  isPrime,
   powerSteps,
   rsaPseudocode,
   rsaTrace,
@@ -15,6 +13,7 @@ import {
   trialYearsExponent,
   validExponent,
 } from './rsa-cryptography.js';
+import { gcd, isPrime } from '$lib/algo-engine/number-theory.js';
 
 /** Deterministic LCG so random inputs are reproducible. */
 function seeded(seed = 1) {

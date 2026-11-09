@@ -1,3 +1,4 @@
+import { gcd } from '$lib/algo-engine/number-theory.js';
 /** @typedef {import('$lib/algo-engine/fractional-knapsack.js').KnapFrame} KnapFrame */
 /** @typedef {import('$lib/algo-engine/fractional-knapsack.js').JobFrame} JobFrame */
 
@@ -9,9 +10,6 @@ const name = (i) => String.fromCharCode(65 + i);
 
 /** A number with at most two decimals: 240, 66.67. @param {number} x */
 const num = (x) => String(Math.round(x * 100) / 100);
-
-/** @param {number} a @param {number} b @returns {number} */
-const gcd = (a, b) => (b === 0 ? a : gcd(b, a % b));
 
 /** A reduced fraction p/q, or 1 for a whole item. @param {number} p @param {number} q */
 function fraction(p, q) {

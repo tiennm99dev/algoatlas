@@ -11,13 +11,13 @@ import {
   catalan,
   factorialTables,
   heightsOf,
-  isPrime,
   lucasPseudocode,
   lucasTrace,
   pascalPseudocode,
   pascalTrace,
   treeOfSequence,
 } from './combinatorics.js';
+import { isPrime } from '$lib/algo-engine/number-theory.js';
 
 /** Deterministic LCG so random inputs are reproducible. */
 function seeded(seed = 1) {

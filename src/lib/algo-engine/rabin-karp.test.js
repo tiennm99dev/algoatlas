@@ -6,11 +6,11 @@ import {
   MAX_TEXT,
   RABIN_KARP_PRESETS,
   expectedSpurious,
-  naiveComparisons,
   polyHash,
   rabinKarpPseudocode,
   rabinKarpTrace,
 } from './rabin-karp.js';
+import { naiveComparisons } from '$lib/algo-engine/text-match.js';
 
 /** Deterministic LCG so random texts are reproducible. */
 function seeded(seed = 1) {

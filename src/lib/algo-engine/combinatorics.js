@@ -4,6 +4,8 @@
  * backtracking, whose number is the Catalan number.
  */
 
+import { powMod } from './number-theory.js';
+
 export const MAX_ROWS = 15;
 export const MAX_CATALAN_N = 5;
 export const MAX_LUCAS_N = 1_000_000_000;
@@ -26,13 +28,6 @@ export function binomial(n, k) {
 
 /** @param {number} n */
 export const catalan = (n) => binomial(2 * n, n) / (n + 1);
-
-/** @param {number} p */
-export function isPrime(p) {
-  if (!Number.isInteger(p) || p < 2) return false;
-  for (let d = 2; d * d <= p; d++) if (p % d === 0) return false;
-  return true;
-}
 
 export const pascalPseudocode = [
   'for n = 0 to N:',
@@ -95,22 +90,6 @@ export function pascalTrace(N) {
   }
   push('done', -1, -1, [4]);
   return frames;
-}
-
-/**
- * a^e mod m, by repeated squaring. Moduli here are at most MAX_PRIME, so products stay small.
- * @param {number} a
- * @param {number} e
- * @param {number} m
- */
-function powMod(a, e, m) {
-  let result = 1 % m;
-  let x = a % m;
-  for (let left = e; left > 0; left = Math.floor(left / 2)) {
-    if (left % 2 === 1) result = (result * x) % m;
-    x = (x * x) % m;
-  }
-  return result;
 }
 
 /**

@@ -6,6 +6,8 @@
  * directly. Moduli need not be coprime; a system that contradicts itself ends in `conflict`.
  */
 
+import { gcd } from './number-theory.js';
+
 export const MAX_INVERSE_VALUE = 9999;
 export const MAX_INVERSE_MODULUS = 9999;
 export const MAX_CONGRUENCES = 4;
@@ -108,19 +110,6 @@ const BLANK = {
 
 /** A remainder that is never negative. @param {number} v @param {number} m */
 const mod = (v, m) => ((v % m) + m) % m;
-
-/**
- * Whether n is prime, by trial division: the page checks this before Fermat, which needs it.
- * @param {number} n
- */
-export function isPrime(n) {
-  if (n < 2) return false;
-  for (let d = 2; d * d <= n; d++) if (n % d === 0) return false;
-  return true;
-}
-
-/** @param {number} a @param {number} b @returns {number} */
-const gcd = (a, b) => (b === 0 ? a : gcd(b, a % b));
 
 /**
  * The inverse of a modulo m, for coprime a and m. Modulo 1 everything is 0.

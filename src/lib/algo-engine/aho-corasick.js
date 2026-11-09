@@ -6,6 +6,8 @@
  * letter once, falling back along failure links until an edge fits.
  */
 
+import { naiveComparisons as plainComparisons } from './text-match.js';
+
 export const MAX_PATTERNS = 6;
 export const MAX_PATTERN_LEN = 6;
 export const MAX_TEXT = 24;
@@ -102,16 +104,7 @@ export function prefixOf(nodes, id) {
  * @returns {number}
  */
 export function naiveComparisons(words, text) {
-  let total = 0;
-  for (const w of words) {
-    for (let s = 0; s + w.length <= text.length; s++) {
-      for (let k = 0; k < w.length; k++) {
-        total++;
-        if (text[s + k] !== w[k]) break;
-      }
-    }
-  }
-  return total;
+  return words.reduce((total, w) => total + plainComparisons(text, w), 0);
 }
 
 /**

@@ -8,8 +8,6 @@
   import ScrollFrame from '$lib/components/scroll-frame.svelte';
   import StepControls from '$lib/components/step-controls.svelte';
   import { STATE_BG } from '$lib/components/visual-state.js';
-  import { naiveComparisons } from '$lib/algo-engine/rabin-karp.js';
-  import { parseLetters } from '$lib/algo-engine/tries.js';
   import {
     BOYER_MOORE_PRESETS,
     MAX_PATTERN,
@@ -19,6 +17,8 @@
   } from '$lib/algo-engine/boyer-moore.js';
   import { en as m } from '$lib/lessons/boyer-moore/copy.en.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
+  import { parseLetters } from '$lib/algo-engine/text-match.js';
+  import { naiveComparisons } from '$lib/algo-engine/text-match.js';
 
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */
   /** @typedef {keyof typeof BOYER_MOORE_PRESETS} Preset */

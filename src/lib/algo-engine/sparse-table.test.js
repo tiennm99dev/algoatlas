@@ -4,11 +4,11 @@ import {
   SPARSE_OPS,
   floorLog2,
   foldRange,
-  gcd,
   parseSparseValues,
   sparsePseudocode,
   sparseTrace,
 } from './sparse-table.js';
+import { gcd } from '$lib/algo-engine/number-theory.js';
 
 /** Deterministic LCG so random inputs are reproducible. */
 function seeded(seed = 1) {

@@ -13,10 +13,10 @@
     manacherTrace,
     naiveExpansions,
   } from '$lib/algo-engine/manacher.js';
-  import { parseLetters } from '$lib/algo-engine/tries.js';
   import { en as m } from '$lib/lessons/manacher/copy.en.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
   import ArcBoard from './arc-board.svelte';
+  import { parseLetters } from '$lib/algo-engine/text-match.js';
 
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */
   /** @typedef {keyof typeof MANACHER_PRESETS} Preset */

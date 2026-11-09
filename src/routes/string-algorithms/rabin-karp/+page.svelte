@@ -8,7 +8,6 @@
   import ScrollFrame from '$lib/components/scroll-frame.svelte';
   import StepControls from '$lib/components/step-controls.svelte';
   import { STATE_BG } from '$lib/components/visual-state.js';
-  import { parseLetters } from '$lib/algo-engine/tries.js';
   import {
     MAX_BASE,
     MAX_MOD,
@@ -16,12 +15,13 @@
     MAX_TEXT,
     RABIN_KARP_PRESETS,
     expectedSpurious,
-    naiveComparisons,
     rabinKarpPseudocode,
     rabinKarpTrace,
   } from '$lib/algo-engine/rabin-karp.js';
   import { en as m } from '$lib/lessons/rabin-karp/copy.en.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
+  import { parseLetters } from '$lib/algo-engine/text-match.js';
+  import { naiveComparisons } from '$lib/algo-engine/text-match.js';
 
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */
   /** @typedef {keyof typeof RABIN_KARP_PRESETS} Preset */

@@ -16,9 +16,9 @@
     suffixPseudocode,
     suffixTrace,
   } from '$lib/algo-engine/suffix-arrays.js';
-  import { parseLetters } from '$lib/algo-engine/tries.js';
   import { en as m } from '$lib/lessons/suffix-arrays/copy.en.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
+  import { parseLetters } from '$lib/algo-engine/text-match.js';
 
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */
   /** @typedef {keyof typeof SUFFIX_PRESETS} Preset */

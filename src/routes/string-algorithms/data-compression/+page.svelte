@@ -13,9 +13,9 @@
     compressionPseudocode,
     compressionTrace,
   } from '$lib/algo-engine/data-compression.js';
-  import { parseLetters } from '$lib/algo-engine/tries.js';
   import { en as m } from '$lib/lessons/data-compression/copy.en.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
+  import { parseLetters } from '$lib/algo-engine/text-match.js';
 
   /** @typedef {import('$lib/algo-engine/data-compression.js').HuffTree} HuffTree */
   /** @typedef {import('$lib/components/tree-layout.js').TreeNode} TreeNode */

@@ -8,7 +8,6 @@
   import ScrollFrame from '$lib/components/scroll-frame.svelte';
   import StepControls from '$lib/components/step-controls.svelte';
   import { STATE_BG } from '$lib/components/visual-state.js';
-  import { parseLetters } from '$lib/algo-engine/tries.js';
   import {
     MAX_LEN,
     Z_PRESETS,
@@ -19,6 +18,7 @@
   } from '$lib/algo-engine/z-function.js';
   import { en as m } from '$lib/lessons/z-function/copy.en.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
+  import { parseLetters } from '$lib/algo-engine/text-match.js';
 
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */
   /** @typedef {keyof typeof Z_PRESETS} Preset */

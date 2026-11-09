@@ -10,9 +10,9 @@ import {
   fermatInverseTrace,
   fermatPseudocode,
   formatSystem,
-  isPrime,
   parseSystem,
 } from './modular-inverse-crt.js';
+import { isPrime } from '$lib/algo-engine/number-theory.js';
 
 /** Deterministic LCG so random inputs are reproducible. */
 function seeded(seed = 1) {

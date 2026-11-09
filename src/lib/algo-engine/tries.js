@@ -62,20 +62,6 @@ export const triePseudocode = [
  */
 
 /**
- * Reads a lowercase word from a text field: trims, lowers the case, and refuses anything else.
- * @param {string} text
- * @param {number} max
- * @returns {{word: string} | {error: 'empty'|'format'|'length'}}
- */
-export function parseLetters(text, max) {
-  const word = text.trim().toLowerCase();
-  if (word === '') return { error: 'empty' };
-  if (!/^[a-z]+$/.test(word)) return { error: 'format' };
-  if (word.length > max) return { error: 'length' };
-  return { word };
-}
-
-/**
  * The children of a node, letters in order.
  * @param {TrieNodeData} node
  * @returns {number[]}

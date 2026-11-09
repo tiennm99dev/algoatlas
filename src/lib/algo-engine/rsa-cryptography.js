@@ -4,6 +4,8 @@
  * numbers are exact. Real RSA uses primes of over 300 digits and random padding.
  */
 
+import { gcd } from './number-theory.js';
+
 export const MAX_PRIME = 499;
 export const MIN_PRIME = 3;
 
@@ -26,19 +28,6 @@ export const attackPseudocode = [
   'φ = (p − 1) · (q − 1), d = e⁻¹ mod φ',
   'M = c^d mod n',
 ];
-
-/** @param {number} a @param {number} b */
-export function gcd(a, b) {
-  while (b > 0) [a, b] = [b, a % b];
-  return a;
-}
-
-/** @param {number} p */
-export function isPrime(p) {
-  if (!Number.isInteger(p) || p < 2) return false;
-  for (let d = 2; d * d <= p; d++) if (p % d === 0) return false;
-  return true;
-}
 
 /**
  * The smallest usable public exponent for φ: every φ here is at least 8, and has a coprime below

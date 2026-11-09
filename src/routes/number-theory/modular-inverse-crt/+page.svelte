@@ -22,11 +22,11 @@
     fermatInverseTrace,
     fermatPseudocode,
     formatSystem,
-    isPrime,
     parseSystem,
   } from '$lib/algo-engine/modular-inverse-crt.js';
   import { en as m } from '$lib/lessons/modular-inverse-crt/copy.en.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
+  import { isPrime } from '$lib/algo-engine/number-theory.js';
 
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */
   /** @typedef {import('$lib/algo-engine/modular-inverse-crt.js').ModClock} ModClock */

@@ -10,6 +10,7 @@
  */
 
 import { parseValueList } from './parse-values.js';
+import { gcd } from './number-theory.js';
 
 export const MAX_N = 16;
 export const MIN_VALUE = 0;
@@ -55,11 +56,6 @@ export const sparsePseudocode = [
  * @property {number} reads  Table cells read by the query.
  * @property {number[]} lines
  */
-
-/** @param {number} a @param {number} b @returns {number} */
-export function gcd(a, b) {
-  return b === 0 ? a : gcd(b, a % b);
-}
 
 /** @param {SparseOp} op @param {number} a @param {number} b */
 export function combine(op, a, b) {

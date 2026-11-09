@@ -22,7 +22,6 @@
     bracketTrace,
     catalan,
     heightsOf,
-    isPrime,
     lucasPseudocode,
     lucasTrace,
     pascalPseudocode,
@@ -31,6 +30,7 @@
   } from '$lib/algo-engine/combinatorics.js';
   import { en as m } from '$lib/lessons/combinatorics/copy.en.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
+  import { isPrime } from '$lib/algo-engine/number-theory.js';
 
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */
   /** @typedef {keyof typeof m.modes} Mode */

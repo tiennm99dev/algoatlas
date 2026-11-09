@@ -1,5 +1,4 @@
 import { describe, expect, it } from 'vitest';
-import { naiveComparisons } from './rabin-karp.js';
 import { en as m } from '$lib/lessons/kmp/copy.en.js';
 import {
   KMP_PRESETS,
@@ -9,6 +8,7 @@ import {
   kmpTrace,
   prefixFunction,
 } from './kmp.js';
+import { naiveComparisons } from '$lib/algo-engine/text-match.js';
 
 /** Deterministic LCG so random texts are reproducible. */
 function seeded(seed = 1) {

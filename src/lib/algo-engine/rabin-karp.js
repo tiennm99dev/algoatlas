@@ -70,23 +70,6 @@ export function polyHash(s, base, mod) {
 }
 
 /**
- * Letter comparisons of the plain matcher: at each start, left to right until a mismatch.
- * @param {string} text
- * @param {string} pattern
- * @returns {number}
- */
-export function naiveComparisons(text, pattern) {
-  let total = 0;
-  for (let s = 0; s + pattern.length <= text.length; s++) {
-    for (let j = 0; j < pattern.length; j++) {
-      total++;
-      if (text[s + j] !== pattern[j]) break;
-    }
-  }
-  return total;
-}
-
-/**
  * The chance model of a spurious hit: each of the n − m + 1 windows hits a given hash value
  * about once in q tries when hashes spread evenly.
  * @param {number} n

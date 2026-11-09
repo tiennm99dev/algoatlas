@@ -6,11 +6,11 @@ import {
   MAX_WORDS,
   makeTrieOps,
   matchPrefix,
-  parseLetters,
   prefixOf,
   triePseudocode,
   trieTrace,
 } from './tries.js';
+import { parseLetters } from '$lib/algo-engine/text-match.js';
 
 /** Deterministic LCG so random words are reproducible. */
 function seeded(seed = 1) {

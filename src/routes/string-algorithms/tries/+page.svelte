@@ -14,13 +14,13 @@
     childIds,
     makeTrieOps,
     matchPrefix,
-    parseLetters,
     prefixOf,
     trieTrace,
     triePseudocode,
   } from '$lib/algo-engine/tries.js';
   import { en as m } from '$lib/lessons/tries/copy.en.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
+  import { parseLetters } from '$lib/algo-engine/text-match.js';
 
   /** @typedef {import('$lib/algo-engine/tries.js').TrieOp} TrieOp */
   /** @typedef {import('$lib/algo-engine/tries.js').TriePreset} TriePreset */

@@ -217,6 +217,10 @@ reads a negative cycle out of the parent links. Graph engines build adjacency wi
 algorithm and calls `enter`, `edge` (`tree`, `stack` or `done`), `back`, `root` and `keep`
 so a trace records its frames from the live `tin`, `low`, `stack` and `comp`. Use these
 instead of writing your own copy in an engine or page.
+String lessons read a typed word with `parseLetters(text, max)` and measure the plain matcher
+with `naiveComparisons(text, pattern)`, both from `src/lib/algo-engine/text-match.js`. Number
+theory engines take `gcd`, `isPrime` and `powMod` from `src/lib/algo-engine/number-theory.js`;
+never redefine them in an engine, copy or page.
 
 ## 8. Practice block and lesson kinds
 

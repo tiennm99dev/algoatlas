@@ -19,10 +19,10 @@
     parsePatterns,
     prefixOf,
   } from '$lib/algo-engine/aho-corasick.js';
-  import { parseLetters } from '$lib/algo-engine/tries.js';
   import { en as m } from '$lib/lessons/aho-corasick/copy.en.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
   import AcBoard from './ac-board.svelte';
+  import { parseLetters } from '$lib/algo-engine/text-match.js';
 
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */
   /** @typedef {keyof typeof AHO_PRESETS} Preset */

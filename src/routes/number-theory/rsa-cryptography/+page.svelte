@@ -15,7 +15,6 @@
     RSA_PRESETS,
     attackPseudocode,
     attackTrace,
-    isPrime,
     rsaPseudocode,
     rsaTrace,
     smallestExponent,
@@ -24,6 +23,7 @@
   } from '$lib/algo-engine/rsa-cryptography.js';
   import { en as m } from '$lib/lessons/rsa-cryptography/copy.en.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
+  import { isPrime } from '$lib/algo-engine/number-theory.js';
 
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */
   /** @typedef {keyof typeof m.modes} Mode */
