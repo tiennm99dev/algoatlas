@@ -179,7 +179,7 @@ export const en = {
     'A cross product of exactly 0 means collinear. Floating-point inputs need an epsilon instead, and then “on the line” becomes a judgement call; whole numbers avoid it.',
     'The convex hull answers many questions: the shortest fence around points, the largest area they enclose, and the farthest pair, which is always two hull corners.',
     'Comparing d² instead of d gives the same order, because squaring is increasing for distances ≥ 0. Take one square root at the end, only for display.',
-    'Load “Field” in the farthest-pair problem and compare the pairs checked with the brute-force count. Then drag an inner point outside the hull and watch both numbers change.',
+    'Load “Field” in the farthest-pair problem and compare the pairs checked with the brute-force count. Then drag an inner point outside the hull: the pairs compared follow the new number of hull corners, while the brute-force count stays the same.',
   ],
   complexityHead: ['Problem', 'Cost', 'Why'],
   complexity: [
