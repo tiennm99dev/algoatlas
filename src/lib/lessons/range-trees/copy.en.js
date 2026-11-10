@@ -160,7 +160,7 @@ export const en = {
     'Each path node with x in range is checked on its own. The subtree hanging off it on the inner side lies wholly inside [x1, x2]: a canonical subtree. There are O(log n) of them, and they cover exactly the points with x in range.',
     'A canonical subtree is not visited. Its node stores its points sorted by y, so two binary searches find the ones with y in [y1, y2]. That is O(log n) searches of O(log n) each: O(log² n + k) for k answers.',
     'A point sits in at most one y-list per level, so the lists take O(n log n) memory. Fractional cascading links each list to its children’s lists, so after one binary search at the split node each step costs O(1): the query drops to O(log n + k).',
-    'Load “Scattered points” and drag corner 1 to the far left. The split node moves, the left path gets longer, and the brute-force count stays at n.',
+    'Load “Scattered points” and drag corner 2 left to x = 5. The root M falls outside [3, 5], so the search on x goes left first and D becomes the split node. The brute-force count stays at n.',
   ],
   complexityHead: ['Part', 'Cost', 'Why'],
   complexity: [
@@ -212,7 +212,7 @@ export const en = {
       unit: 'entries',
       hints: [
         'A node’s y-list holds its whole subtree.',
-        'Count per level instead: a node at level d has a subtree of 2^(4 − d) − 1 points.',
+        'Count per level instead: counting the root as level 1, a node at level d has a subtree of 2^(5 − d) − 1 points.',
       ],
       solution:
         'The root’s list has 15 entries, the two at level 2 have 7 each, the four at level 3 have 3 each and the eight leaves 1 each: 15 + 14 + 12 + 8 = 49. Each point is counted once per node above or at it, at most once per level, so the total is O(n log n).',
