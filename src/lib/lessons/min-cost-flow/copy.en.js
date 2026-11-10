@@ -169,6 +169,16 @@ export const en = {
         'u and v are still 0 for row C and every column, so its slacks are its costs 5, 8, 1, 8, and the smallest is 1 at column 3, which is taken by B.',
     },
     {
+      type: 'number',
+      prompt:
+        'Successive shortest paths: an edge u → v with cost 5 per unit carries 2 units. What is the cost per unit of the backward arc v → u in the residual graph?',
+      answer: -5,
+      tolerance: 0,
+      hints: ['Sending a unit back along v → u cancels a unit on u → v. What happens to the bill?'],
+      solution:
+        'Cancelling a unit of flow on u → v refunds its cost, so the backward arc costs −5. That is why the residual graph can have negative arcs, and why potentials are needed before Dijkstra can search it.',
+    },
+    {
       type: 'choice',
       prompt: 'Why is Σ u + Σ v never more than the cost of any assignment?',
       options: [

@@ -27,7 +27,7 @@ export const en = {
   summary:
     'Find a maximum flow, shade the vertices still reachable from s in the residual graph, and read off a minimum cut of the same value.',
   instruction:
-    'Step through: the flow is found first, then BFS shades the vertices s can still reach. The red edges at the end form the minimum cut. Then pick “Your cut”, move vertices between the two sides and compare your cut’s capacity with the maximum flow.',
+    'Step through: the flow is found first, then BFS shades the vertices s can still reach. The edges marked ✂ at the end form the minimum cut. Then pick “Your cut”, move vertices between the two sides and compare your cut’s capacity with the maximum flow.',
   presetLabel: 'Network',
   presets: {
     classic: 'Textbook network',

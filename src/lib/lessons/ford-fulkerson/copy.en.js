@@ -197,12 +197,12 @@ export const en = {
         'Each edge carries at most its capacity.',
         'Every vertex other than s and t receives exactly what it sends.',
         'Every edge out of s is saturated.',
-        'The value equals the flow entering t.',
+        'The value equals the net flow entering t (in minus out).',
       ],
       answers: [0, 1, 3],
       hints: ['Look at the notes under the vertices on the “Textbook network”.'],
       solution:
-        'Capacity and conservation are the two rules of a flow, and conservation forces the net flow out of s to arrive at t. Edges out of s need not be full: at the end S → A carries 12 of 16.',
+        'Capacity and conservation are the two rules of a flow, and conservation forces the net flow out of s to arrive at t as net flow in. Edges out of s need not be full: at the end S → A carries 12 of 16.',
     },
   ],
   nextTeaser:
