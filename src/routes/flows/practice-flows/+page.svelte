@@ -86,7 +86,10 @@
   /** @param {{nodes: GraphNode[], edges: GraphEdge[]}} g */
   function onGraphChange(g) {
     const tooBig = g.edges.some((e) => (e.weight ?? 1) > MAX_CAPACITY);
-    nodes = g.nodes.map((n) => (n.label ? n : { ...n, label: letter(n.id) }));
+    // A vertex added back after a delete takes the story's name for its id (T stays T).
+    nodes = g.nodes.map((n) =>
+      n.label ? n : { ...n, label: m.scenarios[key].labels[n.id] ?? letter(n.id) },
+    );
     edges = g.edges.map((e) => ({ ...e, weight: Math.min(MAX_CAPACITY, e.weight ?? 1) }));
     // Dragging a vertex only moves the drawing; keep the current step and the check.
     if (graphShape(nodes, edges) !== built || tooBig)

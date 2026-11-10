@@ -186,6 +186,9 @@ describe('Flow modelling practice', () => {
     radio('remove');
     click(vertex(6));
     expect(text()).toContain('The model needs both S and T.');
+    click(buttonByText('Add node'));
+    expect(vertex(6).getAttribute('aria-label')).toContain('Node T,');
+    expect(text()).not.toContain('The model needs both S and T.');
     click(buttonByText(m.resetDrawing));
     expect(text()).toContain('Your model has 7 vertices and 6 edges.');
   });

@@ -49,7 +49,7 @@ export const en = {
       name: 'Students and clubs',
       labels: ['S', 'X', 'Y', 'Z', 'C', 'R', 'T'],
       story:
-        'Students X, Y and Z sign up for the chess club C and the robotics club R. X and Z like both clubs, Y likes only chess. X and Z have time for two clubs, Y for one. Chess has 2 free places and robotics 3. Nobody joins a club twice. How many sign-ups can be made?',
+        'Students X, Y and Z sign up for the chess club C and the robotics club R. X and Z like both clubs, Y likes only chess. X and Z have time for two clubs, Y for one. Chess has 2 free places and robotics 3. Nobody joins a club twice. How many sign-ups can be made? S and T are spare vertices for your model.',
       tip: 'One unit of flow is one sign-up. S → student carries how many clubs the student may join, student → club carries 1 (at most once), club → T carries the free places.',
     },
     convoys: {
