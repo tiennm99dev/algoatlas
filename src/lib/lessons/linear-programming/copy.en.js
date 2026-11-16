@@ -153,7 +153,11 @@ export const en = {
   ],
   complexityHead: ['Step', 'Cost', 'Why'],
   complexity: [
-    ['One pivot', 'O(m·n)', 'Every entry of the m-row, (n + m)-column tableau is updated once.'],
+    [
+      'One pivot',
+      'O(m·(n + m))',
+      'Every entry of the m-row, (n + m)-column tableau is updated once.',
+    ],
     [
       'Number of pivots',
       'exponential worst case',
@@ -217,7 +221,7 @@ export const en = {
       type: 'text',
       prompt:
         'For “Three constraints” the dual prices are y = (2, 0, 1). Which constraint is not tight at the optimum? Answer with its inequality, like x + y ≤ 4.',
-      accept: ['x + 3y ≤ 9', 'x + 3y <= 9', 'constraint 2', 'the second'],
+      accept: ['x + 3y ≤ 9', 'x+3y≤9', 'x + 3y <= 9', 'constraint 2', 'the second'],
       hints: [
         'Complementary slackness: a constraint with a positive dual price must be tight, and a slack constraint has price 0.',
       ],

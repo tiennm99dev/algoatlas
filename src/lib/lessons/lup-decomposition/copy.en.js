@@ -29,7 +29,7 @@ export const en = {
     clrs: 'CLRS example (3×3)',
     zeroPivot: 'Needs a row swap',
     twoByTwo: 'Small 2×2',
-    fourByFour: 'No swaps needed (4×4)',
+    fourByFour: 'Plain LU works (4×4)',
     singular: 'Singular matrix',
   },
   inputTitle: 'Your system A · x = b',
@@ -139,11 +139,12 @@ export const en = {
   practice: [
     {
       type: 'number',
-      prompt:
-        'Load the CLRS example and step to the end. What is x[0]? Give it as a decimal or a fraction’s value.',
+      prompt: 'Load the CLRS example and step to the end. What is x[0]? Give it as a decimal.',
       answer: -1.4,
       tolerance: 0.001,
-      hints: ['Read the x vector on the last step: x[0] is written as a fraction.'],
+      hints: [
+        'Read the x vector on the last step: x[0] is written as a fraction, so divide it out.',
+      ],
       solution:
         'The solution is x = (−7/5, 11/5, 3/5), so x[0] = −7/5 = −1.4. Check row 0: 1·(−7/5) + 2·(11/5) + 0 = 15/5 = 3.',
     },

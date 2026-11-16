@@ -45,7 +45,7 @@ export const en = {
   mError: (min, max) => `The modulus must be a whole number from ${num(min)} to ${num(max)}.`,
   /** @param {number} max */
   exactClamped: (max) =>
-    `Exact numbers grow by about 0.2 digits per step, so exact mode stops at n = ${num(max)}. n was set to ${num(max)}.`,
+    `Exact numbers gain a fixed number of digits with every step, so exact mode stops at n = ${num(max)}. n was set to ${num(max)}.`,
   setupTitle: 'The recurrence as a matrix',
   setupNote: 'One step: (next state) = M · (state). n steps: Mⁿ · v₀.',
   matrixM: 'M',
@@ -124,7 +124,7 @@ export const en = {
   takeaways: [
     'A linear recurrence of order k keeps a state of its last k terms. One step is a k×k matrix M times that state: the first row holds the coefficients, and the ones below the diagonal shift the old terms down.',
     'So the n-th state is Mⁿ times the starting vector. For Fibonacci, Mⁿ = [[Fₙ₊₁, Fₙ], [Fₙ, Fₙ₋₁]].',
-    'Matrix multiplication is associative, so Mⁿ can be built by squaring, exactly like aⁿ: one squaring per bit of n and one product per set bit, at most 2·log₂ n products.',
+    'Matrix multiplication is associative, so Mⁿ can be built by squaring, exactly like aⁿ: one squaring per bit of n after the first and one product per set bit, at most 2⌊log₂ n⌋ + 1 products.',
     'Each product of k×k matrices costs k³ multiplications, so the total is O(k³ log n). Exact entries grow by about 0.21 digits per Fibonacci step, which is why contest problems ask for the answer mod m.',
     'Try “F at 10¹⁵, mod 10⁹ + 7”: n has 50 bits, so 69 matrix products replace 10¹⁵ loop steps.',
   ],

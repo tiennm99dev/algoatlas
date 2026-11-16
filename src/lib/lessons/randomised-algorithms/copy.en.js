@@ -57,7 +57,7 @@ export const en = {
     comparisons: 'Comparisons this run',
     swaps: 'Swaps',
     depth: 'Deepest call',
-    expected: 'Expected, random pivots',
+    expected: 'Expected, distinct keys',
     worst: 'Worst case n(n − 1)/2',
   },
   histTitle: 'Comparisons over many runs',
@@ -183,7 +183,7 @@ export const en = {
     {
       type: 'number',
       prompt:
-        'For 3 distinct keys, what is the probability that the smallest and the largest are ever compared?',
+        'For 3 distinct keys, what is the probability that the smallest and the largest are ever compared? Give it as a decimal.',
       answer: 2 / 3,
       tolerance: 0.01,
       hints: ['They are compared only if one of them is the first pivot chosen among all three.'],
