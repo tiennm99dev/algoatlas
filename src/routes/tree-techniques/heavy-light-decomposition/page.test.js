@@ -85,6 +85,7 @@ describe('heavy-light decomposition lesson', () => {
   it('sizes subtrees, then numbers the chains heavy child first', () => {
     render();
     expect(narration()).toContain('First walk (dfs1)');
+    expect(byTest('array-empty')).toBe(m.arrayEmpty);
     next(2);
     expect(narration()).toBe(
       'H has size 2. Its largest child is M (size 1), so H–M is a heavy edge.',
@@ -95,6 +96,7 @@ describe('heavy-light decomposition lesson', () => {
     );
     next(5);
     expect(narration()).toBe('I hangs on a light edge: it starts a new chain at position 5.');
+    expect(byTest('array-empty')).toBeUndefined();
     expect(node('I').getAttribute('aria-label')).toBe(
       'Node I, value 5, position 5 on chain I, worked on now',
     );

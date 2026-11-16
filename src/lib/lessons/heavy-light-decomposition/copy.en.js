@@ -75,6 +75,7 @@ export const en = {
   },
   arrayTitle: 'Base array in position order: each chain is one block',
   arrayAria: 'Node values in position order, the summed ranges bracketed.',
+  arrayEmpty: 'Empty until the second walk numbers the nodes.',
   /** @param {string} label @param {number} value */
   cellLabel: (label, value) => `${label}, value ${value}`,
   /** @param {string} head */
@@ -117,7 +118,7 @@ export const en = {
         const r = f.ranges[f.ranges.length - 1];
         const low = at(r.to);
         const span = r.from === r.to ? `${L(low)} alone` : `${L(r.head)} down to ${L(low)}`;
-        return `${f.swapped ? 'Swap u and v first. ' : ''}head[u] = ${L(r.head)} is deeper than head[v] = ${L(/** @type {number} */ (f.head[f.v]))}, so add positions ${r.from}..${r.to} (${span}): +${r.sum}. Then u jumps over the light edge above ${L(r.head)} to ${L(f.u)}.`;
+        return `${f.swapped ? 'Swap u and v first. ' : ''}head[u] = ${L(r.head)} is at least as deep as head[v] = ${L(/** @type {number} */ (f.head[f.v]))}, so add positions ${r.from}..${r.to} (${span}): +${r.sum}. Then u jumps over the light edge above ${L(r.head)} to ${L(f.u)}.`;
       }
       case 'last': {
         const r = f.ranges[f.ranges.length - 1];

@@ -372,20 +372,24 @@
         <h2 class="mb-2 text-xs font-semibold tracking-wide text-slate-500 uppercase">
           {m.arrayTitle}
         </h2>
-        <ArrayStrip
-          values={nodeAt.map((x) => tree.value[x])}
-          ariaLabel={m.arrayAria}
-          stateOf={cellState}
-          markerOf={(p) => (frame.head[nodeAt[p]] === nodeAt[p] ? m.markers.head : '')}
-          labelOf={(p) => m.cellLabel(tree.labels[nodeAt[p]], tree.value[nodeAt[p]])}
-          pointers={nodeAt.map((x, p) => ({ name: tree.labels[x], index: p }))}
-          windows={frame.ranges.map((r) => ({
-            from: r.from,
-            to: r.to + 1,
-            label: m.windowLabel(tree.labels[nodeAt[r.from]]),
-          }))}
-          speed={player.speed}
-        />
+        {#if nodeAt.length === 0}
+          <p class="text-sm text-slate-500" data-testid="array-empty">{m.arrayEmpty}</p>
+        {:else}
+          <ArrayStrip
+            values={nodeAt.map((x) => tree.value[x])}
+            ariaLabel={m.arrayAria}
+            stateOf={cellState}
+            markerOf={(p) => (frame.head[nodeAt[p]] === nodeAt[p] ? m.markers.head : '')}
+            labelOf={(p) => m.cellLabel(tree.labels[nodeAt[p]], tree.value[nodeAt[p]])}
+            pointers={nodeAt.map((x, p) => ({ name: tree.labels[x], index: p }))}
+            windows={frame.ranges.map((r) => ({
+              from: r.from,
+              to: r.to + 1,
+              label: m.windowLabel(tree.labels[nodeAt[r.from]]),
+            }))}
+            speed={player.speed}
+          />
+        {/if}
       </div>
 
       <p
