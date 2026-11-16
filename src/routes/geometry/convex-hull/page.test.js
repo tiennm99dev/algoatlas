@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { orient } from '$lib/algo-engine/geometry-orientation.js';
+import { orient } from '$lib/algo-engine/plane-geometry.js';
 import { hullTrace } from '$lib/algo-engine/convex-hull.js';
 import { en as m } from '$lib/lessons/convex-hull/copy.en.js';
 import Page from './+page.svelte';

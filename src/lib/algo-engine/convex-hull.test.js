@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { orient } from './geometry-orientation.js';
+import { orient } from './plane-geometry.js';
 import {
   GRID,
   HULL_PRESETS,

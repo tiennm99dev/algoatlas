@@ -1,4 +1,4 @@
-import { orient } from './geometry-orientation.js';
+import { dist2, hullOf, orient } from './plane-geometry.js';
 
 /**
  * Three problem runners on one set of whole-number points, each with a value for the learner to
@@ -127,33 +127,6 @@ export function randomPoints(n, rand = Math.random) {
     if (!out.some((p) => p.x === x && p.y === y)) out.push({ id: out.length, x, y });
   }
   return out;
-}
-
-/** Squared distance: a whole number for whole-number points, so it compares exactly. */
-/** @param {GeoPoint} p @param {GeoPoint} q */
-export const dist2 = (p, q) => (p.x - q.x) ** 2 + (p.y - q.y) ** 2;
-
-/**
- * Andrew’s monotone chain: the hull corners counter-clockwise, collinear points left out.
- * @param {GeoPoint[]} points  Distinct positions.
- * @returns {number[]}
- */
-export function hullOf(points) {
-  const sorted = points.toSorted((p, q) => p.x - q.x || p.y - q.y);
-  if (sorted.length < 3) return sorted.map((p) => p.id);
-  /** @param {GeoPoint[]} seq */
-  const chain = (seq) => {
-    /** @type {GeoPoint[]} */
-    const out = [];
-    for (const p of seq) {
-      while (out.length >= 2 && orient(out[out.length - 2], out[out.length - 1], p) <= 0) out.pop();
-      out.push(p);
-    }
-    return out;
-  };
-  const lower = chain(sorted);
-  const upper = chain(sorted.toReversed());
-  return [...lower.slice(0, -1), ...upper.slice(0, -1)].map((p) => p.id);
 }
 
 /**

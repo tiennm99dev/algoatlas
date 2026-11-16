@@ -1,4 +1,4 @@
-import { orient } from './geometry-orientation.js';
+import { orient } from './plane-geometry.js';
 
 /**
  * Two convex hull algorithms on whole-number points. Both sort, then scan with a stack that pops

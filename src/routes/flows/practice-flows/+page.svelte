@@ -15,14 +15,14 @@
     modelTrace,
   } from '$lib/algo-engine/practice-flows.js';
   import { en as m } from '$lib/lessons/practice-flows/copy.en.js';
-  import FlowBoard from '$lib/lessons/ford-fulkerson/flow-board.svelte';
-  import NetworkEditor from '$lib/lessons/ford-fulkerson/network-editor.svelte';
+  import FlowBoard from '$lib/components/flow-board.svelte';
+  import NetworkEditor from '$lib/components/network-editor.svelte';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/graph-editor.js').GraphNode} GraphNode */
   /** @typedef {import('$lib/components/graph-editor.js').GraphEdge} GraphEdge */
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */
-  /** @typedef {import('$lib/lessons/ford-fulkerson/board-types.js').BoardArc} BoardArc */
+  /** @typedef {import('$lib/components/board-types.js').BoardArc} BoardArc */
   /** @typedef {import('$lib/algo-engine/practice-flows.js').ScenarioKey} ScenarioKey */
   /** @typedef {import('$lib/algo-engine/practice-flows.js').ModelCheck} ModelCheck */
 

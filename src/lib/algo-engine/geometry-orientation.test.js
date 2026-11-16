@@ -1,17 +1,12 @@
 import { describe, expect, it } from 'vitest';
+import { cross, dot, inBox, orient, sub, turnOf } from './plane-geometry.js';
 import {
   EPSILON,
   GRID,
   ORIENTATION_PRESETS,
-  cross,
-  dot,
   floatOrient,
-  inBox,
-  orient,
   orientationPseudocode,
   orientationTrace,
-  sub,
-  turnOf,
 } from './geometry-orientation.js';
 
 /** Deterministic LCG so random cases are reproducible. */

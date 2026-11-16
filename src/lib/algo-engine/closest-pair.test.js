@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest';
+import { dist2 } from './plane-geometry.js';
 import {
   MAX_N,
   bruteForceClosest,
   closestPseudocode,
   closestTrace,
-  dist2,
   parsePoints,
 } from './closest-pair.js';
 

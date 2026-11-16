@@ -2,14 +2,10 @@
  * Vectors and the orientation test on whole-number points. Whole numbers keep the cross product
  * exact, which is why the trace also repeats the sum in floating point for comparison.
  */
+import { cross, dot, samePoint, sub, turnOf } from './plane-geometry.js';
 
-/**
- * @typedef {object} Point
- * @property {number} x
- * @property {number} y
- */
-
-/** @typedef {'left' | 'right' | 'collinear'} Turn */
+/** @typedef {import('./plane-geometry.js').Point} Point */
+/** @typedef {import('./plane-geometry.js').Turn} Turn */
 /** @typedef {'acute' | 'right' | 'obtuse' | 'none'} AngleKind */
 
 /**
@@ -48,42 +44,8 @@ export const orientationPseudocode = [
   '  return COLLINEAR',
 ];
 
-/** @param {Point} a @param {Point} b @returns {Point} */
-export const sub = (a, b) => ({ x: a.x - b.x, y: a.y - b.y });
-
-/** Adding 0 turns a −0 into 0, so an exact zero always compares and prints as 0. */
-/** @param {Point} u @param {Point} v */
-export const dot = (u, v) => u.x * v.x + u.y * v.y + 0;
-
-/** @param {Point} u @param {Point} v */
-export const cross = (u, v) => u.x * v.y - u.y * v.x + 0;
-
-/**
- * Twice the signed area of triangle abc: positive when a → b → c turns left, negative when it
- * turns right, zero when the three points are on one line.
- * @param {Point} a @param {Point} b @param {Point} c
- */
-export const orient = (a, b, c) => cross(sub(b, a), sub(c, a));
-
-/** @param {number} value @returns {Turn} */
-export const turnOf = (value) => (value > 0 ? 'left' : value < 0 ? 'right' : 'collinear');
-
 /** @param {number} value @returns {AngleKind} */
 const angleOf = (value) => (value > 0 ? 'acute' : value < 0 ? 'obtuse' : 'right');
-
-/**
- * Whether p sits in the bounding box of segment ab, which for a point already known to be on
- * the line through a and b means it is on the segment.
- * @param {Point} a @param {Point} b @param {Point} p
- */
-export const inBox = (a, b, p) =>
-  Math.min(a.x, b.x) <= p.x &&
-  p.x <= Math.max(a.x, b.x) &&
-  Math.min(a.y, b.y) <= p.y &&
-  p.y <= Math.max(a.y, b.y);
-
-/** @param {Point} p @param {Point} q */
-export const samePoint = (p, q) => p.x === q.x && p.y === q.y;
 
 /** Starting points for the widget, each showing one outcome. */
 export const ORIENTATION_PRESETS = {

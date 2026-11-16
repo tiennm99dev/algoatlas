@@ -1,11 +1,11 @@
-import { cross, inBox, orient, sub } from './geometry-orientation.js';
+import { cross, inBox, orient, sub } from './plane-geometry.js';
 
 /**
  * Whether two closed segments meet, decided from orientation signs alone, and where. Inputs are
  * whole-number points, so every sign is exact; the only division is the final position.
  */
 
-/** @typedef {import('./geometry-orientation.js').Point} Point */
+/** @typedef {import('./plane-geometry.js').Point} Point */
 /** @typedef {'cross' | 'touch' | 'overlap' | 'none'} Outcome */
 
 /**

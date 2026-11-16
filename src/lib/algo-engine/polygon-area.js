@@ -1,4 +1,4 @@
-import { inBox, orient } from './geometry-orientation.js';
+import { inBox, orient } from './plane-geometry.js';
 
 /**
  * Three walks over a polygon's edges on whole-number points: the shoelace sum for area, and ray
@@ -7,7 +7,7 @@ import { inBox, orient } from './geometry-orientation.js';
  * through a vertex counts it exactly once.
  */
 
-/** @typedef {import('./geometry-orientation.js').Point} Point */
+/** @typedef {import('./plane-geometry.js').Point} Point */
 /** @typedef {'shoelace' | 'ray' | 'winding'} PolygonMethod */
 /** @typedef {'inside' | 'outside' | 'boundary'} Location */
 /** @typedef {'term' | 'cross' | 'skip' | 'up' | 'down' | 'boundary'} EdgeResult */

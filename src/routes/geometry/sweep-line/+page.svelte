@@ -15,7 +15,7 @@
     anyPseudocode,
     sweepTrace,
   } from '$lib/algo-engine/sweep-line.js';
-  import PointPlane from '$lib/lessons/geometry-orientation/point-plane.svelte';
+  import PointPlane from '$lib/components/point-plane.svelte';
   import { en as m } from '$lib/lessons/sweep-line/copy.en.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
@@ -23,7 +23,7 @@
   /** @typedef {import('$lib/algo-engine/sweep-line.js').SweepFrame} SweepFrame */
   /** @typedef {import('$lib/algo-engine/sweep-line.js').SweepMethod} Method */
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */
-  /** @typedef {import('$lib/lessons/geometry-orientation/plane-types.js').PlaneSegment} PlaneSegment */
+  /** @typedef {import('$lib/components/plane-types.js').PlaneSegment} PlaneSegment */
   /** @typedef {keyof typeof SWEEP_PRESETS} Preset */
 
   const PRESET_KEYS = /** @type {Preset[]} */ (Object.keys(SWEEP_PRESETS));

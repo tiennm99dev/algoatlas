@@ -18,13 +18,13 @@
     randomPoints,
   } from '$lib/algo-engine/convex-hull.js';
   import { en as m } from '$lib/lessons/convex-hull/copy.en.js';
-  import PointPlane from '$lib/lessons/geometry-orientation/point-plane.svelte';
+  import PointPlane from '$lib/components/point-plane.svelte';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/convex-hull.js').HullPoint} HullPoint */
   /** @typedef {import('$lib/algo-engine/convex-hull.js').HullMethod} Method */
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */
-  /** @typedef {import('$lib/lessons/geometry-orientation/plane-types.js').PlaneSegment} PlaneSegment */
+  /** @typedef {import('$lib/components/plane-types.js').PlaneSegment} PlaneSegment */
   /** @typedef {keyof typeof HULL_PRESETS} Preset */
 
   const PRESET_KEYS = /** @type {Preset[]} */ (Object.keys(HULL_PRESETS));

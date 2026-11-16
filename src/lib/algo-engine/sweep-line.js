@@ -13,7 +13,7 @@ import { segmentTrace } from './segment-intersection.js';
  * Heights are compared by cross-multiplying whole numbers, so no fraction is ever rounded.
  */
 
-/** @typedef {import('./geometry-orientation.js').Point} Point */
+/** @typedef {import('./plane-geometry.js').Point} Point */
 /** @typedef {'any' | 'all'} SweepMethod */
 
 /**

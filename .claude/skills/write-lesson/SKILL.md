@@ -197,6 +197,8 @@ very next curriculum lesson and name it by its title (`lesson-content.test.js` c
 | `segmented-control` | a radio toggle (algorithm, variant, tool) | `legend`, `name`, `options`, `bind:value` |
 | `practice-block` | answer-checked questions | `exercises`, `id` (the lesson slug), `title?` |
 | `puzzle-board` | a chess or Sudoku board of buttons | `size`, `boxSide?`, `checkered?`, `cellOf`, `ariaLabel`, `onselect` |
+| `point-plane` | points, segments and polygons on a whole-number grid (geometry lessons) | see the JSDoc; shapes are the `PlanePoint`, `PlaneSegment`, `PlanePolygon` and `PlaneMark` types of `plane-types.js` |
+| `flow-board` and `network-editor` | a flow network drawn with flow/capacity on its arcs, and the editable network behind it (flow lessons) | arcs are the `BoardArc` type of `board-types.js`; see the JSDoc |
 
 `graph-editor.js` (pure edit operations, plus `letter(id)` for vertex names A, B, … and
 `graphShape(nodes, edges, weights?)`, the string a page compares to decide whether an edit
@@ -224,6 +226,8 @@ String lessons read a typed word with `parseLetters(text, max)` and measure the 
 with `naiveComparisons(text, pattern)`, both from `src/lib/algo-engine/text-match.js`. Number
 theory engines take `gcd`, `isPrime` and `powMod` from `src/lib/algo-engine/number-theory.js`;
 never redefine them in an engine, copy or page.
+Geometry engines take `sub`, `dot`, `cross`, `orient`, `turnOf`, `inBox`, `samePoint`, `dist2`
+and `hullOf` (Andrew's monotone chain) from `src/lib/algo-engine/plane-geometry.js`.
 
 ## 8. Practice block and lesson kinds
 

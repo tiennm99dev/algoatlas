@@ -18,7 +18,7 @@
     rangeTreeTrace,
   } from '$lib/algo-engine/range-trees.js';
   import { en as m } from '$lib/lessons/range-trees/copy.en.js';
-  import PointPlane from '$lib/lessons/geometry-orientation/point-plane.svelte';
+  import PointPlane from '$lib/components/point-plane.svelte';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/range-trees.js').RangePoint} RangePoint */
@@ -26,8 +26,8 @@
   /** @typedef {import('$lib/algo-engine/range-trees.js').RangeQuery} RangeQuery */
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */
   /** @typedef {import('$lib/components/tree-layout.js').TreeNode} TreeNode */
-  /** @typedef {import('$lib/lessons/geometry-orientation/plane-types.js').PlanePoint} PlanePoint */
-  /** @typedef {import('$lib/lessons/geometry-orientation/plane-types.js').PlaneSegment} PlaneSegment */
+  /** @typedef {import('$lib/components/plane-types.js').PlanePoint} PlanePoint */
+  /** @typedef {import('$lib/components/plane-types.js').PlaneSegment} PlaneSegment */
   /** @typedef {keyof typeof RANGE_PRESETS} Preset */
   /** @typedef {keyof typeof m.roles} Role */
 

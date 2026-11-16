@@ -19,15 +19,15 @@
     randomPoints,
   } from '$lib/algo-engine/practice-geometry.js';
   import { en as m } from '$lib/lessons/practice-geometry/copy.en.js';
-  import PointPlane from '$lib/lessons/geometry-orientation/point-plane.svelte';
+  import PointPlane from '$lib/components/point-plane.svelte';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/practice-geometry.js').GeoPoint} GeoPoint */
   /** @typedef {import('$lib/algo-engine/practice-geometry.js').Puzzle} Puzzle */
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */
-  /** @typedef {import('$lib/lessons/geometry-orientation/plane-types.js').PlanePoint} PlanePoint */
-  /** @typedef {import('$lib/lessons/geometry-orientation/plane-types.js').PlaneSegment} PlaneSegment */
-  /** @typedef {import('$lib/lessons/geometry-orientation/plane-types.js').PlanePolygon} PlanePolygon */
+  /** @typedef {import('$lib/components/plane-types.js').PlanePoint} PlanePoint */
+  /** @typedef {import('$lib/components/plane-types.js').PlaneSegment} PlaneSegment */
+  /** @typedef {import('$lib/components/plane-types.js').PlanePolygon} PlanePolygon */
   /** @typedef {keyof typeof GEO_PRESETS} Preset */
   /** @typedef {keyof typeof m.roles} Role */
 

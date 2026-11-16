@@ -3,15 +3,15 @@
   import LessonLayout from '$lib/components/lesson-layout.svelte';
   import PracticeBlock from '$lib/components/practice-block.svelte';
   import StepControls from '$lib/components/step-controls.svelte';
+  import { turnOf } from '$lib/algo-engine/plane-geometry.js';
   import {
     GRID,
     ORIENTATION_PRESETS,
     orientationPseudocode,
     orientationTrace,
-    turnOf,
   } from '$lib/algo-engine/geometry-orientation.js';
   import { en as m } from '$lib/lessons/geometry-orientation/copy.en.js';
-  import PointPlane from '$lib/lessons/geometry-orientation/point-plane.svelte';
+  import PointPlane from '$lib/components/point-plane.svelte';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/geometry-orientation.js').Point} Point */
@@ -58,7 +58,7 @@
     })),
   );
   const segments = $derived.by(() => {
-    /** @type {import('$lib/lessons/geometry-orientation/plane-types.js').PlaneSegment[]} */
+    /** @type {import('$lib/components/plane-types.js').PlaneSegment[]} */
     const out = [];
     const { a, b, c } = frame;
     if (frame.u)

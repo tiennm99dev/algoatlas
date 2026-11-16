@@ -10,13 +10,13 @@
     segmentPseudocode,
     segmentTrace,
   } from '$lib/algo-engine/segment-intersection.js';
-  import PointPlane from '$lib/lessons/geometry-orientation/point-plane.svelte';
+  import PointPlane from '$lib/components/point-plane.svelte';
   import { en as m } from '$lib/lessons/segment-intersection/copy.en.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/segment-intersection.js').Point} Point */
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */
-  /** @typedef {import('$lib/lessons/geometry-orientation/plane-types.js').PlaneSegment} PlaneSegment */
+  /** @typedef {import('$lib/components/plane-types.js').PlaneSegment} PlaneSegment */
   /** @typedef {keyof typeof SEGMENT_PRESETS} Preset */
 
   const PRESET_KEYS = /** @type {Preset[]} */ (Object.keys(SEGMENT_PRESETS));

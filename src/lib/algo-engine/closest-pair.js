@@ -7,6 +7,7 @@
  * most 7 of them. Three or fewer points are checked pair by pair. Distances are compared
  * squared, on whole numbers, so ties are exact.
  */
+import { dist2 } from './plane-geometry.js';
 
 export const MIN_N = 2;
 export const MAX_N = 16;
@@ -49,9 +50,6 @@ export const closestPseudocode = [
   '  return d',
   'sort the points by x once; answer = closest(all points)',
 ];
-
-/** @param {Point} p @param {Point} q */
-export const dist2 = (p, q) => (p.x - q.x) ** 2 + (p.y - q.y) ** 2;
 
 /**
  * Reads points written as `x, y` pairs, optionally in brackets, separated by spaces or

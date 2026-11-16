@@ -18,14 +18,14 @@
     shoelacePseudocode,
     windingPseudocode,
   } from '$lib/algo-engine/polygon-area.js';
-  import PointPlane from '$lib/lessons/geometry-orientation/point-plane.svelte';
+  import PointPlane from '$lib/components/point-plane.svelte';
   import { en as m } from '$lib/lessons/polygon-area/copy.en.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/polygon-area.js').Point} Point */
   /** @typedef {import('$lib/algo-engine/polygon-area.js').PolygonMethod} Method */
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */
-  /** @typedef {import('$lib/lessons/geometry-orientation/plane-types.js').PlaneSegment} PlaneSegment */
+  /** @typedef {import('$lib/components/plane-types.js').PlaneSegment} PlaneSegment */
   /** @typedef {keyof typeof POLYGON_PRESETS} Preset */
 
   const PRESET_KEYS = /** @type {Preset[]} */ (Object.keys(POLYGON_PRESETS));
@@ -213,7 +213,7 @@
   });
 
   const polygons = $derived.by(() => {
-    /** @type {import('$lib/lessons/geometry-orientation/plane-types.js').PlanePolygon[]} */
+    /** @type {import('$lib/components/plane-types.js').PlanePolygon[]} */
     const out = [{ key: 'poly', pts: frame.polygon, state: 'visited' }];
     if (frame.method === 'shoelace' && frame.edge !== null) {
       const row = frame.rows[frame.rows.length - 1];

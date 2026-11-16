@@ -14,14 +14,14 @@
     phaseFlowTrace,
   } from '$lib/algo-engine/edmonds-karp-dinic.js';
   import { en as m } from '$lib/lessons/edmonds-karp-dinic/copy.en.js';
-  import FlowBoard from '$lib/lessons/ford-fulkerson/flow-board.svelte';
-  import NetworkEditor from '$lib/lessons/ford-fulkerson/network-editor.svelte';
+  import FlowBoard from '$lib/components/flow-board.svelte';
+  import NetworkEditor from '$lib/components/network-editor.svelte';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/graph-editor.js').GraphNode} GraphNode */
   /** @typedef {import('$lib/components/graph-editor.js').GraphEdge} GraphEdge */
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */
-  /** @typedef {import('$lib/lessons/ford-fulkerson/board-types.js').BoardArc} BoardArc */
+  /** @typedef {import('$lib/components/board-types.js').BoardArc} BoardArc */
   /** @typedef {import('$lib/algo-engine/edmonds-karp-dinic.js').FlowMethod} FlowMethod */
   /** @typedef {'classic' | 'layers' | 'zigzag'} Preset */
   /** @typedef {'flow' | 'residual'} View */

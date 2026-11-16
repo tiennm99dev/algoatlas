@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { dist2, hullOf } from './plane-geometry.js';
 import {
   GEO_PRESETS,
   GRID,
@@ -7,9 +8,7 @@ import {
   PSEUDOCODE,
   PUZZLES,
   diameterTrace,
-  dist2,
   fenceTrace,
-  hullOf,
   lineAcross,
   puzzleTrace,
   randomPoints,
