@@ -58,14 +58,15 @@ export const MAX_K = 5;
  */
 
 export const fptPseudocode = [
-  'vc(G, k):                    // a cover of at most k vertices?',
-  '  while some v has more than k edges: take v; k = k − 1',
-  '  if more than k² edges are left: return no',
+  'vc(G, k):    // a cover of ≤ k vertices?',
+  '  while v has > k edges: take v; k = k − 1',
+  '  if more than k² edges left: return no',
   'search(G, k):',
   '  if G has no edges: return yes',
   '  if k = 0: return no',
-  '  u – v = the first uncovered edge   // u or v is in any cover',
-  '  return search(G − u, k − 1) or search(G − v, k − 1)',
+  '  u – v = first uncovered edge',
+  '  return search(G − u, k − 1)',
+  '      or search(G − v, k − 1)',
 ];
 
 /**
@@ -204,13 +205,13 @@ export function fptTrace({ ids, edges, k, kernel }) {
       record('fail', { current: id }, [3, 5]);
       return false;
     }
-    record('branch', { current: id, edge: next }, [3, 6]);
+    record('branch', { current: id, edge: next }, [3, 6, 7]);
     for (const v of pairs[next]) {
       path.push(v);
       // A found cover keeps its path, so the last frame shows it.
       if (search(id, v, left - 1)) return true;
       path = path.slice(0, -1);
-      record('back', { current: id, edge: next }, [7]);
+      record('back', { current: id, edge: next }, [8]);
     }
     nodes[id].status = 'done';
     return false;

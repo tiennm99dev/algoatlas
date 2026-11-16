@@ -27,7 +27,7 @@
 
   const W = 560;
   const H = 320;
-  const BOX_W = 132;
+  const BOX_W = 150;
   const BOX_H = 30;
   const FIRST = GADGET_PRESETS[0];
   const FIRST_FORMULA = /** @type {Formula} */ (parseFormula(FIRST.formula));
@@ -191,7 +191,7 @@
     <ScrollFrame>
       <svg
         viewBox="0 0 640 380"
-        class="block w-full min-w-[34rem]"
+        class="mx-auto block w-full max-w-[44rem] min-w-[34rem]"
         role="group"
         aria-label={m.mapAria}
       >
@@ -201,8 +201,9 @@
             viewBox="0 0 10 10"
             refX="9"
             refY="5"
-            markerWidth="7"
-            markerHeight="7"
+            markerUnits="userSpaceOnUse"
+            markerWidth="10"
+            markerHeight="10"
             orient="auto-start-reverse"
           >
             <path d="M0,0 L10,5 L0,10 z" class="fill-slate-600" />
@@ -243,7 +244,7 @@
               x={p.x}
               y={p.y + 4.5}
               text-anchor="middle"
-              class="text-[13px] font-semibold {on ? 'fill-white' : 'fill-slate-900'}"
+              class="text-[12px] font-semibold {on ? 'fill-white' : 'fill-slate-900'}"
               >{m.problems[p.key].name}</text
             >
           </g>

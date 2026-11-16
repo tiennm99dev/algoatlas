@@ -46,16 +46,16 @@ export const MAX_NODES = 8;
  */
 
 export const reductionPseudocode = [
-  'reduce(G, k):            // CLIQUE → INDEPENDENT SET',
-  '  H = the same vertices, no edges',
-  '  for each pair u, v of vertices:',
-  '    if u – v is not an edge of G: add u – v to H',
-  '  return (H, k)           // n(n − 1)/2 pairs: polynomial',
-  'verify(G, k, S):         // S is the certificate',
+  'reduce(G, k):       // CLIQUE ≤ₚ IND. SET',
+  '  H = same vertices, no edges',
+  '  for each pair u, v:',
+  '    if u – v not in G: add u – v to H',
+  '  return (H, k)      // n(n − 1)/2 pairs',
+  'verify(G, k, S):    // S: certificate',
   '  if |S| < k: reject',
   '  for each pair u, v in S:',
-  '    if u – v is not an edge of G: reject',
-  '  accept                  // a clique of G = an independent set of H',
+  '    if u – v not in G: reject',
+  '  accept',
 ];
 
 /**

@@ -83,7 +83,7 @@ export const en = {
   },
   /** @param {string} name @param {boolean} on */
   mapNodeLabel: (name, on) => `${name}${on ? ', shown below the map' : ''}`,
-  formulaLabel: 'Formula φ, 3-CNF',
+  formulaLabel: '3-CNF formula',
   presetLabel: 'Example',
   /** @type {Record<string, string>} */
   presets: {

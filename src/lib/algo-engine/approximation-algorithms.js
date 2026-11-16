@@ -42,22 +42,22 @@ export const MAX_NODES = 10;
  */
 
 export const matchingPseudocode = [
-  'approxCover(G):           // maximal matching',
+  'approxCover(G):  // maximal matching',
   '  C = { }',
   '  for each edge u – v:',
   '    if neither u nor v is in C:',
-  '      add u and v to C     // u – v joins the matching M',
-  '    else: skip, the edge is already covered',
-  '  return C                 // |C| = 2|M| ≤ 2 · OPT',
+  '      add u and v to C  // M gets u – v',
+  '    else: skip, already covered',
+  '  return C  // |C| = 2|M| ≤ 2 · OPT',
 ];
 
 export const greedyPseudocode = [
-  'greedyCover(G):          // greedy set cover',
+  'greedyCover(G):  // greedy set cover',
   '  C = { }',
   '  while some edge is uncovered:',
   '    v = the vertex touching the most uncovered edges',
   '    add v to C, and mark its edges covered',
-  '  return C                 // |C| ≤ H(Δ) · OPT',
+  '  return C  // |C| ≤ H(Δ) · OPT',
 ];
 
 /**

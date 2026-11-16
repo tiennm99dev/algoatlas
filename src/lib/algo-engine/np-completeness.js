@@ -57,15 +57,16 @@ export const VAR_NAMES = 'abcd';
  */
 
 export const gadgetPseudocode = [
-  'reduce(φ with n variables and m clauses):',
-  '  for each variable x: add vertices x, ¬x and the edge x – ¬x',
-  '  for each clause: add a triangle, one vertex per literal',
-  '    join each triangle vertex to the vertex of its literal',
-  '  return (G, k = n + 2m)       // 2n + 3m vertices: polynomial',
+  'reduce(φ: n variables, m clauses):',
+  '  for each variable x: add edge x – ¬x',
+  '  for each clause: add a triangle',
+  '    join each corner to its literal',
+  '  return (G, k = n + 2m)',
   'cover(G, an assignment):',
-  '  for each variable: take the vertex of its true literal',
-  '  for each clause: keep out one true literal’s vertex, take the other two',
-  '  all edges covered by k vertices ⇔ the assignment satisfies φ',
+  '  for each variable: take its true literal',
+  '  for each clause: leave out one true',
+  '    literal’s corner, take the other two',
+  '  all edges covered ⇔ φ is satisfied',
 ];
 
 /**
@@ -245,12 +246,12 @@ export function gadgetTrace(f, assignment) {
     const out = free < 0 ? 0 : free;
     const take = [0, 1, 2].filter((t) => t !== out).map((t) => clauseVertex(f, j, t));
     cover.push(...take);
-    record(free < 0 ? 'unsat' : 'pickClause', { current: take, clause: j }, [7]);
+    record(free < 0 ? 'unsat' : 'pickClause', { current: take, clause: j }, [7, 8]);
   });
   const inCover = new Set(cover);
   uncovered = all.flatMap((e, i) => (inCover.has(e.a) || inCover.has(e.b) ? [] : [i]));
-  record(uncovered.length ? 'uncovered' : 'covered', {}, [8]);
-  record('done', {}, [8]);
+  record(uncovered.length ? 'uncovered' : 'covered', {}, [9]);
+  record('done', {}, [9]);
   return frames;
 }
 
@@ -271,10 +272,10 @@ export const MAP_PROBLEMS = [
   { key: 'vertexCover', x: 130, y: 240 },
   { key: 'clique', x: 320, y: 240 },
   { key: 'subsetSum', x: 545, y: 240 },
-  { key: 'setCover', x: 70, y: 310 },
-  { key: 'hamCycle', x: 215, y: 310 },
-  { key: 'independentSet', x: 360, y: 310 },
-  { key: 'tsp', x: 215, y: 360 },
+  { key: 'setCover', x: 80, y: 310 },
+  { key: 'hamCycle', x: 240, y: 310 },
+  { key: 'independentSet', x: 400, y: 310 },
+  { key: 'tsp', x: 240, y: 360 },
 ];
 
 /** Reductions A → B, meaning A ≤ₚ B, so B is at least as hard as A. */
