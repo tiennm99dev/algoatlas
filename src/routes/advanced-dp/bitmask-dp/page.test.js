@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
-import { exerciseProblems } from '$lib/components/answer-check.js';
+import { checkAnswer, exerciseProblems } from '$lib/components/answer-check.js';
 import {
   CITY_PRESETS,
   distances,
@@ -186,5 +186,8 @@ describe('bitmask DP lesson', () => {
     submit();
     expect(q.textContent).toContain('Correct!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
+    const cost = m.practice.find((ex) => ex.type === 'text');
+    for (const typed of ['O(2^n * n^2)', 'O(n²·2ⁿ)'])
+      expect(checkAnswer(/** @type {any} */ (cost), typed).correct).toBe(true);
   });
 });

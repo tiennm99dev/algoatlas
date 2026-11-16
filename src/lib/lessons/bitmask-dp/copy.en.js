@@ -188,7 +188,17 @@ export const en = {
     {
       type: 'text',
       prompt: 'What is the running time of Held-Karp for n cities?',
-      accept: ['O(2^n n^2)', 'O(2^n·n^2)', 'O(n^2 2^n)', 'O(n^2·2^n)', 'O(2ⁿ n²)', 'O(2ⁿ·n²)'],
+      accept: [
+        'O(2^n n^2)',
+        'O(2^n·n^2)',
+        'O(2^n*n^2)',
+        'O(n^2 2^n)',
+        'O(n^2·2^n)',
+        'O(n^2*2^n)',
+        'O(2ⁿ n²)',
+        'O(2ⁿ·n²)',
+        'O(n²·2ⁿ)',
+      ],
       hints: ['Count the states, then the work per state.'],
       solution: 'There are 2ⁿ · n states and each tries up to n next cities: O(2ⁿ · n²).',
     },
