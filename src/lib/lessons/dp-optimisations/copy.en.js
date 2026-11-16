@@ -118,7 +118,7 @@ export const en = {
         const stay = next
           ? ` ${name(next.id)} gives ${num(next.m * x + next.b)}, higher, so the pointer stays.`
           : '';
-        return `At x = ${x}, the lowest line is ${name(cur.id)}: ${f.answers[f.q]}.${stay}`;
+        return `At x = ${x}, the lowest line is ${name(cur.id)}: ${num(f.answers[f.q] ?? 0)}.${stay}`;
       }
       case 'done':
         return `${plural(f.queries.length, 'answer', 'answers')} with ${f.checks} hull checks and ${f.compares} pointer comparisons, against ${f.pool.length * f.queries.length} for trying every line at every x.`;
