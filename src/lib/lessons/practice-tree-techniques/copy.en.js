@@ -107,7 +107,7 @@ export const en = {
     'A distance only needs the lowest common ancestor: dist(u, v) = depth[u] + depth[v] − 2·depth[lca]. Climbing chain by chain finds the LCA in O(log n) steps; binary lifting would too.',
     'Updates are where a plain array of values shines (one write) and where HLD pays O(log n). Prefix sums along root paths, the other easy fix, would pay O(n) per update.',
     'On tiny trees the constant factors decide, and the walk often wins. On a path of 100 000 nodes the walk costs 100 000 per query, while O(log² n) is a few hundred.',
-    'Load the Caterpillar and compare sum N Z with sum Y Z: the long path is where the naive cost grows, while HLD’s cost stays about the same.',
+    'Load the Caterpillar and compare sum N Z with sum Y Z: the naive cost follows the path length (15 against 4), while HLD’s cost follows the ranges and the segment tree, not the length (20 against 30).',
   ],
   complexityHead: ['Operation', 'Naive walk', 'Heavy-light decomposition'],
   complexity: [
