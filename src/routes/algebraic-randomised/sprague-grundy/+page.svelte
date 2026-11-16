@@ -66,7 +66,7 @@
   const X = $derived(nimSum(board, g));
   const bits = $derived(Math.max(1, ...g.map((v) => v.toString(2).length)));
   const wins = $derived(winningMoves(board, rule, moves, g));
-  const gameStatus = $derived(status || m.yourTurn(X));
+  const gameStatus = $derived(status || (canMove(board, rule, moves) ? m.yourTurn(X) : m.noMoves));
 
   /** @param {string} message */
   function say(message) {

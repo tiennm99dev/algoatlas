@@ -104,12 +104,14 @@ export const en = {
   yourTurn: (x) =>
     x !== 0
       ? `Your move. X = ${x} ≠ 0, so you can win: find a move that makes X = 0.`
-      : 'Your move. X = 0, so every move gives the computer a win unless it slips.',
+      : 'Your move. X = 0, so every move leaves X ≠ 0, and the computer always finds the winning reply.',
+  noMoves:
+    'No pile has a legal move, so you, the player to move, lose. Change the piles or restart.',
   /** @param {{ pile: number, take: number }[]} wins */
   hint: (wins) =>
     wins.length
       ? `Winning ${wins.length === 1 ? 'move' : 'moves'}: ${wins.map((w) => moveText(w)).join('; ')}.`
-      : 'No move wins from here: X is already 0. Take one stone and hope the computer slips.',
+      : 'No move wins from here: X is already 0, so whatever you take, the computer can make it 0 again.',
   /** @param {{ pile: number, take: number }} you @param {{ pile: number, take: number }} it @param {number} x */
   reply: (you, it, x) =>
     `You ${moveText(you)}. The computer ${moveText(it, 'takes')}. ${x !== 0 ? `X = ${x} ≠ 0, so you can still win.` : 'X = 0, so with best play the computer wins from here.'}`,

@@ -184,6 +184,13 @@ describe('Nim and Sprague-Grundy lesson', () => {
     expect(document.querySelector('[name="moves"]')).toBeNull();
   });
 
+  it('says the game is lost when no pile has a legal move', () => {
+    render();
+    commit(field('piles'), '0 0');
+    expect(stat('status')).toBe(m.noMoves);
+    expect(stones()).toBe(0);
+  });
+
   it('checks a practice answer, wrong then right, with a hint', () => {
     render();
     const q = /** @type {HTMLElement} */ (document.querySelectorAll('li[aria-labelledby]')[0]);
