@@ -251,12 +251,19 @@ export const en = {
     },
     {
       type: 'order',
-      prompt: 'Order these knapsack variants from easiest to hardest to solve exactly in general.',
-      items: ['0/1 knapsack', 'Fractional knapsack', 'Subset sum with a target of at most 1,000'],
+      prompt:
+        'Order these by how much the size of the numbers matters to the best known exact algorithm, from not at all to most.',
+      items: [
+        '0/1 knapsack with any weights',
+        'Fractional knapsack',
+        '0/1 knapsack with a weight limit W of at most 1,000',
+      ],
       answer: [1, 2, 0],
-      hints: ['Fractional is greedy. Subset sum with a small target is a pseudo-polynomial table.'],
+      hints: [
+        'Fractional is greedy. A small weight limit allows a table with one column per weight.',
+      ],
       solution:
-        'Fractional knapsack is greedy in O(n log n). Subset sum with a target of at most 1,000 takes an O(n · 1000) table. 0/1 knapsack with large weights and values is NP-hard.',
+        'Fractional knapsack is greedy in O(n log n), whatever the numbers. With W ≤ 1,000 the dynamic programming table is O(n · W), polynomial only because W is small. With any weights that table can be exponential in the input size, and 0/1 knapsack is NP-hard.',
     },
   ],
   nextTeaser:

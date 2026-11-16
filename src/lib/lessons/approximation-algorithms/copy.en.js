@@ -106,8 +106,8 @@ export const en = {
     ],
     [
       'Greedy set cover',
-      'within H(n) ≈ ln n',
-      'Each pick costs the optimum at most its share of the remaining elements.',
+      'O(k · Σ|S|)',
+      'Each of the k picks rescans every set; the answer stays within H(n) ≈ ln n of the optimum.',
     ],
     [
       'Exact optimum here',
