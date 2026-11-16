@@ -112,7 +112,7 @@ export const en = {
       case 'done': {
         const loose = f.table[len][S] ?? 0;
         return f.tight[len] === S
-          ? `${f.result} numbers: ${loose} loose ones with sum ${S}, plus N itself, whose tight prefix ends at ${S}.`
+          ? `${plural(f.result ?? 0, 'number', 'numbers')}: ${plural(loose, 'loose one', 'loose ones')} with sum ${S}, plus N itself, whose tight prefix ends at ${S}.`
           : `${plural(f.result ?? 0, 'number', 'numbers')} from 0 to ${f.limit} ${f.result === 1 ? 'has' : 'have'} digit sum ${S}: the count in cnt[${S}] of the last row.`;
       }
     }
@@ -178,7 +178,17 @@ export const en = {
     {
       type: 'text',
       prompt: 'Roughly how many steps does digit DP need for N with len digits and target sum S?',
-      accept: ['O(len·S·10)', 'O(10·len·S)', 'O(len*S*10)', 'O(len S)', 'O(len·S)'],
+      accept: [
+        'O(len·S·10)',
+        'O(10·len·S)',
+        'O(len*S*10)',
+        'O(10*len*S)',
+        'O(len S)',
+        'O(len·S)',
+        'O(len*S)',
+        'O(S·len)',
+        'O(S*len)',
+      ],
       hints: ['Count positions, sums and digit choices.'],
       solution: 'len positions × (S + 1) sums × 10 digits: O(len · S · 10).',
     },

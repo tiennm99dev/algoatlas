@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
-import { exerciseProblems } from '$lib/components/answer-check.js';
+import { checkAnswer, exerciseProblems } from '$lib/components/answer-check.js';
 import { digitTrace } from '$lib/algo-engine/digit-dp.js';
 import { en as m } from '$lib/lessons/digit-dp/copy.en.js';
 import Page from './+page.svelte';
@@ -101,6 +101,17 @@ describe('digit DP lesson', () => {
     expect(narration()).toContain('plus N itself');
   });
 
+  it('names a single number in the singular when N is the only one', () => {
+    render();
+    commit(field('input[name="limit"]'), '5');
+    commit(field('input[name="target"]'), '5');
+    click(button('Last step'));
+    expect(byTest('answer')).toBe('1');
+    expect(narration()).toBe(
+      '1 number: 0 loose ones with sum 5, plus N itself, whose tight prefix ends at 5.',
+    );
+  });
+
   it('refuses values out of range and keeps the last good ones', () => {
     render();
     commit(field('input[name="limit"]'), '1000000');
@@ -160,5 +171,8 @@ describe('digit DP lesson', () => {
     submit();
     expect(q.textContent).toContain('Correct!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
+    const cost = m.practice.find((ex) => ex.type === 'text');
+    for (const typed of ['O(len * S)', 'O(10 * len * S)'])
+      expect(checkAnswer(/** @type {any} */ (cost), typed).correct).toBe(true);
   });
 });

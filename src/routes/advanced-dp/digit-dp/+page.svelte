@@ -154,7 +154,7 @@
   const ROLE_MARK = {
     source: m.markers.source,
     target: m.markers.target,
-    branch: m.markers.tight,
+    branch: m.markers.target,
     tight: m.markers.tight,
     answer: m.markers.answer,
     '': '',
