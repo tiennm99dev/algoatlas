@@ -142,6 +142,8 @@ export function reductionTrace({ ids, edges, k, cert }) {
   let checks = 0;
   /** @type {ReductionFrame['verdict']} */
   let verdict = '';
+  /** The pseudocode line where the verifier rejected. */
+  let rejectLine = 6;
   /** @type {ReductionFrame[]} */
   const frames = [];
 
@@ -188,6 +190,7 @@ export function reductionTrace({ ids, edges, k, cert }) {
 
   if (s.length < k) {
     verdict = 'reject';
+    rejectLine = 6;
     record('small', null, [5, 6]);
   } else {
     let ok = true;
@@ -199,6 +202,7 @@ export function reductionTrace({ ids, edges, k, cert }) {
         if (!inG.has(p[0] * 64 + p[1])) {
           ok = false;
           verdict = 'reject';
+          rejectLine = 8;
           record('pairBad', p, [7, 8]);
           break outer;
         }
@@ -211,7 +215,7 @@ export function reductionTrace({ ids, edges, k, cert }) {
       record('accept', null, [9]);
     }
   }
-  record('done', null, verdict === 'accept' ? [9] : [5]);
+  record('done', null, verdict === 'accept' ? [9] : [rejectLine]);
   return frames;
 }
 

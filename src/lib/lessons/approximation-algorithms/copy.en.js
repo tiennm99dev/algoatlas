@@ -169,5 +169,5 @@ export const en = {
     },
   ],
   nextTeaser:
-    'Next up: Fixed-parameter algorithms, which solve vertex cover exactly in O(2ᵏ · n) time, fast whenever the cover size k is small.',
+    'Next up: Fixed-parameter algorithms, which solve vertex cover exactly in O(2ᵏ · m) time, fast whenever the cover size k is small.',
 };

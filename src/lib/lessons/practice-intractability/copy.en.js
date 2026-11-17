@@ -9,7 +9,7 @@ const cards = {
   eulerCircuit: {
     name: 'Euler circuit',
     statement: 'Is there a closed walk that uses every edge exactly once?',
-    why: 'Hierholzer’s algorithm in O(V + E): it exists exactly when the graph is connected and every degree is even.',
+    why: 'Hierholzer’s algorithm in O(V + E): it exists exactly when every degree is even and all the edges lie in one connected piece.',
   },
   hamCycle: {
     name: 'Hamiltonian cycle',

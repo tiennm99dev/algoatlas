@@ -58,9 +58,10 @@ export const MAX_K = 5;
  */
 
 export const fptPseudocode = [
-  'vc(G, k):    // a cover of ≤ k vertices?',
-  '  while v has > k edges: take v; k = k − 1',
-  '  if more than k² edges left: return no',
+  'vc(G, k):  // ≤ k vertices?',
+  '  while some v has > k edges:',
+  '    take v; k = k − 1',
+  '  if > k² edges left: return no',
   'search(G, k):',
   '  if G has no edges: return yes',
   '  if k = 0: return no',
@@ -173,15 +174,15 @@ export function fptTrace({ ids, edges, k, kernel }) {
       }
       forced.push(v);
       budget--;
-      record('forced', { vertex: v }, [1]);
+      record('forced', { vertex: v }, [1, 2]);
     }
     if (leftOf(forced) > budget * budget) {
       answer = 'no';
-      record('tooBig', {}, [2]);
-      record('done', {}, [2]);
+      record('tooBig', {}, [3]);
+      record('done', {}, [3]);
       return frames;
     }
-    record('kernel', {}, [2]);
+    record('kernel', {}, [3]);
   }
 
   /**
@@ -197,21 +198,21 @@ export function fptTrace({ ids, edges, k, kernel }) {
     if (next < 0) {
       nodes[id].status = 'yes';
       answer = 'yes';
-      record('yes', { current: id }, [3, 4]);
+      record('yes', { current: id }, [4, 5]);
       return true;
     }
     if (left === 0) {
       nodes[id].status = 'fail';
-      record('fail', { current: id }, [3, 5]);
+      record('fail', { current: id }, [4, 6]);
       return false;
     }
-    record('branch', { current: id, edge: next }, [3, 6, 7]);
+    record('branch', { current: id, edge: next }, [4, 7, 8]);
     for (const v of pairs[next]) {
       path.push(v);
       // A found cover keeps its path, so the last frame shows it.
       if (search(id, v, left - 1)) return true;
       path = path.slice(0, -1);
-      record('back', { current: id, edge: next }, [8]);
+      record('back', { current: id, edge: next }, [9]);
     }
     nodes[id].status = 'done';
     return false;
@@ -219,7 +220,7 @@ export function fptTrace({ ids, edges, k, kernel }) {
 
   const found = search(-1, -1, budget);
   if (!found) answer = 'no';
-  record('done', {}, found ? [4] : [5]);
+  record('done', {}, found ? [5] : [6]);
   return frames;
 }
 

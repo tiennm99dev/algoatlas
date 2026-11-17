@@ -130,7 +130,7 @@ export const en = {
     ['Buss kernel', 'O(k · (n + m))', 'At most k forced vertices, one degree count each.'],
     [
       'Kernel then search',
-      'O(n + m + 2ᵏ · k²)',
+      'O(k · (n + m) + 2ᵏ · k²)',
       'The search runs on a kernel of at most k² edges.',
     ],
     ['Brute force', 'O(nᵏ · m)', 'Every set of k vertices, checked against every edge.'],
