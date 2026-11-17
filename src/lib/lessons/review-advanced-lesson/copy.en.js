@@ -27,7 +27,7 @@ export const en = {
     [
       'Fenwick tree; segment tree (with lazy tags)',
       'O(log n) per update or query',
-      'Each operation touches one cell per bit, or O(log n) nodes per level of the tree; lazy tags postpone range updates.',
+      'Each operation touches one cell per bit, or a constant number of nodes on each of the O(log n) levels of the tree; lazy tags postpone range updates.',
     ],
     [
       'Mo’s algorithm',
@@ -47,12 +47,12 @@ export const en = {
     [
       'Euclid, extended Euclid, binary exponentiation',
       'O(log n)',
-      'Remainders shrink at least every two steps, and squaring halves the exponent.',
+      'The remainder at least halves every two steps, and squaring halves the exponent.',
     ],
     [
       'Sieve of Eratosthenes',
       'O(n log log n)',
-      'Each number is crossed out once per prime factor, and Σ 1/p over primes grows like log log n.',
+      'Each composite is crossed out once per distinct prime factor, and Σ n/p over the primes p ≤ n grows like n log log n.',
     ],
     [
       'Convex hull; sweep line',
