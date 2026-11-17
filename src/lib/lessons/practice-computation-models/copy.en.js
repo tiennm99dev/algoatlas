@@ -130,7 +130,7 @@ const CARDS = {
       },
       mru: {
         name: 'Evict the most recently used page',
-        why: 'Alternating between two pages that are not both cached makes it fault on every request while OPT faults once: no bound.',
+        why: 'Once the cache is full, alternating between its last page and a new one makes it fault on every request, while OPT evicts another page once and then only hits: no bound.',
       },
     },
   },

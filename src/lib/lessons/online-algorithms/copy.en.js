@@ -171,7 +171,7 @@ export const en = {
     'FIFO is k-competitive too, but it can fault more with a bigger cache (Belady’s anomaly); LRU never does.',
     'Try it: with You decide and Adversary, try to beat 2 − 1/b. Then load Belady’s sequence in Paging and compare FIFO’s faults at k = 3 and k = 4.',
   ],
-  complexityHead: ['Algorithm', 'Competitive ratio', 'Why'],
+  complexityHead: ['Algorithm', 'Competitive ratio or time', 'Why'],
   complexity: [
     [
       'Ski rental, buy on day b',
@@ -187,8 +187,8 @@ export const en = {
     ],
     [
       'Paging, time per request',
-      'O(k)',
-      'Look up the page and pick a victim among k slots; OPT also scans ahead.',
+      'O(k) online, O(k + n) for OPT',
+      'Look up the page and pick a victim among k slots; OPT also scans the n requests ahead.',
     ],
   ],
   practiceTitle: 'Check yourself',

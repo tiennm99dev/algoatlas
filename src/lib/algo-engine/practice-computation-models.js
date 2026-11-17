@@ -121,7 +121,7 @@ export const SCENARIOS = [
   {
     id: 'webCache',
     model: 'online',
-    params: [{ key: 'k', min: 1, max: 64, initial: 16 }],
+    params: [{ key: 'k', min: 2, max: 64, initial: 16 }],
     candidates: [
       { id: 'lru', cost: (q) => q.k },
       { id: 'mru', cost: () => Infinity },

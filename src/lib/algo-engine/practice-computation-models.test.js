@@ -60,6 +60,8 @@ describe('scenario costs', () => {
     expect(servers.costs[1].cost).toBeCloseTo(2 - 1 / 24);
     expect(servers.costs[2].cost).toBe(Infinity);
     expect(evaluate('webCache', { k: 16 }).best).toEqual(['lru']);
+    // With one page every rule evicts the same page, so MRU is unbounded only from k = 2.
+    expect(scenario('webCache').params[0].min).toBe(2);
   });
 
   it('election: FloodMax on a ring sends half the messages of flooding every ID', () => {
