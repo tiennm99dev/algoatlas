@@ -247,7 +247,7 @@
               <div class="mb-1 flex flex-wrap items-baseline justify-between gap-2 text-sm">
                 <span class="font-semibold text-slate-800">{m.queues[q]}</span>
                 <span class="text-slate-600 tabular-nums">
-                  <span class="text-lg font-bold text-slate-900">{frame.total[q]}</span>
+                  <span class="text-lg font-bold text-slate-900">{m.total(frame.total[q])}</span>
                   {#if frame.step[q] > 0}<span class="ml-1 text-xs"
                       >{m.stepNote(frame.step[q])}</span
                     >{/if}

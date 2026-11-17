@@ -6,8 +6,11 @@ const count = (k, one, many) => `${k.toLocaleString('en-US')} ${k === 1 ? one : 
 
 const NAMES = { binary: 'binary heap', fibonacci: 'Fibonacci heap', veb: 'vEB tree' };
 
+/** @param {number} k */
+const num = (k) => k.toLocaleString('en-US');
+
 /** @param {Costs} c */
-const costs = (c) => `binary ${c.binary}, Fibonacci ${c.fibonacci}, vEB ${c.veb}`;
+const costs = (c) => `binary ${num(c.binary)}, Fibonacci ${num(c.fibonacci)}, vEB ${num(c.veb)}`;
 
 /** @param {Costs} c @param {number} k */
 const perOp = (c, k) => ({
@@ -50,7 +53,9 @@ export const en = {
   raceAria: (f) => `Steps so far: ${costs(f.total)}.`,
   queues: { binary: 'Binary heap', fibonacci: 'Fibonacci heap', veb: 'van Emde Boas tree' },
   /** @param {number} step */
-  stepNote: (step) => `+${step} this step`,
+  stepNote: (step) => `+${num(step)} this step`,
+  /** @param {number} steps */
+  total: (steps) => num(steps),
   leader: '✓ fewest steps',
   noFit: '✗ keys do not fit in u',
   stats: {
@@ -138,7 +143,7 @@ export const en = {
     [
       'van Emde Boas tree',
       'O(log log u) for each operation',
-      'One real call per level, and there are log₂ log₂ u levels; integer keys below u only.',
+      'One real call per level, and there are log₂ log₂ u + 1 levels; integer keys below u only.',
     ],
     [
       'Dijkstra',

@@ -5,7 +5,7 @@
  * are non-empty. The min is stored only in the min field, never in a cluster; a structure of
  * size 2 is just its min and max. high(x) = ⌊x / √u⌋ names the cluster, low(x) = x mod √u the
  * place inside it, and index(h, l) = h·√u + l puts them back together. Every operation makes
- * at most one call that does real work per level, and there are log₂ log₂ u levels.
+ * at most one call that does real work per level, and there are log₂ log₂ u + 1 levels.
  *
  * Structures are named by their path: `V` is the whole tree, `V.S` its summary, `V.3` its
  * cluster 3, `V.3.S` the summary of that cluster, and so on.

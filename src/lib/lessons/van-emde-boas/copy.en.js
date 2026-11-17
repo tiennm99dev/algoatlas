@@ -127,7 +127,9 @@ export const en = {
       case 'empty-insert':
         return `${name} was empty: set min = max = ${f.x}. Nothing goes into a cluster, so this costs O(1).`;
       case 'swap-min':
-        return `${f.x} < min ${f.result}: ${f.x} becomes the min of ${name}, and the old min ${f.result} is inserted below in its place.`;
+        return f.u === 2
+          ? `${f.x} < min ${f.result}: ${f.x} becomes the min of ${name}, and the old min ${f.result} stays as its max.`
+          : `${f.x} < min ${f.result}: ${f.x} becomes the min of ${name}, and the old min ${f.result} is inserted below in its place.`;
       case 'cluster-empty':
         return `Cluster ${f.high} is empty: first record ${f.high} in the summary.`;
       case 'fill-cluster':
@@ -180,7 +182,7 @@ export const en = {
     'A vEB tree works on integer keys from {0, …, u − 1}. Key x lives in cluster high(x) = ⌊x / √u⌋ at place low(x) = x mod √u, and index(h, l) = h·√u + l puts it back together.',
     'The summary is itself a vEB tree of size √u that records which clusters hold keys, so “the next non-empty cluster” is one successor query on it.',
     'Keeping min and max at every level, and the min out of the clusters, means every operation makes only one call that does real work: inserting into an empty cluster or deleting its last key is O(1).',
-    'Each level takes a square root, u → √u → u^(1/4) → … → 2, so there are log₂ log₂ u levels and every operation costs O(log log u). The price is memory: O(u), however few keys are stored.',
+    'Each level takes a square root, u → √u → u^(1/4) → … → 2, so there are log₂ log₂ u + 1 levels and every operation costs O(log log u). The price is memory: O(u), however few keys are stored.',
     'Try it: ask successor(120) in u = 256 and count the levels, then ask a successor in u = 16. Squaring the universe adds just one level.',
   ],
   complexityHead: ['Operation', 'Cost', 'Why'],
