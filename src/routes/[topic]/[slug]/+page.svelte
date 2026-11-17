@@ -1,7 +1,7 @@
 <script>
   import { resolve } from '$app/paths';
   import { t } from '$lib/i18n/index.js';
-  import { topicPath } from '$lib/lessons/registry.js';
+  import { topicPath } from '$lib/lessons/paths.js';
 
   let { data } = $props();
 

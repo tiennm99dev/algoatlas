@@ -4,7 +4,7 @@
   import { page } from '$app/state';
   import { t } from '$lib/i18n/index.js';
   import { levels } from '$lib/curriculum/index.js';
-  import { topicPath } from '$lib/lessons/registry.js';
+  import { topicPath } from '$lib/lessons/paths.js';
 
   let { children } = $props();
   const copy = t();

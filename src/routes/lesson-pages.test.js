@@ -7,7 +7,8 @@ import BfsPage from './graphs/bfs-grid/+page.svelte';
 import HubPage from './[topic]/+page.svelte';
 import HomePage from './+page.svelte';
 import Layout from './+layout.svelte';
-import { entries, load } from './[topic]/+page.js';
+import { entries, load } from './[topic]/+page.server.js';
+import { load as homeLoad } from './+page.server.js';
 import { page } from '$app/state';
 import { t } from '$lib/i18n/index.js';
 import { lessonNeighbors, lessonPath, lessons } from '$lib/lessons/registry.js';
@@ -23,6 +24,9 @@ const lessonPages =
 async function pageOf(lesson) {
   return (await lessonPages[`.${lessonPath(lesson)}+page.svelte`]()).default;
 }
+
+/** @param {string} topic */
+const hubData = (topic) => load(/** @type {any} */ ({ params: { topic } }));
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -332,7 +336,7 @@ describe('routing', () => {
   it('rejects prototype keys as topics', () => {
     const run = (/** @type {string} */ topic) => load(/** @type {any} */ ({ params: { topic } }));
     expect(() => run('constructor')).toThrow();
-    expect(run('sorting')).toEqual({ topic: 'sorting' });
+    expect(run('sorting')).toMatchObject({ topic: 'sorting' });
   });
 
   it('prerenders exactly the ordered topics, and every lesson belongs to one', async () => {
@@ -465,7 +469,7 @@ describe('site chrome', () => {
   });
 
   it('names each hub card link by the lesson title only', () => {
-    render(HubPage, { data: { topic: 'sorting' } });
+    render(HubPage, { data: hubData('sorting') });
     const names = [...document.querySelectorAll('li a')].map((a) => a.textContent?.trim());
     const plan = levels[0].chapters.find((c) => c.slug === 'sorting')?.lessons ?? [];
     expect(names).toEqual(
@@ -474,7 +478,7 @@ describe('site chrome', () => {
   });
 
   it('lists every planned lesson of a topic in book order and marks the unwritten ones', () => {
-    render(HubPage, { data: { topic: 'trees' } });
+    render(HubPage, { data: hubData('trees') });
     const cards = [...document.querySelectorAll('section > ul > li')].map((li) => ({
       title: li.querySelector('h2')?.textContent?.trim(),
       href: li.querySelector('a')?.getAttribute('href'),
@@ -494,7 +498,7 @@ describe('site chrome', () => {
 
 describe('home page', () => {
   it('groups every topic under its level, in curriculum order', () => {
-    render(HomePage);
+    render(HomePage, { data: homeLoad(/** @type {any} */ ({})) });
     const sections = [...document.querySelectorAll('section[id^="level-"]')];
     expect(sections.map((el) => el.id)).toEqual(['level-1', 'level-2', 'level-3']);
     sections.forEach((el, i) => {
@@ -505,7 +509,7 @@ describe('home page', () => {
   });
 
   it('counts written against planned lessons and links the written ones', () => {
-    render(HomePage);
+    render(HomePage, { data: homeLoad(/** @type {any} */ ({})) });
     const sorting = /** @type {HTMLElement} */ (
       [...document.querySelectorAll('li')].find(
         (li) => li.querySelector('h4')?.textContent?.trim() === 'Sorting',
@@ -520,7 +524,7 @@ describe('home page', () => {
   });
 
   it('starts the path at the first written lesson', () => {
-    render(HomePage);
+    render(HomePage, { data: homeLoad(/** @type {any} */ ({})) });
     const cta = /** @type {HTMLAnchorElement} */ (document.querySelector('a.btn-primary'));
     expect(cta.getAttribute('href')).toBe(lessonPath(lessons[0]));
     expect(cta.textContent).toContain(

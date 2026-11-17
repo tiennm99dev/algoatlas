@@ -1,7 +1,7 @@
 <script>
   import { t } from '$lib/i18n/index.js';
   import { resolve } from '$app/paths';
-  import { lessonNeighbors, topicPath } from '$lib/lessons/registry.js';
+  import { lessonNeighbors, topicPath } from '$lib/lessons/paths.js';
 
   /**
    * @type {{

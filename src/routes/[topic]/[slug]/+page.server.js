@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit';
 import { chapters, findLesson } from '$lib/curriculum/index.js';
 import { findRedirect, legacyRedirects } from '$lib/curriculum/legacy-redirects.js';
-import { lessonNeighbors } from '$lib/lessons/registry.js';
+import { lessonNeighbors } from '$lib/lessons/paths.js';
 import { hasStaticRoute } from '$lib/lessons/static-routes.js';
 
 /**

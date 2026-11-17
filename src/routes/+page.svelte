@@ -2,14 +2,21 @@
   import { t } from '$lib/i18n/index.js';
   import { resolve } from '$app/paths';
   import { levels } from '$lib/curriculum/index.js';
-  import { lessonPath, lessons, lessonsByTopic, topicPath } from '$lib/lessons/registry.js';
+  import { lessonPath, topicPath } from '$lib/lessons/paths.js';
+
+  let { data } = $props();
 
   const copy = t();
-  const first = lessons[0];
-  const sections = levels.map((l) => ({
-    ...l,
-    topics: l.chapters.map((c) => ({ ...c, written: lessonsByTopic(c.slug) })),
-  }));
+  const first = $derived(data.lessons[0]);
+  const sections = $derived(
+    levels.map((l) => ({
+      ...l,
+      topics: l.chapters.map((c) => ({
+        ...c,
+        written: data.lessons.filter((lesson) => lesson.topic === c.slug),
+      })),
+    })),
+  );
 </script>
 
 <svelte:head>

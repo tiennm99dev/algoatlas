@@ -2,7 +2,7 @@
   import { resolve } from '$app/paths';
   import { t } from '$lib/i18n/index.js';
   import { chapters } from '$lib/curriculum/index.js';
-  import { lessonPath, lessonsByTopic } from '$lib/lessons/registry.js';
+  import { lessonPath } from '$lib/lessons/paths.js';
 
   let { data } = $props();
 
@@ -10,7 +10,7 @@
   const topic = $derived(copy.topics[data.topic]);
   // Every curriculum lesson in book order; the ones nobody has written yet show as coming soon.
   const items = $derived.by(() => {
-    const written = lessonsByTopic(data.topic);
+    const written = data.written;
     const plan = chapters.find((c) => c.slug === data.topic)?.lessons ?? [];
     return plan.map((p) => ({ plan: p, lesson: written.find((l) => l.slug === p.slug) }));
   });
