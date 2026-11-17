@@ -43,5 +43,8 @@ jobs:
       - name: Test
         run: npm test
 
+      - name: No lesson stubs
+        run: npm run stubs -- --strict
+
       - name: Build
         run: npm run build
