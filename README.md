@@ -50,7 +50,7 @@ npm run preview   # serve build/
 
 ## Architecture
 
-- **Static site**: SvelteKit + `@sveltejs/adapter-static`, every route prerendered, `paths.base = '/algoatlas'` (override with `SITE_BASE`).
+- **Static site**: SvelteKit + `@sveltejs/adapter-static`, every route prerendered, `paths.base = '/algoatlas'` (override with `SITE_BASE`), prerender origin `https://tiennm99dev.github.io` (override with `SITE_ORIGIN`). `/sitemap.xml` lists the home page, every topic hub and every lesson.
 - **Language**: JavaScript only. Types live in JSDoc and are checked by `svelte-check` (`checkJs` + `strict`).
 - **Styling**: Tailwind 4 via `@tailwindcss/vite`. The shared visualizer palette (`state-compare`, `state-sorted`, `state-path`, …) is defined in `@theme` in `src/app.css`.
 - **Algorithm engines** (`src/lib/algo-engine/`): pure, DOM-free modules. Each algorithm runs once and returns a trace — an array of immutable frames carrying the data state, highlighted indices, running counters, and the pseudocode line. Rewinding is just showing an earlier frame.
