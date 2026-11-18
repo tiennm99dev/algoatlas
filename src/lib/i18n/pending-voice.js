@@ -23,8 +23,6 @@ export const pendingTopics = new Set([
 
   'heaps',
 
-  'review-foundations',
-
   'shortest-paths',
 
   'mst',
@@ -39,15 +37,11 @@ export const pendingTopics = new Set([
 
   'balanced-bst',
 
-  'review-core',
-
   'flows',
 
   'advanced-heaps',
 
   'computation-models',
-
-  'review-advanced',
 ]);
 
 /**

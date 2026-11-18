@@ -288,7 +288,7 @@ describe('stored answers', () => {
 
     const cross = (4 - 0) * (3 - 0) - (0 - 0) * (2 - 0);
     expect(cross).toBeGreaterThan(0);
-    const turn = question('bạn rẽ theo hướng nào');
+    const turn = question('em rẽ theo hướng nào');
     if (turn.type !== 'choice') throw new Error('expected the orientation question');
     expect(turn.options[turn.answer]).toContain('Ngược chiều kim đồng hồ');
 

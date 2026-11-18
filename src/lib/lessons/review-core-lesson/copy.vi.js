@@ -4,18 +4,18 @@ export const vi = {
   level: 'Nâng cao',
   title: 'Ôn tập: thuật toán cốt lõi',
   intro:
-    'Bài trắc nghiệm này trộn câu hỏi từ mọi chương của phần thuật toán cốt lõi: đường đi ngắn nhất, tập hợp rời nhau (DSU), cây khung nhỏ nhất (MST), đồ thị nâng cao, chia để trị (divide and conquer), thuật toán tham lam (greedy), quy hoạch động (dynamic programming), quay lui (backtracking) và cây tìm kiếm cân bằng. Nhiều câu mô tả một bài toán rồi hỏi thuật toán hay mô hình giải nào hợp với nó, vì nhận ra hình dạng của bài toán chính là kĩ năng mà các chương này rèn luyện; các câu còn lại yêu cầu bạn tự chạy tay một thuật toán.',
+    'Bài trắc nghiệm này trộn câu hỏi từ mọi chương của phần thuật toán cốt lõi: đường đi ngắn nhất, DSU (cấu trúc các tập rời nhau), cây khung nhỏ nhất (MST), đồ thị nâng cao, chia để trị (divide and conquer), thuật toán tham lam (greedy), quy hoạch động (dynamic programming), quay lui (backtracking) và cây tìm kiếm cân bằng. Nhiều câu mô tả một bài toán rồi hỏi thuật toán hay mô hình giải nào hợp với nó, vì nhận ra hình dạng của bài toán chính là kĩ năng mà các chương này rèn luyện; các câu còn lại yêu cầu em tự chạy tay một thuật toán.',
   summary:
     'Bài trắc nghiệm tổng hợp cho cả phần thuật toán cốt lõi: chọn thuật toán đồ thị, nhận ra mô hình giải từ đề bài, và ôn lại cây tìm kiếm cân bằng.',
   instruction:
-    'Trả lời từng câu rồi bấm Kiểm tra. Trả lời sai thì bạn biết ngay; hãy mở từng gợi ý một, và sau lần thử đầu tiên bạn có thể đọc lời giải đầy đủ. Câu đã giải giữ dấu tích trong trình duyệt này.',
+    'Trả lời từng câu rồi bấm Kiểm tra. Trả lời sai thì em biết ngay. Hãy mở từng gợi ý một; sau lần thử đầu tiên là đọc được lời giải đầy đủ. Câu đã giải giữ dấu tích trong trình duyệt này.',
   practiceTitle: 'Trắc nghiệm phần thuật toán cốt lõi',
   takeaways: [
-    'Để trọng số cạnh chọn thuật toán đường đi ngắn nhất: mọi cạnh như nhau thì dùng BFS, chỉ có 0 và 1 thì dùng hàng đợi hai đầu (deque), không âm thì dùng Dijkstra, có cạnh âm thì dùng Bellman-Ford, còn trên DAG chỉ cần một lượt theo thứ tự tô-pô.',
+    'Để trọng số cạnh chọn thuật toán đường đi ngắn nhất: mọi cạnh như nhau thì dùng BFS, chỉ có 0 và 1 thì dùng deque (hàng đợi hai đầu), không âm thì dùng Dijkstra, có cạnh âm thì dùng Bellman-Ford, còn trên DAG chỉ cần một lượt theo thứ tự tô-pô.',
     'Đọc đề để nhận ra mô hình giải: hai nửa độc lập gợi ý chia để trị, một lựa chọn chứng minh được là an toàn gợi ý tham lam, các bài toán con gối nhau (overlapping subproblems) gợi ý quy hoạch động, còn “liệt kê mọi cách sắp xếp hợp lệ” gợi ý quay lui.',
     'Tham lam phải được chứng minh, không được mặc nhiên coi là đúng. Chọn hoạt động kết thúc sớm nhất và bài toán cái túi dạng phân số là an toàn, còn cùng quy tắc giá trị trên khối lượng đó lại sai với bài toán cái túi 0/1.',
     'Các cây cân bằng giữ chiều cao ở mức O(log n) theo nhiều cách: cây AVL chặn chênh lệch chiều cao của cây con, cây đỏ đen dùng luật tô màu, cây B dùng nút rộng cho ổ đĩa, còn treap và skip list dùng tính ngẫu nhiên.',
-    'Thử xem: cố ý trả lời sai một câu thuộc chương bạn thấy yếu nhất, đọc gợi ý đầu tiên và xem nó có đủ để bạn tìm ra đáp án mà không cần lời giải hay không.',
+    'Thử xem: cố ý trả lời sai một câu thuộc chương em thấy yếu nhất, đọc gợi ý đầu tiên và xem nó có đủ để tìm ra đáp án mà không cần lời giải hay không.',
   ],
   complexityHead: ['Cấu trúc hoặc thuật toán', 'Chi phí', 'Vì sao'],
   complexity: [
@@ -27,7 +27,7 @@ export const vi = {
     [
       'BFS 0-1; nới lỏng cạnh trên DAG theo thứ tự tô-pô',
       'O(V + E)',
-      'Một hàng đợi hai đầu hoặc một thứ tự đỉnh cố định thay cho heap, nên không cần thêm thừa số log.',
+      'Một deque hoặc một thứ tự đỉnh cố định thay cho heap, nên không cần thêm thừa số log.',
     ],
     [
       'Bellman-Ford',
@@ -101,7 +101,7 @@ export const vi = {
     ],
   ],
   nextTeaser:
-    'Bài sau mở đầu phần chủ đề nâng cao với bảng thưa: dựng trước một lần trong O(n log n), rồi trả lời mỗi truy vấn giá trị nhỏ nhất trên đoạn chỉ trong O(1).',
+    'Bài sau mở đầu phần chủ đề nâng cao với sparse table (bảng thưa): dựng trước một lần trong O(n log n), rồi trả lời mỗi truy vấn giá trị nhỏ nhất trên đoạn chỉ trong O(1).',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
   practice: [
     {
@@ -126,7 +126,7 @@ export const vi = {
     {
       type: 'choice',
       prompt:
-        'Đường đi ngắn nhất. Tỉ giá giữa các loại tiền tạo thành một đồ thị có hướng. Với trọng số cạnh −log(rate), bạn muốn biết có vòng giao dịch nào sinh lời không. Thuật toán nào phù hợp?',
+        'Đường đi ngắn nhất. Tỉ giá giữa các loại tiền tạo thành một đồ thị có hướng. Với trọng số cạnh −log(rate), em muốn biết có vòng giao dịch nào sinh lời không. Thuật toán nào phù hợp?',
       options: [
         'Dijkstra từ mọi loại tiền',
         'Bellman-Ford, rồi thêm một vòng nới lỏng cạnh nữa',
@@ -157,12 +157,12 @@ export const vi = {
     {
       type: 'choice',
       prompt:
-        'Đường đi ngắn nhất. Trên một lưới, đi qua ô trống tốn 0 còn phá một bức tường tốn 1. Bạn muốn phá ít tường nhất để đi từ điểm xuất phát đến đích trong O(V + E). Cách nào phù hợp?',
+        'Đường đi ngắn nhất. Trên một lưới, đi qua ô trống tốn 0 còn phá một bức tường tốn 1. Em muốn phá ít tường nhất để đi từ điểm xuất phát đến đích trong O(V + E). Cách nào phù hợp?',
       options: [
-        'BFS thông thường với một hàng đợi',
+        'BFS thông thường với một queue',
         'Floyd-Warshall',
         'Bellman-Ford',
-        'BFS 0-1 với hàng đợi hai đầu: cạnh 0 vào đầu hàng, cạnh 1 vào cuối hàng',
+        'BFS 0-1 với deque: cạnh 0 vào đầu deque, cạnh 1 vào cuối deque',
       ],
       answer: 3,
       hints: [
@@ -170,7 +170,7 @@ export const vi = {
         'Cấu trúc cần giữ các đỉnh theo thứ tự khoảng cách, mỗi lúc chỉ có hai giá trị khoảng cách khác nhau.',
       ],
       solution:
-        'Khi trọng số chỉ là 0 và 1, hàng đợi hai đầu luôn được sắp theo khoảng cách nếu cạnh 0 vào đầu hàng và cạnh 1 vào cuối hàng. Cách này cho đúng thứ tự của Dijkstra mà không cần heap, trong O(V + E). BFS thông thường sẽ đếm số bước đi chứ không đếm số tường.',
+        'Khi trọng số chỉ là 0 và 1, deque luôn được sắp theo khoảng cách nếu cạnh 0 vào đầu deque và cạnh 1 vào cuối deque. Cách này cho đúng thứ tự của Dijkstra mà không cần heap, trong O(V + E). BFS thông thường sẽ đếm số bước đi chứ không đếm số tường.',
     },
     {
       type: 'number',
@@ -206,7 +206,7 @@ export const vi = {
     {
       type: 'number',
       prompt:
-        'Tập hợp rời nhau. Các đỉnh từ 1 đến 8 ban đầu đứng riêng. Thêm lần lượt các cạnh (1, 2), (3, 4), (2, 3), (5, 6), (1, 4). Còn lại bao nhiêu thành phần liên thông?',
+        'DSU. Các đỉnh từ 1 đến 8 ban đầu đứng riêng. Thêm lần lượt các cạnh (1, 2), (3, 4), (2, 3), (5, 6), (1, 4). Còn lại bao nhiêu thành phần liên thông?',
       answer: 4,
       unit: 'thành phần',
       hints: [
@@ -219,7 +219,7 @@ export const vi = {
     {
       type: 'number',
       prompt:
-        'Tập hợp rời nhau. Dùng hợp theo hạng (union by rank) mà không nén đường đi, trong đó một phần tử đứng riêng có hạng 0. Bắt đầu từ 16 phần tử riêng lẻ, hạng lớn nhất mà một gốc có thể đạt là bao nhiêu?',
+        'DSU. Dùng hợp theo hạng (union by rank) mà không nén đường đi, trong đó một phần tử đứng riêng có hạng 0. Bắt đầu từ 16 phần tử riêng lẻ, hạng lớn nhất mà một gốc có thể đạt là bao nhiêu?',
       answer: 4,
       hints: [
         'Hạng chỉ tăng khi nối hai gốc có cùng hạng.',
@@ -262,7 +262,7 @@ export const vi = {
     {
       type: 'choice',
       prompt:
-        'Cây khung. Bạn cần nối 5000 điểm, và có thể kéo cáp giữa hai điểm bất kì, nên đồ thị là đồ thị đầy đủ. Cách cài đặt nào phù hợp nhất?',
+        'Cây khung. Em cần nối 5000 điểm, và có thể kéo cáp giữa hai điểm bất kì, nên đồ thị là đồ thị đầy đủ. Cách cài đặt nào phù hợp nhất?',
       options: [
         'Dijkstra với heap nhị phân',
         'Prim với một mảng thường, O(V²)',
@@ -280,7 +280,7 @@ export const vi = {
     {
       type: 'choice',
       prompt:
-        'Đồ thị nâng cao. Trong một mạng máy chủ, bạn cần tìm mọi sợi cáp mà nếu một mình nó hỏng thì mạng bị tách làm hai. Thuật toán nào phù hợp?',
+        'Đồ thị nâng cao. Trong một mạng máy chủ, em cần tìm mọi sợi cáp mà nếu một mình nó hỏng thì mạng bị tách làm hai. Thuật toán nào phù hợp?',
       options: [
         'Tìm cầu bằng giá trị low của DFS',
         'Thuật toán Kosaraju tìm thành phần liên thông mạnh',
@@ -362,14 +362,14 @@ export const vi = {
         'Số 3 đếm được 1, 1 và 2, tức 3 nghịch thế.',
       ],
       solution:
-        'Xét từng phần tử từ trái sang: 3 → 3, 1 → 0, 4 → 2, 1 → 0, 5 → 1, 9 → 2, 2 → 0, 6 → 0, tổng cộng 8. Sắp xếp trộn đếm đúng con số này trong O(n log n): mỗi khi lấy từ nửa phải, mọi phần tử còn lại ở nửa trái tạo thành một nghịch thế.',
+        'Xét từng phần tử từ trái sang: 3 → 3, 1 → 0, 4 → 2, 1 → 0, 5 → 1, 9 → 2, 2 → 0, 6 → 0, tổng cộng 8. Merge sort (sắp xếp trộn) đếm đúng con số này trong O(n log n): mỗi khi lấy từ nửa phải, mọi phần tử còn lại ở nửa trái tạo thành một nghịch thế.',
     },
     {
       type: 'choice',
       prompt:
-        'Chia để trị. Bạn chỉ cần trung vị của 1 000 000 số chưa sắp xếp, một lần duy nhất, trong thời gian kì vọng tuyến tính. Cách nào phù hợp?',
+        'Chia để trị. Em chỉ cần trung vị của 1 000 000 số chưa sắp xếp, một lần duy nhất, trong thời gian kì vọng tuyến tính. Cách nào phù hợp?',
       options: [
-        'Sắp xếp trộn, rồi đọc phần tử giữa',
+        'Merge sort, rồi đọc phần tử giữa',
         'Một cây tìm kiếm cân bằng chứa mọi số',
         'Quickselect: phân hoạch, rồi đệ quy vào phía chứa thứ hạng cần tìm',
         'Tìm kiếm nhị phân trên mảng chưa sắp xếp',
@@ -578,7 +578,7 @@ export const vi = {
     {
       type: 'number',
       prompt:
-        'Cây cân bằng. Một cây thống kê thứ tự lưu kích thước của các cây con. Cây con trái của gốc có kích thước 5, và bạn muốn tìm khoá nhỏ thứ 7. Nó nằm ở cây con phải. Ở đó bạn cần tìm thứ hạng bao nhiêu?',
+        'Cây cân bằng. Một cây thống kê thứ tự lưu kích thước của các cây con. Cây con trái của gốc có kích thước 5, và em muốn tìm khoá nhỏ thứ 7. Nó nằm ở cây con phải. Ở đó cần tìm thứ hạng bao nhiêu?',
       answer: 1,
       hints: ['Chính gốc là khoá nhỏ thứ 6.', 'Lấy thứ hạng trừ đi cây con trái và gốc.'],
       solution:
@@ -653,7 +653,7 @@ export const vi = {
     {
       type: 'choice',
       prompt:
-        'Mô hình giải. Mỗi công việc chiếm một khung giờ, đem lại một khoản lợi nhuận và phải xong trước hạn chót của nó. Bạn muốn tổng lợi nhuận lớn nhất, và chứng minh được rằng giữ công việc lời nhất còn xếp vừa không bao giờ làm kết quả tệ đi. Mô hình giải nào phù hợp?',
+        'Mô hình giải. Mỗi công việc chiếm một khung giờ, đem lại một khoản lợi nhuận và phải xong trước hạn chót của nó. Em muốn tổng lợi nhuận lớn nhất, và chứng minh được rằng giữ công việc lời nhất còn xếp vừa không bao giờ làm kết quả tệ đi. Mô hình giải nào phù hợp?',
       options: [
         'Quay lui trên mọi thứ tự của các công việc',
         'Chia để trị: giải riêng từng nửa của trục thời gian',
@@ -674,7 +674,7 @@ export const vi = {
         'Mô hình giải. Trong một mảng 100 000 số, đếm số cặp i < j mà a[i] > 2 · a[j] trong O(n log n). Cách tiếp cận nào phù hợp?',
       options: [
         'Thuật toán Prim trên các chỉ số',
-        'Chia để trị: đếm các cặp nằm ở hai nửa trong lúc sắp xếp trộn',
+        'Chia để trị: đếm các cặp nằm ở hai nửa trong lúc merge sort',
         'Thử mọi cặp bằng hai vòng lặp lồng nhau',
         'Quay lui trên mọi tập con',
       ],

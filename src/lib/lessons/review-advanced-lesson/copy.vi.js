@@ -4,30 +4,30 @@ export const vi = {
   level: 'Nâng cao',
   title: 'Ôn tập: thuật toán nâng cao',
   intro:
-    'Bài trắc nghiệm này trộn câu hỏi từ mọi chương của phần chủ đề nâng cao: các cấu trúc truy vấn đoạn, thuật toán trên xâu, số học, hình học, luồng trên mạng, quy hoạch động (dynamic programming) nâng cao, kĩ thuật trên cây, thuật toán đại số và ngẫu nhiên, các bài toán khó, heap nâng cao và những mô hình tính toán khác. Có câu hỏi cấu trúc hay thuật toán nào hợp với một việc, có câu hỏi đâu là giới hạn của những gì tính nhanh được, còn các câu còn lại yêu cầu bạn tự chạy tay một thuật toán.',
+    'Bài trắc nghiệm này trộn câu hỏi từ mọi chương của phần chủ đề nâng cao: các cấu trúc truy vấn đoạn, thuật toán trên xâu, số học, hình học, luồng trên mạng, quy hoạch động (dynamic programming) nâng cao, kĩ thuật trên cây, thuật toán đại số và ngẫu nhiên, các bài toán khó, heap nâng cao và những mô hình tính toán khác. Có câu hỏi cấu trúc hay thuật toán nào hợp với một việc, có câu hỏi đâu là giới hạn của những gì tính nhanh được, còn các câu còn lại yêu cầu em tự chạy tay một thuật toán.',
   summary:
     'Bài trắc nghiệm tổng hợp cho cả phần chủ đề nâng cao: chọn cấu trúc hoặc thuật toán, giới hạn của tính toán hiệu quả, và các bài tập tính tay từ mọi chương nâng cao.',
   instruction:
-    'Trả lời từng câu rồi bấm Kiểm tra. Trả lời sai thì bạn biết ngay; hãy mở từng gợi ý một, và sau lần thử đầu tiên bạn có thể đọc lời giải đầy đủ. Câu đã giải giữ dấu tích trong trình duyệt này.',
+    'Trả lời từng câu rồi bấm Kiểm tra. Trả lời sai thì em biết ngay. Hãy mở từng gợi ý một; sau lần thử đầu tiên là đọc được lời giải đầy đủ. Câu đã giải giữ dấu tích trong trình duyệt này.',
   practiceTitle: 'Trắc nghiệm phần chủ đề nâng cao',
   takeaways: [
-    'Để truy vấn chọn cấu trúc: bảng thưa (sparse table) cho truy vấn luỹ đẳng trên mảng tĩnh trong O(1), cây Fenwick (BIT) cho tổng tiền tố có cập nhật điểm, cây phân đoạn (segment tree) cho mọi phép gộp có tính kết hợp, và cập nhật lười (lazy propagation) khi một lần cập nhật phủ cả đoạn.',
+    'Để truy vấn chọn cấu trúc: sparse table (bảng thưa) cho truy vấn luỹ đẳng trên mảng tĩnh trong O(1), Fenwick tree (BIT, cây chỉ số nhị phân) cho prefix sum (tổng tiền tố) có cập nhật điểm, segment tree (cây phân đoạn) cho mọi phép gộp có tính kết hợp, và lazy propagation (cập nhật lười) khi một lần cập nhật phủ cả đoạn.',
     'Xâu được so khớp trong thời gian tuyến tính nhờ dùng lại những gì các lần so sánh trước đã biết: hàm tiền tố, khối Z, liên kết thất bại của Aho-Corasick và phép soi gương của Manacher đều tránh phải lùi lại trong văn bản.',
-    'Nhiều bài toán trở thành dạng quen thuộc sau khi được mô hình hoá: mạng luồng cho bài toán phân công và lát cắt, mặt nạ bit (bitmask) cho các tập con tới khoảng 20 phần tử, đường nặng hoặc nhảy nhị phân cho truy vấn dọc đường đi trên cây.',
+    'Nhiều bài toán trở thành dạng quen thuộc sau khi được mô hình hoá: mạng luồng cho bài toán phân công và lát cắt, bitmask (mặt nạ bit) cho các tập con tới khoảng 20 phần tử, đường nặng hoặc nhảy nhị phân cho truy vấn dọc đường đi trên cây.',
     'Hãy biết giới hạn: khoảng 10⁸ bước đơn giản mỗi giây quyết định độ phức tạp nào vừa sức, còn một bài toán NP-khó cần một tham số nhỏ, một thuật toán xấp xỉ hoặc một hàm ước lượng thay vì một thuật toán chính xác mà nhanh.',
-    'Thử xem: chọn chương bạn thấy yếu nhất, cố ý trả lời sai một câu của chương đó, và xem gợi ý đầu tiên có đủ để bạn tìm ra đáp án mà không cần lời giải hay không.',
+    'Thử xem: chọn chương em thấy yếu nhất, cố ý trả lời sai một câu của chương đó, và xem gợi ý đầu tiên có đủ để tìm ra đáp án mà không cần lời giải hay không.',
   ],
   complexityHead: ['Cấu trúc hoặc thuật toán', 'Chi phí', 'Vì sao'],
   complexity: [
     [
-      'Bảng thưa',
+      'Sparse table',
       'Dựng O(n log n), truy vấn O(1)',
       'Hai khối độ dài luỹ thừa của 2 chồng lên nhau phủ được mọi đoạn, điều này an toàn với các phép gộp luỹ đẳng như min và gcd.',
     ],
     [
-      'Cây Fenwick; cây phân đoạn (có cập nhật lười)',
+      'Fenwick tree; segment tree (có lazy propagation)',
       'O(log n) cho mỗi lần cập nhật hoặc truy vấn',
-      'Mỗi thao tác chạm một ô cho mỗi bit, hoặc một số không đổi nút ở mỗi tầng trong O(log n) tầng của cây; cập nhật lười hoãn các lần cập nhật đoạn lại.',
+      'Mỗi thao tác chạm một ô cho mỗi bit, hoặc một số không đổi nút ở mỗi tầng trong O(log n) tầng của cây; lazy propagation hoãn các lần cập nhật đoạn lại.',
     ],
     [
       'Thuật toán Mo',
@@ -91,16 +91,16 @@ export const vi = {
     ],
   ],
   nextTeaser:
-    'Đây là bài cuối cùng của chương trình: bạn đã đi hết phần chủ đề nâng cao. Hãy quay lại bất kì chương nào bạn muốn ôn thêm.',
+    'Đây là bài cuối cùng của chương trình: em đã đi hết phần chủ đề nâng cao. Hãy quay lại bất kì chương nào cần ôn thêm.',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
   practice: [
     {
       type: 'choice',
       prompt:
-        'Truy vấn đoạn. Một mảng 10⁶ số không bao giờ thay đổi, và bạn phải trả lời 10⁶ truy vấn giá trị nhỏ nhất trên đoạn nhanh nhất có thể. Cấu trúc nào phù hợp nhất?',
+        'Truy vấn đoạn. Một mảng 10⁶ số không bao giờ thay đổi, và em phải trả lời 10⁶ truy vấn giá trị nhỏ nhất trên đoạn nhanh nhất có thể. Cấu trúc nào phù hợp nhất?',
       options: [
-        'Cây Fenwick, O(log n) mỗi truy vấn',
-        'Bảng thưa: dựng mất O(n log n), mỗi truy vấn O(1)',
+        'Fenwick tree, O(log n) mỗi truy vấn',
+        'Sparse table: dựng mất O(n log n), mỗi truy vấn O(1)',
         'Chia căn, O(√n) mỗi truy vấn',
         'Một vòng lặp qua cả đoạn cho mỗi truy vấn',
       ],
@@ -110,12 +110,12 @@ export const vi = {
         'Lấy min hai lần trên cùng một phần tử không gây hại gì.',
       ],
       solution:
-        'Phép lấy min có tính luỹ đẳng, nên một đoạn được phủ bởi hai khối độ dài 2ᵏ chồng lên nhau, với k = ⌊log₂ độ dài⌋, và mỗi truy vấn đọc hai ô của bảng. Bảng thưa không cập nhật rẻ được, nhưng mảng này không bao giờ thay đổi.',
+        'Phép lấy min có tính luỹ đẳng, nên một đoạn được phủ bởi hai khối độ dài 2ᵏ chồng lên nhau, với k = ⌊log₂ độ dài⌋, và mỗi truy vấn đọc hai ô của bảng. Sparse table không cập nhật rẻ được, nhưng mảng này không bao giờ thay đổi.',
     },
     {
       type: 'number',
       prompt:
-        'Truy vấn đoạn. Một cây Fenwick đánh chỉ số từ 1, ô i lưu tổng của lowbit(i) phần tử kết thúc tại i. Để đọc tổng của 13 phần tử đầu tiên, cần cộng bao nhiêu ô?',
+        'Truy vấn đoạn. Một Fenwick tree đánh chỉ số từ 1, ô i lưu tổng của lowbit(i) phần tử kết thúc tại i. Để đọc tổng của 13 phần tử đầu tiên, cần cộng bao nhiêu ô?',
       answer: 3,
       unit: 'ô',
       hints: [
@@ -128,11 +128,11 @@ export const vi = {
     {
       type: 'choice',
       prompt:
-        'Truy vấn đoạn. Bạn phải cộng v vào mọi phần tử của một đoạn và cũng phải trả lời các truy vấn tổng trên đoạn, mỗi loại 10⁵ lần, xen kẽ nhau. Cấu trúc nào xử lí được cả hai trong O(log n)?',
+        'Truy vấn đoạn. Em phải cộng v vào mọi phần tử của một đoạn và cũng phải trả lời các truy vấn tổng trên đoạn, mỗi loại 10⁵ lần, xen kẽ nhau. Cấu trúc nào xử lí được cả hai trong O(log n)?',
       options: [
-        'Một bảng thưa',
-        'Tổng tiền tố dựng lại sau mỗi lần cập nhật',
-        'Một cây phân đoạn có cập nhật lười',
+        'Một sparse table',
+        'Prefix sum dựng lại sau mỗi lần cập nhật',
+        'Một segment tree có lazy propagation',
         'Thuật toán Mo trên các truy vấn',
       ],
       answer: 2,
@@ -141,7 +141,7 @@ export const vi = {
         'Thuật toán Mo làm việc ngoại tuyến trên các truy vấn không có cập nhật.',
       ],
       solution:
-        'Cây phân đoạn có cập nhật lười chia đoạn cập nhật thành O(log n) nút, cộng v × độ dài vào tổng của mỗi nút và để lại một nhãn chờ, chỉ đẩy xuống khi một thao tác sau đi xuống bên dưới. Tổng tiền tố dựng lại tốn O(n) mỗi lần cập nhật, còn bảng thưa không cập nhật rẻ được.',
+        'Segment tree có lazy propagation chia đoạn cập nhật thành O(log n) nút, cộng v × độ dài vào tổng của mỗi nút và để lại một nhãn chờ, chỉ đẩy xuống khi một thao tác sau đi xuống bên dưới. Prefix sum dựng lại tốn O(n) mỗi lần cập nhật, còn sparse table không cập nhật rẻ được.',
     },
     {
       type: 'text',
@@ -247,7 +247,7 @@ export const vi = {
     {
       type: 'choice',
       prompt:
-        'Hình học. Đi từ A = (0, 0) đến B = (4, 0) rồi tiếp tới C = (2, 3), tại B bạn rẽ theo hướng nào?',
+        'Hình học. Đi từ A = (0, 0) đến B = (4, 0) rồi tiếp tới C = (2, 3), tại B em rẽ theo hướng nào?',
       options: [
         'Cùng chiều kim đồng hồ, tức rẽ phải',
         'Không rẽ: ba điểm thẳng hàng',
@@ -330,17 +330,17 @@ export const vi = {
         'QHĐ nâng cao. Một hệ thức truy hồi có dạng dp[i] = min theo j < i của (dp[j] + b[j] · x[i]), trong đó b[j] giảm khi j tăng và x[i] tăng khi i tăng. Kĩ thuật tối ưu nào đưa vòng lặp O(n²) xuống O(n)?',
       options: [
         'Tối ưu Knuth cho QHĐ trên đoạn',
-        'Một hàng đợi đơn điệu cho giá trị nhỏ nhất trên cửa sổ trượt',
+        'Một queue đơn điệu cho giá trị nhỏ nhất trên cửa sổ trượt',
         'Đệ quy có nhớ',
         'Kĩ thuật bao lồi, với một con trỏ chỉ tiến về phía trước',
       ],
       answer: 3,
       hints: [
         'Coi mỗi j là một đường thẳng y = b[j] · x + dp[j].',
-        'Bạn cần đường thấp nhất tại điểm x[i], và các điểm truy vấn chỉ tăng dần.',
+        'Cần tìm đường thấp nhất tại điểm x[i], và các điểm truy vấn chỉ tăng dần.',
       ],
       solution:
-        'Mỗi j thêm một đường thẳng có hệ số góc b[j] và tung độ gốc dp[j]; dp[i] là đường thấp nhất tại x[i]. Các hệ số góc đến theo thứ tự giảm dần, nên đường bao dưới được giữ trong một hàng đợi hai đầu, và các truy vấn tăng dần cho phép một con trỏ đi dọc theo nó: tổng cộng O(n).',
+        'Mỗi j thêm một đường thẳng có hệ số góc b[j] và tung độ gốc dp[j]; dp[i] là đường thấp nhất tại x[i]. Các hệ số góc đến theo thứ tự giảm dần, nên đường bao dưới được giữ trong một deque (hàng đợi hai đầu), và các truy vấn tăng dần cho phép một con trỏ đi dọc theo nó: tổng cộng O(n).',
     },
     {
       type: 'number',
@@ -356,7 +356,7 @@ export const vi = {
       prompt:
         'Kĩ thuật trên cây. Trong phân rã nặng nhẹ, vì sao đường đi từ một đỉnh bất kì lên gốc chỉ cắt qua O(log n) cạnh nhẹ?',
       options: [
-        'Đi lên qua một cạnh nhẹ làm kích thước cây con bạn đang ở ít nhất tăng gấp đôi',
+        'Đi lên qua một cạnh nhẹ làm kích thước cây con đang xét ít nhất tăng gấp đôi',
         'Mỗi chuỗi nặng có tối đa log n đỉnh',
         'Phép phân rã cân bằng lại cây trước',
         'Mỗi đỉnh có tối đa hai con',
@@ -367,7 +367,7 @@ export const vi = {
         'Kích thước một cây con tăng gấp đôi được bao nhiêu lần trước khi vượt n?',
       ],
       solution:
-        'Cây con của một con nhẹ chứa không quá một nửa cây con của cha nó, nên mỗi lần đi lên qua một cạnh nhẹ kích thước ít nhất tăng gấp đôi, điều này xảy ra nhiều nhất log₂ n lần. Chuỗi nặng có thể dài, nhưng mỗi chuỗi là một đoạn liên tiếp trong cây phân đoạn, cho truy vấn đường đi O(log² n).',
+        'Cây con của một con nhẹ chứa không quá một nửa cây con của cha nó, nên mỗi lần đi lên qua một cạnh nhẹ kích thước ít nhất tăng gấp đôi, điều này xảy ra nhiều nhất log₂ n lần. Chuỗi nặng có thể dài, nhưng mỗi chuỗi là một đoạn liên tiếp trong segment tree, cho truy vấn đường đi O(log² n).',
     },
     {
       type: 'number',
@@ -387,7 +387,7 @@ export const vi = {
       prompt:
         'Đại số và ngẫu nhiên. Những thuật toán nào dưới đây là thuật toán Las Vegas, luôn cho đáp án đúng và chỉ có thời gian chạy là phụ thuộc may rủi?',
       options: [
-        'Sắp xếp nhanh ngẫu nhiên',
+        'Quicksort ngẫu nhiên',
         'Kiểm tra số nguyên tố Miller-Rabin',
         'Một lần chạy thuật toán co cạnh ngẫu nhiên của Karger tìm lát cắt nhỏ nhất',
         'Quickselect ngẫu nhiên',
@@ -399,7 +399,7 @@ export const vi = {
         'Một chốt ngẫu nhiên có bao giờ khiến phép sắp xếp hay phép chọn trả về kết quả sai không?',
       ],
       solution:
-        'Chốt ngẫu nhiên chỉ thay đổi thời gian chạy của sắp xếp nhanh và quickselect, không bao giờ thay đổi đầu ra: đó là Las Vegas. Miller-Rabin và Fermat có thể gọi một hợp số là số nguyên tố, và một lần chạy Karger có thể bỏ lỡ lát cắt nhỏ nhất: đó là Monte Carlo, trở nên đáng tin nhờ chạy lặp lại.',
+        'Chốt ngẫu nhiên chỉ thay đổi thời gian chạy của quicksort (sắp xếp nhanh) và quickselect, không bao giờ thay đổi đầu ra: đó là Las Vegas. Miller-Rabin và Fermat có thể gọi một hợp số là số nguyên tố, và một lần chạy Karger có thể bỏ lỡ lát cắt nhỏ nhất: đó là Monte Carlo, trở nên đáng tin nhờ chạy lặp lại.',
     },
     {
       type: 'number',
@@ -435,8 +435,7 @@ export const vi = {
     },
     {
       type: 'choice',
-      prompt:
-        'Bài toán khó. Bạn muốn chứng minh một bài toán mới X là NP-khó. Bạn phải chỉ ra điều gì?',
+      prompt: 'Bài toán khó. Em muốn chứng minh một bài toán mới X là NP-khó. Cần chỉ ra điều gì?',
       options: [
         'X quy dẫn được về 3-SAT trong thời gian đa thức',
         'X có một thuật toán thời gian hàm mũ',
@@ -446,7 +445,7 @@ export const vi = {
       answer: 3,
       hints: [
         'Một phép quy dẫn A ≤ B nói rằng B ít nhất khó bằng A.',
-        'Bạn muốn X ít nhất khó bằng một bài toán đã biết là khó.',
+        'Mục tiêu là X ít nhất khó bằng một bài toán đã biết là khó.',
       ],
       solution:
         'Quy dẫn 3-SAT về X nghĩa là một thuật toán nhanh cho X cũng giải nhanh được 3-SAT, nên X ít nhất khó bằng 3-SAT: X là NP-khó. Quy dẫn X về 3-SAT cho thấy điều ngược lại, rằng X không khó hơn 3-SAT, điều đó chỉ đặt X vào lớp NP.',
@@ -507,7 +506,7 @@ export const vi = {
     {
       type: 'choice',
       prompt:
-        'Mô hình tính toán. Thuê ván trượt tốn 1 mỗi ngày còn mua tốn 10, và bạn không biết mình sẽ trượt bao nhiêu ngày. Bạn thuê cho đến khi đã trả 9, rồi mua. Chiến lược này bảo đảm tỉ số cạnh tranh bằng bao nhiêu?',
+        'Mô hình tính toán. Thuê ván trượt tốn 1 mỗi ngày còn mua tốn 10, và em không biết sẽ trượt bao nhiêu ngày. Cách làm: thuê cho đến khi đã trả 9, rồi mua. Chiến lược này bảo đảm tỉ số cạnh tranh bằng bao nhiêu?',
       options: [
         '1: nó luôn trả đúng bằng lựa chọn ngoại tuyến tốt nhất',
         '1,9: nó không bao giờ trả quá 19 khi lựa chọn ngoại tuyến tốt nhất trả 10',
@@ -516,11 +515,11 @@ export const vi = {
       ],
       answer: 1,
       hints: [
-        'Trường hợp xấu nhất là dừng ngay sau khi bạn vừa mua.',
-        'Khi đó bạn đã trả 9 + 10, trong khi người biết trước tương lai sẽ mua ngay ngày đầu.',
+        'Trường hợp xấu nhất là dừng ngay sau khi vừa mua.',
+        'Khi đó em đã trả 9 + 10, trong khi người biết trước tương lai sẽ mua ngay ngày đầu.',
       ],
       solution:
-        'Nếu bạn trượt ít hơn 10 ngày, bạn trả đúng bằng lựa chọn ngoại tuyến tốt nhất. Ngược lại bạn trả 9 + 10 = 19 so với 10 của lựa chọn ngoại tuyến, tỉ số 1,9 = 2 − 1/10. Không chiến lược tất định nào làm tốt hơn, đó là cận kinh điển của bài toán thuê ván trượt.',
+        'Nếu trượt ít hơn 10 ngày, em trả đúng bằng lựa chọn ngoại tuyến tốt nhất. Ngược lại em trả 9 + 10 = 19 so với 10 của lựa chọn ngoại tuyến, tỉ số 1,9 = 2 − 1/10. Không chiến lược tất định nào làm tốt hơn, đó là cận kinh điển của bài toán thuê ván trượt.',
     },
     {
       type: 'multi',
@@ -530,7 +529,7 @@ export const vi = {
       answers: [0, 1, 4],
       hints: ['Thay số vào: log₂ 10⁵ ≈ 17 và √10⁵ ≈ 316.', 'n² là 10¹⁰.'],
       solution:
-        'n log n ≈ 1,7 × 10⁶, n√n ≈ 3,2 × 10⁷ và n log² n ≈ 2,8 × 10⁷ đều vừa. n² = 10¹⁰ mất khoảng 100 giây, còn 2ⁿ vượt xa mọi máy tính. Kiểm tra giới hạn trước giúp loại bớt các cách làm trước khi bạn viết chúng.',
+        'n log n ≈ 1,7 × 10⁶, n√n ≈ 3,2 × 10⁷ và n log² n ≈ 2,8 × 10⁷ đều vừa. n² = 10¹⁰ mất khoảng 100 giây, còn 2ⁿ vượt xa mọi máy tính. Kiểm tra giới hạn trước giúp loại bớt các cách làm trước khi viết chúng.',
     },
     {
       type: 'order',
@@ -547,11 +546,11 @@ export const vi = {
     {
       type: 'choice',
       prompt:
-        'Lựa chọn. Một cây có 10⁵ đỉnh mang giá trị. Bạn phải trả lời 10⁵ truy vấn “tổng các giá trị trên đường đi từ u đến v”, xen kẽ với các lần cập nhật đổi giá trị của một đỉnh. Cách tiếp cận nào phù hợp?',
+        'Lựa chọn. Một cây có 10⁵ đỉnh mang giá trị. Em phải trả lời 10⁵ truy vấn “tổng các giá trị trên đường đi từ u đến v”, xen kẽ với các lần cập nhật đổi giá trị của một đỉnh. Cách tiếp cận nào phù hợp?',
       options: [
         'Chỉ dùng nhảy nhị phân',
-        'Một bảng thưa trên chu trình Euler của cây',
-        'Phân rã nặng nhẹ cùng một cây phân đoạn trên các chuỗi',
+        'Một sparse table trên chu trình Euler của cây',
+        'Phân rã nặng nhẹ cùng một segment tree trên các chuỗi',
         'Floyd-Warshall trên cây',
       ],
       answer: 2,
@@ -560,7 +559,7 @@ export const vi = {
         'Chia mỗi đường đi thành một vài đoạn liên tiếp mà một cấu trúc tính tổng trên đoạn trả lời được.',
       ],
       solution:
-        'Phân rã nặng nhẹ cắt mọi đường đi thành O(log n) chuỗi, mỗi chuỗi là một đoạn vị trí liên tiếp, và cây phân đoạn trả lời mỗi đoạn và mỗi lần cập nhật điểm trong O(log n): O(log² n) mỗi truy vấn. Bảng thưa không cập nhật được, còn O(n³) của Floyd-Warshall quá chậm.',
+        'Phân rã nặng nhẹ cắt mọi đường đi thành O(log n) chuỗi, mỗi chuỗi là một đoạn vị trí liên tiếp, và segment tree trả lời mỗi đoạn và mỗi lần cập nhật điểm trong O(log n): O(log² n) mỗi truy vấn. Sparse table không cập nhật được, còn O(n³) của Floyd-Warshall quá chậm.',
     },
   ],
 };

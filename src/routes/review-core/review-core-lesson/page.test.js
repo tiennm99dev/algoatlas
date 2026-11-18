@@ -146,7 +146,7 @@ describe('review: core algorithms', () => {
     expect(chapters).toEqual(
       new Set([
         'Đường đi ngắn nhất',
-        'Tập hợp rời nhau',
+        'DSU',
         'Cây khung',
         'Đồ thị nâng cao',
         'Chia để trị',

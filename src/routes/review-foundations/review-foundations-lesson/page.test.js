@@ -101,7 +101,7 @@ describe('review: foundations', () => {
 
   it('accepts the stack output written in several ways', () => {
     render();
-    const i = indexOf((ex) => ex.type === 'text' && ex.prompt.startsWith('Ngăn xếp.'));
+    const i = indexOf((ex) => ex.type === 'text' && ex.prompt.startsWith('Stack.'));
     const q = questions()[i];
     type(q, '3, 4, 2');
     submit(q);
@@ -132,17 +132,10 @@ describe('review: foundations', () => {
   it('covers every foundations chapter with well-formed, correct questions', () => {
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
     const chapters = new Set(m.practice.map((ex) => ex.prompt.split('.')[0]));
-    for (const c of [
-      'Độ phức tạp',
-      'Mảng',
-      'Sắp xếp',
-      'Tìm kiếm',
-      'Danh sách liên kết',
-      'Ngăn xếp',
-    ]) {
+    for (const c of ['Độ phức tạp', 'Mảng', 'Sắp xếp', 'Tìm kiếm', 'Linked list', 'Stack']) {
       expect(chapters).toContain(c);
     }
-    for (const c of ['Băm', 'Đệ quy', 'Cây', 'Heap', 'Đồ thị']) {
+    for (const c of ['Hash', 'Đệ quy', 'Cây', 'Heap', 'Đồ thị']) {
       expect(chapters).toContain(c);
     }
     expect(new Set(m.practice.map((ex) => ex.type)).size).toBe(5);
