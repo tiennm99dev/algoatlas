@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { en as m } from '$lib/lessons/boyer-moore/copy.en.js';
+import { vi as m } from '$lib/lessons/boyer-moore/copy.vi.js';
 import {
   BOYER_MOORE_PRESETS,
   MAX_PATTERN,

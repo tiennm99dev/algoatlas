@@ -16,7 +16,7 @@
     zPseudocode,
     zTrace,
   } from '$lib/algo-engine/z-function.js';
-  import { en as m } from '$lib/lessons/z-function/copy.en.js';
+  import { vi as m } from '$lib/lessons/z-function/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
   import { parseLetters } from '$lib/algo-engine/text-match.js';
 

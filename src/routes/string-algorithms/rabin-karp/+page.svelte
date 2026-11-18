@@ -18,7 +18,7 @@
     rabinKarpPseudocode,
     rabinKarpTrace,
   } from '$lib/algo-engine/rabin-karp.js';
-  import { en as m } from '$lib/lessons/rabin-karp/copy.en.js';
+  import { vi as m } from '$lib/lessons/rabin-karp/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
   import { parseLetters } from '$lib/algo-engine/text-match.js';
   import { naiveComparisons } from '$lib/algo-engine/text-match.js';

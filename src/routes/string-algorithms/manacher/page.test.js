@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
 import { MANACHER_PRESETS, MAX_LEN, naiveExpansions, separate } from '$lib/algo-engine/manacher.js';
-import { en as m } from '$lib/lessons/manacher/copy.en.js';
+import { vi as m } from '$lib/lessons/manacher/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -95,20 +95,20 @@ describe('Manacher lesson', () => {
     expect(narration()).toContain('T = #a#b#a#c#');
     expect(stat('band')).toBe('—');
     toLast();
-    expect(narration()).toContain('the longest palindrome is abacabacaba, of length 11');
+    expect(narration()).toContain('xâu đối xứng dài nhất là abacabacaba, độ dài 11');
     expect(stat('best')).toBe('11');
     expect(stat('naive')).toBe(String(naiveExpansions(separate(MANACHER_PRESETS.nested))));
-    expect(titles()).toContain('Position 11: b, radius 11, longest palindrome');
+    expect(titles()).toContain('Vị trí 11: b, bán kính 11, xâu đối xứng dài nhất');
   });
 
   it('starts inside the band from the mirror and draws its arc', () => {
     render();
     commit(field('text'), 'abaaba');
-    stepUntil('mirrors position');
+    stepUntil('soi gương với vị trí');
     expect(narration()).toContain('min(R − i');
     expect(document.querySelector('[data-band]')).not.toBeNull();
-    expect(titles().some((t) => t.includes('centre i'))).toBe(true);
-    stepUntil('mirrors position 3');
+    expect(titles().some((t) => t.includes('tâm i'))).toBe(true);
+    stepUntil('soi gương với vị trí 3');
     expect(document.querySelector('[data-arc="mirror"]')).not.toBeNull();
   });
 

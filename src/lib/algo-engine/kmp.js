@@ -18,7 +18,7 @@ export const kmpPseudocode = [
   'for i = 0 to n − 1:',
   '  while q > 0 and P[q] ≠ T[i]: q = π[q − 1]',
   '  if P[q] == T[i]: q = q + 1',
-  '  if q == m: report a match at i − m + 1, q = π[q − 1]',
+  '  if q == m: báo khớp ở i − m + 1, q = π[q − 1]',
 ];
 
 /**

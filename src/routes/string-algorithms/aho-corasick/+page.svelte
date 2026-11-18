@@ -19,7 +19,7 @@
     parsePatterns,
     prefixOf,
   } from '$lib/algo-engine/aho-corasick.js';
-  import { en as m } from '$lib/lessons/aho-corasick/copy.en.js';
+  import { vi as m } from '$lib/lessons/aho-corasick/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
   import AcBoard from './ac-board.svelte';
   import { parseLetters } from '$lib/algo-engine/text-match.js';

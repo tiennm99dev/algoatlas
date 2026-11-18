@@ -15,15 +15,15 @@ export const LZW_BITS = 9;
 export const FIRST_LZW_CODE = 256;
 
 export const compressionPseudocode = [
-  'Huffman: count letters, merge the two rarest trees until one remains',
-  'code[c] = path from the root, 0 for left and 1 for right',
-  'run = none; w = empty',
-  'for each letter c of the text:',
-  '  Run-length: if c ≠ run letter: emit (letter, count), start a new run',
-  '  Huffman: emit code[c]',
-  '  LZW: if w + c is in the dictionary: w = w + c',
-  '       else: emit code[w], add w + c to the dictionary, w = c',
-  'at the end: emit the last run and code[w]',
+  'Huffman: đếm chữ cái, gộp hai cây hiếm nhất cho đến khi còn một cây',
+  'code[c] = đường đi từ gốc, 0 là sang trái và 1 là sang phải',
+  'run = null; w = ""',
+  'for c in text:',
+  '  Loạt dài: if c ≠ run.letter: ghi (letter, count), mở loạt mới',
+  '  Huffman: ghi code[c]',
+  '  LZW: if w + c in dict: w = w + c',
+  '       else: ghi code[w], thêm w + c vào dict, w = c',
+  'cuối cùng: ghi loạt cuối và code[w]',
 ];
 
 /**

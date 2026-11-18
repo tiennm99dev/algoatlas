@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { en as m } from '$lib/lessons/rabin-karp/copy.en.js';
+import { vi as m } from '$lib/lessons/rabin-karp/copy.vi.js';
 import {
   MAX_MOD,
   MAX_PATTERN,

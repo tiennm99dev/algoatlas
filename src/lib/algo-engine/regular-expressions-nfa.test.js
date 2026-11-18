@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { en as m } from '$lib/lessons/regular-expressions-nfa/copy.en.js';
+import { vi as m } from '$lib/lessons/regular-expressions-nfa/copy.vi.js';
 import {
   EPSILON,
   MAX_INPUT,

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { en as m } from '$lib/lessons/aho-corasick/copy.en.js';
+import { vi as m } from '$lib/lessons/aho-corasick/copy.vi.js';
 import {
   AHO_PRESETS,
   MAX_PATTERNS,

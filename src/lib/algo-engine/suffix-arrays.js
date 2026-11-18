@@ -9,17 +9,17 @@
 export const MAX_LEN = 16;
 
 export const suffixPseudocode = [
-  'rank[i] = letter at i; k = 1',
+  'rank[i] = chữ cái ở i; k = 1',
   'repeat:',
-  '  key[i] = (rank[i], rank[i + k]), −1 past the end',
-  '  sort the suffixes by key',
-  '  rerank: the next number whenever the key changes',
-  '  if all ranks differ: stop; else k = 2k',
+  '  key[i] = (rank[i], rank[i + k]), −1 nếu vượt quá cuối',
+  '  sắp xếp các hậu tố theo key',
+  '  đánh hạng lại: tăng thêm 1 mỗi khi key đổi',
+  '  if mọi hạng khác nhau: stop; else k = 2k',
   'h = 0',
-  'for i = 0 to n − 1, in text order:',
+  'for i = 0 to n − 1:  // theo thứ tự trong văn bản',
   '  if rank[i] == 0: h = 0; continue',
-  '  j = SA[rank[i] − 1]   // the neighbour above',
-  '  while s[i + h] == s[j + h], both inside s: h = h + 1',
+  '  j = SA[rank[i] − 1]   // hàng kề ở trên',
+  '  while s[i + h] == s[j + h], cả hai trong s: h = h + 1',
   '  LCP[rank[i]] = h',
   '  if h > 0: h = h − 1',
 ];

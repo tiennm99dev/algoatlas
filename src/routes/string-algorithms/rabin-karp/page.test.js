@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
 import { MAX_BASE, MAX_MOD, MAX_PATTERN, MAX_TEXT } from '$lib/algo-engine/rabin-karp.js';
-import { en as m } from '$lib/lessons/rabin-karp/copy.en.js';
+import { vi as m } from '$lib/lessons/rabin-karp/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -62,23 +62,23 @@ function stepUntil(kindText) {
 describe('Rabin-Karp lesson', () => {
   it('sets up the hashes, then rolls the window and finishes with the counters', () => {
     render();
-    expect(narration()).toBe('Search abracadabra for abra, with base 31 and modulus 101.');
+    expect(narration()).toBe('Tìm abra trong abracadabra, với cơ số 31 và modulo 101.');
     click(button('Bước tiếp'));
     expect(narration()).toContain('b^(m − 1)');
-    stepUntil('Slide one place');
+    stepUntil('Trượt một vị trí');
     expect(stat('roll')).toMatch(/^\(31 · \(\d+ − a·\d+\) \+ c\) mod 101 = \d+$/);
     toLast();
     expect(stat('matches')).toBe('2');
     expect(stat('spurious')).toBe('1');
     expect(stat('checks')).toBe('8');
     expect(stat('work')).toBe(String(4 + 4 + 2 * 7));
-    expect(narration()).toContain('2 matches and 1 spurious hit');
+    expect(narration()).toContain('2 lần khớp và 1 lần khớp giả');
   });
 
   it('marks a window whose hash agrees but whose letters do not', () => {
     render();
-    stepUntil('A spurious hit');
-    expect(titles().some((t) => t.includes('spurious hit'))).toBe(true);
+    stepUntil('Khớp giả:');
+    expect(titles().some((t) => t.includes('khớp giả'))).toBe(true);
     expect(narration()).toContain('brac');
   });
 
@@ -89,11 +89,11 @@ describe('Rabin-Karp lesson', () => {
     toLast();
     expect(stat('matches')).toBe('2');
     commit(field('mod'), '2');
-    expect(narration()).toContain('modulus 2');
+    expect(narration()).toContain('modulo 2');
     toLast();
     expect(stat('matches')).toBe('2');
     commit(field('base'), '3');
-    expect(narration()).toContain('base 3');
+    expect(narration()).toContain('cơ số 3');
     commit(field('preset'), 'collide');
     toLast();
     expect(stat('spurious')).toBe('3');
@@ -138,7 +138,7 @@ describe('Rabin-Karp lesson', () => {
     render();
     commit(field('text'), 'ab');
     commit(field('pattern'), 'abc');
-    stepUntil('no window exists');
+    stepUntil('không có cửa sổ nào');
     toLast();
     expect(stat('checks')).toBe('0');
     expect(stat('expected')).toBe('0.0');

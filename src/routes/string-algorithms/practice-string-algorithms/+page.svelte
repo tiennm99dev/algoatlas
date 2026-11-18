@@ -20,7 +20,7 @@
     structurePseudocode,
     structureTrace,
   } from '$lib/algo-engine/practice-string-algorithms.js';
-  import { en as m } from '$lib/lessons/practice-string-algorithms/copy.en.js';
+  import { vi as m } from '$lib/lessons/practice-string-algorithms/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/practice-string-algorithms.js').MatcherId} MatcherId */

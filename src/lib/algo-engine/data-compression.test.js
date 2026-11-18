@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { en as m } from '$lib/lessons/data-compression/copy.en.js';
+import { vi as m } from '$lib/lessons/data-compression/copy.vi.js';
 import {
   COMPRESSION_PRESETS,
   FIRST_LZW_CODE,
@@ -246,7 +246,7 @@ describe('practice answers', () => {
     expect(f.huffBits).toBeLessThanOrEqual(f.rawBits);
     expect(f.lzwBits).toBeGreaterThan(f.rawBits);
     expect(f.runBits).toBeGreaterThan(f.lzwBits);
-    expect(q.options[q.answer]).toContain('Run-length');
+    expect(q.options[q.answer]).toContain('Loạt dài');
   });
 });
 

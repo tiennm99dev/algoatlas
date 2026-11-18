@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
 import { MAX_LEN } from '$lib/algo-engine/data-compression.js';
-import { en as m } from '$lib/lessons/data-compression/copy.en.js';
+import { vi as m } from '$lib/lessons/data-compression/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -92,45 +92,45 @@ function checkFirstQuestion(wrong, right) {
 describe('Data compression lesson', () => {
   it('builds the Huffman tree first, then reads through all three', () => {
     render();
-    expect(narration()).toContain('Huffman needs the letter counts');
+    expect(narration()).toContain('Huffman cần biết số lần xuất hiện');
     expect(stat('stream')).toBe(m.streamEmpty);
     click(button('Bước tiếp'));
-    expect(narration()).toBe('Merge the two lightest trees into cb, with count 6.');
-    stepUntil('One tree remains');
+    expect(narration()).toBe('Gộp hai cây nhẹ nhất thành cb, với số lần 6.');
+    stepUntil('Chỉ còn một cây');
     expect(document.body.textContent).toContain('a = 1');
-    stepUntil('Now read the text');
+    stepUntil('Giờ đọc văn bản');
     click(button('Bước tiếp'));
     expect(narration()).toBe(
-      'a: Run-length starts a run of a. Huffman emits 1. LZW already knows a, so it keeps growing.',
+      'a: Loạt dài mở một loạt a. Huffman ghi 1. LZW đã biết a, nên tiếp tục mở rộng.',
     );
-    expect(stat('raw')).toBe('8 bits');
+    expect(stat('raw')).toBe('8 bit');
     expect(stat('huff')).toBe(m.bitsValue(1));
-    expect(stat('open-run')).toBe('Open run: a × 1');
-    expect(titles()).toContain('Letter 0: a, read now');
+    expect(stat('open-run')).toBe('Loạt đang mở: a × 1');
+    expect(titles()).toContain('Chữ cái 0: a, đang đọc');
   });
 
   it('reaches the known totals for each method', () => {
     render();
     toLast();
-    expect(stat('raw')).toBe('112 bits');
-    expect(stat('run')).toBe('48 bits');
-    expect(stat('huff')).toBe('20 bits');
-    expect(stat('lzw')).toBe('81 bits');
+    expect(stat('raw')).toBe('112 bit');
+    expect(stat('run')).toBe('48 bit');
+    expect(stat('huff')).toBe('20 bit');
+    expect(stat('lzw')).toBe('81 bit');
     expect(document.body.textContent).toContain('a × 8');
-    expect(narration()).toContain('Raw 112 bits, run-length 48, Huffman 20, LZW 81');
+    expect(narration()).toContain('Không nén 112 bit, loạt dài 48, Huffman 20, LZW 81');
   });
 
   it('grows the LZW dictionary with each code', () => {
     render();
     commit(field('text'), 'abab');
-    stepUntil('LZW emits 97, adds ab as 256');
+    stepUntil('LZW ghi 97, thêm ab với mã 256');
     expect(document.body.textContent).toContain('256 = ab');
     expect(document.body.textContent).toContain('97 (a)');
-    stepUntil('LZW emits 98, adds ba as 257');
-    stepUntil('LZW already knows ab');
-    expect(stat('lzw-w')).toBe('Growing string w: ab');
+    stepUntil('LZW ghi 98, thêm ba với mã 257');
+    stepUntil('LZW đã biết ab');
+    expect(stat('lzw-w')).toBe('Xâu w đang lớn dần: ab');
     toLast();
-    expect(stat('lzw')).toBe('27 bits');
+    expect(stat('lzw')).toBe('27 bit');
     expect(document.body.textContent).toContain('256 (ab)');
   });
 
@@ -138,23 +138,23 @@ describe('Data compression lesson', () => {
     render();
     commit(field('preset'), 'flat');
     toLast();
-    expect(stat('raw')).toBe('80 bits');
-    expect(stat('run')).toBe('160 bits');
+    expect(stat('raw')).toBe('80 bit');
+    expect(stat('run')).toBe('160 bit');
     commit(field('preset'), 'repeats');
     toLast();
-    expect(stat('run')).toBe(`${16 * 16} bits`);
+    expect(stat('run')).toBe(`${16 * 16} bit`);
     expect(Number(stat('lzw')?.split(' ')[0])).toBeLessThan(128);
   });
 
   it('handles a text of one letter', () => {
     render();
     commit(field('text'), 'aaa');
-    expect(narration()).toContain('Huffman needs');
+    expect(narration()).toContain('Huffman cần');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('One tree remains');
+    expect(narration()).toContain('Chỉ còn một cây');
     toLast();
-    expect(stat('huff')).toBe('3 bits');
-    expect(stat('run')).toBe('16 bits');
+    expect(stat('huff')).toBe('3 bit');
+    expect(stat('run')).toBe('16 bit');
   });
 
   it('refuses bad input with a notice and keeps the last good value', () => {

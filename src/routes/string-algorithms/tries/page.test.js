@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/tries/copy.en.js';
+import { vi as m } from '$lib/lessons/tries/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -80,29 +80,29 @@ describe('tries lesson', () => {
   it('opens on the finished preset with the typed word lit, and rewinds to the empty root', () => {
     render();
     expect(stat('nodes')).toBe('10');
-    expect(node('Prefix car,').getAttribute('aria-label')).toContain('matches what you typed');
+    expect(node('Tiền tố car,').getAttribute('aria-label')).toContain('khớp với chữ bạn gõ');
     expect(chipsOf(m.resultsTitle)).toEqual(['car', 'card', 'care']);
     click(button('Về bước đầu'));
-    expect(narration()).toBe('The trie starts as a single empty root.');
+    expect(narration()).toBe('Ban đầu trie chỉ có một gốc rỗng.');
     expect(stat('nodes')).toBe('0');
     click(button('Bước tiếp'));
-    expect(narration()).toBe('Insert car: start at the root.');
+    expect(narration()).toBe('Chèn car: bắt đầu từ gốc.');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('No child for c, so create one');
+    expect(narration()).toContain('Chưa có nút con cho c, nên ta tạo một nút');
     toLast();
     expect(stat('words')).toBe('6');
     expect(stat('letters')).toBe('20');
     expect(stat('nodes')).toBe('10');
-    expect(document.body.textContent).toContain('Sharing prefixes saves 10 nodes');
+    expect(document.body.textContent).toContain('Dùng chung tiền tố tiết kiệm được 10 nút');
   });
 
   it('inserts a word and shows only the new letters being created', () => {
     render();
     commit(wordField(), 'cart');
-    click(buttonByText('Insert'));
-    expect(narration()).toBe('Insert cart: start at the root.');
+    click(buttonByText(m.insert));
+    expect(narration()).toBe('Chèn cart: bắt đầu từ gốc.');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Letter c already has a node');
+    expect(narration()).toContain('Chữ c đã có nút');
     toLast();
     expect(stat('words')).toBe('7');
     expect(stat('nodes')).toBe('11');
@@ -111,29 +111,29 @@ describe('tries lesson', () => {
   it('tells a stored word from a prefix when searching', () => {
     render();
     commit(wordField(), 'ca');
-    click(buttonByText('Search'));
+    click(buttonByText(m.search));
     toLast();
     click(button('Bước trước'));
-    expect(narration()).toContain('ca is only a prefix of longer words');
+    expect(narration()).toContain('ca chỉ là tiền tố của những từ dài hơn');
     commit(wordField(), 'cat');
-    click(buttonByText('Search'));
+    click(buttonByText(m.search));
     toLast();
     click(button('Bước trước'));
-    expect(narration()).toContain('cat is stored');
+    expect(narration()).toContain('cat đã được lưu');
     commit(wordField(), 'cow');
-    click(buttonByText('Search'));
+    click(buttonByText(m.search));
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
-    expect(narration()).toContain('No child for o');
+    expect(narration()).toContain('Không có nút con cho o');
   });
 
   it('autocompletes a prefix into a sorted list of chips', () => {
     render();
     commit(wordField(), 'ca');
-    click(buttonByText('Autocomplete'));
+    click(buttonByText(m.complete));
     toLast();
     click(button('Bước trước'));
-    expect(narration()).toBe('Autocomplete found 4 words after touching 6 nodes.');
+    expect(narration()).toBe('Tự động hoàn thành tìm được 4 từ sau khi đi qua 6 nút.');
     expect(chipsOf(m.resultsTitle)).toEqual(['car', 'card', 'care', 'cat']);
   });
 
@@ -142,23 +142,23 @@ describe('tries lesson', () => {
     click(button('Về bước đầu'));
     for (let i = 0; i < 40; i++) {
       click(button('Bước tiếp'));
-      expect(document.body.textContent).not.toMatch(/saves -/);
-      expect(stat('live')).not.toContain('starts 0 words');
+      expect(document.body.textContent).not.toMatch(/được -/);
+      expect(stat('live')).not.toContain('Có 0 từ');
     }
     toLast();
-    expect(document.body.textContent).toContain('Sharing prefixes saves 10 nodes');
+    expect(document.body.textContent).toContain('Dùng chung tiền tố tiết kiệm được 10 nút');
   });
 
   it('follows typed letters live, before any operation runs', () => {
     render();
     toLast();
     type(wordField(), 'do');
-    expect(stat('live')).toBe('“do” starts 2 words: dog, dot.');
-    expect(node('Prefix do,').getAttribute('aria-label')).toContain('matches what you typed');
+    expect(stat('live')).toBe('Có 2 từ bắt đầu bằng “do”: dog, dot.');
+    expect(node('Tiền tố do,').getAttribute('aria-label')).toContain('khớp với chữ bạn gõ');
     type(wordField(), 'dx');
-    expect(stat('live')).toBe('“d” is in the trie, but no word continues with x.');
+    expect(stat('live')).toBe('“d” có trong trie, nhưng không từ nào đi tiếp bằng x.');
     type(wordField(), 'q');
-    expect(stat('live')).toBe('No word starts with q.');
+    expect(stat('live')).toBe('Không có từ nào bắt đầu bằng q.');
     expect(wordField().value).toBe('q');
   });
 
@@ -167,7 +167,7 @@ describe('tries lesson', () => {
     commit(wordField(), 'c4t');
     expect(narration()).toBe(m.wordErrors(8).format);
     expect(wordField().value).toBe('car');
-    click(buttonByText('Insert'));
+    click(buttonByText(m.insert));
     expect(stat('words')).not.toBe('7');
     commit(wordField(), 'abcdefghi');
     expect(narration()).toBe(m.wordErrors(8).length);
@@ -196,26 +196,28 @@ describe('tries lesson', () => {
     click(buttonByText(m.reset));
     for (const w of ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']) {
       commit(wordField(), w);
-      click(buttonByText('Insert'));
+      click(buttonByText(m.insert));
     }
     commit(wordField(), 'k');
-    click(buttonByText('Insert'));
+    click(buttonByText(m.insert));
     expect(narration()).toBe(m.full(10));
-    for (let i = 0; i < 10; i++) click(buttonByText('Search'));
-    click(buttonByText('Search'));
+    for (let i = 0; i < 10; i++) click(buttonByText(m.search));
+    click(buttonByText(m.search));
     expect(narration()).toBe(m.logFull(20));
   });
 
   it('copies the prefix of a clicked node into the field, by pointer and keyboard', () => {
     render();
     toLast();
-    node('Prefix car').dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    node('Tiền tố car').dispatchEvent(new MouseEvent('click', { bubbles: true }));
     flushSync();
     expect(wordField().value).toBe('car');
-    node('Prefix ca,').dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    node('Tiền tố ca,').dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }),
+    );
     flushSync();
     expect(wordField().value).toBe('ca');
-    node('Root').dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    node('Gốc').dispatchEvent(new MouseEvent('click', { bubbles: true }));
     flushSync();
     expect(wordField().value).toBe('ca');
   });
@@ -227,7 +229,7 @@ describe('tries lesson', () => {
     type(field, 'zoo');
     field.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     flushSync();
-    expect(narration()).toBe('Insert zoo: start at the root.');
+    expect(narration()).toBe('Chèn zoo: bắt đầu từ gốc.');
   });
 
   it('checks a practice answer, wrong then right, with a hint', () => {

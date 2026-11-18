@@ -16,7 +16,7 @@
     suffixPseudocode,
     suffixTrace,
   } from '$lib/algo-engine/suffix-arrays.js';
-  import { en as m } from '$lib/lessons/suffix-arrays/copy.en.js';
+  import { vi as m } from '$lib/lessons/suffix-arrays/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
   import { parseLetters } from '$lib/algo-engine/text-match.js';
 

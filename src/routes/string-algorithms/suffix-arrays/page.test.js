@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
 import { MAX_LEN } from '$lib/algo-engine/suffix-arrays.js';
-import { en as m } from '$lib/lessons/suffix-arrays/copy.en.js';
+import { vi as m } from '$lib/lessons/suffix-arrays/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -70,9 +70,9 @@ describe('Suffix arrays lesson', () => {
     expect(rows()).toEqual(['banana', 'anana', 'nana', 'ana', 'na', 'a']);
     expect(narration()).toContain('a = 0, b = 1');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('cover 2 letters');
+    expect(narration()).toContain('phủ 2 kí tự');
     expect(document.querySelector('[data-testid="row-0"]')?.textContent).toContain('1, 0');
-    stepUntil('Every rank is different');
+    stepUntil('Mọi hạng đều khác nhau');
     expect(rows()).toEqual(['a', 'ana', 'anana', 'banana', 'na', 'nana']);
     expect(stat('rounds')).toBe('2');
     expect(stat('distinct')).toBe('—');
@@ -80,12 +80,12 @@ describe('Suffix arrays lesson', () => {
 
   it('fills the LCP bars with Kasai and reads off the answers', () => {
     render();
-    stepUntil('Suffix 0 has neighbour');
-    stepUntil('Suffix 1 has neighbour 3 above. Compare');
-    stepUntil('LCP = 3 between suffix 3 and suffix 1');
+    stepUntil('Hậu tố 0 có hàng kề');
+    stepUntil('Hậu tố 1 có hàng kề 3 ở trên. So sánh');
+    stepUntil('LCP = 3 giữa hậu tố 3 và hậu tố 1');
     expect(document.querySelector('[data-testid="bar-2"]')?.textContent).toContain('LCP 3');
-    stepUntil('h becomes 2');
-    stepUntil('The last step proves 2 letters match already');
+    stepUntil('h thành 2');
+    stepUntil('Bước trước đã chứng tỏ 2 kí tự khớp sẵn');
     toLast();
     expect(stat('distinct')).toBe('15');
     expect(stat('repeat')).toBe('ana');
@@ -95,9 +95,9 @@ describe('Suffix arrays lesson', () => {
 
   it('marks the suffixes being compared and the letters in play', () => {
     render();
-    stepUntil('so h grows to 1');
+    stepUntil('nên h tăng lên 1');
     const label = document.querySelector('[data-testid="row-2"]')?.getAttribute('aria-label');
-    expect(label).toContain('suffix');
+    expect(label).toContain('hậu tố');
     expect(document.body.textContent).toContain('✓');
   });
 

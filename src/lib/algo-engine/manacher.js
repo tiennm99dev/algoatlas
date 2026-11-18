@@ -10,15 +10,15 @@ export const MAX_LEN = 16;
 export const SEP = '#';
 
 export const manacherPseudocode = [
-  'T = # + letters of S joined by # + #   // length 2n + 1',
-  'C = 0, R = 0   // centre and right end of the furthest palindrome',
+  'T = # + các chữ cái của S nối bằng # + #   // độ dài 2n + 1',
+  'C = 0, R = 0   // tâm và đầu phải của xâu đối xứng vươn xa nhất',
   'for i = 0 to |T| − 1:',
   '  P[i] = i < R ? min(R − i, P[2C − i]) : 0',
-  '  while T[i − P[i] − 1] == T[i + P[i] + 1], both inside T:',
+  '  while T[i − P[i] − 1] == T[i + P[i] + 1], cả hai trong T:',
   '    P[i] = P[i] + 1',
   '  if i + P[i] > R: C = i, R = i + P[i]',
   '  if P[i] > best: best = P[i], centre = i',
-  'the answer starts at (centre − best) / 2 in S, with length best',
+  'đáp án bắt đầu ở (centre − best) / 2 trong S, độ dài best',
 ];
 
 /**

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { en as m } from '$lib/lessons/kmp/copy.en.js';
+import { vi as m } from '$lib/lessons/kmp/copy.vi.js';
 import {
   KMP_PRESETS,
   MAX_PATTERN,

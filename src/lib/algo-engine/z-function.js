@@ -10,13 +10,13 @@ export const MAX_LEN = 20;
 export const SEPARATOR = '$';
 
 export const zPseudocode = [
-  'l = 0, r = 0   // the Z-box is S[l..r)',
+  'l = 0, r = 0   // hộp Z là S[l..r)',
   'for i = 1 to n − 1:',
   '  Z[i] = i < r ? min(r − i, Z[i − l]) : 0',
   '  while i + Z[i] < n and S[Z[i]] == S[i + Z[i]]:',
   '    Z[i] = Z[i] + 1',
   '  if i + Z[i] > r: l = i, r = i + Z[i]',
-  'with S = P + $ + T: P occurs at j where Z[m + 1 + j] == m',
+  'với S = P + $ + T: P xuất hiện ở j khi Z[m + 1 + j] == m',
 ];
 
 /**

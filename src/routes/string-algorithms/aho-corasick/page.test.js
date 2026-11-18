@@ -9,7 +9,7 @@ import {
   MAX_TEXT,
   naiveComparisons,
 } from '$lib/algo-engine/aho-corasick.js';
-import { en as m } from '$lib/lessons/aho-corasick/copy.en.js';
+import { vi as m } from '$lib/lessons/aho-corasick/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -98,19 +98,19 @@ function checkFirstQuestion(wrong, right) {
 describe('Aho-Corasick lesson', () => {
   it('grows the trie, sets the links and scans to the known matches', () => {
     render();
-    expect(narration()).toBe('Start with an empty trie: only the root.');
+    expect(narration()).toBe('Bắt đầu với một trie rỗng: chỉ có gốc.');
     expect(stat('nodes')).toBe('1');
     click(button('Bước tiếp'));
-    expect(narration()).toBe('Pattern he: letter h leads to “h”.');
-    stepUntil('Mark “hers”');
+    expect(narration()).toBe('Mẫu he: chữ h dẫn đến “h”.');
+    stepUntil('Đánh dấu “hers”');
     expect(stat('nodes')).toBe('10');
-    stepUntil('“she” fails to “he”');
-    expect(narration()).toContain('Its output link points to “he”.');
+    stepUntil('“she” thất bại về “he”');
+    expect(narration()).toContain('Liên kết đầu ra của nó trỏ đến “he”.');
     expect(document.querySelectorAll('[data-link="out"]').length).toBe(1);
-    expect(titles()).toContain('Node she, ends the pattern she, fails to he, child v');
-    stepUntil('The links are ready');
-    stepUntil('Pattern she ends here');
-    stepUntil('An output link shows he also ends here');
+    expect(titles()).toContain('Nút she, kết thúc mẫu she, thất bại về he, nút con v');
+    stepUntil('Các liên kết đã sẵn sàng');
+    stepUntil('Mẫu she kết thúc ở đây');
+    stepUntil('Một liên kết đầu ra cho thấy he cũng kết thúc ở đây');
     toLast();
     const { patterns, text } = AHO_PRESETS.classic;
     expect(stat('matches')).toBe('6');
@@ -122,10 +122,10 @@ describe('Aho-Corasick lesson', () => {
   it('falls back on a mismatch without moving back in the text', () => {
     render();
     commit(field('text'), 'shr');
-    stepUntil('follow its failure link');
-    expect(narration()).toContain('to “h”');
+    stepUntil('đi theo liên kết thất bại của nó');
+    expect(narration()).toContain('đến “h”');
     expect(stat('hops')).toBe('1');
-    expect(titles()).toContain('Text position 2: r, being read');
+    expect(titles()).toContain('Văn bản vị trí 2: r, đang đọc');
   });
 
   it('shows the links to the root only when asked', () => {

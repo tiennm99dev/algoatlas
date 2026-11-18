@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
 import { MAX_LEN } from '$lib/algo-engine/z-function.js';
-import { en as m } from '$lib/lessons/z-function/copy.en.js';
+import { vi as m } from '$lib/lessons/z-function/copy.vi.js';
 import { Z_PRESETS, naiveZComparisons, zTrace } from '$lib/algo-engine/z-function.js';
 import Page from './+page.svelte';
 
@@ -67,44 +67,42 @@ const classicEnd = /** @type {import('$lib/algo-engine/z-function.js').ZFrame} *
 describe('Z-function lesson', () => {
   it('walks the classic string to the expected Z values and counters', () => {
     render();
-    expect(narration()).toBe(
-      'Compute the Z-function of aabxaabxcaabxaabxay. The Z-box starts empty.',
-    );
+    expect(narration()).toBe('Tính hàm Z của aabxaabxcaabxaabxay. Ban đầu hộp Z rỗng.');
     expect(stat('box')).toBe('—');
     click(button('Bước tiếp'));
-    expect(narration()).toBe('i = 1 is past the box, so nothing is known: start from Z[1] = 0.');
+    expect(narration()).toBe('i = 1 nằm ngoài hộp, nên chưa biết gì: bắt đầu từ Z[1] = 0.');
     click(button('Bước tiếp'));
-    expect(narration()).toBe('S[0] = a equals S[1], so Z[1] grows to 1.');
-    expect(titles()).toContain('String column 1: a, letters equal');
-    stepUntil('the Z-box becomes [1, 2)');
+    expect(narration()).toBe('S[0] = a bằng S[1], nên Z[1] tăng lên 1.');
+    expect(titles()).toContain('Xâu cột 1: a, kí tự bằng nhau');
+    stepUntil('hộp Z trở thành [1, 2)');
     stepUntil('Z[1] = 1');
     toLast();
     expect(stat('comparisons')).toBe(String(classicEnd.comparisons));
     expect(stat('reused')).toBe(String(classicEnd.reused));
     expect(stat('naive')).toBe(String(naiveZComparisons(Z_PRESETS.classic.text)));
-    expect(titles()).toContain('Z value column 9: 8');
-    expect(titles()).toContain('Z value column 13: 5');
+    expect(titles()).toContain('Giá trị Z cột 9: 8');
+    expect(titles()).toContain('Giá trị Z cột 13: 5');
   });
 
   it('starts inside the box from the mirror, without reading letters', () => {
     render();
     commit(field('text'), 'aabxaabxc');
-    stepUntil('i = 5 is inside the box [4, 8)');
+    stepUntil('i = 5 nằm trong hộp [4, 8)');
     expect(narration()).toContain('min(r − i, Z[1]) = 1');
     expect(stat('box')).toBe('[4, 8)');
-    expect(titles()).toContain('Z value column 1: 1, mirror of position i');
+    expect(titles()).toContain('Giá trị Z cột 1: 1, vị trí soi gương của i');
   });
 
   it('finds a pattern through the separator', () => {
     render();
     commit(field('preset'), 'search');
     expect(narration()).toContain('S = abc$abcabcabc');
-    stepUntil('so the pattern occurs at 0');
+    stepUntil('nên mẫu xuất hiện ở vị trí 0');
     toLast();
     expect(stat('matches')).toBe('3');
-    expect(titles()).toContain('Z value column 4: 3, pattern found');
+    expect(titles()).toContain('Giá trị Z cột 4: 3, tìm thấy mẫu');
     commit(field('pattern'), '');
-    expect(narration()).toBe('Compute the Z-function of abcabcabc. The Z-box starts empty.');
+    expect(narration()).toBe('Tính hàm Z của abcabcabc. Ban đầu hộp Z rỗng.');
   });
 
   it('refuses bad input with a notice and keeps the last good value', () => {

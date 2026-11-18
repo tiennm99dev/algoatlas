@@ -9,7 +9,7 @@ import {
   searchTrace,
   structureTrace,
 } from '$lib/algo-engine/practice-string-algorithms.js';
-import { en as m } from '$lib/lessons/practice-string-algorithms/copy.en.js';
+import { vi as m } from '$lib/lessons/practice-string-algorithms/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -74,7 +74,9 @@ describe('practice: string problems lesson', () => {
     expect(stat('rabin-steps')).toBe('107');
     expect(stat('kmp-matches')).toBe('1');
     expect(stat('spurious')).toBe('1');
-    expect(narration()).toBe('Cheapest: Boyer-Moore with 15 steps. Every matcher found 1 match.');
+    expect(narration()).toBe(
+      'Tốn ít nhất: Boyer-Moore với 15 bước. Mọi thuật toán đều tìm được 1 lần khớp.',
+    );
     expect(document.querySelector('[data-testid="boyer-row"]')?.textContent).toContain(
       m.cheapestWord,
     );
@@ -83,35 +85,35 @@ describe('practice: string problems lesson', () => {
   it('rewinds and spends one step of every matcher per tick', () => {
     render();
     click(button('Về bước đầu'));
-    expect(narration()).toContain('All five matchers start on 35 letters');
+    expect(narration()).toContain('Cả năm thuật toán bắt đầu trên 35 chữ cái');
     expect(stat('boyer-steps')).toBe('0');
     click(button('Bước tiếp'));
     for (const id of ['naive', 'rabin', 'kmp', 'boyer', 'z']) {
       expect(stat(`${id}-steps`)).toBe('1');
     }
-    expect(narration()).toBe('Skip table: the rightmost l seen so far is at 0.');
+    expect(narration()).toBe('Bảng bước nhảy: chữ l xa nhất bên phải gặp đến giờ ở vị trí 0.');
   });
 
   it('watches the matcher whose row is pressed, without moving the race', () => {
     render();
     click(button('Về bước đầu'));
     click(button('Bước tiếp'));
-    click(button(m.watchLabel('Plain scan')));
-    expect(button(m.watchLabel('Plain scan')).getAttribute('aria-pressed')).toBe('true');
+    click(button(m.watchLabel(m.matchers.naive)));
+    expect(button(m.watchLabel(m.matchers.naive)).getAttribute('aria-pressed')).toBe('true');
     expect(button(m.watchLabel('Boyer-Moore')).getAttribute('aria-pressed')).toBe('false');
-    expect(narration()).toBe('P[0] = l against T[0] = t: different.');
+    expect(narration()).toBe('So P[0] = l với T[0] = t: khác nhau.');
     expect(stat('naive-steps')).toBe('1');
     click(button(m.watchLabel('Rabin-Karp')));
-    expect(narration()).toBe('P[0] = l goes into the pattern’s hash, now 12.');
+    expect(narration()).toBe('P[0] = l được đưa vào giá trị băm của mẫu, giờ là 12.');
     click(button(m.watchLabel('KMP')));
-    expect(narration()).toBe('Preparing: P[0] = l against position 1, a: different.');
+    expect(narration()).toBe('Chuẩn bị: so P[0] = l với vị trí 1, a: khác nhau.');
   });
 
   it('narrates a finished matcher while the others still run', () => {
     render();
     click(button('Về bước đầu'));
     for (let i = 0; i < 16; i++) click(button('Bước tiếp'));
-    expect(narration()).toContain('Boyer-Moore finished after 15 steps.');
+    expect(narration()).toContain('Boyer-Moore đã xong sau 15 bước.');
     expect(document.querySelector('[data-testid="boyer-row"]')?.textContent).toContain(
       m.finishedWord,
     );
@@ -127,10 +129,10 @@ describe('practice: string problems lesson', () => {
       seen.push(narration());
       click(button('Bước tiếp'));
     }
-    expect(seen.some((s) => s.includes('a spurious hit, the hashes collided'))).toBe(true);
-    expect(seen.some((s) => s.includes('a true match at 28'))).toBe(true);
-    expect(seen.some((s) => s.includes('leaves the window'))).toBe(true);
-    expect(seen.some((s) => s.includes('enters: the window at'))).toBe(true);
+    expect(seen.some((s) => s.includes('một lần khớp giả, hai giá trị băm va chạm'))).toBe(true);
+    expect(seen.some((s) => s.includes('khớp thật ở vị trí 28'))).toBe(true);
+    expect(seen.some((s) => s.includes('rời khỏi cửa sổ'))).toBe(true);
+    expect(seen.some((s) => s.includes('đi vào: cửa sổ ở vị trí'))).toBe(true);
   });
 
   it('rebuilds on a preset and on typed text and pattern', () => {
@@ -138,7 +140,7 @@ describe('practice: string problems lesson', () => {
     commit(presetSelect(), 'head');
     expect(stat('naive-steps')).toBe('37');
     expect(stat('boyer-steps')).toBe('152');
-    expect(narration()).toContain('Cheapest: Plain scan with 37 steps');
+    expect(narration()).toContain('Tốn ít nhất: Quét trực tiếp với 37 bước');
     commit(field('text'), 'ABAB');
     expect(field('text').value).toBe('abab');
     expect(presetSelect().value).toBe('');
@@ -184,7 +186,7 @@ describe('practice: string problems lesson', () => {
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     input.dispatchEvent(new Event('change', { bubbles: true }));
     flushSync();
-    expect(narration()).toContain('Cheapest');
+    expect(narration()).toContain('Tốn ít nhất');
     expect(stat('kmp-matches')).toBe('0');
   });
 
@@ -198,12 +200,12 @@ describe('practice: string problems lesson', () => {
     expect(stat('longest')).toBe('10');
     expect(stat('palindromes')).toBe('23');
     expect(stat('best-text')).toBe('geeksskeeg');
-    expect(narration()).toContain('Longest palindrome: “geeksskeeg”, length 10');
+    expect(narration()).toContain('Xâu đối xứng dài nhất: “geeksskeeg”, độ dài 10');
     click(button('Về bước đầu'));
-    expect(narration()).toContain('Read forgeeksskeegfor twice');
+    expect(narration()).toContain('Đọc forgeeksskeegfor hai lượt');
     expect(stat('period')).toBe(m.noValue);
     click(button('Bước tiếp'));
-    expect(narration()).toBe('π[1] = 0: the longest border of S[0..1] is empty.');
+    expect(narration()).toBe('π[1] = 0: viền dài nhất của S[0..1] là rỗng.');
   });
 
   it('steps through a period and a palindrome centre', () => {
@@ -216,12 +218,12 @@ describe('practice: string problems lesson', () => {
       seen.push(narration());
       click(button('Bước tiếp'));
     }
-    expect(seen).toContain('π[5] = 4: the longest border of S[0..5] is “abab”.');
+    expect(seen).toContain('π[5] = 4: viền dài nhất của S[0..5] là “abab”.');
     expect(seen).toContain(
-      'π[5] = 4, so the smallest period is 6 − 4 = 2. It divides 6, so S is “ab” repeated 3 times.',
+      'π[5] = 4, nên chu kì nhỏ nhất là 6 − 4 = 2. Nó chia hết 6, nên S là “ab” lặp lại 3 lần.',
     );
-    expect(seen.some((s) => s.startsWith('Centre on letter 2:'))).toBe(true);
-    expect(seen.some((s) => s.startsWith('Centre on the gap before letter 2:'))).toBe(true);
+    expect(seen.some((s) => s.startsWith('Tâm ở chữ cái 2:'))).toBe(true);
+    expect(seen.some((s) => s.startsWith('Tâm ở khe trước chữ cái 2:'))).toBe(true);
     expect(stat('repeats')).toBe('3');
     expect(stat('period')).toBe('2');
   });
@@ -239,7 +241,7 @@ describe('practice: string problems lesson', () => {
     click(radio);
     expect(field('pattern').value).toBe('abca');
     expect(stat('kmp-matches')).toBe('0');
-    expect(narration()).toContain('Cheapest');
+    expect(narration()).toContain('Tốn ít nhất');
   });
 
   it('names the last centre as the end of the text, not a letter past it', () => {
@@ -252,14 +254,14 @@ describe('practice: string problems lesson', () => {
       seen.push(narration());
       click(button('Bước tiếp'));
     }
-    expect(seen).toContain('Centre on the end: 0 comparisons, and no palindrome.');
-    expect(seen.some((s) => s.includes('gap before letter 3'))).toBe(false);
+    expect(seen).toContain('Tâm ở cuối xâu: 0 lần so sánh, và không có xâu đối xứng.');
+    expect(seen.some((s) => s.includes('khe trước chữ cái 3'))).toBe(false);
   });
 
   it('reports a Z-function match on the comparison that completes it', () => {
     render();
     commit(presetSelect(), 'periodic');
-    click(button('Watch Z-function'));
+    click(button(m.watchLabel(m.matchers.z)));
     click(button('Về bước đầu'));
     const seen = [];
     for (let i = 0; i < 80; i++) {
@@ -267,7 +269,7 @@ describe('practice: string problems lesson', () => {
       seen.push(narration());
     }
     expect(seen).toContain(
-      'The $ after P stops the run against T[6]. All 6 letters agreed, so P occurs at 0.',
+      'Dấu $ sau P chặn đoạn khớp tại T[6]. Cả 6 kí tự đều trùng, nên P xuất hiện ở vị trí 0.',
     );
   });
 
@@ -276,7 +278,7 @@ describe('practice: string problems lesson', () => {
     click(button('Về bước đầu'));
     click(button('Bước tiếp'));
     structureMode();
-    expect(narration()).toContain('Longest palindrome');
+    expect(narration()).toContain('Xâu đối xứng dài nhất');
     const radio = /** @type {HTMLInputElement} */ (
       document.querySelector('input[name="mode"][value="search"]')
     );
@@ -307,7 +309,7 @@ describe('practice: string problems lesson', () => {
     expect(q.textContent).toMatch(/chưa đúng|thử lại/i);
     const hint = [...q.querySelectorAll('button')].find((b) => /gợi ý/i.test(b.textContent ?? ''));
     click(/** @type {HTMLButtonElement} */ (hint));
-    expect(q.textContent).toContain('Boyer-Moore’s row');
+    expect(q.textContent).toContain('hàng Boyer-Moore');
     answer.value = '15';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();

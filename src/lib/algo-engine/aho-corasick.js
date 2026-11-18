@@ -14,20 +14,20 @@ export const MAX_TEXT = 24;
 export const ROOT = 0;
 
 export const ahoPseudocode = [
-  'for each pattern: insert it into the trie, mark its last node',
-  'fail[children of root] = root; queue = those children',
-  'while queue is not empty:',
+  'for pattern in patterns: chèn vào trie, đánh dấu nút cuối',
+  'fail[con của root] = root; queue = các con đó',
+  'while queue khác rỗng:',
   '  u = queue.pop()',
-  '  for each child v of u on letter c:',
-  '    f = fail[u]; while f ≠ root and f has no c edge: f = fail[f]',
-  '    fail[v] = f has a c edge ? goto(f, c) : root',
-  '    out[v] = fail[v] ends a pattern ? fail[v] : out[fail[v]]',
+  '  for v in children(u):  // v là con của u theo chữ c',
+  '    f = fail[u]; while f ≠ root and f không có cạnh c: f = fail[f]',
+  '    fail[v] = f có cạnh c ? goto(f, c) : root',
+  '    out[v] = fail[v] kết thúc một mẫu ? fail[v] : out[fail[v]]',
   '    queue.push(v)',
   'state = root',
-  'for each letter c of the text:',
-  '  while state ≠ root and state has no c edge: state = fail[state]',
-  '  if state has a c edge: state = goto(state, c)',
-  '  for w = state, out[w], out[out[w]], …: report the pattern ending at w',
+  'for c in text:',
+  '  while state ≠ root and state không có cạnh c: state = fail[state]',
+  '  if state có cạnh c: state = goto(state, c)',
+  '  for w = state, out[w], out[out[w]], …: báo mẫu kết thúc ở w',
 ];
 
 /**

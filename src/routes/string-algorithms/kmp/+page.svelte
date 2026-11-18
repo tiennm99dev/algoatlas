@@ -15,7 +15,7 @@
     kmpPseudocode,
     kmpTrace,
   } from '$lib/algo-engine/kmp.js';
-  import { en as m } from '$lib/lessons/kmp/copy.en.js';
+  import { vi as m } from '$lib/lessons/kmp/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
   import { parseLetters } from '$lib/algo-engine/text-match.js';
   import { naiveComparisons } from '$lib/algo-engine/text-match.js';

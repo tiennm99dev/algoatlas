@@ -17,8 +17,8 @@ export const rabinKarpPseudocode = [
   'hp = hash(P), ht = hash(T[0..m))',
   'for s = 0 to n − m:',
   '  if ht == hp:',
-  '    compare T[s..s + m) with P letter by letter',
-  '    all equal: report a match; otherwise: a spurious hit',
+  '    so T[s..s + m) với P theo từng kí tự',
+  '    trùng hết: báo khớp ở s; không thì: khớp giả',
   '  if s < n − m:',
   '    ht = (b · (ht − T[s] · high) + T[s + m]) mod q',
 ];

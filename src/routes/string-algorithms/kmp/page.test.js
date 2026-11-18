@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
 import { MAX_PATTERN, MAX_TEXT } from '$lib/algo-engine/kmp.js';
-import { en as m } from '$lib/lessons/kmp/copy.en.js';
+import { vi as m } from '$lib/lessons/kmp/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -62,44 +62,44 @@ function stepUntil(kindText) {
 describe('KMP lesson', () => {
   it('builds the prefix function, then searches to the expected counters', () => {
     render();
-    expect(narration()).toContain('First compute the prefix function of ababd');
+    expect(narration()).toContain('Trước hết tính hàm tiền tố của ababd');
     click(button('Bước tiếp'));
     expect(narration()).toBe(
-      'P[1] = b against P[0] = a: different, and nothing is matched, so move on to the next letter.',
+      'So P[1] = b với P[0] = a: khác nhau, và chưa có gì khớp, nên ta sang kí tự kế tiếp.',
     );
-    stepUntil('π is ready');
+    stepUntil('π đã sẵn sàng');
     expect(stat('build')).toBe('5');
-    expect(titles().some((t) => t.includes('π value column 3: 2'))).toBe(true);
+    expect(titles().some((t) => t.includes('Giá trị π cột 3: 2'))).toBe(true);
     toLast();
     expect(stat('comparisons')).toBe('18');
     expect(stat('falls')).toBe('4');
     expect(stat('naive')).toBe('28');
-    expect(narration()).toContain('1 match with 18 comparisons');
+    expect(narration()).toContain('1 lần khớp với 18 lần so sánh');
   });
 
   it('jumps the pattern on a mismatch and keeps the same text index', () => {
     render();
-    stepUntil('π is ready');
-    stepUntil('Fall back');
-    expect(narration()).toContain('Fall back: π[3] = 2');
-    expect(narration()).toContain('slide P right by 2');
+    stepUntil('π đã sẵn sàng');
+    stepUntil('Nhảy lùi');
+    expect(narration()).toContain('Nhảy lùi: π[3] = 2');
+    expect(narration()).toContain('dời P sang phải 2 ô');
     expect(stat('i')).toBe('4');
     expect(stat('k')).toBe('2');
-    expect(titles().some((t) => t.includes('border kept after the jump'))).toBe(true);
+    expect(titles().some((t) => t.includes('viền được giữ sau khi nhảy'))).toBe(true);
   });
 
   it('marks a full match and catches the overlapping one', () => {
     render();
     commit(field('preset'), 'overlap');
-    stepUntil('occurs at 0');
-    expect(titles().some((t) => t.includes('full match'))).toBe(true);
-    expect(titles()).toContain('Pattern row column 0: a, full match');
-    expect(titles()).toContain('Pattern row column 3: b, full match');
+    stepUntil('xuất hiện ở vị trí 0');
+    expect(titles().some((t) => t.includes('khớp toàn bộ'))).toBe(true);
+    expect(titles()).toContain('Hàng mẫu cột 0: a, khớp toàn bộ');
+    expect(titles()).toContain('Hàng mẫu cột 3: b, khớp toàn bộ');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('To catch overlaps');
+    expect(narration()).toContain('Để bắt được các lần khớp chồng nhau');
     // The border ab stays under the text letters it matched, at columns 2 and 3.
-    expect(titles()).toContain('Pattern row column 2: a, border kept after the jump');
-    expect(titles()).toContain('Pattern row column 3: b, border kept after the jump');
+    expect(titles()).toContain('Hàng mẫu cột 2: a, viền được giữ sau khi nhảy');
+    expect(titles()).toContain('Hàng mẫu cột 3: b, viền được giữ sau khi nhảy');
     toLast();
     expect(stat('comparisons')).toBe('8');
   });
@@ -108,9 +108,9 @@ describe('KMP lesson', () => {
     render();
     commit(field('text'), 'abcx');
     commit(field('pattern'), 'abcd');
-    stepUntil('Fall back');
+    stepUntil('Nhảy lùi');
     expect(narration()).toBe(
-      'Fall back: π[2] = 0. No part of what matched can start a match, so slide P right by 3. Index i stays at 3.',
+      'Nhảy lùi: π[2] = 0. Không phần nào của đoạn đã khớp có thể làm đầu một lần khớp, nên dời P sang phải 3 ô. Chỉ số i vẫn ở 3.',
     );
   });
 
@@ -149,7 +149,7 @@ describe('KMP lesson', () => {
     flushSync();
     commit(field('text'), 'ab');
     toLast();
-    expect(narration()).toContain('0 matches');
+    expect(narration()).toContain('0 lần khớp');
   });
 
   it('checks a practice answer, wrong then right, with a hint', () => {

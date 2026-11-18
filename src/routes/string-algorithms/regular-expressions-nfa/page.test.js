@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
 import { BACKTRACK_CAP, MAX_INPUT, MAX_REGEX } from '$lib/algo-engine/regular-expressions-nfa.js';
-import { en as m } from '$lib/lessons/regular-expressions-nfa/copy.en.js';
+import { vi as m } from '$lib/lessons/regular-expressions-nfa/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -95,29 +95,29 @@ const hotEdges = () => document.querySelectorAll('[data-hot="true"]').length;
 describe('Regular expressions lesson', () => {
   it('grows the NFA piece by piece, then simulates to a verdict', () => {
     render();
-    expect(narration()).toBe('Build the NFA of (a|b)*abb, starting from one state.');
+    expect(narration()).toBe('Dựng NFA của (a|b)*abb, bắt đầu từ một trạng thái.');
     expect(drawnStates()).toBe(1);
     click(button('Bước tiếp'));
-    expect(narration()).toContain('a: add a letter edge');
+    expect(narration()).toContain('a: thêm một cạnh chữ cái');
     expect(drawnStates()).toBe(4);
-    stepUntil('(a|b)*: add a loop back');
-    stepUntil('follow every ε edge from the start');
+    stepUntil('(a|b)*: thêm một vòng quay lại');
+    stepUntil('đi theo mọi cạnh ε từ trạng thái bắt đầu');
     expect(hotEdges()).toBeGreaterThan(0);
-    stepUntil('Read a:');
-    expect(titles().some((t) => t.includes('just reached'))).toBe(true);
+    stepUntil('Đọc a:');
+    expect(titles().some((t) => t.includes('vừa tới'))).toBe(true);
     toLast();
-    expect(narration()).toContain('aababb is accepted');
-    expect(stat('verdict')).toBe('accepted');
+    expect(narration()).toContain('aababb được chấp nhận');
+    expect(stat('verdict')).toBe(m.verdicts.yes);
     expect(document.body.textContent).toContain('b →');
   });
 
   it('rejects when the set empties, and stops reading', () => {
     render();
     commit(field('preset'), 'dead');
-    stepUntil('The active set is empty');
+    stepUntil('Tập đang hoạt động đã rỗng');
     expect(stat('active')).toBe('0');
     toLast();
-    expect(stat('verdict')).toBe('rejected');
+    expect(stat('verdict')).toBe(m.verdicts.no);
   });
 
   it('decides the empty input from the start set', () => {
@@ -126,8 +126,8 @@ describe('Regular expressions lesson', () => {
     commit(field('input'), '');
     expect(document.body.textContent).toContain(m.inputEmpty);
     toLast();
-    expect(stat('verdict')).toBe('accepted');
-    expect(narration()).toContain('the empty input is accepted');
+    expect(stat('verdict')).toBe(m.verdicts.yes);
+    expect(narration()).toContain('đầu vào trống được chấp nhận');
     expect(stat('states')).toBe('4');
     expect(stat('edges')).toBe('5');
   });

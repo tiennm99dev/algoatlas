@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { en as m } from '$lib/lessons/manacher/copy.en.js';
+import { vi as m } from '$lib/lessons/manacher/copy.vi.js';
 import {
   MANACHER_PRESETS,
   MAX_LEN,

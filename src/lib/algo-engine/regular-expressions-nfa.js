@@ -14,13 +14,13 @@ export const EPSILON = 'ε';
 export const BACKTRACK_CAP = 1000000;
 
 export const nfaPseudocode = [
-  'build the NFA: one small piece per letter and operator',
+  'dựng NFA: mỗi chữ cái và phép toán một mảnh nhỏ',
   'set = ε-closure({start})',
-  'for each letter c of the input:',
-  '  next = states reached from set by a c edge',
+  'for c in input:',
+  '  next = các trạng thái tới được từ set qua cạnh c',
   '  set = ε-closure(next)',
-  '  if set is empty: stop and reject',
-  'accept if set contains the accepting state',
+  '  if set rỗng: stop, từ chối',
+  'chấp nhận nếu set chứa trạng thái chấp nhận',
 ];
 
 /**

@@ -10,12 +10,12 @@ export const MAX_TEXT = 20;
 export const MAX_PATTERN = 8;
 
 export const boyerMoorePseudocode = [
-  'last[c] = rightmost index of c in P, −1 if absent',
+  'last[c] = chỉ số xa nhất bên phải của c trong P, −1 nếu không có',
   's = 0',
   'while s ≤ n − m:',
   '  j = m − 1',
   '  while j ≥ 0 and P[j] == T[s + j]: j = j − 1',
-  '  if j < 0: report a match at s',
+  '  if j < 0: báo khớp ở s',
   '    s = s + (s + m < n ? m − last[T[s + m]] : 1)',
   '  else: s = s + max(1, j − last[T[s + j]])',
 ];

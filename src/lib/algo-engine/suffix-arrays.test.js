@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { en as m } from '$lib/lessons/suffix-arrays/copy.en.js';
+import { vi as m } from '$lib/lessons/suffix-arrays/copy.vi.js';
 import {
   MAX_LEN,
   SUFFIX_PRESETS,

@@ -12,17 +12,17 @@ export const MAX_OPS = 20;
 export const triePseudocode = [
   'insert(word):',
   '  node = root',
-  '  for each letter c of word:',
-  '    if node has no child c: create it',
+  '  for c in word:',
+  '    if c not in node.child: tạo nút con c',
   '    node = node.child[c]',
   '  node.isWord = true',
   'search(word):',
-  '  walk word from the root; no child: not found',
-  '  found only if the last node has isWord',
+  '  đi theo word từ gốc; thiếu nút con: return "không tìm thấy"',
+  '  chỉ tìm thấy khi nút cuối có isWord',
   'complete(prefix):',
-  '  walk prefix from the root; no child: no matches',
-  '  go depth-first below that node, letters in order',
-  '  at each node with isWord: report its word',
+  '  đi theo prefix từ gốc; thiếu nút con: không có kết quả',
+  '  duyệt theo chiều sâu dưới nút đó, chữ cái theo thứ tự',
+  '  ở mỗi nút có isWord: báo từ của nút',
 ];
 
 /**

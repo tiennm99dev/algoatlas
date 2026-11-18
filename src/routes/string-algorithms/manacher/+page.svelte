@@ -13,7 +13,7 @@
     manacherTrace,
     naiveExpansions,
   } from '$lib/algo-engine/manacher.js';
-  import { en as m } from '$lib/lessons/manacher/copy.en.js';
+  import { vi as m } from '$lib/lessons/manacher/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
   import ArcBoard from './arc-board.svelte';
   import { parseLetters } from '$lib/algo-engine/text-match.js';

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { en as m } from '$lib/lessons/z-function/copy.en.js';
+import { vi as m } from '$lib/lessons/z-function/copy.vi.js';
 import {
   MAX_LEN,
   Z_PRESETS,
