@@ -98,8 +98,8 @@ describe('sorting lesson', () => {
   it('shows both algorithms’ totals for the current array', () => {
     render(SortPage);
     expect(text()).toContain('Tổng chi phí trên mảng này');
-    expect(text()).toMatch(/Sắp xếp nổi bọt\s*\d+ lần so sánh · \d+ lần đổi chỗ/);
-    expect(text()).toMatch(/Sắp xếp chèn\s*\d+ lần so sánh · \d+ lần dời/);
+    expect(text()).toMatch(/Bubble sort\s*\d+ lần so sánh · \d+ lần đổi chỗ/);
+    expect(text()).toMatch(/Insertion sort\s*\d+ lần so sánh · \d+ lần dời/);
   });
 
   it('describes the values in the chart label', () => {

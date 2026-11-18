@@ -119,7 +119,11 @@ export const vi = {
   ],
   complexityHead: ['Thuật toán', 'Chi phí', 'Vì sao'],
   complexity: [
-    ['Counting sort, thời gian', 'O(n + k)', 'Một lượt để đếm, k bước để cộng dồn, một lượt để đặt.'],
+    [
+      'Counting sort, thời gian',
+      'O(n + k)',
+      'Một lượt để đếm, k bước để cộng dồn, một lượt để đặt.',
+    ],
     ['Counting sort, bộ nhớ', 'O(n + k)', 'Mảng count và một mảng đầu ra riêng.'],
     [
       'Radix sort, thời gian',

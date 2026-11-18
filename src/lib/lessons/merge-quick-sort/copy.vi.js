@@ -175,11 +175,7 @@ export const vi = {
       'O(n²)',
       'Chốt luôn là giá trị nhỏ nhất hoặc lớn nhất thì một bên luôn rỗng.',
     ],
-    [
-      'Bộ nhớ thêm',
-      'O(n) / O(log n)',
-      'Merge sort cần vùng đệm; quicksort chỉ cần call stack.',
-    ],
+    ['Bộ nhớ thêm', 'O(n) / O(log n)', 'Merge sort cần vùng đệm; quicksort chỉ cần call stack.'],
   ],
   nextTeaser:
     'Bài tiếp theo là heapsort: một cách đạt O(n log n) tại chỗ nhờ max-heap (heap lớn nhất).',

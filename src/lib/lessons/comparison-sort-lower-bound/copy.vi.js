@@ -165,12 +165,7 @@ export const vi = {
     {
       type: 'choice',
       prompt: 'Thuật toán sắp xếp nào dưới đây không bị cận Ω(n log n) giới hạn?',
-      options: [
-        'Heapsort',
-        'Merge sort',
-        'Counting sort trên các khoá nguyên nhỏ',
-        'Quicksort',
-      ],
+      options: ['Heapsort', 'Merge sort', 'Counting sort trên các khoá nguyên nhỏ', 'Quicksort'],
       answer: 2,
       hints: ['Cận dưới chỉ áp dụng cho các thuật toán biết về khoá bằng cách so sánh chúng.'],
       solution:
