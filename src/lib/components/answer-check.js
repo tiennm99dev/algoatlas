@@ -114,7 +114,7 @@ export function normalizeText(s) {
     .replace(MINUS_RE, '-')
     .replace(SPACE_RE, ' ')
     .trim()
-    .replace(/\s*([()[\]{},^*/+=<>-])\s*/g, '$1')
+    .replace(/\s*([()[\]{},^*/+=<>·×-])\s*/g, '$1')
     .replace(/\s*[.!?;]+$/, '');
 }
 

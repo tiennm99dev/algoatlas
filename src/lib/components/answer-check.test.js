@@ -71,6 +71,9 @@ describe('normalizeText', () => {
     expect(normalizeText('O( n log n )')).toBe('o(n log n)');
     expect(normalizeText('O(N²)')).toBe(normalizeText('o(n ^ 2)'));
     expect(normalizeText('O(V + E)')).toBe('o(v+e)');
+    expect(normalizeText('O(2^n · n^2)')).toBe(normalizeText('O(2^n·n^2)'));
+    expect(normalizeText('O(k^3 · log n)')).toBe(normalizeText('O(k^3·log n)'));
+    expect(normalizeText('O(n × m)')).toBe(normalizeText('O(n×m)'));
   });
 });
 
