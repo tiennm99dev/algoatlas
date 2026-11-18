@@ -6,9 +6,9 @@ export const vi = {
   level: 'Trung bình',
   title: 'Dựng heap trong thời gian tuyến tính',
   intro:
-    'Để biến n giá trị thành một heap, ta có thể chèn lần lượt từng giá trị, mỗi lần tốn O(log n). Vun heap từ dưới lên (heapify) làm tốt hơn: coi mảng là một cây, bỏ qua các lá và vun xuống mọi nút còn lại, từ nút cha cuối cùng ngược về gốc. Cả quá trình chỉ tốn O(n), vì phần lớn các nút nằm gần đáy và chỉ có thể chìm xuống một hai tầng.',
+    'Để biến n giá trị thành một heap (đống), ta có thể chèn lần lượt từng giá trị, mỗi lần tốn O(log n). Heapify (vun đống) từ dưới lên làm tốt hơn: coi mảng là một cây, bỏ qua các lá và vun xuống mọi nút còn lại, từ nút cha cuối cùng ngược về gốc. Cả quá trình chỉ tốn O(n), vì phần lớn các nút nằm gần đáy và chỉ có thể chìm xuống một hai tầng.',
   summary:
-    'Chạy từng bước cách vun heap từ dưới lên và cách chèn lần lượt trên cùng một mảng, với bảng theo từng tầng cho thấy vì sao cách từ dưới lên chỉ tốn O(n).',
+    'Chạy từng bước cách heapify từ dưới lên và cách chèn lần lượt trên cùng một mảng, với bảng theo từng tầng cho thấy vì sao cách từ dưới lên chỉ tốn O(n).',
   instruction:
     'Nhập tối đa 31 giá trị hoặc chọn kích thước và mảng ban đầu, rồi chạy từng bước. Chuyển qua lại giữa Từ dưới lên và Chèn lần lượt rồi so sánh số lần đổi chỗ. Trong bảng các tầng, để ý công việc dồn vào đâu: phần lớn các nút nằm ở các tầng dưới cùng.',
   methodLabel: 'Cách dựng',
@@ -105,14 +105,14 @@ export const vi = {
       case 'up-root':
         return `${v(0)} đã lên tới gốc: đó là giá trị nhỏ nhất tới giờ.`;
       case 'done':
-        return `Mảng đã là một heap nhỏ nhất sau ${f.swaps} lần đổi chỗ và ${f.comparisons} phép so sánh.`;
+        return `Mảng đã là một min-heap sau ${f.swaps} lần đổi chỗ và ${f.comparisons} phép so sánh.`;
     }
   },
   takeaways: [
-    'Vun heap từ dưới lên bỏ qua các lá, khoảng một nửa mảng, và vun xuống từng nút cha từ ô ⌊n/2⌋ − 1 ngược về 0. Khi vun một ô, hai cây con của nó đều đã là heap.',
+    'Heapify từ dưới lên bỏ qua các lá, khoảng một nửa mảng, và vun xuống từng nút cha từ ô ⌊n/2⌋ − 1 ngược về 0. Khi vun một ô, hai cây con của nó đều đã là heap.',
     'Một lần vun xuống tốn nhiều nhất bằng chiều cao của nút. Một nửa số nút có chiều cao 0, một phần tư có chiều cao 1, một phần tám có chiều cao 2, … nên tổng là n·(1/4 + 2/8 + 3/16 + …) < n lần đổi chỗ: O(n).',
     'Chèn lần lượt tốn O(n log n) trong trường hợp xấu nhất, vì rất nhiều nút ở sâu lại chính là những nút có thể leo xa nhất.',
-    'Cách dựng O(n) là lí do pha đầu của sắp xếp vun đống (heapsort) rẻ, và vì sao một hàng đợi ưu tiên dựng từ một danh sách có sẵn nên vun heap thay vì chèn từng phần tử.',
+    'Cách dựng O(n) là lí do pha đầu của heapsort (sắp xếp vun đống) rẻ, và vì sao một priority queue (hàng đợi ưu tiên) dựng từ một danh sách có sẵn nên heapify thay vì chèn từng phần tử.',
     'Thử mảng Giảm dần với kích thước 31 ở cả hai cách: từ dưới lên tốn 26 lần đổi chỗ, chèn lần lượt tốn 98, và mỗi tầng chạm đúng cận của nó.',
   ],
   complexityHead: ['Bước', 'Chi phí', 'Vì sao'],
@@ -135,7 +135,7 @@ export const vi = {
   practice: [
     {
       type: 'number',
-      prompt: 'Vun heap từ dưới lên với 20 giá trị: ô nào được vun xuống đầu tiên?',
+      prompt: 'Heapify từ dưới lên với 20 giá trị: ô nào được vun xuống đầu tiên?',
       answer: 9,
       hints: ['Các lá không cần làm gì. Ô đầu tiên được vun là ⌊n/2⌋ − 1.'],
       solution: '⌊20/2⌋ − 1 = 9. Con trái của nó là ô 19, ô cuối cùng; các ô từ 10 đến 19 là lá.',
@@ -143,7 +143,7 @@ export const vi = {
     {
       type: 'text',
       prompt:
-        'Vun 9, 4, 7, 1, 8, 2, 6 thành heap nhỏ nhất theo cách từ dưới lên. Nhập mảng sau khi dựng xong, các số cách nhau bằng dấu phẩy.',
+        'Vun 9, 4, 7, 1, 8, 2, 6 thành min-heap (heap nhỏ nhất) theo cách từ dưới lên. Nhập mảng sau khi dựng xong, các số cách nhau bằng dấu phẩy.',
       accept: ['1, 4, 2, 9, 8, 7, 6', '1 4 2 9 8 7 6', '[1, 4, 2, 9, 8, 7, 6]', '1,4,2,9,8,7,6'],
       hints: [
         'Vun ô 2, rồi ô 1, rồi ô 0.',
@@ -155,7 +155,7 @@ export const vi = {
     {
       type: 'number',
       prompt:
-        'Một heap đầy gồm 15 giá trị có các tầng từ 0 đến 3. Vun heap từ dưới lên có thể đổi chỗ tổng cộng nhiều nhất bao nhiêu lần?',
+        'Một heap đầy gồm 15 giá trị có các tầng từ 0 đến 3. Heapify từ dưới lên có thể đổi chỗ tổng cộng nhiều nhất bao nhiêu lần?',
       answer: 11,
       unit: 'lần',
       hints: [
@@ -167,7 +167,7 @@ export const vi = {
     },
     {
       type: 'choice',
-      prompt: 'Vì sao vun heap từ dưới lên tốn O(n) chứ không phải O(n log n)?',
+      prompt: 'Vì sao heapify từ dưới lên tốn O(n) chứ không phải O(n log n)?',
       options: [
         'Mỗi lần vun xuống chỉ tốn O(1).',
         'Phần lớn các nút ở gần đáy, nơi việc vun xuống rất ngắn; chỉ vài nút có thể chìm xa.',
@@ -181,5 +181,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Có heap trong tay, ta dùng nó làm hàng đợi ưu tiên để trộn danh sách và giữ k số lớn nhất. Bài sau: Ứng dụng của hàng đợi ưu tiên.',
+    'Có heap trong tay, ta dùng nó làm priority queue để trộn danh sách và giữ k số lớn nhất. Bài sau: Ứng dụng của priority queue.',
 };

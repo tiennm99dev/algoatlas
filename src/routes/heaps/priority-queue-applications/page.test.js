@@ -65,7 +65,7 @@ describe('priority queue applications lesson', () => {
     expect(text()).toContain('Push 1, phần tử đầu của danh sách A.');
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
-    expect(svgLabel('Heap nhỏ nhất')).toContain('Heap nhỏ nhất dạng mảng: 1, 2, 5');
+    expect(svgLabel('Min-heap')).toContain('Min-heap dạng mảng: 1, 2, 5');
     click(button('Bước tiếp'));
     expect(text()).toContain('Pop phần tử đầu nhỏ nhất, 1 từ danh sách A');
     expect(svgLabel('Kết quả')).toBe('Kết quả: 1.');
@@ -96,11 +96,11 @@ describe('priority queue applications lesson', () => {
   it('keeps the top k of a stream', () => {
     render();
     topK();
-    expect(text()).toContain('Giữ 3 giá trị lớn nhất trong một heap nhỏ nhất cỡ 3.');
+    expect(text()).toContain('Giữ 3 giá trị lớn nhất trong một min-heap cỡ 3.');
     click(button('Đến bước cuối'));
     expect(text()).toContain('gốc 7 của nó là số lớn thứ 3');
     expect(text()).toContain(m.resultTitle);
-    expect(svgLabel('Heap nhỏ nhất')).toContain('Heap nhỏ nhất dạng mảng: 7, 8, 9');
+    expect(svgLabel('Min-heap')).toContain('Min-heap dạng mảng: 7, 8, 9');
   });
 
   it('changes k and refuses a bad k', () => {
@@ -108,7 +108,7 @@ describe('priority queue applications lesson', () => {
     topK();
     commit(input('k'), '1');
     click(button('Đến bước cuối'));
-    expect(svgLabel('Heap nhỏ nhất')).toContain('Heap nhỏ nhất dạng mảng: 9.');
+    expect(svgLabel('Min-heap')).toContain('Min-heap dạng mảng: 9.');
     commit(input('k'), '9');
     expect(text()).toContain(m.kError);
     expect(input('k').value).toBe('1');

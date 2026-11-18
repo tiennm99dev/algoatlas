@@ -5,7 +5,7 @@
 /** @param {HeapKind} h */
 const word = (h) => (h === 'min' ? 'nhỏ nhất' : 'lớn nhất');
 /** @param {HeapKind} h */
-const name = (h) => (h === 'min' ? 'heap nhỏ nhất' : 'heap lớn nhất');
+const name = (h) => (h === 'min' ? 'min-heap' : 'max-heap');
 /** @param {HeapKind} h */
 const lt = (h) => (h === 'min' ? '<' : '>');
 /** @param {HeapKind} h */
@@ -17,11 +17,11 @@ export const vi = {
   level: 'Cơ bản',
   title: 'Heap nhị phân',
   intro:
-    'Heap nhị phân là một cây nhị phân đầy đủ trong đó mỗi nút cha luôn đứng trước các con: trong heap nhỏ nhất, không con nào nhỏ hơn cha, nên giá trị nhỏ nhất luôn nằm ở gốc. Vì cây đầy đủ nên nó xếp gọn được vào một mảng mà không cần con trỏ nào. Thao tác chèn và thao tác lấy phần tử ở đỉnh đều chỉ đi theo một đường từ gốc tới lá, nên cả hai đều tốn O(log n).',
+    'Heap nhị phân (đống nhị phân) là một cây nhị phân đầy đủ trong đó mỗi nút cha luôn đứng trước các con: trong min-heap (heap nhỏ nhất), không con nào nhỏ hơn cha, nên giá trị nhỏ nhất luôn nằm ở gốc. Vì cây đầy đủ nên nó xếp gọn được vào một mảng mà không cần con trỏ nào. Thao tác chèn và thao tác lấy phần tử ở đỉnh đều chỉ đi theo một đường từ gốc tới lá, nên cả hai đều tốn O(log n).',
   summary:
-    'Chèn vào và lấy ra khỏi một heap nhỏ nhất hoặc heap lớn nhất theo từng bước, với cây và mảng vẽ cạnh nhau khi các giá trị được vun lên và vun xuống.',
+    'Chèn vào và lấy ra khỏi một min-heap hoặc max-heap theo từng bước, với cây và mảng vẽ cạnh nhau khi các giá trị được vun lên và vun xuống.',
   instruction:
-    'Nhập một giá trị rồi bấm Chèn (hoặc Enter), hoặc bấm Lấy ra min. Mỗi thao tác được thêm vào nhật kí; chạy từng bước và xem cùng các ô đó di chuyển trong cây và trong mảng. Chuyển sang heap lớn nhất để đảo thứ tự, hoặc bấm vào một ô để xem cha và các con của nó.',
+    'Nhập một giá trị rồi bấm Chèn (hoặc Enter), hoặc bấm Lấy ra min. Mỗi thao tác được thêm vào nhật kí; chạy từng bước và xem cùng các ô đó di chuyển trong cây và trong mảng. Chuyển sang max-heap (heap lớn nhất) để đảo thứ tự, hoặc bấm vào một ô để xem cha và các con của nó.',
   valueLabel: 'Giá trị',
   insert: 'Chèn',
   /** @param {HeapKind} h */
@@ -29,7 +29,7 @@ export const vi = {
   undo: 'Hoàn tác',
   reset: 'Làm lại',
   heapLabel: 'Loại heap',
-  heaps: { min: 'Heap nhỏ nhất', max: 'Heap lớn nhất' },
+  heaps: { min: 'Min-heap', max: 'Max-heap' },
   presetLabel: 'Mẫu có sẵn',
   presetPlaceholder: 'Chọn một mẫu…',
   presets: {
@@ -47,7 +47,7 @@ export const vi = {
   heapAria: (values, h) =>
     values.length === 0
       ? 'Heap đang rỗng.'
-      : `${h === 'min' ? 'Heap nhỏ nhất' : 'Heap lớn nhất'} gồm ${values.length} phần tử, dạng mảng: ${values.join(', ')}.`,
+      : `${h === 'min' ? 'Min-heap' : 'Max-heap'} gồm ${values.length} phần tử, dạng mảng: ${values.join(', ')}.`,
   /** @param {number} i @param {number} n */
   slotInfo: (i, n) => {
     const kids = [2 * i + 1, 2 * i + 2].filter((c) => c < n);
@@ -130,8 +130,8 @@ export const vi = {
     'Tính chất heap: mỗi nút cha đứng trước các con (≤ trong heap nhỏ nhất, ≥ trong heap lớn nhất), nên giá trị ở đỉnh nằm ở gốc. Các nút anh em không có thứ tự gì với nhau.',
     'Heap là cây đầy đủ, được lấp từng tầng từ trái sang, nên nó nằm gọn trong một mảng: ô i có các con 2i + 1 và 2i + 2, và cha ⌊(i − 1)/2⌋.',
     'Chèn đặt giá trị vào ô trống tiếp theo rồi vun lên (sift up); lấy ra chuyển giá trị cuối lên gốc rồi vun xuống (sift down). Mỗi thao tác đi qua nhiều nhất ⌊log₂ n⌋ tầng.',
-    'Xem phần tử ở đỉnh chỉ tốn O(1); heap là cách thường dùng để cài đặt hàng đợi ưu tiên (priority queue).',
-    'Thử mẫu Chèn 7, lấy ra hết: các giá trị lấy ra đã được sắp xếp. Đó chính là ý tưởng cốt lõi của sắp xếp vun đống.',
+    'Xem phần tử ở đỉnh chỉ tốn O(1); heap là cách thường dùng để cài đặt priority queue (hàng đợi ưu tiên).',
+    'Thử mẫu Chèn 7, lấy ra hết: các giá trị lấy ra đã được sắp xếp. Đó chính là ý tưởng cốt lõi của heapsort (sắp xếp vun đống).',
   ],
   complexityHead: ['Thao tác', 'Chi phí', 'Vì sao'],
   complexity: [
@@ -161,7 +161,7 @@ export const vi = {
     },
     {
       type: 'choice',
-      prompt: 'Mảng nào là một heap nhỏ nhất hợp lệ?',
+      prompt: 'Mảng nào là một min-heap hợp lệ?',
       options: ['3, 5, 4, 9, 6, 8', '3, 5, 4, 2, 6, 8', '5, 3, 4, 9, 6, 8', '3, 9, 4, 5, 6, 8'],
       answer: 0,
       hints: [
@@ -173,7 +173,7 @@ export const vi = {
     {
       type: 'text',
       prompt:
-        'Chèn 1 vào heap nhỏ nhất 2, 4, 3, 7, 5. Nhập mảng sau khi vun lên, các số cách nhau bằng dấu phẩy.',
+        'Chèn 1 vào min-heap 2, 4, 3, 7, 5. Nhập mảng sau khi vun lên, các số cách nhau bằng dấu phẩy.',
       accept: ['1, 4, 2, 7, 5, 3', '1 4 2 7 5 3', '[1, 4, 2, 7, 5, 3]', '1,4,2,7,5,3'],
       hints: [
         '1 vào ô 5. Cha của nó là ô ⌊4/2⌋ = 2.',
@@ -185,7 +185,7 @@ export const vi = {
     {
       type: 'text',
       prompt:
-        'Lấy giá trị nhỏ nhất ra khỏi heap nhỏ nhất 1, 4, 2, 7, 5, 3. Nhập mảng sau khi vun xuống, các số cách nhau bằng dấu phẩy.',
+        'Lấy giá trị nhỏ nhất ra khỏi min-heap 1, 4, 2, 7, 5, 3. Nhập mảng sau khi vun xuống, các số cách nhau bằng dấu phẩy.',
       accept: ['2, 4, 3, 7, 5', '2 4 3 7 5', '[2, 4, 3, 7, 5]', '2,4,3,7,5'],
       hints: [
         'Bỏ 1 và chuyển giá trị cuối, 3, lên gốc.',

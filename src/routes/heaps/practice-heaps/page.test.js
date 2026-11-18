@@ -83,7 +83,7 @@ function answer(q, value) {
 describe('practice heaps lesson', () => {
   it('splits the stream into two halves and reports the median', () => {
     render();
-    expect(text()).toContain('low là heap lớn nhất chứa nửa nhỏ hơn');
+    expect(text()).toContain('low là max-heap chứa nửa nhỏ hơn');
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
     expect(text()).toContain('low đang rỗng, nên 5 vào low.');
@@ -104,8 +104,8 @@ describe('practice heaps lesson', () => {
     expect(last?.medians).toEqual([5, 10, 5, 4, 5, 6, 7, 7.5, 7]);
     const chips = document.body.textContent?.split(m.mediansTitle)[1] ?? '';
     expect(chips).toContain('7.5');
-    expect(svgLabel('Nửa dưới')).toBe(`Nửa dưới, heap lớn nhất: ${last?.low.join(', ')}.`);
-    expect(svgLabel('Nửa trên')).toBe(`Nửa trên, heap nhỏ nhất: ${last?.high.join(', ')}.`);
+    expect(svgLabel('Nửa dưới')).toBe(`Nửa dưới, max-heap: ${last?.low.join(', ')}.`);
+    expect(svgLabel('Nửa trên')).toBe(`Nửa trên, min-heap: ${last?.high.join(', ')}.`);
   });
 
   it('loads a typed stream and refuses bad ones', () => {
@@ -122,7 +122,7 @@ describe('practice heaps lesson', () => {
   it('finds the k closest points', () => {
     render();
     closest();
-    expect(text()).toContain('Giữ 3 điểm gần nhất trong một heap lớn nhất');
+    expect(text()).toContain('Giữ 3 điểm gần nhất trong một max-heap');
     click(button('Bước tiếp'));
     expect(text()).toContain('Đọc A (1, 2): khoảng cách² = 1² + 2² = 5.');
     click(button('Bước tiếp'));

@@ -62,7 +62,7 @@ export const mergePseudocode = [
 ];
 
 export const topKPseudocode = [
-  'topK(stream, k):          // heap nhỏ nhất giữ k số lớn nhất tới giờ',
+  'topK(stream, k):          // min-heap giữ k số lớn nhất tới giờ',
   '  for x in stream:',
   '    if heap có ít hơn k phần tử: push x',
   '    else if x > heap.min():',

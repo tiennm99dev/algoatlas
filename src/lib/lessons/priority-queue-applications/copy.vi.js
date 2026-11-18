@@ -8,11 +8,11 @@ export const vi = {
   slug: 'priority-queue-applications',
   topic: 'heaps',
   level: 'Trung bình',
-  title: 'Ứng dụng của hàng đợi ưu tiên',
+  title: 'Ứng dụng của priority queue',
   intro:
-    'Hàng đợi ưu tiên (priority queue) luôn trao ra phần tử cấp bách nhất trước, và heap nhị phân làm cho mỗi lần push và pop chỉ tốn O(log n). Nhiều bài toán trở nên dễ ngay khi ta tự hỏi “phần tử nào nên đi tiếp theo?”: trộn k danh sách đã sắp xếp, giữ k giá trị lớn nhất của một dòng dữ liệu, và chạy các sự kiện theo thứ tự thời gian.',
+    'Priority queue (hàng đợi ưu tiên) luôn trao ra phần tử cấp bách nhất trước, và heap nhị phân (đống nhị phân) làm cho mỗi lần push và pop chỉ tốn O(log n). Nhiều bài toán trở nên dễ ngay khi ta tự hỏi “phần tử nào nên đi tiếp theo?”: trộn k danh sách đã sắp xếp, giữ k giá trị lớn nhất của một dòng dữ liệu, và chạy các sự kiện theo thứ tự thời gian.',
   summary:
-    'Trộn k danh sách đã sắp xếp bằng cách lấy phần tử đầu nhỏ nhất ra khỏi một heap nhỏ nhất, và giữ k giá trị lớn nhất của một dòng dữ liệu bằng heap nhỏ nhất cỡ k, từng bước một.',
+    'Trộn k danh sách đã sắp xếp bằng cách lấy phần tử đầu nhỏ nhất ra khỏi một min-heap, và giữ k giá trị lớn nhất của một dòng dữ liệu bằng min-heap cỡ k, từng bước một.',
   instruction:
     'Chọn một bài toán. Với Trộn, nhập các danh sách đã sắp xếp, ngăn cách bằng /, và xem mỗi lần pop lấy phần tử đầu nhỏ nhất rồi push giá trị tiếp theo của chính danh sách đó. Với Top k, nhập một dòng dữ liệu và k, rồi xem một giá trị chỉ được vào khi nó lớn hơn min của heap.',
   problemLabel: 'Bài toán',
@@ -47,10 +47,10 @@ export const vi = {
   headPointer: 'đầu',
   nextPointer: 'tiếp',
   listsTitle: 'Các danh sách đầu vào',
-  heapTitle: 'Heap nhỏ nhất',
+  heapTitle: 'Min-heap',
   /** @param {string[]} labels */
   heapAria: (labels) =>
-    labels.length === 0 ? 'Heap đang rỗng.' : `Heap nhỏ nhất dạng mảng: ${labels.join(', ')}.`,
+    labels.length === 0 ? 'Heap đang rỗng.' : `Min-heap dạng mảng: ${labels.join(', ')}.`,
   /** @param {number} value @param {number} list */
   entryLabel: (value, list) => `${value} từ danh sách ${listName(list)}`,
   /** @param {number} i @param {string} label @param {string} state */
@@ -96,7 +96,7 @@ export const vi = {
     const name = listName(f.list);
     switch (f.kind) {
       case 'start':
-        return `Trộn ${lists.length} danh sách đã sắp xếp gồm ${lists.flat().length} giá trị. Chỉ các phần tử đầu mới có thể đi tiếp, nên đưa phần tử đầu của mỗi danh sách vào một heap nhỏ nhất.`;
+        return `Trộn ${lists.length} danh sách đã sắp xếp gồm ${lists.flat().length} giá trị. Chỉ các phần tử đầu mới có thể đi tiếp, nên đưa phần tử đầu của mỗi danh sách vào một min-heap.`;
       case 'seed':
         return `Push ${f.value}, phần tử đầu của danh sách ${name}.`;
       case 'pop':
@@ -113,7 +113,7 @@ export const vi = {
   describeTopK(f, k) {
     switch (f.kind) {
       case 'start':
-        return `Giữ ${k} giá trị lớn nhất trong một heap nhỏ nhất cỡ ${k}. Min của heap là số nhỏ nhất trong nhóm thắng, chính là số cần vượt qua.`;
+        return `Giữ ${k} giá trị lớn nhất trong một min-heap cỡ ${k}. Min của heap là số nhỏ nhất trong nhóm thắng, chính là số cần vượt qua.`;
       case 'read':
         return `Đọc ${f.value}.`;
       case 'push':
@@ -129,10 +129,10 @@ export const vi = {
     }
   },
   takeaways: [
-    'Hãy nghĩ tới hàng đợi ưu tiên mỗi khi câu hỏi là “phần tử nào tiếp theo?” và tập ứng viên thay đổi trong lúc làm.',
+    'Hãy nghĩ tới priority queue mỗi khi câu hỏi là “phần tử nào tiếp theo?” và tập ứng viên thay đổi trong lúc làm.',
     'Trộn k danh sách đã sắp xếp chỉ cần k phần tử đầu. Pop phần tử nhỏ nhất, push phần tử đứng sau nó: n lần pop và n lần push trên heap cỡ k tốn O(n log k).',
-    'Để giữ k số lớn nhất của một dòng dữ liệu, dùng heap nhỏ nhất cỡ k: gốc của nó là mức cần vượt qua. Cách này tốn thời gian O(n log k) và bộ nhớ O(k), kể cả khi dòng dữ liệu quá dài để lưu hết.',
-    'Mô phỏng sự kiện giữ các sự kiện tương lai trong heap nhỏ nhất theo thời gian; pop sự kiện sớm nhất rồi push những sự kiện nó gây ra thì luôn xử lí đúng thứ tự thời gian. Thuật toán Dijkstra tìm đường đi ngắn nhất cũng làm như vậy.',
+    'Để giữ k số lớn nhất của một dòng dữ liệu, dùng min-heap (heap nhỏ nhất) cỡ k: gốc của nó là mức cần vượt qua. Cách này tốn thời gian O(n log k) và bộ nhớ O(k), kể cả khi dòng dữ liệu quá dài để lưu hết.',
+    'Mô phỏng sự kiện giữ các sự kiện tương lai trong min-heap theo thời gian; pop sự kiện sớm nhất rồi push những sự kiện nó gây ra thì luôn xử lí đúng thứ tự thời gian. Thuật toán Dijkstra tìm đường đi ngắn nhất cũng làm như vậy.',
     'Thử một dòng chỉ tăng, như 1, 2, 3, … với k = 3: mọi giá trị sau giá trị thứ ba đều thay gốc. Một dòng giảm dần thì bỏ qua mọi giá trị sau giá trị thứ ba.',
   ],
   complexityHead: ['Việc', 'Chi phí', 'Vì sao'],
@@ -175,24 +175,24 @@ export const vi = {
     },
     {
       type: 'choice',
-      prompt: 'Để giữ 10 giá trị lớn nhất của một dòng dữ liệu dài, bạn giữ heap nào?',
+      prompt: 'Để giữ 10 giá trị lớn nhất của một dòng dữ liệu dài, em giữ heap nào?',
       options: [
-        'Một heap lớn nhất chứa mọi giá trị đã gặp',
-        'Một heap nhỏ nhất cỡ 10',
-        'Một heap lớn nhất cỡ 10',
-        'Một heap nhỏ nhất chứa mọi giá trị đã gặp',
+        'Một max-heap chứa mọi giá trị đã gặp',
+        'Một min-heap cỡ 10',
+        'Một max-heap cỡ 10',
+        'Một min-heap chứa mọi giá trị đã gặp',
       ],
       answer: 1,
       hints: [
         'Giá trị mới phải vượt qua số yếu nhất trong nhóm đang thắng. Heap nào cho thấy số đó?',
       ],
       solution:
-        'Heap nhỏ nhất cỡ 10 giữ số thắng nhỏ nhất ở gốc, nên chỉ một phép so sánh là biết giá trị mới có được vào không. Heap chứa tất cả thì tốn bộ nhớ O(n).',
+        'Min-heap cỡ 10 giữ số thắng nhỏ nhất ở gốc, nên chỉ một phép so sánh là biết giá trị mới có được vào không. Heap chứa tất cả thì tốn bộ nhớ O(n).',
     },
     {
       type: 'number',
       prompt:
-        'Top 3 của dòng dữ liệu 5, 1, 9, 3, 7, 2, 8 với heap nhỏ nhất cỡ 3: có bao nhiêu giá trị thay gốc?',
+        'Top 3 của dòng dữ liệu 5, 1, 9, 3, 7, 2, 8 với min-heap cỡ 3: có bao nhiêu giá trị thay gốc?',
       answer: 3,
       unit: 'giá trị',
       hints: [
@@ -205,7 +205,7 @@ export const vi = {
     {
       type: 'order',
       prompt:
-        'Một chương trình mô phỏng giữ các sự kiện trong heap nhỏ nhất theo thời gian. Heap đang có “xe buýt lúc 9”, “chuông báo lúc 7” và “thư lúc 8”. Pop “chuông báo lúc 7” sẽ hẹn thêm “cà phê lúc 10”. Các sự kiện được xử lí theo thứ tự nào?',
+        'Một chương trình mô phỏng giữ các sự kiện trong min-heap theo thời gian. Heap đang có “xe buýt lúc 9”, “chuông báo lúc 7” và “thư lúc 8”. Pop “chuông báo lúc 7” sẽ hẹn thêm “cà phê lúc 10”. Các sự kiện được xử lí theo thứ tự nào?',
       items: ['xe buýt lúc 9', 'cà phê lúc 10', 'chuông báo lúc 7', 'thư lúc 8'],
       answer: [2, 3, 0, 1],
       hints: ['Mỗi lần pop lấy thời điểm sớm nhất trong heap, kể cả các sự kiện thêm vào sau.'],

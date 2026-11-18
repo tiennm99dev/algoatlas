@@ -64,7 +64,7 @@ export const medianPseudocode = [
 ];
 
 export const closestPseudocode = [
-  'kClosest(points, k):      // heap lớn nhất theo khoảng cách², cỡ k',
+  'kClosest(points, k):      // max-heap theo khoảng cách², cỡ k',
   '  for p in points:',
   '    if heap có ít hơn k phần tử: push p',
   '    else if dist²(p) < heap.max():',

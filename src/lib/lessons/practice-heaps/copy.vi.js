@@ -15,9 +15,9 @@ export const vi = {
   level: 'Trung bình',
   title: 'Luyện tập: bài toán về heap',
   intro:
-    'Hai bài toán heap kinh điển. Trung vị động chia dòng dữ liệu thành hai nửa: một heap lớn nhất chứa nửa nhỏ hơn và một heap nhỏ nhất chứa nửa lớn hơn, với kích thước bằng nhau hoặc nửa dưới hơn một phần tử, nên trung vị nằm ngay ở đỉnh của chúng. Bài k điểm gần nhất giữ một heap lớn nhất cỡ k, có gốc là điểm xa nhất vẫn còn trong đáp án.',
+    'Hai bài toán heap (đống) kinh điển. Trung vị động chia dòng dữ liệu thành hai nửa: một max-heap (heap lớn nhất) chứa nửa nhỏ hơn và một min-heap (heap nhỏ nhất) chứa nửa lớn hơn, với kích thước bằng nhau hoặc nửa dưới hơn một phần tử, nên trung vị nằm ngay ở đỉnh của chúng. Bài k điểm gần nhất giữ một max-heap cỡ k, có gốc là điểm xa nhất vẫn còn trong đáp án.',
   summary:
-    'Giữ trung vị động của một dòng dữ liệu bằng hai heap cân bằng và tìm k điểm gần gốc toạ độ nhất bằng heap lớn nhất cỡ k, rồi dùng công cụ để trả lời câu hỏi.',
+    'Giữ trung vị động của một dòng dữ liệu bằng hai heap cân bằng và tìm k điểm gần gốc toạ độ nhất bằng max-heap cỡ k, rồi dùng công cụ để trả lời câu hỏi.',
   instruction:
     'Chọn một bài toán. Với Trung vị động, nhập một dòng dữ liệu rồi chạy từng bước: xem mỗi giá trị vào một nửa và hai nửa cân bằng lại. Với K điểm gần nhất, nhập các điểm dạng (x, y) và k, rồi xem các điểm xa bị loại. Dùng công cụ này để trả lời các câu hỏi bên dưới.',
   problemLabel: 'Bài toán',
@@ -41,11 +41,11 @@ export const vi = {
   kError: 'k phải là số nguyên từ 1 đến 6.',
   streamTitle: 'Dòng dữ liệu',
   streamAria: (/** @type {number[]} */ values) => `Dòng dữ liệu: ${values.join(', ') || 'rỗng'}.`,
-  lowTitle: 'Nửa dưới: heap lớn nhất',
-  highTitle: 'Nửa trên: heap nhỏ nhất',
+  lowTitle: 'Nửa dưới: max-heap',
+  highTitle: 'Nửa trên: min-heap',
   /** @param {'low'|'high'} side @param {number[]} values */
   halfAria: (side, values) =>
-    `${side === 'low' ? 'Nửa dưới, heap lớn nhất' : 'Nửa trên, heap nhỏ nhất'}: ${values.length === 0 ? 'rỗng' : values.join(', ')}.`,
+    `${side === 'low' ? 'Nửa dưới, max-heap' : 'Nửa trên, min-heap'}: ${values.length === 0 ? 'rỗng' : values.join(', ')}.`,
   /** @param {'low'|'high'} side */
   halfEmpty: (side) => (side === 'low' ? 'Nửa dưới đang rỗng.' : 'Nửa trên đang rỗng.'),
   /** @param {number} i @param {string} label @param {string} state */
@@ -62,10 +62,10 @@ export const vi = {
   /** @param {number} i @param {Point} p @param {string} state */
   pointLabel: (i, p, state) =>
     `Điểm ${pointName(i)} tại ${coords(p)}, khoảng cách² ${p.x * p.x + p.y * p.y}${state ? `, ${state}` : ''}`,
-  heapTitle: 'Heap lớn nhất theo khoảng cách²',
+  heapTitle: 'Max-heap theo khoảng cách²',
   /** @param {string[]} labels */
   heapAria: (labels) =>
-    labels.length === 0 ? 'Heap đang rỗng.' : `Heap lớn nhất dạng mảng: ${labels.join(', ')}.`,
+    labels.length === 0 ? 'Heap đang rỗng.' : `Max-heap dạng mảng: ${labels.join(', ')}.`,
   pointName,
   states: {
     active: 'đang xử lí',
@@ -101,7 +101,7 @@ export const vi = {
     const hi = f.high[0];
     switch (f.kind) {
       case 'start':
-        return 'low là heap lớn nhất chứa nửa nhỏ hơn, high là heap nhỏ nhất chứa nửa lớn hơn. low được phép nhiều hơn high một giá trị.';
+        return 'low là max-heap chứa nửa nhỏ hơn, high là min-heap chứa nửa lớn hơn. low được phép nhiều hơn high một giá trị.';
       case 'read':
         return `Đọc ${f.value}.`;
       case 'push-low':
@@ -132,7 +132,7 @@ export const vi = {
     const top = f.heap[0];
     switch (f.kind) {
       case 'start':
-        return `Giữ ${k} điểm gần nhất trong một heap lớn nhất theo khoảng cách², để khỏi phải khai căn. Gốc của nó là điểm xa nhất đang giữ.`;
+        return `Giữ ${k} điểm gần nhất trong một max-heap theo khoảng cách², để khỏi phải khai căn. Gốc của nó là điểm xa nhất đang giữ.`;
       case 'read':
         return p
           ? `Đọc ${name} ${coords(p)}: khoảng cách² = ${sq(p.x)} + ${sq(p.y)} = ${d}.`
@@ -154,9 +154,9 @@ export const vi = {
     }
   },
   takeaways: [
-    'Trung vị động: một heap lớn nhất giữ nửa nhỏ hơn và một heap nhỏ nhất giữ nửa lớn hơn. Mỗi giá trị tốn một lần push và nhiều nhất một lần chuyển, O(log n), và trung vị được đọc từ các đỉnh trong O(1).',
+    'Trung vị động: một max-heap giữ nửa nhỏ hơn và một min-heap giữ nửa lớn hơn. Mỗi giá trị tốn một lần push và nhiều nhất một lần chuyển, O(log n), và trung vị được đọc từ các đỉnh trong O(1).',
     'Giữ hai nửa cân bằng (low có bằng hoặc nhiều hơn high một phần tử) và đúng thứ tự (mọi giá trị trong low ≤ mọi giá trị trong high); khi đó trung vị là đỉnh của low hoặc trung bình cộng của hai đỉnh.',
-    'Với k điểm gần nhất, giữ một heap lớn nhất cỡ k theo khoảng cách: gốc của nó là điểm cần vượt qua. Cách này tốn thời gian O(n log k) và bộ nhớ O(k).',
+    'Với k điểm gần nhất, giữ một max-heap cỡ k theo khoảng cách: gốc của nó là điểm cần vượt qua. Cách này tốn thời gian O(n log k) và bộ nhớ O(k).',
     'So sánh bình phương khoảng cách, x² + y²: chúng xếp thứ tự các điểm giống hệt khoảng cách thật mà không cần khai căn.',
     'Thử dòng dữ liệu 1, 2, 3, 4, 5: cứ hai giá trị lại có một giá trị phải chuyển từ high sang low. Một dòng giảm dần làm các giá trị chuyển theo chiều ngược lại.',
   ],
@@ -199,7 +199,7 @@ export const vi = {
       type: 'number',
       prompt: 'Chạy dòng dữ liệu 2, 8, 4, 6, 10. Cuối cùng giá trị nào nằm ở gốc của low?',
       answer: 6,
-      hints: ['low giữ ba giá trị nhỏ hơn trong năm giá trị, và nó là heap lớn nhất.'],
+      hints: ['low giữ ba giá trị nhỏ hơn trong năm giá trị, và nó là max-heap.'],
       solution:
         'Đã sắp xếp: 2, 4, 6, 8, 10. low giữ 2, 4 và 6 với 6 ở đỉnh, cũng chính là trung vị; high giữ 8 và 10.',
     },
@@ -239,17 +239,17 @@ export const vi = {
     },
     {
       type: 'choice',
-      prompt: 'Vì sao bài k điểm gần nhất giữ heap lớn nhất chứ không phải heap nhỏ nhất?',
+      prompt: 'Vì sao bài k điểm gần nhất giữ max-heap chứ không phải min-heap?',
       options: [
-        'Heap lớn nhất dựng nhanh hơn.',
+        'Max-heap dựng nhanh hơn.',
         'Gốc phải là điểm xa nhất đang giữ, điểm mà điểm mới phải vượt qua.',
-        'Heap nhỏ nhất không chứa được điểm.',
+        'Min-heap không chứa được điểm.',
         'Đáp án phải được đưa ra từ xa đến gần.',
       ],
       answer: 1,
       hints: ['Khi có điểm mới, nó có thể đẩy điểm đang giữ nào ra?'],
       solution:
-        'Điểm mới chỉ có thể thế chỗ điểm xa nhất trong k điểm đang giữ. Heap lớn nhất theo khoảng cách đặt đúng điểm đó ở gốc, nên chỉ cần một phép so sánh để quyết định và một lần vun để sửa lại.',
+        'Điểm mới chỉ có thể thế chỗ điểm xa nhất trong k điểm đang giữ. Max-heap theo khoảng cách đặt đúng điểm đó ở gốc, nên chỉ cần một phép so sánh để quyết định và một lần vun để sửa lại.',
     },
   ],
   nextTeaser:

@@ -76,7 +76,7 @@ describe('build heap lesson', () => {
     click(button('Đến bước cuối'));
     const last = buildHeapTrace(INITIAL).at(-1);
     expect(arrayLabel()).toBe(`Mảng: ${last?.values.join(', ')}.`);
-    expect(text()).toContain(`Mảng đã là một heap nhỏ nhất sau ${last?.swaps} lần đổi chỗ`);
+    expect(text()).toContain(`Mảng đã là một min-heap sau ${last?.swaps} lần đổi chỗ`);
     const table = [...document.querySelectorAll('table')].find((t) =>
       t.textContent?.includes(m.levelHead[2]),
     );

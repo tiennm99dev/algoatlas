@@ -63,14 +63,12 @@ function submit() {
 describe('binary heaps lesson', () => {
   it('starts on an empty min-heap and runs the log to the end', () => {
     render();
-    expect(text()).toContain('Một heap nhỏ nhất rỗng.');
+    expect(text()).toContain('Một min-heap rỗng.');
     click(button('Bước tiếp'));
     expect(text()).toContain('Chèn 42: đặt vào ô trống tiếp theo, ô 0');
     click(button('Đến bước cuối'));
     const last = binaryHeapTrace(makeHeapOps('build')).at(-1);
-    expect(heapLabel()).toContain(
-      `Heap nhỏ nhất gồm 8 phần tử, dạng mảng: ${last?.values.join(', ')}.`,
-    );
+    expect(heapLabel()).toContain(`Min-heap gồm 8 phần tử, dạng mảng: ${last?.values.join(', ')}.`);
     expect(text()).toContain(`${last?.comparisons} phép so sánh và ${last?.swaps} lần đổi chỗ`);
   });
 
@@ -80,7 +78,7 @@ describe('binary heaps lesson', () => {
     submit();
     expect(text()).toContain('Chèn 1: đặt vào ô trống tiếp theo, ô 8');
     click(button('Đến bước cuối'));
-    expect(heapLabel()).toMatch(/^Heap nhỏ nhất gồm 9 phần tử, dạng mảng: 1, /);
+    expect(heapLabel()).toMatch(/^Min-heap gồm 9 phần tử, dạng mảng: 1, /);
   });
 
   it('extracts the minimum and lists it as removed', () => {
@@ -89,7 +87,7 @@ describe('binary heaps lesson', () => {
     expect(text()).toContain('Lấy gốc 8, giá trị nhỏ nhất.');
     click(button('Đến bước cuối'));
     expect(text()).toContain('Đã lấy ra, theo thứ tự');
-    expect(heapLabel()).toMatch(/^Heap nhỏ nhất gồm 7 phần tử, /);
+    expect(heapLabel()).toMatch(/^Min-heap gồm 7 phần tử, /);
   });
 
   it('switches to a max-heap on the same log', () => {
@@ -97,7 +95,7 @@ describe('binary heaps lesson', () => {
     click(/** @type {HTMLInputElement} */ (document.querySelector('input[value="max"]')));
     expect(buttonByText('Lấy ra max')).toBeTruthy();
     expect(heapLabel()).toContain(
-      `Heap lớn nhất gồm 8 phần tử, dạng mảng: ${binaryHeapTrace(makeHeapOps('build'), 'max').at(-1)?.values.join(', ')}.`,
+      `Max-heap gồm 8 phần tử, dạng mảng: ${binaryHeapTrace(makeHeapOps('build'), 'max').at(-1)?.values.join(', ')}.`,
     );
     expect(text()).toContain('Đỉnh: giá trị lớn nhất');
   });
@@ -105,9 +103,9 @@ describe('binary heaps lesson', () => {
   it('undoes, resets and loads a preset', () => {
     render();
     click(buttonByText(m.undo));
-    expect(heapLabel()).toMatch(/^Heap nhỏ nhất gồm 9 phần tử, dạng mảng: 5, /);
+    expect(heapLabel()).toMatch(/^Min-heap gồm 9 phần tử, dạng mảng: 5, /);
     click(buttonByText(m.reset));
-    expect(text()).toContain('Một heap nhỏ nhất rỗng.');
+    expect(text()).toContain('Một min-heap rỗng.');
     click(buttonByText('Lấy ra min'));
     expect(text()).toContain(m.emptyError);
     commit(/** @type {HTMLSelectElement} */ (document.querySelector('select')), 'drain');
