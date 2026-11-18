@@ -162,7 +162,7 @@ export const vi = {
     [
       'V lần chạy Dijkstra',
       'O(V·E log V)',
-      'Mỗi lần chạy tốn O((V + E) log V) với heap nhị phân; O(V² log V + V·E) với heap Fibonacci.',
+      'Mỗi lần chạy tốn O((V + E) log V) với heap nhị phân (đống nhị phân); O(V² log V + V·E) với heap Fibonacci.',
     ],
     [
       'Tổng trên đồ thị thưa (E ≈ V)',

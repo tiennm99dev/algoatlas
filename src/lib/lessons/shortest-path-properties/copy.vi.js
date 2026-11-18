@@ -126,7 +126,7 @@ export const vi = {
     'Trọng số của một đường đi là tổng trọng số các cạnh của nó. Khoảng cách ngắn nhất δ(s, v) là trọng số nhỏ nhất trong mọi đường đi từ s đến v, và bằng ∞ khi không đến được v.',
     'Nới lỏng u → v là kiểm tra d[u] + w < d[v]; nếu đúng thì giảm d[v] và đặt parent[v] = u. Nhãn luôn là trọng số của một đường đi có thật, nên nó không bao giờ nhỏ hơn δ(s, v) và không bao giờ tăng.',
     'Cấu trúc con tối ưu (optimal substructure): mọi đoạn đầu của một đường đi ngắn nhất cũng là đường đi ngắn nhất. Vì vậy nếu nới lỏng các cạnh của một đường đi ngắn nhất theo đúng thứ tự trên đường, đỉnh cuối sẽ có khoảng cách chính xác, dù xen giữa ta nới lỏng thêm cạnh nào.',
-    'Thuật toán Dijkstra, Bellman-Ford, BFS cho trọng số 0-1 và phương pháp trên DAG đều nới lỏng cạnh; chúng chỉ khác nhau ở thứ tự, và thứ tự quyết định cần bao nhiêu lần nới lỏng.',
+    'Thuật toán Dijkstra, Bellman-Ford, BFS (duyệt theo chiều rộng) cho trọng số 0-1 và phương pháp trên DAG đều nới lỏng cạnh; chúng chỉ khác nhau ở thứ tự, và thứ tự quyết định cần bao nhiêu lần nới lỏng.',
     'Thử xem: chọn “Danh sách cạnh đảo ngược”, để ý xem có ít nhãn chính xác thế nào, rồi thêm từng lần nới lỏng cho đến khi mọi nhãn khớp khoảng cách thật.',
   ],
   complexityHead: ['Thao tác', 'Chi phí', 'Vì sao'],

@@ -97,10 +97,10 @@ function answer(q, value) {
 describe('shortest-path practice', () => {
   it('runs BFS on the moves puzzle and calls it the best fit', () => {
     render();
-    expect(text()).toContain('BFS: đưa đỉnh nguồn vào hàng đợi.');
+    expect(text()).toContain('BFS: đưa đỉnh nguồn vào queue.');
     expect(text()).toContain(m.verdictPending);
     click(button('Bước tiếp'));
-    expect(text()).toContain('Lấy 1 ra khỏi hàng đợi, cách đỉnh nguồn 0 cạnh.');
+    expect(text()).toContain('Lấy 1 ra khỏi queue, cách đỉnh nguồn 0 cạnh.');
     click(button('Đến bước cuối'));
     expect(statValue(m.stats.answer)).toBe('4');
     expect(text()).toContain(m.verdicts.best);
@@ -176,7 +176,7 @@ describe('shortest-path practice', () => {
     expect(statValue(m.stats.answer)).toBe('3');
     click(button('Về bước đầu'));
     press(document.body, 'ArrowRight');
-    expect(text()).toContain('Lấy 1 ra khỏi hàng đợi');
+    expect(text()).toContain('Lấy 1 ra khỏi queue');
   });
 
   it('checks practice answers with a hint', () => {

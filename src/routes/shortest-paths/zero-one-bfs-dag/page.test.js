@@ -95,7 +95,7 @@ function answer(q, value) {
 describe('0-1 BFS and DAG shortest paths lesson', () => {
   it('runs 0-1 BFS with front and back pushes and a skipped copy', () => {
     render();
-    expect(text()).toContain('Đặt d[S] = 0, mọi nhãn khác là ∞, và đưa S vào hàng đợi hai đầu.');
+    expect(text()).toContain('Đặt d[S] = 0, mọi nhãn khác là ∞, và đưa S vào deque.');
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
     expect(text()).toContain(
@@ -112,7 +112,7 @@ describe('0-1 BFS and DAG shortest paths lesson', () => {
     );
     click(button('Đến bước cuối'));
     expect(text()).toContain(
-      'Hàng đợi hai đầu đã rỗng sau 8 lần lấy ra, 3 lần đẩy vào đầu hàng và 4 lần đẩy vào cuối hàng.',
+      'Deque đã rỗng sau 8 lần lấy ra, 3 lần đẩy vào đầu hàng và 4 lần đẩy vào cuối hàng.',
     );
     expect(vertexTitle('T')).toBe('Đỉnh T, d = 1, đã xong');
   });

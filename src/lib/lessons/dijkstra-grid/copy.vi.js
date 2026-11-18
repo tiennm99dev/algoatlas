@@ -10,7 +10,7 @@ export const vi = {
   intro:
     'Khi có bước đi tốn hơn bước khác, đường đi ít bước nhất không còn là đường rẻ nhất. Thuật toán Dijkstra luôn mở rộng ô rẻ nhất đang biết, nên khi chạm tới đích, nó đã tìm được đường rẻ nhất. Một bước đi tốn bằng trung bình chi phí của hai ô nó nối: 1 trên đất trống, 5 khi đi trong bùn, 3 khi bước vào hoặc ra khỏi bùn.',
   summary:
-    'Xem thuật toán Dijkstra tìm đường rẻ nhất qua một lưới có bùn, và hiểu vì sao một ô chỉ được chốt khi nó được lấy ra khỏi hàng đợi.',
+    'Xem thuật toán Dijkstra tìm đường rẻ nhất qua một lưới có bùn, và hiểu vì sao một ô chỉ được chốt khi nó được lấy ra khỏi queue.',
   instruction:
     'Bấm hoặc kéo trên lưới để vẽ tường và bùn, hoặc nhấn Enter ở ô đang chọn. Dời điểm xuất phát và đích, rồi bấm phát. Các con số là chi phí rẻ nhất đang biết để đến từng ô.',
   tools: {
@@ -22,7 +22,7 @@ export const vi = {
   randomTerrain: 'Địa hình ngẫu nhiên',
   clearTerrain: 'Xoá địa hình',
   hotLabel: 'vừa đẩy vào',
-  pqLabel: 'Hàng đợi ưu tiên (rẻ nhất ra trước)',
+  pqLabel: 'Priority queue (rẻ nhất ra trước)',
   pqEmpty: 'rỗng',
   /** A stale entry costs more than the cell's best known cost now. @param {number} cell @param {number} cols @param {number} d @param {boolean} stale */
   pqChip(cell, cols, d, stale) {
@@ -44,7 +44,7 @@ export const vi = {
     start: 'Điểm xuất phát',
     goal: 'Đích',
     wall: 'Tường',
-    frontier: 'Trong hàng đợi',
+    frontier: 'Trong queue',
     visited: 'Đã chốt',
     current: 'Đang mở rộng',
     stale: 'Bản cũ, bỏ qua',
@@ -71,9 +71,9 @@ export const vi = {
     const at = (/** @type {number} */ c) => vi.coord(c, cols);
     switch (f.kind) {
       case 'start':
-        return 'Đưa điểm xuất phát vào hàng đợi với chi phí 0.';
+        return 'Đưa điểm xuất phát vào queue với chi phí 0.';
       case 'pop':
-        return `Lấy ${at(f.current)} ra với chi phí ${f.popped}. Trong hàng đợi không còn gì rẻ hơn, nên chi phí của ô này đã chốt.`;
+        return `Lấy ${at(f.current)} ra với chi phí ${f.popped}. Trong queue không còn gì rẻ hơn, nên chi phí của ô này đã chốt.`;
       case 'stale':
         return `Lấy ${at(f.current)} ra với chi phí ${f.popped}, nhưng từ đó ta đã tìm được đường rẻ hơn là ${f.dist[f.current]}: đây là bản cũ, bỏ qua.`;
       case 'relax': {
@@ -86,13 +86,13 @@ export const vi = {
       case 'found':
         return `Đã đến đích với chi phí ${f.popped}. Đường đi có ${f.path.length - 1} bước.`;
       case 'no-path':
-        return 'Hàng đợi đã rỗng mà vẫn chưa đến được đích — tường đã chặn kín.';
+        return 'Queue đã rỗng mà vẫn chưa đến được đích — tường đã chặn kín.';
     }
   },
   takeaways: [
-    'Hàng đợi ưu tiên (priority queue) thay cho hàng đợi của BFS: ô có chi phí đang biết nhỏ nhất luôn được lấy ra trước.',
+    'Priority queue (hàng đợi ưu tiên) thay cho queue (hàng đợi) của BFS (duyệt theo chiều rộng): ô có chi phí đang biết nhỏ nhất luôn được lấy ra trước.',
     'Một ô chỉ chốt khi được lấy ra, không phải khi được chạm tới lần đầu. Ở giữa vẫn có thể xuất hiện đường rẻ hơn; hãy xem chi phí của đích giảm xuống trước khi nó được chốt.',
-    'Thay vì giảm khoá của một mục đã nằm trong hàng đợi, cách cài đặt này đẩy một mục mới vào và bỏ qua mục cũ khi nó nổi lên.',
+    'Thay vì giảm khoá của một mục đã nằm trong queue, cách cài đặt này đẩy một mục mới vào và bỏ qua mục cũ khi nó nổi lên.',
     'Khi mọi chi phí bằng nhau, thuật toán Dijkstra loang theo đúng các vòng như BFS. Chi phí âm làm nó sai; khi đó cần thuật toán Bellman-Ford.',
     'Thử vẽ một dải bùn chắn ngang đường thẳng: đường đi sẽ uốn vòng qua mỗi khi đi vòng rẻ hơn lội qua.',
   ],
@@ -103,7 +103,7 @@ export const vi = {
       'O((V + E) log V)',
       'Với V ô, E cạnh giữa các ô trống kề nhau và một heap nhị phân, mỗi lần đẩy vào hay lấy ra tốn O(log V), và mỗi lần nới lỏng có tối đa một lần đẩy vào.',
     ],
-    ['Bộ nhớ', 'O(V + E)', 'Hàng đợi có thể chứa một mục cho mỗi lần nới lỏng, kể cả các bản cũ.'],
+    ['Bộ nhớ', 'O(V + E)', 'Queue có thể chứa một mục cho mỗi lần nới lỏng, kể cả các bản cũ.'],
   ],
   nextTeaser:
     'Lưới chỉ là một loại đồ thị. Bài sau là thuật toán Dijkstra trên đồ thị tổng quát, với heap nhị phân và cạnh có trọng số bất kì không âm.',

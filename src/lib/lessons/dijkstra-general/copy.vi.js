@@ -10,9 +10,9 @@ export const vi = {
   level: 'Trung bình',
   title: 'Thuật toán Dijkstra trên đồ thị tổng quát',
   intro:
-    'Trên đồ thị có trọng số cạnh không âm, thuật toán Dijkstra chốt các đỉnh theo thứ tự khoảng cách tăng dần từ đỉnh nguồn. Một heap nhỏ nhất dạng nhị phân tìm đỉnh gần nhất tiếp theo trong O(log V). Thay vì sửa một mục nằm trong heap, cách cài đặt thường gặp đẩy vào một mục mới và để dành bỏ qua mục cũ về sau: đó là xoá lười.',
+    'Trên đồ thị có trọng số cạnh không âm, thuật toán Dijkstra chốt các đỉnh theo thứ tự khoảng cách tăng dần từ đỉnh nguồn. Một min-heap (heap nhỏ nhất) dạng nhị phân tìm đỉnh gần nhất tiếp theo trong O(log V). Thay vì sửa một mục nằm trong heap (đống), cách cài đặt thường gặp đẩy vào một mục mới và để dành bỏ qua mục cũ về sau: đó là xoá lười.',
   summary:
-    'Chạy thuật toán Dijkstra bằng heap nhị phân trên đồ thị do bạn vẽ, và xem xoá lười để lại rồi bỏ qua các mục cũ trong heap.',
+    'Chạy thuật toán Dijkstra bằng heap nhị phân trên đồ thị do em vẽ, và xem xoá lười để lại rồi bỏ qua các mục cũ trong heap.',
   instruction:
     'Chọn đỉnh nguồn rồi chạy từng bước. Hãy để ý heap: mỗi lần tìm được đường ngắn hơn, ta đẩy vào một mục (khoảng cách, đỉnh) mới, và mục cũ của đỉnh đó thành bản cũ. Vẽ cạnh bằng công cụ Nối, hoặc đổi trọng số trong bảng, để tạo thêm bản cũ.',
   sourceLabel: 'Đỉnh nguồn',
@@ -28,7 +28,7 @@ export const vi = {
   /** @param {HeapEntry[]} heap @param {string[]} names */
   heapAria: (heap, names) =>
     heap.length
-      ? `Heap nhỏ nhất gồm ${heap.length} mục, theo thứ tự mảng: ${heap.map((e) => `(${e.d}, ${names[e.v]})`).join(', ')}.`
+      ? `Min-heap gồm ${heap.length} mục, theo thứ tự mảng: ${heap.map((e) => `(${e.d}, ${names[e.v]})`).join(', ')}.`
       : 'Heap đang rỗng.',
   heapArrayTitle: 'Mảng của heap (ô 0 là nhỏ nhất)',
   orderTitle: 'Thứ tự chốt',
@@ -42,7 +42,7 @@ export const vi = {
     pops: 'Số lần lấy ra',
     stale: 'Số bản cũ đã bỏ qua',
     relaxations: 'Số cạnh đã xét',
-    maxHeap: 'Kích thước heap lớn nhất',
+    maxHeap: 'Kích thước max-heap',
   },
   legend: {
     current: 'Đang chốt hoặc mở rộng',
@@ -98,7 +98,7 @@ export const vi = {
   },
   takeaways: [
     'Thuật toán Dijkstra chốt đỉnh chưa chốt có nhãn nhỏ nhất. Với trọng số không âm, không đường nào về sau rẻ hơn được, nên nhãn của nó là cuối cùng ngay khi được lấy ra.',
-    'Một heap nhỏ nhất chứa các cặp (khoảng cách, đỉnh) cho ta đỉnh đó trong O(log V). Mỗi lần nới lỏng thành công đẩy vào một mục, nên có tối đa E + 1 lần đẩy vào và chừng ấy lần lấy ra. Trên đồ thị vô hướng, một cạnh chỉ nới lỏng thành công được từ một đầu: khi mở rộng đầu thứ hai, đầu thứ nhất đã được chốt với nhãn không lớn hơn.',
+    'Một min-heap chứa các cặp (khoảng cách, đỉnh) cho ta đỉnh đó trong O(log V). Mỗi lần nới lỏng thành công đẩy vào một mục, nên có tối đa E + 1 lần đẩy vào và chừng ấy lần lấy ra. Trên đồ thị vô hướng, một cạnh chỉ nới lỏng thành công được từ một đầu: khi mở rộng đầu thứ hai, đầu thứ nhất đã được chốt với nhãn không lớn hơn.',
     'Xoá lười: thay vì thao tác giảm khoá, ta đẩy vào một mục mới và để nguyên mục cũ. Khi một mục lấy ra có khoảng cách lớn hơn nhãn của đỉnh, đó là bản cũ và được bỏ qua.',
     'Tổng chi phí là O((V + E) log V). Với đồ thị dày, quét một mảng để tìm nhỏ nhất cho O(V²), có thể còn tốt hơn.',
     'Thử xem: đổi trọng số của A — C từ 1 thành 5, xem còn lại bao nhiêu bản cũ, rồi chọn một đỉnh nguồn khác.',

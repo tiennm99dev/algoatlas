@@ -17,9 +17,9 @@ export const vi = {
   level: 'Nâng cao',
   title: 'Luyện tập: bài toán đường đi ngắn nhất',
   intro:
-    'Cái khó của một bài toán đường đi ngắn nhất thường không nằm ở thuật toán mà ở việc chọn thuật toán nào. Mọi cạnh cùng chi phí thì dùng BFS, trọng số không âm thì dùng thuật toán Dijkstra, có trọng số âm thì dùng thuật toán Bellman-Ford. Nhiều câu đố cũng là đồ thị trá hình: các đỉnh là trạng thái của câu đố, các cạnh là nước đi.',
+    'Cái khó của một bài toán đường đi ngắn nhất thường không nằm ở thuật toán mà ở việc chọn thuật toán nào. Mọi cạnh cùng chi phí thì dùng BFS (duyệt theo chiều rộng), trọng số không âm thì dùng thuật toán Dijkstra, có trọng số âm thì dùng thuật toán Bellman-Ford. Nhiều câu đố cũng là đồ thị trá hình: các đỉnh là trạng thái của câu đố, các cạnh là nước đi.',
   summary:
-    'Chọn BFS, Dijkstra hoặc Bellman-Ford cho từng tình huống, xem lựa chọn của bạn chạy, và biết kết quả của nó có đúng không.',
+    'Chọn BFS, Dijkstra hoặc Bellman-Ford cho từng tình huống, xem lựa chọn của em chạy, và biết kết quả của nó có đúng không.',
   instruction:
     'Chọn một thẻ tình huống, chọn một thuật toán rồi chạy đến bước cuối: phần nhận xét cho biết kết quả có đúng không và thuật toán nào hợp nhất. Bảng chạy cả ba thuật toán trên cùng đồ thị. Đổi trọng số trong danh sách cạnh, hoặc vẽ thêm cạnh, để xem nhận xét thay đổi.',
   scenarioLabel: 'Tình huống',
@@ -37,7 +37,7 @@ export const vi = {
     cashback: {
       title: 'Chuyến bay hoàn tiền',
       story:
-        'Giá vé giữa các thành phố, và chuyến bay từ B đến A hoàn lại cho bạn 4. Chuyến đi rẻ nhất từ S đến T là bao nhiêu?',
+        'Giá vé giữa các thành phố, và chuyến bay từ B đến A hoàn lại cho em 4. Chuyến đi rẻ nhất từ S đến T là bao nhiêu?',
     },
     arbitrage: {
       title: 'Vòng giao dịch',
@@ -45,7 +45,7 @@ export const vi = {
         'Chi phí của mỗi lần giao dịch; chi phí âm nghĩa là có lãi. Cách rẻ nhất từ S đến T là gì? Coi chừng một vòng lặp cứ đi quanh là có lãi.',
     },
   },
-  algoLabel: 'Lựa chọn của bạn',
+  algoLabel: 'Lựa chọn của em',
   algos: algoNames,
   sourceLabel: 'Từ',
   targetLabel: 'Đến',
@@ -59,8 +59,8 @@ export const vi = {
   badWeight: (max) =>
     `Trọng số phải là số nguyên từ −${max} đến ${max}. Trọng số cũ được giữ nguyên.`,
   frontierTitle: {
-    bfs: 'Hàng đợi (đầu hàng trước, số = số cạnh đã dùng)',
-    dijkstra: 'Hàng đợi ưu tiên (nhãn nhỏ nhất trước)',
+    bfs: 'Queue (đầu hàng trước, số = số cạnh đã dùng)',
+    dijkstra: 'Priority queue (nhãn nhỏ nhất trước)',
     'bellman-ford': 'Các nhãn d (số = nhãn hiện tại)',
   },
   frontierEmpty: 'rỗng',
@@ -134,13 +134,13 @@ export const vi = {
     switch (f.kind) {
       case 'start':
         return algo === 'bfs'
-          ? 'BFS: đưa đỉnh nguồn vào hàng đợi. Khi tìm kiếm, nó đếm số cạnh và bỏ qua trọng số.'
+          ? 'BFS: đưa đỉnh nguồn vào queue. Khi tìm kiếm, nó đếm số cạnh và bỏ qua trọng số.'
           : algo === 'dijkstra'
             ? 'Dijkstra: đỉnh nguồn có nhãn 0, mọi đỉnh khác là ∞.'
             : `Bellman-Ford: đỉnh nguồn có nhãn 0, mọi đỉnh khác là ∞. Tối đa ${Math.max(0, names.length - 1)} vòng.`;
       case 'take':
         return algo === 'bfs'
-          ? `Lấy ${u} ra khỏi hàng đợi, cách đỉnh nguồn ${f.hops[f.current]} cạnh.`
+          ? `Lấy ${u} ra khỏi queue, cách đỉnh nguồn ${f.hops[f.current]} cạnh.`
           : `Chốt ${u} với d = ${show(f.dist[f.current])}, nhãn nhỏ nhất còn lại. Nhãn này sẽ không bao giờ đổi nữa.`;
       case 'skip':
         return `Lấy ra một mục cũ của ${u} (${show(f.before)}): ${u} đã được chốt, bỏ qua.`;
@@ -277,12 +277,12 @@ export const vi = {
       answer: 1,
       hints: ['Chỉ có hai giá trị trọng số, và một trong hai là 0.'],
       solution:
-        'BFS 0-1: đẩy cạnh 0 vào đầu hàng đợi hai đầu và cạnh 1 vào cuối hàng. Nó chạy trong O(V + E). BFS thường sẽ đếm cả các bước trượt băng là nước đi.',
+        'BFS 0-1: đẩy cạnh 0 vào đầu deque (hàng đợi hai đầu) và cạnh 1 vào cuối hàng. Nó chạy trong O(V + E). BFS thường sẽ đếm cả các bước trượt băng là nước đi.',
     },
     {
       type: 'choice',
       prompt:
-        'Bạn cần khoảng cách giữa mọi cặp trong 200 nhà ga, biết đủ cả 40 000 tuyến nối và có tuyến mang trọng số âm. Không có chu trình âm. Thuật toán nào hợp nhất?',
+        'Em cần khoảng cách giữa mọi cặp trong 200 nhà ga, biết đủ cả 40 000 tuyến nối và có tuyến mang trọng số âm. Không có chu trình âm. Thuật toán nào hợp nhất?',
       options: ['Dijkstra từ mọi nhà ga', 'Floyd-Warshall', 'BFS từ mọi nhà ga', 'A*'],
       answer: 1,
       hints: ['Mọi cặp đỉnh, đồ thị dày, có trọng số âm.'],
@@ -291,5 +291,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Chương sau chuyển sang các bài toán gom nhóm, bắt đầu với tập hợp rời nhau: gộp hai nhóm và hỏi hai phần tử có chung nhóm không.',
+    'Chương sau chuyển sang các bài toán gom nhóm, bắt đầu với cấu trúc DSU (cấu trúc các tập rời nhau): gộp hai nhóm và hỏi hai phần tử có chung nhóm không.',
 };

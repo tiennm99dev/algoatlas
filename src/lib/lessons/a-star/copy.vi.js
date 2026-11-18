@@ -93,7 +93,7 @@ export const vi = {
     [
       'Xấu nhất',
       'O((V + E) log V)',
-      'Giống thuật toán Dijkstra với heap nhị phân: khi h = 0, hoặc hàm ước lượng không định hướng được gì, mọi ô đều có thể bị mở rộng.',
+      'Giống thuật toán Dijkstra với heap nhị phân (đống nhị phân): khi h = 0, hoặc hàm ước lượng không định hướng được gì, mọi ô đều có thể bị mở rộng.',
     ],
     [
       'Hàm ước lượng tốt',
@@ -156,5 +156,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Đến lúc tự chọn công cụ. Bài sau là luyện tập: bài toán đường đi ngắn nhất, nơi bạn chọn đúng thuật toán cho từng tình huống.',
+    'Đến lúc tự chọn công cụ. Bài sau là luyện tập: bài toán đường đi ngắn nhất, nơi em chọn đúng thuật toán cho từng tình huống.',
 };

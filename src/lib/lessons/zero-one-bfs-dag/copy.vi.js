@@ -13,11 +13,11 @@ export const vi = {
   level: 'Trung bình',
   title: 'BFS 0-1 và đường đi ngắn nhất trên DAG',
   intro:
-    'Thuật toán Dijkstra cần heap vì nó luôn phải tìm đỉnh chưa chốt gần nhất. Có hai trường hợp đặc biệt hay gặp cho ta thứ tự đó miễn phí, trong O(V + E). Khi mọi trọng số là 0 hoặc 1, một hàng đợi hai đầu (deque) giữ các đỉnh theo thứ tự khoảng cách. Khi đồ thị là đồ thị có hướng không chu trình (DAG), nới lỏng các đỉnh theo thứ tự tô-pô vẫn đúng kể cả khi có trọng số âm, và cùng một lượt duyệt đó tìm được cả đường đi dài nhất.',
+    'Thuật toán Dijkstra cần heap (đống) vì nó luôn phải tìm đỉnh chưa chốt gần nhất. Có hai trường hợp đặc biệt hay gặp cho ta thứ tự đó miễn phí, trong O(V + E). Khi mọi trọng số là 0 hoặc 1, một deque (hàng đợi hai đầu) giữ các đỉnh theo thứ tự khoảng cách. Khi đồ thị là đồ thị có hướng không chu trình (DAG), nới lỏng các đỉnh theo thứ tự tô-pô vẫn đúng kể cả khi có trọng số âm, và cùng một lượt duyệt đó tìm được cả đường đi dài nhất.',
   summary:
-    'Chạy từng bước BFS 0-1 với hàng đợi hai đầu, và đường đi ngắn nhất, dài nhất trên DAG theo thứ tự tô-pô.',
+    'Chạy từng bước BFS 0-1 với deque, và đường đi ngắn nhất, dài nhất trên DAG theo thứ tự tô-pô.',
   instruction:
-    'Chọn một chế độ rồi chạy từng bước. Ở BFS 0-1, hãy xem cạnh trọng số 0 đưa đỉnh đích của nó lên đầu hàng đợi hai đầu, còn cạnh trọng số 1 đưa xuống cuối hàng. Ở các chế độ DAG, hãy xem lượt duyệt đi theo thứ tự tô-pô. Bật tắt hoặc gõ trọng số cạnh, hay đổi đỉnh nguồn, rồi chạy lại.',
+    'Chọn một chế độ rồi chạy từng bước. Ở BFS (duyệt theo chiều rộng) 0-1, hãy xem cạnh trọng số 0 đưa đỉnh đích của nó lên đầu deque, còn cạnh trọng số 1 đưa xuống cuối hàng. Ở các chế độ DAG, hãy xem lượt duyệt đi theo thứ tự tô-pô. Bật tắt hoặc gõ trọng số cạnh, hay đổi đỉnh nguồn, rồi chạy lại.',
   modeLabel: 'Chế độ',
   modes: { zeroOne: 'BFS 0-1', short: 'DAG, ngắn nhất', long: 'DAG, dài nhất' },
   sourceLabel: 'Đỉnh nguồn',
@@ -36,12 +36,10 @@ export const vi = {
   /** @param {number} max */
   badWeight: (max) =>
     `Trọng số phải là số nguyên từ −${max} đến ${max}. Trọng số cũ được giữ nguyên.`,
-  dequeTitle: 'Hàng đợi hai đầu (đầu hàng bên trái)',
+  dequeTitle: 'Deque (đầu hàng bên trái)',
   /** @param {string[]} items */
   dequeAria: (items) =>
-    items.length
-      ? `Hàng đợi hai đầu, từ đầu đến cuối: ${items.join(', ')}.`
-      : 'Hàng đợi hai đầu đang rỗng.',
+    items.length ? `Deque, từ đầu đến cuối: ${items.join(', ')}.` : 'Deque đang rỗng.',
   staleTag: 'cũ',
   orderTitle: 'Thứ tự tô-pô',
   orderAria: 'Thứ tự tô-pô; lượt duyệt nới lỏng các cạnh ra của từng đỉnh từ trái sang phải.',
@@ -56,7 +54,7 @@ export const vi = {
   legend: {
     current: 'Đang mở rộng',
     neighbor: 'Đỉnh kề đang xét',
-    queued: 'Trong hàng đợi hai đầu',
+    queued: 'Trong deque',
     done: 'Xong (nhãn cuối cùng)',
     passed: 'Đã đi qua trong thứ tự',
     pushed: 'Mục vừa đẩy vào',
@@ -68,7 +66,7 @@ export const vi = {
     source: 'đỉnh nguồn',
     current: 'đang xét',
     neighbor: 'đỉnh kề đang xét',
-    queued: 'trong hàng đợi hai đầu',
+    queued: 'trong deque',
     done: 'đã xong',
     passed: 'đã đi qua',
   },
@@ -87,10 +85,10 @@ export const vi = {
     switch (f.kind) {
       case 'start':
         return f.deque.length
-          ? `Đặt d[${names[f.deque[0].v]}] = 0, mọi nhãn khác là ∞, và đưa ${names[f.deque[0].v]} vào hàng đợi hai đầu.`
+          ? `Đặt d[${names[f.deque[0].v]}] = 0, mọi nhãn khác là ∞, và đưa ${names[f.deque[0].v]} vào deque.`
           : 'Đỉnh nguồn không nằm trong đồ thị.';
       case 'pop':
-        return `Lấy ${u} ra từ đầu hàng. Nhãn ${show(f.dist[f.current])} của nó nhỏ nhất trong hàng đợi, nên đã là cuối cùng: đánh dấu ${u} đã xong.`;
+        return `Lấy ${u} ra từ đầu hàng. Nhãn ${show(f.dist[f.current])} của nó nhỏ nhất trong queue, nên đã là cuối cùng: đánh dấu ${u} đã xong.`;
       case 'skip':
         return `Lấy ${u} ra lần nữa: bản này được đẩy vào trước khi ta tìm được đường ngắn hơn, và ${u} đã xong. Bỏ qua.`;
       case 'improve':
@@ -101,7 +99,7 @@ export const vi = {
         return `Cạnh ${u} → ${v} (trọng số ${f.weight}): ${show(f.dist[f.current])} + ${f.weight} = ${show(f.dist[f.current] + f.weight)} không nhỏ hơn d[${v}] = ${show(f.before)}. Giữ nguyên.`;
       case 'done': {
         const missed = f.dist.filter((d) => d === Infinity).length;
-        return `Hàng đợi hai đầu đã rỗng sau ${f.pops} lần lấy ra, ${f.pushFront} lần đẩy vào đầu hàng và ${f.pushBack} lần đẩy vào cuối hàng. Mọi nhãn đều đã là cuối cùng.${missed ? ` ${missed} đỉnh không đến được vẫn giữ ∞.` : ''}`;
+        return `Deque đã rỗng sau ${f.pops} lần lấy ra, ${f.pushFront} lần đẩy vào đầu hàng và ${f.pushBack} lần đẩy vào cuối hàng. Mọi nhãn đều đã là cuối cùng.${missed ? ` ${missed} đỉnh không đến được vẫn giữ ∞.` : ''}`;
       }
     }
   },
@@ -137,7 +135,7 @@ export const vi = {
     }
   },
   takeaways: [
-    'BFS 0-1: khi mọi trọng số là 0 hoặc 1, đẩy đỉnh đích của cạnh 0 vào đầu hàng đợi hai đầu và đỉnh đích của cạnh 1 vào cuối hàng. Hàng đợi luôn chỉ chứa nhãn d và d + 1 theo thứ tự, nên đầu hàng luôn là một đỉnh gần nhất, như trong thuật toán Dijkstra, với chi phí O(1) cho mỗi lần đẩy vào.',
+    'BFS 0-1: khi mọi trọng số là 0 hoặc 1, đẩy đỉnh đích của cạnh 0 vào đầu deque và đỉnh đích của cạnh 1 vào cuối hàng. Queue (hàng đợi) luôn chỉ chứa nhãn d và d + 1 theo thứ tự, nên đầu hàng luôn là một đỉnh gần nhất, như trong thuật toán Dijkstra, với chi phí O(1) cho mỗi lần đẩy vào.',
     'Một đỉnh có thể bị đẩy vào hai lần khi về sau một cạnh 0 thắng một cạnh 1 trước đó. Bản đến sau bị bỏ qua, giống hệt một mục cũ trong heap.',
     'Đường đi ngắn nhất trên DAG: nới lỏng các cạnh ra của từng đỉnh theo thứ tự tô-pô (topological sort). Khi đến lượt u, mọi cạnh đi vào u đã được nới lỏng, nên d[u] đã là cuối cùng. Trọng số âm không sao, vì DAG hoàn toàn không có chu trình.',
     'Tìm đường đi dài nhất trên đồ thị tổng quát rất khó, nhưng trên DAG cùng lượt duyệt đó làm được: khởi đầu bằng −∞ và giữ tổng lớn hơn. Đó chính là đường găng của một lịch công việc.',
@@ -148,7 +146,7 @@ export const vi = {
     [
       'BFS 0-1',
       'O(V + E)',
-      'Mỗi đỉnh được mở rộng một lần và mỗi cạnh được xét một lần; đẩy vào và lấy ra ở hàng đợi hai đầu tốn O(1).',
+      'Mỗi đỉnh được mở rộng một lần và mỗi cạnh được xét một lần; đẩy vào và lấy ra ở deque tốn O(1).',
     ],
     [
       'DAG, ngắn nhất hoặc dài nhất',
@@ -158,7 +156,7 @@ export const vi = {
     [
       'Bộ nhớ',
       'O(V + E)',
-      'Nhãn và cha, cộng với hàng đợi hai đầu chứa tối đa một mục cho mỗi lần nới lỏng thành công, hoặc bán bậc vào và thứ tự của phép sắp xếp tô-pô.',
+      'Nhãn và cha, cộng với deque chứa tối đa một mục cho mỗi lần nới lỏng thành công, hoặc bán bậc vào và thứ tự của phép sắp xếp tô-pô.',
     ],
   ],
   practiceTitle: 'Tự kiểm tra',
@@ -166,8 +164,7 @@ export const vi = {
   practice: [
     {
       type: 'number',
-      prompt:
-        'Chạy BFS 0-1 trên đồ thị ban đầu từ S, T được lấy ra khỏi hàng đợi hai đầu bao nhiêu lần?',
+      prompt: 'Chạy BFS 0-1 trên đồ thị ban đầu từ S, T được lấy ra khỏi deque bao nhiêu lần?',
       answer: 2,
       unit: 'lần',
       tolerance: 0,
