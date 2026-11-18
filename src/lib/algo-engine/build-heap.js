@@ -39,20 +39,20 @@ export const MAX_VALUE = 99;
 export const SIZES = [7, 15, 31];
 
 export const bottomUpPseudocode = [
-  'buildHeap(a):              // bottom-up',
+  'buildHeap(a):              // từ dưới lên',
   '  for i = ⌊n/2⌋ − 1 down to 0:',
-  '    siftDown(a, i)          // both subtrees are heaps',
+  '    siftDown(a, i)          // hai cây con đều là heap',
   'siftDown(a, i):',
-  '  while i has a child (2i + 1 < n):',
-  '    c = the smaller child of i',
+  '  while 2i + 1 < n:          // i còn con',
+  '    c = con nhỏ hơn của i',
   '    if a[c] ≥ a[i]: stop',
   '    swap(a[i], a[c]); i = c',
 ];
 
 export const oneByOnePseudocode = [
-  'buildHeap(a):              // one insert at a time',
+  'buildHeap(a):              // chèn lần lượt từng phần tử',
   '  for i = 1 to n − 1:',
-  '    siftUp(a, i)            // a[0..i−1] is a heap',
+  '    siftUp(a, i)            // a[0..i−1] đã là heap',
   'siftUp(a, i):',
   '  while i > 0 and a[i] < a[parent(i)]:',
   '    swap(a[i], a[parent(i)]); i = parent(i)',

@@ -54,23 +54,23 @@ export const MAX_VALUE = 99;
 export const MAX_COORD = 5;
 
 export const medianPseudocode = [
-  'for each x in the stream:',
-  '  if low is empty or x ≤ low.max: low.push(x)',
+  'for x in stream:',
+  '  if low rỗng or x ≤ low.max: low.push(x)',
   '  else: high.push(x)',
   '  if low.size > high.size + 1: high.push(low.popMax())',
   '  else if high.size > low.size: low.push(high.popMin())',
-  '  median = low.max when the sizes differ,',
-  '           else (low.max + high.min) / 2',
+  '  median = low.max nếu hai kích thước khác nhau,',
+  '           ngược lại (low.max + high.min) / 2',
 ];
 
 export const closestPseudocode = [
-  'kClosest(points, k):      // max-heap by distance², size k',
-  '  for each point p:',
-  '    if the heap holds fewer than k: push p',
+  'kClosest(points, k):      // heap lớn nhất theo khoảng cách², cỡ k',
+  '  for p in points:',
+  '    if heap có ít hơn k phần tử: push p',
   '    else if dist²(p) < heap.max():',
-  '      replace the max with p; sift down',
-  '    else: skip p              // farther than all k kept',
-  '  return the heap',
+  '      thay max bằng p; vun xuống',
+  '    else: bỏ qua p            // xa hơn cả k điểm đang giữ',
+  '  return heap',
 ];
 
 /**

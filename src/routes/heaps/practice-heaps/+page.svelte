@@ -24,7 +24,7 @@
     parseMedianStream,
     parsePoints,
   } from '$lib/algo-engine/practice-heaps.js';
-  import { en as m } from '$lib/lessons/practice-heaps/copy.en.js';
+  import { vi as m } from '$lib/lessons/practice-heaps/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/practice-heaps.js').MedianFrame} MedianFrame */

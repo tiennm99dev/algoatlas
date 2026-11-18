@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/priority-queue-applications/copy.en.js';
+import { vi as m } from '$lib/lessons/priority-queue-applications/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -60,34 +60,34 @@ const topK = () =>
 describe('priority queue applications lesson', () => {
   it('seeds the heap with each list head, then pops the smallest', () => {
     render();
-    expect(text()).toContain('Merge 3 sorted lists of 9 values.');
+    expect(text()).toContain('Trộn 3 danh sách đã sắp xếp gồm 9 giá trị.');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Push 1, the head of list A.');
+    expect(text()).toContain('Push 1, phần tử đầu của danh sách A.');
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
-    expect(svgLabel('Min-heap')).toContain('Min-heap as an array: 1, 2, 5');
+    expect(svgLabel('Heap nhỏ nhất')).toContain('Heap nhỏ nhất dạng mảng: 1, 2, 5');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Pop the smallest head, 1 from list A');
-    expect(svgLabel('Output')).toBe('Output: 1.');
+    expect(text()).toContain('Pop phần tử đầu nhỏ nhất, 1 từ danh sách A');
+    expect(svgLabel('Kết quả')).toBe('Kết quả: 1.');
     click(button('Bước tiếp'));
-    expect(text()).toContain('List A moves on: push its next value, 4.');
+    expect(text()).toContain('Danh sách A đi tiếp: push giá trị tiếp theo của nó, 4.');
   });
 
   it('ends with the merged output', () => {
     render();
     click(button('Đến bước cuối'));
-    expect(svgLabel('Output')).toBe('Output: 1, 2, 3, 4, 5, 6, 7, 8, 9.');
-    expect(text()).toContain('Merged 9 values with 18 heap operations');
+    expect(svgLabel('Kết quả')).toBe('Kết quả: 1, 2, 3, 4, 5, 6, 7, 8, 9.');
+    expect(text()).toContain('Đã trộn 9 giá trị với 18 thao tác trên heap');
     const titles = [...document.querySelectorAll('title')].map((t) => t.textContent);
-    expect(titles).toContain('Position 8: 9 from list A, in the output');
-    expect(text()).toContain('The heap is empty.');
+    expect(titles).toContain('Vị trí 8: 9 từ danh sách A, đã vào kết quả');
+    expect(text()).toContain('Heap đang rỗng.');
   });
 
   it('loads typed lists and refuses unsorted ones', () => {
     render();
     commit(input('lists'), '2, 5 / 1, 3');
     click(button('Đến bước cuối'));
-    expect(svgLabel('Output')).toBe('Output: 1, 2, 3, 5.');
+    expect(svgLabel('Kết quả')).toBe('Kết quả: 1, 2, 3, 5.');
     commit(input('lists'), '5, 2 / 1');
     expect(text()).toContain(m.listErrors.unsorted);
     expect(input('lists').value).toBe('2, 5 / 1, 3');
@@ -96,11 +96,11 @@ describe('priority queue applications lesson', () => {
   it('keeps the top k of a stream', () => {
     render();
     topK();
-    expect(text()).toContain('Keep the 3 largest values in a min-heap of size 3.');
+    expect(text()).toContain('Giữ 3 giá trị lớn nhất trong một heap nhỏ nhất cỡ 3.');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('its root 7 is the 3rd largest');
+    expect(text()).toContain('gốc 7 của nó là số lớn thứ 3');
     expect(text()).toContain(m.resultTitle);
-    expect(svgLabel('Min-heap')).toContain('Min-heap as an array: 7, 8, 9');
+    expect(svgLabel('Heap nhỏ nhất')).toContain('Heap nhỏ nhất dạng mảng: 7, 8, 9');
   });
 
   it('changes k and refuses a bad k', () => {
@@ -108,7 +108,7 @@ describe('priority queue applications lesson', () => {
     topK();
     commit(input('k'), '1');
     click(button('Đến bước cuối'));
-    expect(svgLabel('Min-heap')).toContain('Min-heap as an array: 9.');
+    expect(svgLabel('Heap nhỏ nhất')).toContain('Heap nhỏ nhất dạng mảng: 9.');
     commit(input('k'), '9');
     expect(text()).toContain(m.kError);
     expect(input('k').value).toBe('1');
@@ -128,7 +128,7 @@ describe('priority queue applications lesson', () => {
     render();
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
     flushSync();
-    expect(text()).toContain('Push 1, the head of list A.');
+    expect(text()).toContain('Push 1, phần tử đầu của danh sách A.');
   });
 
   it('checks a practice answer with a hint', () => {

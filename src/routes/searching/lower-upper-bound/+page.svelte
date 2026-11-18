@@ -8,7 +8,7 @@
     boundTrace,
     makeSortedArrayWithDuplicates,
   } from '$lib/algo-engine/lower-upper-bound.js';
-  import { en as m } from '$lib/lessons/lower-upper-bound/copy.en.js';
+  import { vi as m } from '$lib/lessons/lower-upper-bound/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {'lower'|'upper'} Variant */

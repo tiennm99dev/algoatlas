@@ -36,15 +36,15 @@ export const MAX_WEIGHT = 15;
  */
 
 export const answerPseudocode = [
-  'lo = max(w); hi = sum(w)  // hi works',
+  'lo = max(w); hi = sum(w)  // hi chắc chắn đạt',
   'while lo < hi:',
   '  mid = lo + floor((hi - lo) / 2)',
   '  if feasible(mid):',
-  '    hi = mid        // so may smaller c',
-  '  else: lo = mid + 1  // all c ≤ mid fail',
-  'return lo           // smallest c that works',
+  '    hi = mid        // c nhỏ hơn có thể vẫn đạt',
+  '  else: lo = mid + 1  // mọi c ≤ mid đều không đạt',
+  'return lo           // c nhỏ nhất đạt yêu cầu',
   'feasible(c): days = 1; load = 0',
-  '  for each weight x in w:',
+  '  for x in w:               // từng khối lượng',
   '    if load + x > c: days += 1; load = 0',
   '    load = load + x',
   '  return days <= D',

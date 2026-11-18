@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/ternary-search/copy.en.js';
+import { vi as m } from '$lib/lessons/ternary-search/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -61,13 +61,13 @@ function practice() {
 describe('ternary search lesson', () => {
   it('opens on the parabola and closes in on 3.7 in 11 rounds', () => {
     render();
-    expect(text()).toContain('Look for the highest point of f on [0.000, 6.000]');
+    expect(text()).toContain('Ta tìm điểm cao nhất của f trên [0.000, 6.000]');
     click(button('Bước tiếp'));
     expect(text()).toContain(
-      'f(m1) = f(2.000) = 3.555 and f(m2) = f(4.000) = 4.955, so f(m1) < f(m2).',
+      'f(m1) = f(2.000) = 3.555 và f(m2) = f(4.000) = 4.955, nên f(m1) < f(m2).',
     );
     click(button('Bước tiếp'));
-    expect(text()).toContain('lo = 2.000; the interval is now 4.000 wide.');
+    expect(text()).toContain('lo = 2.000; giờ khoảng rộng 4.000.');
     expect(byTest('cut-left')).not.toBeNull();
     expect(byTest('cut-right')).toBeNull();
     click(button('Bước tiếp'));
@@ -76,7 +76,7 @@ describe('ternary search lesson', () => {
     expect(byTest('cut-right')).not.toBeNull();
     click(button('Đến bước cuối'));
     expect(text()).toContain(
-      'The peak is at about x = 3.695, f(x) = 5.000, after 11 rounds and 22 evaluations.',
+      'Đỉnh ở khoảng x = 3.695, f(x) = 5.000, sau 11 vòng và 22 lần tính f.',
     );
     expect(byTest('rounds')?.textContent?.trim()).toBe('11');
     expect(byTest('answer')).not.toBeNull();
@@ -94,7 +94,7 @@ describe('ternary search lesson', () => {
   it('the peak slider moves the answer', () => {
     render();
     commit(/** @type {HTMLInputElement} */ (document.querySelector('input[name="peak"]')), '1.2');
-    expect(text()).toContain('Peak at x = 1.2');
+    expect(text()).toContain('Đỉnh tại x = 1.2');
     click(button('Đến bước cuối'));
     expect(text()).toMatch(/x = 1\.(19|20|21)\d/);
   });
@@ -105,7 +105,7 @@ describe('ternary search lesson', () => {
     slider.value = '4.5';
     slider.dispatchEvent(new Event('input', { bubbles: true }));
     flushSync();
-    expect(text()).toContain('Peak at x = 4.5');
+    expect(text()).toContain('Đỉnh tại x = 4.5');
     click(button('Đến bước cuối'));
     expect(text()).toMatch(/x = 4\.(49|50|51)\d/);
   });
@@ -115,9 +115,9 @@ describe('ternary search lesson', () => {
     click(radio('shape', 'two-peaks'));
     expect(document.querySelector('input[name="peak"]')).toBeNull();
     click(button('Bước tiếp'));
-    expect(text()).toContain('f(m1) = f(2.000) = 0.646 and f(m2) = f(4.000) = 3.200');
+    expect(text()).toContain('f(m1) = f(2.000) = 0.646 và f(m2) = f(4.000) = 3.200');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('was discarded in the first round');
+    expect(text()).toContain('đã bị bỏ ngay vòng đầu');
   });
 
   it('switching curves keeps the tent peak exact', () => {

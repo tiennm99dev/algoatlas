@@ -4,7 +4,7 @@ import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { binaryHeapTrace, makeHeapOps } from '$lib/algo-engine/binary-heaps.js';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/binary-heaps/copy.en.js';
+import { vi as m } from '$lib/lessons/binary-heaps/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -63,50 +63,52 @@ function submit() {
 describe('binary heaps lesson', () => {
   it('starts on an empty min-heap and runs the log to the end', () => {
     render();
-    expect(text()).toContain('An empty min-heap.');
+    expect(text()).toContain('Một heap nhỏ nhất rỗng.');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Insert 42: put it in the next free slot, 0');
+    expect(text()).toContain('Chèn 42: đặt vào ô trống tiếp theo, ô 0');
     click(button('Đến bước cuối'));
     const last = binaryHeapTrace(makeHeapOps('build')).at(-1);
-    expect(heapLabel()).toContain(`Min-heap of 8, array: ${last?.values.join(', ')}.`);
-    expect(text()).toContain(`${last?.comparisons} comparisons and ${last?.swaps} swaps`);
+    expect(heapLabel()).toContain(
+      `Heap nhỏ nhất gồm 8 phần tử, dạng mảng: ${last?.values.join(', ')}.`,
+    );
+    expect(text()).toContain(`${last?.comparisons} phép so sánh và ${last?.swaps} lần đổi chỗ`);
   });
 
   it('inserts a typed value and jumps to its first step', () => {
     render();
     commit(valueInput(), '1');
     submit();
-    expect(text()).toContain('Insert 1: put it in the next free slot, 8');
+    expect(text()).toContain('Chèn 1: đặt vào ô trống tiếp theo, ô 8');
     click(button('Đến bước cuối'));
-    expect(heapLabel()).toMatch(/^Min-heap of 9, array: 1, /);
+    expect(heapLabel()).toMatch(/^Heap nhỏ nhất gồm 9 phần tử, dạng mảng: 1, /);
   });
 
   it('extracts the minimum and lists it as removed', () => {
     render();
-    click(buttonByText('Extract min'));
-    expect(text()).toContain('Take the root 8, the smallest value.');
+    click(buttonByText('Lấy ra min'));
+    expect(text()).toContain('Lấy gốc 8, giá trị nhỏ nhất.');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Removed, in order');
-    expect(heapLabel()).toMatch(/^Min-heap of 7, /);
+    expect(text()).toContain('Đã lấy ra, theo thứ tự');
+    expect(heapLabel()).toMatch(/^Heap nhỏ nhất gồm 7 phần tử, /);
   });
 
   it('switches to a max-heap on the same log', () => {
     render();
     click(/** @type {HTMLInputElement} */ (document.querySelector('input[value="max"]')));
-    expect(buttonByText('Extract max')).toBeTruthy();
+    expect(buttonByText('Lấy ra max')).toBeTruthy();
     expect(heapLabel()).toContain(
-      `Max-heap of 8, array: ${binaryHeapTrace(makeHeapOps('build'), 'max').at(-1)?.values.join(', ')}.`,
+      `Heap lớn nhất gồm 8 phần tử, dạng mảng: ${binaryHeapTrace(makeHeapOps('build'), 'max').at(-1)?.values.join(', ')}.`,
     );
-    expect(text()).toContain('Top: the maximum');
+    expect(text()).toContain('Đỉnh: giá trị lớn nhất');
   });
 
   it('undoes, resets and loads a preset', () => {
     render();
     click(buttonByText(m.undo));
-    expect(heapLabel()).toMatch(/^Min-heap of 9, array: 5, /);
+    expect(heapLabel()).toMatch(/^Heap nhỏ nhất gồm 9 phần tử, dạng mảng: 5, /);
     click(buttonByText(m.reset));
-    expect(text()).toContain('An empty min-heap.');
-    click(buttonByText('Extract min'));
+    expect(text()).toContain('Một heap nhỏ nhất rỗng.');
+    click(buttonByText('Lấy ra min'));
     expect(text()).toContain(m.emptyError);
     commit(/** @type {HTMLSelectElement} */ (document.querySelector('select')), 'drain');
     click(button('Đến bước cuối'));
@@ -141,7 +143,7 @@ describe('binary heaps lesson', () => {
     );
     slot3.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     flushSync();
-    expect(text()).toContain('Slot 3: parent ⌊(3 − 1)/2⌋ = 1; children 2·3 + 1 = 7.');
+    expect(text()).toContain('Ô 3: cha là ⌊(3 − 1)/2⌋ = 1; các con là 2·3 + 1 = 7.');
   });
 
   it('checks a practice answer with a hint', () => {

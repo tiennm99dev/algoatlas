@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/practice-searching/copy.en.js';
+import { vi as m } from '$lib/lessons/practice-searching/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -70,61 +70,61 @@ describe('practice: searching problems', () => {
   it('opens on version B missing 12', () => {
     render();
     expect(text()).toContain(
-      'Version B: look for 12 in 7 sorted values, starting with lo = 0 and hi = 6.',
+      'Phiên bản B: tìm 12 trong 7 giá trị đã sắp xếp, bắt đầu với lo = 0 và hi = 6.',
     );
     expect(text()).toContain('while lo < hi:');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Wrong: 12 is at index 2, and that cell was never read.');
-    expect(byTest('verdict')).toBe('✕ misses x');
+    expect(text()).toContain('Sai: 12 nằm ở chỉ số 2, và ô đó chưa bao giờ được đọc.');
+    expect(byTest('verdict')).toBe('✕ bỏ sót x');
     expect(byTest('result')).toBe('-1');
-    expect(byTest('targets-summary')).toBe('Version B fails on 4 of 30 targets.');
-    expect(targetCell(12).getAttribute('aria-label')).toBe('Target 12: misses x');
+    expect(byTest('targets-summary')).toBe('Phiên bản B sai ở 4/30 giá trị cần tìm.');
+    expect(targetCell(12).getAttribute('aria-label')).toBe('Giá trị 12: bỏ sót x');
   });
 
   it('version A is correct everywhere', () => {
     render();
-    click(buttonByText('Version A'));
-    expect(byTest('targets-summary')).toBe('Version A is correct on all 30 targets.');
+    click(buttonByText('Phiên bản A'));
+    expect(byTest('targets-summary')).toBe('Phiên bản A đúng với cả 30 giá trị cần tìm.');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Return 2: a[2] = 12. Correct after 3 probes.');
+    expect(text()).toContain('Trả về 2: a[2] = 12. Đúng, sau 3 lần đọc.');
   });
 
   it('a target cell loads that target, and version C loops on 30', () => {
     render();
-    click(buttonByText('Version C'));
+    click(buttonByText('Phiên bản C'));
     click(targetCell(30));
     expect(input('target').value).toBe('30');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('lo = 5, hi = 6 is a state this run has been in before.');
-    expect(byTest('result')).toBe('never');
-    expect(byTest('broken')).toBe('24 of 30');
+    expect(text()).toContain('lo = 5, hi = 6 là trạng thái lần chạy này đã gặp trước đó.');
+    expect(byTest('result')).toBe('không bao giờ');
+    expect(byTest('broken')).toBe('24/30');
     expect(text()).toContain('(5, 6)');
   });
 
   it('version D reads past the end above every value', () => {
     render();
-    click(buttonByText('Version D'));
+    click(buttonByText('Phiên bản D'));
     commit(input('target'), '31');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('mid = 7 = n, so reading a[7] goes past the end of the array.');
-    expect(byTest('verdict')).toBe('⚠ reads past the end');
+    expect(text()).toContain('mid = 7 = n, nên đọc a[7] là đọc quá cuối mảng.');
+    expect(byTest('verdict')).toBe('⚠ đọc quá cuối mảng');
   });
 
   it('a typed one-value array shows the single failure of each version', () => {
     render();
     commit(input('values'), '5');
-    expect(byTest('targets-summary')).toBe('Version B fails on 1 of 3 targets.');
-    click(buttonByText('Version E'));
-    expect(targetCell(4).getAttribute('aria-label')).toBe('Target 4: loops forever');
+    expect(byTest('targets-summary')).toBe('Phiên bản B sai ở 1/3 giá trị cần tìm.');
+    click(buttonByText('Phiên bản E'));
+    expect(targetCell(4).getAttribute('aria-label')).toBe('Giá trị 4: lặp vô hạn');
   });
 
   it('refuses unsorted input and bad targets with a notice', () => {
     render();
     commit(input('values'), '8, 3');
-    expect(text()).toContain('Binary search needs sorted input');
+    expect(text()).toContain('Tìm kiếm nhị phân cần đầu vào đã sắp xếp');
     expect(input('values').value).toBe('3, 8, 12, 17, 21, 26, 30');
     commit(input('target'), '99');
-    expect(text()).toContain('The target must be a whole number from 0 to 60.');
+    expect(text()).toContain('Giá trị cần tìm phải là số nguyên từ 0 đến 60.');
     expect(input('target').value).toBe('12');
   });
 
@@ -132,14 +132,14 @@ describe('practice: searching problems', () => {
     render();
     expect(byTest('change')).toBeUndefined();
     click(input('show-change'));
-    expect(byTest('change')).toBe('Changed line 2: while lo < hi:');
-    click(buttonByText('Version A'));
+    expect(byTest('change')).toBe('Dòng 2 bị thay đổi: while lo < hi:');
+    click(buttonByText('Phiên bản A'));
     expect(byTest('change')).toBe(m.noChange);
   });
 
   it('New array loads a sorted array', () => {
     render();
-    click(buttonByText('New array'));
+    click(buttonByText(m.newArray));
     const vals = input('values').value.split(', ').map(Number);
     expect(vals.length).toBeGreaterThanOrEqual(5);
     for (let i = 1; i < vals.length; i++) expect(vals[i]).toBeGreaterThan(vals[i - 1]);

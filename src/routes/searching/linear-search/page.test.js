@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/linear-search/copy.en.js';
+import { vi as m } from '$lib/lessons/linear-search/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -67,11 +67,11 @@ const cell = (i) => /** @type {SVGElement} */ (document.querySelector(`g[data-in
 describe('linear search lesson', () => {
   it('opens on the plain scan and finds 63 after 7 comparisons', () => {
     render();
-    expect(text()).toContain('Scan the 10 cells from left to right for 63');
+    expect(text()).toContain('Quét 10 ô từ trái sang phải để tìm 63');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Is 0 < 10? Yes. Compare a[0] = 31 with 63: not equal');
+    expect(text()).toContain('0 < 10? Đúng. So sánh a[0] = 31 với 63: khác nhau');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Found 63 at index 6 after 7 comparisons.');
+    expect(text()).toContain('Tìm thấy 63 ở chỉ số 6 sau 7 phép so sánh.');
     expect(stat('comparisons')).toBe('7');
     expect(stat('bound-checks')).toBe('7');
     expect(stat('total')).toBe('14');
@@ -81,10 +81,10 @@ describe('linear search lesson', () => {
     render();
     expect(stat('worst')).toBe('10');
     click(/** @type {HTMLElement} */ (document.querySelector('input[value="sentinel"]')));
-    expect(text()).toContain('as a sentinel');
+    expect(text()).toContain('làm phần tử cầm canh');
     expect(text()).toContain('a[n] = x; i = 0');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('this is a real copy: return 6.');
+    expect(text()).toContain('đây là bản sao thật: trả về 6.');
     expect(stat('comparisons')).toBe('7');
     expect(stat('bound-checks')).toBe('1');
     // A miss also compares the sentinel copy of x.
@@ -95,19 +95,19 @@ describe('linear search lesson', () => {
     render();
     commit(input('target'), '5');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Is 10 < 10? No: every cell was checked. 5 is not in the array');
+    expect(text()).toContain('10 < 10? Sai: mọi ô đều đã được xét. 5 không có trong mảng');
     expect(stat('total')).toBe('21');
-    expect(stat('final-sentinel')).toBe('11 comparisons + 1 bound check = 12');
+    expect(stat('final-sentinel')).toBe('11 phép so sánh + 1 lần kiểm tra biên = 12');
   });
 
   it('presets move the target to either end', () => {
     render();
-    click(buttonByText('Target at the front'));
+    click(buttonByText(m.targetFirst));
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Found 31 at index 0 after 1 comparison.');
-    click(buttonByText('Target at the end'));
+    expect(text()).toContain('Tìm thấy 31 ở chỉ số 0 sau 1 phép so sánh.');
+    click(buttonByText(m.targetLast));
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Found 14 at index 9 after 10 comparisons.');
+    expect(text()).toContain('Tìm thấy 14 ở chỉ số 9 sau 10 phép so sánh.');
   });
 
   it('a typed array replaces the data and finds the first copy', () => {
@@ -115,16 +115,16 @@ describe('linear search lesson', () => {
     commit(input('values'), '4 7 7 2');
     commit(input('target'), '7');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Found 7 at index 1 after 2 comparisons.');
+    expect(text()).toContain('Tìm thấy 7 ở chỉ số 1 sau 2 phép so sánh.');
   });
 
   it('refuses bad input with a notice and keeps the last values', () => {
     render();
     commit(input('values'), '3, x');
-    expect(text()).toContain('Type whole numbers separated by commas or spaces');
+    expect(text()).toContain('Hãy nhập các số nguyên cách nhau bằng dấu phẩy hoặc dấu cách');
     expect(input('values').value).toBe('31, 8, 52, 19, 77, 40, 63, 25, 90, 14');
     commit(input('target'), '150');
-    expect(text()).toContain('The target must be a whole number from 0 to 99.');
+    expect(text()).toContain('Giá trị cần tìm phải là số nguyên từ 0 đến 99.');
     expect(input('target').value).toBe('63');
   });
 
@@ -136,9 +136,9 @@ describe('linear search lesson', () => {
     expect(document.activeElement).toBe(cell(1));
     cell(1).dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     flushSync();
-    expect(text()).toContain('Searching for 8 now.');
+    expect(text()).toContain('Giờ ta tìm 8.');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Found 8 at index 1 after 2 comparisons.');
+    expect(text()).toContain('Tìm thấy 8 ở chỉ số 1 sau 2 phép so sánh.');
   });
 
   it('checks a practice answer, wrong then right, with a hint', () => {

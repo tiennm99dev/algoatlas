@@ -15,7 +15,7 @@
     packDays,
     parseWeights,
   } from '$lib/algo-engine/binary-search-on-answer.js';
-  import { en as m } from '$lib/lessons/binary-search-on-answer/copy.en.js';
+  import { vi as m } from '$lib/lessons/binary-search-on-answer/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   // A fixed first input keeps the prerendered HTML and the hydrated page identical.

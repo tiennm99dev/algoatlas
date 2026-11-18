@@ -17,7 +17,7 @@
     parseSorted,
     scanTargets,
   } from '$lib/algo-engine/practice-searching.js';
-  import { en as m } from '$lib/lessons/practice-searching/copy.en.js';
+  import { vi as m } from '$lib/lessons/practice-searching/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/practice-searching.js').Version} Version */

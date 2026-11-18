@@ -50,8 +50,8 @@ describe('lower and upper bound lesson', () => {
   it('lower bound ends at 8 and shades the four copies', () => {
     render();
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Lower bound of 17 is 8.');
-    expect(text()).toContain('4 copies of 17');
+    expect(text()).toContain('Cận dưới của 17 là 8.');
+    expect(text()).toContain('4 bản sao của 17');
     for (let i = 8; i <= 11; i++) expect(cell(i).className).toContain('bg-state-sorted');
     expect(cell(7).className).not.toContain('bg-state-sorted');
     expect(cell(12).className).not.toContain('bg-state-sorted');
@@ -62,16 +62,16 @@ describe('lower and upper bound lesson', () => {
     click(/** @type {HTMLElement} */ (document.querySelector('input[value="upper"]')));
     expect(text()).toContain('if a[mid] <= x:');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Upper bound of 17 is 12.');
-    expect(text()).toContain('4 copies of 17');
+    expect(text()).toContain('Cận trên của 17 là 12.');
+    expect(text()).toContain('4 bản sao của 17');
   });
 
   it('a target above every value gives n and no copies', () => {
     render();
     commit(targetInput(), '99');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Lower bound of 99 is 15.');
-    expect(text()).toContain('0 copies of 99');
+    expect(text()).toContain('Cận dưới của 99 là 15.');
+    expect(text()).toContain('0 bản sao của 99');
   });
 
   it('ignores a target the learner is still typing', () => {
@@ -81,22 +81,22 @@ describe('lower and upper bound lesson', () => {
     input.dispatchEvent(new Event('input', { bubbles: true }));
     flushSync();
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Lower bound of 17 is 8.');
+    expect(text()).toContain('Cận dưới của 17 là 8.');
   });
 
   it('keeps the last target when the field is cleared', () => {
     render();
     commit(targetInput(), '');
-    expect(text()).toContain('bound of 17');
+    expect(text()).toContain('cận dưới của 17');
     expect(text()).not.toContain('null');
   });
 
   it('shows a placeholder for the result until the search ends', () => {
     render();
     expect(text()).toContain('—');
-    expect(text()).not.toContain('copies of 17');
+    expect(text()).not.toContain('bản sao của 17');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('copies of 17');
+    expect(text()).toContain('bản sao của 17');
   });
 
   it('draws a one-row window strip whose width follows the window', () => {
@@ -116,20 +116,20 @@ describe('lower and upper bound lesson', () => {
 
   it('names the actual test in the legend for each variant', () => {
     render();
-    expect(text()).toContain('a[i] < x held: left of lo');
-    expect(text()).toContain('a[i] ≥ x: hi and beyond');
+    expect(text()).toContain('a[i] < x đúng: bên trái lo');
+    expect(text()).toContain('a[i] ≥ x: từ hi trở đi');
     click(/** @type {HTMLElement} */ (document.querySelector('input[value="upper"]')));
-    expect(text()).toContain('a[i] ≤ x held: left of lo');
-    expect(text()).toContain('a[i] > x: hi and beyond');
+    expect(text()).toContain('a[i] ≤ x đúng: bên trái lo');
+    expect(text()).toContain('a[i] > x: từ hi trở đi');
   });
 
   it('announces a new array even when the target repeats', () => {
     render();
     click(button('Đến bước cuối'));
     const newArray = /** @type {HTMLElement} */ (
-      [...document.querySelectorAll('button')].find((b) => b.textContent === 'New array')
+      [...document.querySelectorAll('button')].find((b) => b.textContent === 'Mảng mới')
     );
     click(newArray);
-    expect(text()).toMatch(/New array of 15 values\. Target is \d+\./);
+    expect(text()).toMatch(/Mảng mới gồm 15 giá trị\. Giá trị cần tìm là \d+\./);
   });
 });

@@ -16,20 +16,20 @@
  */
 
 const shared = [
-  'lo = 0; hi = n            // half-open window [lo, hi)',
+  'lo = 0; hi = n            // cửa sổ nửa mở [lo, hi)',
   'while lo < hi:',
   '  mid = lo + floor((hi - lo) / 2)',
 ];
 const tail = [
-  '    lo = mid + 1          // answer is right of mid',
-  '  else: hi = mid          // mid could still be the answer',
-  'return lo                 // first index where the test fails',
+  '    lo = mid + 1          // đáp án nằm bên phải mid',
+  '  else: hi = mid          // mid vẫn có thể là đáp án',
+  'return lo                 // chỉ số đầu tiên làm phép thử sai',
 ];
 
 /** @type {{lower: string[], upper: string[]}} */
 export const boundPseudocode = {
-  lower: [...shared, '  if a[mid] < x:          // upper bound: a[mid] <= x', ...tail],
-  upper: [...shared, '  if a[mid] <= x:         // lower bound: a[mid] < x', ...tail],
+  lower: [...shared, '  if a[mid] < x:          // cận trên: a[mid] <= x', ...tail],
+  upper: [...shared, '  if a[mid] <= x:         // cận dưới: a[mid] < x', ...tail],
 };
 
 /**

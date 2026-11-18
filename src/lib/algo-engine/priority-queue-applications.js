@@ -53,22 +53,22 @@ export const MAX_VALUE = 99;
 
 export const mergePseudocode = [
   'merge(lists):',
-  '  for each list j: if j is not empty, push (head of j, j)',
-  '  while the heap is not empty:',
+  '  for j in lists: if j khác rỗng: push (đầu của j, j)',
+  '  while heap khác rỗng:',
   '    (x, j) = popMin()',
-  '    append x to the output',
-  '    if list j has a next value y: push (y, j)',
-  '  return the output',
+  '    thêm x vào cuối kết quả',
+  '    if danh sách j còn giá trị tiếp theo y: push (y, j)',
+  '  return kết quả',
 ];
 
 export const topKPseudocode = [
-  'topK(stream, k):          // min-heap of the k largest so far',
-  '  for each x in the stream:',
-  '    if the heap holds fewer than k: push x',
+  'topK(stream, k):          // heap nhỏ nhất giữ k số lớn nhất tới giờ',
+  '  for x in stream:',
+  '    if heap có ít hơn k phần tử: push x',
   '    else if x > heap.min():',
-  '      replace the min with x; sift down',
-  '    else: skip x            // too small for the top k',
-  '  return the heap           // its min is the kth largest',
+  '      thay min bằng x; vun xuống',
+  '    else: bỏ qua x          // quá nhỏ để vào top k',
+  '  return heap              // min của heap là số lớn thứ k',
 ];
 
 /**

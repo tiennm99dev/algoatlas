@@ -21,7 +21,7 @@
     topKPseudocode,
     topKTrace,
   } from '$lib/algo-engine/priority-queue-applications.js';
-  import { en as m } from '$lib/lessons/priority-queue-applications/copy.en.js';
+  import { vi as m } from '$lib/lessons/priority-queue-applications/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/priority-queue-applications.js').MergeFrame} MergeFrame */

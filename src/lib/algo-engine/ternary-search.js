@@ -59,8 +59,8 @@ export const ternaryPseudocode = [
   '  m1 = lo + (hi - lo) / 3',
   '  m2 = hi - (hi - lo) / 3',
   '  if f(m1) < f(m2):',
-  '    lo = m1     // peak not in [lo, m1)',
-  '  else: hi = m2  // peak not in (m2, hi]',
+  '    lo = m1     // đỉnh không nằm trong [lo, m1)',
+  '  else: hi = m2  // đỉnh không nằm trong (m2, hi]',
   'return (lo + hi) / 2',
 ];
 

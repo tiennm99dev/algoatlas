@@ -18,7 +18,7 @@
     makeHeapOps,
     sizeAfter,
   } from '$lib/algo-engine/binary-heaps.js';
-  import { en as m } from '$lib/lessons/binary-heaps/copy.en.js';
+  import { vi as m } from '$lib/lessons/binary-heaps/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/binary-heaps.js').HeapOp} HeapOp */

@@ -35,13 +35,13 @@ export const MAX_VALUE = 99;
 
 export const minHeapPseudocode = [
   'insert(x):',
-  '  append x; i = n − 1          // the new last slot',
+  '  append x; i = n − 1          // ô cuối mới thêm',
   '  while i > 0 and a[i] < a[parent(i)]:',
   '    swap(a[i], a[parent(i)]); i = parent(i)',
   'extractMin():',
   '  top = a[0]; a[0] = last; n = n − 1; i = 0',
-  '  while i has a child (2i + 1 < n):',
-  '    c = the smaller child of i',
+  '  while 2i + 1 < n:            // i còn con',
+  '    c = con nhỏ hơn của i',
   '    if a[c] ≥ a[i]: stop',
   '    swap(a[i], a[c]); i = c',
   '  return top',
@@ -49,13 +49,13 @@ export const minHeapPseudocode = [
 
 export const maxHeapPseudocode = [
   'insert(x):',
-  '  append x; i = n − 1          // the new last slot',
+  '  append x; i = n − 1          // ô cuối mới thêm',
   '  while i > 0 and a[i] > a[parent(i)]:',
   '    swap(a[i], a[parent(i)]); i = parent(i)',
   'extractMax():',
   '  top = a[0]; a[0] = last; n = n − 1; i = 0',
-  '  while i has a child (2i + 1 < n):',
-  '    c = the larger child of i',
+  '  while 2i + 1 < n:            // i còn con',
+  '    c = con lớn hơn của i',
   '    if a[c] ≤ a[i]: stop',
   '    swap(a[i], a[c]); i = c',
   '  return top',

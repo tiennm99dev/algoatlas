@@ -14,7 +14,7 @@
     makeUnsortedArray,
     parseValues,
   } from '$lib/algo-engine/linear-search.js';
-  import { en as m } from '$lib/lessons/linear-search/copy.en.js';
+  import { vi as m } from '$lib/lessons/linear-search/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/linear-search.js').LinearVariant} LinearVariant */

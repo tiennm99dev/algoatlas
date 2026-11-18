@@ -4,7 +4,7 @@ import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { medianTrace } from '$lib/algo-engine/practice-heaps.js';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/practice-heaps/copy.en.js';
+import { vi as m } from '$lib/lessons/practice-heaps/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -83,17 +83,17 @@ function answer(q, value) {
 describe('practice heaps lesson', () => {
   it('splits the stream into two halves and reports the median', () => {
     render();
-    expect(text()).toContain('Low is a max-heap of the smaller half');
+    expect(text()).toContain('low là heap lớn nhất chứa nửa nhỏ hơn');
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
-    expect(text()).toContain('Low is empty, so 5 goes into low.');
+    expect(text()).toContain('low đang rỗng, nên 5 vào low.');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Odd count: the median is low’s top, 5.');
+    expect(text()).toContain('Số lượng lẻ: trung vị là đỉnh của low, 5.');
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
-    expect(text()).toContain('15 > low’s top 5, so it belongs to the larger half');
+    expect(text()).toContain('15 > đỉnh của low là 5, nên nó thuộc nửa lớn hơn');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Even count: the median is (5 + 15) / 2 = 10.');
+    expect(text()).toContain('Số lượng chẵn: trung vị là (5 + 15) / 2 = 10.');
   });
 
   it('ends with the running medians', () => {
@@ -104,8 +104,8 @@ describe('practice heaps lesson', () => {
     expect(last?.medians).toEqual([5, 10, 5, 4, 5, 6, 7, 7.5, 7]);
     const chips = document.body.textContent?.split(m.mediansTitle)[1] ?? '';
     expect(chips).toContain('7.5');
-    expect(svgLabel('Low half')).toBe(`Low half, max-heap: ${last?.low.join(', ')}.`);
-    expect(svgLabel('High half')).toBe(`High half, min-heap: ${last?.high.join(', ')}.`);
+    expect(svgLabel('Nửa dưới')).toBe(`Nửa dưới, heap lớn nhất: ${last?.low.join(', ')}.`);
+    expect(svgLabel('Nửa trên')).toBe(`Nửa trên, heap nhỏ nhất: ${last?.high.join(', ')}.`);
   });
 
   it('loads a typed stream and refuses bad ones', () => {
@@ -122,17 +122,17 @@ describe('practice heaps lesson', () => {
   it('finds the k closest points', () => {
     render();
     closest();
-    expect(text()).toContain('Keep the 3 closest points in a max-heap');
+    expect(text()).toContain('Giữ 3 điểm gần nhất trong một heap lớn nhất');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Read A (1, 2): distance² = 1² + 2² = 5.');
-    click(button('Bước tiếp'));
-    click(button('Bước tiếp'));
+    expect(text()).toContain('Đọc A (1, 2): khoảng cách² = 1² + 2² = 5.');
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
-    expect(text()).toContain('Read C (-2, -2): distance² = (-2)² + (-2)² = 8.');
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
+    expect(text()).toContain('Đọc C (-2, -2): khoảng cách² = (-2)² + (-2)² = 8.');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('The 3 closest: D, G, A.');
-    expect(svgLabel('Points:')).toContain('A (1, 2)');
+    expect(text()).toContain('3 điểm gần nhất: D, G, A.');
+    expect(svgLabel('Các điểm:')).toContain('A (1, 2)');
   });
 
   it('changes k, refuses bad points and a bad k', () => {
@@ -140,14 +140,14 @@ describe('practice heaps lesson', () => {
     closest();
     commit(input('k'), '1');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('The 1 closest: D.');
+    expect(text()).toContain('1 điểm gần nhất: D.');
     commit(input('k'), '0');
     expect(text()).toContain(m.kError);
     commit(input('points'), '(1, 2) (1, 2)');
     expect(text()).toContain(m.pointErrors.duplicate);
     commit(input('points'), '(3, 4) (0, 2)');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('The 1 closest: B.');
+    expect(text()).toContain('1 điểm gần nhất: B.');
   });
 
   it('loads new input', () => {
@@ -161,7 +161,7 @@ describe('practice heaps lesson', () => {
     render();
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
     flushSync();
-    expect(text()).toContain('Read 5.');
+    expect(text()).toContain('Đọc 5.');
   });
 
   it('checks practice answers with a hint', () => {

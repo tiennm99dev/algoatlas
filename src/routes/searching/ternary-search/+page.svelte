@@ -18,7 +18,7 @@
     ternaryPseudocode,
     ternaryTrace,
   } from '$lib/algo-engine/ternary-search.js';
-  import { en as m } from '$lib/lessons/ternary-search/copy.en.js';
+  import { vi as m } from '$lib/lessons/ternary-search/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/ternary-search.js').Shape} Shape */

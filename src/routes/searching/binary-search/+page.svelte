@@ -11,7 +11,7 @@
     makeSortedArray,
     midpoint,
   } from '$lib/algo-engine/searching.js';
-  import { en as m } from '$lib/lessons/binary-search/copy.en.js';
+  import { vi as m } from '$lib/lessons/binary-search/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {'watch'|'drive'} Mode */

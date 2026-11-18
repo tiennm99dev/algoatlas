@@ -17,7 +17,7 @@
     makeBuildValues,
     parseBuildValues,
   } from '$lib/algo-engine/build-heap.js';
-  import { en as m } from '$lib/lessons/build-heap/copy.en.js';
+  import { vi as m } from '$lib/lessons/build-heap/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/build-heap.js').BuildMethod} BuildMethod */

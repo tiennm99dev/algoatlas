@@ -190,7 +190,7 @@ describe('binary search lesson', () => {
   it('watch mode reaches the target', () => {
     render(BinaryPage);
     click(button('Đến bước cuối'));
-    expect(text()).toContain('a[11] = 53. Found it after');
+    expect(text()).toContain('a[11] = 53. Tìm thấy sau');
   });
 
   it('ignores a target the learner is still typing', () => {
@@ -200,7 +200,7 @@ describe('binary search lesson', () => {
     input.value = '5';
     input.dispatchEvent(new Event('input', { bubbles: true }));
     flushSync();
-    expect(text()).toContain('a[11] = 53. Found it after');
+    expect(text()).toContain('a[11] = 53. Tìm thấy sau');
     expect(text()).not.toContain('< 5');
   });
 
@@ -211,30 +211,30 @@ describe('binary search lesson', () => {
     input.dispatchEvent(new Event('input', { bubbles: true }));
     input.dispatchEvent(new Event('change', { bubbles: true }));
     flushSync();
-    expect(text()).toContain('Looking for 53');
+    expect(text()).toContain('Ta tìm 53');
     expect(text()).not.toContain('null');
   });
 
   it('you-drive mode rules out cells and detects a hit', () => {
     render(BinaryPage);
     click(/** @type {HTMLInputElement} */ (document.querySelector('input[value="drive"]')));
-    click(button('Index 7, value 31'));
-    expect(text()).toContain('31 < 53: everything left of here is ruled out.');
-    const out = button('Index 3, value 14, ruled out');
+    click(button('Chỉ số 7, giá trị 31'));
+    expect(text()).toContain('31 < 53: mọi ô bên trái chỗ này đều bị loại.');
+    const out = button('Chỉ số 3, giá trị 14, đã loại');
     expect(out.getAttribute('aria-disabled')).toBe('true');
     expect(out.disabled).toBe(false);
     // Focus moves to the midpoint of the new window, indices 8–14.
-    expect(document.activeElement).toBe(button('Index 11, value 53'));
-    click(button('Index 11, value 53'));
-    expect(text()).toMatch(/Found in 2 probes/);
-    expect(button('Index 11, value 53, found')).toBeTruthy();
+    expect(document.activeElement).toBe(button('Chỉ số 11, giá trị 53'));
+    click(button('Chỉ số 11, giá trị 53'));
+    expect(text()).toMatch(/Tìm thấy sau 2 lần đọc/);
+    expect(button('Chỉ số 11, giá trị 53, đã tìm thấy')).toBeTruthy();
   });
 
   it('labels every cell ruled out once the watch is over, and names the hit', () => {
     render(BinaryPage);
     click(button('Đến bước cuối'));
-    expect(button('Index 11, value 53, found')).toBeTruthy();
-    expect(button('Index 12, value 58, ruled out')).toBeTruthy();
+    expect(button('Chỉ số 11, giá trị 53, đã tìm thấy')).toBeTruthy();
+    expect(button('Chỉ số 12, giá trị 58, đã loại')).toBeTruthy();
   });
 });
 

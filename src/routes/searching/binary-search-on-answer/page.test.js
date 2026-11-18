@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/binary-search-on-answer/copy.en.js';
+import { vi as m } from '$lib/lessons/binary-search-on-answer/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -68,11 +68,11 @@ function practice() {
 describe('binary search on the answer lesson', () => {
   it('opens on the capacity range and finds 18 with 5 checks', () => {
     render();
-    expect(text()).toContain('Candidates run from 10, the heaviest parcel, to 48');
+    expect(text()).toContain('Ứng viên chạy từ 10, kiện nặng nhất, đến 48');
     expect(document.querySelectorAll('g[data-cap]')).toHaveLength(39);
     expect(text()).toContain(m.packEmpty);
     click(button('Đến bước cuối'));
-    expect(text()).toContain('The smallest capacity that ships everything in 3 days is 18');
+    expect(text()).toContain('Tải trọng nhỏ nhất chở hết mọi kiện trong 3 ngày là 18');
     expect(byTest('checks')).toBe('5');
     expect(byTest('linear')).toBe('9');
     expect(kind(18)).toBe('answer');
@@ -83,16 +83,16 @@ describe('binary search on the answer lesson', () => {
   it('shows the greedy packing of a checked capacity', () => {
     render();
     click(button('Bước tiếp'));
-    expect(text()).toContain('Test the middle capacity, mid = 29.');
+    expect(text()).toContain('Thử tải trọng ở giữa, mid = 29.');
     expect(kind(29)).toBe('mid');
     click(button('Bước tiếp'));
-    expect(text()).toContain('At capacity 29 the greedy packing needs 2 days, within D = 3.');
-    expect(byTest('verdict')).toBe('2 days ≤ D = 3: ✓ works');
+    expect(text()).toContain('Với tải trọng 29, cách xếp tham lam cần 2 ngày, không quá D = 3.');
+    expect(byTest('verdict')).toBe('2 ngày ≤ D = 3: ✓ đạt');
     // The check runs every line of feasible(c), shown in its own code panel.
     const panels = document.querySelectorAll('section[aria-labelledby] ol.font-mono');
     expect(panels[1].querySelectorAll('li[aria-current="step"]')).toHaveLength(5);
     expect(
-      document.querySelector('li[aria-label="Day 1: 7 + 2 + 5 + 10 = 24 of 29"]'),
+      document.querySelector('li[aria-label="Ngày 1: 7 + 2 + 5 + 10 = 24 trên 29"]'),
     ).not.toBeNull();
     click(button('Bước tiếp'));
     expect(text()).toContain('hi = 29');
@@ -103,7 +103,7 @@ describe('binary search on the answer lesson', () => {
     render();
     commit(input('days'), '2');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('in 2 days is 24');
+    expect(text()).toContain('trong 2 ngày là 24');
   });
 
   it('typed weights replace the parcels and clamp D', () => {
@@ -111,27 +111,27 @@ describe('binary search on the answer lesson', () => {
     commit(input('weights'), '15 15');
     expect(input('days').value).toBe('2');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('in 2 days is 15');
+    expect(text()).toContain('trong 2 ngày là 15');
   });
 
   it('refuses bad weights, days and capacities with a notice', () => {
     render();
     commit(input('weights'), '3, 0');
-    expect(text()).toContain('Every weight must be from 1 to 15.');
+    expect(text()).toContain('Mọi khối lượng phải từ 1 đến 15.');
     expect(input('weights').value).toBe('7, 2, 5, 10, 8, 4, 9, 3');
     commit(input('days'), '9');
-    expect(text()).toContain('D must be a whole number from 1 to 8');
+    expect(text()).toContain('D phải là số nguyên từ 1 đến 8');
     expect(input('days').value).toBe('3');
     commit(input('try'), '5');
-    expect(text()).toContain('Try a capacity from 10 to 48.');
+    expect(text()).toContain('Hãy thử một tải trọng từ 10 đến 48.');
   });
 
   it('a typed capacity shows its own packing until the next step', () => {
     render();
     commit(input('try'), '17');
-    expect(byTest('verdict')).toBe('4 days > D = 3: ✕ fails');
+    expect(byTest('verdict')).toBe('4 ngày > D = 3: ✕ không đạt');
     click(button('Bước tiếp'));
-    expect(text()).not.toContain('4 days > D = 3');
+    expect(text()).not.toContain('4 ngày > D = 3');
   });
 
   it('reveals the whole false-then-true strip', () => {
@@ -151,8 +151,8 @@ describe('binary search on the answer lesson', () => {
 
   it('New parcels loads a fresh input', () => {
     render();
-    click(buttonByText('New parcels'));
-    expect(text()).toContain('Candidates run from');
+    click(buttonByText(m.newParcels));
+    expect(text()).toContain('Ứng viên chạy từ');
     expect(input('weights').value).not.toBe('');
   });
 

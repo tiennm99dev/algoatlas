@@ -29,17 +29,17 @@ export const MAX_VALUE = 99;
 export const linearPseudocode = {
   plain: [
     'i = 0',
-    'while i < n:              // bound check',
-    '  if a[i] == x: return i  // key comparison',
+    'while i < n:              // kiểm tra biên',
+    '  if a[i] == x: return i  // so sánh khoá',
     '  i = i + 1',
-    'return -1                 // x is not in a',
+    'return -1                 // x không có trong a',
   ],
   sentinel: [
-    'a[n] = x; i = 0           // sentinel after the last cell',
-    'while a[i] != x:          // key comparison only',
+    'a[n] = x; i = 0           // phần tử cầm canh sau ô cuối',
+    'while a[i] != x:          // chỉ so sánh khoá',
     '  i = i + 1',
-    'if i < n: return i        // the one bound check',
-    'return -1                 // stopped on the sentinel',
+    'if i < n: return i        // lần kiểm tra biên duy nhất',
+    'return -1                 // dừng ở phần tử cầm canh',
   ],
 };
 
