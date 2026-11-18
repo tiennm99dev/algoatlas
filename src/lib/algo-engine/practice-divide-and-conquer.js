@@ -86,7 +86,9 @@ export function combinePseudocode(problem, parts) {
       '  L = best(lo, mid); R = best(mid + 1, hi)',
       '  C = maxSuffix(lo, mid) + maxPrefix(mid + 1, hi)',
       '  T = sum(lo, hi)',
-      terms.length ? `  return max(${terms.join(', ')})` : '  return nothing',
+      terms.length
+        ? `  return max(${terms.join(', ')})`
+        : '  return none  // chưa chọn số hạng nào',
     ];
   }
   const cands = [on.includes('left') ? 'L' : '', on.includes('right') ? 'R' : ''].filter(Boolean);
@@ -95,7 +97,7 @@ export function combinePseudocode(problem, parts) {
     '  if lo == hi: return a[lo]',
     '  mid = floor((lo + hi) / 2)',
     '  L = major(lo, mid); R = major(mid + 1, hi)',
-    `  for each x ≠ none in [${cands.join(', ')}]:`,
+    `  for x in [${cands.join(', ')}], x ≠ none:`,
     on.includes('count') ? '    if count(x, lo, hi) > (hi − lo + 1) / 2: return x' : '    return x',
     '  return none',
   ];

@@ -37,21 +37,21 @@ export const MAX_DIGITS = 6;
 
 export const fourPseudocode = [
   'multiply(x, y):',
-  '  if x < 10 and y < 10: return x · y  // one digit product',
+  '  if x < 10 and y < 10: return x · y  // tích một chữ số',
   '  m = floor(digits / 2)',
-  '  split x = x₁·10^m + x₀ and y = y₁·10^m + y₀',
+  '  tách x = x₁·10^m + x₀, y = y₁·10^m + y₀',
   '  a = multiply(x₁, y₁);  b = multiply(x₁, y₀)',
-  '  c = multiply(x₀, y₁);  d = multiply(x₀, y₀)  // four products',
+  '  c = multiply(x₀, y₁);  d = multiply(x₀, y₀)  // bốn tích',
   '  return a·10^(2m) + (b + c)·10^m + d',
 ];
 
 export const threePseudocode = [
   'multiply(x, y):',
-  '  if x < 10 and y < 10: return x · y  // one digit product',
+  '  if x < 10 and y < 10: return x · y  // tích một chữ số',
   '  m = floor(digits / 2)',
-  '  split x = x₁·10^m + x₀ and y = y₁·10^m + y₀',
+  '  tách x = x₁·10^m + x₀, y = y₁·10^m + y₀',
   '  z₂ = multiply(x₁, y₁);  z₀ = multiply(x₀, y₀)',
-  '  z₁ = multiply(x₁ + x₀, y₁ + y₀) − z₂ − z₀  // one product, not two',
+  '  z₁ = multiply(x₁ + x₀, y₁ + y₀) − z₂ − z₀  // một tích, không phải hai',
   '  return z₂·10^(2m) + z₁·10^m + z₀',
 ];
 
@@ -201,7 +201,7 @@ export function multiplyTrace(x, y, method) {
  */
 
 export const strassenPseudocode = [
-  'C = A·B, with A, B split into 2×2 blocks (here single numbers):',
+  'C = A·B, với A, B chia thành 2×2 khối (ở đây mỗi khối là một số):',
   'M₁ = (A₁₁ + A₂₂)(B₁₁ + B₂₂)',
   'M₂ = (A₂₁ + A₂₂)·B₁₁',
   'M₃ = A₁₁·(B₁₂ − B₂₂)',

@@ -13,7 +13,7 @@
     inversionTrace,
     parseInversionValues,
   } from '$lib/algo-engine/counting-inversions.js';
-  import { en as m } from '$lib/lessons/counting-inversions/copy.en.js';
+  import { vi as m } from '$lib/lessons/counting-inversions/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */

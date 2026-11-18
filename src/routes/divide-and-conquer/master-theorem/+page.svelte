@@ -20,7 +20,7 @@
     validRecurrence,
     work,
   } from '$lib/algo-engine/master-theorem.js';
-  import { en as m } from '$lib/lessons/master-theorem/copy.en.js';
+  import { vi as m } from '$lib/lessons/master-theorem/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/master-theorem.js').Recurrence} Recurrence */
@@ -137,9 +137,11 @@
       for (const k of WHOLE) commitWhole(k);
     }}
   >
-    <label class="flex flex-col gap-1 text-xs font-semibold tracking-wide text-slate-500 uppercase">
+    <label
+      class="flex max-w-full flex-col gap-1 text-xs font-semibold tracking-wide text-slate-500 uppercase"
+    >
       {m.presetLabel}
-      <select name="preset" class="field" value={preset} onchange={loadPreset}>
+      <select name="preset" class="field max-w-full" value={preset} onchange={loadPreset}>
         <option value="" disabled>{m.presetPlaceholder}</option>
         {#each PRESET_KEYS as p (p)}
           <option value={p}>{m.presets[p]}</option>

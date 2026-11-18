@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/practice-divide-and-conquer/copy.en.js';
+import { vi as m } from '$lib/lessons/practice-divide-and-conquer/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -76,35 +76,35 @@ function practice() {
 describe('practice: divide and conquer problems', () => {
   it('opens on max(L, R), which misses the crossing run of Sample 1', () => {
     render();
-    expect(text()).toContain('Call best(0, 8) on 9 values.');
+    expect(text()).toContain('Gọi best(0, 8) trên 9 giá trị.');
     expect(text()).toContain('return max(L, R)');
-    expect(byTest('samples-summary')).toBe('Your combine passes 1 of 5 arrays.');
+    expect(byTest('samples-summary')).toBe('Bước kết hợp của bạn qua 1/5 mảng.');
     expect(byTest('expected')).toBe('6');
     click(button('Đến bước cuối'));
     expect(byTest('returned')).toBe('4 ✕');
     expect(byTest('calls')).toBe('17');
     expect(byTest('reads')).toBe('38');
-    expect(text()).toContain('but the right answer is 6. The first wrong call was [5, 6].');
+    expect(text()).toContain('nhưng đáp án đúng là 6. Lời gọi sai đầu tiên là [5, 6].');
   });
 
   it('ticking C fixes every sample', () => {
     render();
     click(input('part-cross'));
     expect(text()).toContain('return max(L, R, C)');
-    expect(byTest('samples-summary')).toContain('passes all 5 arrays');
+    expect(byTest('samples-summary')).toContain('qua cả 5/5 mảng');
     click(button('Đến bước cuối'));
     expect(byTest('returned')).toBe('6 ✓');
-    expect(text()).toContain('every call was right for its own range');
+    expect(text()).toContain('mọi lời gọi đều đúng với chính đoạn của nó');
   });
 
   it('jumps to the first wrong call and explains it', () => {
     render();
     click(buttonByText(m.jumpWrong));
     expect(text()).toContain(
-      'Your combine returns 2, from L. ✕ Wrong: the right answer for [5, 6] is 3.',
+      'Bước kết hợp của bạn trả về 2, lấy từ L. ✕ Sai: đáp án đúng của [5, 6] là 3.',
     );
-    expect(callNode('Call [5, 6]').getAttribute('aria-label')).toBe(
-      'Call [5, 6]: wrong for its range, returned 2.',
+    expect(callNode('Lời gọi [5, 6]').getAttribute('aria-label')).toBe(
+      'Lời gọi [5, 6]: sai với đoạn của nó, trả về 2.',
     );
   });
 
@@ -113,10 +113,10 @@ describe('practice: divide and conquer problems', () => {
     click(input('part-left'));
     click(input('part-right'));
     click(input('part-cross'));
-    expect(byTest('samples-summary')).toBe('Your combine passes 4 of 5 arrays.');
+    expect(byTest('samples-summary')).toBe('Bước kết hợp của bạn qua 4/5 mảng.');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('the right answer, but call [0, 1] was wrong on the way.');
-    click(sample('Sample 3'));
+    expect(text()).toContain('đúng đáp án, nhưng lời gọi [0, 1] đã sai trên đường đi.');
+    click(sample('Mẫu 3'));
     click(button('Đến bước cuối'));
     expect(byTest('returned')).toBe('−8 ✕');
   });
@@ -125,26 +125,26 @@ describe('practice: divide and conquer problems', () => {
     render();
     click(/** @type {HTMLInputElement} */ (document.querySelector('input[value="majority"]')));
     expect(input('values').value).toBe('3, 3, 4, 2, 4, 4, 2, 4, 4');
-    expect(byTest('samples-summary')).toBe('Your combine passes 2 of 5 arrays.');
+    expect(byTest('samples-summary')).toBe('Bước kết hợp của bạn qua 2/5 mảng.');
     click(input('part-count'));
-    expect(byTest('samples-summary')).toContain('passes all 5 arrays');
+    expect(byTest('samples-summary')).toContain('qua cả 5/5 mảng');
     click(button('Đến bước cuối'));
     expect(byTest('reads')).toBe('38');
     expect(byTest('returned')).toBe('4 ✓');
     click(input('part-left'));
-    expect(byTest('samples-summary')).toBe('Your combine passes 4 of 5 arrays.');
-    click(sample('Sample 2'));
+    expect(byTest('samples-summary')).toBe('Bước kết hợp của bạn qua 4/5 mảng.');
+    click(sample('Mẫu 2'));
     click(button('Đến bước cuối'));
-    expect(byTest('returned')).toBe('none ✕');
+    expect(byTest('returned')).toBe('không có ✕');
   });
 
   it('a typed array joins the samples, and bad input is refused', () => {
     render();
     commit(input('values'), '1, -2, 3');
     expect(sample(m.yourArray).getAttribute('aria-label')).toBe(
-      'Your array: 1, −2, 3. Right answer 3, yours 3, pass. Load it.',
+      'Mảng của bạn: 1, −2, 3. Đáp án đúng 3, của bạn 3, đạt. Nạp mẫu này.',
     );
-    expect(byTest('samples-summary')).toBe('Your combine passes 2 of 6 arrays.');
+    expect(byTest('samples-summary')).toBe('Bước kết hợp của bạn qua 2/6 mảng.');
     commit(input('values'), '1, 200');
     expect(text()).toContain(m.errors.range);
     expect(input('values').value).toBe('1, -2, 3');
@@ -154,10 +154,10 @@ describe('practice: divide and conquer problems', () => {
 
   it('a call node picked by keyboard seeks to its return', () => {
     render();
-    const node = callNode('Call [0, 0]');
+    const node = callNode('Lời gọi [0, 0]');
     node.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     flushSync();
-    expect(text()).toContain('[0, 0] is one cell, so return a[0] = −2. ✓ Right for [0, 0].');
+    expect(text()).toContain('[0, 0] chỉ có một ô, nên return a[0] = −2. ✓ Đúng với [0, 0].');
   });
 
   it('Random array loads a new array and a notice says when nothing is wrong', () => {

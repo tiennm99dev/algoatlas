@@ -15,7 +15,7 @@
     selectTrace,
   } from '$lib/algo-engine/quickselect.js';
   import { lcg } from '$lib/algo-engine/seeded-random.js';
-  import { en as m } from '$lib/lessons/quickselect/copy.en.js';
+  import { vi as m } from '$lib/lessons/quickselect/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/quickselect.js').PivotRule} PivotRule */

@@ -53,16 +53,16 @@ export const MAX_NODES = 85;
 
 export const masterPseudocode = [
   'T(n) = a·T(n/b) + f(n),   f(n) = n^d · (log n)^p',
-  'divide into a subproblems of size n/b; f(n) = divide + combine work',
-  'for each level i = 0 to k − 1:',
-  '  level cost = aⁱ · f(n / bⁱ)',
-  'leaves: aᵏ = n^(log_b a) calls of size 1, cost 1 each',
-  'c = log_b a  // the leaves grow like n^c',
-  'compare d with c:',
-  '  d < c: case 1, the leaves dominate → Θ(n^c)',
-  '  d = c and p ≥ 0: case 2, every level counts → Θ(n^c · (log n)^(p+1))',
-  '  d > c and a·f(n/b) ≤ r·f(n), r < 1: case 3, the root dominates → Θ(f(n))',
-  '  otherwise: none of the three cases applies',
+  'chia thành a bài toán con cỡ n/b; f(n) = việc chia + việc kết hợp',
+  'for i = 0 to k − 1:  // từng tầng i',
+  '  chi phí tầng i = aⁱ · f(n / bⁱ)',
+  'lá: aᵏ = n^(log_b a) lời gọi cỡ 1, mỗi lời gọi tốn 1',
+  'c = log_b a  // số lá tăng như n^c',
+  'so sánh d với c:',
+  '  d < c: trường hợp 1, các lá chiếm ưu thế → Θ(n^c)',
+  '  d = c and p ≥ 0: trường hợp 2, mọi tầng đều đáng kể → Θ(n^c · (log n)^(p+1))',
+  '  d > c and a·f(n/b) ≤ r·f(n), r < 1: trường hợp 3, gốc chiếm ưu thế → Θ(f(n))',
+  '  else: không trường hợp nào trong ba trường hợp áp dụng',
 ];
 
 /** Nodes in a full tree of depth k with branching a. @param {number} a @param {number} k */

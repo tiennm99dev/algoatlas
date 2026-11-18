@@ -219,8 +219,10 @@ describe('inputs and code', () => {
 
   it('writes the combine line from the chosen parts', () => {
     expect(combinePseudocode('max-subarray', ['total', 'left'])[6]).toBe('  return max(L, T)');
-    expect(combinePseudocode('max-subarray', [])[6]).toBe('  return nothing');
-    expect(combinePseudocode('majority', ['right'])).toContain('  for each x ≠ none in [R]:');
+    expect(combinePseudocode('max-subarray', [])[6]).toBe(
+      '  return none  // chưa chọn số hạng nào',
+    );
+    expect(combinePseudocode('majority', ['right'])).toContain('  for x in [R], x ≠ none:');
     expect(combinePseudocode('majority', ['right'])[5]).toBe('    return x');
     expect(normalizeParts('majority', ['count', 'left', 'left'])).toEqual(['left', 'count']);
     for (const p of PROBLEMS) expect(combinePseudocode(p, PARTS[p])).toHaveLength(7);

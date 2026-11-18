@@ -42,14 +42,14 @@ export const MAX_VALUE = 99;
  */
 
 export const inversionPseudocode = [
-  'sortCount(a, lo, hi):  // sorts a[lo..hi], returns its inversions',
+  'sortCount(a, lo, hi):  // sắp xếp a[lo..hi], trả về số nghịch thế trong đó',
   '  if lo >= hi: return 0',
   '  mid = floor((lo + hi) / 2)',
   '  inv = sortCount(a, lo, mid) + sortCount(a, mid + 1, hi)',
   '  L = a[lo..mid]; R = a[mid+1..hi]; i = 0; j = 0',
   '  for k = lo to hi:',
   '    if j = |R| or (i < |L| and L[i] <= R[j]): a[k] = L[i]; i++',
-  '    else: a[k] = R[j]; j++; inv += |L| − i   // R[j] jumps over every L left',
+  '    else: a[k] = R[j]; j++; inv += |L| − i   // R[j] vượt qua mọi giá trị còn trong L',
   '  return inv',
   'answer = sortCount(a, 0, n − 1)',
 ];

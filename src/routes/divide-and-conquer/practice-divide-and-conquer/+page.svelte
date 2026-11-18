@@ -20,7 +20,7 @@
     runCombine,
     solveTrace,
   } from '$lib/algo-engine/practice-divide-and-conquer.js';
-  import { en as m } from '$lib/lessons/practice-divide-and-conquer/copy.en.js';
+  import { vi as m } from '$lib/lessons/practice-divide-and-conquer/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/practice-divide-and-conquer.js').Problem} Problem */

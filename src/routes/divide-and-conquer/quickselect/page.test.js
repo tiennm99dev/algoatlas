@@ -4,7 +4,7 @@ import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
 import { selectTrace } from '$lib/algo-engine/quickselect.js';
-import { en as m } from '$lib/lessons/quickselect/copy.en.js';
+import { vi as m } from '$lib/lessons/quickselect/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -87,15 +87,17 @@ function practice() {
 describe('quickselect lesson', () => {
   it('starts on the 6th smallest of the example', () => {
     render();
-    expect(narration()).toContain('Find the 6th smallest of 12 values');
-    expect(narration()).toContain('slot 5');
+    expect(narration()).toContain('Tìm phần tử nhỏ thứ 6 trong 12 giá trị');
+    expect(narration()).toContain('ô 5');
   });
 
   it('finds the answer and reports rounds and comparisons', () => {
     render();
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('The 6th smallest is 38, found in 2 rounds with 21 comparisons');
-    expect(stat('Rounds')).toBe('2');
+    expect(narration()).toContain(
+      'Phần tử nhỏ thứ 6 là 38, tìm được sau 2 vòng với 21 lần so sánh',
+    );
+    expect(stat('Số vòng')).toBe('2');
   });
 
   it('fades the discarded side after a discard', () => {
@@ -103,59 +105,59 @@ describe('quickselect lesson', () => {
     const trace = selectTrace(EXAMPLE, 6, 'last');
     const at = trace.findIndex((f) => f.kind === 'discard');
     seek(at);
-    expect(narration()).toMatch(/so discard \[\d+–\d+\]/);
-    expect(stat('Live values')).toBe(String(trace[at].hi - trace[at].lo + 1));
+    expect(narration()).toMatch(/nên bỏ \[\d+–\d+\]/);
+    expect(stat('Giá trị còn xét')).toBe(String(trace[at].hi - trace[at].lo + 1));
   });
 
   it('shows groups of 5 and their medians under median of medians', () => {
     render();
     pickRule('mom');
-    expect(narration()).toContain('Pivot rule: Median of medians.');
+    expect(narration()).toContain('Cách chọn chốt: Trung vị của các trung vị.');
     expect(text()).toContain('medianOfMedians(a, lo, hi):');
     const trace = selectTrace(EXAMPLE, 6, 'mom');
     seek(trace.findIndex((f) => f.kind === 'groups'));
-    expect(narration()).toContain('into 3 groups of at most 5');
+    expect(narration()).toContain('thành 3 nhóm, mỗi nhóm tối đa 5');
     seek(trace.findIndex((f) => f.kind === 'medians'));
-    expect(narration()).toContain('found by a recursive selection');
-    const strip = document.querySelector('[aria-label^="Array:"]');
+    expect(narration()).toContain('tìm được nhờ một lần chọn đệ quy');
+    const strip = document.querySelector('[aria-label^="Mảng:"]');
     expect(strip?.textContent).toContain('m');
     expect(strip?.getAttribute('aria-label')).toContain('g1');
   });
 
   it('compares the three pivot rules on the same input', () => {
     render();
-    expect(text()).toMatch(/Last value\s*21 comparisons/);
-    expect(text()).toMatch(/Median of medians\s*30 comparisons/);
-    expect(text()).toContain('19 of them spent choosing pivots');
-    expect(text()).toContain('Sort first, then index');
+    expect(text()).toMatch(/Giá trị cuối\s*21 lần so sánh/);
+    expect(text()).toMatch(/Trung vị của các trung vị\s*30 lần so sánh/);
+    expect(text()).toContain('19 lần trong số đó dùng để chọn chốt');
+    expect(text()).toContain('Sắp xếp trước, rồi lấy theo chỉ số');
   });
 
   it('runs the random rule without breaking the answer', () => {
     render();
     pickRule('random');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('The 6th smallest is 38');
+    expect(narration()).toContain('Phần tử nhỏ thứ 6 là 38');
   });
 
   it('shows the quadratic case for the minimum of sorted input', () => {
     render();
     commit(field('preset'), 'sorted');
-    expect(text()).toContain('New array loaded.');
+    expect(text()).toContain('Đã nạp mảng mới.');
     commit(field('k'), '1');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('found in 11 rounds with 66 comparisons');
+    expect(narration()).toContain('sau 11 vòng với 66 lần so sánh');
     pickRule('mom');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('found in 3 rounds with 36 comparisons');
+    expect(narration()).toContain('sau 3 vòng với 36 lần so sánh');
   });
 
   it('refuses a k outside 1..n and bad values, keeping the last valid ones', () => {
     render();
     commit(field('k'), '13');
-    expect(narration()).toContain('k must be a whole number from 1 to 12');
+    expect(narration()).toContain('k phải là số nguyên từ 1 đến 12');
     expect(/** @type {HTMLInputElement} */ (field('k')).value).toBe('6');
     commit(field('values'), '1, 2, q');
-    expect(narration()).toContain('Type whole numbers');
+    expect(narration()).toContain('Hãy nhập các số nguyên');
     expect(/** @type {HTMLInputElement} */ (field('values')).value).toBe(EXAMPLE.join(', '));
   });
 
@@ -166,13 +168,13 @@ describe('quickselect lesson', () => {
     values.dispatchEvent(new Event('input', { bubbles: true }));
     values.form?.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
     flushSync();
-    expect(narration()).toContain('Find the 3rd smallest of 3 values');
+    expect(narration()).toContain('Tìm phần tử nhỏ thứ 3 trong 3 giá trị');
   });
 
   it('loads a random array from the button', () => {
     render();
-    click(buttonByText('Random array'));
-    expect(text()).toContain('New array loaded.');
+    click(buttonByText('Mảng ngẫu nhiên'));
+    expect(text()).toContain('Đã nạp mảng mới.');
   });
 
   it('checks a practice answer, shows a hint, and accepts the right one', () => {

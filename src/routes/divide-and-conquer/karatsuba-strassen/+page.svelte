@@ -17,7 +17,7 @@
     strassenTrace,
     threePseudocode,
   } from '$lib/algo-engine/karatsuba-strassen.js';
-  import { en as m } from '$lib/lessons/karatsuba-strassen/copy.en.js';
+  import { vi as m } from '$lib/lessons/karatsuba-strassen/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/karatsuba-strassen.js').SplitMethod} SplitMethod */
@@ -361,8 +361,8 @@
                 {@const c = digitProducts(n)}
                 <tr class="border-t border-slate-100">
                   <td class="py-0.5 text-left">{n}</td>
-                  <td class="py-0.5">{c.four.toLocaleString('en-US')}</td>
-                  <td class="py-0.5">{c.three.toLocaleString('en-US')}</td>
+                  <td class="py-0.5">{c.four}</td>
+                  <td class="py-0.5">{c.three}</td>
                 </tr>
               {/each}
             </tbody>

@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/karatsuba-strassen/copy.en.js';
+import { vi as m } from '$lib/lessons/karatsuba-strassen/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -71,22 +71,22 @@ function practice() {
 describe('Karatsuba and Strassen lesson', () => {
   it('splits 1213 × 3141 into four products first', () => {
     render();
-    expect(narration()).toContain('Multiply 1213 × 3141');
+    expect(narration()).toContain('Nhân 1213 × 3141');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('split at m = 2');
-    expect(narration()).toContain('Four products: 12·31, 12·41, 13·31 and 13·41.');
+    expect(narration()).toContain('chia tại m = 2');
+    expect(narration()).toContain('Bốn tích: 12·31, 12·41, 13·31 và 13·41.');
     expect(calls()).toHaveLength(5);
   });
 
   it('ends with 16 one-digit products, then 9 with Karatsuba', () => {
     render();
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('1213 × 3141 = 3810033, using 16 one-digit multiplications');
+    expect(narration()).toContain('1213 × 3141 = 3810033, dùng 16 phép nhân một chữ số');
     pick('three');
-    expect(text()).toContain('Now using Karatsuba’s three products per split.');
+    expect(text()).toContain('Đang dùng ba tích mỗi lần chia của Karatsuba.');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('using 9 one-digit multiplications');
-    expect(stat('One-digit multiplications')).toBe('9');
+    expect(narration()).toContain('dùng 9 phép nhân một chữ số');
+    expect(stat('Số phép nhân một chữ số')).toBe('9');
   });
 
   it('explains the Karatsuba middle term when combining', () => {
@@ -98,15 +98,15 @@ describe('Karatsuba and Strassen lesson', () => {
       seen = narration().startsWith('z₁ = ');
     }
     expect(seen).toBe(true);
-    expect(narration()).toMatch(/z₁ = \d+ − \d+ − \d+ = \d+, so/);
+    expect(narration()).toMatch(/z₁ = \d+ − \d+ − \d+ = \d+, nên/);
   });
 
   it('shows a carry note and a Karatsuba loss on 1234 × 5678', () => {
     render();
     commit(field('example'), 'classic');
     pick('three');
-    expect(text()).toMatch(/Four \(plain split\)\s*16/);
-    expect(text()).toMatch(/Three \(Karatsuba\)\s*17/);
+    expect(text()).toMatch(/Bốn \(chia thường\)\s*16/);
+    expect(text()).toMatch(/Ba \(Karatsuba\)\s*17/);
   });
 
   it('lets a learner select a call to see its split', () => {
@@ -121,31 +121,31 @@ describe('Karatsuba and Strassen lesson', () => {
   it('refuses bad factors and keeps the last valid one', () => {
     render();
     commit(field('x'), '12x');
-    expect(narration()).toContain('Type a whole number');
+    expect(narration()).toContain('Hãy nhập một số nguyên');
     expect(/** @type {HTMLInputElement} */ (field('x')).value).toBe('1213');
     commit(field('y'), '1234567');
-    expect(narration()).toContain('at most 6 digits');
+    expect(narration()).toContain('tối đa 6 chữ số');
     commit(field('y'), '7');
     commit(field('x'), '8');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('8 × 7 = 56, using 1 one-digit multiplication in 1 call');
+    expect(narration()).toContain('8 × 7 = 56, dùng 1 phép nhân một chữ số trong 1 lời gọi');
   });
 
   it('tabulates n² against n^1.585', () => {
     render();
-    expect(text()).toMatch(/1024\s*1,048,576\s*59,049/);
+    expect(text()).toMatch(/1024\s*1048576\s*59049/);
   });
 
   it('steps through Strassen’s seven products and four entries', () => {
     render();
     pick('matrices');
-    expect(narration()).toContain('The definition needs 8 products');
+    expect(narration()).toContain('Theo định nghĩa cần 8 tích');
     click(button('Bước tiếp'));
     expect(narration()).toContain('M₁ = (A₁₁ + A₂₂)(B₁₁ + B₂₂) = 5 × 13 = 65.');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('C = [19 22; 43 50], with 7 multiplications and 18 additions');
-    expect(stat('Multiplications')).toBe('7');
-    expect(stat('Additions and subtractions')).toBe('18');
+    expect(narration()).toContain('C = [19 22; 43 50], với 7 phép nhân và 18 phép cộng và trừ');
+    expect(stat('Số phép nhân')).toBe('7');
+    expect(stat('Số phép cộng và trừ')).toBe('18');
   });
 
   it('rebuilds Strassen on new matrices and refuses bad ones', () => {
@@ -155,10 +155,10 @@ describe('Karatsuba and Strassen lesson', () => {
     click(button('Đến bước cuối'));
     expect(narration()).toContain('C = [5 6; 7 8]');
     commit(field('B'), '1 2 3');
-    expect(narration()).toContain('Type four whole numbers');
+    expect(narration()).toContain('Hãy nhập bốn số nguyên');
     expect(/** @type {HTMLInputElement} */ (field('B')).value).toBe('5 6; 7 8');
     commit(field('B'), '1 2 3 12');
-    expect(narration()).toContain('between −9 and 9');
+    expect(narration()).toContain('từ −9 đến 9');
   });
 
   it('checks a practice answer, shows a hint, and accepts the right one', () => {

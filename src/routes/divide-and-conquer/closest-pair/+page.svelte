@@ -20,7 +20,7 @@
     closestTrace,
     parsePoints,
   } from '$lib/algo-engine/closest-pair.js';
-  import { en as m } from '$lib/lessons/closest-pair/copy.en.js';
+  import { vi as m } from '$lib/lessons/closest-pair/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/closest-pair.js').Point} Point */

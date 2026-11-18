@@ -4,7 +4,7 @@ import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
 import { inversionTrace } from '$lib/algo-engine/counting-inversions.js';
-import { en as m } from '$lib/lessons/counting-inversions/copy.en.js';
+import { vi as m } from '$lib/lessons/counting-inversions/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -81,16 +81,16 @@ function practice() {
 describe('counting inversions lesson', () => {
   it('starts with the pair count a full check would need', () => {
     render();
-    expect(narration()).toContain('Checking every pair would read 28 pairs');
-    expect(stat('Inversions')).toBe('0');
-    expect(stat('Pairs a check of every pair reads')).toBe('28');
+    expect(narration()).toContain('Thử mọi cặp sẽ phải xét 28 cặp');
+    expect(stat('Số nghịch thế')).toBe('0');
+    expect(stat('Số cặp phải xét nếu thử mọi cặp')).toBe('28');
   });
 
   it('counts 14 inversions on the example and lists them', () => {
     render();
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('14 inversions, found with');
-    expect(stat('Inversions')).toBe('14');
+    expect(narration()).toContain('Có 14 nghịch thế, tìm được sau');
+    expect(stat('Số nghịch thế')).toBe('14');
     expect(text()).toContain('8 > 4');
   });
 
@@ -100,10 +100,10 @@ describe('counting inversions lesson', () => {
     const at = trace.findIndex((f) => f.kind === 'take-right' && f.gained >= 2);
     seek(at);
     const f = trace[at];
-    expect(narration()).toContain(`each one an inversion: +${f.gained}.`);
+    expect(narration()).toContain(`mỗi giá trị là một nghịch thế: +${f.gained}.`);
     const left = document.querySelector('[aria-label^="L:"]');
     expect(left?.textContent).toContain('>');
-    expect(stat('Cross pairs in this merge')).toBe(String(f.call?.cross));
+    expect(stat('Cặp chéo trong lượt trộn này')).toBe(String(f.call?.cross));
   });
 
   it('shows L and R only while a range is merging', () => {
@@ -119,8 +119,8 @@ describe('counting inversions lesson', () => {
     render();
     commit(valuesField(), '5, 5, 5, 5');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('0 inversions');
-    expect(narration()).toContain('already sorted');
+    expect(narration()).toContain('Có 0 nghịch thế');
+    expect(narration()).toContain('vốn đã được sắp xếp');
   });
 
   it('loads a preset and announces it', () => {
@@ -129,21 +129,21 @@ describe('counting inversions lesson', () => {
       /** @type {HTMLSelectElement} */ (document.querySelector('select[name="preset"]')),
       'reversed',
     );
-    expect(text()).toContain('New array loaded.');
+    expect(text()).toContain('Đã nạp mảng mới.');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('66 inversions');
-    expect(narration()).toContain('Every pair is inverted');
+    expect(narration()).toContain('Có 66 nghịch thế');
+    expect(narration()).toContain('Cặp nào cũng là nghịch thế');
   });
 
   it('refuses bad values and keeps the last valid array', () => {
     render();
     commit(valuesField(), '3, x');
-    expect(narration()).toContain('Type whole numbers');
+    expect(narration()).toContain('Hãy nhập các số nguyên');
     expect(valuesField().value).toBe(EXAMPLE.join(', '));
     commit(valuesField(), '1, 200');
-    expect(narration()).toContain('between 0 and 99');
+    expect(narration()).toContain('từ 0 đến 99');
     commit(valuesField(), '1');
-    expect(narration()).toContain('between 2 and 16 values');
+    expect(narration()).toContain('từ 2 đến 16 giá trị');
   });
 
   it('commits typed values on Enter', () => {
@@ -154,13 +154,13 @@ describe('counting inversions lesson', () => {
     field.form?.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
     flushSync();
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('1 inversion, found with 1 comparison');
+    expect(narration()).toContain('Có 1 nghịch thế, tìm được sau 1 lần so sánh');
   });
 
   it('loads a random array from the button', () => {
     render();
-    click(buttonByText('Random array'));
-    expect(text()).toContain('New array loaded.');
+    click(buttonByText('Mảng ngẫu nhiên'));
+    expect(text()).toContain('Đã nạp mảng mới.');
     expect(
       /** @type {HTMLSelectElement} */ (document.querySelector('select[name="preset"]')).value,
     ).toBe('');
@@ -200,7 +200,7 @@ describe('take-left narration', () => {
         .filter((f) => f.kind === 'take-left' && f.j < f.right.length)
         .map((f) => m.describe(f));
     expect(takes([1, 2])).toEqual([expect.stringContaining('1 < R[0] = 2')]);
-    expect(takes([1, 2])[0]).not.toContain('Ties');
-    expect(takes([3, 3])).toEqual([expect.stringContaining('Ties go left')]);
+    expect(takes([1, 2])[0]).not.toContain('Khi bằng nhau');
+    expect(takes([3, 3])).toEqual([expect.stringContaining('Khi bằng nhau ta lấy bên trái')]);
   });
 });
