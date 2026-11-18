@@ -140,7 +140,7 @@ export const en = {
         'Move the cache slider up one block at a time and read Block transfers at the last step.',
       ],
       solution:
-        'C = 4 gives 56, 5 gives 48, 6 gives 44 and 7 gives 32. The recursion works on 4 × 4 sub-matrices, which touch 4 blocks of A and 4 of B; from 7 cached blocks on, LRU keeps every block until the recursion is done with it, so each is fetched once.',
+        'C = 4 gives 56, 5 gives 48, 6 gives 44 and 7 gives 32. A 4 × 4 sub-matrix touches 4 blocks of A and 4 of B, but not all 8 at once: its first two rows of A are finished before the last two are read, so 6 blocks are in use at a time. LRU needs one more than that, because with 6 it evicts a block of B that is still needed instead of a finished block of A; with 7 the block it evicts is always a finished one, so every block is fetched once.',
     },
     {
       type: 'choice',
