@@ -85,21 +85,21 @@ describe('practice: choosing a model lesson', () => {
     click(button('Đến bước cuối'));
     expect(row('chunks')).toContain('131074 bước');
     expect(row('chunks')).toContain(m.bestMark);
-    expect(text()).toContain('Thuật toán bạn chọn không phải rẻ nhất ở đây.');
+    expect(text()).toContain('Thuật toán em chọn không phải rẻ nhất ở đây.');
   });
 
   it('records a right match and a wrong one', () => {
     render();
     commit(field('algorithm'), 'chunks');
     click(buttonByText(m.check));
-    expect(text()).toContain('Cách ghép của bạn đúng rồi.');
+    expect(text()).toContain('Cách ghép của em đúng rồi.');
     expect(text()).toContain(m.score(1, 6));
     expect(result('sum')).toContain('đã ghép đúng');
     commit(field('card'), 'webCache');
     commit(field('model'), 'external');
     commit(field('algorithm'), 'lru');
     click(buttonByText(m.check));
-    expect(text()).toContain('Thuật toán bạn chọn đúng, nhưng hãy xem lại mô hình.');
+    expect(text()).toContain('Thuật toán em chọn đúng, nhưng hãy xem lại mô hình.');
     expect(result('webCache')).toContain('chưa đúng');
     expect(text()).toContain(m.score(1, 6));
   });

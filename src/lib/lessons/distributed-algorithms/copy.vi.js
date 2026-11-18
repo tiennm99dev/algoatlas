@@ -10,11 +10,11 @@ export const vi = {
   level: 'Trung bình',
   title: 'Thuật toán phân tán',
   intro:
-    'Trong một hệ phân tán, mỗi nút là một máy riêng, chỉ thấy trạng thái của chính nó và các thông điệp từ những nút kề. Trong mô hình đồng bộ, các nút cùng tiến theo từng vòng: gửi, nhận, cập nhật. Bầu ra một thủ lĩnh là bài toán kinh điển đầu tiên, và FloodMax giải nó trong D vòng, đồng thời dựng luôn một cây duyệt theo chiều rộng (BFS) trên đường đi.',
+    'Trong một hệ phân tán, mỗi nút là một máy riêng, chỉ thấy trạng thái của chính nó và các thông điệp từ những nút kề. Trong mô hình đồng bộ, các nút cùng tiến theo từng vòng: gửi, nhận, cập nhật. Bầu ra một thủ lĩnh là bài toán kinh điển đầu tiên, và FloodMax giải nó trong D vòng, đồng thời dựng luôn một cây BFS (duyệt theo chiều rộng) trên đường đi.',
   summary:
-    'Xem FloodMax bầu thủ lĩnh qua từng vòng trên một mạng do bạn vẽ, đếm số thông điệp của nó, và thấy vì sao các nút giống hệt nhau không thể phá vỡ đối xứng.',
+    'Xem FloodMax bầu thủ lĩnh qua từng vòng trên một mạng do em vẽ, đếm số thông điệp của nó, và thấy vì sao các nút giống hệt nhau không thể phá vỡ đối xứng.',
   instruction:
-    'Chạy từng vòng: các liên kết được tô sáng mang thông điệp của vòng này, còn ghi chú dưới mỗi nút cho biết ID của nó và ID lớn nhất nó đã thấy. Vẽ mạng của riêng bạn bằng các công cụ, xáo trộn ID, cho mọi ID bằng nhau, hoặc chuyển sang chỉ gửi khi có thay đổi rồi so số thông điệp.',
+    'Chạy từng vòng: các liên kết được tô sáng mang thông điệp của vòng này, còn ghi chú dưới mỗi nút cho biết ID của nó và ID lớn nhất nó đã thấy. Vẽ mạng của riêng em bằng các công cụ, xáo trộn ID, cho mọi ID bằng nhau, hoặc chuyển sang chỉ gửi khi có thay đổi rồi so số thông điệp.',
   presetLabel: 'Mạng',
   presets: { ring: 'Vòng', path: 'Đường thẳng', tree: 'Cây', mesh: 'Lưới' },
   variantLabel: 'Gửi',

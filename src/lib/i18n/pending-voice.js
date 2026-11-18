@@ -5,10 +5,11 @@
  * runs. Whoever moves a topic to the new voice and terms removes its line in the same commit,
  * and the last one removes this module and its imports.
  */
-export const pendingTopics = new Set([
-  // One topic per line, a blank line between, so parallel removals merge cleanly.
-  'computation-models',
-]);
+export const pendingTopics = /** @type {Set<string>} */ (
+  new Set([
+    // One topic per line, a blank line between, so parallel removals merge cleanly.
+  ])
+);
 
 /**
  * Lesson titles from before the English-term rename, by slug. A lesson in a pending topic may

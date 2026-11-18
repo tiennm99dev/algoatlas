@@ -40,11 +40,11 @@ export const vi = {
   intro:
     'Một chương trình đa luồng nói rõ phần nào được chạy song song bằng hai từ khoá: spawn bắt đầu một lời gọi có thể chạy song song với hàm cha, còn sync chờ mọi lời gọi đã spawn chạy xong. Một lần chạy của nó là một DAG gồm các mạch lệnh, và hai con số dự đoán tốc độ của nó trên mọi máy: khối lượng công việc (work) T₁, tức tổng thời gian của mọi mạch, và độ dài đường găng (span) T∞, tức đường đi dài nhất qua DAG.',
   summary:
-    'Lập lịch DAG tính toán của P-FIB hoặc của sắp xếp trộn song song trên 1 đến 8 bộ xử lí, và xem work, span cùng cận Brent quyết định thời gian chạy ra sao.',
+    'Lập lịch DAG tính toán của P-FIB hoặc của merge sort song song trên 1 đến 8 bộ xử lí, và xem work, span cùng cận Brent quyết định thời gian chạy ra sao.',
   instruction:
     'Chọn một chương trình và kích thước của nó, đặt số bộ xử lí P, rồi chạy từng bước lịch tham lam. Ở mỗi bước, mỗi bộ xử lí chạy một bước của một mạch; P1, P2, … cho biết bộ nào chạy mạch nào. So số bước với work, span và bảng hệ số tăng tốc.',
   programLabel: 'Chương trình',
-  programs: { fib: 'P-FIB(n)', mergesort: 'Sắp xếp trộn song song' },
+  programs: { fib: 'P-FIB(n)', mergesort: 'Merge sort song song' },
   /** @param {'fib'|'mergesort'} program */
   sizeLabel: (program) => (program === 'fib' ? 'n' : 'Số phần tử n'),
   processorsLabel: 'Số bộ xử lí P',
@@ -128,8 +128,8 @@ export const vi = {
     'spawn cho một lời gọi chạy song song với phần mã phía sau nó; sync chờ mọi lời gọi con đã spawn. Bỏ cả hai từ khoá đi thì còn lại đúng chương trình tuần tự thông thường.',
     'Work T₁ là thời gian chạy trên một bộ xử lí, còn span T∞ là thời gian chạy trên vô số bộ xử lí. Mọi lịch trên P bộ xử lí đều cần T_P ≥ T₁/P (định luật work) và T_P ≥ T∞ (định luật span).',
     'Bộ lập lịch tham lam, không bao giờ để một bộ xử lí rảnh khi còn mạch sẵn sàng, xong trong vòng T₁/P + T∞ bước, nên chậm hơn lịch tốt nhất không quá 2 lần. Hệ số tăng tốc tăng gần như tuyến tính khi P còn nhỏ hơn nhiều so với độ song song T₁/T∞.',
-    'Sắp xếp trộn với các lời gọi đệ quy được spawn có work Θ(n log n) nhưng span Θ(n), vì riêng phép trộn tuần tự ở gốc đã mất n bước; độ song song của nó chỉ là Θ(log n). Trộn song song giảm span xuống Θ(log³ n).',
-    'Thử xem: chạy sắp xếp trộn song song trên 16 phần tử và tăng P từ 1 lên 8. Hệ số tăng tốc chững lại gần độ song song 2.71, còn P-FIB(7) vẫn tiếp tục tăng.',
+    'Merge sort (sắp xếp trộn) với các lời gọi đệ quy được spawn có work Θ(n log n) nhưng span Θ(n), vì riêng phép trộn tuần tự ở gốc đã mất n bước; độ song song của nó chỉ là Θ(log n). Trộn song song giảm span xuống Θ(log³ n).',
+    'Thử xem: chạy merge sort song song trên 16 phần tử và tăng P từ 1 lên 8. Hệ số tăng tốc chững lại gần độ song song 2.71, còn P-FIB(7) vẫn tiếp tục tăng.',
   ],
   complexityHead: ['Đại lượng', 'Chi phí', 'Vì sao'],
   complexity: [
@@ -144,12 +144,12 @@ export const vi = {
       'Đường đi dài nhất rẽ nhánh xuống n tầng rồi hợp nhánh quay lên.',
     ],
     [
-      'Sắp xếp trộn, trộn tuần tự',
+      'Merge sort, trộn tuần tự',
       'Work Θ(n log n), span Θ(n)',
       'Hai nửa chạy song song, nhưng mỗi phép trộn là một mạch dài: n + n/2 + … ≤ 2n.',
     ],
     [
-      'Sắp xếp trộn, trộn song song',
+      'Merge sort, trộn song song',
       'Work Θ(n log n), span Θ(log³ n)',
       'Chia mỗi phép trộn theo trung vị và tìm kiếm nhị phân cho một phép trộn có span Θ(log² n).',
     ],
@@ -174,7 +174,7 @@ export const vi = {
     {
       type: 'number',
       prompt:
-        'Chạy sắp xếp trộn song song trên 16 phần tử với P = 4. Lịch tham lam mất bao nhiêu bước?',
+        'Chạy merge sort song song trên 16 phần tử với P = 4. Lịch tham lam mất bao nhiêu bước?',
       answer: 45,
       unit: 'bước',
       hints: [
@@ -186,7 +186,7 @@ export const vi = {
     {
       type: 'choice',
       prompt:
-        'Sắp xếp trộn song song trên 16 phần tử chỉ đạt hệ số tăng tốc 2.5 trên 8 bộ xử lí. Điều gì giới hạn nó?',
+        'Merge sort song song trên 16 phần tử chỉ đạt hệ số tăng tốc 2.5 trên 8 bộ xử lí. Điều gì giới hạn nó?',
       options: [
         'Hai lời gọi đệ quy không thể chạy cùng lúc',
         'Span: các phép trộn tuần tự dọc đường găng mất 16 + 8 + 4 + 2 bước',

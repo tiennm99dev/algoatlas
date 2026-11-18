@@ -84,17 +84,17 @@ describe('online algorithms lesson', () => {
     render();
     expect(text()).toContain('Mùa kết thúc vào một ngày bí mật. Hãy thuê hoặc mua cho ngày 1.');
     click(buttonByText(m.rent));
-    expect(text()).toContain('Sau ngày 1 bạn đã trả 1. Mùa vẫn tiếp tục');
+    expect(text()).toContain('Sau ngày 1 em đã trả 1. Mùa vẫn tiếp tục');
     click(buttonByText(m.rent));
     click(buttonByText(m.buy));
     // The secret season lasts 13 days: 2 rented days and the skis, 12, against min(13, 10).
-    expect(text()).toContain('Mùa trượt kéo dài 13 ngày. Bạn đã trả 12');
+    expect(text()).toContain('Mùa trượt kéo dài 13 ngày. Em đã trả 12');
     expect(stat(m.skiStats.ratio)).toBe('1.2');
     click(buttonByText(m.rent));
     expect(text()).toContain(m.notices.over);
     click(button('Về bước đầu'));
     click(button('Bước tiếp'));
-    expect(text()).toContain('Ngày 1: Bạn thuê: +1.');
+    expect(text()).toContain('Ngày 1: Em thuê: +1.');
   });
 
   it('lets the adversary end the season right after buying', () => {
@@ -103,7 +103,7 @@ describe('online algorithms lesson', () => {
     click(radio('rule', 'adversary'));
     for (let i = 0; i < 4; i++) click(buttonByText(m.rent));
     click(buttonByText(m.buy));
-    expect(text()).toContain('Mùa trượt kéo dài 5 ngày. Bạn đã trả 14');
+    expect(text()).toContain('Mùa trượt kéo dài 5 ngày. Em đã trả 14');
     expect(stat(m.skiStats.ratio)).toBe('2.8');
     click(buttonByText(m.newSeason));
     expect(stat(m.skiStats.day)).toBe('0');

@@ -57,7 +57,7 @@ export const skiPseudocode = [
   '  if đã có ván: trượt miễn phí',
   '  else if t = k: mua ván, trả b',
   '  else: thuê, trả 1',
-  'ratio = chi phí của bạn / min(số ngày, b)   ▹ OPT biết trước độ dài mùa',
+  'ratio = chi phí của em / min(số ngày, b)   ▹ OPT biết trước độ dài mùa',
 ];
 
 export const pagingPseudocode = [

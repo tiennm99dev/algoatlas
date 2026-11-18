@@ -112,7 +112,7 @@ export const vi = {
       'Các ma trận con cỡ B × B vừa với cache, nên mỗi khối chỉ được nạp O(1) lần.',
     ],
     [
-      'Sắp xếp trộn so với sắp xếp phễu (funnelsort)',
+      'Merge sort so với sắp xếp phễu (funnelsort)',
       'Θ((n/B) log₂(n/M)) so với Θ((n/B) log_{M/B}(n/B))',
       'Phép trộn nhiều đường theo kiểu đệ quy dùng hết cache mà không cần biết kích thước của nó.',
     ],

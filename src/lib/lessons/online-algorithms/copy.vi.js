@@ -16,14 +16,14 @@ export const vi = {
   intro:
     'Thuật toán trực tuyến phải quyết định ngay khi đầu vào tới, mà không thấy được phần sau. Ta đánh giá nó bằng tỉ số cạnh tranh (competitive ratio): trong trường hợp xấu nhất, nó tốn nhiều hơn bao nhiêu lần so với lời giải ngoại tuyến tốt nhất, vốn biết trước toàn bộ đầu vào. Bài toán thuê ván trượt và bài toán phân trang là hai ví dụ kinh điển.',
   summary:
-    'Chơi bài toán thuê ván trượt với một mùa trượt bí mật hoặc do đối thủ chọn và so chi phí của bạn với tối ưu, rồi cho LRU, FIFO và OPT ngoại tuyến thi đấu trên một dãy yêu cầu phân trang do bạn gõ.',
+    'Chơi bài toán thuê ván trượt với một mùa trượt bí mật hoặc do đối thủ chọn và so chi phí của em với tối ưu, rồi cho LRU, FIFO và OPT ngoại tuyến thi đấu trên một dãy yêu cầu phân trang do em gõ.',
   instruction:
-    'Ở Thuê ván trượt, bấm Thuê hôm nay hoặc Mua hôm nay và xem tỉ số của bạn khi mùa kết thúc, hoặc chọn sẵn một kế hoạch rồi kéo độ dài mùa để tìm trường hợp xấu nhất của nó. Ở Phân trang, gõ một dãy yêu cầu, đặt kích thước cache k, rồi chạy từng bước để so số lỗi trang của LRU, FIFO và OPT.',
+    'Ở Thuê ván trượt, bấm Thuê hôm nay hoặc Mua hôm nay và xem tỉ số của em khi mùa kết thúc, hoặc chọn sẵn một kế hoạch rồi kéo độ dài mùa để tìm trường hợp xấu nhất của nó. Ở Phân trang, gõ một dãy yêu cầu, đặt kích thước cache k, rồi chạy từng bước để so số lỗi trang của LRU, FIFO và OPT.',
   modeLabel: 'Bài toán',
   modes: { ski: 'Thuê ván trượt', paging: 'Phân trang' },
   priceLabel: 'Giá mua ván b',
   strategyLabel: 'Kế hoạch',
-  strategies: { play: 'Bạn tự quyết', fixed: 'Mua vào ngày k', never: 'Không bao giờ mua' },
+  strategies: { play: 'Em tự quyết', fixed: 'Mua vào ngày k', never: 'Không bao giờ mua' },
   buyDayLabel: 'Mua vào ngày k',
   seasonLabel: 'Độ dài mùa d',
   seasonRuleLabel: 'Mùa kết thúc',
@@ -37,9 +37,9 @@ export const vi = {
     empty: 'Hãy gõ ít nhất một yêu cầu.',
     length: 'Dùng tối đa 30 yêu cầu.',
   },
-  daysTitle: 'Mùa trượt của bạn',
+  daysTitle: 'Mùa trượt của em',
   /** @param {number} n */
-  daysAria: (n) => `Mùa trượt của bạn tới lúc này: ${n} ngày.`,
+  daysAria: (n) => `Mùa trượt của em tới lúc này: ${n} ngày.`,
   dayMarks: { rent: 'T', buy: 'M', own: '✓' },
   /** @param {number} day @param {'rent'|'buy'|'own'} a */
   dayLabel: (day, a) =>
@@ -66,7 +66,7 @@ export const vi = {
   curveLegend: { worst: '▲ Mùa xấu nhất cho kế hoạch này', season: '● Mùa hiện tại' },
   skiStats: {
     day: 'Ngày',
-    cost: 'Chi phí của bạn',
+    cost: 'Chi phí của em',
     opt: 'Tối ưu min(d, b)',
     ratio: 'Tỉ số',
   },
@@ -121,24 +121,24 @@ export const vi = {
     switch (f.kind) {
       case 'start':
         return ctx.plan === 'play'
-          ? `Mua ván giá ${b}; thuê tốn 1 mỗi ngày. ${ctx.rule === 'adversary' ? 'Một đối thủ sẽ kết thúc mùa vào lúc tệ nhất cho bạn.' : 'Mùa kết thúc vào một ngày bí mật.'} Hãy thuê hoặc mua cho ngày 1.`
+          ? `Mua ván giá ${b}; thuê tốn 1 mỗi ngày. ${ctx.rule === 'adversary' ? 'Một đối thủ sẽ kết thúc mùa vào lúc tệ nhất cho em.' : 'Mùa kết thúc vào một ngày bí mật.'} Hãy thuê hoặc mua cho ngày 1.`
           : `Mua ván giá ${b}; thuê tốn 1 mỗi ngày. Kế hoạch ${ctx.plan === 'never' ? 'thuê mọi ngày' : `thuê tới ngày ${ctx.k - 1} và mua vào ngày ${ctx.k}`}.`;
       case 'day': {
         const a = f.actions[f.day - 1];
         const what =
           a === 'rent'
-            ? 'Bạn thuê: +1.'
+            ? 'Em thuê: +1.'
             : a === 'buy'
-              ? `Bạn mua ván: +${b}.`
-              : 'Bạn trượt bằng ván của mình: +0.';
+              ? `Em mua ván: +${b}.`
+              : 'Em trượt bằng ván của mình: +0.';
         return `Ngày ${f.day}: ${what} Chi phí ${f.cost}. Nếu mùa kết thúc hôm nay, tối ưu sẽ trả min(${f.day}, ${b}) = ${f.opt}: tỉ số ${num(ratio)}.`;
       }
       case 'done':
         if (!f.over)
           return f.day === 0
             ? `Mua ván giá ${b}; thuê tốn 1 mỗi ngày. Hãy thuê hoặc mua cho ngày 1.`
-            : `Sau ngày ${f.day} bạn đã trả ${f.cost}. Mùa vẫn tiếp tục: hãy thuê hoặc mua cho ngày ${f.day + 1}.`;
-        return `Mùa trượt kéo dài ${f.day} ngày. Bạn đã trả ${f.cost}; nếu biết trước d, tối ưu trả min(${f.day}, ${b}) = ${f.opt}. Tỉ số ${num(ratio)}${ratio <= 2 - 1 / b + 1e-9 ? ', nằm trong mức đảm bảo hoà vốn 2 − 1/b.' : ', tệ hơn mức 2 − 1/b = ' + num(2 - 1 / b) + ' của kế hoạch hoà vốn.'}`;
+            : `Sau ngày ${f.day} em đã trả ${f.cost}. Mùa vẫn tiếp tục: hãy thuê hoặc mua cho ngày ${f.day + 1}.`;
+        return `Mùa trượt kéo dài ${f.day} ngày. Em đã trả ${f.cost}; nếu biết trước d, tối ưu trả min(${f.day}, ${b}) = ${f.opt}. Tỉ số ${num(ratio)}${ratio <= 2 - 1 / b + 1e-9 ? ', nằm trong mức đảm bảo hoà vốn 2 − 1/b.' : ', tệ hơn mức 2 − 1/b = ' + num(2 - 1 / b) + ' của kế hoạch hoà vốn.'}`;
     }
   },
   /** @param {PagingFrame} f @param {string[]} req @param {number} k */
@@ -165,19 +165,19 @@ export const vi = {
   },
   takeaways: [
     'Thuật toán trực tuyến quyết định mà không thấy tương lai. Tỉ số cạnh tranh của nó là trường hợp xấu nhất, trên mọi đầu vào, của chi phí của nó chia cho chi phí của tối ưu ngoại tuyến.',
-    'Thuê ván trượt: thuê cho tới khi tổng tiền thuê sắp bằng giá mua, rồi mua vào ngày b, thì không bao giờ trả quá 2 − 1/b lần tối ưu, và không kế hoạch tất định nào làm tốt hơn. Mùa tệ nhất kết thúc ngay sau khi bạn mua.',
+    'Thuê ván trượt: thuê cho tới khi tổng tiền thuê sắp bằng giá mua, rồi mua vào ngày b, thì không bao giờ trả quá 2 − 1/b lần tối ưu, và không kế hoạch tất định nào làm tốt hơn. Mùa tệ nhất kết thúc ngay sau khi em mua.',
     'Phân trang: OPT đẩy ra trang lâu nữa mới cần nhất, nên nó phải biết cả dãy yêu cầu. LRU là k-cạnh tranh: với cache k trang, nó không bao giờ lỗi trang quá k lần số lỗi của OPT, và một vòng lặp qua k + 1 trang làm nó lỗi ở mọi yêu cầu.',
     'FIFO cũng là k-cạnh tranh, nhưng có thể lỗi nhiều hơn khi cache lớn hơn (nghịch lí Belady); LRU thì không bao giờ như vậy.',
-    'Thử xem: với Bạn tự quyết và Do đối thủ chọn, hãy thử vượt mức 2 − 1/b. Rồi mở Dãy của Belady ở Phân trang và so số lỗi trang của FIFO khi k = 3 và k = 4.',
+    'Thử xem: với Em tự quyết và Do đối thủ chọn, hãy thử vượt mức 2 − 1/b. Rồi mở Dãy của Belady ở Phân trang và so số lỗi trang của FIFO khi k = 3 và k = 4.',
   ],
   complexityHead: ['Thuật toán', 'Tỉ số cạnh tranh hoặc thời gian', 'Vì sao'],
   complexity: [
     [
       'Thuê ván trượt, mua vào ngày b',
       '2 − 1/b',
-      'Nếu d < b bạn trả d, đúng bằng tối ưu; nếu không bạn trả b − 1 + b so với b của tối ưu.',
+      'Nếu d < b em trả d, đúng bằng tối ưu; nếu không em trả b − 1 + b so với b của tối ưu.',
     ],
-    ['Mua ngay ngày 1', 'b', 'Mùa chỉ một ngày làm bạn tốn b so với 1.'],
+    ['Mua ngay ngày 1', 'b', 'Mùa chỉ một ngày làm em tốn b so với 1.'],
     ['Không bao giờ mua', 'Không bị chặn', 'Mùa dài d ngày tốn d so với b.'],
     [
       'Phân trang với LRU hoặc FIFO',
@@ -201,7 +201,7 @@ export const vi = {
       tolerance: 0.001,
       hints: ['Tìm dấu ▲ trên biểu đồ tỉ số, hoặc đặt độ dài mùa là 10 ngày.'],
       solution:
-        'Nếu mùa kết thúc vào ngày 10, bạn trả 9 + 10 = 19 trong khi tối ưu mua (hoặc thuê) với giá 10: 19/10 = 1.9 = 2 − 1/b.',
+        'Nếu mùa kết thúc vào ngày 10, em trả 9 + 10 = 19 trong khi tối ưu mua (hoặc thuê) với giá 10: 19/10 = 1.9 = 2 − 1/b.',
     },
     {
       type: 'number',
@@ -233,9 +233,9 @@ export const vi = {
       answer: 1,
       hints: ['Đọc số lỗi trang của FIFO ở cả hai kích thước.'],
       solution:
-        'Đây là nghịch lí Belady: FIFO lỗi 9 lần với 3 trang và 10 lần với 4 trang. LRU giảm từ 10 xuống 8, vì một thuật toán ngăn xếp không bao giờ tệ đi khi cache lớn hơn.',
+        'Đây là nghịch lí Belady: FIFO lỗi 9 lần với 3 trang và 10 lần với 4 trang. LRU giảm từ 10 xuống 8, vì một thuật toán stack (ngăn xếp) không bao giờ tệ đi khi cache lớn hơn.',
     },
   ],
   nextTeaser:
-    'Bài sau, Luyện tập: chọn mô hình tính toán, cho bạn ghép từng tình huống với mô hình và thuật toán phù hợp.',
+    'Bài sau, Luyện tập: chọn mô hình tính toán, cho em ghép từng tình huống với mô hình và thuật toán phù hợp.',
 };

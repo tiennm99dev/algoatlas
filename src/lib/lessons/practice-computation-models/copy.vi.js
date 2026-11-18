@@ -60,13 +60,13 @@ const CARDS = {
     why: 'Các lõi dùng chung bộ nhớ và làm việc song song: đếm số bước thời gian bằng work và span.',
     params: { logN: 'Số khoá n', p: 'Số lõi P' },
     candidates: {
-      serial: { name: 'Sắp xếp trộn trên một lõi', why: 'n log₂ n bước, dù P là bao nhiêu.' },
+      serial: { name: 'Merge sort trên một lõi', why: 'n log₂ n bước, dù P là bao nhiêu.' },
       serialMerge: {
-        name: 'Sắp xếp trộn song song, trộn tuần tự',
+        name: 'Merge sort song song, trộn tuần tự',
         why: 'Work n log₂ n nhưng span khoảng 2n, vì mỗi phép trộn là một mạch dài: n log₂ n / P + 2n.',
       },
       parallelMerge: {
-        name: 'Sắp xếp trộn song song, trộn song song',
+        name: 'Merge sort song song, trộn song song',
         why: 'Cùng work nhưng span chỉ khoảng log₂³ n: n log₂ n / P + log₂³ n.',
       },
     },
@@ -148,7 +148,7 @@ export const vi = {
   summary:
     'Ghép các thẻ tình huống với mô hình tính toán và thuật toán phù hợp, rồi đổi các con số trên mỗi thẻ để thấy khi nào một thuật toán khác trở nên rẻ nhất.',
   instruction:
-    'Chọn một thẻ, chọn mô hình và thuật toán bạn cho là phù hợp, rồi bấm Kiểm tra cách ghép. Sau đó chạy từng bước: mô hình được kiểm tra, mọi thuật toán được tính chi phí trong mô hình đó với các con số của thẻ, và thuật toán rẻ nhất thắng. Kéo các thanh trượt rồi kiểm tra lại.',
+    'Chọn một thẻ, chọn mô hình và thuật toán em cho là phù hợp, rồi bấm Kiểm tra cách ghép. Sau đó chạy từng bước: mô hình được kiểm tra, mọi thuật toán được tính chi phí trong mô hình đó với các con số của thẻ, và thuật toán rẻ nhất thắng. Kéo các thanh trượt rồi kiểm tra lại.',
   cardLabel: 'Thẻ',
   cardTitles: Object.fromEntries(Object.entries(CARDS).map(([id, c]) => [id, c.title])),
   /** @param {string} id */
@@ -163,10 +163,10 @@ export const vi = {
   costPending: 'chưa tính',
   costText,
   bestMark: '✓ rẻ nhất',
-  pickMark: '◀ bạn chọn',
+  pickMark: '◀ em chọn',
   /** @param {number} done @param {number} total */
   score: (done, total) => `Đã ghép đúng ${done}/${total} thẻ`,
-  scoreTitle: 'Các lần ghép của bạn',
+  scoreTitle: 'Các lần ghép của em',
   scoreMarks: { right: '✓', wrong: '✗', open: '·' },
   /** @param {string} title @param {'right'|'wrong'|'open'} state */
   scoreLabel: (title, state) =>
@@ -179,7 +179,7 @@ export const vi = {
     const c = CARDS[id];
     switch (f.kind) {
       case 'start':
-        return `${c.title}: ${c.job} Cách ghép của bạn: ${MODEL_NAMES[pick.model]}, “${c.candidates[pick.algorithm].name}”.`;
+        return `${c.title}: ${c.job} Cách ghép của em: ${MODEL_NAMES[pick.model]}, “${c.candidates[pick.algorithm].name}”.`;
       case 'model':
         return f.modelOk
           ? `Đúng mô hình: ${MODEL_NAMES[f.model]}. ${c.why}`
@@ -194,9 +194,9 @@ export const vi = {
         const tie = f.best.length > 1 ? ' (hoà nhau)' : '';
         const mine = f.algorithmOk
           ? f.modelOk
-            ? 'Cách ghép của bạn đúng rồi.'
-            : 'Thuật toán bạn chọn đúng, nhưng hãy xem lại mô hình.'
-          : 'Thuật toán bạn chọn không phải rẻ nhất ở đây.';
+            ? 'Cách ghép của em đúng rồi.'
+            : 'Thuật toán em chọn đúng, nhưng hãy xem lại mô hình.'
+          : 'Thuật toán em chọn không phải rẻ nhất ở đây.';
         return `Rẻ nhất: ${names}${tie}. ${mine}`;
       }
     }
@@ -236,14 +236,14 @@ export const vi = {
       type: 'choice',
       prompt: 'Thẻ “Sắp xếp trên nhiều lõi” với P = 1 lõi. Thuật toán nào rẻ nhất?',
       options: [
-        'Sắp xếp trộn trên một lõi',
-        'Sắp xếp trộn song song, trộn tuần tự',
-        'Sắp xếp trộn song song, trộn song song',
+        'Merge sort trên một lõi',
+        'Merge sort song song, trộn tuần tự',
+        'Merge sort song song, trộn song song',
       ],
       answer: 0,
       hints: ['Đặt thanh trượt Số lõi về 1 rồi đọc ba chi phí.'],
       solution:
-        'Với một lõi, các bản song song làm cùng lượng work và còn cộng thêm span của chúng: sắp xếp trộn thường mất 20971520 bước, so với 23068672 và 20979520.',
+        'Với một lõi, các bản song song làm cùng lượng work và còn cộng thêm span của chúng: merge sort (sắp xếp trộn) thường mất 20971520 bước, so với 23068672 và 20979520.',
     },
     {
       type: 'number',
@@ -252,7 +252,7 @@ export const vi = {
       unit: 'bước',
       hints: ['Trộn song song giữ cho span nhỏ.'],
       solution:
-        'Sắp xếp trộn song song với phép trộn song song: 20 · 2^20 / 16 = 1310720 cộng với span 20³ = 8000, tức 1318720 bước. Bản trộn tuần tự phải trả span 2n = 2097152.',
+        'Merge sort song song với phép trộn song song: 20 · 2^20 / 16 = 1310720 cộng với span 20³ = 8000, tức 1318720 bước. Bản trộn tuần tự phải trả span 2n = 2097152.',
     },
     {
       type: 'number',
@@ -303,5 +303,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Bài sau, Ôn tập: thuật toán nâng cao, gom lại các kĩ thuật nâng cao bạn đã gặp trong phần này.',
+    'Bài sau, Ôn tập: thuật toán nâng cao, gom lại các kĩ thuật nâng cao em đã gặp trong phần này.',
 };
