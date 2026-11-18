@@ -9,9 +9,9 @@ export const vi = {
   level: 'Trung bình',
   title: 'Đếm nghịch thế',
   intro:
-    'Một nghịch thế là một cặp vị trí i < j có giá trị bị ngược thứ tự, a[i] > a[j]. Số nghịch thế cho biết mảng còn cách thứ tự đã sắp xếp bao xa, và dùng để so sánh hai bảng xếp hạng của cùng các đối tượng. Xét mọi cặp tốn O(n²); sắp xếp trộn đếm được tất cả trong O(n log n) ngay trong lúc sắp xếp, đúng tinh thần chia để trị (divide and conquer).',
+    'Một nghịch thế là một cặp vị trí i < j có giá trị bị ngược thứ tự, a[i] > a[j]. Số nghịch thế cho biết mảng còn cách thứ tự đã sắp xếp bao xa, và dùng để so sánh hai bảng xếp hạng của cùng các đối tượng. Xét mọi cặp tốn O(n²); merge sort (sắp xếp trộn) đếm được tất cả trong O(n log n) ngay trong lúc sắp xếp, đúng tinh thần chia để trị (divide and conquer).',
   summary:
-    'Chạy từng bước sắp xếp trộn được mở rộng để đếm nghịch thế: mỗi lần một giá trị từ dãy bên phải vượt lên trước dãy bên trái, nó cộng thêm một nghịch thế cho mỗi giá trị nó vượt qua.',
+    'Chạy từng bước merge sort được mở rộng để đếm nghịch thế: mỗi lần một giá trị từ dãy bên phải vượt lên trước dãy bên trái, nó cộng thêm một nghịch thế cho mỗi giá trị nó vượt qua.',
   instruction:
     'Nhập các giá trị hoặc chọn một mảng có sẵn, rồi chạy từng bước. Hãy để ý bước trộn: khi một giá trị được lấy từ R, mọi giá trị còn chờ trong L đều lớn hơn nó, nên số đếm tăng ngay |L| − i.',
   valuesLabel: 'Giá trị',
@@ -66,7 +66,7 @@ export const vi = {
   pairsEmpty: 'chưa có',
   /** @param {number} big @param {number} small */
   pairChip: (big, small) => `${big} > ${small}`,
-  stackTitle: 'Ngăn xếp lời gọi (ngoài cùng trước)',
+  stackTitle: 'Call stack (ngoài cùng trước)',
   stackEmpty: 'rỗng',
   /** @param {number} lo @param {number} hi */
   rangeChip: (lo, hi) => `[${lo}–${hi}]`,
@@ -76,7 +76,7 @@ export const vi = {
     const [lo, hi] = f.range ?? [0, 0];
     switch (f.kind) {
       case 'start':
-        return `Đếm các cặp i < j có a[i] > a[j]. Thử mọi cặp sẽ phải xét ${allPairs(f.values.length)} cặp; sắp xếp trộn tìm ra chúng ngay trong lúc sắp xếp.`;
+        return `Đếm các cặp i < j có a[i] > a[j]. Thử mọi cặp sẽ phải xét ${allPairs(f.values.length)} cặp; merge sort tìm ra chúng ngay trong lúc sắp xếp.`;
       case 'split':
         return `Chia [${lo}–${hi}] tại ${f.mid}: đếm các nghịch thế bên trong nửa trái, rồi bên trong nửa phải.`;
       case 'copy': {
@@ -112,7 +112,7 @@ export const vi = {
     }
   },
   takeaways: [
-    'Một nghịch thế là một cặp i < j có a[i] > a[j]. Mảng đã sắp xếp có 0 nghịch thế, còn mảng giảm ngặt có nhiều nhất, n(n − 1)/2. Sắp xếp nổi bọt đổi chỗ đúng một lần cho mỗi nghịch thế, còn sắp xếp chèn dời đúng một lần cho mỗi nghịch thế.',
+    'Một nghịch thế là một cặp i < j có a[i] > a[j]. Mảng đã sắp xếp có 0 nghịch thế, còn mảng giảm ngặt có nhiều nhất, n(n − 1)/2. Bubble sort (sắp xếp nổi bọt) đổi chỗ đúng một lần cho mỗi nghịch thế, còn insertion sort (sắp xếp chèn) dời đúng một lần cho mỗi nghịch thế.',
     'Chia: mọi nghịch thế hoặc nằm trong nửa trái, hoặc nằm trong nửa phải, hoặc nằm chéo giữa hai nửa. Sắp xếp đệ quy từng nửa sẽ đếm được hai loại đầu.',
     'Kết hợp: trong bước trộn, khi R[j] được lấy trong lúc L còn |L| − i giá trị, tất cả các giá trị ấy đều lớn hơn R[j] và đứng trước nó, nên ta cộng ngay |L| − i thay vì xét từng cặp.',
     'Khi bằng nhau ta lấy từ L, nên hai giá trị bằng nhau không bao giờ được đếm. Bước trộn tốn O(n) mỗi tầng và có log₂ n tầng, nên tổng cộng là O(n log n), so với O(n²) khi xét mọi cặp.',
@@ -121,7 +121,7 @@ export const vi = {
   complexityHead: ['Cách làm', 'Chi phí', 'Vì sao'],
   complexity: [
     [
-      'Đếm bằng sắp xếp trộn',
+      'Đếm bằng merge sort',
       'O(n log n)',
       'log₂ n tầng; mỗi tầng trộn n giá trị và cộng mỗi loạt cặp chéo trong một bước.',
     ],
@@ -130,7 +130,7 @@ export const vi = {
     [
       'Bộ nhớ thêm',
       'O(n)',
-      'Hai bản sao L và R của một lượt trộn, cộng ngăn xếp lời gọi sâu log₂ n.',
+      'Hai bản sao L và R của một lượt trộn, cộng call stack (ngăn xếp lời gọi) sâu log₂ n.',
     ],
   ],
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
@@ -189,16 +189,16 @@ export const vi = {
     {
       type: 'text',
       prompt:
-        'Đếm nghịch thế bằng sắp xếp trộn có thời gian chạy bao nhiêu, viết theo kí hiệu O lớn?',
+        'Đếm nghịch thế bằng merge sort có thời gian chạy bao nhiêu, viết theo kí hiệu O lớn?',
       accept: ['O(n log n)', 'n log n', 'Θ(n log n)', 'O(nlogn)'],
       hints: [
-        'Hệ thức truy hồi giống hệt của sắp xếp trộn.',
+        'Hệ thức truy hồi giống hệt của merge sort.',
         'T(n) = 2T(n/2) + n, trường hợp 2 của định lí thợ.',
       ],
       solution:
-        'Việc đếm chỉ thêm O(1) vào mỗi bước của lượt trộn, nên T(n) = 2T(n/2) + Θ(n) = Θ(n log n), giống sắp xếp trộn.',
+        'Việc đếm chỉ thêm O(1) vào mỗi bước của lượt trộn, nên T(n) = 2T(n/2) + Θ(n) = Θ(n log n), giống merge sort.',
     },
   ],
   nextTeaser:
-    'Bài sau giữ lại bước phân hoạch của sắp xếp nhanh nhưng chỉ đi vào một phía: Quickselect và trung vị của các trung vị tìm phần tử nhỏ thứ k mà không cần sắp xếp cả mảng.',
+    'Bài sau giữ lại bước phân hoạch của quicksort (sắp xếp nhanh) nhưng chỉ đi vào một phía: Quickselect và trung vị của các trung vị tìm phần tử nhỏ thứ k mà không cần sắp xếp cả mảng.',
 };

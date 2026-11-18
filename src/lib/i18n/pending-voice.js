@@ -39,8 +39,6 @@ export const pendingTopics = new Set([
 
   'advanced-graphs',
 
-  'divide-and-conquer',
-
   'greedy',
 
   'dynamic-programming',

@@ -91,7 +91,7 @@ export const vi = {
   summary:
     'Dựng cây đệ quy của một phép nhân với bốn tích mỗi lần chia, rồi với ba tích của Karatsuba, đếm số phép nhân một chữ số, và chạy từng bước bảy tích ma trận của Strassen.',
   instruction:
-    'Chọn Số hoặc Ma trận. Với số, nhập hai thừa số rồi chuyển qua lại giữa bốn tích và ba tích: cây cho thấy mọi lời gọi đệ quy, và bạn có thể chọn một lời gọi để xem nó được chia ra sao. Với ma trận, nhập A và B rồi chạy từng bước từ M₁ đến M₇.',
+    'Chọn Số hoặc Ma trận. Với số, nhập hai thừa số rồi chuyển qua lại giữa bốn tích và ba tích: cây cho thấy mọi lời gọi đệ quy, và em có thể chọn một lời gọi để xem nó được chia ra sao. Với ma trận, nhập A và B rồi chạy từng bước từ M₁ đến M₇.',
   modeLabel: 'Phép nhân',
   modes: { numbers: 'Số', matrices: 'Ma trận 2×2' },
   methodLabel: 'Số tích mỗi lần chia',

@@ -134,7 +134,7 @@ export const vi = {
     'Sắp xếp các điểm theo x một lần. Mỗi lời gọi dùng một đường thẳng đứng tại trung vị để chia các điểm của nó thành nửa trái và nửa phải, rồi giải đệ quy cả hai nửa.',
     'Đặt d = min(dL, dR). Mọi cặp gần hơn d đều phải nằm chéo qua đường chia, nên cả hai điểm của nó cách đường chia chưa đến d: chỉ dải rộng 2d là đáng xét.',
     'Theo thứ tự y, một điểm trong dải chỉ cần so với các điểm tiếp theo cao hơn nó chưa đến d. Các điểm cùng một phía cách nhau ít nhất d, nên một hình chữ nhật d × 2d chứa tối đa 8 điểm, và mỗi điểm chỉ phải so với tối đa 7 điểm khác: dải tốn O(n).',
-    'Nếu hai nửa được trộn theo y như sắp xếp trộn, T(n) = 2T(n/2) + O(n) = O(n log n). Sắp xếp lại dải trong mọi lời gọi cho O(n log² n); xét mọi cặp là O(n²).',
+    'Nếu hai nửa được trộn theo y như merge sort (sắp xếp trộn), T(n) = 2T(n/2) + O(n) = O(n log n). Sắp xếp lại dải trong mọi lời gọi cho O(n log² n); xét mọi cặp là O(n²).',
     'Chọn “Dải đông điểm” rồi chạy qua lời gọi ngoài cùng: rất nhiều điểm nằm sát đường chia, vậy mà mỗi điểm trong dải chỉ được đo với vài điểm lân cận phía trên nó.',
   ],
   complexityHead: ['Cách làm', 'Chi phí', 'Vì sao'],
@@ -150,7 +150,11 @@ export const vi = {
       'T(n) = 2T(n/2) + O(n log n), trường hợp 2 của định lí thợ.',
     ],
     ['Xét mọi cặp', 'O(n²)', 'n(n − 1)/2 khoảng cách.'],
-    ['Bộ nhớ thêm', 'O(n)', 'Bản sao đã sắp xếp theo x, dải, và ngăn xếp lời gọi sâu log₂ n.'],
+    [
+      'Bộ nhớ thêm',
+      'O(n)',
+      'Bản sao đã sắp xếp theo x, dải, và call stack (ngăn xếp lời gọi) sâu log₂ n.',
+    ],
   ],
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
   practice: [
@@ -222,7 +226,7 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Bài sau là Luyện tập: bài toán chia để trị. Bạn tự viết bước kết hợp cho đoạn con có tổng lớn nhất và phần tử chiếm đa số, rồi kiểm tra trên dữ liệu mẫu.',
+    'Bài sau là Luyện tập: bài toán chia để trị. Em tự viết bước kết hợp cho đoạn con có tổng lớn nhất và phần tử chiếm đa số, rồi kiểm tra trên dữ liệu mẫu.',
 };
 
 /** Squared distance between two points of a frame, by id. @param {ClosestFrame} f @param {number} a @param {number} b */

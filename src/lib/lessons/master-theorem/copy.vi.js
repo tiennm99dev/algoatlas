@@ -104,7 +104,7 @@ export const vi = {
   presetPlaceholder: 'Chọn một hệ thức…',
   presets: {
     binary: 'Tìm kiếm nhị phân: T(n/2) + 1',
-    merge: 'Sắp xếp trộn: 2T(n/2) + n',
+    merge: 'Merge sort: 2T(n/2) + n',
     karatsuba: 'Karatsuba: 3T(n/2) + n',
     strassen: 'Strassen: 7T(n/2) + n²',
     matrix: 'Nhân ma trận theo khối: 8T(n/2) + n²',
@@ -293,5 +293,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Bài sau dùng ngay hệ thức 2T(n/2) + n của sắp xếp trộn để đếm nghịch thế: đếm xem một mảng còn cách thứ tự đã sắp xếp bao xa.',
+    'Bài sau dùng ngay hệ thức 2T(n/2) + n của merge sort (sắp xếp trộn) để đếm nghịch thế: đếm xem một mảng còn cách thứ tự đã sắp xếp bao xa.',
 };

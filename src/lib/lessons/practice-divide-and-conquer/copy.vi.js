@@ -27,7 +27,7 @@ export const vi = {
   level: 'Trung bình',
   title: 'Luyện tập: bài toán chia để trị',
   intro:
-    'Trong chia để trị (divide and conquer), bước chia và các lời gọi đệ quy hầu như lúc nào cũng giống nhau: cắt đoạn tại mid rồi giải cả hai nửa. Phần việc thật sự, và gần như mọi lỗi, nằm ở bước kết hợp. Ở đây bạn tự dựng bước kết hợp cho hai bài toán kinh điển, đoạn con có tổng lớn nhất và phần tử chiếm đa số, kiểm tra nó trên dữ liệu mẫu, rồi chạy từng bước để tìm lời gọi đầu tiên mà nó trả lời sai.',
+    'Trong chia để trị (divide and conquer), bước chia và các lời gọi đệ quy hầu như lúc nào cũng giống nhau: cắt đoạn tại mid rồi giải cả hai nửa. Phần việc thật sự, và gần như mọi lỗi, nằm ở bước kết hợp. Ở đây em tự dựng bước kết hợp cho hai bài toán kinh điển, đoạn con có tổng lớn nhất và phần tử chiếm đa số, kiểm tra nó trên dữ liệu mẫu, rồi chạy từng bước để tìm lời gọi đầu tiên mà nó trả lời sai.',
   summary:
     'Dựng bước kết hợp cho bài toán đoạn con có tổng lớn nhất và phần tử chiếm đa số, kiểm tra trên các mảng mẫu, rồi chạy từng bước đệ quy để xem lời gọi nào sai.',
   instruction:
@@ -57,7 +57,7 @@ export const vi = {
       'Một lượt quét từ trái sang phải, mỗi thuật toán giữ O(1) trạng thái.',
     ],
     ['Vét cạn', 'O(n²)', 'Tính tổng mọi đoạn con, hoặc đếm mọi giá trị.'],
-    ['Bộ nhớ thêm', 'O(log n)', 'Ngăn xếp lời gọi sâu khoảng log₂ n lời gọi.'],
+    ['Bộ nhớ thêm', 'O(log n)', 'Call stack (ngăn xếp lời gọi) sâu khoảng log₂ n lời gọi.'],
   ],
   nextTeaser:
     'Bài sau mở chủ đề tham lam (greedy): lựa chọn tham lam và lập luận hoán đổi, cách chứng minh rằng chọn cái tốt nhất trước mắt vẫn dẫn đến đáp án tối ưu.',
@@ -73,7 +73,7 @@ export const vi = {
   },
   valuesLabel: 'Mảng (tối đa 16 số nguyên)',
   randomArray: 'Mảng ngẫu nhiên',
-  combineTitle: 'Bước kết hợp của bạn',
+  combineTitle: 'Bước kết hợp của em',
   /** @type {Record<Problem, Partial<Record<Part, string>>>} */
   parts: {
     'max-subarray': {
@@ -90,7 +90,7 @@ export const vi = {
   },
   /** @type {Record<Problem, string>} */
   combineHint: {
-    'max-subarray': 'Lời gọi trả về số lớn nhất trong các số hạng bạn chọn.',
+    'max-subarray': 'Lời gọi trả về số lớn nhất trong các số hạng em chọn.',
     majority:
       'Lời gọi trả về ứng viên được chọn đầu tiên vượt qua phép kiểm tra, nếu không thì trả về không có.',
   },
@@ -102,19 +102,19 @@ export const vi = {
   jumpWrong: 'Nhảy đến lời gọi sai đầu tiên',
   noWrong: 'Trên mảng này chưa lời gọi nào trả về giá trị sai.',
   samplesTitle: 'Kiểm tra trên dữ liệu mẫu',
-  yourArray: 'Mảng của bạn',
+  yourArray: 'Mảng của em',
   /** @param {number} k */
   sampleName: (k) => `Mẫu ${k}`,
   /** @param {number} pass @param {number} total */
   samplesSummary: (pass, total) =>
     pass === total
-      ? `Bước kết hợp của bạn qua cả ${total}/${total} mảng. Hãy chạy từng bước trên chúng nữa: qua được vẫn có thể giấu một lời gọi sai.`
-      : `Bước kết hợp của bạn qua ${pass}/${total} mảng.`,
+      ? `Bước kết hợp của em qua cả ${total}/${total} mảng. Hãy chạy từng bước trên chúng nữa: qua được vẫn có thể giấu một lời gọi sai.`
+      : `Bước kết hợp của em qua ${pass}/${total} mảng.`,
   expectedLabel: 'đáp án đúng',
-  gotLabel: 'của bạn',
+  gotLabel: 'của em',
   /** @param {string} name @param {number[]} a @param {Problem} p @param {number | null} exp @param {number | null} got @param {boolean} ok */
   sampleAria: (name, a, p, exp, got, ok) =>
-    `${name}: ${a.map(num).join(', ')}. Đáp án đúng ${value(p, exp)}, của bạn ${value(p, got)}, ${ok ? 'đạt' : 'chưa đạt'}. Nạp mẫu này.`,
+    `${name}: ${a.map(num).join(', ')}. Đáp án đúng ${value(p, exp)}, của em ${value(p, got)}, ${ok ? 'đạt' : 'chưa đạt'}. Nạp mẫu này.`,
   pass: '✓',
   fail: '✕',
   /** @param {Problem} p @param {number | null} v */
@@ -152,7 +152,7 @@ export const vi = {
   stats: {
     calls: 'Số lời gọi',
     reads: 'Số ô đã đọc',
-    returned: 'Đáp án của bạn',
+    returned: 'Đáp án của em',
     expected: 'Đáp án đúng',
   },
   pending: '—',
@@ -166,10 +166,10 @@ export const vi = {
     {
       type: 'number',
       prompt:
-        'Đoạn con có tổng lớn nhất, bước kết hợp chỉ có max(L, R), Mẫu 1 (−2, 1, −3, 4, −1, 2, 1, −5, 4). Bước kết hợp của bạn trả về bao nhiêu cho cả mảng?',
+        'Đoạn con có tổng lớn nhất, bước kết hợp chỉ có max(L, R), Mẫu 1 (−2, 1, −3, 4, −1, 2, 1, −5, 4). Bước kết hợp của em trả về bao nhiêu cho cả mảng?',
       answer: 4,
       hints: [
-        'Đây là bước kết hợp trang mở ra lúc đầu. Đọc ô Đáp án của bạn sau bước cuối.',
+        'Đây là bước kết hợp trang mở ra lúc đầu. Đọc ô Đáp án của em sau bước cuối.',
         'Không có C, mọi đáp án đều là một ô đơn lẻ hoặc một đoạn không bao giờ vắt qua một mid nào.',
       ],
       solution:
@@ -267,7 +267,7 @@ export const vi = {
     const name = p === 'max-subarray' ? 'best' : 'major';
     switch (f.kind) {
       case 'start':
-        return `Gọi ${name}(0, ${a.length - 1}) trên ${a.length} giá trị. Mỗi lời gọi chia đoạn của nó tại mid, giải cả hai nửa, rồi chạy bước kết hợp của bạn.`;
+        return `Gọi ${name}(0, ${a.length - 1}) trên ${a.length} giá trị. Mỗi lời gọi chia đoạn của nó tại mid, giải cả hai nửa, rồi chạy bước kết hợp của em.`;
       case 'split':
         return `${name}(${f.lo}, ${f.hi}): chia tại mid = ${f.mid} thành ${range(f.lo, f.mid)} và ${range(f.mid + 1, f.hi)}, rồi giải nửa trái trước.`;
       case 'base':
@@ -287,8 +287,8 @@ export const vi = {
       case 'combine': {
         if (p === 'max-subarray') {
           const head = f.picked
-            ? `Bước kết hợp của bạn trả về ${num(/** @type {number} */ (f.result))}, lấy từ ${f.picked}.`
-            : 'Bước kết hợp của bạn không có số hạng nào, nên nó không trả về gì.';
+            ? `Bước kết hợp của em trả về ${num(/** @type {number} */ (f.result))}, lấy từ ${f.picked}.`
+            : 'Bước kết hợp của em không có số hạng nào, nên nó không trả về gì.';
           return `${head} ${verdict(f)}`;
         }
         const back =
@@ -303,11 +303,11 @@ export const vi = {
       case 'done': {
         const got = value(p, f.result);
         if (!f.ok) {
-          return `Bước kết hợp của bạn trả về ${got} cho cả mảng, nhưng đáp án đúng là ${value(p, f.expected)}. Lời gọi sai đầu tiên là [${f.firstWrong.replace('-', ', ')}].`;
+          return `Bước kết hợp của em trả về ${got} cho cả mảng, nhưng đáp án đúng là ${value(p, f.expected)}. Lời gọi sai đầu tiên là [${f.firstWrong.replace('-', ', ')}].`;
         }
         return f.firstWrong
-          ? `Bước kết hợp của bạn trả về ${got}, đúng đáp án, nhưng lời gọi [${f.firstWrong.replace('-', ', ')}] đã sai trên đường đi. Mảng này chưa bắt được lỗi; một mảng khác sẽ bắt được.`
-          : `Bước kết hợp của bạn trả về ${got}, đúng đáp án, và mọi lời gọi đều đúng với chính đoạn của nó.`;
+          ? `Bước kết hợp của em trả về ${got}, đúng đáp án, nhưng lời gọi [${f.firstWrong.replace('-', ', ')}] đã sai trên đường đi. Mảng này chưa bắt được lỗi; một mảng khác sẽ bắt được.`
+          : `Bước kết hợp của em trả về ${got}, đúng đáp án, và mọi lời gọi đều đúng với chính đoạn của nó.`;
       }
     }
     return '';

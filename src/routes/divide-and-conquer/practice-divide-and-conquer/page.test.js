@@ -78,7 +78,7 @@ describe('practice: divide and conquer problems', () => {
     render();
     expect(text()).toContain('Gọi best(0, 8) trên 9 giá trị.');
     expect(text()).toContain('return max(L, R)');
-    expect(byTest('samples-summary')).toBe('Bước kết hợp của bạn qua 1/5 mảng.');
+    expect(byTest('samples-summary')).toBe('Bước kết hợp của em qua 1/5 mảng.');
     expect(byTest('expected')).toBe('6');
     click(button('Đến bước cuối'));
     expect(byTest('returned')).toBe('4 ✕');
@@ -101,7 +101,7 @@ describe('practice: divide and conquer problems', () => {
     render();
     click(buttonByText(m.jumpWrong));
     expect(text()).toContain(
-      'Bước kết hợp của bạn trả về 2, lấy từ L. ✕ Sai: đáp án đúng của [5, 6] là 3.',
+      'Bước kết hợp của em trả về 2, lấy từ L. ✕ Sai: đáp án đúng của [5, 6] là 3.',
     );
     expect(callNode('Lời gọi [5, 6]').getAttribute('aria-label')).toBe(
       'Lời gọi [5, 6]: sai với đoạn của nó, trả về 2.',
@@ -113,7 +113,7 @@ describe('practice: divide and conquer problems', () => {
     click(input('part-left'));
     click(input('part-right'));
     click(input('part-cross'));
-    expect(byTest('samples-summary')).toBe('Bước kết hợp của bạn qua 4/5 mảng.');
+    expect(byTest('samples-summary')).toBe('Bước kết hợp của em qua 4/5 mảng.');
     click(button('Đến bước cuối'));
     expect(text()).toContain('đúng đáp án, nhưng lời gọi [0, 1] đã sai trên đường đi.');
     click(sample('Mẫu 3'));
@@ -125,14 +125,14 @@ describe('practice: divide and conquer problems', () => {
     render();
     click(/** @type {HTMLInputElement} */ (document.querySelector('input[value="majority"]')));
     expect(input('values').value).toBe('3, 3, 4, 2, 4, 4, 2, 4, 4');
-    expect(byTest('samples-summary')).toBe('Bước kết hợp của bạn qua 2/5 mảng.');
+    expect(byTest('samples-summary')).toBe('Bước kết hợp của em qua 2/5 mảng.');
     click(input('part-count'));
     expect(byTest('samples-summary')).toContain('qua cả 5/5 mảng');
     click(button('Đến bước cuối'));
     expect(byTest('reads')).toBe('38');
     expect(byTest('returned')).toBe('4 ✓');
     click(input('part-left'));
-    expect(byTest('samples-summary')).toBe('Bước kết hợp của bạn qua 4/5 mảng.');
+    expect(byTest('samples-summary')).toBe('Bước kết hợp của em qua 4/5 mảng.');
     click(sample('Mẫu 2'));
     click(button('Đến bước cuối'));
     expect(byTest('returned')).toBe('không có ✕');
@@ -142,9 +142,9 @@ describe('practice: divide and conquer problems', () => {
     render();
     commit(input('values'), '1, -2, 3');
     expect(sample(m.yourArray).getAttribute('aria-label')).toBe(
-      'Mảng của bạn: 1, −2, 3. Đáp án đúng 3, của bạn 3, đạt. Nạp mẫu này.',
+      'Mảng của em: 1, −2, 3. Đáp án đúng 3, của em 3, đạt. Nạp mẫu này.',
     );
-    expect(byTest('samples-summary')).toBe('Bước kết hợp của bạn qua 2/6 mảng.');
+    expect(byTest('samples-summary')).toBe('Bước kết hợp của em qua 2/6 mảng.');
     commit(input('values'), '1, 200');
     expect(text()).toContain(m.errors.range);
     expect(input('values').value).toBe('1, -2, 3');

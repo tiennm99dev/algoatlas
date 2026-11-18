@@ -7,7 +7,7 @@ export const vi = {
   level: 'Nâng cao',
   title: 'Quickselect và trung vị của các trung vị',
   intro:
-    'Thống kê thứ tự thứ k là giá trị sẽ nằm ở ô k − 1 nếu mảng được sắp xếp: k = 1 là giá trị nhỏ nhất, k = ⌈n/2⌉ là trung vị. Quickselect tìm nó mà không cần sắp xếp. Thuật toán phân hoạch quanh một chốt (pivot) như sắp xếp nhanh (quicksort), rồi chỉ giữ lại phía chứa ô k − 1, nên mỗi vòng lại bỏ đi một phần mảng.',
+    'Thống kê thứ tự thứ k là giá trị sẽ nằm ở ô k − 1 nếu mảng được sắp xếp: k = 1 là giá trị nhỏ nhất, k = ⌈n/2⌉ là trung vị. Quickselect tìm nó mà không cần sắp xếp. Thuật toán phân hoạch quanh một chốt (pivot) như quicksort (sắp xếp nhanh), rồi chỉ giữ lại phía chứa ô k − 1, nên mỗi vòng lại bỏ đi một phần mảng.',
   summary:
     'Chạy từng bước quickselect khi mỗi lần phân hoạch bỏ đi một phía, và so sánh ba cách chọn chốt: giá trị cuối, ngẫu nhiên và trung vị của các trung vị, trên cùng một đầu vào.',
   instruction:
@@ -115,7 +115,7 @@ export const vi = {
   },
   takeaways: [
     'Thống kê thứ tự thứ k là giá trị ở ô k − 1 của mảng đã sắp xếp. Sắp xếp tìm được nó trong O(n log n), nhưng bài toán chọn chỉ cần O(n).',
-    'Quickselect phân hoạch như sắp xếp nhanh rồi chỉ giữ lại một phía. Chốt ngẫu nhiên trung bình giữ lại một tỉ lệ cố định, nên khối lượng việc kì vọng là n + n/2 + n/4 + … = O(n).',
+    'Quickselect phân hoạch như quicksort rồi chỉ giữ lại một phía. Chốt ngẫu nhiên trung bình giữ lại một tỉ lệ cố định, nên khối lượng việc kì vọng là n + n/2 + n/4 + … = O(n).',
     'Một chốt cố định có thể lần nào cũng là lựa chọn tệ nhất: giá trị cuối của mảng đã sắp xếp chỉ bỏ được chính nó, nên tìm giá trị nhỏ nhất tốn (n − 1) + (n − 2) + … + 1 = Θ(n²).',
     'Trung vị của các trung vị chọn chốt từ các nhóm 5 phần tử: lấy trung vị của mỗi nhóm, rồi lấy trung vị của các trung vị ấy. Mỗi phía có ít nhất khoảng 3n/10 giá trị, nên T(n) ≤ T(n/5) + T(7n/10) + O(n) = O(n) ngay cả trong trường hợp xấu nhất. Hằng số của nó lớn hơn, và khi có nhiều giá trị bằng nhau thì cần phân hoạch ba phần để giữ được bảo đảm này.',
     'Chọn “Đã sắp xếp”, đặt k = 1 rồi đi đến bước cuối với từng cách chọn chốt: chốt là giá trị cuối cần 11 vòng và 66 lần so sánh, trung vị của các trung vị cần 3 vòng và 36 lần, một nửa trong số đó dùng để chọn chốt.',
@@ -141,7 +141,7 @@ export const vi = {
     [
       'Bộ nhớ thêm',
       'O(1) hoặc O(log n)',
-      'Vòng lặp phân hoạch tại chỗ; phép tìm trung vị đệ quy cần ngăn xếp lời gọi.',
+      'Vòng lặp phân hoạch tại chỗ; phép tìm trung vị đệ quy cần call stack (ngăn xếp lời gọi).',
     ],
   ],
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
@@ -162,7 +162,7 @@ export const vi = {
     {
       type: 'choice',
       prompt:
-        'Vì sao quickselect ngẫu nhiên có thời gian kì vọng O(n), còn sắp xếp nhanh ngẫu nhiên là O(n log n)?',
+        'Vì sao quickselect ngẫu nhiên có thời gian kì vọng O(n), còn quicksort ngẫu nhiên là O(n log n)?',
       options: [
         'Quickselect dùng cách phân hoạch tốt hơn',
         'Quickselect chỉ đệ quy vào một phía, nên khối lượng việc giảm theo cấp số nhân',
@@ -171,11 +171,11 @@ export const vi = {
       ],
       answer: 1,
       hints: [
-        'Sắp xếp nhanh xử lí cả hai phía của mọi chốt.',
+        'Quicksort xử lí cả hai phía của mọi chốt.',
         'Cộng kích thước các đoạn mà quickselect còn phải quét.',
       ],
       solution:
-        'Sắp xếp nhanh tốn n cho mỗi tầng, với khoảng log n tầng. Quickselect chỉ đi theo một phía, nên kích thước các đoạn phải quét kì vọng vào khoảng n, n/2, n/4, …, cộng lại được O(n).',
+        'Quicksort tốn n cho mỗi tầng, với khoảng log n tầng. Quickselect chỉ đi theo một phía, nên kích thước các đoạn phải quét kì vọng vào khoảng n, n/2, n/4, …, cộng lại được O(n).',
     },
     {
       type: 'number',
