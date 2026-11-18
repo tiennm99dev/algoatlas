@@ -22,11 +22,11 @@ export const vi = {
   level: 'Trung bình',
   title: 'Luyện tập: bài toán quy hoạch động',
   intro:
-    'Giải một bài quy hoạch động (dynamic programming) mới quy về hai quyết định: dp[i] nghĩa là gì, và dp[i] suy ra từ các ô nhỏ hơn như thế nào. Ở đây bạn tự đưa ra cả hai quyết định cho ba bài toán. Thiết kế của bạn chạy trên các đầu vào nhỏ, mỗi ô được đối chiếu với giá trị vét cạn theo đúng ý nghĩa bạn đã khai báo, và đáp án được đối chiếu với đề bài. Nhờ vậy bạn thấy không chỉ là thiết kế sai, mà còn sai ở đâu và vì sao.',
+    'Giải một bài quy hoạch động (dynamic programming) mới quy về hai quyết định: dp[i] nghĩa là gì, và dp[i] suy ra từ các ô nhỏ hơn như thế nào. Ở đây em tự đưa ra cả hai quyết định cho ba bài toán. Thiết kế của em chạy trên các đầu vào nhỏ, mỗi ô được đối chiếu với giá trị vét cạn theo đúng ý nghĩa em đã khai báo, và đáp án được đối chiếu với đề bài. Nhờ vậy em thấy không chỉ là thiết kế sai, mà còn sai ở đâu và vì sao.',
   summary:
     'Khai báo dp[i] nghĩa là gì, dựng hệ thức truy hồi và thử trên các đầu vào nhỏ, với mỗi ô được đối chiếu với vét cạn.',
   instruction:
-    'Chọn một bài toán, rồi chọn ý nghĩa của dp[i], các số hạng và cách kết hợp chúng, giá trị cơ sở và cách đọc đáp án. Danh sách Thử trên các mẫu cập nhật ngay lập tức. Bấm vào một mẫu và chạy từng bước: dấu ✕ đánh dấu ô đầu tiên phá vỡ lời hứa của trạng thái bạn chọn.',
+    'Chọn một bài toán, rồi chọn ý nghĩa của dp[i], các số hạng và cách kết hợp chúng, giá trị cơ sở và cách đọc đáp án. Danh sách Thử trên các mẫu cập nhật ngay lập tức. Bấm vào một mẫu và chạy từng bước: dấu ✕ đánh dấu ô đầu tiên phá vỡ lời hứa của trạng thái em chọn.',
   problemLabel: 'Bài toán',
   problems: {
     'max-subarray': 'Đoạn con có tổng lớn nhất',
@@ -37,7 +37,7 @@ export const vi = {
   goals: {
     'max-subarray': 'Tìm tổng lớn nhất của một đoạn khác rỗng gồm các giá trị liền nhau.',
     climb:
-      'Bắt đầu từ mặt đất và mỗi lần leo 1 hoặc 2 bậc. Mỗi bậc bạn đứng lên tốn a[i], và phải dừng ở bậc n, sao cho tốn ít tiền nhất.',
+      'Bắt đầu từ mặt đất và mỗi lần leo 1 hoặc 2 bậc. Mỗi bậc em đứng lên tốn a[i], và phải dừng ở bậc n, sao cho tốn ít tiền nhất.',
     decode:
       'Mỗi chữ số ứng với một chữ cái, 1 → A cho đến 26 → Z. Đếm số cách đọc cả xâu thành các chữ cái. Một chữ cái không bao giờ bắt đầu bằng 0.',
   },
@@ -61,7 +61,7 @@ export const vi = {
       decode: 'Chỉ viết chữ số, ví dụ 226.',
     },
   }),
-  designTitle: 'Thiết kế của bạn',
+  designTitle: 'Thiết kế của em',
   stateLabel: 'dp[i] nghĩa là',
   /** @type {Record<string, string>} */
   states: {
@@ -79,12 +79,12 @@ export const vi = {
   baseLabel: 'dp[0]',
   answerLabel: 'Đáp án là',
   answers: { last: 'dp[n]', largest: 'dp[i] lớn nhất', smallest: 'dp[i] nhỏ nhất' },
-  tableTitle: 'Bảng của bạn so với giá trị đúng',
+  tableTitle: 'Bảng của em so với giá trị đúng',
   tableNote:
-    'Hàng a là đầu vào. Hàng dp là những gì hệ thức truy hồi của bạn tính ra. Hàng đúng là giá trị mỗi ô phải có theo ý nghĩa bạn đã chọn, tìm bằng vét cạn. dp[0] là giá trị cơ sở và không được kiểm tra.',
+    'Hàng a là đầu vào. Hàng dp là những gì hệ thức truy hồi của em tính ra. Hàng đúng là giá trị mỗi ô phải có theo ý nghĩa em đã chọn, tìm bằng vét cạn. dp[0] là giá trị cơ sở và không được kiểm tra.',
   rows: { a: 'a', dp: 'dp', truth: 'đúng' },
   /** @param {number} n */
-  tableAria: (n) => `Ba hàng cho ${n} ô: đầu vào, dp của bạn và các giá trị đúng.`,
+  tableAria: (n) => `Ba hàng cho ${n} ô: đầu vào, dp của em và các giá trị đúng.`,
   /** @param {string} row @param {number} i @param {string} v @param {string} state */
   cellLabel: (row, i, v, state) =>
     `${row}[${i}]: ${v === '' ? 'trống' : v}${state ? `, ${state}` : ''}`,
@@ -108,14 +108,14 @@ export const vi = {
   stats: {
     wrong: 'Số ô sai',
     reads: 'Số ô đã đọc',
-    got: 'Đáp án của bạn',
+    got: 'Đáp án của em',
     expected: 'Đáp án đúng',
   },
   pending: '…',
   pass: '✓',
   fail: '✕',
   jumpWrong: 'Nhảy tới ô sai đầu tiên',
-  noWrong: 'Mọi ô đều giữ đúng lời hứa của trạng thái bạn chọn trên đầu vào này.',
+  noWrong: 'Mọi ô đều giữ đúng lời hứa của trạng thái em chọn trên đầu vào này.',
   samplesTitle: 'Thử trên các mẫu',
   /** @param {number} passed @param {number} total */
   samplesSummary: (passed, total) =>
@@ -124,7 +124,7 @@ export const vi = {
       : `Đạt ${passed}/${total} mẫu.`,
   /** @param {number} k */
   sampleName: (k) => `Mẫu ${k}`,
-  yourInput: 'Đầu vào của bạn',
+  yourInput: 'Đầu vào của em',
   expectedLabel: 'cần ra',
   gotLabel: 'ra',
   /** @param {number} n */
@@ -142,7 +142,7 @@ export const vi = {
   describe(f) {
     switch (f.kind) {
       case 'start':
-        return `Chạy thiết kế của bạn trên ${f.a.length} giá trị.`;
+        return `Chạy thiết kế của em trên ${f.a.length} giá trị.`;
       case 'base':
         return `Cơ sở: dp[0] = ${f.dp[0]}.`;
       case 'cell': {
@@ -152,23 +152,23 @@ export const vi = {
         const head = parts.length ? `${parts.join('; ')}. ` : 'Chưa chọn số hạng nào. ';
         const cell = `dp[${f.i}] = ${num(f.value)}`;
         return f.right[f.i]
-          ? `${head}${cell}. ✓ Khớp với ý nghĩa bạn đã chọn.`
-          : `${head}${cell}. ✕ Theo ý nghĩa bạn chọn, ô này phải là ${num(f.truth[f.i])}.`;
+          ? `${head}${cell}. ✓ Khớp với ý nghĩa em đã chọn.`
+          : `${head}${cell}. ✕ Theo ý nghĩa em chọn, ô này phải là ${num(f.truth[f.i])}.`;
       }
       case 'answer':
-        return `Đáp án của bạn là ${num(f.got)}; đáp án đúng là ${num(f.expected)}.`;
+        return `Đáp án của em là ${num(f.got)}; đáp án đúng là ${num(f.expected)}.`;
       case 'done':
         if (f.answerOk && f.wrong === 0)
           return 'Đã giải được trên đầu vào này: mọi ô đều giữ đúng lời hứa và đáp án đúng.';
         if (!f.answerOk && f.wrong === 0)
           return 'Mọi ô đều giữ đúng lời hứa, nhưng đáp án sai. Hoặc trạng thái không trả lời đúng câu hỏi, hoặc đáp án được đọc sai chỗ.';
         if (f.answerOk)
-          return `Đáp án đúng, nhưng có ${f.wrong} ô không mang ý nghĩa bạn đã khai báo. Hãy sửa ý nghĩa, kẻo đầu vào tiếp theo sẽ làm nó sai.`;
+          return `Đáp án đúng, nhưng có ${f.wrong} ô không mang ý nghĩa em đã khai báo. Hãy sửa ý nghĩa, kẻo đầu vào tiếp theo sẽ làm nó sai.`;
         return `Đáp án sai và có ${f.wrong} ô phá vỡ lời hứa. Hãy nhảy tới ô sai đầu tiên.`;
     }
   },
   takeaways: [
-    'Định nghĩa trạng thái trước, bằng một câu chính xác về dp[i]. Nếu không nói được một ô nghĩa là gì, bạn không thể biết hệ thức truy hồi có đúng không.',
+    'Định nghĩa trạng thái trước, bằng một câu chính xác về dp[i]. Nếu không nói được một ô nghĩa là gì, em không thể biết hệ thức truy hồi có đúng không.',
     'Tìm công thức chuyển bằng cách hỏi bước cuối cùng là gì. Một đoạn kết thúc ở i hoặc nối dài đoạn kết thúc ở i − 1, hoặc bắt đầu mới. Một cách leo tới từ 1 hoặc 2 bậc bên dưới. Một cách đọc kết thúc bằng một chữ cái gồm một hoặc hai chữ số.',
     'Trạng thái phải mang đủ thông tin. “Đoạn tốt nhất ở đâu đó trong i giá trị đầu tiên” không nối dài được, vì đoạn tốt nhất có thể đã kết thúc từ lâu. “Kết thúc đúng ở i” thì được, và khi đó đáp án là ô lớn nhất.',
     'Trường hợp cơ sở là một phần của thiết kế: trong bài số cách giải mã, dp[0] = 1 đếm cách duy nhất để đọc xâu rỗng. Đặt 0 ở đó thì mọi ô đều bằng 0.',
@@ -289,9 +289,9 @@ export const vi = {
         'Đặt các trường hợp cơ sở và nơi đọc đáp án',
       ],
       answer: [2, 0, 3, 1],
-      hints: ['Bạn không thể viết hệ thức truy hồi cho một ô khi chưa quyết định ý nghĩa của nó.'],
+      hints: ['Em không thể viết hệ thức truy hồi cho một ô khi chưa quyết định ý nghĩa của nó.'],
       solution:
-        'Trạng thái trước, rồi công thức chuyển, rồi trường hợp cơ sở và đáp án, rồi thử. Một lần thử thất bại thường đưa bạn quay lại trạng thái.',
+        'Trạng thái trước, rồi công thức chuyển, rồi trường hợp cơ sở và đáp án, rồi thử. Một lần thử thất bại thường đưa em quay lại trạng thái.',
     },
   ],
   nextTeaser:

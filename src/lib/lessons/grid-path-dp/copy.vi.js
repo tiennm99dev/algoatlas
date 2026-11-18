@@ -253,5 +253,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Bài sau, Luyện tập: bài toán quy hoạch động, để bạn tự chọn trạng thái và công thức chuyển rồi thử trên đầu vào nhỏ.',
+    'Bài sau, Luyện tập: bài toán quy hoạch động, để em tự chọn trạng thái và công thức chuyển rồi thử trên đầu vào nhỏ.',
 };

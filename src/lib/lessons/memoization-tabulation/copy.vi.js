@@ -134,7 +134,7 @@ export const vi = {
     'Một bài toán có các bài toán con gối nhau khi cùng một trường hợp nhỏ hơn được cần đến nhiều lần: fib(n − 1) và fib(n − 2) đều cần fib(n − 3).',
     'Đệ quy thuần làm lặp lại phần việc đó, nên fib(n) tạo ra 2·fib(n + 1) − 1 lời gọi: thời gian tăng theo hàm mũ.',
     'Đệ quy có nhớ (từ trên xuống) giữ nguyên đệ quy và lưu mỗi đáp án ngay lần đầu; lời gọi lặp lại trở thành một lần tra bảng, nên fib(n) chỉ còn 2n − 1 lời gọi.',
-    'Lập bảng (từ dưới lên) lấp bảng theo thứ tự sao cho ô nào được đọc cũng đã có sẵn: không đệ quy, không có ngăn xếp lời gọi (call stack), chỉ n − 1 phép cộng.',
+    'Lập bảng (từ dưới lên) lấp bảng theo thứ tự sao cho ô nào được đọc cũng đã có sẵn: không đệ quy, không có call stack (ngăn xếp lời gọi), chỉ n − 1 phép cộng.',
     'Đặt n = 8 và so sánh “Số lời gọi” của ba cách: 67, 15 và 0, cùng cho đáp án 21.',
   ],
   complexityHead: ['Cách làm', 'Chi phí', 'Vì sao'],
@@ -149,7 +149,7 @@ export const vi = {
       'O(n)',
       'Mỗi bài toán con trong n + 1 bài toán con được tính một lần; n − 2 lời gọi còn lại là phép tra bảng O(1).',
     ],
-    ['Đệ quy có nhớ, bộ nhớ', 'O(n)', 'Bảng memo có n + 1 ô và ngăn xếp lời gọi sâu tới n tầng.'],
+    ['Đệ quy có nhớ, bộ nhớ', 'O(n)', 'Bảng memo có n + 1 ô và call stack sâu tới n tầng.'],
     ['Lập bảng, thời gian', 'O(n)', 'Một lượt vòng lặp, mỗi ô một phép cộng.'],
     [
       'Lập bảng, bộ nhớ',

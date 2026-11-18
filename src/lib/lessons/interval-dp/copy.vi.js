@@ -175,7 +175,7 @@ export const vi = {
     'Điểm chia k là lựa chọn: cả đoạn được hoàn thành bằng cách ghép i..k với k + 1..j. Thử mọi k, giữ cái tốt nhất và lưu nó vào s[i][j]. Sau đó dựng lại đáp án từ trên xuống, bắt đầu ở s[1][n].',
     'Lấp theo độ dài, không lấp theo hàng từ trên xuống: cả hai phần của một cách chia đều ngắn hơn cả đoạn, nên chúng đã xong khi mọi độ dài nhỏ hơn đã xong.',
     'Chuỗi ma trận: m[i][j] = min theo k của m[i][k] + m[k+1][j] + p[i−1]·p[k]·p[j]. Số hạng cuối là phép nhân hai phần đã xong. Thứ tự nhân có thể làm khối lượng công việc chênh nhau mười lần, như ví dụ đầu tiên cho thấy.',
-    'Bài cắt thanh vừa với cùng bảng đó, nhưng mọi đường chéo lặp lại, vì giá trị của một mẩu chỉ phụ thuộc vào độ dài. Nên nó thu gọn còn một hàng: r[n] = max theo i của p[i] + r[n − i], trong O(n²). Nạp thanh dài 8 và đọc các đường chéo, rồi gõ bảng giá của riêng bạn sao cho bán nguyên thanh là tốt nhất.',
+    'Bài cắt thanh vừa với cùng bảng đó, nhưng mọi đường chéo lặp lại, vì giá trị của một mẩu chỉ phụ thuộc vào độ dài. Nên nó thu gọn còn một hàng: r[n] = max theo i của p[i] + r[n − i], trong O(n²). Nạp thanh dài 8 và đọc các đường chéo, rồi gõ bảng giá của riêng em sao cho bán nguyên thanh là tốt nhất.',
   ],
   complexityHead: ['Đại lượng', 'Chi phí', 'Vì sao'],
   complexity: [

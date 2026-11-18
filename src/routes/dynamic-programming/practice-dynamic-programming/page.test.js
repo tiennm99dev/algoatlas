@@ -70,11 +70,11 @@ function practice() {
 describe('dynamic programming practice lesson', () => {
   it('opens on a failing design and shows the first wrong cell', () => {
     render();
-    expect(narration()).toBe('Chạy thiết kế của bạn trên 9 giá trị.');
+    expect(narration()).toBe('Chạy thiết kế của em trên 9 giá trị.');
     expect(byTest('samples-summary')).toBe('Đạt 1/5 mẫu.');
     click(buttonByText(m.jumpWrong));
     expect(narration()).toBe(
-      'dp[i−1] + a[i] → −1. dp[2] = −1. ✕ Theo ý nghĩa bạn chọn, ô này phải là 1.',
+      'dp[i−1] + a[i] → −1. dp[2] = −1. ✕ Theo ý nghĩa em chọn, ô này phải là 1.',
     );
   });
 
@@ -106,7 +106,7 @@ describe('dynamic programming practice lesson', () => {
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
     expect(narration()).toBe(
-      'a[i] → 1; dp[i−1] + a[i] → −1. dp[2] = 1. ✓ Khớp với ý nghĩa bạn đã chọn.',
+      'a[i] → 1; dp[i−1] + a[i] → −1. dp[2] = 1. ✓ Khớp với ý nghĩa em đã chọn.',
     );
     expect(byTest('options')).toContain('✓ được chọn');
     expect(arrows()).toBe(1);
@@ -171,7 +171,7 @@ describe('dynamic programming practice lesson', () => {
   it('draws a random input', () => {
     render();
     click(buttonByText(m.randomInput));
-    expect(narration()).toMatch(/^Chạy thiết kế của bạn trên \d+ giá trị\.$/);
+    expect(narration()).toMatch(/^Chạy thiết kế của em trên \d+ giá trị\.$/);
   });
 
   it('steps with the arrow keys', () => {

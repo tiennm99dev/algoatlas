@@ -148,7 +148,7 @@ export const vi = {
     'Trạng thái là một tiền tố: dp[i] là đáp án cho i bậc đầu tiên, số tiền i hoặc i nhà đầu tiên, nên n + 1 ô bao trọn mọi bài toán con.',
     'Công thức chuyển đi từ các trạng thái nhỏ hơn: mỗi ô chỉ đọc các ô bên trái, nên lấp từ trái sang phải là một thứ tự hợp lệ.',
     'Bài đếm kết hợp các lựa chọn bằng phép +, như leo cầu thang; bài tối ưu chọn cái tốt nhất bằng min hoặc max, như đổi tiền và ăn trộm nhà.',
-    'Ghi nhớ lựa chọn nào thắng ở mỗi ô, bạn có thể lần ngược từ đáp án để dựng lại các đồng xu hay ngôi nhà, chứ không chỉ có con số.',
+    'Ghi nhớ lựa chọn nào thắng ở mỗi ô, em có thể lần ngược từ đáp án để dựng lại các đồng xu hay ngôi nhà, chứ không chỉ có con số.',
     'Thử các đồng xu 1, 3, 4 với số tiền 6: cách tham lam (greedy) lấy 4 + 1 + 1, nhưng hàng QHĐ tìm ra 3 + 3. Sau đó đổi các đồng xu thành 2, 5 và số tiền thành 3.',
   ],
   complexityHead: ['Bài toán', 'Chi phí', 'Vì sao'],

@@ -36,11 +36,11 @@ export const vi = {
   level: 'Cơ bản',
   title: 'Khung SRTBOT',
   intro:
-    'SRTBOT là công thức sáu bước để thiết kế một lời giải quy hoạch động (dynamic programming): chọn các bài toán con (Subproblems), liên hệ (Relate) mỗi bài toán con với các bài toán con nhỏ hơn, kiểm tra có thứ tự tô-pô (Topological order), chốt các trường hợp cơ sở (Base cases), nói rõ bài toán gốc (Original problem) được đọc ra từ các bài toán con thế nào, và chặn trên thời gian (Time). Mọi lời giải QHĐ trong chương này đều là sáu câu trả lời đó. Ở đây bạn thiết kế hai lời giải, cho bài ném ki và bài đoạn con có tổng lớn nhất, rồi chạy thiết kế trên dãy số của chính bạn.',
+    'SRTBOT là công thức sáu bước để thiết kế một lời giải quy hoạch động (dynamic programming): chọn các bài toán con (Subproblems), liên hệ (Relate) mỗi bài toán con với các bài toán con nhỏ hơn, kiểm tra có thứ tự tô-pô (Topological order), chốt các trường hợp cơ sở (Base cases), nói rõ bài toán gốc (Original problem) được đọc ra từ các bài toán con thế nào, và chặn trên thời gian (Time). Mọi lời giải QHĐ trong chương này đều là sáu câu trả lời đó. Ở đây em thiết kế hai lời giải, cho bài ném ki và bài đoạn con có tổng lớn nhất, rồi chạy thiết kế trên dãy số của chính em.',
   summary:
-    'Đi qua sáu bước SRTBOT cho bài ném ki và bài đoạn con có tổng lớn nhất, rồi xem thiết kế lấp bảng trên dãy số của chính bạn.',
+    'Đi qua sáu bước SRTBOT cho bài ném ki và bài đoạn con có tổng lớn nhất, rồi xem thiết kế lấp bảng trên dãy số của chính em.',
   instruction:
-    'Chọn một bài toán rồi chạy từng bước: bảng hướng dẫn bên phải sáng lên ở mỗi bước SRTBOT khi lần chạy tới đó, và bảng được lấp theo thứ tự tô-pô. Bấm nút “Xem” của một bước để nhảy tới bước đó, hoặc gõ dãy số của bạn và xem phương án nào thắng ở mỗi ô.',
+    'Chọn một bài toán rồi chạy từng bước: bảng hướng dẫn bên phải sáng lên ở mỗi bước SRTBOT khi lần chạy tới đó, và bảng được lấp theo thứ tự tô-pô. Bấm nút “Xem” của một bước để nhảy tới bước đó, hoặc gõ dãy số của em và xem phương án nào thắng ở mỗi ô.',
   problemLabel: 'Bài toán',
   problems: { bowling: 'Ném ki', maxsub: 'Đoạn con có tổng lớn nhất' },
   valuesLabel: 'Các giá trị',
@@ -59,7 +59,7 @@ export const vi = {
   /** @param {SrtbotProblem} p */
   problemText: (p) =>
     p === 'bowling'
-      ? 'Các ki đứng thành một hàng, mỗi ki có một giá trị. Mỗi lần ném trúng một ki được điểm bằng giá trị của nó, hoặc trúng hai ki kề nhau được điểm bằng tích hai giá trị; bạn có thể bỏ qua ki, và mỗi ki bị ném trúng nhiều nhất một lần. Tìm tổng điểm lớn nhất.'
+      ? 'Các ki đứng thành một hàng, mỗi ki có một giá trị. Mỗi lần ném trúng một ki được điểm bằng giá trị của nó, hoặc trúng hai ki kề nhau được điểm bằng tích hai giá trị; em có thể bỏ qua ki, và mỗi ki bị ném trúng nhiều nhất một lần. Tìm tổng điểm lớn nhất.'
       : 'Tìm tổng lớn nhất của một đoạn khác rỗng gồm các giá trị liền nhau a[i..j].',
   guideTitle: 'Hướng dẫn SRTBOT',
   stepOrder: /** @type {SrtbotStep[]} */ ([
