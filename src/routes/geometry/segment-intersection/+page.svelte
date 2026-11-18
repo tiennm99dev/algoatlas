@@ -11,7 +11,7 @@
     segmentTrace,
   } from '$lib/algo-engine/segment-intersection.js';
   import PointPlane from '$lib/components/point-plane.svelte';
-  import { en as m } from '$lib/lessons/segment-intersection/copy.en.js';
+  import { vi as m } from '$lib/lessons/segment-intersection/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/segment-intersection.js').Point} Point */

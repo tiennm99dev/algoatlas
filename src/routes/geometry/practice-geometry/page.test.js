@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
 import { GEO_PRESETS, puzzleTrace } from '$lib/algo-engine/practice-geometry.js';
-import { en as m } from '$lib/lessons/practice-geometry/copy.en.js';
+import { vi as m } from '$lib/lessons/practice-geometry/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -91,16 +91,16 @@ function guess(value) {
 describe('geometry practice', () => {
   it('checks a predicted cross product and moves on only when it is right', () => {
     render();
-    expect(narration()).toContain('Line A → B runs from A (1, 1) to B (11, 6)');
+    expect(narration()).toContain('Đường thẳng A → B đi từ A (1, 1) đến B (11, 6)');
     click(button('Bước tiếp'));
     expect(narration()).toContain('p = C (2, 5)');
     guess('30');
-    expect(cell('feedback')).toContain('Not quite');
+    expect(cell('feedback')).toContain('Chưa đúng');
     expect(cell('wrong')).toBe('1');
     guess('35');
-    expect(cell('feedback')).toBe('Correct: 35.');
+    expect(cell('feedback')).toBe('Đúng rồi: 35.');
     expect(cell('correct')).toBe('1');
-    expect(narration()).toContain('C is left of A → B');
+    expect(narration()).toContain('C nằm bên trái A → B');
     expect(cell('left')).toBe('1');
   });
 
@@ -118,14 +118,14 @@ describe('geometry practice', () => {
     expect(cell('right')).toBe('2');
     expect(cell('on')).toBe('2');
     expect(text()).toContain(m.askDone);
-    expect(point(3).getAttribute('aria-label')).toContain('on line AB');
+    expect(point(3).getAttribute('aria-label')).toContain('trên đường thẳng AB');
   });
 
   it('sums the fence area with the shoelace terms', () => {
     render();
     choose('puzzle', 'fence');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('The hull has 6 corners');
+    expect(narration()).toContain('Bao lồi có 6 đỉnh');
     click(button('Bước tiếp'));
     guess('-7');
     expect(cell('twice')).toBe('−7');
@@ -141,7 +141,7 @@ describe('geometry practice', () => {
     expect(cell('best')).toBe('125');
     expect(cell('pairs')).toBe('15');
     expect(cell('brute')).toBe('36');
-    expect(narration()).toContain('The farthest pair is A and B');
+    expect(narration()).toContain('Cặp xa nhất là A và B');
   });
 
   it('re-runs when an example loads or a point moves', () => {

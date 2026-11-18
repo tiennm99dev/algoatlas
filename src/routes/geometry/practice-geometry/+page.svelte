@@ -18,7 +18,7 @@
     puzzleTrace,
     randomPoints,
   } from '$lib/algo-engine/practice-geometry.js';
-  import { en as m } from '$lib/lessons/practice-geometry/copy.en.js';
+  import { vi as m } from '$lib/lessons/practice-geometry/copy.vi.js';
   import PointPlane from '$lib/components/point-plane.svelte';
   import { createPlayer } from '$lib/player/player.svelte.js';
 

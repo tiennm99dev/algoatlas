@@ -10,7 +10,7 @@
     orientationPseudocode,
     orientationTrace,
   } from '$lib/algo-engine/geometry-orientation.js';
-  import { en as m } from '$lib/lessons/geometry-orientation/copy.en.js';
+  import { vi as m } from '$lib/lessons/geometry-orientation/copy.vi.js';
   import PointPlane from '$lib/components/point-plane.svelte';
   import { createPlayer } from '$lib/player/player.svelte.js';
 

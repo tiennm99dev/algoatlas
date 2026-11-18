@@ -16,7 +16,7 @@
     sweepTrace,
   } from '$lib/algo-engine/sweep-line.js';
   import PointPlane from '$lib/components/point-plane.svelte';
-  import { en as m } from '$lib/lessons/sweep-line/copy.en.js';
+  import { vi as m } from '$lib/lessons/sweep-line/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/sweep-line.js').SweepSegment} SweepSegment */

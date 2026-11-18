@@ -42,25 +42,25 @@ export const MAX_POINTS = 24;
 
 export const grahamPseudocode = [
   'function grahamScan(points):',
-  '  pivot = lowest point, leftmost on a tie',
-  '  sort the rest by angle around pivot, nearest first on a tie',
-  '  for each p in that order, after pivot:',
+  '  pivot = điểm thấp nhất, nếu hoà lấy điểm bên trái nhất',
+  '  sắp xếp các điểm còn lại theo góc quanh pivot, hoà thì điểm gần trước',
+  '  for p in thứ tự đó, sau pivot:',
   '    while size ≥ 2 and orient(second, top, p) ≤ 0:',
   '      pop',
   '    push p',
-  '  return the stack',
+  '  return stack',
 ];
 
 export const monotonePseudocode = [
   'function monotoneChain(points):',
-  '  sort points by x, then y',
-  '  for each pass: left to right, then right to left:',
-  '    chain = empty',
-  '    for each p in the pass’s order:',
+  '  sắp xếp points theo x, rồi theo y',
+  '  for pass in [trái sang phải, phải sang trái]:',
+  '    chain = rỗng',
+  '    for p in thứ tự của pass:',
   '      while size ≥ 2 and orient(second, top, p) ≤ 0:',
   '        pop',
   '      push p',
-  '  return both chains, each without its last point',
+  '  return hai chain, mỗi chain bỏ điểm cuối',
 ];
 
 /** @param {[number, number][]} coords @returns {HullPoint[]} */

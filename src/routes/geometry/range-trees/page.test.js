@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
 import { RANGE_PRESETS, rangeTreeTrace } from '$lib/algo-engine/range-trees.js';
-import { en as m } from '$lib/lessons/range-trees/copy.en.js';
+import { vi as m } from '$lib/lessons/range-trees/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -80,26 +80,26 @@ function commit(el, value) {
 describe('range trees lesson', () => {
   it('walks the scattered query from the split node to the answer', () => {
     render();
-    expect(narration()).toBe('13 points. Find those in [3, 10] × [2, 6].');
+    expect(narration()).toBe('13 điểm. Tìm các điểm nằm trong [3, 10] × [2, 6].');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('The tree is built once');
+    expect(narration()).toContain('Cây được dựng một lần');
     expect(cell('storage')).toBe('41');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('This is the split node.');
+    expect(narration()).toContain('Đây là nút tách.');
     expect(document.querySelector('[data-testid="list-idle"]')).not.toBeNull();
     click(button('Đến bước cuối'));
     expect(cell('reported')).toBe('5');
     expect(cell('visited')).toBe('7');
     expect(cell('searches')).toBe('2');
     expect(cell('brute')).toBe('13');
-    expect(narration()).toContain('Done: 5 points found');
+    expect(narration()).toContain('Xong: tìm thấy 5 điểm');
   });
 
   it('shows the binary search window over a canonical subtree’s y-list', () => {
     render();
-    for (let i = 0; i < 30 && !narration().startsWith('Every point under'); i++)
+    for (let i = 0; i < 30 && !narration().startsWith('Mọi điểm dưới'); i++)
       click(button('Bước tiếp'));
-    expect(narration()).toContain('Every point under F has x in range');
+    expect(narration()).toContain('Mọi điểm dưới F đều có x trong khoảng');
     expect(text()).toContain(m.listTitle('F'));
     expect(text()).toContain(m.listWindow);
   });
@@ -109,10 +109,10 @@ describe('range trees lesson', () => {
     click(button('Đến bước cuối'));
     const tree = /** @type {Element} */ (document.querySelector(`[aria-label="${m.treeLabel}"]`));
     const labels = [...tree.querySelectorAll('title')].map((e) => e.textContent);
-    expect(labels.some((l) => l?.startsWith('Node M at (6, 8)') && l.includes('split node'))).toBe(
+    expect(labels.some((l) => l?.startsWith('Nút M ở (6, 8)') && l.includes('nút tách'))).toBe(
       true,
     );
-    expect(labels.some((l) => l?.startsWith('Node F') && l.includes('canonical'))).toBe(true);
+    expect(labels.some((l) => l?.startsWith('Nút F') && l.includes('chính tắc'))).toBe(true);
   });
 
   it('ends early when no x lies in the range', () => {
@@ -121,7 +121,7 @@ describe('range trees lesson', () => {
     click(button('Đến bước cuối'));
     expect(cell('reported')).toBe('0');
     click(button('Bước trước'));
-    expect(narration()).toContain('The search fell off the tree');
+    expect(narration()).toContain('Phép tìm kiếm đã đi ra ngoài cây');
   });
 
   it('handles points that share an x', () => {

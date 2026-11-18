@@ -19,7 +19,7 @@
     windingPseudocode,
   } from '$lib/algo-engine/polygon-area.js';
   import PointPlane from '$lib/components/point-plane.svelte';
-  import { en as m } from '$lib/lessons/polygon-area/copy.en.js';
+  import { vi as m } from '$lib/lessons/polygon-area/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/polygon-area.js').Point} Point */

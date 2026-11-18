@@ -4,7 +4,7 @@ import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
 import { orient } from '$lib/algo-engine/plane-geometry.js';
 import { segmentTrace } from '$lib/algo-engine/segment-intersection.js';
-import { en as m } from '$lib/lessons/segment-intersection/copy.en.js';
+import { vi as m } from '$lib/lessons/segment-intersection/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -65,7 +65,7 @@ describe('segment intersection lesson', () => {
     render();
     expect(redLines()).toBe(0);
     click(button('Đến bước cuối'));
-    expect(cell('verdict')).toBe('Proper crossing');
+    expect(cell('verdict')).toBe('Cắt nhau thực sự');
     expect(cell('tests')).toBe('4');
     expect(redLines()).toBe(2);
     expect(cell('t')).toBe('7 / 13');
@@ -88,12 +88,12 @@ describe('segment intersection lesson', () => {
   });
 
   it.each([
-    ['tee', 'They touch', '(5, 2)'],
-    ['overlap', 'They overlap', '(3, 2) to (7, 4)'],
-    ['endToEnd', 'They touch', '(5, 3)'],
-    ['gap', 'No intersection', '—'],
-    ['parallel', 'No intersection', '—'],
-    ['lineOnly', 'No intersection', '—'],
+    ['tee', 'Chạm nhau', '(5, 2)'],
+    ['overlap', 'Chồng lên nhau', '(3, 2) đến (7, 4)'],
+    ['endToEnd', 'Chạm nhau', '(5, 3)'],
+    ['gap', 'Không giao nhau', '—'],
+    ['parallel', 'Không giao nhau', '—'],
+    ['lineOnly', 'Không giao nhau', '—'],
   ])('reads preset %s as %s at %s', (preset, verdict, where) => {
     render();
     pick(preset);
@@ -115,7 +115,7 @@ describe('segment intersection lesson', () => {
     pick('lineOnly');
     // B from (5, 3) to (9, 3) takes it past the line x = 8.
     for (let i = 0; i < 4; i++) press(point(1), 'ArrowRight', true);
-    expect(cell('verdict')).toBe('Proper crossing');
+    expect(cell('verdict')).toBe('Cắt nhau thực sự');
     expect(redLines()).toBe(2);
     expect(cell('where')).toContain('8');
   });
@@ -123,7 +123,7 @@ describe('segment intersection lesson', () => {
   it('turns back when it leaves again', () => {
     render();
     for (let i = 0; i < 8; i++) press(point(3), 'ArrowUp', true);
-    expect(cell('verdict')).toBe('No intersection');
+    expect(cell('verdict')).toBe('Không giao nhau');
     expect(redLines()).toBe(0);
     expect(cell('where')).toBe('—');
   });

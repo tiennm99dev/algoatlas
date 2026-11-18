@@ -17,7 +17,7 @@
     rangeTreePseudocode,
     rangeTreeTrace,
   } from '$lib/algo-engine/range-trees.js';
-  import { en as m } from '$lib/lessons/range-trees/copy.en.js';
+  import { vi as m } from '$lib/lessons/range-trees/copy.vi.js';
   import PointPlane from '$lib/components/point-plane.svelte';
   import { createPlayer } from '$lib/player/player.svelte.js';
 

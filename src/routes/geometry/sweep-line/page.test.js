@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
 import { sweepTrace } from '$lib/algo-engine/sweep-line.js';
-import { en as m } from '$lib/lessons/sweep-line/copy.en.js';
+import { vi as m } from '$lib/lessons/sweep-line/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -80,24 +80,24 @@ const sweepLine = () => document.querySelector('line.stroke-state-frontier');
 describe('sweep line lesson', () => {
   it('sorts the events, then moves the line from one to the next', () => {
     render();
-    expect(narration()).toContain('4 segments. All pairs would take 6 tests.');
+    expect(narration()).toContain('4 đoạn thẳng. Xét mọi cặp sẽ tốn 6 phép kiểm tra.');
     expect(sweepLine()).toBeNull();
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Sort the 8 end points');
+    expect(narration()).toContain('Sắp xếp 8 đầu mút');
     click(button('Bước tiếp'));
-    expect(narration()).toBe('The line reaches x = 1, where A starts.');
+    expect(narration()).toBe('Đường quét đến x = 1, nơi A bắt đầu.');
     expect(cell('x')).toBe('1');
     expect(sweepLine()).not.toBeNull();
     click(button('Bước tiếp'));
-    expect(narration()).toContain('A joins the active set');
+    expect(narration()).toContain('A vào tập đang xét');
     expect(cell('active')).toBe('1');
   });
 
   it('stops the any-crossing sweep at its first hit', () => {
     render();
     click(button('Đến bước cuối'));
-    expect(cell('answer')).toBe('Yes');
-    expect(narration()).toMatch(/Stopped after \d+ pair tests?: at least one pair meets\./);
+    expect(cell('answer')).toBe('Có');
+    expect(narration()).toMatch(/Dừng sau \d+ phép kiểm tra cặp: có ít nhất một cặp giao nhau\./);
     expect(document.querySelectorAll('svg circle.stroke-state-swap')).toHaveLength(1);
   });
 
@@ -106,7 +106,7 @@ describe('sweep line lesson', () => {
     pick('mesh');
     method('all');
     click(button('Đến bước cuối'));
-    expect(narration()).toMatch(/^All done: 9 meetings found/);
+    expect(narration()).toMatch(/^Xong: tìm thấy 9 giao điểm/);
     expect(document.querySelectorAll('svg circle.stroke-state-swap')).toHaveLength(9);
     expect(cell('active')).toBe('0');
   });
@@ -116,7 +116,7 @@ describe('sweep line lesson', () => {
     pick('disjoint');
     expect(cell('answer')).toBe(m.pending);
     click(button('Đến bước cuối'));
-    expect(cell('answer')).toBe('No');
+    expect(cell('answer')).toBe('Không');
   });
 
   it('compares pair tests on long parallel segments', () => {
@@ -131,7 +131,7 @@ describe('sweep line lesson', () => {
     render();
     pick('touching');
     click(button('Đến bước cuối'));
-    expect(cell('answer')).toBe('Yes');
+    expect(cell('answer')).toBe('Có');
     expect(text()).toContain('A × B (6, 2)');
   });
 
@@ -139,12 +139,12 @@ describe('sweep line lesson', () => {
     render();
     pick('disjoint');
     click(button('Đến bước cuối'));
-    expect(cell('answer')).toBe('No');
+    expect(cell('answer')).toBe('Không');
     // B runs from (3, 4) to (8, 3); pulling its right end down to (8, 1) crosses D.
     press(point(3), 'ArrowDown', true);
     press(point(3), 'ArrowDown', true);
     expect(point(3).getAttribute('aria-label')).toContain('(8, 1)');
-    expect(cell('answer')).toBe('Yes');
+    expect(cell('answer')).toBe('Có');
   });
 
   it('adds a segment and removes one with Delete', async () => {

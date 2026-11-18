@@ -60,9 +60,9 @@ export const shoelacePseudocode = [
 export const rayPseudocode = [
   'function locate(q, p):',
   '  inside = false',
-  '  for each edge (a, b) of p:',
-  '    if q on segment ab: return BOUNDARY',
-  '    if (a.y > q.y) ≠ (b.y > q.y) and crossing is right of q:',
+  '  for (a, b) in edges(p):',
+  '    if q nằm trên đoạn ab: return BOUNDARY',
+  '    if (a.y > q.y) ≠ (b.y > q.y) and giao điểm nằm bên phải q:',
   '      inside = not inside',
   '  return inside',
 ];
@@ -70,8 +70,8 @@ export const rayPseudocode = [
 export const windingPseudocode = [
   'function locate(q, p):',
   '  w = 0',
-  '  for each edge (a, b) of p:',
-  '    if q on segment ab: return BOUNDARY',
+  '  for (a, b) in edges(p):',
+  '    if q nằm trên đoạn ab: return BOUNDARY',
   '    if a.y ≤ q.y and b.y > q.y and orient(a, b, q) > 0: w = w + 1',
   '    else if a.y > q.y and b.y ≤ q.y and orient(a, b, q) < 0: w = w − 1',
   '  return w ≠ 0',

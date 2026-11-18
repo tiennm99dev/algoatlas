@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
 import { POLYGON_PRESETS, polygonTrace, shoelaceSum } from '$lib/algo-engine/polygon-area.js';
-import { en as m } from '$lib/lessons/polygon-area/copy.en.js';
+import { vi as m } from '$lib/lessons/polygon-area/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -92,12 +92,12 @@ describe('polygon area and point in polygon lesson', () => {
   it('adds up the rectangle’s terms to its area', () => {
     render();
     click(button('Bước tiếp'));
-    expect(text()).toContain('Edge 0 → 1: 2 · 1 − 8 · 1 = −6.');
+    expect(text()).toContain('Cạnh 0 → 1: 2 · 1 − 8 · 1 = −6.');
     expect(cell('sum')).toBe('−6');
     click(button('Đến bước cuối'));
     expect(cell('area')).toBe('30');
     expect(cell('sum')).toBe('60');
-    expect(cell('direction')).toBe('Counter-clockwise');
+    expect(cell('direction')).toBe('Ngược chiều kim đồng hồ');
     expect(document.querySelectorAll('[data-testid="edge-row"]')).toHaveLength(4);
   });
 
@@ -107,7 +107,7 @@ describe('polygon area and point in polygon lesson', () => {
     click(button('Đến bước cuối'));
     expect(cell('sum')).toBe('−40');
     expect(cell('area')).toBe('20');
-    expect(cell('direction')).toBe('Clockwise');
+    expect(cell('direction')).toBe('Theo chiều kim đồng hồ');
   });
 
   it('tests a point by ray casting', () => {
@@ -116,9 +116,9 @@ describe('polygon area and point in polygon lesson', () => {
     method('ray');
     expect(point(QUERY)).toBeTruthy();
     click(button('Đến bước cuối'));
-    expect(cell('location')).toBe('Outside');
+    expect(cell('location')).toBe('Bên ngoài');
     expect(cell('count')).toBe('2');
-    expect(text()).toContain('2 crossings in all, which is even');
+    expect(text()).toContain('Tổng cộng 2 lần cắt, là số chẵn');
   });
 
   it('counts a ray through a vertex once', () => {
@@ -127,7 +127,7 @@ describe('polygon area and point in polygon lesson', () => {
     method('ray');
     click(button('Đến bước cuối'));
     expect(cell('count')).toBe('1');
-    expect(cell('location')).toBe('Inside');
+    expect(cell('location')).toBe('Bên trong');
   });
 
   it('splits the two tests on the star and warns about the outline', () => {
@@ -136,10 +136,10 @@ describe('polygon area and point in polygon lesson', () => {
     expect(cell('self-crossing')).toBe(m.selfCrossing);
     method('ray');
     click(button('Đến bước cuối'));
-    expect(cell('location')).toBe('Outside');
+    expect(cell('location')).toBe('Bên ngoài');
     method('winding');
     click(button('Đến bước cuối'));
-    expect(cell('location')).toBe('Inside');
+    expect(cell('location')).toBe('Bên trong');
     expect(cell('count')).toBe('−2');
   });
 
@@ -147,9 +147,9 @@ describe('polygon area and point in polygon lesson', () => {
     render();
     method('ray');
     for (let i = 0; i < 2; i++) press(point(QUERY), 'ArrowDown', true);
-    expect(cell('location')).toBe('On the boundary');
+    expect(cell('location')).toBe('Trên biên');
     press(point(QUERY), 'ArrowDown', true);
-    expect(cell('location')).toBe('Outside');
+    expect(cell('location')).toBe('Bên ngoài');
   });
 
   it('moves a vertex and updates the area', () => {

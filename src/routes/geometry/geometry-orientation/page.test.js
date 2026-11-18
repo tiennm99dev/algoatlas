@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
 import { cross, dot, orient, sub } from '$lib/algo-engine/plane-geometry.js';
-import { en as m } from '$lib/lessons/geometry-orientation/copy.en.js';
+import { vi as m } from '$lib/lessons/geometry-orientation/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -59,7 +59,7 @@ function press(el, key, shiftKey = false) {
 describe('points, vectors and orientation lesson', () => {
   it('starts with the question and no verdict', () => {
     render();
-    expect(text()).toContain('Going from a to b, where is c?');
+    expect(text()).toContain('Đi từ a đến b thì c nằm ở đâu?');
     expect(cell('turn')).toBe(m.pending);
   });
 
@@ -69,7 +69,7 @@ describe('points, vectors and orientation lesson', () => {
     expect(cell('cross')).toBe('18');
     expect(cell('dot')).toBe('13');
     expect(cell('area')).toBe('9');
-    expect(cell('turn')).toBe('Left turn');
+    expect(cell('turn')).toBe('Rẽ trái');
     expect(cell('angle')).toBe(m.angles.acute);
   });
 
@@ -80,7 +80,7 @@ describe('points, vectors and orientation lesson', () => {
     click(button('Bước tiếp'));
     expect(text()).toContain('v = c − a = (2, 5)');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Dot = u.x · v.x + u.y · v.y = 13');
+    expect(text()).toContain('Tích vô hướng = u.x · v.x + u.y · v.y = 13');
   });
 
   it('flips the turn when a preset changes the points', () => {
@@ -88,10 +88,10 @@ describe('points, vectors and orientation lesson', () => {
     pick('right');
     expect(cell('turn')).toBe(m.pending);
     click(button('Đến bước cuối'));
-    expect(cell('turn')).toBe('Right turn');
+    expect(cell('turn')).toBe('Rẽ phải');
     pick('collinear');
     click(button('Đến bước cuối'));
-    expect(cell('turn')).toBe('Collinear');
+    expect(cell('turn')).toBe('Thẳng hàng');
     expect(cell('area')).toBe('0');
   });
 
@@ -99,9 +99,9 @@ describe('points, vectors and orientation lesson', () => {
     render();
     pick('floatTrap');
     click(button('Đến bước cuối'));
-    expect(cell('turn')).toBe('Collinear');
-    expect(cell('float-row')).toContain('Right turn');
-    expect(cell('epsilon-row')).toBe('Collinear');
+    expect(cell('turn')).toBe('Thẳng hàng');
+    expect(cell('float-row')).toContain('Rẽ phải');
+    expect(cell('epsilon-row')).toBe('Thẳng hàng');
     expect(cell('float-verdict')).toBe(m.precisionWrong);
   });
 
@@ -110,7 +110,7 @@ describe('points, vectors and orientation lesson', () => {
     // C from (3, 6) straight down to (3, 1) leaves c below the line a → b.
     for (let i = 0; i < 5; i++) press(point(2), 'ArrowDown', true);
     expect(point(2).getAttribute('aria-label')).toContain('(3, 1)');
-    expect(cell('turn')).toBe('Right turn');
+    expect(cell('turn')).toBe('Rẽ phải');
     expect(cell('cross')).toBe('−2');
   });
 
@@ -149,7 +149,7 @@ describe('points, vectors and orientation lesson', () => {
     expect(point(2).getAttribute('aria-label')).toContain('(6, 1)');
     // u = (4, 1) and v = (5, 0).
     expect(cell('cross')).toBe('−5');
-    expect(cell('turn')).toBe('Right turn');
+    expect(cell('turn')).toBe('Rẽ phải');
   });
 
   it('keeps its stored answers true to the engine', () => {

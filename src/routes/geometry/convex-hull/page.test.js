@@ -4,7 +4,7 @@ import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
 import { orient } from '$lib/algo-engine/plane-geometry.js';
 import { hullTrace } from '$lib/algo-engine/convex-hull.js';
-import { en as m } from '$lib/lessons/convex-hull/copy.en.js';
+import { vi as m } from '$lib/lessons/convex-hull/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -90,21 +90,21 @@ function commit(el, value) {
 describe('convex hull lesson', () => {
   it('walks Graham scan from the pivot to the finished hull', () => {
     render();
-    expect(text()).toContain('12 points to wrap.');
+    expect(text()).toContain('Cần bao quanh 12 điểm.');
     click(button('Bước tiếp'));
-    expect(text()).toContain('The pivot is B');
+    expect(text()).toContain('Điểm mốc là B');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Sort the rest by angle');
+    expect(text()).toContain('Sắp xếp các điểm còn lại theo góc');
     click(button('Đến bước cuối'));
     expect(cell('hull')).toBe('7');
-    expect(text()).toContain('counter-clockwise');
+    expect(text()).toContain('ngược chiều kim đồng hồ');
   });
 
   it('reaches a pop and narrates it', () => {
     render();
     const narration = () => document.querySelector('p[aria-live]')?.textContent ?? '';
-    for (let i = 0; i < 60 && !narration().startsWith('Pop '); i++) click(button('Bước tiếp'));
-    expect(narration()).toMatch(/^Pop [A-L]\. It lies inside or on the hull\.$/);
+    for (let i = 0; i < 60 && !narration().startsWith('Lấy '); i++) click(button('Bước tiếp'));
+    expect(narration()).toMatch(/^Lấy [A-L] ra\. Điểm này nằm bên trong hoặc trên cạnh của bao\.$/);
     expect(Number(cell('pops'))).toBeGreaterThan(0);
   });
 
@@ -112,9 +112,9 @@ describe('convex hull lesson', () => {
     render();
     method('monotone');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Sort the points by x');
+    expect(text()).toContain('Sắp xếp các điểm theo x');
     click(button('Bước tiếp'));
-    expect(text()).toContain('First pass, left to right');
+    expect(text()).toContain('Lượt thứ nhất, từ trái sang phải');
     click(button('Đến bước cuối'));
     expect(cell('hull')).toBe('7');
   });

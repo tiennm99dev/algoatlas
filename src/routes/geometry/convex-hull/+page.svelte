@@ -17,7 +17,7 @@
     monotonePseudocode,
     randomPoints,
   } from '$lib/algo-engine/convex-hull.js';
-  import { en as m } from '$lib/lessons/convex-hull/copy.en.js';
+  import { vi as m } from '$lib/lessons/convex-hull/copy.vi.js';
   import PointPlane from '$lib/components/point-plane.svelte';
   import { createPlayer } from '$lib/player/player.svelte.js';
 

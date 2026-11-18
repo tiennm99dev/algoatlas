@@ -46,7 +46,7 @@ export const segmentPseudocode = [
   '  hit = hit or (o4 = 0 and d in box(a, b))',
   '  if not hit: return NONE',
   '  r = b − a;  s = d − c',
-  '  if r × s = 0: return middle two of the sorted endpoints',
+  '  if r × s = 0: return hai đầu mút ở giữa sau khi sắp xếp',
   '  t = ((c − a) × s) / (r × s)',
   '  return a + t · r',
 ];

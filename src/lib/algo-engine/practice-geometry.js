@@ -50,17 +50,17 @@ export const PUZZLES = /** @type {Puzzle[]} */ (['side', 'fence', 'diameter']);
 /** @type {Record<Puzzle, string[]>} */
 export const PSEUDOCODE = {
   side: [
-    'for each point p other than A and B:',
-    '  c = cross(B − A, p − A)   // whole numbers: exact',
-    '  if c > 0: p is left of A → B',
-    '  else if c < 0: p is right of A → B',
-    '  else: p is on the line   // c = 0 exactly, no epsilon',
-    'return the three groups',
+    'for p in points, p ≠ A và p ≠ B:',
+    '  c = cross(B − A, p − A)   // số nguyên: chính xác',
+    '  if c > 0: p nằm bên trái A → B',
+    '  else if c < 0: p nằm bên phải A → B',
+    '  else: p nằm trên đường thẳng   // c = 0 chính xác, không cần epsilon',
+    'return ba nhóm điểm',
   ],
   fence: [
-    'hull = monotoneChain(points)   // corners, counter-clockwise',
+    'hull = monotoneChain(points)   // các đỉnh, ngược chiều kim đồng hồ',
     'twice = 0, perimeter = 0',
-    'for each hull edge (pᵢ, pᵢ₊₁):',
+    'for (pᵢ, pᵢ₊₁) in edges(hull):',
     '  twice = twice + (xᵢ · yᵢ₊₁ − xᵢ₊₁ · yᵢ)',
     '  perimeter = perimeter + |pᵢ pᵢ₊₁|',
     'area = twice / 2',
@@ -68,10 +68,10 @@ export const PSEUDOCODE = {
   diameter: [
     'hull = monotoneChain(points)',
     'best = −1',
-    'for each pair (p, q) of hull corners:',
-    '  d² = (px − qx)² + (py − qy)²   // no square root',
+    'for (p, q) in pairs(hull):',
+    '  d² = (px − qx)² + (py − qy)²   // không lấy căn',
     '  if d² > best: best = d², pair = (p, q)',
-    'return pair, with distance √best',
+    'return pair, khoảng cách √best',
   ],
 };
 
