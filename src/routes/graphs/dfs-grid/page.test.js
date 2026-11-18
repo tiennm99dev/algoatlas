@@ -57,15 +57,15 @@ describe('dfs lesson', () => {
   it('finds a long path on the default grid and compares it with BFS', () => {
     render(Page);
     click(button('Đến bước cuối'));
-    expect(text()).toContain('path of 54 steps');
-    expect(statValue('BFS shortest path')).toBe('22');
-    expect(statValue('DFS path length')).toBe('54');
+    expect(text()).toContain('đường đi dài 54 bước');
+    expect(statValue('Đường ngắn nhất của BFS')).toBe('22');
+    expect(statValue('Độ dài đường DFS')).toBe('54');
   });
 
   it('keyboard activation toggles a wall and rebuilds the trace', () => {
     render(Page);
     keyActivate(button('Hàng 0, cột 0'));
-    expect(button('Hàng 0, cột 0, Wall')).toBeTruthy();
+    expect(button('Hàng 0, cột 0, Tường')).toBeTruthy();
     expect(text()).toMatch(/Bước 1\/\d+/);
     expect(text()).toContain('Đã thêm tường ở (0,0).');
   });
@@ -73,16 +73,16 @@ describe('dfs lesson', () => {
   it('announces visit numbers in cell labels', () => {
     render(Page);
     click(button('Đến bước cuối'));
-    expect(button('Hàng 4, cột 2, Start, visit 1')).toBeTruthy();
+    expect(button('Hàng 4, cột 2, Điểm xuất phát, thăm thứ 1')).toBeTruthy();
   });
 
   it('narrates a push and lists it on the stack', () => {
     render(Page);
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
-    expect(text()).toContain('Push (4,1): open and not visited yet.');
+    expect(text()).toContain('Đẩy (4,1) vào ngăn xếp: ô trống và chưa được thăm.');
     const stack = [...document.querySelectorAll('ol li')].map((li) => li.textContent?.trim());
-    expect(stack).toContain('(4,1) (just pushed)');
+    expect(stack).toContain('(4,1) (vừa đẩy vào)');
   });
 
   it('reports no path when the goal is walled in', () => {
@@ -96,13 +96,13 @@ describe('dfs lesson', () => {
       keyActivate(button(`Hàng ${r}, cột ${c}`));
     }
     click(button('Đến bước cuối'));
-    expect(text()).toContain('walls cut it off');
-    expect(statValue('BFS shortest path')).toBe('—');
+    expect(text()).toContain('tường đã chặn kín đường');
+    expect(statValue('Đường ngắn nhất của BFS')).toBe('—');
   });
 
   it('moves focus with the arrow keys', () => {
     render(Page);
-    const startCell = button('Hàng 4, cột 2, Start');
+    const startCell = button('Hàng 4, cột 2, Điểm xuất phát');
     startCell.focus();
     key(startCell, { key: 'ArrowRight' });
     expect(document.activeElement).toBe(button('Hàng 4, cột 3'));
@@ -112,7 +112,7 @@ describe('dfs lesson', () => {
     render(Page);
     // A walled-in goal makes DFS sweep the open field, where stale copies surface.
     const clear = [...document.querySelectorAll('button')].find(
-      (b) => b.textContent === 'Clear walls',
+      (b) => b.textContent === 'Xoá hết tường',
     );
     click(/** @type {HTMLElement} */ (clear));
     for (const [r, c] of [
@@ -124,11 +124,11 @@ describe('dfs lesson', () => {
       keyActivate(button(`Hàng ${r}, cột ${c}`));
     }
     const next = button('Bước tiếp');
-    for (let i = 0; i < 400 && !text().includes('so skip it'); i++) click(next);
-    expect(text()).toContain('so skip it');
-    const cell = document.querySelector('button[aria-label*="Stale, skipped"]');
+    for (let i = 0; i < 400 && !text().includes('nên ta bỏ qua'); i++) click(next);
+    expect(text()).toContain('nên ta bỏ qua');
+    const cell = document.querySelector('button[aria-label*="Bản cũ, bỏ qua"]');
     expect(cell).not.toBeNull();
-    expect(document.querySelector('button[aria-label*="Expanding"]')).toBeNull();
+    expect(document.querySelector('button[aria-label*="Đang xét"]')).toBeNull();
   });
 
   it('announces the top stack entry as just pushed', () => {
@@ -137,6 +137,6 @@ describe('dfs lesson', () => {
     click(button('Bước tiếp'));
     const hot = document.querySelectorAll('ol li .sr-only');
     expect(hot).toHaveLength(1);
-    expect(hot[0].textContent).toBe(' (just pushed)');
+    expect(hot[0].textContent).toBe(' (vừa đẩy vào)');
   });
 });

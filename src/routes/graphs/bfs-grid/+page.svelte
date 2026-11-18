@@ -6,7 +6,7 @@
   import SegmentedControl from '$lib/components/segmented-control.svelte';
   import StepControls from '$lib/components/step-controls.svelte';
   import { bfsGridTrace, bfsPseudocode } from '$lib/algo-engine/graph.js';
-  import { en as m } from '$lib/lessons/bfs-grid/copy.en.js';
+  import { vi as m } from '$lib/lessons/bfs-grid/copy.vi.js';
   import { createGridEditor } from '$lib/player/grid-editor.svelte.js';
 
   const TOOLS = /** @type {(keyof typeof m.tools)[]} */ (Object.keys(m.tools));

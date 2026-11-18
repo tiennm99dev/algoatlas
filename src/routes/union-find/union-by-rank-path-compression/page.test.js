@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/union-by-rank-path-compression/copy.en.js';
+import { vi as m } from '$lib/lessons/union-by-rank-path-compression/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -89,67 +89,65 @@ const tableRow = (label) =>
 describe('union by rank and path compression lesson', () => {
   it('climbs the nine-link chain and flattens it with compression', () => {
     render();
-    expect(narration()).toContain('Every element is its own root with rank 0.');
+    expect(narration()).toContain('Mỗi phần tử là gốc của chính nó với hạng 0.');
     click(button('Đến bước cuối'));
     expect(narration()).toBe(
-      'Done: 1 set, tallest tree 1 link, 10 links followed and 8 entries re-pointed.',
+      'Xong: 1 tập, cây cao nhất dài 1 liên kết, đã đi qua 10 liên kết và trỏ lại 8 ô.',
     );
-    expect(statValue('Links followed (total)')).toBe('10');
+    expect(statValue('Số liên kết đã đi (tổng)')).toBe('10');
   });
 
   it('narrates a compression step', () => {
     render();
     let guard = 0;
-    while (!narration().startsWith('Path compression') && guard++ < 200) click(button('Bước tiếp'));
-    expect(narration()).toBe(
-      'Path compression: 0 pointed at 1; now it points straight at the root 9.',
-    );
+    while (!narration().startsWith('Nén đường đi') && guard++ < 200) click(button('Bước tiếp'));
+    expect(narration()).toBe('Nén đường đi: 0 từng trỏ vào 1; giờ nó trỏ thẳng vào gốc 9.');
   });
 
   it('keeps the chain tall with compression off', () => {
     render();
     radio('off');
     click(button('Đến bước cuối'));
-    expect(statValue('Links followed (total)')).toBe('17');
-    expect(statValue('Tallest tree (links)')).toBe('9');
-    expect(tableRow('Plain, no compression')?.textContent).toContain('(shown)');
+    expect(statValue('Số liên kết đã đi (tổng)')).toBe('17');
+    expect(statValue('Cây cao nhất (số liên kết)')).toBe('9');
+    expect(tableRow('Thông thường, không nén')?.textContent).toContain('(đang hiển thị)');
   });
 
   it('never forms the chain with union by rank and shows ranks', () => {
     render();
     radio('rank');
     click(button('Đến bước cuối'));
-    expect(statValue('Tallest tree (links)')).toBe('1');
-    expect(statValue('Links followed (total)')).toBe('8');
+    expect(statValue('Cây cao nhất (số liên kết)')).toBe('1');
+    expect(statValue('Số liên kết đã đi (tổng)')).toBe('8');
     expect(text()).toContain('r1');
-    expect(tableRow('Both')?.textContent).toContain('(shown)');
+    expect(tableRow('Cả hai')?.textContent).toContain('(đang hiển thị)');
   });
 
   it('compares all four settings on the same log', () => {
     render();
     commit(preset(), 'mixed');
-    expect(tableRow('Plain, no compression')?.textContent).toContain('13');
-    expect(tableRow('By rank only')?.textContent).toContain('11');
-    expect(tableRow('Compression only')?.textContent).toContain('10');
-    expect(tableRow('Both')?.textContent).toContain('8');
+    expect(tableRow('Thông thường, không nén')?.textContent).toContain('13');
+    expect(tableRow('Chỉ hợp theo hạng')?.textContent).toContain('11');
+    expect(tableRow('Chỉ nén đường đi')?.textContent).toContain('10');
+    expect(tableRow('Cả hai')?.textContent).toContain('8');
   });
 
   it('adds a union with Enter and a find by picking a node', () => {
     render();
-    click(buttonByText('Reset'));
+    click(buttonByText('Đặt lại'));
     commit(field('a'), '2');
     commit(field('b'), '5');
     const form = /** @type {HTMLFormElement} */ (field('a').closest('form'));
     form.requestSubmit();
     flushSync();
-    expect(narration()).toBe('Find the root of a = 2: start at 2.');
+    expect(narration()).toBe('Tìm gốc của a = 2: bắt đầu ở 2.');
     const node = /** @type {HTMLElement} */ (
       document.querySelector('g[role="button"][aria-label^="5 là gốc"]')
     );
     node.focus();
     node.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     flushSync();
-    expect(narration()).toBe('find(5): start at 5.');
+    expect(narration()).toBe('find(5): bắt đầu ở 5.');
     expect(text()).toContain('find(5)');
   });
 
@@ -158,11 +156,11 @@ describe('union by rank and path compression lesson', () => {
     commit(field('a'), '20');
     expect(field('a').value).toBe('0');
     // The first click follows the refused value, so it is refused too and adds nothing.
-    click(buttonByText('Find a'));
+    click(buttonByText('Tìm gốc của a'));
     expect(narration()).toBe(m.elementError);
-    for (let i = 0; i < 6; i++) click(buttonByText('Find a'));
+    for (let i = 0; i < 6; i++) click(buttonByText('Tìm gốc của a'));
     expect(narration()).toBe(m.logFull);
-    click(buttonByText('Undo last'));
+    click(buttonByText('Hoàn tác'));
     expect(text()).not.toContain(m.logFull);
   });
 

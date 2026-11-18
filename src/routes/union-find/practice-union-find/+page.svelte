@@ -13,7 +13,7 @@
     streamPseudocode,
     streamTrace,
   } from '$lib/algo-engine/practice-union-find.js';
-  import { en as m } from '$lib/lessons/practice-union-find/copy.en.js';
+  import { vi as m } from '$lib/lessons/practice-union-find/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/practice-union-find.js').Edge} Edge */

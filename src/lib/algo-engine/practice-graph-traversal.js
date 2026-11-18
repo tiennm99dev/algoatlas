@@ -38,26 +38,26 @@ export const MAX_SOURCES = 4;
  */
 
 export const bfsPseudocode = [
-  'queue = every source; dist[source] = 0; mark the sources seen',
-  'while queue is not empty:',
+  'queue = sources; dist[s] = 0 và seen.add(s) với mọi nguồn s',
+  'while queue khác rỗng:',
   '  cell = queue.dequeue()',
-  '  if cell == goal: walk parents back; stop',
-  '  for each neighbour n of cell (up, right, down, left):',
-  '    if n is open and not seen:',
-  '      mark n seen; dist[n] = dist[cell] + 1; parent[n] = cell; queue.enqueue(n)',
-  'queue empty: every reachable cell has its distance',
+  '  if cell == goal: lần theo parent để dựng đường đi; stop',
+  '  for n in neighbours(cell):  // lên, phải, xuống, trái',
+  '    if open(n) and n not in seen:',
+  '      seen.add(n); dist[n] = dist[cell] + 1; parent[n] = cell; queue.enqueue(n)',
+  'hàng đợi rỗng: mọi ô đi tới được đã có khoảng cách',
 ];
 
 export const dfsPseudocode = [
-  'stack = every source, each at depth 0',
-  'while stack is not empty:',
+  'stack = sources, mỗi nguồn ở độ sâu 0',
+  'while stack khác rỗng:',
   '  (cell, depth, from) = stack.pop()',
-  '  if cell is already visited: continue      // stale copy',
-  '  visit cell; label[cell] = depth; parent[cell] = from',
-  '  if cell == goal: walk parents back; stop',
-  '  for each neighbour n of cell (left, down, right, up):',
-  '    if n is open and not visited: stack.push((n, depth + 1, cell))',
-  'stack empty: every reachable cell is visited',
+  '  if cell in visited: continue      // bản cũ',
+  '  visited.add(cell); label[cell] = depth; parent[cell] = from',
+  '  if cell == goal: lần theo parent để dựng đường đi; stop',
+  '  for n in neighbours(cell):  // trái, xuống, phải, lên',
+  '    if open(n) and n not in visited: stack.push((n, depth + 1, cell))',
+  'ngăn xếp rỗng: mọi ô đi tới được đã được thăm',
 ];
 
 /**

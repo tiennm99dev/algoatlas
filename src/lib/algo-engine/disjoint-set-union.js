@@ -13,11 +13,11 @@ export const dsuPseudocode = [
   'find(x):',
   '  while parent[x] ≠ x:',
   '    x = parent[x]',
-  '  return x          // the root names the set',
+  '  return x          // gốc là tên của tập',
   'union(a, b):',
   '  ra = find(a); rb = find(b)',
-  '  if ra == rb: same set already, stop',
-  '  parent[rb] = ra   // b’s tree hangs under a’s root',
+  '  if ra == rb: đã cùng tập, stop',
+  '  parent[rb] = ra   // cây của b treo dưới gốc của a',
   'same(a, b): return find(a) == find(b)',
 ];
 

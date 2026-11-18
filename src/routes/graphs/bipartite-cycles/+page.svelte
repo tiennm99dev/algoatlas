@@ -16,7 +16,7 @@
     undirectedCyclePseudocode,
     undirectedCycleTrace,
   } from '$lib/algo-engine/bipartite-cycles.js';
-  import { en as m } from '$lib/lessons/bipartite-cycles/copy.en.js';
+  import { vi as m } from '$lib/lessons/bipartite-cycles/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/graph-editor.js').GraphNode} GraphNode */

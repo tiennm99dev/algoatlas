@@ -15,7 +15,7 @@
     dfsPseudocode,
     traversalTrace,
   } from '$lib/algo-engine/practice-graph-traversal.js';
-  import { en as m } from '$lib/lessons/practice-graph-traversal/copy.en.js';
+  import { vi as m } from '$lib/lessons/practice-graph-traversal/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {keyof typeof m.puzzles} PuzzleKey */

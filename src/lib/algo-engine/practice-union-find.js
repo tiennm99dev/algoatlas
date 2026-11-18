@@ -8,12 +8,12 @@ export const N = 8;
 export const MAX_EDGES = 16;
 
 export const streamPseudocode = [
-  'components = n; every vertex is its own set',
-  'for each edge (u, v), in arrival order:',
+  'components = n; mỗi đỉnh là một tập riêng',
+  'for (u, v) in stream:  // theo thứ tự cạnh đến',
   '  ru = find(u); rv = find(v)',
-  '  if ru == rv: u and v are already connected, so (u, v) closes a cycle',
+  '  if ru == rv: u và v đã liên thông, nên (u, v) khép kín một chu trình',
   '  else: union(ru, rv); components = components − 1',
-  'report the components and the flagged edges',
+  'return components, flagged  // số thành phần và các cạnh bị đánh dấu',
 ];
 
 /** @typedef {[number, number]} Edge */

@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/disjoint-set-union/copy.en.js';
+import { vi as m } from '$lib/lessons/disjoint-set-union/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -81,11 +81,11 @@ function answer(q, value) {
 describe('disjoint set union lesson', () => {
   it('starts with every element alone and ends the friends preset at five sets', () => {
     render();
-    expect(narration()).toContain('Every element starts alone');
-    expect(statValue('Sets')).toBe('10');
+    expect(narration()).toContain('Ban đầu mỗi phần tử đứng một mình');
+    expect(statValue('Số tập')).toBe('10');
     click(button('Đến bước cuối'));
     expect(narration()).toBe(
-      'Done: 5 sets, tallest tree 2 links, 10 parent links followed in total.',
+      'Xong: 5 tập, cây cao nhất dài 2 liên kết, tổng cộng đã đi qua 10 liên kết parent.',
     );
     expect(text()).toContain('{0, 1, 2, 3}');
     expect(text()).toContain('{4, 5, 6}');
@@ -94,31 +94,31 @@ describe('disjoint set union lesson', () => {
   it('walks a find from an element up to its root', () => {
     render();
     commit(field('a'), '3');
-    click(buttonByText('Find a'));
-    expect(narration()).toContain('find(3): start at 3');
+    click(buttonByText('Tìm gốc của a'));
+    expect(narration()).toContain('find(3): bắt đầu ở 3');
     click(button('Bước tiếp'));
-    expect(narration()).toBe('parent[3] = 2, so climb to 2.');
+    expect(narration()).toBe('parent[3] = 2, nên leo lên 2.');
     click(button('Bước tiếp'));
-    expect(narration()).toBe('parent[2] = 0, so climb to 0.');
+    expect(narration()).toBe('parent[2] = 0, nên leo lên 0.');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('0 is the root');
-    expect(statValue('Links followed (this operation)')).toBe('2');
+    expect(narration()).toContain('0 là gốc');
+    expect(statValue('Số liên kết đã đi (thao tác này)')).toBe('2');
   });
 
   it('merges two sets with union and answers same-set queries', () => {
     render();
     commit(field('a'), '6');
     commit(field('b'), '9');
-    click(buttonByText('Union'));
+    click(buttonByText('Hợp a và b'));
     click(button('Đến bước cuối'));
-    expect(statValue('Sets')).toBe('4');
+    expect(statValue('Số tập')).toBe('4');
     commit(field('a'), '9');
     commit(field('b'), '5');
-    click(buttonByText('Same set?'));
+    click(buttonByText('Cùng tập?'));
     click(button('Đến bước cuối'));
     expect(text()).not.toContain('{9}');
     click(button('Bước trước'));
-    expect(narration()).toBe('Both roots are 4: yes, 9 and 5 are in the same set.');
+    expect(narration()).toBe('Cả hai gốc đều là 4: có, 9 và 5 ở cùng một tập.');
   });
 
   it('runs union when Enter submits the form', () => {
@@ -128,8 +128,8 @@ describe('disjoint set union lesson', () => {
     const form = /** @type {HTMLFormElement} */ (field('a').closest('form'));
     form.requestSubmit();
     flushSync();
-    expect(narration()).toContain('Find the root of a = 7');
-    expect(buttonByText('Same set?').type).toBe('button');
+    expect(narration()).toContain('Tìm gốc của a = 7');
+    expect(buttonByText('Cùng tập?').type).toBe('button');
   });
 
   it('runs find on a node picked with Enter in the forest', () => {
@@ -138,15 +138,15 @@ describe('disjoint set union lesson', () => {
     node.focus();
     node.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     flushSync();
-    expect(narration()).toMatch(/^find\(\d\): start at \d/);
+    expect(narration()).toMatch(/^find\(\d\): bắt đầu ở \d/);
     expect(text()).toMatch(/find\(\d\)/);
   });
 
   it('builds a tall chain with the chain preset', () => {
     render();
     commit(preset(), 'chain');
-    expect(statValue('Tallest tree (links)')).toBe('6');
-    expect(statValue('Links followed (total)')).toBe('6');
+    expect(statValue('Cây cao nhất (số liên kết)')).toBe('6');
+    expect(statValue('Số liên kết đã đi (tổng)')).toBe('6');
   });
 
   it('keeps the last valid element and refuses invalid input', () => {
@@ -160,13 +160,13 @@ describe('disjoint set union lesson', () => {
 
   it('undoes, resets and refuses a full log', () => {
     render();
-    click(buttonByText('Undo last'));
+    click(buttonByText('Hoàn tác'));
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('Done: 5 sets');
-    click(buttonByText('Reset'));
-    expect(text()).toContain('none yet');
-    expect(buttonByText('Reset').getAttribute('aria-disabled')).toBe('true');
-    for (let i = 0; i < 17; i++) click(buttonByText('Find a'));
+    expect(narration()).toContain('Xong: 5 tập');
+    click(buttonByText('Đặt lại'));
+    expect(text()).toContain('chưa có');
+    expect(buttonByText('Đặt lại').getAttribute('aria-disabled')).toBe('true');
+    for (let i = 0; i < 17; i++) click(buttonByText('Tìm gốc của a'));
     expect(narration()).toBe(m.logFull);
     click(button('Bước tiếp'));
     expect(narration()).not.toBe(m.logFull);

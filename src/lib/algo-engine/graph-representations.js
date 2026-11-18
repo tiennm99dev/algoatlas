@@ -37,11 +37,11 @@ export const MAX_NODES = 8;
  */
 
 export const representationsPseudocode = [
-  'matrix = n × n table of 0; list = n empty lists',
-  'for each edge (u, v, w) in the edge list:',
-  '  matrix[u][v] = w                 // w = 1 when unweighted',
+  'matrix = bảng n × n toàn 0; list = n danh sách rỗng',
+  'for (u, v, w) in edges:',
+  '  matrix[u][v] = w                 // w = 1 khi không có trọng số',
   '  list[u].append((v, w))',
-  '  if the graph is undirected:',
+  '  if đồ thị vô hướng:',
   '    matrix[v][u] = w; list[v].append((u, w))',
   'return matrix, list',
 ];

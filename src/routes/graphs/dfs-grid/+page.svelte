@@ -7,7 +7,7 @@
   import StepControls from '$lib/components/step-controls.svelte';
   import { dfsGridTrace, dfsPseudocode } from '$lib/algo-engine/dfs-grid.js';
   import { bfsGridTrace } from '$lib/algo-engine/graph.js';
-  import { en as m } from '$lib/lessons/dfs-grid/copy.en.js';
+  import { vi as m } from '$lib/lessons/dfs-grid/copy.vi.js';
   import { createGridEditor } from '$lib/player/grid-editor.svelte.js';
 
   const TOOLS = /** @type {(keyof typeof m.tools)[]} */ (Object.keys(m.tools));

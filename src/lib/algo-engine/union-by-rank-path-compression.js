@@ -17,15 +17,15 @@ export const rankPseudocode = [
   'find(x):',
   '  r = x',
   '  while parent[r] ≠ r: r = parent[r]',
-  '  if path compression is on:',
-  '    for each v on the path from x up to r: parent[v] = r',
+  '  if compress:  // bật nén đường đi',
+  '    for v in path(x, r): parent[v] = r',
   '  return r',
   'union(a, b):',
   '  ra = find(a); rb = find(b)',
   '  if ra == rb: stop',
-  '  if by rank and rank[ra] < rank[rb]: swap ra and rb',
+  '  if byRank and rank[ra] < rank[rb]: swap(ra, rb)',
   '  parent[rb] = ra',
-  '  if by rank and rank[ra] == rank[rb]: rank[ra] += 1',
+  '  if byRank and rank[ra] == rank[rb]: rank[ra] += 1',
 ];
 
 /**

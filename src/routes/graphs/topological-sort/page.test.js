@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/topological-sort/copy.en.js';
+import { vi as m } from '$lib/lessons/topological-sort/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -79,17 +79,19 @@ function answer(q, value) {
 describe('topological sort lesson', () => {
   it('runs Kahn on the dinner graph', () => {
     render();
-    expect(text()).toContain('Count the edges into each task: A 0, B 1, C 1, D 0, E 2, F 1, G 2.');
+    expect(text()).toContain('Đếm số cạnh đi vào mỗi việc: A 0, B 1, C 1, D 0, E 2, F 1, G 2.');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Tasks with in-degree 0 need nothing first: queue A, D.');
+    expect(text()).toContain(
+      'Những việc có bậc vào 0 không phải chờ việc nào: đưa A, D vào hàng đợi.',
+    );
     click(button('Bước tiếp'));
-    expect(text()).toContain('Dequeue A and place it at position 1.');
+    expect(text()).toContain('Lấy A ra khỏi hàng đợi và xếp vào vị trí 1.');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Remove A → B: B now has in-degree 0, so enqueue it.');
+    expect(text()).toContain('Gỡ cạnh A → B: bậc vào của B giờ bằng 0, nên đưa B vào hàng đợi.');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Remove A → E: E still waits on 1 more.');
+    expect(text()).toContain('Gỡ cạnh A → E: E vẫn còn chờ 1 việc nữa.');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Done. Order: A, D, B, E, C, F, G. Every edge points forward.');
+    expect(text()).toContain('Xong. Thứ tự: A, D, B, E, C, F, G. Mọi cạnh đều chỉ về phía sau.');
     expect(statValue(m.stats.backward)).toBe('0');
     expect(statValue(m.stats.placed)).toBe('7 / 7');
   });
@@ -97,11 +99,11 @@ describe('topological sort lesson', () => {
   it('runs the DFS method and reverses the finish order', () => {
     render();
     radio('dfs');
-    expect(text()).toContain('Every task starts unvisited.');
+    expect(text()).toContain('Ban đầu chưa việc nào được thăm.');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Visit A: mark it in progress.');
+    expect(text()).toContain('Thăm A: đánh dấu đang thăm.');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Reverse the finish order: D, A, E, B, C, F, G.');
+    expect(text()).toContain('Đảo ngược thứ tự hoàn tất: D, A, E, B, C, F, G.');
     const card = [...document.querySelectorAll('h2')].find(
       (h) => h.textContent?.trim() === m.resultLabel,
     )?.parentElement;
@@ -115,28 +117,28 @@ describe('topological sort lesson', () => {
     click(vertex(6));
     click(vertex(0));
     click(button('Đến bước cuối'));
-    expect(text()).toContain('The queue is empty but A, B, C, E, F, G were never placed');
+    expect(text()).toContain('Hàng đợi đã rỗng nhưng A, B, C, E, F, G chưa bao giờ được xếp');
     expect(statValue(m.stats.backward)).toBe('—');
     radio('dfs');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Cycle A, B, C, F, G → A: no topological order exists.');
-    expect(vertex(6).getAttribute('aria-label')).toContain('on the cycle');
+    expect(text()).toContain('Chu trình A, B, C, F, G → A: không có thứ tự tô-pô nào.');
+    expect(vertex(6).getAttribute('aria-label')).toContain('trên chu trình');
     click(buttonByText(m.resetGraph));
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Reverse the finish order');
+    expect(text()).toContain('Đảo ngược thứ tự hoàn tất');
   });
 
   it('steps with the keyboard shortcut', () => {
     render();
     press(document.body, 'ArrowRight');
-    expect(text()).toContain('queue A, D');
+    expect(text()).toContain('đưa A, D vào hàng đợi');
   });
 
   it('labels each task with its state and in-degree', () => {
     render();
     click(button('Bước tiếp'));
-    expect(vertex(0).getAttribute('aria-label')).toBe('Task A, queued, in 0');
-    expect(vertex(4).getAttribute('aria-label')).toBe('Task E, in 2');
+    expect(vertex(0).getAttribute('aria-label')).toBe('Việc A, trong hàng đợi, bậc vào 0');
+    expect(vertex(4).getAttribute('aria-label')).toBe('Việc E, bậc vào 2');
   });
 
   it('checks practice answers with a hint', () => {

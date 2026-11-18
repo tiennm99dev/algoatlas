@@ -13,7 +13,7 @@
     componentsTrace,
     randomLand,
   } from '$lib/algo-engine/connected-components.js';
-  import { en as m } from '$lib/lessons/connected-components/copy.en.js';
+  import { vi as m } from '$lib/lessons/connected-components/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   const ROWS = MAX_ROWS;

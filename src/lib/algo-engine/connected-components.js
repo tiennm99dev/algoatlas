@@ -31,14 +31,14 @@ export const MAX_COLS = 12;
  */
 
 export const componentsPseudocode = [
-  'count = 0; every cell starts with no label',
-  'for each cell in row-major order:',
-  '  if cell is land and has no label:',
+  'count = 0; label[cell] = null với mọi ô',
+  'for cell in cells:  // theo từng hàng, trái sang phải',
+  '  if land(cell) and label[cell] == null:',
   '    count += 1; label[cell] = count; queue = [cell]',
-  '    while queue is not empty:',
+  '    while queue khác rỗng:',
   '      c = queue.dequeue()',
-  '      for each neighbour n of c (4 or 8 directions):',
-  '        if n is land and has no label:',
+  '      for n in neighbours(c):  // 4 hoặc 8 hướng',
+  '        if land(n) and label[n] == null:',
   '          label[n] = count; queue.enqueue(n)',
   'return count',
 ];

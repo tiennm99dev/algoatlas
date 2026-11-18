@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/bipartite-cycles/copy.en.js';
+import { vi as m } from '$lib/lessons/bipartite-cycles/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -79,27 +79,27 @@ function answer(q, value) {
 describe('bipartite and cycles lesson', () => {
   it('two-colours the odd cycle until C and D clash', () => {
     render();
-    expect(text()).toContain('No vertex has a colour yet.');
+    expect(text()).toContain('Chưa đỉnh nào có màu.');
     click(button('Bước tiếp'));
-    expect(text()).toContain('A has no colour: give it colour 1 and start a BFS from it.');
+    expect(text()).toContain('A chưa có màu: tô màu 1 và bắt đầu một lần BFS từ đỉnh này.');
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
-    expect(text()).toContain('B has no colour, so it gets the other colour, 2.');
-    expect(vertex(1).getAttribute('aria-label')).toBe('Vertex B, side 2');
+    expect(text()).toContain('B chưa có màu, nên nhận màu còn lại, màu 2.');
+    expect(vertex(1).getAttribute('aria-label')).toBe('Đỉnh B, phía 2');
     click(button('Đến bước cuối'));
     expect(text()).toContain(
-      'C and D both have colour 1, but an edge joins them. Odd cycle A, B, C, D, E: the graph is not bipartite.',
+      'C và D cùng có màu 1, nhưng có một cạnh nối chúng. Chu trình lẻ A, B, C, D, E: đồ thị không phải đồ thị hai phía.',
     );
-    expect(statValue(m.stats.result)).toBe('odd cycle of 5');
-    expect(vertex(4).getAttribute('aria-label')).toContain('on the cycle');
-    expect(vertex(6).getAttribute('aria-label')).toBe('Vertex G');
+    expect(statValue(m.stats.result)).toBe('chu trình lẻ dài 5');
+    expect(vertex(4).getAttribute('aria-label')).toContain('trên chu trình');
+    expect(vertex(6).getAttribute('aria-label')).toBe('Đỉnh G');
   });
 
   it('colours the even cycle into two sides', () => {
     render();
     click(buttonByText(m.presets.even));
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Bipartite. Side 1: A, C, E. Side 2: B, D, F.');
+    expect(text()).toContain('Đồ thị hai phía. Phía 1: A, C, E. Phía 2: B, D, F.');
     expect(statValue(m.stats.checks)).toBe('14');
     expect(statValue(m.stats.sides)).toBe('3 | 3');
   });
@@ -109,15 +109,15 @@ describe('bipartite and cycles lesson', () => {
     click(buttonByText(m.presets.diamond));
     radio('undirected');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Cycle A, B, D, C – A.');
+    expect(text()).toContain('Chu trình A, B, D, C – A.');
     radio('directed');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('the directed graph has no cycle, so it is a DAG.');
-    expect(statValue(m.stats.result)).toBe('no cycle');
+    expect(text()).toContain('đồ thị có hướng này không có chu trình, nên nó là một DAG.');
+    expect(statValue(m.stats.result)).toBe('không có chu trình');
     const next = button('Bước tiếp');
     click(button('Về bước đầu'));
-    for (let i = 0; i < 40 && !text().includes('is finished, so every path'); i++) click(next);
-    expect(text()).toContain('Edge C → D: D is finished');
+    for (let i = 0; i < 40 && !text().includes('đã hoàn tất, nên mọi đường đi'); i++) click(next);
+    expect(text()).toContain('Cạnh C → D: D đã hoàn tất');
   });
 
   it('skips the parent edge in the undirected check of a tree', () => {
@@ -128,18 +128,20 @@ describe('bipartite and cycles lesson', () => {
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
-    expect(text()).toContain('B – A is the edge we arrived along, not a cycle. Skip it.');
+    expect(text()).toContain(
+      'B – A là cạnh ta vừa đi theo để đến đây, không phải chu trình. Bỏ qua.',
+    );
     click(button('Đến bước cuối'));
-    expect(text()).toContain('the graph is a forest');
+    expect(text()).toContain('đồ thị là một rừng');
   });
 
   it('finds the directed cycle of the odd preset with a back edge', () => {
     render();
     radio('directed');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Cycle A, B, C, D, E → A.');
+    expect(text()).toContain('Chu trình A, B, C, D, E → A.');
     click(button('Bước trước'));
-    expect(text()).toContain('Edge E → A leads to A, which is still in progress: a back edge.');
+    expect(text()).toContain('Cạnh E → A dẫn tới A, đỉnh vẫn đang thăm: đây là cạnh ngược.');
   });
 
   it('deleting an edge of the odd cycle makes the graph bipartite', () => {
@@ -150,13 +152,13 @@ describe('bipartite and cycles lesson', () => {
     );
     click(edge);
     click(button('Đến bước cuối'));
-    expect(statValue(m.stats.result)).toBe('bipartite');
+    expect(statValue(m.stats.result)).toBe('hai phía');
   });
 
   it('steps with the keyboard shortcut', () => {
     render();
     press(document.body, 'ArrowRight');
-    expect(text()).toContain('give it colour 1');
+    expect(text()).toContain('tô màu 1');
   });
 
   it('checks practice answers with a hint', () => {

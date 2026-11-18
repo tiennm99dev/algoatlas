@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/practice-union-find/copy.en.js';
+import { vi as m } from '$lib/lessons/practice-union-find/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -82,14 +82,14 @@ const graphLabel = () =>
 describe('union-find practice lesson', () => {
   it('runs the road network to two components and three cycle edges', () => {
     render();
-    expect(narration()).toContain('9 edges will arrive one at a time');
-    expect(statValue('Components')).toBe('8');
+    expect(narration()).toContain('9 cạnh sẽ lần lượt đến từng cạnh một');
+    expect(statValue('Số thành phần')).toBe('8');
     click(button('Đến bước cuối'));
     expect(narration()).toBe(
-      'All 9 edges processed: 2 components, 3 edges closed a cycle, the first was #4.',
+      'Đã xử lí hết 9 cạnh: còn 2 thành phần, 3 cạnh khép kín chu trình, cạnh đầu tiên là #4.',
     );
-    expect(statValue('Edges that merged')).toBe('6');
-    expect(statValue('First cycle edge')).toBe('#4');
+    expect(statValue('Số cạnh đã gộp')).toBe('6');
+    expect(statValue('Cạnh đầu tiên khép chu trình')).toBe('#4');
     expect(graphLabel()).toContain('{A, B, C, D, E, F, G}, {H}');
     expect(graphLabel()).toContain('A–D, G–E, B–F');
   });
@@ -97,9 +97,9 @@ describe('union-find practice lesson', () => {
   it('flags the edge that closes the first cycle', () => {
     render();
     for (let i = 0; i < 7; i++) click(button('Bước tiếp'));
-    expect(narration()).toBe('Edge #4 A–D: find(A) = A, find(D) = A.');
+    expect(narration()).toBe('Cạnh #4 A–D: find(A) = A, find(D) = A.');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('#4 A–D closes a cycle');
+    expect(narration()).toContain('#4 A–D khép kín một chu trình');
     expect(text()).toContain('#4 A–D ✕');
     expect(text()).toContain('#4: 5');
   });
@@ -111,31 +111,31 @@ describe('union-find practice lesson', () => {
     const form = /** @type {HTMLFormElement} */ (select('from').closest('form'));
     form.requestSubmit();
     flushSync();
-    expect(narration()).toBe('Edge #10 H–A: find(H) = H, find(A) = A.');
+    expect(narration()).toBe('Cạnh #10 H–A: find(H) = H, find(A) = A.');
     click(button('Đến bước cuối'));
-    expect(statValue('Components')).toBe('1');
+    expect(statValue('Số thành phần')).toBe('1');
     commit(select('to'), '7');
-    click(buttonByText('Add edge'));
+    click(buttonByText('Thêm cạnh'));
     expect(narration()).toBe(m.edits.loop);
     commit(select('from'), '0');
     commit(select('to'), '1');
-    click(buttonByText('Add edge'));
+    click(buttonByText('Thêm cạnh'));
     expect(narration()).toBe(m.edits.repeat);
     expect(text()).not.toContain('#11');
   });
 
   it('undoes, clears and loads the spanning tree stream', () => {
     render();
-    click(buttonByText('Undo last'));
+    click(buttonByText('Hoàn tác'));
     click(button('Đến bước cuối'));
-    expect(statValue('Edges that closed a cycle')).toBe('2');
-    click(buttonByText('Clear'));
-    expect(text()).toContain('no edges yet');
-    expect(buttonByText('Clear').getAttribute('aria-disabled')).toBe('true');
+    expect(statValue('Số cạnh khép chu trình')).toBe('2');
+    click(buttonByText('Xoá hết'));
+    expect(text()).toContain('chưa có cạnh nào');
+    expect(buttonByText('Xoá hết').getAttribute('aria-disabled')).toBe('true');
     commit(select('preset'), 'tree');
     click(button('Đến bước cuối'));
-    expect(statValue('Components')).toBe('1');
-    expect(statValue('First cycle edge')).toBe('—');
+    expect(statValue('Số thành phần')).toBe('1');
+    expect(statValue('Cạnh đầu tiên khép chu trình')).toBe('—');
   });
 
   it('refuses a seventeenth edge', () => {
@@ -152,12 +152,12 @@ describe('union-find practice lesson', () => {
     for (const [u, v] of pairs) {
       commit(select('from'), String(u));
       commit(select('to'), String(v));
-      click(buttonByText('Add edge'));
+      click(buttonByText('Thêm cạnh'));
     }
     expect(text()).toContain('#16');
     commit(select('from'), '1');
     commit(select('to'), '6');
-    click(buttonByText('Add edge'));
+    click(buttonByText('Thêm cạnh'));
     expect(narration()).toBe(m.edits.full);
   });
 

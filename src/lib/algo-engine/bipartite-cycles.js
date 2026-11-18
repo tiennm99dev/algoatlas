@@ -36,38 +36,38 @@ export const MAX_NODES = 8;
  */
 
 export const bipartitePseudocode = [
-  'every vertex starts with no colour',
-  'for each vertex s with no colour:',
+  'colour[v] = null với mọi đỉnh v',
+  'for s in vertices if colour[s] == null:',
   '  colour[s] = 1; queue = [s]',
-  '  while queue is not empty:',
+  '  while queue khác rỗng:',
   '    u = queue.dequeue()',
-  '    for each neighbour v of u:',
-  '      if v has no colour: colour[v] = the other colour; queue.enqueue(v)',
-  '      else if colour[v] == colour[u]: odd cycle, not bipartite — stop',
-  'bipartite: the two colours are the two sides',
+  '    for v in adj[u]:',
+  '      if colour[v] == null: colour[v] = màu còn lại; queue.enqueue(v)',
+  '      else if colour[v] == colour[u]: chu trình lẻ, không hai phía — stop',
+  'hai phía: mỗi màu là một phía',
 ];
 
 export const undirectedCyclePseudocode = [
-  'for each vertex s: if s is unvisited: visit(s, none)',
+  'for s in vertices: if s chưa thăm: visit(s, null)',
   'visit(u, parent):',
-  '  mark u visited',
-  '  for each neighbour v of u:',
-  '    if v == parent: skip, that is the edge we came along',
-  '    else if v is visited: cycle found — stop',
+  '  đánh dấu u đã thăm',
+  '  for v in adj[u]:',
+  '    if v == parent: bỏ qua, đó là cạnh vừa đi tới',
+  '    else if v đã thăm: có chu trình — stop',
   '    else: visit(v, u)',
-  'no cycle: the graph is a forest',
+  'không có chu trình: đồ thị là một rừng',
 ];
 
 export const directedCyclePseudocode = [
-  'for each vertex s: if s is unvisited: visit(s)',
+  'for s in vertices: if s chưa thăm: visit(s)',
   'visit(u):',
-  '  mark u in progress',
-  '  for each edge u → v:',
-  '    if v is in progress: back edge, cycle found — stop',
-  '    if v is finished: no cycle through v, skip it',
-  '    if v is unvisited: visit(v)',
-  '  mark u finished',
-  'no cycle: the graph is a DAG',
+  '  đánh dấu u đang thăm',
+  '  for v in adj[u]:  // mỗi cạnh u → v',
+  '    if v đang thăm: cạnh ngược, có chu trình — stop',
+  '    if v đã hoàn tất: không có chu trình qua v, bỏ qua',
+  '    if v chưa thăm: visit(v)',
+  '  đánh dấu u hoàn tất',
+  'không có chu trình: đồ thị là một DAG',
 ];
 
 /**

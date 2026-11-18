@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/connected-components/copy.en.js';
+import { vi as m } from '$lib/lessons/connected-components/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -82,19 +82,21 @@ function answer(q, value) {
 describe('connected components lesson', () => {
   it('labels the first island, then counts all nine', () => {
     render();
-    expect(text()).toContain('No cell has a label yet.');
+    expect(text()).toContain('Chưa ô nào có nhãn.');
     click(button('Bước tiếp'));
-    expect(text()).toContain('(0,0) is land with no label: a new island. Label it 1');
+    expect(text()).toContain('(0,0) là đất chưa có nhãn: một hòn đảo mới. Gán nhãn 1');
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
-    expect(text()).toContain('(0,1) is unlabelled land next to (0,0): label it 1 and enqueue it.');
+    expect(text()).toContain(
+      '(0,1) là đất chưa có nhãn, kề với (0,0): gán nhãn 1 và đưa vào hàng đợi.',
+    );
     const queue = [...document.querySelectorAll('ol li')].map((li) => li.textContent?.trim());
-    expect(queue).toContain('(0,1) (just labelled)');
+    expect(queue).toContain('(0,1) (vừa gán nhãn)');
     click(button('Đến bước cuối'));
     expect(statValue(m.stats.islands)).toBe('9');
     expect(statValue(m.stats.largest)).toBe('7');
-    expect(text()).toContain('Scan finished: 9 islands, after 97 neighbour checks.');
-    expect(button('Row 6, column 6, island 7')).toBeTruthy();
+    expect(text()).toContain('Quét xong: 9 đảo, sau 97 lần xét ô kề.');
+    expect(button('Hàng 6, cột 6, đảo 7')).toBeTruthy();
   });
 
   it('8 directions merge the diagonal chain', () => {
@@ -102,23 +104,23 @@ describe('connected components lesson', () => {
     radio('8');
     click(button('Đến bước cuối'));
     expect(statValue(m.stats.islands)).toBe('7');
-    expect(button('Row 4, column 2, island 4')).toBeTruthy();
+    expect(button('Hàng 4, cột 2, đảo 4')).toBeTruthy();
   });
 
   it('keyboard edits switch land and water and rebuild the trace', () => {
     render();
-    keyActivate(button('Row 0, column 3, Water'));
-    expect(text()).toContain('Land added at (0,3).');
+    keyActivate(button('Hàng 0, cột 3, Nước'));
+    expect(text()).toContain('Đã thêm đất ở (0,3).');
     click(button('Đến bước cuối'));
     expect(statValue(m.stats.islands)).toBe('10');
-    keyActivate(button('Row 0, column 3, island 2'));
-    expect(text()).toContain('Water at (0,3).');
+    keyActivate(button('Hàng 0, cột 3, đảo 2'));
+    expect(text()).toContain('Đã đổi (0,3) thành nước.');
   });
 
   it('a pointer stroke paints land across cells', () => {
     render();
-    const a = button('Row 0, column 3, Water');
-    const b = button('Row 0, column 4, Water');
+    const a = button('Hàng 0, cột 3, Nước');
+    const b = button('Hàng 0, cột 4, Nước');
     // jsdom has no layout, so point the hit test at the cell under the pretend pointer.
     let under = a;
     document.elementFromPoint = () => under;
@@ -127,8 +129,8 @@ describe('connected components lesson', () => {
     under = b;
     b.dispatchEvent(new PointerEvent('pointermove', { bubbles: true, buttons: 1 }));
     flushSync();
-    expect(button('Row 0, column 3, Land, no label')).toBeTruthy();
-    expect(button('Row 0, column 4, Land, no label')).toBeTruthy();
+    expect(button('Hàng 0, cột 3, Đất, chưa có nhãn')).toBeTruthy();
+    expect(button('Hàng 0, cột 4, Đất, chưa có nhãn')).toBeTruthy();
   });
 
   it('all water and reset change the map', () => {
@@ -136,7 +138,7 @@ describe('connected components lesson', () => {
     click(buttonByText(m.clearMap));
     click(button('Đến bước cuối'));
     expect(statValue(m.stats.islands)).toBe('0');
-    expect(text()).toContain('Scan finished: 0 islands');
+    expect(text()).toContain('Quét xong: 0 đảo');
     click(buttonByText(m.resetMap));
     click(button('Đến bước cuối'));
     expect(statValue(m.stats.islands)).toBe('9');
@@ -144,10 +146,10 @@ describe('connected components lesson', () => {
 
   it('moves focus with the arrow keys', () => {
     render();
-    const first = button('Row 0, column 0, Land, no label');
+    const first = button('Hàng 0, cột 0, Đất, chưa có nhãn');
     first.focus();
     press(first, 'ArrowRight');
-    expect(document.activeElement).toBe(button('Row 0, column 1, Land, no label'));
+    expect(document.activeElement).toBe(button('Hàng 0, cột 1, Đất, chưa có nhãn'));
   });
 
   it('checks practice answers with a hint', () => {

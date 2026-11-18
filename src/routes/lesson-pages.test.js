@@ -242,57 +242,57 @@ describe('bfs lesson', () => {
   it('finds the shortest path on the default grid', () => {
     render(BfsPage);
     click(button('Đến bước cuối'));
-    expect(text()).toMatch(/shortest path of \d+ steps/);
+    expect(text()).toMatch(/đường đi ngắn nhất dài \d+ bước/);
   });
 
   it('keyboard activation toggles a wall and rebuilds the trace', () => {
     render(BfsPage);
     keyActivate(button('Hàng 0, cột 0'));
-    expect(button('Hàng 0, cột 0, Wall')).toBeTruthy();
+    expect(button('Hàng 0, cột 0, Tường')).toBeTruthy();
     expect(text()).toMatch(/Bước 1\/\d+/);
   });
 
   it('announces distances in cell labels', () => {
     render(BfsPage);
     click(button('Đến bước cuối'));
-    expect(button('Hàng 4, cột 2, Start, distance 0')).toBeTruthy();
+    expect(button('Hàng 4, cột 2, Điểm xuất phát, khoảng cách 0')).toBeTruthy();
   });
 
   it('explains why a start move onto a wall is refused', () => {
     render(BfsPage);
     click(/** @type {HTMLInputElement} */ (document.querySelector('input[value="start"]')));
-    keyActivate(button('Hàng 0, cột 6, Wall'));
+    keyActivate(button('Hàng 0, cột 6, Tường'));
     expect(text()).toContain('Hãy chọn một ô trống');
   });
 
   it('drops a refusal notice as soon as the learner steps on', () => {
     render(BfsPage);
     click(/** @type {HTMLInputElement} */ (document.querySelector('input[value="start"]')));
-    keyActivate(button('Hàng 0, cột 6, Wall'));
+    keyActivate(button('Hàng 0, cột 6, Tường'));
     expect(text()).toContain('Hãy chọn một ô trống');
     click(button('Bước tiếp'));
     expect(text()).not.toContain('Hãy chọn một ô trống');
-    expect(text()).toContain('Dequeue (4,2)');
+    expect(text()).toContain('Lấy (4,2) ra khỏi đầu hàng');
   });
 
   it('confirms keyboard edits in the narration', () => {
     render(BfsPage);
     keyActivate(button('Hàng 0, cột 0'));
     expect(text()).toContain('Đã thêm tường ở (0,0).');
-    keyActivate(button('Hàng 0, cột 0, Wall'));
+    keyActivate(button('Hàng 0, cột 0, Tường'));
     expect(text()).toContain('Đã bỏ tường ở (0,0).');
-    keyActivate(button('Hàng 4, cột 2, Start, distance 0'));
+    keyActivate(button('Hàng 4, cột 2, Điểm xuất phát, khoảng cách 0'));
     expect(text()).toContain('Hãy chọn một ô trống');
     click(/** @type {HTMLInputElement} */ (document.querySelector('input[value="goal"]')));
     expect(text()).not.toContain('Hãy chọn một ô trống');
     keyActivate(button('Hàng 0, cột 0'));
     expect(text()).toContain('Đã dời đích đến (0,0).');
-    expect(button('Hàng 0, cột 0, Goal')).toBeTruthy();
+    expect(button('Hàng 0, cột 0, Đích')).toBeTruthy();
   });
 
   it('moves focus with the arrow keys', () => {
     render(BfsPage);
-    const startCell = button('Hàng 4, cột 2, Start, distance 0');
+    const startCell = button('Hàng 4, cột 2, Điểm xuất phát, khoảng cách 0');
     startCell.focus();
     key(startCell, { key: 'ArrowRight' });
     expect(document.activeElement).toBe(button('Hàng 4, cột 3'));
@@ -307,7 +307,7 @@ describe('bfs lesson', () => {
       render(BfsPage);
       const grid = /** @type {HTMLElement} */ (document.querySelector('[role="grid"]'));
       expect(grid.style.gridTemplateColumns).toContain('repeat(10,');
-      const startCell = button('Hàng 4, cột 2, Start, distance 0');
+      const startCell = button('Hàng 4, cột 2, Điểm xuất phát, khoảng cách 0');
       startCell.focus();
       key(startCell, { key: 'ArrowRight' });
       expect(document.activeElement).toBe(button('Hàng 5, cột 2'));
@@ -328,7 +328,7 @@ describe('bfs lesson', () => {
       keyActivate(button(`Hàng ${r}, cột ${c}`));
     }
     click(button('Đến bước cuối'));
-    expect(text()).toContain('walls cut it off');
+    expect(text()).toContain('tường đã chặn kín đường');
   });
 });
 

@@ -36,27 +36,27 @@ export const MAX_NODES = 8;
  */
 
 export const kahnPseudocode = [
-  'indeg[v] = number of edges into v, for every vertex v',
-  'queue = every vertex v with indeg[v] = 0',
-  'while queue is not empty:',
+  'indeg[v] = số cạnh đi vào v, với mọi đỉnh v',
+  'queue = mọi đỉnh v có indeg[v] = 0',
+  'while queue khác rỗng:',
   '  u = queue.dequeue()',
   '  order.append(u)',
-  '  for each edge u → v:',
+  '  for v in adj[u]:  // mỗi cạnh u → v',
   '    indeg[v] -= 1',
   '    if indeg[v] == 0: queue.enqueue(v)',
-  'if order holds every vertex: return order',
-  'else: the vertices left over lie on or behind a cycle',
+  'if order chứa mọi đỉnh: return order',
+  'else: các đỉnh còn lại nằm trên hoặc sau một chu trình',
 ];
 
 export const dfsTopoPseudocode = [
-  'for each vertex s: if s is unvisited: visit(s)',
+  'for s in vertices: if s chưa thăm: visit(s)',
   'visit(u):',
-  '  mark u in progress',
-  '  for each edge u → v:',
-  '    if v is in progress: back edge, cycle found — stop',
-  '    if v is unvisited: visit(v)',
-  '  mark u finished; finished.append(u)',
-  'order = finished, reversed',
+  '  đánh dấu u đang thăm',
+  '  for v in adj[u]:  // mỗi cạnh u → v',
+  '    if v đang thăm: cạnh ngược, có chu trình — stop',
+  '    if v chưa thăm: visit(v)',
+  '  đánh dấu u hoàn tất; finished.append(u)',
+  'order = finished đảo ngược',
 ];
 
 /**

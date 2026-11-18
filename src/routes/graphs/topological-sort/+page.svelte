@@ -15,7 +15,7 @@
     kahnPseudocode,
     kahnTrace,
   } from '$lib/algo-engine/topological-sort.js';
-  import { en as m } from '$lib/lessons/topological-sort/copy.en.js';
+  import { vi as m } from '$lib/lessons/topological-sort/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/graph-editor.js').GraphNode} GraphNode */

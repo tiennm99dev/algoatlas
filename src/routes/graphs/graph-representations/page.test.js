@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/graph-representations/copy.en.js';
+import { vi as m } from '$lib/lessons/graph-representations/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -86,17 +86,17 @@ function answer(q, value) {
 describe('graph representations lesson', () => {
   it('starts empty and fills both panels by the last step', () => {
     render();
-    expect(text()).toContain('Start with a 5 × 5 matrix of zeros and 5 empty lists.');
+    expect(text()).toContain('Bắt đầu với một ma trận 5 × 5 toàn số 0 và 5 danh sách rỗng.');
     expect(statValue(m.stats.matrixCells)).toBe('25');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Edge A – B: set matrix[A][B] = 1 and append B to A’s list.');
+    expect(text()).toContain('Cạnh A – B: ghi matrix[A][B] = 1 và thêm B vào danh sách của A.');
     click(button('Bước tiếp'));
-    expect(text()).toContain('store it the other way too: matrix[B][A] = 1');
+    expect(text()).toContain('ta lưu cả chiều ngược lại: matrix[B][A] = 1');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('each of the 6 edges appears twice');
+    expect(text()).toContain('mỗi cạnh trong 6 cạnh xuất hiện hai lần');
     expect(statValue(m.stats.listEntries)).toBe('12');
     expect(listRows()[0]).toBe('A → B, C');
-    expect(matrixCell(1, 0).getAttribute('aria-label')).toBe('Row B, column A: 1');
+    expect(matrixCell(1, 0).getAttribute('aria-label')).toBe('Hàng B, cột A: 1');
   });
 
   it('switching to directed stores each edge once and breaks the symmetry', () => {
@@ -104,15 +104,15 @@ describe('graph representations lesson', () => {
     radio('directed');
     click(button('Đến bước cuối'));
     expect(statValue(m.stats.listEntries)).toBe('6');
-    expect(matrixCell(0, 1).getAttribute('aria-label')).toBe('Row A, column B: 1');
-    expect(matrixCell(1, 0).getAttribute('aria-label')).toBe('Row B, column A: 0');
+    expect(matrixCell(0, 1).getAttribute('aria-label')).toBe('Hàng A, cột B: 1');
+    expect(matrixCell(1, 0).getAttribute('aria-label')).toBe('Hàng B, cột A: 0');
   });
 
   it('weighted mode writes the edge weights', () => {
     render();
     radio('weighted');
     click(button('Đến bước cuối'));
-    expect(matrixCell(1, 3).getAttribute('aria-label')).toBe('Row B, column D: 10');
+    expect(matrixCell(1, 3).getAttribute('aria-label')).toBe('Hàng B, cột D: 10');
     expect(listRows()[1]).toBe('B → A·4, C·5, D·10');
   });
 
@@ -120,12 +120,12 @@ describe('graph representations lesson', () => {
     render();
     click(vertex(3));
     expect(text()).toContain(
-      'Neighbours of D: B, E. The matrix scans all 5 cells of row D; the list reads just its 2 entries.',
+      'Các đỉnh kề D: B, E. Ma trận phải quét cả 5 ô của hàng D; danh sách chỉ đọc 2 mục của nó.',
     );
-    expect(matrixCell(3, 0).getAttribute('aria-label')).toContain('selected row');
+    expect(matrixCell(3, 0).getAttribute('aria-label')).toContain('hàng đang chọn');
     // The answer describes the finished panels, so the player shows them too.
     expect(statValue(m.stats.listEntries)).toBe('12');
-    expect(listRows()[3]).toBe('D → B, E (selected)');
+    expect(listRows()[3]).toBe('D → B, E (đang chọn)');
   });
 
   it('a vertex press whose click lands on the canvas still selects the vertex', () => {
@@ -137,17 +137,17 @@ describe('graph representations lesson', () => {
     canvas.dispatchEvent(new MouseEvent('pointerup', at));
     canvas.dispatchEvent(new MouseEvent('click', at));
     flushSync();
-    expect(text()).toContain('Neighbours of B: A, C, D.');
+    expect(text()).toContain('Các đỉnh kề B: A, C, D.');
   });
 
   it('a matrix cell answers an edge test, also from the keyboard', () => {
     render();
     click(matrixCell(0, 3));
-    expect(text()).toContain('Is there an edge A → D? The matrix answers with one read: 0, no.');
+    expect(text()).toContain('Có cạnh A → D không? Ma trận trả lời sau một lần đọc: 0, không có.');
     press(matrixCell(0, 3), 'ArrowLeft');
     press(/** @type {Element} */ (document.activeElement), 'Enter');
-    expect(text()).toContain('Is there an edge A → C?');
-    expect(text()).toContain('1, yes');
+    expect(text()).toContain('Có cạnh A → C không?');
+    expect(text()).toContain('1, có.');
   });
 
   it('adding a vertex and an edge rebuilds the trace', () => {

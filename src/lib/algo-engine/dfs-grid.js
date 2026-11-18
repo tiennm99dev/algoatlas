@@ -20,15 +20,15 @@ import { neighbors } from './graph.js';
  */
 
 export const dfsPseudocode = [
-  'stack = [(start, none)]',
-  'while stack is not empty:',
+  'stack = [(start, null)]',
+  'while stack khác rỗng:',
   '  (cell, from) = stack.pop()',
-  '  if cell is already visited: continue      // stale duplicate',
+  '  if cell in visited: continue      // bản trùng cũ',
   '  visited.add(cell); parent[cell] = from',
-  '  if cell == goal: walk parents back; stop',
-  '  for each neighbor of cell (left, down, right, up):',
-  '    if neighbor is open and not visited: stack.push((neighbor, cell))',
-  'no path — goal is walled off',
+  '  if cell == goal: lần theo parent để dựng đường đi; stop',
+  '  for neighbor in neighbors(cell):  // trái, xuống, phải, lên',
+  '    if open(neighbor) and neighbor not in visited: stack.push((neighbor, cell))',
+  'không có đường đi — đích bị tường vây kín',
 ];
 
 /**
