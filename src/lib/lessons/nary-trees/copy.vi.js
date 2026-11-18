@@ -63,7 +63,7 @@ export const vi = {
   markers: { active: '▶', frontier: '…', compare: '↑', visited: '✓', path: '◆' },
   legend: {
     active: 'Đang chạy',
-    frontier: 'Đang chờ trên ngăn xếp lời gọi',
+    frontier: 'Đang chờ trên call stack',
     compare: 'Con đang báo về',
     visited: 'Đã xong: kích thước và chiều cao cuối cùng',
     path: 'Đường kính',
@@ -79,7 +79,7 @@ export const vi = {
     calls: 'Số lời gọi dfs',
   },
   notYet: '?',
-  stackTitle: 'Ngăn xếp lời gọi (ngoài cùng trước)',
+  stackTitle: 'Call stack (ngoài cùng trước)',
   stackEmpty: 'rỗng',
   /** @param {NaryFrame} f @param {string[]} labels @param {number[][]} kids */
   describe(f, labels, kids) {
@@ -116,7 +116,7 @@ export const vi = {
     ['Mọi kích thước cây con và chiều cao', 'O(n)', 'Mỗi nút một lời gọi; mỗi con báo về một lần.'],
     ['Đường kính', 'O(n)', 'Cùng lần duyệt đó: giữ hai con cao nhất ở mỗi nút.'],
     [
-      'Ngăn xếp đệ quy',
+      'Stack đệ quy',
       'O(h)',
       'Mỗi tầng trên đường đi hiện tại có một lời gọi đang mở; cây dạng đường thẳng cho h = n − 1.',
     ],
@@ -160,5 +160,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Tiếp theo là bài Luyện tập: bài toán về cây, nơi bạn dùng đệ quy trên cây để giải các bài toán quen thuộc.',
+    'Tiếp theo là bài Luyện tập: bài toán về cây, nơi em dùng đệ quy trên cây để giải các bài toán quen thuộc.',
 };

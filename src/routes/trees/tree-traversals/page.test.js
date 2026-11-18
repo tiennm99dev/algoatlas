@@ -65,7 +65,7 @@ function practice() {
 describe('tree traversals lesson', () => {
   it('runs preorder with an explicit stack and numbers the nodes', () => {
     render();
-    expect(narration()).toBe('Duyệt trước: đẩy “expand A”, tức cả cây, vào ngăn xếp.');
+    expect(narration()).toBe('Duyệt trước: đẩy “expand A”, tức cả cây, vào stack.');
     click(button('Bước tiếp'));
     expect(narration()).toContain('Lấy “expand A” ra.');
     click(button('Bước tiếp'));
@@ -83,8 +83,8 @@ describe('tree traversals lesson', () => {
   it('switches to level order with a queue', () => {
     render();
     pick('level');
-    expect(narration()).toBe('Duyệt theo tầng: đưa gốc A vào hàng đợi.');
-    expect(document.body.textContent).toContain('Hàng đợi (đầu hàng → cuối hàng)');
+    expect(narration()).toBe('Duyệt theo tầng: đưa gốc A vào queue.');
+    expect(document.body.textContent).toContain('Queue (đầu hàng → cuối hàng)');
     click(button('Đến bước cuối'));
     expect(narration()).toContain('duyệt theo tầng là A B C D E F');
     expect(byTest('pushes')).toBe('6');

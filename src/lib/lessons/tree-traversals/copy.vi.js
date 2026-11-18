@@ -17,7 +17,7 @@ export const vi = {
   intro:
     'Phép duyệt cây thăm mỗi nút đúng một lần. Duyệt trước (preorder) thăm một nút trước các cây con của nó, duyệt giữa (inorder) thăm nút ở giữa hai cây con, duyệt sau (postorder) thăm nút sau cùng; còn duyệt theo tầng (level order) quét cây lần lượt từng tầng. Cách nào cũng chạy trong O(n), và mỗi thứ tự trả lời những câu hỏi khác nhau.',
   summary:
-    'Chạy từng bước duyệt trước, duyệt giữa, duyệt sau và duyệt theo tầng bằng một ngăn xếp hoặc hàng đợi tường minh, và xem mỗi nút nhận số thứ tự thăm của nó.',
+    'Chạy từng bước duyệt trước, duyệt giữa, duyệt sau và duyệt theo tầng bằng một stack hoặc queue tường minh, và xem mỗi nút nhận số thứ tự thăm của nó.',
   instruction:
     'Chọn một cách duyệt rồi chạy từng bước. Mỗi nút đã thăm được ghi số thứ tự ở góc. Sửa cây theo thứ tự mảng (dấu - cho ô trống) hoặc mở một mẫu, rồi đổi cách duyệt để so các con số trên cùng một cây.',
   orderLabel: 'Cách duyệt',
@@ -45,17 +45,16 @@ export const vi = {
   /** @param {string} label @param {number | null} n @param {string} state */
   nodeLabel: (label, n, state) =>
     [`Nút ${label}`, n === null ? 'chưa thăm' : `thăm thứ ${n}`, state].filter(Boolean).join(', '),
-  states: { active: 'đang xét', frontier: 'đang chờ trong ngăn xếp hoặc hàng đợi' },
+  states: { active: 'đang xét', frontier: 'đang chờ trong stack hoặc queue' },
   markers: { active: '▶', frontier: '…' },
   legend: {
     active: 'Đang xét',
-    frontier: 'Đang chờ trong ngăn xếp hoặc hàng đợi',
+    frontier: 'Đang chờ trong stack hoặc queue',
     visited: 'Đã thăm (số = thứ tự thăm)',
     idle: 'Chưa tới',
   },
   /** @param {TraversalOrder} order */
-  workTitle: (order) =>
-    order === 'level' ? 'Hàng đợi (đầu hàng → cuối hàng)' : 'Ngăn xếp (đáy → đỉnh)',
+  workTitle: (order) => (order === 'level' ? 'Queue (đầu hàng → cuối hàng)' : 'Stack (đáy → đỉnh)'),
   /** @param {string} label @param {boolean} visit */
   workItem: (label, visit) => (visit ? `visit ${label}` : label),
   workLegend: {
@@ -64,7 +63,7 @@ export const vi = {
   },
   /** @param {TraversalOrder} order @param {string[]} items */
   workAria: (order, items) =>
-    `${order === 'level' ? 'Hàng đợi, từ đầu đến cuối' : 'Ngăn xếp, từ đáy lên đỉnh'}: ${items.length === 0 ? 'rỗng' : items.join(', ')}.`,
+    `${order === 'level' ? 'Queue, từ đầu đến cuối' : 'Stack, từ đáy lên đỉnh'}: ${items.length === 0 ? 'rỗng' : items.join(', ')}.`,
   outputTitle: 'Đầu ra, theo thứ tự thăm',
   outputEmpty: 'chưa có gì',
   stats: {
@@ -85,8 +84,8 @@ export const vi = {
     post: ['post(node):', '  if node rỗng: return', '  post(left); post(right)', '  output(node)'],
     level: [
       'Duyệt theo tầng không có dạng đệ quy ngắn gọn:',
-      'hàng đợi giữ đúng thứ tự từng tầng,',
-      'điều mà ngăn xếp lời gọi không làm được.',
+      'queue giữ đúng thứ tự từng tầng,',
+      'điều mà call stack không làm được.',
     ],
   },
   /** @param {TraversalFrame} f @param {(string | null)[]} slots */
@@ -99,8 +98,8 @@ export const vi = {
     switch (f.kind) {
       case 'start':
         return f.order === 'level'
-          ? `${ORDER_NAMES.level}: đưa gốc ${slots[0]} vào hàng đợi.`
-          : `${ORDER_NAMES[f.order]}: đẩy “expand ${slots[0]}”, tức cả cây, vào ngăn xếp.`;
+          ? `${ORDER_NAMES.level}: đưa gốc ${slots[0]} vào queue.`
+          : `${ORDER_NAMES[f.order]}: đẩy “expand ${slots[0]}”, tức cả cây, vào stack.`;
       case 'expand': {
         const parts = {
           pre: `thăm ${at} trước, rồi cây con trái, rồi cây con phải`,
@@ -111,7 +110,7 @@ export const vi = {
       }
       case 'visit':
         return f.order === 'level'
-          ? `Lấy ${at} ra khỏi hàng đợi và xuất nó: lượt thăm thứ ${f.output.length}.`
+          ? `Lấy ${at} ra khỏi queue và xuất nó: lượt thăm thứ ${f.output.length}.`
           : `Lấy “visit ${at}” ra và xuất nó: lượt thăm thứ ${f.output.length}.`;
       case 'enqueue':
         return `Đưa các con của ${at} (${kids.join(', ')}) vào cuối hàng, để tầng sau chờ phía sau tầng này.`;
@@ -121,10 +120,10 @@ export const vi = {
   },
   takeaways: [
     'Duyệt trước (nút, trái, phải) sao chép hoặc in một cây từ trên xuống. Duyệt giữa (trái, nút, phải) liệt kê cây nhị phân tìm kiếm theo thứ tự tăng dần. Duyệt sau (trái, phải, nút) làm xong các con trước, nên hợp để xoá một cây hoặc tính kích thước và chiều cao.',
-    'Trên cây biểu thức, duyệt trước cho kí pháp tiền tố, duyệt giữa cho kí pháp trung tố quen thuộc (không có ngoặc), còn duyệt sau cho kí pháp hậu tố mà máy tính dùng ngăn xếp tính được.',
-    'Đệ quy ghi nhớ vị trí đang làm trên ngăn xếp lời gọi. Một ngăn xếp tường minh làm đúng việc ấy: đẩy các phần của một nút vào theo thứ tự ngược thì chúng được lấy ra theo đúng thứ tự. Giữa ba cách duyệt theo chiều sâu, chỉ có vị trí của “visit node” là khác nhau.',
-    'Duyệt theo tầng thay ngăn xếp bằng hàng đợi: vào trước, ra trước nên các tầng giữ đúng thứ tự. Đó chính là duyệt theo chiều rộng (BFS) trên cây.',
-    'Thử chuỗi lệch trái: ngăn xếp lớn dần theo chiều cao, còn hàng đợi không bao giờ chứa quá một nút. Trên cây hoàn hảo, hàng đợi lớn tới cỡ tầng rộng nhất, tức 8.',
+    'Trên cây biểu thức, duyệt trước cho kí pháp tiền tố, duyệt giữa cho kí pháp trung tố quen thuộc (không có ngoặc), còn duyệt sau cho kí pháp hậu tố mà máy tính dùng stack (ngăn xếp) tính được.',
+    'Đệ quy ghi nhớ vị trí đang làm trên call stack (ngăn xếp lời gọi). Một stack tường minh làm đúng việc ấy: đẩy các phần của một nút vào theo thứ tự ngược thì chúng được lấy ra theo đúng thứ tự. Giữa ba cách DFS (duyệt theo chiều sâu), chỉ có vị trí của “visit node” là khác nhau.',
+    'Duyệt theo tầng thay stack bằng queue (hàng đợi): vào trước, ra trước nên các tầng giữ đúng thứ tự. Đó chính là BFS (duyệt theo chiều rộng) trên cây.',
+    'Thử chuỗi lệch trái: stack lớn dần theo chiều cao, còn queue không bao giờ chứa quá một nút. Trên cây hoàn hảo, queue lớn tới cỡ tầng rộng nhất, tức 8.',
   ],
   complexityHead: ['Cách duyệt', 'Chi phí', 'Vì sao'],
   complexity: [
@@ -132,12 +131,12 @@ export const vi = {
     [
       'Trước, giữa, sau: bộ nhớ',
       'O(h)',
-      'Ngăn xếp chỉ chứa vài phần tử cho mỗi tầng trên đường đi hiện tại.',
+      'Stack chỉ chứa vài phần tử cho mỗi tầng trên đường đi hiện tại.',
     ],
     [
       'Theo tầng: bộ nhớ',
       'O(w)',
-      'Hàng đợi chứa nhiều nhất khoảng một tầng, tới w = n / 2 trên cây hoàn hảo.',
+      'Queue chứa nhiều nhất khoảng một tầng, tới w = n / 2 trên cây hoàn hảo.',
     ],
   ],
   practiceTitle: 'Tự kiểm tra',
@@ -167,12 +166,12 @@ export const vi = {
     {
       type: 'order',
       prompt:
-        'Xếp cây biểu thức (a + b) × (c − d) theo thứ tự duyệt sau, đúng thứ tự mà máy tính dùng ngăn xếp tính nó.',
+        'Xếp cây biểu thức (a + b) × (c − d) theo thứ tự duyệt sau, đúng thứ tự mà máy tính dùng stack tính nó.',
       items: ['×', 'a', '+', 'b', 'c', '−', 'd'],
       answer: [1, 3, 2, 4, 6, 5, 0],
       hints: ['Mở mẫu Biểu thức và chọn Duyệt sau.'],
       solution:
-        'Thứ tự duyệt sau là a b + c d − ×: cả hai toán hạng đứng trước phép toán của chúng, nên máy tính dùng ngăn xếp có thể đẩy a và b vào, thực hiện +, và cứ thế tiếp tục.',
+        'Thứ tự duyệt sau là a b + c d − ×: cả hai toán hạng đứng trước phép toán của chúng, nên máy tính dùng stack có thể đẩy a và b vào, thực hiện +, và cứ thế tiếp tục.',
     },
   ],
   nextTeaser:

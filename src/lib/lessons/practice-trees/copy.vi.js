@@ -76,7 +76,7 @@ export const vi = {
   },
   legend: {
     active: 'Đang kiểm tra',
-    frontier: 'Đang chờ trên ngăn xếp lời gọi',
+    frontier: 'Đang chờ trên call stack',
     visited: 'Đạt phép kiểm tra',
     swap: 'Không đạt phép kiểm tra',
     path: 'Trên đường đi',
@@ -92,12 +92,12 @@ export const vi = {
     comparisons: 'Số lần so sánh khoá',
     checked: 'Số nút đã kiểm tra',
     visited: 'Số nút đã thăm',
-    depth: 'Độ sâu ngăn xếp',
+    depth: 'Độ sâu stack',
     result: 'Kết quả',
     answer: 'LCA',
   },
   results: { pending: '?', valid: 'hợp lệ', invalid: 'không phải BST' },
-  stackTitle: 'Ngăn xếp lời gọi (ngoài cùng trước)',
+  stackTitle: 'Call stack (ngoài cùng trước)',
   stackEmpty: 'rỗng',
   /** @param {ValidateFrame} f @param {KeySlots} s */
   describeValidate(f, s) {

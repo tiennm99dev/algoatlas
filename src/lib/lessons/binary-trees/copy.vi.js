@@ -69,14 +69,14 @@ export const vi = {
   markers: { active: '▶', frontier: '…', visited: '✓', swap: '!' },
   legend: {
     active: 'Đang đo',
-    frontier: 'Đang chờ trên ngăn xếp lời gọi',
+    frontier: 'Đang chờ trên call stack',
     visited: 'Đã biết độ sâu và chiều cao',
     swap: 'Phá vỡ tính đủ hoặc đầy đủ',
     selected: 'Đang chọn (viền xanh đậm)',
   },
   stats: { size: 'Số nút', leaves: 'Số lá', height: 'Chiều cao', array: 'Độ dài mảng' },
   notYet: '?',
-  stackTitle: 'Ngăn xếp lời gọi (ngoài cùng trước)',
+  stackTitle: 'Call stack (ngoài cùng trước)',
   stackEmpty: 'rỗng',
   /** @param {string} label @param {number} d */
   stackChip: (label, d) => `measure(${label}, ${d})`,
@@ -126,13 +126,13 @@ export const vi = {
     'Gốc có độ sâu 0 và mỗi cạnh đi xuống cộng thêm 1. Chiều cao đếm số cạnh trên đường dài nhất đi xuống một lá, nên lá có chiều cao 0 và chiều cao của cây là chiều cao của gốc. Một số sách đếm số tầng thay vì số cạnh, tức là cộng thêm 1.',
     'Độ sâu truyền xuống (độ sâu của cha + 1) còn chiều cao truyền lên (1 + chiều cao của con cao hơn), nên một lần duyệt đệ quy tính được cả hai: độ sâu trước khi xuống các con, chiều cao sau khi các con xong.',
     'Cây đủ nghĩa là mọi nút có 0 hoặc 2 con. Cây đầy đủ nghĩa là mọi tầng đều kín, có thể trừ tầng cuối, và tầng cuối được lấp từ trái sang. Cây hoàn hảo vừa đủ vừa đầy đủ: mọi tầng đều kín, tổng cộng 2^(h + 1) − 1 nút.',
-    'Trong biểu diễn bằng mảng, ô i có các con 2i + 1, 2i + 2 và cha ⌊(i − 1) / 2⌋. Cây đầy đủ dùng đúng n ô; heap dựa vào điều này.',
+    'Trong biểu diễn bằng mảng, ô i có các con 2i + 1, 2i + 2 và cha ⌊(i − 1) / 2⌋. Cây đầy đủ dùng đúng n ô; heap (đống) dựa vào điều này.',
     'Thử mẫu “Chuỗi lệch phải”: 4 nút cần tới 15 ô mảng, vì mỗi lần sang phải chỉ số ô lại tăng gấp đôi.',
   ],
   complexityHead: ['Thao tác', 'Chi phí', 'Vì sao'],
   complexity: [
     ['Đo mọi độ sâu và chiều cao', 'O(n)', 'Mỗi nút một lời gọi, mỗi lời gọi tốn hằng số việc.'],
-    ['Ngăn xếp đệ quy', 'O(h)', 'Mỗi lúc mỗi tầng chỉ có một lời gọi đang mở.'],
+    ['Stack đệ quy', 'O(h)', 'Mỗi lúc mỗi tầng chỉ có một lời gọi đang mở.'],
     ['Tìm cha hoặc con trong mảng', 'O(1)', 'Tính chỉ số: 2i + 1, 2i + 2, ⌊(i − 1) / 2⌋.'],
     [
       'Bộ nhớ mảng',
