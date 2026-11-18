@@ -136,6 +136,17 @@ const BANNED_RE = wordsRe(english.filter((t) => t.ban !== false).flatMap((t) => 
 const FRIEND_RE = /người bạn|bạn bè|bạn học|kết bạn/giu;
 const BAN_RE = wordsRe(['bạn']);
 
+// Each banned Vietnamese form with its English term, longest form first ("bảng băm" before "băm").
+const FORMS = english
+  .filter((t) => t.ban !== false)
+  .flatMap((t) => t.vi.map((vi) => ({ en: t.en, re: wordsRe([vi]), length: vi.length })))
+  .sort((a, b) => b.length - a.length);
+/** The English term whose Vietnamese form a parenthesis holds, if any. @param {string} inner */
+const glossedTerm = (inner) => FORMS.find((f) => f.re.test(inner))?.en;
+const LABEL_PATH_RE = /legend|title|label|aria|heading|button|summary/i;
+// How far before the parenthesis the English term may start, past its own length.
+const GLOSS_REACH = 25;
+
 /** @param {string} text */
 const withoutParentheses = (text) => text.replace(/\([^()]*\)/g, ' ');
 
@@ -208,6 +219,22 @@ describe.each(sources)('Vietnamese copy in %s', (_, strings) => {
       if (path.endsWith('.vi')) continue;
       const hit = BANNED_RE.exec(withoutParentheses(s));
       expect(hit?.[0], `${path}: ${s}`).toBeUndefined();
+    }
+  });
+
+  it('puts a Vietnamese form in parentheses only as a gloss right after its English term', () => {
+    for (const [path, s] of strings) {
+      if (path.endsWith('.vi')) continue;
+      for (const m of s.matchAll(/\(([^()]*)\)/g)) {
+        const term = glossedTerm(m[1]);
+        if (!term) continue;
+        const where = `${path}: ${s}`;
+        // Labels, titles, headings, buttons, aria text and summaries carry no gloss.
+        expect(LABEL_PATH_RE.test(path), where).toBe(false);
+        // The English term comes just before, perhaps with a Vietnamese modifier after it.
+        const before = s.slice(Math.max(0, m.index - term.length - GLOSS_REACH), m.index);
+        expect(before.toLowerCase(), where).toContain(term.toLowerCase());
+      }
     }
   });
 });

@@ -80,7 +80,7 @@ export const vi = {
   atLine: (line) => `dòng ${line + 1}`,
   callName,
   legend: {
-    active: 'Đang chạy (ở đỉnh ngăn xếp)',
+    active: 'Đang chạy (ở đỉnh call stack)',
     waiting: 'Đang chờ lời gọi mà nó tạo ra',
     returned: 'Đã trả về; ghi chú cho biết giá trị',
     lost: 'Không bao giờ trả về: mất khi chương trình sập',

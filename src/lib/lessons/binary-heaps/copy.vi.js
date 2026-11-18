@@ -127,7 +127,7 @@ export const vi = {
     }
   },
   takeaways: [
-    'Tính chất heap: mỗi nút cha đứng trước các con (≤ trong heap nhỏ nhất, ≥ trong heap lớn nhất), nên giá trị ở đỉnh nằm ở gốc. Các nút anh em không có thứ tự gì với nhau.',
+    'Tính chất heap: mỗi nút cha đứng trước các con (≤ trong min-heap, ≥ trong max-heap), nên giá trị ở đỉnh nằm ở gốc. Các nút anh em không có thứ tự gì với nhau.',
     'Heap là cây đầy đủ, được lấp từng tầng từ trái sang, nên nó nằm gọn trong một mảng: ô i có các con 2i + 1 và 2i + 2, và cha ⌊(i − 1)/2⌋.',
     'Chèn đặt giá trị vào ô trống tiếp theo rồi vun lên (sift up); lấy ra chuyển giá trị cuối lên gốc rồi vun xuống (sift down). Mỗi thao tác đi qua nhiều nhất ⌊log₂ n⌋ tầng.',
     'Xem phần tử ở đỉnh chỉ tốn O(1); heap là cách thường dùng để cài đặt priority queue (hàng đợi ưu tiên).',

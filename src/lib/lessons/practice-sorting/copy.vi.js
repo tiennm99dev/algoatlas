@@ -70,7 +70,7 @@ export const vi = {
   /** @param {string} name @param {string} status @param {number[]} keys */
   laneAria: (name, status, keys) => `${name}, ${status}: ${keys.join(', ')}`,
   legend: {
-    compare: 'Vừa so sánh (sắp xếp trộn: ô vừa được ghi)',
+    compare: 'Vừa so sánh (merge sort: ô vừa được ghi)',
     sorted: 'Thuật toán này đã xong',
     tag: 'Thứ tự của các khoá bằng nhau trong đầu vào',
   },

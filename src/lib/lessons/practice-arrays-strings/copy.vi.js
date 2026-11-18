@@ -330,7 +330,7 @@ export const vi = {
     }
   },
   takeaways: [
-    'Hãy hỏi đáp án được tạo nên từ gì: hai vị trí đơn lẻ (hai con trỏ), một đoạn giá trị liên tiếp (cửa sổ trượt), hay tổng của nhiều đoạn (tổng tiền tố).',
+    'Hãy hỏi đáp án được tạo nên từ gì: hai vị trí đơn lẻ (hai con trỏ), một đoạn giá trị liên tiếp (cửa sổ trượt), hay tổng của nhiều đoạn (prefix sum).',
     'Hai con trỏ cần một lí do để bỏ đi một đầu ở mỗi bước: thứ tự đã sắp xếp với bài tổng một cặp, tính đối xứng với xâu đối xứng. Với bài tổng một cặp, điều đó biến n(n − 1)/2 lần kiểm tra thành nhiều nhất n − 1.',
     'Cửa sổ trượt cần một tổng chạy cập nhật được trong O(1). Cửa sổ thay đổi còn cần tổng không bao giờ giảm khi cửa sổ nới rộng, điều mà các giá trị ≥ 0 bảo đảm.',
     'Prefix sum trả O(n) một lần rồi trả lời mọi đoạn trong O(1). Cách này toả sáng khi có nhiều truy vấn, nhưng không làm nhanh hơn một lần tìm kiếm vẫn phải thử O(n²) đoạn.',

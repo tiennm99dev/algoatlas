@@ -82,7 +82,7 @@ export const vi = {
   },
   keptTitle: 'Đã chọn, theo thứ tự giữ',
   keptEmpty: 'chưa giữ đoạn nào',
-  roomsTitle: 'Thời điểm kết thúc của các phòng (heap nhỏ nhất)',
+  roomsTitle: 'Thời điểm kết thúc của các phòng (min-heap)',
   roomsEmpty: 'chưa mở phòng nào',
   /** @param {number} r @param {number} end */
   roomChip: (r, end) => `${roomName(r)}: ${end}`,
