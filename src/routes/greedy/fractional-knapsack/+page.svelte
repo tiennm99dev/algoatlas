@@ -20,7 +20,7 @@
     parseJobs,
     zeroOne,
   } from '$lib/algo-engine/fractional-knapsack.js';
-  import { en as m } from '$lib/lessons/fractional-knapsack/copy.en.js';
+  import { vi as m } from '$lib/lessons/fractional-knapsack/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/fractional-knapsack.js').Item} Item */

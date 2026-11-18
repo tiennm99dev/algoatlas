@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/fractional-knapsack/copy.en.js';
+import { vi as m } from '$lib/lessons/fractional-knapsack/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -73,37 +73,39 @@ function practice() {
 describe('fractional knapsack lesson', () => {
   it('starts on the textbook knapsack', () => {
     render();
-    expect(narration()).toContain('Fill a knapsack of capacity 50 from 3 items');
-    expect(stat('Room left')).toBe('50');
+    expect(narration()).toContain('Xếp vào cái túi sức chứa 50 từ 3 vật');
+    expect(stat('Còn trống')).toBe('50');
     expect(document.querySelector('[data-testid="zero-one"]')?.textContent).toContain(
-      'Greedy by value/weight packs 160; the best is 220, so greedy loses.',
+      'Tham lam theo giá trị/khối lượng xếp được 160; tốt nhất là 220, nên tham lam thua.',
     );
   });
 
   it('sorts by value per weight and packs whole items first', () => {
     render();
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Sort by value per weight, highest first: A (6), B (5), C (4).');
+    expect(narration()).toContain(
+      'Sắp xếp theo giá trị trên mỗi đơn vị khối lượng, cao nhất trước: A (6), B (5), C (4).',
+    );
     click(button('Bước tiếp'));
-    expect(narration()).toContain('50 units of room, so all of it fits.');
+    expect(narration()).toContain('Còn trống 50 đơn vị, nên vừa cả vật.');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Take all of A: +60. Value 60, 40 units left.');
+    expect(narration()).toContain('Lấy cả A: +60. Giá trị 60, còn trống 40 đơn vị.');
     expect(rows()[0]).toContain('A ✓');
   });
 
   it('cuts the last item to two thirds and reaches 240', () => {
     render();
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('Done: value 240, with only C cut, to 2/3.');
-    expect(stat('Value packed')).toBe('240');
-    expect(stat('Room left')).toBe('0');
+    expect(narration()).toContain('Xong: giá trị 240, chỉ cắt C, còn 2/3.');
+    expect(stat('Giá trị đã xếp')).toBe('240');
+    expect(stat('Còn trống')).toBe('0');
     expect(rows()).toEqual([
       'A ✓ | 60 | 10 | 6 | 1',
       'B ✓ | 100 | 20 | 5 | 1',
       'C ½ | 120 | 30 | 4 | 2/3',
     ]);
     const piece = document.querySelector('g[role="listitem"][aria-label^="C:"]');
-    expect(piece?.getAttribute('aria-label')).toBe('C: 2/3, weight 20');
+    expect(piece?.getAttribute('aria-label')).toBe('C: 2/3, khối lượng 20');
   });
 
   it('stops early when the knapsack fills, and packs everything when it all fits', () => {
@@ -111,26 +113,24 @@ describe('fractional knapsack lesson', () => {
     commit(field('capacity'), '25');
     click(button('Đến bước cuối'));
     click(button('Bước trước'));
-    expect(narration()).toContain(
-      'The knapsack is full, so stop: C and every item after it stay out.',
-    );
+    expect(narration()).toContain('Túi đã đầy, nên dừng: C và mọi vật sau nó đều ở ngoài.');
     commit(field('preset'), 'roomy');
-    expect(text()).toContain('New example loaded.');
+    expect(text()).toContain('Đã nạp ví dụ mới.');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('Every item fits whole: value 280 with 40 units to spare.');
+    expect(narration()).toContain('Mọi vật đều vừa nguyên vẹn: giá trị 280, còn dư 40 đơn vị.');
   });
 
   it('refuses bad items and capacities, keeping the last valid ones', () => {
     render();
     commit(field('items'), '60/10, 5/0');
-    expect(narration()).toContain('Keep every weight between 1 and 99.');
+    expect(narration()).toContain('Mỗi khối lượng phải từ 1 đến 99.');
     expect(/** @type {HTMLInputElement} */ (field('items')).value).toBe('60/10, 100/20, 120/30');
     commit(field('capacity'), '0');
-    expect(narration()).toContain('The capacity must be a whole number from 1 to 200.');
+    expect(narration()).toContain('Sức chứa phải là số nguyên từ 1 đến 200.');
     expect(/** @type {HTMLInputElement} */ (field('capacity')).value).toBe('50');
     commit(field('items'), '10/5 9/3');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('Every item fits whole: value 19');
+    expect(narration()).toContain('Mọi vật đều vừa nguyên vẹn: giá trị 19');
   });
 
   it('commits typed items on Enter', () => {
@@ -140,29 +140,31 @@ describe('fractional knapsack lesson', () => {
     input.dispatchEvent(new Event('input', { bubbles: true }));
     input.form?.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
     flushSync();
-    expect(narration()).toContain('from 2 items');
+    expect(narration()).toContain('từ 2 vật');
   });
 
   it('schedules the five classic jobs for a profit of 142', () => {
     render();
     pickProblem('jobs');
-    expect(narration()).toContain('Schedule 5 jobs, each one time slot long, in slots 1 to 3.');
-    expect(stat('Best possible')).toBe('142');
+    expect(narration()).toContain(
+      'Xếp lịch 5 việc, mỗi việc dài một ô thời gian, vào các ô từ 1 đến 3.',
+    );
+    expect(stat('Tốt nhất có thể')).toBe('142');
     click(button('Bước tiếp'));
     expect(narration()).toContain(
-      'Sort by profit, highest first: A (100), C (27), D (25), B (19), E (15).',
+      'Sắp xếp theo lợi nhuận, cao nhất trước: A (100), C (27), D (25), B (19), E (15).',
     );
     click(button('Bước tiếp'));
-    expect(narration()).toContain('slot 2 is the latest free one');
+    expect(narration()).toContain('ô 2 là ô trống muộn nhất');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Put A in slot 2');
+    expect(narration()).toContain('Đặt A vào ô 2');
     click(button('Đến bước cuối'));
     expect(narration()).toContain(
-      'Done: profit 142, the best any schedule can earn. Skipped: D, B.',
+      'Xong: lợi nhuận 142, cao nhất mà một lịch bất kì có thể đạt. Bỏ qua: D, B.',
     );
-    expect(stat('Slot probes')).toBe('6');
-    expect(rows()).toContain('B | 19 | 1 | skipped');
-    expect(document.querySelector('[aria-label^="3 time slots"]')?.textContent).toContain('E');
+    expect(stat('Số lần dò ô')).toBe('6');
+    expect(rows()).toContain('B | 19 | 1 | bỏ qua');
+    expect(document.querySelector('[aria-label^="3 ô thời gian"]')?.textContent).toContain('E');
   });
 
   it('shows a job that finds every slot taken', () => {
@@ -172,9 +174,9 @@ describe('fractional knapsack lesson', () => {
     click(button('Đến bước cuối'));
     click(button('Bước trước'));
     click(button('Bước trước'));
-    expect(narration()).toContain('D: profit 6, deadline 3. Slots 3, 2, 1 are all taken.');
+    expect(narration()).toContain('D: lợi nhuận 6, hạn chót 3. Các ô 3, 2, 1 đều đã có việc.');
     commit(field('jobs'), '5/11');
-    expect(narration()).toContain('Keep every deadline between 1 and 10.');
+    expect(narration()).toContain('Mỗi hạn chót phải từ 1 đến 10.');
     expect(/** @type {HTMLInputElement} */ (field('jobs')).value).toBe('9/3, 8/3, 7/3, 6/3');
   });
 

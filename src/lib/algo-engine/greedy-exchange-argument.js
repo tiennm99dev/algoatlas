@@ -38,12 +38,12 @@ export const SCAN_LIMIT = 200;
 
 export const changePseudocode = [
   'greedyChange(coins, x):',
-  '  sort coins from largest to smallest',
-  '  for each coin c:',
-  '    q = ⌊x / c⌋  // as many c coins as fit',
-  '    if q > 0: take q coins of c; x = x − q·c',
-  '  if x > 0: report “no change”  // greedy is stuck',
-  '  return the coins taken',
+  '  sắp xếp coins từ lớn đến nhỏ',
+  '  for c in coins:',
+  '    q = ⌊x / c⌋  // lấy nhiều đồng c nhất có thể',
+  '    if q > 0: lấy q đồng c; x = x − q·c',
+  '  if x > 0: báo “không đổi được”  // tham lam bị kẹt',
+  '  return các đồng đã lấy',
 ];
 
 /**

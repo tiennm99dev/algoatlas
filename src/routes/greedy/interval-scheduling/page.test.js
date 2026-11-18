@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/interval-scheduling/copy.en.js';
+import { vi as m } from '$lib/lessons/interval-scheduling/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -76,44 +76,44 @@ function practice() {
 describe('interval scheduling lesson', () => {
   it('starts on the 11 classic activities', () => {
     render();
-    expect(narration()).toContain('Keep as many of the 11 intervals as possible');
-    expect(stat('Most possible')).toBe('4');
+    expect(narration()).toContain('Giữ lại nhiều nhất có thể trong 11 đoạn');
+    expect(stat('Nhiều nhất có thể')).toBe('4');
     expect(document.querySelectorAll('g[role="listitem"]')).toHaveLength(11);
   });
 
   it('sorts by finish time and keeps the first interval', () => {
     render();
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Sort by finish time');
+    expect(narration()).toContain('Sắp xếp theo thời điểm kết thúc');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('A [1, 4): nothing is kept yet, so it fits.');
+    expect(narration()).toContain('A [1, 4): chưa giữ đoạn nào, nên đoạn này vừa.');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Keep A; lastFinish becomes 4.');
-    expect(bar('A')).toContain('Kept or placed');
+    expect(narration()).toContain('Giữ A; lastFinish thành 4.');
+    expect(bar('A')).toContain('đã giữ hoặc đã xếp phòng');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('B [3, 5): 3 < lastFinish 4, so it clashes with A [1, 4).');
-    expect(bar('A')).toContain('Clashes with the scanned one');
+    expect(narration()).toContain('B [3, 5): 3 < lastFinish 4, nên đoạn này chồng với A [1, 4).');
+    expect(bar('A')).toContain('chồng với đoạn đang quét');
   });
 
   it('keeps four activities by earliest finish', () => {
     render();
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('Kept 4 intervals: A, D, H, K.');
-    expect(stat('Kept')).toBe('4');
-    expect(stat('Clash checks')).toBe('11');
-    expect(bar('B')).toContain('Skipped');
+    expect(narration()).toContain('Đã giữ 4 đoạn: A, D, H, K.');
+    expect(stat('Đã giữ')).toBe('4');
+    expect(stat('Số lần kiểm tra chồng')).toBe('11');
+    expect(bar('B')).toContain('đã bỏ qua');
   });
 
   it('shows shortest first losing on its trap', () => {
     render();
     commit(field('preset'), 'shortTrap');
-    expect(text()).toContain('New intervals loaded.');
+    expect(text()).toContain('Đã nạp các đoạn mới.');
     commit(field('rule'), 'shortest');
-    expect(narration()).toContain('Rule: Select: shortest first.');
-    expect(text()).toContain('if I clashes with no interval in chosen:');
+    expect(narration()).toContain('Quy tắc: Chọn: ngắn nhất trước.');
+    expect(text()).toContain('if I không chồng với đoạn nào trong chosen:');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('Kept 1 interval: B. Earliest finish keeps 2');
-    expect(text()).toMatch(/Select: earliest finish\s*2 intervals/);
+    expect(narration()).toContain('Đã giữ 1 đoạn: B. Kết thúc sớm nhất giữ được 2');
+    expect(text()).toMatch(/Chọn: kết thúc sớm nhất\s*2 đoạn/);
   });
 
   it('shows earliest start losing and the rooms it needs', () => {
@@ -121,14 +121,14 @@ describe('interval scheduling lesson', () => {
     commit(field('preset'), 'startTrap');
     commit(field('rule'), 'start');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('Kept 1 interval: A. Earliest finish keeps 3');
+    expect(narration()).toContain('Đã giữ 1 đoạn: A. Kết thúc sớm nhất giữ được 3');
     commit(field('rule'), 'rooms');
-    expect(text()).toContain('free = empty min-heap of room finish times');
+    expect(text()).toContain('free = min-heap rỗng chứa thời điểm kết thúc các phòng');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('2 rooms hold every interval. At time 1, 2 intervals overlap');
-    expect(stat('Rooms')).toBe('2');
-    expect(stat('Depth')).toBe('2');
-    expect(bar('C')).toContain('room R2');
+    expect(narration()).toContain('2 phòng chứa được mọi đoạn. Lúc 1, có 2 đoạn chồng nhau');
+    expect(stat('Số phòng')).toBe('2');
+    expect(stat('Độ sâu')).toBe('2');
+    expect(bar('C')).toContain('phòng R2');
   });
 
   it('partitions the classic activities into 6 rooms', () => {
@@ -136,11 +136,11 @@ describe('interval scheduling lesson', () => {
     commit(field('rule'), 'rooms');
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
-    expect(narration()).toContain('C [0, 6): no room is open yet.');
+    expect(narration()).toContain('C [0, 6): chưa có phòng nào mở.');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Open room R1 for C.');
+    expect(narration()).toContain('Mở phòng R1 cho C.');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('6 rooms hold every interval. At time 8, 6 intervals overlap');
+    expect(narration()).toContain('6 phòng chứa được mọi đoạn. Lúc 8, có 6 đoạn chồng nhau');
     expect(text()).toContain('R1: ');
   });
 
@@ -148,12 +148,12 @@ describe('interval scheduling lesson', () => {
     render();
     commit(field('intervals'), '1-4, 4-6');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('Kept 2 intervals: A, B.');
+    expect(narration()).toContain('Đã giữ 2 đoạn: A, B.');
     commit(field('intervals'), '5-3');
-    expect(narration()).toContain('Every interval must end after it starts.');
+    expect(narration()).toContain('Mỗi đoạn phải kết thúc sau khi bắt đầu.');
     expect(/** @type {HTMLInputElement} */ (field('intervals')).value).toBe('1-4, 4-6');
     commit(field('intervals'), '1-30');
-    expect(narration()).toContain('Keep every time between 0 and 24.');
+    expect(narration()).toContain('Mọi thời điểm phải từ 0 đến 24.');
   });
 
   it('commits typed intervals on Enter and loads random ones', () => {
@@ -163,9 +163,9 @@ describe('interval scheduling lesson', () => {
     input.dispatchEvent(new Event('input', { bubbles: true }));
     input.form?.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
     flushSync();
-    expect(narration()).toContain('Keep as many of the 3 intervals');
-    click(buttonByText('Random intervals'));
-    expect(text()).toContain('New intervals loaded.');
+    expect(narration()).toContain('Giữ lại nhiều nhất có thể trong 3 đoạn');
+    click(buttonByText('Các đoạn ngẫu nhiên'));
+    expect(text()).toContain('Đã nạp các đoạn mới.');
   });
 
   it('checks a practice answer, shows a hint, and accepts the right one', () => {

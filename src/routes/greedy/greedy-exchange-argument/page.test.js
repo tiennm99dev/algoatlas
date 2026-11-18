@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/greedy-exchange-argument/copy.en.js';
+import { vi as m } from '$lib/lessons/greedy-exchange-argument/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -73,51 +73,51 @@ function practice() {
 describe('greedy change-making lesson', () => {
   it('starts on paying 6 with 1, 3, 4', () => {
     render();
-    expect(narration()).toContain('Pay 6 with as few coins as possible from 1, 3, 4.');
-    expect(stat('Still to pay')).toBe('6');
-    expect(stat('Fewest coins')).toBe('2');
+    expect(narration()).toContain('Trả 6 bằng ít đồng nhất có thể từ 1, 3, 4.');
+    expect(stat('Còn phải trả')).toBe('6');
+    expect(stat('Số đồng ít nhất')).toBe('2');
   });
 
   it('steps through the sort and the first coin', () => {
     render();
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Sort the coins from largest to smallest: 4, 3, 1.');
+    expect(narration()).toContain('Sắp xếp các đồng xu từ lớn đến nhỏ: 4, 3, 1.');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Coin 4: ⌊6 / 4⌋ = 1');
+    expect(narration()).toContain('Đồng 4: ⌊6 / 4⌋ = 1');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Take 1 × 4. 2 is left to pay.');
-    expect(stat('Greedy coins')).toBe('1');
+    expect(narration()).toContain('Lấy 1 × 4. Còn phải trả 2.');
+    expect(stat('Số đồng theo tham lam')).toBe('1');
   });
 
   it('ends with greedy using one coin too many', () => {
     render();
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('Greedy paid 6 = 4 + 1 + 1, 3 coins, but 3 + 3 uses only 2.');
-    expect(stat('Verdict')).toBe('Greedy uses too many coins');
-    const strip = document.querySelector('[aria-label^="Coins:"]');
+    expect(narration()).toContain('Tham lam trả 6 = 4 + 1 + 1, 3 đồng, nhưng 3 + 3 chỉ dùng 2.');
+    expect(stat('Kết luận')).toBe('Tham lam dùng quá nhiều đồng');
+    const strip = document.querySelector('[aria-label^="Các đồng xu:"]');
     expect(strip?.textContent).toContain('×2');
   });
 
   it('finds no counterexample for canonical coins', () => {
     render();
     commit(field('preset'), 'us');
-    expect(text()).toContain('New coin set loaded.');
-    expect(summary()).toBe('Greedy is optimal for every amount from 1 to 200 with these coins.');
-    expect(buttonByText('Step through the smallest one').getAttribute('aria-disabled')).toBe(
+    expect(text()).toContain('Đã nạp bộ đồng xu mới.');
+    expect(summary()).toBe('Với bộ đồng xu này, tham lam tối ưu cho mọi số tiền từ 1 đến 200.');
+    expect(buttonByText('Chạy từng bước phản ví dụ nhỏ nhất').getAttribute('aria-disabled')).toBe(
       'true',
     );
     commit(field('preset'), 'vnd');
-    expect(summary()).toContain('Greedy is optimal for every amount');
+    expect(summary()).toContain('tham lam tối ưu cho mọi số tiền');
   });
 
   it('loads the smallest counterexample and steps through it', () => {
     render();
     commit(field('preset'), 'sevenTen');
-    expect(summary()).toContain('Greedy is not optimal for');
-    click(buttonByText('Step through the smallest one'));
-    expect(narration()).toContain('Amount 14 loaded');
+    expect(summary()).toContain('Tham lam không tối ưu cho');
+    click(buttonByText('Chạy từng bước phản ví dụ nhỏ nhất'));
+    expect(narration()).toContain('Đã nạp số tiền 14');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('Greedy paid 14 = 10 + 1 + 1 + 1 + 1, 5 coins, but 7 + 7');
+    expect(narration()).toContain('Tham lam trả 14 = 10 + 1 + 1 + 1 + 1, 5 đồng, nhưng 7 + 7');
   });
 
   it('shows greedy stuck and impossible amounts without a 1 coin', () => {
@@ -125,24 +125,26 @@ describe('greedy change-making lesson', () => {
     commit(field('preset'), 'noOne');
     commit(field('amount'), '9');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('Greedy got stuck with 1 unpaid, yet 9 = 3 + 3 + 3 works');
-    expect(stat('Verdict')).toBe('Greedy is stuck');
+    expect(narration()).toContain(
+      'Tham lam bị kẹt với 1 chưa trả, trong khi 9 = 3 + 3 + 3 trả được',
+    );
+    expect(stat('Kết luận')).toBe('Tham lam bị kẹt');
     commit(field('amount'), '7');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('No combination of these coins pays 7');
-    expect(stat('Fewest coins')).toBe('—');
+    expect(narration()).toContain('Không tổ hợp nào của các đồng xu này trả được 7');
+    expect(stat('Số đồng ít nhất')).toBe('—');
   });
 
   it('reads typed coins and refuses bad input', () => {
     render();
     commit(field('coins'), '9 6 5 1');
     expect(/** @type {HTMLInputElement} */ (field('coins')).value).toBe('1, 5, 6, 9');
-    expect(summary()).toContain('Greedy is not optimal');
+    expect(summary()).toContain('Tham lam không tối ưu');
     commit(field('coins'), '1, 0');
-    expect(narration()).toContain('Keep every coin between 1 and 100.');
+    expect(narration()).toContain('Mỗi đồng xu phải từ 1 đến 100.');
     expect(/** @type {HTMLInputElement} */ (field('coins')).value).toBe('1, 5, 6, 9');
     commit(field('amount'), '500');
-    expect(narration()).toContain('The amount must be a whole number from 1 to 200.');
+    expect(narration()).toContain('Số tiền phải là số nguyên từ 1 đến 200.');
     expect(/** @type {HTMLInputElement} */ (field('amount')).value).toBe('6');
   });
 
@@ -153,7 +155,7 @@ describe('greedy change-making lesson', () => {
     amount.dispatchEvent(new Event('input', { bubbles: true }));
     amount.form?.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
     flushSync();
-    expect(narration()).toContain('Pay 11 with as few coins');
+    expect(narration()).toContain('Trả 11 bằng ít đồng nhất');
   });
 
   it('checks a practice answer, shows a hint, and accepts the right one', () => {

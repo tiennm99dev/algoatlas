@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/practice-greedy/copy.en.js';
+import { vi as m } from '$lib/lessons/practice-greedy/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -89,59 +89,59 @@ function practice() {
 describe('greedy practice lesson', () => {
   it('starts on the jump game with the longest-jump rule', () => {
     render();
-    expect(narration()).toContain('Start at cell 0 and always take the longest jump');
-    expect(stat('Right answer')).toBe('yes');
-    expect(stat('Rule’s answer')).toBe('…');
-    expect(report()).toContain('Not tested yet.');
+    expect(narration()).toContain('Xuất phát từ ô 0 và luôn nhảy bước xa nhất');
+    expect(stat('Đáp án đúng')).toBe('có');
+    expect(stat('Đáp án của quy tắc')).toBe('…');
+    expect(report()).toContain('Chưa kiểm tra.');
   });
 
   it('steps the wrong rule onto a zero and reports the counterexample', () => {
     render();
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Jump 2 from cell 0 to cell 2. 1 jump so far.');
+    expect(narration()).toContain('Nhảy 2 từ ô 0 đến ô 2. Đã nhảy 1 bước.');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Cell 2 holds 0: the rule is stuck there.');
+    expect(narration()).toContain('Ô 2 chứa 0: quy tắc bị kẹt ở đó.');
     click(button('Đến bước cuối'));
     expect(narration()).toContain(
-      'The rule answers no, but the right answer is yes: a counterexample',
+      'Quy tắc cho đáp án không, nhưng đáp án đúng là có: đây là một phản ví dụ',
     );
-    expect(stat('Rule’s answer')).toBe('no');
+    expect(stat('Đáp án của quy tắc')).toBe('không');
     const titles = [...document.querySelectorAll('svg title')].map((t) => t.textContent);
-    expect(titles).toContain('Cell 2: 0, Stuck here');
+    expect(titles).toContain('Ô 2: 0, bị kẹt ở đây');
   });
 
   it('switches to the farthest-reach rule, which is right here', () => {
     render();
     pickRule('right');
-    expect(narration()).toContain('Rule: Track the farthest reach.');
+    expect(narration()).toContain('Quy tắc: Theo dõi điểm xa nhất tới được.');
     expect(text()).toContain('reach = max(reach, i + a[i])');
     click(button('Bước tiếp'));
     expect(narration()).toContain(
-      'Cell 0 is reachable (0 ≤ reach). From it you can get to 2, so reach = 2.',
+      'Ô 0 tới được (0 ≤ reach). Từ ô này có thể tới 2, nên reach = 2.',
     );
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('The rule answers yes, which is right on this input.');
-    expect(stat('Farthest reach')).toBe('8');
+    expect(narration()).toContain('Quy tắc cho đáp án có, đúng với đầu vào này.');
+    expect(stat('Điểm xa nhất tới được')).toBe('8');
   });
 
   it('breaks the wrong rule on random cases and loads the counterexample', () => {
     vi.spyOn(Math, 'random').mockImplementation(seeded(4));
     render();
-    click(buttonByText('Test on 200 random cases'));
-    expect(report()).toMatch(/Failed \d+ of 200 random cases\./);
-    expect(report()).toContain('Shortest counterexample:');
-    click(buttonByText('Load the counterexample'));
-    expect(narration()).toContain('Counterexample loaded');
+    click(buttonByText('Kiểm tra trên 200 trường hợp ngẫu nhiên'));
+    expect(report()).toMatch(/Sai \d+\/200 trường hợp ngẫu nhiên\./);
+    expect(report()).toContain('Phản ví dụ ngắn nhất:');
+    click(buttonByText('Nạp phản ví dụ'));
+    expect(narration()).toContain('Đã nạp phản ví dụ');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('a counterexample, so this rule is wrong');
+    expect(narration()).toContain('đây là một phản ví dụ, nên quy tắc này sai');
   });
 
   it('passes the right rule on every random case', () => {
     vi.spyOn(Math, 'random').mockImplementation(seeded(9));
     render();
     pickRule('right');
-    click(buttonByText('Test on 200 random cases'));
-    expect(report()).toContain('Passed all 200 random cases.');
+    click(buttonByText('Kiểm tra trên 200 trường hợp ngẫu nhiên'));
+    expect(report()).toContain('Đúng cả 200 trường hợp ngẫu nhiên.');
   });
 
   it('counts jumps by layers on the fewest-jumps card', () => {
@@ -149,46 +149,48 @@ describe('greedy practice lesson', () => {
     card('jumps');
     expect(/** @type {HTMLInputElement} */ (field('values')).value).toBe('2, 3, 1, 1, 4');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('The rule answers 3 jumps, but the right answer is 2 jumps');
+    expect(narration()).toContain(
+      'Quy tắc cho đáp án 3 bước nhảy, nhưng đáp án đúng là 2 bước nhảy',
+    );
     pickRule('right');
     expect(text()).toContain('if i = end:');
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
     expect(narration()).toContain(
-      'Cell 0 is the end of the range covered by 0 jumps, so take jump 1: it can land anywhere up to cell 2.',
+      'Ô 0 là cuối tầm mà 0 bước nhảy phủ tới, nên thực hiện bước nhảy 1: nó có thể đáp xuống bất kì đâu, tới tận ô 2.',
     );
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('The rule answers 2 jumps, which is right');
+    expect(narration()).toContain('Quy tắc cho đáp án 2 bước nhảy, đúng');
   });
 
   it('fills boats with the two lightest and with heaviest plus lightest', () => {
     render();
     card('boats');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Sort the weights: 1, 2, 8, 9.');
+    expect(narration()).toContain('Sắp xếp các khối lượng: 1, 2, 8, 9.');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Boat 1: the two lightest, 1 and 2, share it.');
+    expect(narration()).toContain('Thuyền 1: hai người nhẹ nhất, 1 và 2, đi chung.');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('The rule answers 3 boats, but the right answer is 2 boats');
+    expect(narration()).toContain('Quy tắc cho đáp án 3 thuyền, nhưng đáp án đúng là 2 thuyền');
     expect(text()).toContain('1 + 2');
     pickRule('right');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('The rule answers 2 boats, which is right');
+    expect(narration()).toContain('Quy tắc cho đáp án 2 thuyền, đúng');
     expect(text()).toContain('9 + 1');
-    expect(document.querySelector('[aria-label^="Cells:"]')?.textContent).toContain('b2');
+    expect(document.querySelector('[aria-label^="Các ô:"]')?.textContent).toContain('b2');
   });
 
   it('refuses bad input and keeps the last valid one', () => {
     render();
     commit(field('values'), '2, 12');
-    expect(narration()).toContain('Keep every jump length between 0 and 9.');
+    expect(narration()).toContain('Mỗi độ dài bước nhảy phải từ 0 đến 9.');
     expect(/** @type {HTMLInputElement} */ (field('values')).value).toBe('2, 3, 0, 1, 4');
     card('boats');
     commit(field('values'), '0 3');
-    expect(narration()).toContain('Keep every weight between 1 and 9.');
+    expect(narration()).toContain('Mỗi khối lượng phải từ 1 đến 9.');
     commit(field('values'), '5 5 5');
     click(button('Đến bước cuối'));
-    expect(stat('Right answer')).toBe('2 boats');
+    expect(stat('Đáp án đúng')).toBe('2 thuyền');
   });
 
   it('commits typed input on Enter and loads a random one', () => {
@@ -199,9 +201,9 @@ describe('greedy practice lesson', () => {
     input.form?.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
     flushSync();
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('The rule answers yes, which is right');
-    click(buttonByText('Random input'));
-    expect(text()).toContain('New input loaded.');
+    expect(narration()).toContain('Quy tắc cho đáp án có, đúng');
+    click(buttonByText('Đầu vào ngẫu nhiên'));
+    expect(text()).toContain('Đã nạp đầu vào mới.');
   });
 
   it('checks a practice answer, shows a hint, and accepts the right one', () => {

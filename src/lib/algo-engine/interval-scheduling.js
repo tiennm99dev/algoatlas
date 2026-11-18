@@ -47,9 +47,9 @@ export const RULES = /** @type {Rule[]} */ (['finish', 'start', 'shortest', 'roo
 
 /** @type {Record<Exclude<Rule, 'rooms'>, string>} */
 const SORT_LINE = {
-  finish: '  sort intervals by finish time',
-  start: '  sort intervals by start time',
-  shortest: '  sort intervals by length, shortest first',
+  finish: '  sắp xếp intervals theo thời điểm kết thúc',
+  start: '  sắp xếp intervals theo thời điểm bắt đầu',
+  shortest: '  sắp xếp intervals theo độ dài, ngắn trước',
 };
 
 /** @param {Rule} rule */
@@ -57,13 +57,13 @@ export function intervalPseudocode(rule) {
   if (rule === 'rooms') {
     return [
       'partition(intervals):',
-      '  sort intervals by start time',
-      '  free = empty min-heap of room finish times',
-      '  for each interval I in that order:',
-      '    if free is not empty and min(free) ≤ I.start:',
-      '      reuse that room: its finish time becomes I.end',
-      '    else: open a new room with finish time I.end',
-      '  return the number of rooms  // the depth',
+      '  sắp xếp intervals theo thời điểm bắt đầu',
+      '  free = min-heap rỗng chứa thời điểm kết thúc các phòng',
+      '  for I in intervals:  // theo thứ tự đã sắp xếp',
+      '    if free khác rỗng and min(free) ≤ I.start:',
+      '      dùng lại phòng đó: thời điểm kết thúc của nó thành I.end',
+      '    else: mở phòng mới, kết thúc lúc I.end',
+      '  return số phòng  // chính là độ sâu',
     ];
   }
   const finish = rule === 'finish';
@@ -71,12 +71,12 @@ export function intervalPseudocode(rule) {
     'select(intervals):',
     SORT_LINE[rule],
     finish ? '  chosen = []; lastFinish = −∞' : '  chosen = []',
-    '  for each interval I in that order:',
+    '  for I in intervals:  // theo thứ tự đã sắp xếp',
     finish
-      ? '    if I.start ≥ lastFinish:  // clashes with no chosen one'
-      : '    if I clashes with no interval in chosen:',
-    finish ? '      add I to chosen; lastFinish = I.end' : '      add I to chosen',
-    '    else: skip I',
+      ? '    if I.start ≥ lastFinish:  // không chồng với đoạn nào đã chọn'
+      : '    if I không chồng với đoạn nào trong chosen:',
+    finish ? '      thêm I vào chosen; lastFinish = I.end' : '      thêm I vào chosen',
+    '    else: bỏ qua I',
     '  return chosen',
   ];
 }

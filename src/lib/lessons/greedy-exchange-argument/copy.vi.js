@@ -1,123 +1,123 @@
 /** @typedef {import('$lib/algo-engine/greedy-exchange-argument.js').ChangeFrame} ChangeFrame */
 
-/** @param {number} x @param {string} word */
-const plural = (x, word) => `${x} ${word}${x === 1 ? '' : 's'}`;
-
 /**
  * A payment as a sum, largest coin first: 4 + 1 + 1.
  * @param {number[]} coins @param {number[]} taken
  */
 function sum(coins, taken) {
   const parts = coins.flatMap((c, k) => Array(taken[k]).fill(c));
-  return parts.length ? parts.join(' + ') : 'no coins';
+  return parts.length ? parts.join(' + ') : 'không đồng nào';
 }
 
-export const en = {
+export const vi = {
   slug: 'greedy-exchange-argument',
   topic: 'greedy',
   level: 'Cơ bản',
   title: 'Lựa chọn tham lam và lập luận hoán đổi',
   intro:
-    'A greedy algorithm builds its answer one choice at a time and never takes a choice back: at every step it picks what looks best right now. Paying an amount with the fewest coins by always taking the largest coin that fits is the classic example. It is fast and simple, but it is only correct when the problem has the greedy-choice property, and an exchange argument is how you prove it.',
+    'Thuật toán tham lam (greedy) dựng đáp án từng lựa chọn một và không bao giờ rút lại lựa chọn nào: ở mỗi bước, nó chọn thứ trông tốt nhất ngay lúc đó. Ví dụ kinh điển là trả một số tiền bằng ít đồng xu nhất, bằng cách luôn lấy đồng lớn nhất còn vừa. Cách này nhanh và đơn giản, nhưng chỉ đúng khi bài toán có tính chất lựa chọn tham lam, và lập luận hoán đổi (exchange argument) là cách chứng minh tính chất đó.',
   summary:
-    'Step through greedy change-making, compare it with the true fewest coins, and search for amounts where the greedy choice fails.',
+    'Chạy từng bước thuật toán đổi tiền tham lam, so sánh với số đồng xu ít nhất thật sự, và tìm những số tiền mà lựa chọn tham lam thất bại.',
   instruction:
-    'Pick a coin set or type your own, set the amount, then step. The panel on the right shows the fewest coins possible. Press “Step through the smallest one” to load an amount where greedy loses.',
-  coinsLabel: 'Coins',
-  amountLabel: 'Amount',
-  presetLabel: 'Coin set',
-  presetPlaceholder: 'Load a coin set…',
+    'Chọn một bộ đồng xu hoặc tự nhập, đặt số tiền, rồi chạy từng bước. Khung bên phải cho biết số đồng xu ít nhất có thể. Bấm “Chạy từng bước phản ví dụ nhỏ nhất” để nạp một số tiền mà tham lam thua.',
+  coinsLabel: 'Các đồng xu',
+  amountLabel: 'Số tiền',
+  presetLabel: 'Bộ đồng xu',
+  presetPlaceholder: 'Nạp một bộ đồng xu…',
   presets: {
     tricky: '1, 3, 4',
-    us: 'US coins: 1, 5, 10, 25',
-    vnd: 'Vietnamese notes (×1,000 ₫)',
+    us: 'Đồng xu Mỹ: 1, 5, 10, 25',
+    vnd: 'Tiền giấy Việt Nam (×1000 ₫)',
     sevenTen: '1, 7, 10',
-    noOne: 'No 1 coin: 3, 5',
+    noOne: 'Không có đồng 1: 3, 5',
   },
   errors: {
-    format: 'Type whole coin values separated by commas or spaces. The last valid coins are back.',
-    range: 'Keep every coin between 1 and 100. The last valid coins are back.',
-    count: 'Use at most 8 different coins. The last valid coins are back.',
+    format:
+      'Hãy nhập các mệnh giá nguyên, cách nhau bởi dấu phẩy hoặc dấu cách. Bộ đồng xu hợp lệ gần nhất đã được khôi phục.',
+    range: 'Mỗi đồng xu phải từ 1 đến 100. Bộ đồng xu hợp lệ gần nhất đã được khôi phục.',
+    count: 'Hãy dùng nhiều nhất 8 loại đồng xu. Bộ đồng xu hợp lệ gần nhất đã được khôi phục.',
   },
-  amountError: 'The amount must be a whole number from 1 to 200. The last valid amount is back.',
-  newCoinsNotice: 'New coin set loaded.',
+  amountError: 'Số tiền phải là số nguyên từ 1 đến 200. Số tiền hợp lệ gần nhất đã được khôi phục.',
+  newCoinsNotice: 'Đã nạp bộ đồng xu mới.',
   /** @param {number} x */
-  counterNotice: (x) => `Amount ${x} loaded: the smallest one where greedy is not optimal.`,
+  counterNotice: (x) => `Đã nạp số tiền ${x}: số nhỏ nhất mà tham lam không tối ưu.`,
   /** @param {number[]} coins @param {number} rest */
-  coinsAria: (coins, rest) => `Coins: ${coins.join(', ')}. Still to pay: ${rest}.`,
+  coinsAria: (coins, rest) => `Các đồng xu: ${coins.join(', ')}. Còn phải trả: ${rest}.`,
   /** @param {number} coin @param {number} taken @param {string} state */
   coinLabel: (coin, taken, state) =>
-    `Coin ${coin}${state ? `, ${state}` : ''}${taken ? `, taken ${taken} times` : ''}`,
+    `Đồng ${coin}${state ? `, ${state.toLowerCase()}` : ''}${taken ? `, đã lấy ${taken} lần` : ''}`,
   coinPointer: 'c',
   legend: {
-    trying: 'Coin tried now',
-    taken: 'Taken at least once',
-    skipped: 'Too big for what is left',
+    trying: 'Đồng đang thử',
+    taken: 'Đã lấy ít nhất một lần',
+    skipped: 'Quá lớn so với số còn lại',
   },
   markers: { trying: '?', taken: '×q', skipped: '✗' },
   /** @param {number} q */
   takenMark: (q) => `×${q}`,
   stats: {
-    rest: 'Still to pay',
-    greedy: 'Greedy coins',
-    best: 'Fewest coins',
-    verdict: 'Verdict',
+    rest: 'Còn phải trả',
+    greedy: 'Số đồng theo tham lam',
+    best: 'Số đồng ít nhất',
+    verdict: 'Kết luận',
   },
   none: '—',
   verdicts: {
-    optimal: 'Greedy is optimal',
-    worse: 'Greedy uses too many coins',
-    stuck: 'Greedy is stuck',
-    impossible: 'No payment exists',
-    pending: 'Still running',
+    optimal: 'Tham lam tối ưu',
+    worse: 'Tham lam dùng quá nhiều đồng',
+    stuck: 'Tham lam bị kẹt',
+    impossible: 'Không có cách trả nào',
+    pending: 'Đang chạy',
   },
-  greedyTitle: 'Greedy payment so far',
-  bestTitle: 'A fewest-coin payment (dynamic programming)',
-  emptyPay: 'no coins yet',
-  noPay: 'this amount cannot be paid',
-  counterTitle: 'Counterexample search',
+  greedyTitle: 'Cách trả theo tham lam đến giờ',
+  bestTitle: 'Một cách trả ít đồng nhất (quy hoạch động)',
+  emptyPay: 'chưa có đồng nào',
+  noPay: 'không trả được số tiền này',
+  counterTitle: 'Tìm phản ví dụ',
   /** @param {number} n @param {number} limit */
   counterSummary: (n, limit) =>
     n === 0
-      ? `Greedy is optimal for every amount from 1 to ${limit} with these coins.`
-      : `Greedy is not optimal for ${plural(n, 'amount')} from 1 to ${limit}.`,
+      ? `Với bộ đồng xu này, tham lam tối ưu cho mọi số tiền từ 1 đến ${limit}.`
+      : `Tham lam không tối ưu cho ${n} số tiền trong khoảng từ 1 đến ${limit}.`,
   /** @param {{amount: number, greedy: number, best: number, stuck: boolean}} c */
   counterChip: (c) =>
-    c.stuck ? `${c.amount}: stuck, best ${c.best}` : `${c.amount}: ${c.greedy} vs ${c.best}`,
-  counterChipsTitle: 'Amount: greedy coins vs fewest',
-  counterEmpty: 'no counterexample',
-  smallest: 'Step through the smallest one',
-  practiceTitle: 'Check yourself',
+    c.stuck
+      ? `${c.amount}: bị kẹt, tốt nhất ${c.best}`
+      : `${c.amount}: ${c.greedy} so với ${c.best}`,
+  counterChipsTitle: 'Số tiền: số đồng theo tham lam so với ít nhất',
+  counterEmpty: 'không có phản ví dụ',
+  smallest: 'Chạy từng bước phản ví dụ nhỏ nhất',
+  practiceTitle: 'Tự kiểm tra',
   /** @param {ChangeFrame} f */
   describe(f) {
     const c = f.at >= 0 ? f.coins[f.at] : 0;
     switch (f.kind) {
       case 'start':
-        return `Pay ${f.amount} with as few coins as possible from ${f.coins.join(', ')}. The greedy rule: always take the largest coin that still fits.`;
+        return `Trả ${f.amount} bằng ít đồng nhất có thể từ ${f.coins.join(', ')}. Quy tắc tham lam: luôn lấy đồng lớn nhất còn vừa.`;
       case 'sort':
-        return `Sort the coins from largest to smallest: ${f.coins.join(', ')}.`;
+        return `Sắp xếp các đồng xu từ lớn đến nhỏ: ${f.coins.join(', ')}.`;
       case 'try':
-        return `Coin ${c}: ⌊${f.rest} / ${c}⌋ = ${f.q}, so ${f.q === 0 ? 'it does not fit' : `${plural(f.q, 'coin')} of ${c} fit`}.`;
+        return `Đồng ${c}: ⌊${f.rest} / ${c}⌋ = ${f.q}, nên ${f.q === 0 ? 'đồng này không vừa' : `vừa ${f.q} đồng ${c}`}.`;
       case 'take':
-        return `Take ${f.q} × ${c}. ${f.rest === 0 ? 'Nothing is left to pay.' : `${f.rest} is left to pay.`}`;
+        return `Lấy ${f.q} × ${c}. ${f.rest === 0 ? 'Không còn gì phải trả.' : `Còn phải trả ${f.rest}.`}`;
       case 'skip':
         return f.rest === 0
-          ? `Skip ${c}: the amount is already paid.`
-          : `Skip ${c}: it is larger than the ${f.rest} still to pay.`;
+          ? `Bỏ qua ${c}: số tiền đã trả xong.`
+          : `Bỏ qua ${c}: đồng này lớn hơn ${f.rest} còn phải trả.`;
       case 'fail':
-        return `Every coin has been tried and ${f.rest} is still unpaid: greedy is stuck, because no coin is small enough.`;
+        return `Đã thử hết mọi đồng mà vẫn còn ${f.rest} chưa trả: tham lam bị kẹt, vì không có đồng nào đủ nhỏ.`;
       case 'done': {
         const paid = sum(f.coins, f.taken);
         const best = sum(f.coins, f.bestTaken);
         switch (f.verdict) {
           case 'optimal':
-            return `Greedy paid ${f.amount} = ${paid}, ${plural(f.count, 'coin')}, and no payment uses fewer. Correct on this amount, but that does not prove it is correct on every amount: try the counterexample search.`;
+            return `Tham lam trả ${f.amount} = ${paid}, ${f.count} đồng, và không cách trả nào dùng ít hơn. Đúng với số tiền này, nhưng điều đó không chứng minh nó đúng với mọi số tiền: hãy thử tìm phản ví dụ.`;
           case 'worse':
-            return `Greedy paid ${f.amount} = ${paid}, ${plural(f.count, 'coin')}, but ${best} uses only ${f.best}. At some step the largest coin that fit was the wrong choice, so this coin set lacks the greedy-choice property.`;
+            return `Tham lam trả ${f.amount} = ${paid}, ${f.count} đồng, nhưng ${best} chỉ dùng ${f.best}. Ở một bước nào đó, đồng lớn nhất còn vừa lại là lựa chọn sai, nên bộ đồng xu này không có tính chất lựa chọn tham lam.`;
           case 'stuck':
-            return `Greedy got stuck with ${f.rest} unpaid, yet ${f.amount} = ${best} works with ${plural(f.best, 'coin')}. Taking the largest coin first was the wrong choice.`;
+            return `Tham lam bị kẹt với ${f.rest} chưa trả, trong khi ${f.amount} = ${best} trả được bằng ${f.best} đồng. Lấy đồng lớn nhất trước là lựa chọn sai.`;
           case 'impossible':
-            return `No combination of these coins pays ${f.amount}, so neither greedy nor any other method can.`;
+            return `Không tổ hợp nào của các đồng xu này trả được ${f.amount}, nên cả tham lam lẫn mọi cách khác đều không làm được.`;
           default:
             return '';
         }
@@ -125,96 +125,97 @@ export const en = {
     }
   },
   takeaways: [
-    'A greedy algorithm makes the locally best choice, commits to it and solves what is left. It never backtracks, so it is usually fast: change-making with k coins sorted takes k divisions.',
-    'Greedy is correct when the problem has the greedy-choice property (some optimal solution starts with the greedy choice) and optimal substructure (what is left is a smaller copy of the same problem).',
-    'An exchange argument proves the greedy-choice property: take any optimal solution that does not start with the greedy choice, swap a part of it for the greedy choice, and show the result is still feasible and no worse. For 1, 5, 10, 25 an optimal payment never holds five 1s, two 5s, three 10s, or two 10s and a 5, so whenever x ≥ 25 a 25 must be in it.',
-    'One counterexample is enough to show greedy fails. With 1, 3, 4 greedy pays 6 = 4 + 1 + 1, three coins, while 3 + 3 uses two; with 3, 5 it gets stuck on 9 although 3 + 3 + 3 works. Then dynamic programming finds the true minimum.',
-    'Load “1, 7, 10” and step through the smallest counterexample, then load the Vietnamese notes: the search finds no amount up to 200 where greedy loses. With a 1 coin, the smallest counterexample, when one exists, is always below the sum of the two largest coins, so a short search settles the question.',
+    'Thuật toán tham lam đưa ra lựa chọn tốt nhất tại chỗ, giữ nguyên lựa chọn đó và giải phần còn lại. Nó không bao giờ quay lui, nên thường chạy nhanh: đổi tiền với k đồng xu đã sắp xếp chỉ cần k phép chia.',
+    'Tham lam đúng khi bài toán có tính chất lựa chọn tham lam (có một lời giải tối ưu bắt đầu bằng lựa chọn tham lam) và có cấu trúc con tối ưu (optimal substructure), tức phần còn lại là một bản nhỏ hơn của cùng bài toán.',
+    'Lập luận hoán đổi chứng minh tính chất lựa chọn tham lam: lấy một lời giải tối ưu bất kì không bắt đầu bằng lựa chọn tham lam, đổi một phần của nó lấy lựa chọn tham lam, rồi chỉ ra kết quả vẫn hợp lệ và không tệ hơn. Với 1, 5, 10, 25, một cách trả tối ưu không bao giờ chứa năm đồng 1, hai đồng 5, ba đồng 10, hoặc hai đồng 10 cùng một đồng 5, nên hễ x ≥ 25 thì trong đó phải có đồng 25.',
+    'Chỉ một phản ví dụ là đủ cho thấy tham lam thất bại. Với 1, 3, 4, tham lam trả 6 = 4 + 1 + 1, ba đồng, trong khi 3 + 3 chỉ dùng hai; với 3, 5, nó bị kẹt ở 9 dù 3 + 3 + 3 trả được. Khi đó quy hoạch động tìm ra giá trị nhỏ nhất thật sự.',
+    'Nạp “1, 7, 10” và chạy từng bước phản ví dụ nhỏ nhất, rồi nạp bộ tiền giấy Việt Nam: việc tìm kiếm không thấy số tiền nào tới 200 mà tham lam thua. Khi có đồng 1, phản ví dụ nhỏ nhất (nếu có) luôn nhỏ hơn tổng hai đồng lớn nhất, nên chỉ cần tìm trong một khoảng ngắn là trả lời được câu hỏi.',
   ],
-  complexityHead: ['Method', 'Cost', 'Why'],
+  complexityHead: ['Phương pháp', 'Chi phí', 'Vì sao'],
   complexity: [
     [
-      'Greedy change, coins sorted',
-      'O(k) time',
-      'One division ⌊x / c⌋ per coin, whatever the amount.',
+      'Đổi tiền tham lam, các đồng đã sắp xếp',
+      'Thời gian O(k)',
+      'Mỗi đồng một phép chia ⌊x / c⌋, bất kể số tiền.',
     ],
-    ['Sorting the coins', 'O(k log k)', 'Done once, before the loop.'],
+    ['Sắp xếp các đồng xu', 'O(k log k)', 'Làm một lần, trước vòng lặp.'],
     [
-      'Fewest coins by dynamic programming',
-      'O(k · x) time, O(x) memory',
-      'Every amount 1..x tries every coin as its last coin.',
+      'Số đồng ít nhất bằng quy hoạch động',
+      'Thời gian O(k · x), bộ nhớ O(x)',
+      'Mỗi số tiền 1..x thử từng đồng xu làm đồng cuối cùng.',
     ],
     [
-      'Counterexample search up to L',
+      'Tìm phản ví dụ tới L',
       'O(k · L)',
-      'One DP table for 1..L, and one greedy run of O(k) per amount.',
+      'Một bảng QHĐ cho 1..L, và mỗi số tiền một lần chạy tham lam O(k).',
     ],
   ],
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
   practice: [
     {
       type: 'number',
-      prompt: 'With coins 1, 3 and 4, how many coins does greedy use to pay 6?',
+      prompt: 'Với các đồng 1, 3 và 4, tham lam dùng bao nhiêu đồng để trả 6?',
       answer: 3,
-      unit: 'coins',
-      hints: ['Greedy takes the largest coin that fits first: 4.', 'After 4, there is 2 left.'],
+      unit: 'đồng',
+      hints: ['Tham lam lấy đồng lớn nhất còn vừa trước: 4.', 'Sau đồng 4, còn lại 2.'],
       solution:
-        'Greedy takes 4, then 3 does not fit the 2 left, so it takes 1 + 1: 4 + 1 + 1 is 3 coins. The best payment 3 + 3 uses only 2.',
+        'Tham lam lấy 4, rồi 3 không vừa với 2 còn lại, nên nó lấy 1 + 1: 4 + 1 + 1 là 3 đồng. Cách trả tốt nhất 3 + 3 chỉ dùng 2.',
     },
     {
       type: 'number',
-      prompt: 'What is the smallest amount where greedy is not optimal for coins 1, 7 and 10?',
+      prompt: 'Số tiền nhỏ nhất mà tham lam không tối ưu với các đồng 1, 7 và 10 là bao nhiêu?',
       answer: 14,
       hints: [
-        'Look for an amount that two 7s pay exactly.',
-        'Load “1, 7, 10” and read the first chip of the counterexample search.',
+        'Tìm một số tiền mà hai đồng 7 trả vừa đúng.',
+        'Nạp “1, 7, 10” và đọc ô đầu tiên của phần tìm phản ví dụ.',
       ],
       solution:
-        'Every amount up to 13 is paid optimally, but 14 = 10 + 1 + 1 + 1 + 1 takes greedy 5 coins while 7 + 7 takes 2.',
+        'Mọi số tiền tới 13 đều được trả tối ưu, nhưng 14 = 10 + 1 + 1 + 1 + 1 khiến tham lam dùng 5 đồng, trong khi 7 + 7 chỉ cần 2.',
     },
     {
       type: 'choice',
-      prompt: 'For which coin set is greedy change-making optimal for every amount?',
+      prompt: 'Với bộ đồng xu nào thì đổi tiền tham lam tối ưu cho mọi số tiền?',
       options: ['1, 3, 4', '1, 5, 6, 9', '1, 5, 10, 25', '1, 7, 10'],
       answer: 2,
       hints: [
-        'Three of the sets have a small counterexample: try 6, 11 and 14.',
-        'Run the counterexample search on each set.',
+        'Ba trong bốn bộ có một phản ví dụ nhỏ: thử 6, 11 và 14.',
+        'Chạy phần tìm phản ví dụ trên từng bộ.',
       ],
       solution:
-        '1, 5, 10, 25 is canonical: an exchange argument shows an optimal payment never needs more small coins than the greedy one. 1, 3, 4 fails at 6, 1, 5, 6, 9 at 11 (9 + 1 + 1 against 6 + 5) and 1, 7, 10 at 14.',
+        '1, 5, 10, 25 là bộ chuẩn tắc: lập luận hoán đổi cho thấy một cách trả tối ưu không bao giờ cần nhiều đồng nhỏ hơn cách trả tham lam. 1, 3, 4 thất bại ở 6, 1, 5, 6, 9 ở 11 (9 + 1 + 1 so với 6 + 5) và 1, 7, 10 ở 14.',
     },
     {
       type: 'choice',
-      prompt: 'What does greedy do when it pays 9 with coins 3 and 5?',
+      prompt: 'Tham lam làm gì khi trả 9 bằng các đồng 3 và 5?',
       options: [
-        'Pays 3 + 3 + 3',
-        'Pays 5 + 3 and is stuck with 1 unpaid',
-        'Pays 5 + 5 and goes over',
-        'Reports that 9 cannot be paid, which is true',
+        'Trả 3 + 3 + 3',
+        'Trả 5 + 3 và bị kẹt với 1 chưa trả',
+        'Trả 5 + 5 và trả dư',
+        'Báo rằng không trả được 9, và điều đó đúng',
       ],
       answer: 1,
-      hints: ['Greedy takes ⌊9 / 5⌋ fives first.', 'Then it takes ⌊4 / 3⌋ threes.'],
+      hints: ['Tham lam lấy ⌊9 / 5⌋ đồng 5 trước.', 'Sau đó nó lấy ⌊4 / 3⌋ đồng 3.'],
       solution:
-        'Greedy takes one 5 and one 3, then 1 is left and no coin fits. 9 can be paid, as 3 + 3 + 3, so the greedy choice of 5 was a mistake it cannot undo.',
+        'Tham lam lấy một đồng 5 và một đồng 3, rồi còn 1 và không đồng nào vừa. 9 trả được, bằng 3 + 3 + 3, nên lựa chọn tham lam lấy đồng 5 là một sai lầm mà nó không thể sửa lại.',
     },
     {
       type: 'order',
-      prompt: 'Put the steps of an exchange argument in order.',
+      prompt: 'Xếp các bước của một lập luận hoán đổi theo đúng thứ tự.',
       items: [
-        'Conclude that some optimal solution makes the greedy choice',
-        'Take any optimal solution that does not make the greedy choice',
-        'Show the new solution is still feasible and no worse',
-        'Swap one of its parts for the greedy choice',
+        'Kết luận rằng có một lời giải tối ưu chọn lựa chọn tham lam',
+        'Lấy một lời giải tối ưu bất kì không chọn lựa chọn tham lam',
+        'Chỉ ra lời giải mới vẫn hợp lệ và không tệ hơn',
+        'Đổi một phần của nó lấy lựa chọn tham lam',
       ],
       answer: [1, 3, 2, 0],
       hints: [
-        'You start from a solution you know is optimal.',
-        'The swap comes before you check that nothing got worse.',
+        'Bạn bắt đầu từ một lời giải mà bạn biết là tối ưu.',
+        'Phép đổi diễn ra trước khi bạn kiểm tra rằng không có gì tệ đi.',
       ],
       solution:
-        'Start from an arbitrary optimal solution, exchange a part of it for the greedy choice, check that the result is feasible and costs no more, and conclude that an optimal solution exists that starts greedily.',
+        'Bắt đầu từ một lời giải tối ưu tuỳ ý, đổi một phần của nó lấy lựa chọn tham lam, kiểm tra kết quả hợp lệ và không tốn hơn, rồi kết luận rằng tồn tại một lời giải tối ưu bắt đầu bằng lựa chọn tham lam.',
     },
   ],
-  nextTeaser: 'Bài tiếp theo: Lập lịch các đoạn.',
+  nextTeaser:
+    'Bài tiếp theo, Lập lịch các đoạn, dùng đúng lập luận hoán đổi này để chọn nhiều đoạn không giao nhau nhất.',
 };

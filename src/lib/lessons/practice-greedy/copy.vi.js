@@ -1,17 +1,14 @@
 /** @typedef {import('$lib/algo-engine/practice-greedy.js').PuzzleFrame} PuzzleFrame */
 /** @typedef {import('$lib/algo-engine/practice-greedy.js').Puzzle} Puzzle */
 
-/** @param {number} x @param {string} word */
-const plural = (x, word) => `${x} ${word}${x === 1 ? '' : 's'}`;
-
 /**
  * An answer in words: yes or no, a number of jumps, or a number of boats.
  * @param {Puzzle} puzzle @param {number} x
  */
 function answer(puzzle, x) {
-  if (puzzle === 'reach') return x === 1 ? 'yes' : 'no';
-  if (puzzle === 'jumps') return x < 0 ? 'unreachable' : plural(x, 'jump');
-  return plural(x, 'boat');
+  if (puzzle === 'reach') return x === 1 ? 'có' : 'không';
+  if (puzzle === 'jumps') return x < 0 ? 'không tới được' : `${x} bước nhảy`;
+  return `${x} thuyền`;
 }
 
 /** @param {PuzzleFrame} f */
@@ -21,86 +18,87 @@ function describeBoats(f) {
   const left = f.values.length - f.boats.flat().length;
   if (f.rule === 'right') {
     if (w.length === 2) {
-      return `Boat ${f.count}: the heaviest, ${w[0]}, takes the lightest, ${w[1]}: ${w[0] + w[1]} ≤ 10.`;
+      return `Thuyền ${f.count}: người nặng nhất, ${w[0]}, chở theo người nhẹ nhất, ${w[1]}: ${w[0] + w[1]} ≤ 10.`;
     }
     return left === 0
-      ? `Boat ${f.count}: ${w[0]} is the last one and goes alone.`
-      : `Boat ${f.count}: the heaviest, ${w[0]}, goes alone, because not even the lightest left fits with it.`;
+      ? `Thuyền ${f.count}: ${w[0]} là người cuối cùng và đi một mình.`
+      : `Thuyền ${f.count}: người nặng nhất, ${w[0]}, đi một mình, vì ngay cả người nhẹ nhất còn lại cũng không vừa đi cùng.`;
   }
-  if (w.length === 2) return `Boat ${f.count}: the two lightest, ${w[0]} and ${w[1]}, share it.`;
+  if (w.length === 2) return `Thuyền ${f.count}: hai người nhẹ nhất, ${w[0]} và ${w[1]}, đi chung.`;
   return left === 0
-    ? `Boat ${f.count}: ${w[0]} is the last one and goes alone.`
-    : `Boat ${f.count}: ${w[0]} goes alone, because the next lightest does not fit with it.`;
+    ? `Thuyền ${f.count}: ${w[0]} là người cuối cùng và đi một mình.`
+    : `Thuyền ${f.count}: ${w[0]} đi một mình, vì người nhẹ tiếp theo không vừa đi cùng.`;
 }
 
-export const en = {
+export const vi = {
   slug: 'practice-greedy',
   topic: 'greedy',
   level: 'Nâng cao',
   title: 'Luyện tập: bài toán tham lam',
   intro:
-    'A greedy rule is easy to invent and easy to get wrong. The working habit is: state the rule, hunt for a counterexample on small random cases, and only then try to prove it with an exchange argument or by showing that it stays ahead. Each card below holds a rule that is right and one that only sounds right.',
+    'Một quy tắc tham lam (greedy) rất dễ nghĩ ra và cũng rất dễ sai. Thói quen làm việc nên có là: phát biểu quy tắc, săn phản ví dụ trên các trường hợp ngẫu nhiên nhỏ, rồi mới thử chứng minh nó bằng lập luận hoán đổi (exchange argument) hoặc bằng cách chỉ ra nó luôn dẫn trước. Mỗi thẻ bên dưới có một quy tắc đúng và một quy tắc chỉ nghe có vẻ đúng.',
   summary:
-    'Pick a greedy puzzle, step a rule through your own input, and test it against a brute-force answer on 200 random cases to prove or break it.',
+    'Chọn một câu đố tham lam, chạy từng bước một quy tắc trên đầu vào của bạn, và kiểm tra nó với đáp án vét cạn trên 200 trường hợp ngẫu nhiên để chứng minh hoặc bác bỏ nó.',
   instruction:
-    'Pick a card and a rule, type an input or keep the example, then step. Press “Test on 200 random cases” to compare the rule with brute force, and load the shortest counterexample it finds.',
-  cardsLabel: 'Puzzle',
+    'Chọn một thẻ và một quy tắc, nhập đầu vào hoặc giữ ví dụ, rồi chạy từng bước. Bấm “Kiểm tra trên 200 trường hợp ngẫu nhiên” để so sánh quy tắc với vét cạn, rồi nạp phản ví dụ ngắn nhất tìm được.',
+  cardsLabel: 'Câu đố',
   cards: {
     reach: {
-      title: 'Jump game',
-      goal: 'a[i] is the longest jump from cell i. Starting at cell 0, can you reach the last cell?',
+      title: 'Trò chơi nhảy',
+      goal: 'a[i] là bước nhảy xa nhất từ ô i. Xuất phát từ ô 0, bạn có tới được ô cuối không?',
     },
     jumps: {
-      title: 'Fewest jumps',
-      goal: 'Same cells and jumps. What is the fewest number of jumps to the last cell?',
+      title: 'Ít bước nhảy nhất',
+      goal: 'Vẫn các ô và bước nhảy đó. Cần ít nhất bao nhiêu bước nhảy để tới ô cuối?',
     },
     boats: {
-      title: 'Boats',
-      goal: 'A boat carries at most two people and at most 10 in weight. What is the fewest boats for everyone?',
+      title: 'Thuyền',
+      goal: 'Mỗi thuyền chở nhiều nhất hai người và tổng khối lượng nhiều nhất là 10. Cần ít nhất bao nhiêu thuyền để chở hết mọi người?',
     },
   },
-  ruleLabel: 'Greedy rule',
+  ruleLabel: 'Quy tắc tham lam',
   rules: {
-    reach: { right: 'Track the farthest reach', wrong: 'Always jump the longest' },
-    jumps: { right: 'Jump when the range runs out', wrong: 'Always jump the longest' },
-    boats: { right: 'Heaviest with lightest', wrong: 'Two lightest together' },
+    reach: { right: 'Theo dõi điểm xa nhất tới được', wrong: 'Luôn nhảy xa nhất' },
+    jumps: { right: 'Nhảy khi hết tầm', wrong: 'Luôn nhảy xa nhất' },
+    boats: { right: 'Nặng nhất đi với nhẹ nhất', wrong: 'Hai người nhẹ nhất đi chung' },
   },
-  valuesLabel: { reach: 'Jump lengths', jumps: 'Jump lengths', boats: 'Weights' },
+  valuesLabel: { reach: 'Độ dài bước nhảy', jumps: 'Độ dài bước nhảy', boats: 'Khối lượng' },
   errors: {
-    format: 'Type whole numbers separated by commas or spaces. The last valid input is back.',
+    format:
+      'Hãy nhập các số nguyên, cách nhau bởi dấu phẩy hoặc dấu cách. Đầu vào hợp lệ gần nhất đã được khôi phục.',
     range: {
-      reach: 'Keep every jump length between 0 and 9. The last valid input is back.',
-      jumps: 'Keep every jump length between 0 and 9. The last valid input is back.',
-      boats: 'Keep every weight between 1 and 9. The last valid input is back.',
+      reach: 'Mỗi độ dài bước nhảy phải từ 0 đến 9. Đầu vào hợp lệ gần nhất đã được khôi phục.',
+      jumps: 'Mỗi độ dài bước nhảy phải từ 0 đến 9. Đầu vào hợp lệ gần nhất đã được khôi phục.',
+      boats: 'Mỗi khối lượng phải từ 1 đến 9. Đầu vào hợp lệ gần nhất đã được khôi phục.',
     },
-    count: 'Use between 2 and 12 values. The last valid input is back.',
+    count: 'Hãy dùng từ 2 đến 12 giá trị. Đầu vào hợp lệ gần nhất đã được khôi phục.',
   },
   /** @param {string} rule */
-  ruleNotice: (rule) => `Rule: ${rule}. The trace starts again.`,
-  counterNotice: 'Counterexample loaded: step through it to see where the rule goes wrong.',
-  random: 'Random input',
-  newInputNotice: 'New input loaded.',
+  ruleNotice: (rule) => `Quy tắc: ${rule}. Quá trình chạy bắt đầu lại.`,
+  counterNotice: 'Đã nạp phản ví dụ: hãy chạy từng bước để xem quy tắc sai ở đâu.',
+  random: 'Đầu vào ngẫu nhiên',
+  newInputNotice: 'Đã nạp đầu vào mới.',
   answer,
   /** @param {number} i @param {number} value @param {string} state */
-  cellLabel: (i, value, state) => `Cell ${i}: ${value}${state ? `, ${state}` : ''}`,
+  cellLabel: (i, value, state) => `Ô ${i}: ${value}${state ? `, ${state.toLowerCase()}` : ''}`,
   /** @param {number} weight @param {number} boat 0-based, -1 before boarding @param {string} state */
   personLabel: (weight, boat, state) =>
-    `Weight ${weight}${boat >= 0 ? `, boat ${boat + 1}` : ''}${state ? `, ${state}` : ''}`,
+    `Khối lượng ${weight}${boat >= 0 ? `, thuyền ${boat + 1}` : ''}${state ? `, ${state.toLowerCase()}` : ''}`,
   /** @param {number[]} values */
-  stripAria: (values) => `Cells: ${values.join(', ')}.`,
+  stripAria: (values) => `Các ô: ${values.join(', ')}.`,
   pointers: { i: 'i', end: 'end', far: 'far' },
   reachWindow: 'reach',
   /** @param {number} k */
   boatMark: (k) => `b${k + 1}`,
   legend: {
-    current: 'Looked at now',
-    reachable: 'Known reachable',
-    scanned: 'Scanned',
-    path: 'Landed on',
-    stuck: 'Stuck here',
-    boat: 'In the boat just filled',
-    done: 'In an earlier boat',
-    goal: 'Last cell reached',
+    current: 'Đang xét',
+    reachable: 'Đã biết là tới được',
+    scanned: 'Đã quét',
+    path: 'Đã đặt chân',
+    stuck: 'Bị kẹt ở đây',
+    boat: 'Trên thuyền vừa xếp',
+    done: 'Trên một thuyền trước',
+    goal: 'Đã tới ô cuối',
   },
   markers: {
     current: '?',
@@ -112,178 +110,186 @@ export const en = {
     done: '',
     goal: '★',
   },
-  boatMarkerNote: 'b1, b2, …: boat number',
+  boatMarkerNote: 'b1, b2, …: số thứ tự thuyền',
   stats: {
-    got: 'Rule’s answer',
-    want: 'Right answer',
-    reach: 'Farthest reach',
-    jumps: 'Jumps so far',
-    boats: 'Boats so far',
+    got: 'Đáp án của quy tắc',
+    want: 'Đáp án đúng',
+    reach: 'Điểm xa nhất tới được',
+    jumps: 'Số bước nhảy đến giờ',
+    boats: 'Số thuyền đến giờ',
   },
   pending: '…',
-  boatsTitle: 'Boats',
-  boatsEmpty: 'no boat yet',
+  boatsTitle: 'Các thuyền',
+  boatsEmpty: 'chưa có thuyền nào',
   /** @param {number[]} w */
   boatChip: (w) => w.join(' + '),
-  testTitle: 'Prove or break the rule',
-  test: 'Test on 200 random cases',
-  untested: 'Not tested yet. Random cases have 2 to 8 values.',
+  testTitle: 'Chứng minh hoặc bác bỏ quy tắc',
+  test: 'Kiểm tra trên 200 trường hợp ngẫu nhiên',
+  untested: 'Chưa kiểm tra. Mỗi trường hợp ngẫu nhiên có từ 2 đến 8 giá trị.',
   /** @param {number} tested */
   passed: (tested) =>
-    `Passed all ${tested} random cases. That is evidence, not a proof: read the takeaways for the argument that makes it certain.`,
+    `Đúng cả ${tested} trường hợp ngẫu nhiên. Đó là bằng chứng, chưa phải chứng minh: hãy đọc phần Ghi nhớ để thấy lập luận khiến nó chắc chắn đúng.`,
   /** @param {number} failed @param {number} tested */
-  failed: (failed, tested) => `Failed ${failed} of ${tested} random cases.`,
+  failed: (failed, tested) => `Sai ${failed}/${tested} trường hợp ngẫu nhiên.`,
   /** @param {Puzzle} puzzle @param {number[]} values @param {number} got @param {number} want */
   counterexample: (puzzle, values, got, want) =>
-    `Shortest counterexample: ${values.join(', ')}. The rule says ${answer(puzzle, got)}, the right answer is ${answer(puzzle, want)}.`,
-  loadCounter: 'Load the counterexample',
-  practiceTitle: 'Puzzles to solve with the widget',
+    `Phản ví dụ ngắn nhất: ${values.join(', ')}. Quy tắc cho ${answer(puzzle, got)}, đáp án đúng là ${answer(puzzle, want)}.`,
+  loadCounter: 'Nạp phản ví dụ',
+  practiceTitle: 'Câu đố giải bằng hình minh hoạ',
   /** @param {PuzzleFrame} f @param {number} want */
   describe(f, want) {
     const a = f.values;
     if (f.kind === 'done') {
       const got = answer(f.puzzle, f.result);
       return f.result === want
-        ? `The rule answers ${got}, which is right on this input.`
-        : `The rule answers ${got}, but the right answer is ${answer(f.puzzle, want)}: a counterexample, so this rule is wrong.`;
+        ? `Quy tắc cho đáp án ${got}, đúng với đầu vào này.`
+        : `Quy tắc cho đáp án ${got}, nhưng đáp án đúng là ${answer(f.puzzle, want)}: đây là một phản ví dụ, nên quy tắc này sai.`;
     }
     if (f.puzzle === 'boats') {
       if (f.kind === 'start') {
-        return `Carry ${plural(a.length, 'person')} in boats that hold at most two people and at most 10 in weight.`;
+        return `Chở ${a.length} người bằng các thuyền chở được nhiều nhất hai người và tổng khối lượng nhiều nhất là 10.`;
       }
-      if (f.kind === 'sort') return `Sort the weights: ${a.join(', ')}.`;
+      if (f.kind === 'sort') return `Sắp xếp các khối lượng: ${a.join(', ')}.`;
       return describeBoats(f);
     }
     if (f.rule === 'wrong') {
-      if (f.kind === 'start')
-        return 'Start at cell 0 and always take the longest jump the cell allows.';
-      if (f.kind === 'stuck') return `Cell ${f.i} holds 0: the rule is stuck there.`;
+      if (f.kind === 'start') return 'Xuất phát từ ô 0 và luôn nhảy bước xa nhất mà ô cho phép.';
+      if (f.kind === 'stuck') return `Ô ${f.i} chứa 0: quy tắc bị kẹt ở đó.`;
       const from = /** @type {number} */ (f.path.at(-2));
-      return `Jump ${f.i - from} from cell ${from} to cell ${f.i}${f.i === a.length - 1 ? ', the last cell' : ''}. ${plural(f.count, 'jump')} so far.`;
+      return `Nhảy ${f.i - from} từ ô ${from} đến ô ${f.i}${f.i === a.length - 1 ? ', ô cuối' : ''}. Đã nhảy ${f.count} bước.`;
     }
     if (f.puzzle === 'reach') {
       switch (f.kind) {
         case 'start':
-          return 'Scan the cells from the left and keep reach, the farthest cell known to be reachable. Cell 0 is reachable.';
+          return 'Quét các ô từ trái sang và giữ reach, ô xa nhất đã biết là tới được. Ô 0 tới được.';
         case 'scan':
-          return `Cell ${f.i} is reachable (${f.i} ≤ reach). From it you can get to ${f.i + a[f.i]}, so reach = ${f.reach}.`;
+          return `Ô ${f.i} tới được (${f.i} ≤ reach). Từ ô này có thể tới ${f.i + a[f.i]}, nên reach = ${f.reach}.`;
         case 'stuck':
-          return `Cell ${f.i} > reach ${f.reach}: no earlier cell gets that far, so cell ${f.i} and every cell after it are out of reach.`;
+          return `Ô ${f.i} > reach ${f.reach}: không ô nào phía trước đi xa được đến thế, nên ô ${f.i} và mọi ô sau nó đều ngoài tầm.`;
         default:
           return '';
       }
     }
     switch (f.kind) {
       case 'start':
-        return 'Scan the cells the current jump covers and remember far, the farthest cell any of them reaches. When the scan passes end, one more jump is needed.';
+        return 'Quét các ô mà bước nhảy hiện tại phủ tới và nhớ far, ô xa nhất mà một ô bất kì trong số đó tới được. Khi lượt quét vượt qua end, cần thêm một bước nhảy.';
       case 'scan':
-        return `Cell ${f.i} reaches ${f.i + a[f.i]}, so far = ${f.reach}.`;
+        return `Ô ${f.i} tới được ${f.i + a[f.i]}, nên far = ${f.reach}.`;
       case 'jump':
-        return `Cell ${f.i} is the end of the range covered by ${plural(f.count - 1, 'jump')}, so take jump ${f.count}: it can land anywhere up to cell ${f.end}.`;
+        return `Ô ${f.i} là cuối tầm mà ${f.count - 1} bước nhảy phủ tới, nên thực hiện bước nhảy ${f.count}: nó có thể đáp xuống bất kì đâu, tới tận ô ${f.end}.`;
       case 'stuck':
-        return `The range ends at cell ${f.i} and nothing in it reaches past ${f.i}: the last cell is unreachable.`;
+        return `Tầm dừng ở ô ${f.i} và không ô nào trong đó vượt qua được ${f.i}: không tới được ô cuối.`;
       default:
         return '';
     }
   },
   takeaways: [
-    'Before proving a greedy rule, try to break it: small random cases checked against brute force find most wrong rules in seconds.',
-    'Jump game: the reachable cells always form a prefix 0..reach, because a cell that can jump to cell j can also make every shorter jump. So one scan that grows reach decides the question in O(n). Always taking the longest jump can land on a 0 that a shorter jump would have skipped.',
-    'Fewest jumps: the cells reachable in k jumps also form a range, and the next range ends at the farthest cell any of them reaches. Jumping only when the range runs out is a breadth-first search by layers, so it “stays ahead” of any other plan and is optimal in O(n).',
-    'Boats: the heaviest person needs a boat anyway. If anyone can share it, the lightest can, and swapping the lightest into that seat never hurts another pair: an exchange argument. Pairing the two lightest wastes light people that heavy ones needed.',
-    'Pick “Boats” with “Two lightest together”, press the test button, load the counterexample and step through it, then switch to “Heaviest with lightest” on the same input.',
+    'Trước khi chứng minh một quy tắc tham lam, hãy thử bác bỏ nó: các trường hợp ngẫu nhiên nhỏ, đối chiếu với vét cạn, tìm ra hầu hết các quy tắc sai chỉ trong vài giây.',
+    'Trò chơi nhảy: các ô tới được luôn tạo thành một tiền tố 0..reach, vì một ô nhảy tới được ô j thì cũng nhảy được mọi bước ngắn hơn. Nên chỉ một lượt quét làm tăng dần reach là trả lời được câu hỏi trong O(n). Luôn nhảy bước xa nhất có thể đáp xuống một ô 0 mà bước ngắn hơn lẽ ra đã vượt qua.',
+    'Ít bước nhảy nhất: các ô tới được sau k bước nhảy cũng tạo thành một đoạn, và đoạn tiếp theo kết thúc ở ô xa nhất mà một ô bất kì trong đó tới được. Chỉ nhảy khi hết tầm chính là duyệt theo chiều rộng (BFS) theo từng tầng, nên nó “luôn dẫn trước” mọi kế hoạch khác và tối ưu trong O(n).',
+    'Thuyền: người nặng nhất đằng nào cũng cần một thuyền. Nếu có ai đi chung được với người đó thì người nhẹ nhất đi chung được, và đổi người nhẹ nhất vào chỗ ngồi đó không bao giờ làm hại một cặp khác: đó là lập luận hoán đổi. Ghép hai người nhẹ nhất sẽ phí những người nhẹ mà người nặng cần đến.',
+    'Chọn “Thuyền” với “Hai người nhẹ nhất đi chung”, bấm nút kiểm tra, nạp phản ví dụ và chạy từng bước, rồi chuyển sang “Nặng nhất đi với nhẹ nhất” trên cùng đầu vào.',
   ],
-  complexityHead: ['Rule', 'Cost', 'Why'],
+  complexityHead: ['Quy tắc', 'Chi phí', 'Vì sao'],
   complexity: [
-    ['Jump game, farthest reach', 'O(n)', 'One scan, one max per cell.'],
-    ['Fewest jumps, by layers', 'O(n)', 'One scan; a jump is counted when the range runs out.'],
-    ['Boats, heaviest with lightest', 'O(n log n)', 'The sort; the two-pointer pass is O(n).'],
+    ['Trò chơi nhảy, điểm xa nhất', 'O(n)', 'Một lượt quét, mỗi ô một phép max.'],
+    ['Ít bước nhảy nhất, theo tầng', 'O(n)', 'Một lượt quét; một bước nhảy được đếm khi hết tầm.'],
     [
-      'Brute force used for testing',
-      'O(9n) or exponential',
-      'A breadth-first search over every jump, or every way to pair the people.',
+      'Thuyền, nặng nhất với nhẹ nhất',
+      'O(n log n)',
+      'Phép sắp xếp; lượt hai con trỏ (two pointers) chỉ O(n).',
     ],
     [
-      'Random testing',
-      'trials × brute force',
-      'Cheap on small cases, which is where counterexamples hide.',
+      'Vét cạn dùng để kiểm tra',
+      'O(9n) hoặc hàm mũ',
+      'Duyệt theo chiều rộng qua mọi bước nhảy, hoặc thử mọi cách ghép cặp mọi người.',
+    ],
+    [
+      'Kiểm tra ngẫu nhiên',
+      'số lần thử × vét cạn',
+      'Rẻ trên các trường hợp nhỏ, cũng là nơi phản ví dụ hay ẩn nấp.',
     ],
   ],
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
   practice: [
     {
       type: 'choice',
-      prompt: 'Run “Always jump the longest” on the jump game 2, 3, 0, 1, 4. What happens?',
+      prompt: 'Chạy “Luôn nhảy xa nhất” trên trò chơi nhảy 2, 3, 0, 1, 4. Chuyện gì xảy ra?',
       options: [
-        'It reaches the last cell in 2 jumps',
-        'It reaches the last cell in 3 jumps',
-        'It lands on the 0 at cell 2 and is stuck',
-        'It answers no, which is right',
+        'Nó tới ô cuối sau 2 bước nhảy',
+        'Nó tới ô cuối sau 3 bước nhảy',
+        'Nó đáp xuống ô 0 ở ô 2 và bị kẹt',
+        'Nó trả lời không, và điều đó đúng',
       ],
       answer: 2,
       hints: [
-        'From cell 0 the longest jump has length 2.',
-        'Type 2, 3, 0, 1, 4 on the Jump game card and step to the end.',
+        'Từ ô 0, bước nhảy xa nhất dài 2.',
+        'Nhập 2, 3, 0, 1, 4 vào thẻ “Trò chơi nhảy” rồi chạy đến bước cuối.',
       ],
       solution:
-        'It jumps from cell 0 to cell 2, which holds 0, so it answers no. The farthest-reach rule sees that cell 1 reaches cell 4 and answers yes.',
+        'Nó nhảy từ ô 0 đến ô 2, ô này chứa 0, nên nó trả lời không. Quy tắc điểm xa nhất thấy ô 1 tới được ô 4 và trả lời có.',
     },
     {
       type: 'number',
-      prompt: 'How many jumps does “Always jump the longest” use on 2, 3, 1, 1, 4?',
+      prompt: '“Luôn nhảy xa nhất” dùng bao nhiêu bước nhảy trên 2, 3, 1, 1, 4?',
       answer: 3,
-      unit: 'jumps',
-      hints: ['It lands on cells 2 and 3 before the last cell.', 'Use the Fewest jumps card.'],
+      unit: 'bước nhảy',
+      hints: ['Nó đáp xuống ô 2 và ô 3 trước khi tới ô cuối.', 'Dùng thẻ “Ít bước nhảy nhất”.'],
       solution:
-        'It goes 0 → 2 → 3 → 4, 3 jumps, but 0 → 1 → 4 needs only 2: a shorter first jump can lead farther.',
+        'Nó đi 0 → 2 → 3 → 4, 3 bước nhảy, nhưng 0 → 1 → 4 chỉ cần 2: một bước nhảy đầu ngắn hơn có thể dẫn đi xa hơn.',
     },
     {
       type: 'number',
-      prompt: 'What is the fewest number of jumps to the last cell of 2, 3, 0, 1, 4?',
+      prompt: 'Cần ít nhất bao nhiêu bước nhảy để tới ô cuối của 2, 3, 0, 1, 4?',
       answer: 2,
-      unit: 'jumps',
+      unit: 'bước nhảy',
       hints: [
-        'The first jump covers cells 1 and 2.',
-        'Pick “Jump when the range runs out” and step to the end.',
+        'Bước nhảy đầu tiên phủ ô 1 và ô 2.',
+        'Chọn “Nhảy khi hết tầm” rồi chạy đến bước cuối.',
       ],
       solution:
-        'One jump reaches cells 1 and 2; cell 1 reaches cell 4, so the second jump lands on the last cell: 2 jumps.',
+        'Một bước nhảy tới được ô 1 và ô 2; ô 1 tới được ô 4, nên bước nhảy thứ hai đáp xuống ô cuối: 2 bước nhảy.',
     },
     {
       type: 'number',
-      prompt: 'How many boats does “Two lightest together” use for the weights 1, 2, 8, 9?',
+      prompt: '“Hai người nhẹ nhất đi chung” dùng bao nhiêu thuyền cho các khối lượng 1, 2, 8, 9?',
       answer: 3,
-      unit: 'boats',
-      hints: ['It puts 1 and 2 in the first boat.', '8 and 9 together weigh more than 10.'],
+      unit: 'thuyền',
+      hints: ['Nó xếp 1 và 2 vào thuyền đầu tiên.', '8 và 9 cộng lại nặng hơn 10.'],
       solution:
-        '1 + 2 share a boat, then 8 and 9 each need their own: 3 boats. Heaviest with lightest sends 9 + 1 and 8 + 2, only 2 boats.',
+        '1 + 2 đi chung một thuyền, rồi 8 và 9 mỗi người cần một thuyền riêng: 3 thuyền. Nặng nhất đi với nhẹ nhất xếp 9 + 1 và 8 + 2, chỉ 2 thuyền.',
     },
     {
       type: 'multi',
-      prompt: 'Which rules pass every random test? Test each one with the widget.',
+      prompt:
+        'Những quy tắc nào qua được mọi lần kiểm tra ngẫu nhiên? Hãy kiểm tra từng quy tắc bằng hình minh hoạ.',
       options: [
-        'Jump game: track the farthest reach',
-        'Jump game: always jump the longest',
-        'Fewest jumps: jump when the range runs out',
-        'Fewest jumps: always jump the longest',
-        'Boats: heaviest with lightest',
-        'Boats: two lightest together',
+        'Trò chơi nhảy: theo dõi điểm xa nhất tới được',
+        'Trò chơi nhảy: luôn nhảy xa nhất',
+        'Ít bước nhảy nhất: nhảy khi hết tầm',
+        'Ít bước nhảy nhất: luôn nhảy xa nhất',
+        'Thuyền: nặng nhất đi với nhẹ nhất',
+        'Thuyền: hai người nhẹ nhất đi chung',
       ],
       answers: [0, 2, 4],
       hints: [
-        'Exactly one rule per card is right.',
-        'Press “Test on 200 random cases” for each rule.',
+        'Mỗi thẻ có đúng một quy tắc đúng.',
+        'Bấm “Kiểm tra trên 200 trường hợp ngẫu nhiên” cho từng quy tắc.',
       ],
       solution:
-        'The farthest reach, the layer-by-layer jumps and heaviest with lightest pass, and each has a proof. The longest-jump rules and the two-lightest rule fail on short inputs such as 2, 3, 0, 1, 4 and 1, 2, 8, 9.',
+        'Điểm xa nhất, nhảy theo từng tầng và nặng nhất đi với nhẹ nhất đều qua, và mỗi quy tắc đều có chứng minh. Các quy tắc nhảy xa nhất và quy tắc hai người nhẹ nhất thất bại trên những đầu vào ngắn như 2, 3, 0, 1, 4 và 1, 2, 8, 9.',
     },
     {
       type: 'text',
-      prompt: 'What is the running time of the farthest-reach rule on n cells, in O-notation?',
-      accept: ['O(n)', 'Θ(n)', 'n', 'linear'],
-      hints: ['Count how often each cell is looked at.', 'There is no sort and no inner loop.'],
-      solution: 'One left-to-right scan with one max per cell: O(n).',
+      prompt: 'Thời gian chạy của quy tắc điểm xa nhất trên n ô là bao nhiêu, viết theo kí hiệu O?',
+      accept: ['O(n)', 'Θ(n)', 'n', 'tuyến tính', 'linear'],
+      hints: [
+        'Đếm xem mỗi ô được xét bao nhiêu lần.',
+        'Không có phép sắp xếp nào và không có vòng lặp lồng.',
+      ],
+      solution: 'Một lượt quét từ trái sang phải, mỗi ô một phép max: O(n).',
     },
   ],
-  nextTeaser: 'Bài tiếp theo: Đệ quy có nhớ và lập bảng.',
+  nextTeaser:
+    'Bài tiếp theo, Đệ quy có nhớ và lập bảng, mở đầu quy hoạch động bằng cách ghi nhớ các bài toán con đã giải.',
 };

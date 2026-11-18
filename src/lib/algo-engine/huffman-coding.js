@@ -44,14 +44,14 @@ export const MAX_TEXT = 200;
  */
 
 export const huffmanPseudocode = [
-  'huffman(symbols with frequencies):',
-  '  Q = min-priority queue of one leaf per symbol',
-  '  while Q holds more than one tree:',
-  '    x = extractMin(Q); y = extractMin(Q)  // the two lightest',
-  '    z = new node(left x, right y, weight x + y)',
+  'huffman(symbols):  // kèm tần suất',
+  '  Q = hàng đợi ưu tiên nhỏ nhất, mỗi kí hiệu một lá',
+  '  while Q còn nhiều hơn một cây:',
+  '    x = extractMin(Q); y = extractMin(Q)  // hai cây nhẹ nhất',
+  '    z = node(x, y)  // x trái, y phải, cộng trọng số',
   '    insert(Q, z)',
-  '  for each leaf: its code is the path from the root, left 0, right 1',
-  '  return the codes',
+  '  for leaf in leaves: mã = đường đi từ gốc (trái 0, phải 1)',
+  '  return các mã',
 ];
 
 /** @param {string} ch */

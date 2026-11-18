@@ -1,9 +1,6 @@
 /** @typedef {import('$lib/algo-engine/interval-scheduling.js').IntervalFrame} IntervalFrame */
 /** @typedef {import('$lib/algo-engine/interval-scheduling.js').Rule} Rule */
 
-/** @param {number} x @param {string} word */
-const plural = (x, word) => `${x} ${word}${x === 1 ? '' : 's'}`;
-
 /** Interval names: A, B, C, … in the typed order. @param {number} i */
 const name = (i) => String.fromCharCode(65 + i);
 
@@ -15,83 +12,84 @@ const roomName = (r) => `R${r + 1}`;
 
 /** @type {Record<Rule, string>} */
 const SORT_KEY = {
-  finish: 'finish time',
-  start: 'start time',
-  shortest: 'length, shortest first',
-  rooms: 'start time',
+  finish: 'thời điểm kết thúc',
+  start: 'thời điểm bắt đầu',
+  shortest: 'độ dài, ngắn trước',
+  rooms: 'thời điểm bắt đầu',
 };
 
-export const en = {
+export const vi = {
   slug: 'interval-scheduling',
   topic: 'greedy',
   level: 'Cơ bản',
   title: 'Lập lịch các đoạn',
   intro:
-    'Many requests want the same room, each for an interval of time. Activity selection keeps as many non-clashing requests as possible, and the greedy rule that works is to keep, again and again, the compatible request that finishes earliest. Interval partitioning asks the opposite question: how few rooms hold every request?',
+    'Nhiều yêu cầu cùng muốn dùng một phòng, mỗi yêu cầu trong một đoạn thời gian. Bài toán chọn hoạt động giữ lại nhiều yêu cầu không chồng nhau nhất có thể, và quy tắc tham lam (greedy) đúng là lặp đi lặp lại việc giữ yêu cầu tương thích kết thúc sớm nhất. Bài toán phân hoạch các đoạn hỏi điều ngược lại: cần ít nhất bao nhiêu phòng để chứa mọi yêu cầu?',
   summary:
-    'Step through activity selection by earliest finish time, watch earliest-start and shortest-first lose, and partition intervals into the fewest rooms.',
+    'Chạy từng bước thuật toán chọn hoạt động theo thời điểm kết thúc sớm nhất, xem quy tắc bắt đầu sớm nhất và ngắn nhất trước thua ra sao, rồi chia các đoạn vào ít phòng nhất.',
   instruction:
-    'Type intervals as start-end or load a preset, pick a rule, then step. Each row is one interval on the time line. Load “Shortest-first trap” and compare the three selection rules in the panel on the right.',
-  intervalsLabel: 'Intervals (start-end)',
-  ruleLabel: 'Greedy rule',
+    'Nhập các đoạn dạng đầu-cuối hoặc nạp một mẫu có sẵn, chọn một quy tắc, rồi chạy từng bước. Mỗi hàng là một đoạn trên trục thời gian. Nạp “Bẫy ngắn nhất trước” và so sánh ba quy tắc chọn trong khung bên phải.',
+  intervalsLabel: 'Các đoạn (đầu-cuối)',
+  ruleLabel: 'Quy tắc tham lam',
   rules: {
-    finish: 'Select: earliest finish',
-    start: 'Select: earliest start',
-    shortest: 'Select: shortest first',
-    rooms: 'Partition into rooms',
+    finish: 'Chọn: kết thúc sớm nhất',
+    start: 'Chọn: bắt đầu sớm nhất',
+    shortest: 'Chọn: ngắn nhất trước',
+    rooms: 'Chia vào các phòng',
   },
-  presetLabel: 'Intervals',
-  presetPlaceholder: 'Load intervals…',
+  presetLabel: 'Các đoạn',
+  presetPlaceholder: 'Nạp các đoạn…',
   presets: {
-    classic: '11 activities',
-    shortTrap: 'Shortest-first trap',
-    startTrap: 'Earliest-start trap',
-    lectures: 'A day of lectures',
+    classic: '11 hoạt động',
+    shortTrap: 'Bẫy ngắn nhất trước',
+    startTrap: 'Bẫy bắt đầu sớm nhất',
+    lectures: 'Một ngày học',
   },
-  random: 'Random intervals',
+  random: 'Các đoạn ngẫu nhiên',
   errors: {
-    format: 'Type intervals as start-end, for example 1-4, 3-5. The last valid intervals are back.',
-    range: 'Keep every time between 0 and 24. The last valid intervals are back.',
-    order: 'Every interval must end after it starts. The last valid intervals are back.',
-    count: 'Use at most 12 intervals. The last valid intervals are back.',
+    format:
+      'Hãy nhập các đoạn dạng đầu-cuối, ví dụ 1-4, 3-5. Các đoạn hợp lệ gần nhất đã được khôi phục.',
+    range: 'Mọi thời điểm phải từ 0 đến 24. Các đoạn hợp lệ gần nhất đã được khôi phục.',
+    order: 'Mỗi đoạn phải kết thúc sau khi bắt đầu. Các đoạn hợp lệ gần nhất đã được khôi phục.',
+    count: 'Hãy dùng nhiều nhất 12 đoạn. Các đoạn hợp lệ gần nhất đã được khôi phục.',
   },
-  newIntervalsNotice: 'New intervals loaded.',
+  newIntervalsNotice: 'Đã nạp các đoạn mới.',
   /** @param {string} rule */
-  ruleNotice: (rule) => `Rule: ${rule}. The trace starts again.`,
+  ruleNotice: (rule) => `Quy tắc: ${rule}. Quá trình chạy bắt đầu lại.`,
   name,
   roomName,
   /** @param {number} n */
-  timelineAria: (n) => `Time line of ${plural(n, 'interval')}, one per row, in scan order.`,
+  timelineAria: (n) => `Trục thời gian của ${n} đoạn, mỗi hàng một đoạn, theo thứ tự quét.`,
   /** @param {IntervalFrame} f @param {number} i @param {string} state */
   barLabel: (f, i, state) =>
-    `${span(f, i)}${state ? `, ${state}` : ''}${f.room[i] >= 0 ? `, room ${roomName(f.room[i])}` : ''}`,
+    `${span(f, i)}${state ? `, ${state.toLowerCase()}` : ''}${f.room[i] >= 0 ? `, phòng ${roomName(f.room[i])}` : ''}`,
   lastFinishLabel: 'lastFinish',
-  nowLabel: 'now',
+  nowLabel: 'bây giờ',
   legend: {
-    current: 'Scanned now',
-    kept: 'Kept or placed',
-    clash: 'Clashes with the scanned one',
-    skipped: 'Skipped',
-    freed: 'Last in the room that frees earliest',
+    current: 'Đang quét',
+    kept: 'Đã giữ hoặc đã xếp phòng',
+    clash: 'Chồng với đoạn đang quét',
+    skipped: 'Đã bỏ qua',
+    freed: 'Đoạn cuối của phòng trống sớm nhất',
   },
   markers: { current: '?', kept: '✓', clash: '!', skipped: '✗', freed: '↺' },
   stats: {
-    kept: 'Kept',
-    best: 'Most possible',
-    rooms: 'Rooms',
-    depth: 'Depth',
-    checks: 'Clash checks',
+    kept: 'Đã giữ',
+    best: 'Nhiều nhất có thể',
+    rooms: 'Số phòng',
+    depth: 'Độ sâu',
+    checks: 'Số lần kiểm tra chồng',
   },
-  keptTitle: 'Chosen, in the order kept',
-  keptEmpty: 'nothing kept yet',
-  roomsTitle: 'Room finish times (the min-heap)',
-  roomsEmpty: 'no room open yet',
+  keptTitle: 'Đã chọn, theo thứ tự giữ',
+  keptEmpty: 'chưa giữ đoạn nào',
+  roomsTitle: 'Thời điểm kết thúc của các phòng (heap nhỏ nhất)',
+  roomsEmpty: 'chưa mở phòng nào',
   /** @param {number} r @param {number} end */
   roomChip: (r, end) => `${roomName(r)}: ${end}`,
-  compareTitle: 'Kept on these intervals',
+  compareTitle: 'Số đoạn giữ được trên các đoạn này',
   /** @param {number} k */
-  compareRow: (k) => plural(k, 'interval'),
-  practiceTitle: 'Check yourself',
+  compareRow: (k) => `${k} đoạn`,
+  practiceTitle: 'Tự kiểm tra',
   /**
    * @param {IntervalFrame} f
    * @param {number} best  The most compatible intervals, from the earliest-finish rule.
@@ -103,134 +101,144 @@ export const en = {
     switch (f.kind) {
       case 'start':
         return rooms
-          ? `Put all ${plural(n, 'interval')} in rooms so that no two in one room clash, using as few rooms as possible. Intervals are half-open: [1, 4) and [4, 6) do not clash.`
-          : `Keep as many of the ${plural(n, 'interval')} as possible with no two clashing. Intervals are half-open: [1, 4) and [4, 6) do not clash.`;
+          ? `Xếp cả ${n} đoạn vào các phòng sao cho không có hai đoạn nào trong cùng một phòng chồng nhau, dùng ít phòng nhất có thể. Các đoạn là nửa mở: [1, 4) và [4, 6) không chồng nhau.`
+          : `Giữ lại nhiều nhất có thể trong ${n} đoạn sao cho không có hai đoạn nào chồng nhau. Các đoạn là nửa mở: [1, 4) và [4, 6) không chồng nhau.`;
       case 'sort':
-        return `Sort by ${SORT_KEY[f.rule]}: the rows now run in scan order, ${f.order.map(name).join(', ')}.`;
+        return `Sắp xếp theo ${SORT_KEY[f.rule]}: các hàng giờ theo thứ tự quét, ${f.order.map(name).join(', ')}.`;
       case 'consider': {
         const s = f.intervals[f.current].start;
         if (rooms) {
-          if (f.freed < 0) return `${span(f, f.current)}: no room is open yet.`;
+          if (f.freed < 0) return `${span(f, f.current)}: chưa có phòng nào mở.`;
           const end = f.roomEnds[f.freed];
-          return `${span(f, f.current)}: the room that frees earliest is ${roomName(f.freed)}, free from ${end}. Is ${end} ≤ ${s}?`;
+          return `${span(f, f.current)}: phòng trống sớm nhất là ${roomName(f.freed)}, trống từ ${end}. ${end} ≤ ${s} không?`;
         }
         if (f.rule === 'finish') {
-          if (f.lastFinish < 0) return `${span(f, f.current)}: nothing is kept yet, so it fits.`;
+          if (f.lastFinish < 0)
+            return `${span(f, f.current)}: chưa giữ đoạn nào, nên đoạn này vừa.`;
           return f.conflict < 0
-            ? `${span(f, f.current)}: ${s} ≥ lastFinish ${f.lastFinish}, so it starts after every kept interval ends.`
-            : `${span(f, f.current)}: ${s} < lastFinish ${f.lastFinish}, so it clashes with ${span(f, f.conflict)}.`;
+            ? `${span(f, f.current)}: ${s} ≥ lastFinish ${f.lastFinish}, nên đoạn này bắt đầu sau khi mọi đoạn đã giữ kết thúc.`
+            : `${span(f, f.current)}: ${s} < lastFinish ${f.lastFinish}, nên đoạn này chồng với ${span(f, f.conflict)}.`;
         }
         return f.conflict < 0
-          ? `${span(f, f.current)} clashes with none of the ${plural(f.chosen.length, 'kept interval')}.`
-          : `${span(f, f.current)} clashes with the kept ${span(f, f.conflict)}.`;
+          ? `${span(f, f.current)} không chồng với đoạn nào trong ${f.chosen.length} đoạn đã giữ.`
+          : `${span(f, f.current)} chồng với đoạn đã giữ ${span(f, f.conflict)}.`;
       }
       case 'pick':
         return f.rule === 'finish'
-          ? `Keep ${name(f.current)}; lastFinish becomes ${f.lastFinish}. ${plural(f.chosen.length, 'interval')} kept.`
-          : `Keep ${name(f.current)}. ${plural(f.chosen.length, 'interval')} kept.`;
+          ? `Giữ ${name(f.current)}; lastFinish thành ${f.lastFinish}. Đã giữ ${f.chosen.length} đoạn.`
+          : `Giữ ${name(f.current)}. Đã giữ ${f.chosen.length} đoạn.`;
       case 'reject':
-        return `Skip ${name(f.current)}: it clashes with ${name(f.conflict)}.`;
+        return `Bỏ qua ${name(f.current)}: đoạn này chồng với ${name(f.conflict)}.`;
       case 'reuse': {
         const iv = f.intervals[f.current];
-        return `Yes: ${name(f.current)} goes into ${roomName(f.freed)}, which is now busy until ${iv.end}.`;
+        return `Có: ${name(f.current)} vào phòng ${roomName(f.freed)}, phòng này giờ bận tới ${iv.end}.`;
       }
       case 'open': {
         const iv = f.intervals[f.current];
         const why =
           f.freed < 0
             ? ''
-            : `No: every room is busy at ${iv.start}, and the earliest frees at ${f.roomEnds[f.freed]}. `;
-        return `${why}Open room ${roomName(f.room[f.current])} for ${name(f.current)}. ${plural(f.roomEnds.length, 'room')} open.`;
+            : `Không: mọi phòng đều bận lúc ${iv.start}, và phòng trống sớm nhất là lúc ${f.roomEnds[f.freed]}. `;
+        return `${why}Mở phòng ${roomName(f.room[f.current])} cho ${name(f.current)}. Đang mở ${f.roomEnds.length} phòng.`;
       }
       case 'done': {
         if (rooms) {
-          return `${plural(f.roomEnds.length, 'room')} hold every interval. At time ${deep.at}, ${plural(deep.depth, 'interval')} overlap, so no schedule can use fewer: the greedy count equals the depth.`;
+          return `${f.roomEnds.length} phòng chứa được mọi đoạn. Lúc ${deep.at}, có ${deep.depth} đoạn chồng nhau, nên không lịch nào dùng ít phòng hơn được: số phòng tham lam bằng độ sâu.`;
         }
-        const kept = f.chosen.map(name).join(', ') || 'none';
+        const kept = f.chosen.map(name).join(', ') || 'không có';
         const k = f.chosen.length;
         if (f.rule === 'finish') {
-          return `Kept ${plural(k, 'interval')}: ${kept}. Each pick leaves the most time for the rest, so no compatible set is larger.`;
+          return `Đã giữ ${k} đoạn: ${kept}. Mỗi lần chọn để lại nhiều thời gian nhất cho phần còn lại, nên không tập tương thích nào lớn hơn.`;
         }
         return k < best
-          ? `Kept ${plural(k, 'interval')}: ${kept}. Earliest finish keeps ${best}, so this rule is not optimal: one counterexample is enough.`
-          : `Kept ${plural(k, 'interval')}: ${kept}, as many as earliest finish here. That proves nothing about other inputs: try the trap presets.`;
+          ? `Đã giữ ${k} đoạn: ${kept}. Kết thúc sớm nhất giữ được ${best}, nên quy tắc này không tối ưu: chỉ một phản ví dụ là đủ.`
+          : `Đã giữ ${k} đoạn: ${kept}, bằng số đoạn mà kết thúc sớm nhất giữ được ở đây. Điều đó không chứng minh gì cho các đầu vào khác: hãy thử các mẫu bẫy.`;
       }
     }
   },
   takeaways: [
-    'Activity selection: sort by finish time, then keep every interval that starts at or after the finish of the last one kept. One comparison per interval, so the cost is the O(n log n) sort.',
-    'Exchange argument: let g be the interval that finishes first. In any optimal set, swap its first interval for g; g ends no later, so nothing else clashes and the set keeps its size. Repeating the argument on what is left proves the whole greedy set optimal.',
-    'Natural rules fail. Earliest start keeps one long interval that blocks many short ones; shortest first keeps a short interval that clashes with two compatible ones.',
-    'Interval partitioning: scan by start time and reuse the room that frees earliest, kept in a min-heap of finish times. It opens a new room only when every room is busy, so the room count equals the depth, the most intervals overlapping at one moment, which no schedule can beat.',
-    'Load “Earliest-start trap”, step through it under each selection rule, then switch to rooms: the long interval forces 2 rooms although 3 short ones fit in one.',
+    'Chọn hoạt động: sắp xếp theo thời điểm kết thúc, rồi giữ mọi đoạn bắt đầu bằng hoặc sau thời điểm kết thúc của đoạn vừa giữ. Mỗi đoạn một phép so sánh, nên chi phí là phép sắp xếp O(n log n).',
+    'Lập luận hoán đổi (exchange argument): gọi g là đoạn kết thúc sớm nhất. Trong một tập tối ưu bất kì, đổi đoạn đầu tiên của nó lấy g; g kết thúc không muộn hơn, nên không đoạn nào khác bị chồng và tập vẫn giữ nguyên kích thước. Lặp lại lập luận trên phần còn lại sẽ chứng minh cả tập tham lam là tối ưu.',
+    'Những quy tắc nghe tự nhiên lại thất bại. Bắt đầu sớm nhất giữ một đoạn dài chắn mất nhiều đoạn ngắn; ngắn nhất trước giữ một đoạn ngắn chồng với hai đoạn tương thích với nhau.',
+    'Phân hoạch các đoạn: quét theo thời điểm bắt đầu và dùng lại phòng trống sớm nhất, lưu trong một heap nhỏ nhất chứa các thời điểm kết thúc. Thuật toán chỉ mở phòng mới khi mọi phòng đều bận, nên số phòng bằng độ sâu, tức số đoạn chồng nhau nhiều nhất tại một thời điểm, và không lịch nào làm tốt hơn được.',
+    'Nạp “Bẫy bắt đầu sớm nhất”, chạy từng bước với mỗi quy tắc chọn, rồi chuyển sang chia phòng: đoạn dài buộc phải dùng 2 phòng dù 3 đoạn ngắn vừa trong một phòng.',
   ],
-  complexityHead: ['Step', 'Cost', 'Why'],
+  complexityHead: ['Bước', 'Chi phí', 'Vì sao'],
   complexity: [
-    ['Sort by finish or start time', 'O(n log n)', 'A comparison sort of n intervals.'],
-    ['Activity selection scan', 'O(n)', 'One comparison of I.start with lastFinish per interval.'],
     [
-      'Partitioning with a min-heap',
+      'Sắp xếp theo thời điểm kết thúc hoặc bắt đầu',
+      'O(n log n)',
+      'Một phép sắp xếp so sánh trên n đoạn.',
+    ],
+    ['Lượt quét chọn hoạt động', 'O(n)', 'Mỗi đoạn một phép so sánh I.start với lastFinish.'],
+    [
+      'Phân hoạch bằng heap nhỏ nhất',
       'O(n log d)',
-      'One heap operation per interval on at most d rooms, where d is the depth.',
+      'Mỗi đoạn một thao tác heap trên nhiều nhất d phòng, với d là độ sâu.',
     ],
     [
-      'Checking each interval against every kept one',
+      'Kiểm tra mỗi đoạn với mọi đoạn đã giữ',
       'O(n²)',
-      'What a rule that is not sorted by finish time needs to test a clash.',
+      'Điều mà một quy tắc không sắp xếp theo thời điểm kết thúc cần làm để phát hiện chồng nhau.',
     ],
-    ['Extra memory', 'O(n)', 'The sorted order, the chosen list and the heap.'],
+    ['Bộ nhớ thêm', 'O(n)', 'Thứ tự đã sắp xếp, danh sách đã chọn và heap.'],
   ],
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
   practice: [
     {
       type: 'number',
       prompt:
-        'Earliest finish runs on the 11 activities 1-4, 3-5, 0-6, 5-7, 3-9, 5-9, 6-10, 8-11, 8-12, 2-14, 12-16. How many does it keep?',
+        'Quy tắc kết thúc sớm nhất chạy trên 11 hoạt động 1-4, 3-5, 0-6, 5-7, 3-9, 5-9, 6-10, 8-11, 8-12, 2-14, 12-16. Nó giữ được bao nhiêu hoạt động?',
       answer: 4,
-      unit: 'intervals',
+      unit: 'đoạn',
       hints: [
-        'The first one kept is 1-4, the earliest to finish.',
-        'After 1-4 the next interval starting at 4 or later that finishes first is 5-7.',
+        'Đoạn đầu tiên được giữ là 1-4, đoạn kết thúc sớm nhất.',
+        'Sau 1-4, đoạn tiếp theo bắt đầu từ 4 trở đi và kết thúc sớm nhất là 5-7.',
       ],
-      solution:
-        'It keeps 1-4, 5-7, 8-11 and 12-16: 4 activities. Load “11 activities” to watch it.',
+      solution: 'Nó giữ 1-4, 5-7, 8-11 và 12-16: 4 hoạt động. Nạp “11 hoạt động” để xem quá trình.',
     },
     {
       type: 'number',
-      prompt: 'How many rooms do the same 11 activities need?',
+      prompt: 'Cũng 11 hoạt động đó cần bao nhiêu phòng?',
       answer: 6,
-      unit: 'rooms',
+      unit: 'phòng',
       hints: [
-        'The answer is the depth: the most intervals that overlap at one moment.',
-        'Count the intervals that contain time 8.',
+        'Đáp số là độ sâu: số đoạn chồng nhau nhiều nhất tại một thời điểm.',
+        'Đếm các đoạn chứa thời điểm 8.',
       ],
       solution:
-        'At time 8, the intervals 3-9, 5-9, 6-10, 8-11, 8-12 and 2-14 all run, so at least 6 rooms are needed, and the greedy partition uses exactly 6.',
+        'Lúc 8, các đoạn 3-9, 5-9, 6-10, 8-11, 8-12 và 2-14 cùng diễn ra, nên cần ít nhất 6 phòng, và cách chia tham lam dùng đúng 6.',
     },
     {
       type: 'choice',
-      prompt: 'Which sort order makes the greedy activity selection optimal?',
-      options: ['Earliest start time', 'Shortest length', 'Earliest finish time', 'Fewest clashes'],
+      prompt: 'Thứ tự sắp xếp nào làm cho thuật toán chọn hoạt động tham lam tối ưu?',
+      options: [
+        'Thời điểm bắt đầu sớm nhất',
+        'Độ dài ngắn nhất',
+        'Thời điểm kết thúc sớm nhất',
+        'Ít chồng nhau nhất',
+      ],
       answer: 2,
       hints: [
-        'The first pick should leave as much of the time line free as possible.',
-        'Load the trap presets and compare the panel on the right.',
+        'Lần chọn đầu tiên nên để trống phần trục thời gian còn lại nhiều nhất có thể.',
+        'Nạp các mẫu bẫy và so sánh khung bên phải.',
       ],
       solution:
-        'Earliest finish leaves the most room for the rest, and the exchange argument proves it optimal. Earliest start and shortest first both have small counterexamples. Fewest clashes is also wrong in general, though the counterexample needs more intervals.',
+        'Kết thúc sớm nhất để lại nhiều chỗ nhất cho phần còn lại, và lập luận hoán đổi chứng minh nó tối ưu. Bắt đầu sớm nhất và ngắn nhất trước đều có phản ví dụ nhỏ. Ít chồng nhau nhất nói chung cũng sai, dù phản ví dụ cần nhiều đoạn hơn.',
     },
     {
       type: 'number',
-      prompt: 'Earliest start runs on 0-10, 1-3, 4-6, 7-9. How many intervals does it keep?',
+      prompt: 'Quy tắc bắt đầu sớm nhất chạy trên 0-10, 1-3, 4-6, 7-9. Nó giữ được bao nhiêu đoạn?',
       answer: 1,
-      unit: 'intervals',
+      unit: 'đoạn',
       hints: [
-        'It keeps 0-10 first, because 0 is the earliest start.',
-        'Every other interval lies inside 0-10.',
+        'Nó giữ 0-10 trước, vì 0 là thời điểm bắt đầu sớm nhất.',
+        'Mọi đoạn còn lại đều nằm trong 0-10.',
       ],
       solution:
-        'It keeps 0-10, and the other three all clash with it, so it keeps just 1. Earliest finish keeps 1-3, 4-6 and 7-9.',
+        'Nó giữ 0-10, và cả ba đoạn còn lại đều chồng với đoạn này, nên chỉ giữ được 1. Kết thúc sớm nhất giữ được 1-3, 4-6 và 7-9.',
     },
   ],
-  nextTeaser: 'Bài tiếp theo: Mã hoá Huffman.',
+  nextTeaser:
+    'Bài tiếp theo, Mã hoá Huffman, dùng tham lam để dựng mã nhị phân ngắn nhất cho một văn bản.',
 };

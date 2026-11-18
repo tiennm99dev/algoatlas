@@ -64,24 +64,24 @@ export const MAX_DEADLINE = 10;
 
 export const knapsackPseudocode = [
   'fractionalKnapsack(items, W):',
-  '  sort items by value / weight, highest first',
+  '  sắp xếp items theo value / weight, cao nhất trước',
   '  room = W; total = 0',
-  '  for each item i in that order:',
-  '    if room = 0: stop  // the knapsack is full',
-  '    take = min(wᵢ, room)  // all of it, or the fraction that fits',
+  '  for i in items:  // theo thứ tự đã sắp xếp',
+  '    if room = 0: stop  // túi đã đầy',
+  '    take = min(wᵢ, room)  // cả vật, hoặc phần còn vừa',
   '    total = total + vᵢ · take / wᵢ; room = room − take',
   '  return total',
 ];
 
 export const jobsPseudocode = [
-  'jobSequencing(jobs):  // each job takes one time slot',
-  '  sort jobs by profit, highest first',
-  '  slots 1..max deadline start empty',
-  '  for each job j in that order:',
-  '    t = the latest empty slot ≤ deadline(j)',
-  '    if t exists: put j in slot t; profit = profit + p(j)',
-  '    else: skip j  // every slot up to its deadline is taken',
-  '  return the slots',
+  'jobSequencing(jobs):  // mỗi việc chiếm một ô thời gian',
+  '  sắp xếp jobs theo profit, cao nhất trước',
+  '  các ô 1..max(deadline) ban đầu đều trống',
+  '  for j in jobs:  // theo thứ tự đã sắp xếp',
+  '    t = ô trống muộn nhất ≤ deadline(j)',
+  '    if t tồn tại: đặt j vào ô t; profit = profit + p(j)',
+  '    else: bỏ qua j  // mọi ô tới hạn chót đều đã có việc',
+  '  return các ô',
 ];
 
 /**

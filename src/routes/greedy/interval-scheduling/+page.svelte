@@ -14,7 +14,7 @@
     intervalTrace,
     parseIntervals,
   } from '$lib/algo-engine/interval-scheduling.js';
-  import { en as m } from '$lib/lessons/interval-scheduling/copy.en.js';
+  import { vi as m } from '$lib/lessons/interval-scheduling/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/interval-scheduling.js').Rule} Rule */

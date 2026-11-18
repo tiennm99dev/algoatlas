@@ -14,7 +14,7 @@
     huffmanTrace,
     parseFrequencies,
   } from '$lib/algo-engine/huffman-coding.js';
-  import { en as m } from '$lib/lessons/huffman-coding/copy.en.js';
+  import { vi as m } from '$lib/lessons/huffman-coding/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/huffman-coding.js').SymbolFreq} SymbolFreq */

@@ -2,9 +2,6 @@ import { gcd } from '$lib/algo-engine/number-theory.js';
 /** @typedef {import('$lib/algo-engine/fractional-knapsack.js').KnapFrame} KnapFrame */
 /** @typedef {import('$lib/algo-engine/fractional-knapsack.js').JobFrame} JobFrame */
 
-/** @param {number} x @param {string} word */
-const plural = (x, word) => `${x} ${word}${x === 1 ? '' : 's'}`;
-
 /** Names A, B, C, … in the typed order. @param {number} i */
 const name = (i) => String.fromCharCode(65 + i);
 
@@ -18,118 +15,121 @@ function fraction(p, q) {
   return `${p / g}/${q / g}`;
 }
 
-export const en = {
+export const vi = {
   slug: 'fractional-knapsack',
   topic: 'greedy',
   level: 'Trung bình',
   title: 'Cái túi phân số và lập lịch có hạn chót',
   intro:
-    'Two problems where one sort and one pass give the best answer. In the fractional knapsack you may cut items, so you fill the bag with the best value per kilogram first and cut only the last item. In job sequencing every job takes one time slot and pays only if it finishes by its deadline, so you take the most profitable jobs first, each as late as it can go.',
+    'Hai bài toán mà chỉ một lần sắp xếp và một lượt duyệt là cho đáp án tốt nhất. Trong bài toán cái túi phân số, bạn được cắt nhỏ đồ vật, nên ta xếp vào túi các vật có giá trị trên mỗi ki-lô-gam cao nhất trước và chỉ cắt vật cuối cùng. Trong bài toán lập lịch công việc có hạn chót, mỗi việc chiếm một ô thời gian và chỉ được trả công nếu xong đúng hạn, nên ta nhận các việc có lợi nhuận cao nhất trước, mỗi việc xếp muộn nhất có thể.',
   summary:
-    'Fill a knapsack by value per weight with a fraction of the last item, then schedule unit jobs by profit into the latest free slot before their deadlines.',
+    'Xếp đầy cái túi theo giá trị trên mỗi đơn vị khối lượng, chỉ lấy một phần của vật cuối, rồi xếp các việc dài một đơn vị theo lợi nhuận vào ô trống muộn nhất trước hạn chót của chúng.',
   instruction:
-    'Pick a problem, type the items or jobs, or load a preset, then step. In the knapsack watch the bar fill and the last item get cut; compare the 0/1 numbers under the stats. In job sequencing watch each job probe slots from its deadline down.',
-  problemLabel: 'Problem',
-  problems: { knapsack: 'Fractional knapsack', jobs: 'Jobs with deadlines' },
-  itemsLabel: 'Items (value/weight)',
-  capacityLabel: 'Capacity W',
-  jobsLabel: 'Jobs (profit/deadline)',
-  presetLabel: 'Example',
-  presetPlaceholder: 'Load an example…',
+    'Chọn một bài toán, nhập các vật hoặc các việc, hoặc nạp một ví dụ, rồi chạy từng bước. Với cái túi, hãy xem thanh đầy dần và vật cuối bị cắt; so sánh các số 0/1 bên dưới phần thống kê. Với lập lịch, hãy xem mỗi việc dò các ô từ hạn chót của nó trở xuống.',
+  problemLabel: 'Bài toán',
+  problems: { knapsack: 'Cái túi phân số', jobs: 'Công việc có hạn chót' },
+  itemsLabel: 'Các vật (giá trị/khối lượng)',
+  capacityLabel: 'Sức chứa W',
+  jobsLabel: 'Các việc (lợi nhuận/hạn chót)',
+  presetLabel: 'Ví dụ',
+  presetPlaceholder: 'Nạp một ví dụ…',
   presets: {
     knapsack: {
-      textbook: 'Textbook: W = 50',
-      pantry: 'Six items: W = 40',
-      roomy: 'All fit: W = 100',
+      textbook: 'Ví dụ trong sách: W = 50',
+      pantry: 'Sáu vật: W = 40',
+      roomy: 'Vừa hết: W = 100',
     },
-    jobs: { classic: 'Five jobs', crowded: 'One deadline for all', urgent: 'Many due at 1' },
+    jobs: { classic: 'Năm việc', crowded: 'Chung một hạn chót', urgent: 'Nhiều việc hạn 1' },
   },
   errors: {
-    format: 'Type pairs like 60/10, separated by commas or spaces. The last valid input is back.',
-    value: 'Keep every value and profit between 1 and 999. The last valid input is back.',
-    weight: 'Keep every weight between 1 and 99. The last valid input is back.',
-    deadline: 'Keep every deadline between 1 and 10. The last valid input is back.',
-    count: 'Use at most 10 items or jobs. The last valid input is back.',
+    format:
+      'Hãy nhập các cặp như 60/10, cách nhau bởi dấu phẩy hoặc dấu cách. Đầu vào hợp lệ gần nhất đã được khôi phục.',
+    value: 'Mỗi giá trị và lợi nhuận phải từ 1 đến 999. Đầu vào hợp lệ gần nhất đã được khôi phục.',
+    weight: 'Mỗi khối lượng phải từ 1 đến 99. Đầu vào hợp lệ gần nhất đã được khôi phục.',
+    deadline: 'Mỗi hạn chót phải từ 1 đến 10. Đầu vào hợp lệ gần nhất đã được khôi phục.',
+    count: 'Hãy dùng nhiều nhất 10 vật hoặc việc. Đầu vào hợp lệ gần nhất đã được khôi phục.',
   },
-  capacityError: 'The capacity must be a whole number from 1 to 200. The last valid one is back.',
-  newInputNotice: 'New example loaded.',
+  capacityError:
+    'Sức chứa phải là số nguyên từ 1 đến 200. Giá trị hợp lệ gần nhất đã được khôi phục.',
+  newInputNotice: 'Đã nạp ví dụ mới.',
   name,
   num,
   fraction,
   /** @param {number} capacity @param {number} room */
-  barAria: (capacity, room) => `Knapsack of capacity ${capacity}, ${room} left.`,
+  barAria: (capacity, room) => `Cái túi sức chứa ${capacity}, còn trống ${room}.`,
   /** @param {string} item @param {string} part @param {number} weight */
-  pieceLabel: (item, part, weight) => `${item}: ${part === '1' ? 'whole' : part}, weight ${weight}`,
+  pieceLabel: (item, part, weight) =>
+    `${item}: ${part === '1' ? 'cả vật' : part}, khối lượng ${weight}`,
   /** @param {number} n */
-  slotsAria: (n) => `${plural(n, 'time slot')}, 1 to ${n}.`,
-  slotRow: 'Job',
+  slotsAria: (n) => `${n} ô thời gian, từ 1 đến ${n}.`,
+  slotRow: 'Việc',
   emptySlot: '·',
   legend: {
-    current: 'Scanned now',
-    packed: 'Packed whole or placed',
-    cut: 'Cut: only a fraction fits',
-    probed: 'Slot probed, taken',
+    current: 'Đang quét',
+    packed: 'Đã lấy cả vật hoặc đã xếp',
+    cut: 'Bị cắt: chỉ vừa một phần',
+    probed: 'Ô đã dò, đã có việc',
   },
   markers: { current: '?', packed: '✓', cut: '½', probed: '✗' },
   table: {
-    item: 'Item',
-    value: 'Value',
-    weight: 'Weight',
-    density: 'Value/weight',
-    taken: 'Taken',
-    job: 'Job',
-    profit: 'Profit',
-    deadline: 'Deadline',
-    status: 'Slot',
+    item: 'Vật',
+    value: 'Giá trị',
+    weight: 'Khối lượng',
+    density: 'Giá trị/khối lượng',
+    taken: 'Đã lấy',
+    job: 'Việc',
+    profit: 'Lợi nhuận',
+    deadline: 'Hạn chót',
+    status: 'Ô',
   },
-  tableTitle: { knapsack: 'Items in scan order', jobs: 'Jobs in scan order' },
-  status: { waiting: '—', skipped: 'skipped', none: '0' },
+  tableTitle: { knapsack: 'Các vật theo thứ tự quét', jobs: 'Các việc theo thứ tự quét' },
+  status: { waiting: '—', skipped: 'bỏ qua', none: '0' },
   stats: {
-    room: 'Room left',
-    total: 'Value packed',
-    scanned: 'Items scanned',
-    profit: 'Profit',
-    placed: 'Jobs placed',
-    probes: 'Slot probes',
-    best: 'Best possible',
+    room: 'Còn trống',
+    total: 'Giá trị đã xếp',
+    scanned: 'Số vật đã quét',
+    profit: 'Lợi nhuận',
+    placed: 'Số việc đã xếp',
+    probes: 'Số lần dò ô',
+    best: 'Tốt nhất có thể',
   },
-  zeroOneTitle: 'If items cannot be cut (0/1)',
+  zeroOneTitle: 'Nếu không được cắt vật (0/1)',
   /** @param {number} greedy @param {number} best */
   zeroOne: (greedy, best) =>
-    `Greedy by value/weight packs ${greedy}; the best is ${best}${greedy < best ? ', so greedy loses' : ''}.`,
-  practiceTitle: 'Check yourself',
+    `Tham lam theo giá trị/khối lượng xếp được ${greedy}; tốt nhất là ${best}${greedy < best ? ', nên tham lam thua' : ''}.`,
+  practiceTitle: 'Tự kiểm tra',
   /** @param {KnapFrame} f */
   describeKnapsack(f) {
     const it = f.current >= 0 ? f.items[f.current] : null;
     const n = f.items.length;
     switch (f.kind) {
       case 'start':
-        return `Fill a knapsack of capacity ${f.capacity} from ${plural(n, 'item')} for the most value. Any fraction of an item may be taken, for the same fraction of its value.`;
+        return `Xếp vào cái túi sức chứa ${f.capacity} từ ${n} vật sao cho tổng giá trị lớn nhất. Được lấy một phần bất kì của một vật, với đúng phần đó của giá trị.`;
       case 'sort':
-        return `Sort by value per weight, highest first: ${f.order.map((i) => `${name(i)} (${num(f.items[i].value / f.items[i].weight)})`).join(', ')}.`;
+        return `Sắp xếp theo giá trị trên mỗi đơn vị khối lượng, cao nhất trước: ${f.order.map((i) => `${name(i)} (${num(f.items[i].value / f.items[i].weight)})`).join(', ')}.`;
       case 'consider':
         if (!it) return '';
         return it.weight <= f.room
-          ? `${name(f.current)}: value ${it.value}, weight ${it.weight}, ${num(it.value / it.weight)} per unit. ${f.room} units of room, so all of it fits.`
-          : `${name(f.current)}: value ${it.value}, weight ${it.weight}, ${num(it.value / it.weight)} per unit. Only ${f.room} units of room are left, so cut it.`;
+          ? `${name(f.current)}: giá trị ${it.value}, khối lượng ${it.weight}, ${num(it.value / it.weight)} mỗi đơn vị. Còn trống ${f.room} đơn vị, nên vừa cả vật.`
+          : `${name(f.current)}: giá trị ${it.value}, khối lượng ${it.weight}, ${num(it.value / it.weight)} mỗi đơn vị. Chỉ còn trống ${f.room} đơn vị, nên phải cắt vật này.`;
       case 'take': {
         if (!it) return '';
         const t = f.taken[f.current];
         const part = fraction(t, it.weight);
         return part === '1'
-          ? `Take all of ${name(f.current)}: +${it.value}. Value ${num(f.total)}, ${f.room} units left.`
-          : `Take ${part} of ${name(f.current)}: ${t} of its ${it.weight} units for ${it.value} · ${part} = ${num((it.value * t) / it.weight)}. The knapsack is full at value ${num(f.total)}.`;
+          ? `Lấy cả ${name(f.current)}: +${it.value}. Giá trị ${num(f.total)}, còn trống ${f.room} đơn vị.`
+          : `Lấy ${part} của ${name(f.current)}: ${t} trong ${it.weight} đơn vị, được ${it.value} · ${part} = ${num((it.value * t) / it.weight)}. Túi đã đầy với giá trị ${num(f.total)}.`;
       }
       case 'full':
-        return `The knapsack is full, so stop: ${name(f.current)} and every item after it stay out.`;
+        return `Túi đã đầy, nên dừng: ${name(f.current)} và mọi vật sau nó đều ở ngoài.`;
       case 'done': {
         const cut = f.packed.find((i) => f.taken[i] < f.items[i].weight);
         if (cut !== undefined) {
-          return `Done: value ${num(f.total)}, with only ${name(cut)} cut, to ${fraction(f.taken[cut], f.items[cut].weight)}. No packing beats it, since every unit of room holds the best value per unit still on offer.`;
+          return `Xong: giá trị ${num(f.total)}, chỉ cắt ${name(cut)}, còn ${fraction(f.taken[cut], f.items[cut].weight)}. Không cách xếp nào tốt hơn, vì mỗi đơn vị chỗ trống đều chứa giá trị trên đơn vị tốt nhất còn lại.`;
         }
         return f.room > 0
-          ? `Every item fits whole: value ${num(f.total)} with ${f.room} units to spare.`
-          : `Every item fits whole and fills the knapsack exactly: value ${num(f.total)}.`;
+          ? `Mọi vật đều vừa nguyên vẹn: giá trị ${num(f.total)}, còn dư ${f.room} đơn vị.`
+          : `Mọi vật đều vừa nguyên vẹn và lấp đầy túi vừa khít: giá trị ${num(f.total)}.`;
       }
     }
   },
@@ -138,114 +138,119 @@ export const en = {
     const j = f.current >= 0 ? f.jobs[f.current] : null;
     switch (f.kind) {
       case 'start':
-        return `Schedule ${plural(f.jobs.length, 'job')}, each one time slot long, in slots 1 to ${f.slots.length}. A job pays its profit only if it sits in a slot at or before its deadline.`;
+        return `Xếp lịch ${f.jobs.length} việc, mỗi việc dài một ô thời gian, vào các ô từ 1 đến ${f.slots.length}. Một việc chỉ được trả lợi nhuận nếu nằm ở ô không muộn hơn hạn chót của nó.`;
       case 'sort':
-        return `Sort by profit, highest first: ${f.order.map((i) => `${name(i)} (${f.jobs[i].profit})`).join(', ')}.`;
+        return `Sắp xếp theo lợi nhuận, cao nhất trước: ${f.order.map((i) => `${name(i)} (${f.jobs[i].profit})`).join(', ')}.`;
       case 'consider': {
         if (!j) return '';
         const free = f.slots[(f.probed.at(-1) ?? 1) - 1] < 0;
         return free
-          ? `${name(f.current)}: profit ${j.profit}, deadline ${j.deadline}. Probe slots from ${j.deadline} down: slot ${f.probed.at(-1)} is the latest free one.`
-          : `${name(f.current)}: profit ${j.profit}, deadline ${j.deadline}. Slots ${f.probed.join(', ')} are all taken.`;
+          ? `${name(f.current)}: lợi nhuận ${j.profit}, hạn chót ${j.deadline}. Dò các ô từ ${j.deadline} trở xuống: ô ${f.probed.at(-1)} là ô trống muộn nhất.`
+          : `${name(f.current)}: lợi nhuận ${j.profit}, hạn chót ${j.deadline}. Các ô ${f.probed.join(', ')} đều đã có việc.`;
       }
       case 'place':
-        return `Put ${name(f.current)} in slot ${f.slot}, as late as possible to keep earlier slots free. Profit ${f.profit}.`;
+        return `Đặt ${name(f.current)} vào ô ${f.slot}, muộn nhất có thể để giữ các ô sớm còn trống. Lợi nhuận ${f.profit}.`;
       case 'skip':
-        return `Skip ${name(f.current)}: every slot up to its deadline holds a more profitable job.`;
+        return `Bỏ qua ${name(f.current)}: mọi ô tới hạn chót của nó đều đã có một việc lợi nhuận cao hơn.`;
       case 'done':
-        return `Done: profit ${f.profit}${f.profit === best ? ', the best any schedule can earn' : ''}. Skipped: ${f.skipped.map(name).join(', ') || 'none'}.`;
+        return `Xong: lợi nhuận ${f.profit}${f.profit === best ? ', cao nhất mà một lịch bất kì có thể đạt' : ''}. Bỏ qua: ${f.skipped.map(name).join(', ') || 'không có'}.`;
     }
   },
   takeaways: [
-    'Fractional knapsack: sort by value per weight and pour items in, best first. Every unit of capacity then holds the best value per unit still available, so the result is optimal, and only the last item is cut.',
-    'The same greedy rule fails for 0/1 knapsack, where items cannot be cut: on the textbook items it packs 160 while 100 + 120 = 220 fits. 0/1 knapsack needs dynamic programming.',
-    'Job sequencing: take jobs by profit, highest first, each in the latest free slot at or before its deadline. Placing a job late keeps early slots for jobs with tight deadlines.',
-    'Matroid intuition: a family of “independent” sets where every subset of an independent set is independent and a smaller independent set can always grow by an element of a larger one. Sets of jobs that can all meet their deadlines form one, and on any matroid the greedy rule by weight is optimal. Sets of items that fit a knapsack do not: the exchange step fails.',
-    'Load “Textbook: W = 50” and step to the end: the value is 240 with 2/3 of C. Then read the 0/1 line under the stats, and try capacity 60, where nothing has to be cut.',
+    'Cái túi phân số: sắp xếp theo giá trị trên mỗi đơn vị khối lượng rồi đổ các vật vào, tốt nhất trước. Khi đó mỗi đơn vị sức chứa đều giữ giá trị trên đơn vị tốt nhất còn có, nên kết quả tối ưu, và chỉ vật cuối cùng bị cắt.',
+    'Cũng quy tắc tham lam (greedy) đó lại thất bại với bài toán cái túi 0/1 (knapsack), nơi không được cắt vật: trên các vật của ví dụ trong sách, nó xếp được 160, trong khi 100 + 120 = 220 vẫn vừa. Bài toán cái túi 0/1 cần quy hoạch động (dynamic programming).',
+    'Lập lịch công việc: nhận các việc theo lợi nhuận, cao nhất trước, mỗi việc vào ô trống muộn nhất không quá hạn chót. Xếp một việc muộn giúp giữ các ô sớm cho những việc có hạn chót gấp.',
+    'Trực giác về matroid: một họ các tập “độc lập”, trong đó mọi tập con của một tập độc lập cũng độc lập, và một tập độc lập nhỏ hơn luôn có thể thêm một phần tử của một tập độc lập lớn hơn. Các tập việc cùng kịp hạn chót tạo thành một matroid, và trên mọi matroid, quy tắc tham lam theo trọng số đều tối ưu. Các tập vật vừa cái túi thì không: bước hoán đổi thất bại.',
+    'Nạp “Ví dụ trong sách: W = 50” và chạy đến bước cuối: giá trị là 240 với 2/3 của C. Sau đó đọc dòng 0/1 bên dưới phần thống kê, và thử sức chứa 60, khi không phải cắt vật nào.',
   ],
-  complexityHead: ['Step', 'Cost', 'Why'],
+  complexityHead: ['Bước', 'Chi phí', 'Vì sao'],
   complexity: [
     [
-      'Sort items or jobs',
+      'Sắp xếp các vật hoặc các việc',
       'O(n log n)',
-      'One comparison sort; value per weight compares by cross-multiplying.',
+      'Một phép sắp xếp so sánh; giá trị trên khối lượng được so sánh bằng nhân chéo.',
     ],
     [
-      'Fractional knapsack pass',
+      'Lượt duyệt cái túi phân số',
       'O(n)',
-      'Each item is looked at once, and the pass stops when the knapsack is full.',
+      'Mỗi vật được xét một lần, và lượt duyệt dừng khi túi đầy.',
     ],
     [
-      'Job sequencing, slot scan',
+      'Lập lịch công việc, quét các ô',
       'O(n · d)',
-      'Each job probes at most d slots from its deadline down; a disjoint-set forest over the slots brings it near O(n).',
+      'Mỗi việc dò nhiều nhất d ô từ hạn chót trở xuống; một rừng tập hợp rời nhau (DSU) trên các ô đưa chi phí về gần O(n).',
     ],
     [
-      '0/1 knapsack, dynamic programming',
+      'Cái túi 0/1, quy hoạch động',
       'O(n · W)',
-      'The greedy pass is no longer enough; every capacity is tried.',
+      'Một lượt tham lam không còn đủ; phải thử mọi sức chứa.',
     ],
-    ['Extra memory', 'O(n + d)', 'The sorted order, the amounts taken and the slots.'],
+    ['Bộ nhớ thêm', 'O(n + d)', 'Thứ tự đã sắp xếp, lượng đã lấy và các ô.'],
   ],
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
   practice: [
     {
       type: 'number',
       prompt:
-        'Items 60/10, 100/20, 120/30 (value/weight) and capacity 50. What value does the fractional knapsack reach?',
+        'Các vật 60/10, 100/20, 120/30 (giá trị/khối lượng) và sức chứa 50. Cái túi phân số đạt giá trị bao nhiêu?',
       answer: 240,
       hints: [
-        'The values per unit are 6, 5 and 4, so take them in that order.',
-        'After the first two, 20 units of room are left for the 30-unit item.',
+        'Giá trị trên mỗi đơn vị là 6, 5 và 4, nên lấy theo đúng thứ tự đó.',
+        'Sau hai vật đầu, còn trống 20 đơn vị cho vật nặng 30.',
       ],
       solution:
-        'Take all of A (60) and B (100), then 20/30 = 2/3 of C for 120 · 2/3 = 80: 60 + 100 + 80 = 240.',
+        'Lấy cả A (60) và B (100), rồi 20/30 = 2/3 của C, được 120 · 2/3 = 80: 60 + 100 + 80 = 240.',
     },
     {
       type: 'text',
-      prompt: 'In the same knapsack, what fraction of item C is taken?',
-      accept: ['2/3', '20/30', '0.67', '0.667', 'two thirds'],
-      hints: ['C weighs 30.', 'A and B use 30 of the 50 units.'],
-      solution: '20 units of room are left and C weighs 30, so 20/30 = 2/3 of it goes in.',
+      prompt: 'Cũng cái túi đó, phần nào của vật C được lấy?',
+      accept: ['2/3', '20/30', '0.67', '0,67', '0.667', '0,667', 'hai phần ba'],
+      hints: ['C nặng 30.', 'A và B dùng hết 30 trong 50 đơn vị.'],
+      solution: 'Còn trống 20 đơn vị và C nặng 30, nên lấy được 20/30 = 2/3 của nó.',
     },
     {
       type: 'number',
       prompt:
-        'Now items cannot be cut. What does the greedy rule by value per weight pack for the same items and capacity?',
+        'Giờ không được cắt vật. Quy tắc tham lam theo giá trị trên khối lượng xếp được bao nhiêu với cùng các vật và sức chứa đó?',
       answer: 160,
-      hints: ['It takes A and B whole as before.', 'C no longer fits whole in the 20 units left.'],
-      solution:
-        'Greedy packs A + B = 160 and must skip C. The best 0/1 packing is B + C = 220, so greedy is not optimal once items cannot be cut.',
-    },
-    {
-      type: 'number',
-      prompt:
-        'Jobs (profit/deadline) 100/2, 19/1, 27/2, 25/1, 15/3, each one slot long. What profit does greedy job sequencing earn?',
-      answer: 142,
       hints: [
-        'Take the jobs in the order 100, 27, 25, 19, 15.',
-        'The job worth 100 takes slot 2, so 27 takes slot 1.',
+        'Nó vẫn lấy cả A và B như trước.',
+        'C không còn vừa nguyên vẹn trong 20 đơn vị còn lại.',
       ],
       solution:
-        '100 goes in slot 2, 27 in slot 1, 25 and 19 (deadline 1) find slot 1 taken, and 15 takes slot 3: 100 + 27 + 15 = 142.',
+        'Tham lam xếp A + B = 160 và phải bỏ C. Cách xếp 0/1 tốt nhất là B + C = 220, nên tham lam không tối ưu khi không được cắt vật.',
+    },
+    {
+      type: 'number',
+      prompt:
+        'Các việc (lợi nhuận/hạn chót) 100/2, 19/1, 27/2, 25/1, 15/3, mỗi việc dài một ô. Lập lịch tham lam thu được lợi nhuận bao nhiêu?',
+      answer: 142,
+      hints: [
+        'Nhận các việc theo thứ tự 100, 27, 25, 19, 15.',
+        'Việc 100 chiếm ô 2, nên việc 27 chiếm ô 1.',
+      ],
+      solution:
+        'Việc 100 vào ô 2, việc 27 vào ô 1, việc 25 và 19 (hạn chót 1) thấy ô 1 đã có việc, và việc 15 vào ô 3: 100 + 27 + 15 = 142.',
     },
     {
       type: 'choice',
-      prompt: 'Why does greedy by weight solve job sequencing but not 0/1 knapsack?',
+      prompt:
+        'Vì sao tham lam theo trọng số giải được bài toán lập lịch công việc nhưng không giải được cái túi 0/1?',
       options: [
-        'Jobs have integer deadlines',
-        'Feasible job sets form a matroid; knapsack-feasible sets do not',
-        'Job sequencing sorts by profit, knapsack by weight',
-        'Knapsack has more items than slots',
+        'Vì hạn chót của các việc là số nguyên',
+        'Vì các tập việc khả thi tạo thành một matroid; các tập vừa cái túi thì không',
+        'Vì lập lịch sắp xếp theo lợi nhuận, còn cái túi sắp xếp theo khối lượng',
+        'Vì cái túi có nhiều vật hơn số ô',
       ],
       answer: 1,
       hints: [
-        'On a matroid, the greedy rule by weight is always optimal.',
-        'With W = 35, can the set holding one 30-unit item grow by an item of the larger set of two 10-unit items?',
+        'Trên một matroid, quy tắc tham lam theo trọng số luôn tối ưu.',
+        'Với W = 35, tập chứa một vật nặng 30 có thêm được một vật của tập lớn hơn gồm hai vật nặng 10 không?',
       ],
       solution:
-        'Job sets that can all meet their deadlines satisfy the matroid exchange property: a smaller such set can always take a job from a larger one. Knapsack-feasible sets break it: with W = 35, the set holding one 30-unit item cannot take either item of the larger set of two 10-unit items. Without that property greedy can lose, as 160 against 220 shows.',
+        'Các tập việc cùng kịp hạn chót thoả tính chất hoán đổi của matroid: một tập nhỏ hơn như vậy luôn nhận thêm được một việc từ tập lớn hơn. Các tập vừa cái túi phá vỡ tính chất này: với W = 35, tập chứa một vật nặng 30 không nhận thêm được vật nào của tập lớn hơn gồm hai vật nặng 10. Thiếu tính chất đó, tham lam có thể thua, như 160 so với 220 cho thấy.',
     },
   ],
-  nextTeaser: 'Bài tiếp theo: Luyện tập: bài toán tham lam.',
+  nextTeaser:
+    'Bài tiếp theo là Luyện tập: bài toán tham lam, nơi bạn tự phân biệt quy tắc tham lam đúng và sai.',
 };
