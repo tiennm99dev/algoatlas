@@ -45,7 +45,7 @@ export const MAX_TEXT = 200;
 
 export const huffmanPseudocode = [
   'huffman(symbols):  // kèm tần suất',
-  '  Q = hàng đợi ưu tiên nhỏ nhất, mỗi kí hiệu một lá',
+  '  Q = min-heap, mỗi kí hiệu một lá',
   '  while Q còn nhiều hơn một cây:',
   '    x = extractMin(Q); y = extractMin(Q)  // hai cây nhẹ nhất',
   '    z = node(x, y)  // x trái, y phải, cộng trọng số',

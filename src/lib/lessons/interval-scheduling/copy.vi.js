@@ -160,7 +160,7 @@ export const vi = {
     'Chọn hoạt động: sắp xếp theo thời điểm kết thúc, rồi giữ mọi đoạn bắt đầu bằng hoặc sau thời điểm kết thúc của đoạn vừa giữ. Mỗi đoạn một phép so sánh, nên chi phí là phép sắp xếp O(n log n).',
     'Lập luận hoán đổi (exchange argument): gọi g là đoạn kết thúc sớm nhất. Trong một tập tối ưu bất kì, đổi đoạn đầu tiên của nó lấy g; g kết thúc không muộn hơn, nên không đoạn nào khác bị chồng và tập vẫn giữ nguyên kích thước. Lặp lại lập luận trên phần còn lại sẽ chứng minh cả tập tham lam là tối ưu.',
     'Những quy tắc nghe tự nhiên lại thất bại. Bắt đầu sớm nhất giữ một đoạn dài chắn mất nhiều đoạn ngắn; ngắn nhất trước giữ một đoạn ngắn chồng với hai đoạn tương thích với nhau.',
-    'Phân hoạch các đoạn: quét theo thời điểm bắt đầu và dùng lại phòng trống sớm nhất, lưu trong một heap nhỏ nhất chứa các thời điểm kết thúc. Thuật toán chỉ mở phòng mới khi mọi phòng đều bận, nên số phòng bằng độ sâu, tức số đoạn chồng nhau nhiều nhất tại một thời điểm, và không lịch nào làm tốt hơn được.',
+    'Phân hoạch các đoạn: quét theo thời điểm bắt đầu và dùng lại phòng trống sớm nhất, lưu trong một min-heap (heap nhỏ nhất) chứa các thời điểm kết thúc. Thuật toán chỉ mở phòng mới khi mọi phòng đều bận, nên số phòng bằng độ sâu, tức số đoạn chồng nhau nhiều nhất tại một thời điểm, và không lịch nào làm tốt hơn được.',
     'Nạp “Bẫy bắt đầu sớm nhất”, chạy từng bước với mỗi quy tắc chọn, rồi chuyển sang chia phòng: đoạn dài buộc phải dùng 2 phòng dù 3 đoạn ngắn vừa trong một phòng.',
   ],
   complexityHead: ['Bước', 'Chi phí', 'Vì sao'],
@@ -172,7 +172,7 @@ export const vi = {
     ],
     ['Lượt quét chọn hoạt động', 'O(n)', 'Mỗi đoạn một phép so sánh I.start với lastFinish.'],
     [
-      'Phân hoạch bằng heap nhỏ nhất',
+      'Phân hoạch bằng min-heap',
       'O(n log d)',
       'Mỗi đoạn một thao tác heap trên nhiều nhất d phòng, với d là độ sâu.',
     ],

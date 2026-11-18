@@ -209,8 +209,8 @@ export const vi = {
       ],
       answer: [1, 3, 2, 0],
       hints: [
-        'Bạn bắt đầu từ một lời giải mà bạn biết là tối ưu.',
-        'Phép đổi diễn ra trước khi bạn kiểm tra rằng không có gì tệ đi.',
+        'Em bắt đầu từ một lời giải mà em biết là tối ưu.',
+        'Phép đổi diễn ra trước khi em kiểm tra rằng không có gì tệ đi.',
       ],
       solution:
         'Bắt đầu từ một lời giải tối ưu tuỳ ý, đổi một phần của nó lấy lựa chọn tham lam, kiểm tra kết quả hợp lệ và không tốn hơn, rồi kết luận rằng tồn tại một lời giải tối ưu bắt đầu bằng lựa chọn tham lam.',

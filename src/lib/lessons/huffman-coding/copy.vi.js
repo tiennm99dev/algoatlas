@@ -26,7 +26,7 @@ export const vi = {
   summary:
     'Xem thuật toán Huffman lặp đi lặp lại việc gộp hai cây nhẹ nhất, đọc mã của từng kí hiệu trên cây, và so sánh số bit với mã có độ dài cố định.',
   instruction:
-    'Nhập các cặp kí hiệu:số lần, đếm chữ cái của một văn bản, hoặc nạp một ví dụ, rồi chạy từng bước. Hàng đợi được vẽ từ nhẹ đến nặng; mỗi lần gộp cộng trọng số của nó vào tổng số bit. Chọn một nút để nhảy đến lần gộp tạo ra nó, hoặc một lá để nhảy đến bước đọc mã của lá đó. Đếm “abracadabra” và so sánh số bit với mã có độ dài cố định.',
+    'Nhập các cặp kí hiệu:số lần, đếm chữ cái của một văn bản, hoặc nạp một ví dụ, rồi chạy từng bước. Queue (hàng đợi) được vẽ từ nhẹ đến nặng; mỗi lần gộp cộng trọng số của nó vào tổng số bit. Chọn một nút để nhảy đến lần gộp tạo ra nó, hoặc một lá để nhảy đến bước đọc mã của lá đó. Đếm “abracadabra” và so sánh số bit với mã có độ dài cố định.',
   frequenciesLabel: 'Tần suất (kí hiệu:số lần)',
   textLabel: 'Hoặc đếm chữ cái của',
   presetLabel: 'Ví dụ',
@@ -67,7 +67,7 @@ export const vi = {
     fixed: 'Số bit mã cố định',
     average: 'Số bit mỗi kí hiệu',
   },
-  queueTitle: 'Hàng đợi, nhẹ nhất trước',
+  queueTitle: 'Queue, nhẹ nhất trước',
   queueEmpty: 'rỗng',
   tableTitle: 'Bảng mã',
   tableHead: { symbol: 'Kí hiệu', freq: 'Số lần', code: 'Mã', bits: 'Số bit' },
@@ -80,7 +80,7 @@ export const vi = {
     const leafCount = f.nodes.filter((n) => n.left < 0).length;
     switch (f.kind) {
       case 'start':
-        return `${leafCount} kí hiệu, mỗi kí hiệu là một cây một lá trong hàng đợi, nhẹ nhất trước: ${f.queue.map((id) => tree(f, id)).join(', ')}.`;
+        return `${leafCount} kí hiệu, mỗi kí hiệu là một cây một lá trong queue, nhẹ nhất trước: ${f.queue.map((id) => tree(f, id)).join(', ')}.`;
       case 'pick': {
         const [x, y] = f.picked;
         return `Lấy hai cây nhẹ nhất: ${tree(f, x)} và ${tree(f, y)}.`;
@@ -106,12 +106,12 @@ export const vi = {
     'Một mã phi tiền tố là một cây nhị phân có các kí hiệu ở lá: mã của một kí hiệu là đường đi từ gốc, 0 cho trái và 1 cho phải. Vì không kí hiệu nào nằm trên đường đi của kí hiệu khác, một xâu bit được giải mã từ trái sang phải mà không cần dấu ngăn cách.',
     'Chi phí của một bộ mã là Σ tần suất × độ dài mã. Mỗi lần gộp đẩy mọi kí hiệu dưới nút mới xuống sâu thêm một tầng, nên tổng chi phí cũng bằng tổng trọng số của các nút đã gộp.',
     'Lựa chọn tham lam: trong một cây tối ưu nào đó, hai kí hiệu có tần suất nhỏ nhất là hai lá anh em ở tầng sâu nhất, vì đổi một kí hiệu nằm sâu hơn với một kí hiệu hiếm hơn không bao giờ làm tăng số bit. Gộp chúng rồi giải bài toán nhỏ hơn khi đó là an toàn; đó là lập luận hoán đổi (exchange argument) đứng sau thuật toán Huffman.',
-    'Với một heap nhỏ nhất, n − 1 lần gộp tốn O(n log n). Các tần suất bằng nhau trên số kí hiệu là luỹ thừa của 2 cho một cây cân bằng, không tốt hơn mã cố định; các tần suất lệch nhiều như luỹ thừa của 2 cho các mã dài 1, 2, 3, … bit.',
+    'Với một min-heap (heap nhỏ nhất), n − 1 lần gộp tốn O(n log n). Các tần suất bằng nhau trên số kí hiệu là luỹ thừa của 2 cho một cây cân bằng, không tốt hơn mã cố định; các tần suất lệch nhiều như luỹ thừa của 2 cho các mã dài 1, 2, 3, … bit.',
     'Đếm “abracadabra”: Huffman cần 23 bit, trong khi mã cố định 3 bit cần 33. Sau đó nạp “Bốn tần suất bằng nhau” và xem hai chi phí trùng nhau.',
   ],
   complexityHead: ['Bước', 'Chi phí', 'Vì sao'],
   complexity: [
-    ['Dựng hàng đợi', 'O(n)', 'Vun heap từ n lá.'],
+    ['Dựng queue', 'O(n)', 'Heapify (vun đống) từ n lá.'],
     [
       'Các lần gộp',
       'O(n log n)',
@@ -167,13 +167,13 @@ export const vi = {
         '0 đã là một mã đầy đủ.',
       ],
       solution:
-        '0 là a, rồi 101 là b, rồi 100 là c: abc. Với mã phi tiền tố, bạn không bao giờ phải đoán một mã kết thúc ở đâu.',
+        '0 là a, rồi 101 là b, rồi 100 là c: abc. Với mã phi tiền tố, em không bao giờ phải đoán một mã kết thúc ở đâu.',
     },
     {
       type: 'choice',
       prompt: 'Vì sao thuật toán Huffman gộp hai cây có tần suất nhỏ nhất trước?',
       options: [
-        'Vì chúng dễ tìm nhất trong hàng đợi',
+        'Vì chúng dễ tìm nhất trong queue',
         'Vì có một bộ mã tối ưu nhận chúng làm hai lá anh em ở tầng sâu nhất',
         'Vì cách đó giữ cho cây cân bằng',
         'Vì cách đó làm mọi mã dài bằng nhau',

@@ -74,7 +74,7 @@ describe('Huffman coding lesson', () => {
   it('starts with six leaves in the queue, lightest first', () => {
     render();
     expect(narration()).toContain(
-      '6 kí hiệu, mỗi kí hiệu là một cây một lá trong hàng đợi, nhẹ nhất trước: f (5), e (9), c (12), b (13), d (16), a (45).',
+      '6 kí hiệu, mỗi kí hiệu là một cây một lá trong queue, nhẹ nhất trước: f (5), e (9), c (12), b (13), d (16), a (45).',
     );
     expect(stat('Số bit mã cố định')).toBe('300');
     expect(stat('Số bit Huffman')).toBe('0');

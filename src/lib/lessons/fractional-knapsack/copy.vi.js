@@ -21,7 +21,7 @@ export const vi = {
   level: 'Trung bình',
   title: 'Cái túi phân số và lập lịch có hạn chót',
   intro:
-    'Hai bài toán mà chỉ một lần sắp xếp và một lượt duyệt là cho đáp án tốt nhất. Trong bài toán cái túi phân số, bạn được cắt nhỏ đồ vật, nên ta xếp vào túi các vật có giá trị trên mỗi ki-lô-gam cao nhất trước và chỉ cắt vật cuối cùng. Trong bài toán lập lịch công việc có hạn chót, mỗi việc chiếm một ô thời gian và chỉ được trả công nếu xong đúng hạn, nên ta nhận các việc có lợi nhuận cao nhất trước, mỗi việc xếp muộn nhất có thể.',
+    'Hai bài toán mà chỉ một lần sắp xếp và một lượt duyệt là cho đáp án tốt nhất. Trong bài toán cái túi phân số, em được cắt nhỏ đồ vật, nên ta xếp vào túi các vật có giá trị trên mỗi ki-lô-gam cao nhất trước và chỉ cắt vật cuối cùng. Trong bài toán lập lịch công việc có hạn chót, mỗi việc chiếm một ô thời gian và chỉ được trả công nếu xong đúng hạn, nên ta nhận các việc có lợi nhuận cao nhất trước, mỗi việc xếp muộn nhất có thể.',
   summary:
     'Xếp đầy cái túi theo giá trị trên mỗi đơn vị khối lượng, chỉ lấy một phần của vật cuối, rồi xếp các việc dài một đơn vị theo lợi nhuận vào ô trống muộn nhất trước hạn chót của chúng.',
   instruction:
@@ -178,7 +178,7 @@ export const vi = {
     [
       'Lập lịch công việc, quét các ô',
       'O(n · d)',
-      'Mỗi việc dò nhiều nhất d ô từ hạn chót trở xuống; một rừng tập hợp rời nhau (DSU) trên các ô đưa chi phí về gần O(n).',
+      'Mỗi việc dò nhiều nhất d ô từ hạn chót trở xuống; một rừng DSU (cấu trúc các tập rời nhau) trên các ô đưa chi phí về gần O(n).',
     ],
     [
       'Cái túi 0/1, quy hoạch động',
@@ -252,5 +252,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Bài tiếp theo là Luyện tập: bài toán tham lam, nơi bạn tự phân biệt quy tắc tham lam đúng và sai.',
+    'Bài tiếp theo là Luyện tập: bài toán tham lam, nơi em tự phân biệt quy tắc tham lam đúng và sai.',
 };

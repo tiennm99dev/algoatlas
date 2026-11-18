@@ -38,14 +38,14 @@ export const vi = {
   intro:
     'Một quy tắc tham lam (greedy) rất dễ nghĩ ra và cũng rất dễ sai. Thói quen làm việc nên có là: phát biểu quy tắc, săn phản ví dụ trên các trường hợp ngẫu nhiên nhỏ, rồi mới thử chứng minh nó bằng lập luận hoán đổi (exchange argument) hoặc bằng cách chỉ ra nó luôn dẫn trước. Mỗi thẻ bên dưới có một quy tắc đúng và một quy tắc chỉ nghe có vẻ đúng.',
   summary:
-    'Chọn một câu đố tham lam, chạy từng bước một quy tắc trên đầu vào của bạn, và kiểm tra nó với đáp án vét cạn trên 200 trường hợp ngẫu nhiên để chứng minh hoặc bác bỏ nó.',
+    'Chọn một câu đố tham lam, chạy từng bước một quy tắc trên đầu vào của em, và kiểm tra nó với đáp án vét cạn trên 200 trường hợp ngẫu nhiên để chứng minh hoặc bác bỏ nó.',
   instruction:
     'Chọn một thẻ và một quy tắc, nhập đầu vào hoặc giữ ví dụ, rồi chạy từng bước. Bấm “Kiểm tra trên 200 trường hợp ngẫu nhiên” để so sánh quy tắc với vét cạn, rồi nạp phản ví dụ ngắn nhất tìm được.',
   cardsLabel: 'Câu đố',
   cards: {
     reach: {
       title: 'Trò chơi nhảy',
-      goal: 'a[i] là bước nhảy xa nhất từ ô i. Xuất phát từ ô 0, bạn có tới được ô cuối không?',
+      goal: 'a[i] là bước nhảy xa nhất từ ô i. Xuất phát từ ô 0, em có tới được ô cuối không?',
     },
     jumps: {
       title: 'Ít bước nhảy nhất',
@@ -186,7 +186,7 @@ export const vi = {
   takeaways: [
     'Trước khi chứng minh một quy tắc tham lam, hãy thử bác bỏ nó: các trường hợp ngẫu nhiên nhỏ, đối chiếu với vét cạn, tìm ra hầu hết các quy tắc sai chỉ trong vài giây.',
     'Trò chơi nhảy: các ô tới được luôn tạo thành một tiền tố 0..reach, vì một ô nhảy tới được ô j thì cũng nhảy được mọi bước ngắn hơn. Nên chỉ một lượt quét làm tăng dần reach là trả lời được câu hỏi trong O(n). Luôn nhảy bước xa nhất có thể đáp xuống một ô 0 mà bước ngắn hơn lẽ ra đã vượt qua.',
-    'Ít bước nhảy nhất: các ô tới được sau k bước nhảy cũng tạo thành một đoạn, và đoạn tiếp theo kết thúc ở ô xa nhất mà một ô bất kì trong đó tới được. Chỉ nhảy khi hết tầm chính là duyệt theo chiều rộng (BFS) theo từng tầng, nên nó “luôn dẫn trước” mọi kế hoạch khác và tối ưu trong O(n).',
+    'Ít bước nhảy nhất: các ô tới được sau k bước nhảy cũng tạo thành một đoạn, và đoạn tiếp theo kết thúc ở ô xa nhất mà một ô bất kì trong đó tới được. Chỉ nhảy khi hết tầm chính là BFS (duyệt theo chiều rộng) theo từng tầng, nên nó “luôn dẫn trước” mọi kế hoạch khác và tối ưu trong O(n).',
     'Thuyền: người nặng nhất đằng nào cũng cần một thuyền. Nếu có ai đi chung được với người đó thì người nhẹ nhất đi chung được, và đổi người nhẹ nhất vào chỗ ngồi đó không bao giờ làm hại một cặp khác: đó là lập luận hoán đổi. Ghép hai người nhẹ nhất sẽ phí những người nhẹ mà người nặng cần đến.',
     'Chọn “Thuyền” với “Hai người nhẹ nhất đi chung”, bấm nút kiểm tra, nạp phản ví dụ và chạy từng bước, rồi chuyển sang “Nặng nhất đi với nhẹ nhất” trên cùng đầu vào.',
   ],
@@ -202,7 +202,7 @@ export const vi = {
     [
       'Vét cạn dùng để kiểm tra',
       'O(9n) hoặc hàm mũ',
-      'Duyệt theo chiều rộng qua mọi bước nhảy, hoặc thử mọi cách ghép cặp mọi người.',
+      'BFS qua mọi bước nhảy, hoặc thử mọi cách ghép cặp mọi người.',
     ],
     [
       'Kiểm tra ngẫu nhiên',
