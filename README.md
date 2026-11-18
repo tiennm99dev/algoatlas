@@ -38,9 +38,12 @@ npm run lint      # ESLint
 npm run format:check  # Prettier (npm run format to fix)
 npm run check     # svelte-check with strict JSDoc types, warnings fail
 npm run build     # static output in build/
+npm run size-report  # gzip size of every client JS chunk after a build; fails over 60 KB
 npm run stubs     # unwritten lessons per topic; `-- <topic>` lists one, `--strict` exits 1 on any
 npm run preview   # serve build/
 ```
+
+Size budget: no client JS chunk may pass 60 KB gzip. CI runs `npm run size-report` after the build and fails on a bigger one, so a page-wide import such as the whole lesson registry cannot slip into every page unnoticed.
 
 ## Deploy
 

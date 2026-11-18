@@ -15,7 +15,8 @@
     "test:watch": "vitest",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "stubs": "node scripts/stub-report.js"
+    "stubs": "node scripts/stub-report.js",
+    "size-report": "node scripts/size-report.js"
   },
   "dependencies": {
     "@fontsource/inter": "^5.3.0",
