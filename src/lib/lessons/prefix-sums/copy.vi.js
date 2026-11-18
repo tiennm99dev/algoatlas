@@ -11,11 +11,11 @@ export const vi = {
   slug: 'prefix-sums',
   topic: 'arrays-strings',
   level: 'Trung bình',
-  title: 'Tổng tiền tố và mảng hiệu',
+  title: 'Prefix sum và mảng hiệu',
   intro:
-    'Mảng tổng tiền tố (prefix sum) P lưu các tổng cộng dồn của a: P[i] là tổng của i phần tử đầu tiên. Sau một lượt O(n), tổng của một đoạn bất kì a[l..r] bằng P[r + 1] − P[l], chỉ hai lần tra trong O(1). Làm ngược ý tưởng ấy, ta có mảng hiệu, giúp cộng một giá trị vào cả một đoạn mà chỉ phải sửa hai ô.',
+    'Mảng prefix sum (tổng tiền tố) P lưu các tổng cộng dồn của a: P[i] là tổng của i phần tử đầu tiên. Sau một lượt O(n), tổng của một đoạn bất kì a[l..r] bằng P[r + 1] − P[l], chỉ hai lần tra trong O(1). Làm ngược ý tưởng ấy, ta có mảng hiệu, giúp cộng một giá trị vào cả một đoạn mà chỉ phải sửa hai ô.',
   summary:
-    'Dựng hàng tổng tiền tố của một mảng, chọn một đoạn bất kì để thấy tổng của nó chỉ là một phép trừ giữa hai lần tra, và thực hiện cập nhật đoạn qua mảng hiệu.',
+    'Dựng hàng prefix sum của một mảng, chọn một đoạn bất kì để thấy tổng của nó chỉ là một phép trừ giữa hai lần tra, và thực hiện cập nhật đoạn qua mảng hiệu.',
   instruction:
     'Ở “Tổng đoạn”, nhập các giá trị, rồi bấm vào hai ô của a (hoặc nhập l và r) để chọn đoạn và xem P[r + 1] − P[l]. Lùi lại từng bước để xem P được dựng ra sao. Ở “Cập nhật đoạn”, nhập các lần cập nhật dạng “l r v” và để ý mỗi lần chỉ chạm hai ô của D, trước khi một lượt duy nhất dựng lại mảng.',
   modeLegend: 'Bài toán',
@@ -45,11 +45,11 @@ export const vi = {
   pickFirst: (i) => `Đoạn bắt đầu ở ${i}. Chọn ô nơi đoạn kết thúc.`,
   arrayTitle: 'Mảng a',
   arrayAria: 'Mảng a, chỉ số 0 trước',
-  prefixTitle: 'Tổng tiền tố P (P[i] = a[0] + … + a[i − 1])',
-  prefixAria: 'Tổng tiền tố P, chỉ số 0 trước',
+  prefixTitle: 'Prefix sum P (P[i] = a[0] + … + a[i − 1])',
+  prefixAria: 'Prefix sum P, chỉ số 0 trước',
   diffTitle: 'Mảng hiệu D',
   diffAria: 'Mảng hiệu D, chỉ số 0 trước',
-  outTitle: 'Mảng dựng lại b (tổng tiền tố của D)',
+  outTitle: 'Mảng dựng lại b (prefix sum của D)',
   outAria: 'Mảng dựng lại b, chỉ số 0 trước',
   empty: '·',
   /** @param {number} l @param {number} r */
@@ -126,7 +126,7 @@ export const vi = {
     'P có n + 1 phần tử: P[0] = 0 và P[i + 1] = P[i] + a[i]. Dựng P chỉ cần một lượt O(n).',
     'Tổng của a[l..r] là P[r + 1] − P[l]: mọi thứ đến r, trừ mọi thứ trước l. Mỗi truy vấn là O(1), nên q truy vấn tốn O(n + q) thay vì O(n·q).',
     'Cẩn thận lệch một: P lệch một vị trí so với a. Chính tiền tố rỗng P[0] = 0 giúp các đoạn bắt đầu từ 0 dùng được cùng một công thức.',
-    'Mảng hiệu D[i] = a[i] − a[i − 1] là ý tưởng làm ngược lại: a là tổng tiền tố của D. Cộng v vào a[l..r] chỉ là D[l] += v và D[r + 1] −= v, rồi một lượt dựng lại a.',
+    'Mảng hiệu D[i] = a[i] − a[i − 1] là ý tưởng làm ngược lại: a là prefix sum của D. Cộng v vào a[l..r] chỉ là D[l] += v và D[r + 1] −= v, rồi một lượt dựng lại a.',
     'Thử “Cập nhật đoạn” với 0, 0, 0, 0, 0, 0 và các lần cập nhật 1 3 5, 2 5 2: D chỉ đổi ở ba ô, và mảng dựng lại là 0, 5, 7, 7, 2, 2.',
   ],
   complexityHead: ['Thao tác', 'Chi phí', 'Vì sao'],
@@ -176,12 +176,12 @@ export const vi = {
     {
       type: 'choice',
       prompt:
-        'Bạn phải áp q lần cập nhật đoạn lên một mảng n giá trị, rồi đọc cả mảng một lần. Dùng mảng hiệu thì tốn bao nhiêu?',
+        'Em phải áp q lần cập nhật đoạn lên một mảng n giá trị, rồi đọc cả mảng một lần. Dùng mảng hiệu thì tốn bao nhiêu?',
       options: ['O(n + q)', 'O(n·q)', 'O(q log n)', 'O(n²)'],
       answer: 0,
       hints: ['Mỗi lần cập nhật sửa hai phần tử của D; dựng lại là một lượt.'],
       solution:
-        'q lần cập nhật, mỗi lần O(1), cộng một lượt tổng tiền tố O(n): O(n + q). Sửa trực tiếp mọi phần tử của mọi đoạn có thể tốn O(n·q).',
+        'q lần cập nhật, mỗi lần O(1), cộng một lượt prefix sum O(n): O(n + q). Sửa trực tiếp mọi phần tử của mọi đoạn có thể tốn O(n·q).',
     },
   ],
   nextTeaser:

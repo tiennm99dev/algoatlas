@@ -29,7 +29,7 @@
   const PRESETS = {
     letters: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
     words: ['Tin', 'học', 'thật', 'là', 'vui'],
-    vietnamese: ['Xin', 'chào', 'các', 'bạn'],
+    vietnamese: ['Xin', 'chào', 'thế', 'giới'],
   };
   const presetKeys = /** @type {(keyof typeof m.presets)[]} */ (Object.keys(PRESETS));
 

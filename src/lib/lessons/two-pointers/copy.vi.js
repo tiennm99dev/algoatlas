@@ -85,9 +85,9 @@ export const vi = {
       case 'found':
         return `${f.sum} bằng đích ${f.target}: cặp cần tìm nằm ở chỉ số ${f.left} và ${f.right}.`;
       case 'move-left':
-        return `${f.sum} < ${f.target}: ngay cả bạn ghép lớn nhất còn lại, a[${f.right}], cũng quá nhỏ đối với a[${f.left - 1}], nên ta loại a[${f.left - 1}] và dời lo đến ${f.left}.`;
+        return `${f.sum} < ${f.target}: ngay cả số ghép cặp lớn nhất còn lại, a[${f.right}], cũng quá nhỏ đối với a[${f.left - 1}], nên ta loại a[${f.left - 1}] và dời lo đến ${f.left}.`;
       case 'move-right':
-        return `${f.sum} > ${f.target}: ngay cả bạn ghép nhỏ nhất còn lại, a[${f.left}], cũng quá lớn đối với a[${f.right + 1}], nên ta loại a[${f.right + 1}] và dời hi đến ${f.right}.`;
+        return `${f.sum} > ${f.target}: ngay cả số ghép cặp nhỏ nhất còn lại, a[${f.left}], cũng quá lớn đối với a[${f.right + 1}], nên ta loại a[${f.right + 1}] và dời hi đến ${f.right}.`;
       case 'missing':
         return `lo và hi đã gặp nhau: mọi giá trị đều bị loại, nên không có hai giá trị nào có tổng bằng ${f.target}.`;
       case 'keep-left':
@@ -108,7 +108,7 @@ export const vi = {
   },
   takeaways: [
     'Hai con trỏ hội tụ bắt đầu ở hai đầu và tiến vào giữa. Mỗi bước dời một con trỏ, nên lối đi kết thúc sau nhiều nhất n − 1 bước: thời gian O(n), bộ nhớ thêm O(1).',
-    'Trên mảng đã sắp xếp, nếu a[lo] + a[hi] quá nhỏ thì a[lo] không thể thuộc cặp nào (bạn ghép lớn nhất còn lại của nó là a[hi]), nên lo dời sang phải. Nếu tổng quá lớn, hi dời sang trái vì lí do tương tự.',
+    'Trên mảng đã sắp xếp, nếu a[lo] + a[hi] quá nhỏ thì a[lo] không thể thuộc cặp nào (số ghép cặp lớn nhất còn lại của nó là a[hi]), nên lo dời sang phải. Nếu tổng quá lớn, hi dời sang trái vì lí do tương tự.',
     'Chỉ một quy tắc đó thay cho n(n − 1)/2 lần kiểm tra khi thử mọi cặp. Sắp xếp trước tốn O(n log n), vẫn nhanh hơn O(n²).',
     'Cùng ý tưởng ấy phân hoạch tại chỗ: i bỏ qua các giá trị đã đúng bên trái, j bỏ qua các giá trị đã đúng bên phải, còn một cặp nằm sai phía thì đổi chỗ.',
     'Thử “Tổng một cặp” với một đích không cặp nào đạt được, chẳng hạn 99: hai con trỏ gặp nhau sau đúng n − 1 tổng, trường hợp xấu nhất.',
@@ -157,7 +157,7 @@ export const vi = {
       type: 'choice',
       prompt: 'Trên mảng đã sắp xếp, a[lo] + a[hi] < T. Vì sao dời lo sang phải là an toàn?',
       options: [
-        'a[hi] là bạn ghép lớn nhất còn lại của a[lo], vậy mà vẫn quá nhỏ',
+        'a[hi] là số ghép cặp lớn nhất còn lại của a[lo], vậy mà vẫn quá nhỏ',
         'a[lo] là giá trị nhỏ nhất, nên không bao giờ thuộc cặp nào',
         'Dời hi sang trái sẽ làm tổng lớn hơn',
         'Cặp cần tìm chắc chắn chứa a[hi]',

@@ -110,7 +110,7 @@ export const vi = {
     'Cửa sổ là một đoạn a[l..r) gồm các phần tử liên tiếp. Giữ một giá trị tổng hợp chạy (ở đây là tổng) cho nó, và cập nhật từ các phần tử vào và ra thay vì tính lại.',
     'Cửa sổ cố định độ dài k: một lần khởi tạo O(k), rồi mỗi lần trượt cộng a[r] và trừ a[r − k]. Cả n − k + 1 cửa sổ tốn k + 2(n − k) lần cập nhật, O(n), thay vì (n − k + 1) × k.',
     'Cửa sổ thay đổi: dời r để nới rộng cửa sổ cho đến khi nó đạt yêu cầu, rồi dời l để thu hẹp khi nó vẫn còn đạt. Cả hai đầu chỉ đi sang phải, nên cả lượt quét là O(n).',
-    'Chỉ thu hẹp được khi nới rộng không bao giờ làm kết quả tệ đi: với các giá trị ≥ 0, cửa sổ dài hơn không bao giờ có tổng nhỏ hơn. Khi có giá trị âm, hãy dùng tổng tiền tố (prefix sum).',
+    'Chỉ thu hẹp được khi nới rộng không bao giờ làm kết quả tệ đi: với các giá trị ≥ 0, cửa sổ dài hơn không bao giờ có tổng nhỏ hơn. Khi có giá trị âm, hãy dùng prefix sum (tổng tiền tố).',
     'Thử cửa sổ thay đổi trên 2, 3, 1, 2, 4, 3 với S = 7: l dời 5 lần, và đáp án 4, 3 chỉ hiện ra ở mấy bước cuối.',
   ],
   complexityHead: ['Bài toán', 'Chi phí', 'Vì sao'],
@@ -180,5 +180,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Khi mảng có giá trị âm, cửa sổ không còn thu hẹp an toàn. Bài sau, Tổng tiền tố và mảng hiệu, trả lời mọi truy vấn đoạn trong O(1).',
+    'Khi mảng có giá trị âm, cửa sổ không còn thu hẹp an toàn. Bài sau, Prefix sum và mảng hiệu, trả lời mọi truy vấn đoạn trong O(1).',
 };

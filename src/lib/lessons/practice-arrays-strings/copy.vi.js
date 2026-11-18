@@ -16,7 +16,7 @@ const at = (f, name) => f.pointers.find((p) => p.name === name)?.index ?? -1;
 const techniqueNames = {
   pointers: 'Hai con trỏ',
   window: 'Cửa sổ trượt',
-  prefix: 'Tổng tiền tố',
+  prefix: 'Prefix sum',
   brute: 'Vét cạn',
 };
 
@@ -27,7 +27,7 @@ const why = {
       'Mảng đã sắp xếp, nên tổng quá nhỏ chỉ có thể tăng bằng cách dời lo sang phải, còn tổng quá lớn thì dời hi sang trái. Mỗi lần kiểm tra loại một giá trị: nhiều nhất n − 1 lần kiểm tra.',
     window:
       'Hai giá trị của một cặp không nhất thiết đứng cạnh nhau, nên không có đoạn giá trị liên tiếp nào để trượt.',
-    prefix: 'Tổng tiền tố cộng các đoạn giá trị liên tiếp, còn một cặp chỉ là hai giá trị đơn lẻ.',
+    prefix: 'Prefix sum cộng các đoạn giá trị liên tiếp, còn một cặp chỉ là hai giá trị đơn lẻ.',
     brute: 'Thử mọi cặp i < j luôn tìm ra đáp án, nhưng cần đến n(n − 1)/2 lần kiểm tra.',
   },
   palindrome: {
@@ -53,7 +53,7 @@ const why = {
     window:
       'Với các giá trị ≥ 0, đoạn dài hơn không bao giờ có tổng nhỏ hơn, nên nới rộng bên phải cho đến khi tổng đạt S, rồi thu hẹp từ bên trái. Cả hai đầu chỉ đi sang phải: O(n).',
     prefix:
-      'P cho tổng của một đoạn bất kì chỉ bằng một phép trừ, nhưng bạn vẫn phải thử O(n²) đoạn, nên không nhanh hơn vét cạn mà còn phải dựng P trước.',
+      'P cho tổng của một đoạn bất kì chỉ bằng một phép trừ, nhưng em vẫn phải thử O(n²) đoạn, nên không nhanh hơn vét cạn mà còn phải dựng P trước.',
     brute: 'Với mỗi điểm đầu, cộng dần các giá trị cho đến khi tổng đạt S: đúng, nhưng O(n²).',
   },
   'range-sums': {
@@ -72,9 +72,9 @@ export const vi = {
   level: 'Trung bình',
   title: 'Luyện tập: bài toán về mảng và xâu',
   intro:
-    'Phần lớn bài toán về mảng và xâu trong chủ đề này được giải bằng một trong ba mẹo: hai con trỏ (two pointers) tiến lại gần nhau, cửa sổ trượt (sliding window) đi qua một đoạn giá trị liên tiếp, hoặc tổng tiền tố (prefix sum) trả lời tổng một đoạn bất kì bằng một phép trừ. Kĩ năng cần rèn là nhận ra bài toán đòi hỏi mẹo nào. Ở đây bạn chọn kĩ thuật, chạy nó trên đầu vào của bài, rồi so sánh chi phí với các kĩ thuật khác.',
+    'Phần lớn bài toán về mảng và xâu trong chủ đề này được giải bằng một trong ba mẹo: hai con trỏ (two pointers) tiến lại gần nhau, cửa sổ trượt (sliding window) đi qua một đoạn giá trị liên tiếp, hoặc prefix sum (tổng tiền tố) trả lời tổng một đoạn bất kì bằng một phép trừ. Kĩ năng cần rèn là nhận ra bài toán đòi hỏi mẹo nào. Ở đây em chọn kĩ thuật, chạy nó trên đầu vào của bài, rồi so sánh chi phí với các kĩ thuật khác.',
   summary:
-    'Chọn hai con trỏ, cửa sổ trượt, tổng tiền tố hoặc vét cạn cho năm bài toán về mảng và xâu, xem lựa chọn của bạn chạy trên đầu vào, và so sánh số bước mỗi kĩ thuật cần.',
+    'Chọn hai con trỏ, cửa sổ trượt, prefix sum hoặc vét cạn cho năm bài toán về mảng và xâu, xem lựa chọn của em chạy trên đầu vào, và so sánh số bước mỗi kĩ thuật cần.',
   instruction:
     'Chọn một bài toán, đọc đề, rồi chọn một kĩ thuật. Nếu nó phù hợp, chạy từng bước và theo dõi thẻ “Số bước”; nếu không, đọc lí do. Bảng bên phải cho biết số bước của mọi kĩ thuật trên cùng đầu vào. Sửa đầu vào để thấy chi phí thay đổi.',
   problemLabel: 'Bài toán',
@@ -150,11 +150,11 @@ export const vi = {
   arrayTitle: 'Đầu vào',
   arrayAria: 'Đầu vào, chỉ số 0 trước',
   auxTitles: {
-    prefix: 'Tổng tiền tố P, P[i] = a[0] + … + a[i − 1]',
+    prefix: 'Prefix sum P, P[i] = a[0] + … + a[i − 1]',
     reversed: 'Bản chép ngược r',
   },
   auxAria: {
-    prefix: 'Tổng tiền tố P, chỉ số 0 trước',
+    prefix: 'Prefix sum P, chỉ số 0 trước',
     reversed: 'Bản chép ngược r, chỉ số 0 trước',
   },
   spare: '·',
@@ -256,8 +256,8 @@ export const vi = {
         if (f.cmp === 0) return `${sum} = T. Đã tìm thấy cặp.`;
         if (f.technique === 'brute') return `${sum} ≠ ${T}: thử cặp tiếp theo.`;
         return f.cmp === -1
-          ? `${sum} < ${T}: quá nhỏ. a[hi] là bạn ghép lớn nhất còn lại của a[lo], nên dời lo sang phải.`
-          : `${sum} > ${T}: quá lớn. a[lo] là bạn ghép nhỏ nhất còn lại của a[hi], nên dời hi sang trái.`;
+          ? `${sum} < ${T}: quá nhỏ. a[hi] là số ghép cặp lớn nhất còn lại của a[lo], nên dời lo sang phải.`
+          : `${sum} > ${T}: quá lớn. a[lo] là số ghép cặp nhỏ nhất còn lại của a[hi], nên dời hi sang trái.`;
       }
       case 'compare': {
         const [i, j] = f.reads.length === 2 ? f.reads : [f.reads[0], f.reads[0]];
@@ -333,8 +333,8 @@ export const vi = {
     'Hãy hỏi đáp án được tạo nên từ gì: hai vị trí đơn lẻ (hai con trỏ), một đoạn giá trị liên tiếp (cửa sổ trượt), hay tổng của nhiều đoạn (tổng tiền tố).',
     'Hai con trỏ cần một lí do để bỏ đi một đầu ở mỗi bước: thứ tự đã sắp xếp với bài tổng một cặp, tính đối xứng với xâu đối xứng. Với bài tổng một cặp, điều đó biến n(n − 1)/2 lần kiểm tra thành nhiều nhất n − 1.',
     'Cửa sổ trượt cần một tổng chạy cập nhật được trong O(1). Cửa sổ thay đổi còn cần tổng không bao giờ giảm khi cửa sổ nới rộng, điều mà các giá trị ≥ 0 bảo đảm.',
-    'Tổng tiền tố trả O(n) một lần rồi trả lời mọi đoạn trong O(1). Cách này toả sáng khi có nhiều truy vấn, nhưng không làm nhanh hơn một lần tìm kiếm vẫn phải thử O(n²) đoạn.',
-    'Thử đầu vào mẫu của bài đoạn ngắn nhất với cả ba kĩ thuật dùng được: 11 bước cho cửa sổ, 17 cho vét cạn và 23 cho tổng tiền tố. Rồi chọn “Con trỏ” để đọc lí do nó không phù hợp.',
+    'Prefix sum trả O(n) một lần rồi trả lời mọi đoạn trong O(1). Cách này toả sáng khi có nhiều truy vấn, nhưng không làm nhanh hơn một lần tìm kiếm vẫn phải thử O(n²) đoạn.',
+    'Thử đầu vào mẫu của bài đoạn ngắn nhất với cả ba kĩ thuật dùng được: 11 bước cho cửa sổ, 17 cho vét cạn và 23 cho prefix sum. Rồi chọn “Con trỏ” để đọc lí do nó không phù hợp.',
   ],
   complexityHead: ['Bài toán và kĩ thuật tốt nhất', 'Chi phí', 'Vì sao'],
   complexity: [
@@ -351,7 +351,7 @@ export const vi = {
     [
       'Tổng lớn nhất của k số liền nhau: cửa sổ trượt',
       'O(n)',
-      'Hai lần cập nhật mỗi lần trượt; tổng tiền tố cũng O(n) nhưng cần thêm n + 1 ô.',
+      'Hai lần cập nhật mỗi lần trượt; prefix sum cũng O(n) nhưng cần thêm n + 1 ô.',
     ],
     [
       'Đoạn ngắn nhất có tổng ≥ S: cửa sổ trượt',
@@ -359,7 +359,7 @@ export const vi = {
       'l và r chỉ đi sang phải; thử mọi điểm đầu là O(n²).',
     ],
     [
-      'q truy vấn tổng đoạn: tổng tiền tố',
+      'q truy vấn tổng đoạn: prefix sum',
       'O(n + q)',
       'Dựng P một lần, rồi một phép trừ cho mỗi truy vấn; cộng từng đoạn là O(q·n).',
     ],
@@ -374,10 +374,10 @@ export const vi = {
       unit: 'tổng',
       hints: [
         'Chọn “Vét cạn” rồi chạy đến bước cuối, hoặc theo dõi thẻ “Số bước”.',
-        'Nó thử cả 6 bạn ghép của a[0] trước, rồi a[1] với a[2], a[3], a[4] và a[5].',
+        'Nó thử cả 6 số ghép cặp của a[0] trước, rồi a[1] với a[2], a[3], a[4] và a[5].',
       ],
       solution:
-        'a[0] = 1 thất bại với cả 6 bạn ghép. Sau đó 3 + 4, 3 + 6 và 3 + 8 thất bại, còn 3 + 11 = 14 là tổng thứ 10. Hai con trỏ tìm ra cùng cặp ấy sau 3 tổng: 1 + 15, 1 + 11 và 3 + 11.',
+        'a[0] = 1 thất bại với cả 6 số ghép cặp. Sau đó 3 + 4, 3 + 6 và 3 + 8 thất bại, còn 3 + 11 = 14 là tổng thứ 10. Hai con trỏ tìm ra cùng cặp ấy sau 3 tổng: 1 + 15, 1 + 11 và 3 + 11.',
     },
     {
       type: 'number',
@@ -400,7 +400,7 @@ export const vi = {
     {
       type: 'number',
       prompt:
-        'Đoạn ngắn nhất có tổng ≥ 7 trên đầu vào mẫu 2, 3, 1, 2, 4, 3. Tổng tiền tố tốn bao nhiêu bước, tính cả việc dựng P?',
+        'Đoạn ngắn nhất có tổng ≥ 7 trên đầu vào mẫu 2, 3, 1, 2, 4, 3. Prefix sum tốn bao nhiêu bước, tính cả việc dựng P?',
       answer: 23,
       unit: 'bước',
       hints: [
@@ -421,21 +421,21 @@ export const vi = {
     {
       type: 'multi',
       prompt: 'Những kĩ thuật nào giải được bài “tổng lớn nhất của k số liền nhau”?',
-      options: ['Hai con trỏ', 'Cửa sổ trượt', 'Tổng tiền tố', 'Vét cạn'],
+      options: ['Hai con trỏ', 'Cửa sổ trượt', 'Prefix sum', 'Vét cạn'],
       answers: [1, 2, 3],
       hints: ['Thử từng kĩ thuật trên bài toán đó và đọc nhận xét của nó.'],
       solution:
-        'Cửa sổ trượt phù hợp nhất, tổng tiền tố cũng dùng được trong O(n) với một mảng phụ, và vét cạn dùng được trong O(n·k). Hai con trỏ hội tụ không giữ k giá trị đi liền với nhau.',
+        'Cửa sổ trượt phù hợp nhất, prefix sum cũng dùng được trong O(n) với một mảng phụ, và vét cạn dùng được trong O(n·k). Hai con trỏ hội tụ không giữ k giá trị đi liền với nhau.',
     },
     {
       type: 'choice',
       prompt:
         'Một ứng dụng trả lời 100 000 truy vấn tổng đoạn trên một mảng 1 000 000 giá trị không bao giờ thay đổi. Kĩ thuật nào phù hợp nhất?',
-      options: ['Hai con trỏ', 'Cửa sổ trượt', 'Tổng tiền tố', 'Vét cạn'],
+      options: ['Hai con trỏ', 'Cửa sổ trượt', 'Prefix sum', 'Vét cạn'],
       answer: 2,
       hints: ['So sánh O(n + q) với O(q·n) ở các kích thước này.'],
       solution:
-        'Tổng tiền tố tốn khoảng 1 000 000 bước để dựng rồi một phép trừ cho mỗi truy vấn: khoảng 1 100 000 bước. Cộng từng đoạn có thể tốn đến 100 000 × 1 000 000 bước.',
+        'Prefix sum tốn khoảng 1 000 000 bước để dựng rồi một phép trừ cho mỗi truy vấn: khoảng 1 100 000 bước. Cộng từng đoạn có thể tốn đến 100 000 × 1 000 000 bước.',
     },
     {
       type: 'choice',
@@ -445,14 +445,14 @@ export const vi = {
         'Khi có giá trị âm, một đoạn dài hơn có thể có tổng nhỏ hơn, nên thu hẹp từ bên trái có thể bỏ sót đáp án',
         'Số âm không cộng được trong O(1)',
         'Cửa sổ phải giữ độ dài cố định k',
-        'Tổng tiền tố sẽ nhanh hơn khi có giá trị âm',
+        'Prefix sum sẽ nhanh hơn khi có giá trị âm',
       ],
       answer: 0,
       hints: ['Khi các giá trị có thể âm, cộng thêm một giá trị thì tổng thay đổi thế nào?'],
       solution:
-        'Với các giá trị ≥ 0, cộng thêm một giá trị không bao giờ làm tổng giảm và bỏ đi một giá trị không bao giờ làm tổng tăng, nên nới rộng đến khi tổng đạt S rồi thu hẹp không bao giờ bỏ sót đáp án ngắn hơn. Một giá trị âm phá vỡ điều đó: bỏ nó đi lại làm tổng tăng, và một đoạn dài hơn có thể có tổng nhỏ hơn. Khi ấy cần cách khác, chẳng hạn tổng tiền tố kết hợp hàng đợi đơn điệu (monotonic queue).',
+        'Với các giá trị ≥ 0, cộng thêm một giá trị không bao giờ làm tổng giảm và bỏ đi một giá trị không bao giờ làm tổng tăng, nên nới rộng đến khi tổng đạt S rồi thu hẹp không bao giờ bỏ sót đáp án ngắn hơn. Một giá trị âm phá vỡ điều đó: bỏ nó đi lại làm tổng tăng, và một đoạn dài hơn có thể có tổng nhỏ hơn. Khi ấy cần cách khác, chẳng hạn prefix sum kết hợp queue đơn điệu (hàng đợi đơn điệu).',
     },
   ],
   nextTeaser:
-    'Chủ đề tiếp theo là sắp xếp. Bài sau, Sắp xếp nổi bọt và sắp xếp chèn, mở đầu bằng hai cách sắp xếp đơn giản nhất.',
+    'Chủ đề tiếp theo là sắp xếp. Bài sau, Bubble sort và insertion sort, mở đầu bằng hai cách sắp xếp đơn giản nhất.',
 };

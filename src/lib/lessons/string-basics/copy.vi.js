@@ -154,7 +154,7 @@ export const vi = {
     {
       type: 'number',
       prompt:
-        'Bạn nối sáu mảnh “ab”, “cd”, “ef”, “gh”, “ij”, “kl” bằng s = s + p. Tổng cộng có bao nhiêu kí tự cũ được sao chép?',
+        'Em nối sáu mảnh “ab”, “cd”, “ef”, “gh”, “ij”, “kl” bằng s = s + p. Tổng cộng có bao nhiêu kí tự cũ được sao chép?',
       answer: 30,
       unit: 'lần sao chép',
       hints: [
@@ -212,5 +212,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Đến lúc dùng hết các kĩ thuật của chủ đề. Bài sau, Luyện tập: bài toán về mảng và xâu, để bạn chọn kĩ thuật cho từng bài.',
+    'Đến lúc dùng hết các kĩ thuật của chủ đề. Bài sau, Luyện tập: bài toán về mảng và xâu, để em chọn kĩ thuật cho từng bài.',
 };

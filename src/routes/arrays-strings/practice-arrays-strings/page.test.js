@@ -109,7 +109,7 @@ describe('array and string practice lesson', () => {
     );
     click(button('Bước tiếp'));
     expect(narration()).toBe(
-      'a[0] + a[6] = 1 + 15 = 16 > 14: quá lớn. a[lo] là bạn ghép nhỏ nhất còn lại của a[hi], nên dời hi sang trái.',
+      'a[0] + a[6] = 1 + 15 = 16 > 14: quá lớn. a[lo] là số ghép cặp nhỏ nhất còn lại của a[hi], nên dời hi sang trái.',
     );
     expect(text()).toContain('Chỉ số 6: 15, đang đọc');
     click(button('Đến bước cuối'));
@@ -119,7 +119,7 @@ describe('array and string practice lesson', () => {
     expect(compareSteps()).toEqual({
       'Hai con trỏ': '3',
       'Cửa sổ trượt': m.notApplicable,
-      'Tổng tiền tố': m.notApplicable,
+      'Prefix sum': m.notApplicable,
       'Vét cạn': '10',
     });
   });
