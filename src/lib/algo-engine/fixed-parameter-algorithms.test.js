@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { indexPairs } from './plain-edges.js';
 import { en as m } from '$lib/lessons/fixed-parameter-algorithms/copy.en.js';
 import {
   FPT_PRESETS,
@@ -6,7 +7,6 @@ import {
   MAX_NODES,
   fptPseudocode,
   fptTrace,
-  indexEdges,
   subsetsUpTo,
 } from './fixed-parameter-algorithms.js';
 
@@ -61,7 +61,7 @@ describe('bounded search tree for vertex cover', () => {
       const n = 1 + Math.floor(rand() * MAX_NODES);
       const edges = randomEdges(n, rand(), rand);
       const ids = [...Array(n).keys()];
-      const { pairs } = indexEdges(ids, edges);
+      const { pairs } = indexPairs(ids, edges);
       const opt = minCover(n, pairs);
       const k = Math.floor(rand() * (MAX_K + 1));
       const want = opt <= k ? 'yes' : 'no';

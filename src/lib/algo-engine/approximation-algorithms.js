@@ -13,16 +13,14 @@
  * repeated pair counts once, keeping its first place in the edge order.
  */
 
+import { indexPairs } from './plain-edges.js';
+
 /** Largest graph the lesson draws, small enough for a brute-force optimum. */
 export const MAX_NODES = 10;
 
 /** @typedef {'matching'|'greedy'} CoverAlgorithm */
 
-/**
- * @typedef {object} PlainEdge
- * @property {number} from  Vertex id.
- * @property {number} to    Vertex id.
- */
+/** @typedef {import('./plain-edges.js').PlainEdge} PlainEdge */
 
 /**
  * @typedef {object} CoverFrame
@@ -61,29 +59,6 @@ export const greedyPseudocode = [
 ];
 
 /**
- * @param {number[]} ids
- * @param {PlainEdge[]} edges
- * @returns {{n: number, pairs: [number, number][]}}
- */
-export function indexEdges(ids, edges) {
-  const sorted = ids.slice().sort((a, b) => a - b);
-  const index = new Map(sorted.map((id, i) => [id, i]));
-  /** @type {[number, number][]} */
-  const pairs = [];
-  const seen = new Set();
-  for (const e of edges) {
-    const a = index.get(e.from);
-    const b = index.get(e.to);
-    if (a === undefined || b === undefined || a === b) continue;
-    const key = Math.min(a, b) * 64 + Math.max(a, b);
-    if (seen.has(key)) continue;
-    seen.add(key);
-    pairs.push([a, b]);
-  }
-  return { n: sorted.length, pairs };
-}
-
-/**
  * One smallest vertex cover, by trying every subset; ties go to the smallest bit mask.
  * @param {number} n
  * @param {[number, number][]} pairs
@@ -118,7 +93,7 @@ export function harmonic(d) {
  * @returns {CoverFrame[]}
  */
 export function coverTrace({ ids, edges }, algorithm) {
-  const { n, pairs } = indexEdges(ids, edges);
+  const { n, pairs } = indexPairs(ids, edges);
   const optimum = optimumCover(n, pairs);
   const covered = pairs.map(() => false);
   const inCover = Array.from({ length: n }, () => false);

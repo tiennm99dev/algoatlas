@@ -18,14 +18,12 @@
  * the first cover it finds.
  */
 
+import { indexPairs } from './plain-edges.js';
+
 export const MAX_NODES = 10;
 export const MAX_K = 5;
 
-/**
- * @typedef {object} PlainEdge
- * @property {number} from  Vertex id.
- * @property {number} to    Vertex id.
- */
+/** @typedef {import('./plain-edges.js').PlainEdge} PlainEdge */
 
 /** @typedef {'active'|'fail'|'yes'|'done'} SearchStatus */
 
@@ -70,29 +68,6 @@ export const fptPseudocode = [
   '      or search(G − v, k − 1)',
 ];
 
-/**
- * @param {number[]} ids
- * @param {PlainEdge[]} edges
- * @returns {{n: number, pairs: [number, number][]}}
- */
-export function indexEdges(ids, edges) {
-  const sorted = ids.slice().sort((a, b) => a - b);
-  const index = new Map(sorted.map((id, i) => [id, i]));
-  /** @type {[number, number][]} */
-  const pairs = [];
-  const seen = new Set();
-  for (const e of edges) {
-    const a = index.get(e.from);
-    const b = index.get(e.to);
-    if (a === undefined || b === undefined || a === b) continue;
-    const key = Math.min(a, b) * 64 + Math.max(a, b);
-    if (seen.has(key)) continue;
-    seen.add(key);
-    pairs.push([a, b]);
-  }
-  return { n: sorted.length, pairs };
-}
-
 /** How many sets of at most k of n vertices brute force would try. @param {number} n @param {number} k */
 export function subsetsUpTo(n, k) {
   let total = 0;
@@ -110,7 +85,7 @@ export function subsetsUpTo(n, k) {
  * @returns {FptFrame[]}
  */
 export function fptTrace({ ids, edges, k, kernel }) {
-  const { n, pairs } = indexEdges(ids, edges);
+  const { n, pairs } = indexPairs(ids, edges);
   /** @type {number[]} */
   const forced = [];
   /** @type {number[]} */

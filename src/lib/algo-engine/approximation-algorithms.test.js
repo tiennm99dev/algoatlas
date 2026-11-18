@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { indexPairs } from './plain-edges.js';
 import { en as m } from '$lib/lessons/approximation-algorithms/copy.en.js';
 import {
   COVER_PRESETS,
@@ -6,7 +7,6 @@ import {
   coverTrace,
   greedyPseudocode,
   harmonic,
-  indexEdges,
   matchingPseudocode,
   optimumCover,
 } from './approximation-algorithms.js';
@@ -58,7 +58,7 @@ describe('vertex cover approximations', () => {
     for (let t = 0; t < 150; t++) {
       const n = 1 + Math.floor(rand() * MAX_NODES);
       const g = { ids: [...Array(n).keys()], edges: randomEdges(n, rand(), rand) };
-      const { pairs } = indexEdges(g.ids, g.edges);
+      const { pairs } = indexPairs(g.ids, g.edges);
       const opt = minCover(pairs);
       const match = last(g, 'matching');
       const greedy = last(g, 'greedy');
@@ -119,7 +119,7 @@ describe('vertex cover approximations', () => {
     expect(empty.cover).toEqual([]);
     expect(empty.optimum).toEqual([]);
     expect(last({ ids: [4], edges: [{ from: 4, to: 4 }] }, 'matching').cover).toEqual([]);
-    const { pairs } = indexEdges(
+    const { pairs } = indexPairs(
       [9, 2],
       [
         { from: 9, to: 2 },

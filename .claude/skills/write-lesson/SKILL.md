@@ -218,7 +218,8 @@ the editable parent-list model (`RootedTree`, `MAX_NODES`, `isRootedTree`, `chil
 its card, so a wide tree never shrinks its labels.
 Edge-list shortest-path engines share `src/lib/algo-engine/weighted-edges.js`: `indexEdges(ids,
 edges)` numbers the vertices and lists the edges by index, and `cycleFrom(parent, start, n)`
-reads a negative cycle out of the parent links. Graph engines build adjacency with
+reads a negative cycle out of the parent links. Unweighted vertex-cover style engines take
+`indexPairs(ids, edges)` (`{ n, pairs }`, no loops or repeats) from `plain-edges.js`. Graph engines build adjacency with
 `src/lib/algo-engine/graph-adjacency.js`: `arcLists(ids, edges, directed)` gives
 `{ n, out, inn }`, each list of `{ to, edge }` sorted by the other end, and
 `neighbourLists(lists)` keeps only the ends. Strongly connected components go through
