@@ -134,7 +134,7 @@ export const vi = {
       'O(log min(a, b))',
       'Vẫn những phép chia ấy, mỗi lần chỉ thêm một lượng việc cố định để tính s và t.',
     ],
-    ['Bộ nhớ', 'O(1)', 'Chỉ cần giữ hai hàng. Trang này giữ hết các hàng để bạn đọc lại.'],
+    ['Bộ nhớ', 'O(1)', 'Chỉ cần giữ hai hàng. Trang này giữ hết các hàng để em đọc lại.'],
   ],
   practiceTitle: 'Tự kiểm tra',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */

@@ -53,8 +53,6 @@ export const pendingTopics = new Set([
 
   'range-queries',
 
-  'number-theory',
-
   'geometry',
 
   'flows',

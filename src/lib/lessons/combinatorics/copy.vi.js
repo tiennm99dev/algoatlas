@@ -244,7 +244,7 @@ export const vi = {
     ],
     [
       'Liệt kê dãy ngoặc cân bằng',
-      'O(n·Cₙ) thời gian, O(n) ngăn xếp',
+      'O(n·Cₙ) thời gian, O(n) call stack (ngăn xếp lời gọi)',
       'Mỗi dãy trong Cₙ dãy in ra gồm 2n kí tự, và quy tắc không bao giờ dẫn vào ngõ cụt.',
     ],
     [
@@ -310,5 +310,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Bài tiếp theo, mật mã khoá công khai và RSA, ghép ƯCLN, nghịch đảo và luỹ thừa nhanh thành một ổ khoá ai cũng khoá được nhưng chỉ bạn mở được.',
+    'Bài tiếp theo, mật mã khoá công khai và RSA, ghép ƯCLN, nghịch đảo và luỹ thừa nhanh thành một ổ khoá ai cũng khoá được nhưng chỉ em mở được.',
 };

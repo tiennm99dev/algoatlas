@@ -164,7 +164,7 @@ export const vi = {
       'O(k log n)',
       'Mỗi cơ số một lần luỹ thừa nhanh, thêm tối đa s lần bình phương. Với cơ số ngẫu nhiên, xác suất sai không quá 4⁻ᵏ.',
     ],
-    ['Bộ nhớ', 'O(1)', 'Chỉ cần x và các bộ đếm. Trang này giữ lại các hàng để bạn đọc.'],
+    ['Bộ nhớ', 'O(1)', 'Chỉ cần x và các bộ đếm. Trang này giữ lại các hàng để em đọc.'],
   ],
   practiceTitle: 'Tự kiểm tra',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */

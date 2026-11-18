@@ -103,7 +103,7 @@ export const vi = {
       'Mỗi vòng e giảm một nửa, nên vòng lặp chạy một lần cho mỗi bit: một phép bình phương, thêm một phép nhân nếu bit bằng 1.',
     ],
     ['Độ lớn các số', 'nhỏ hơn m²', 'Lấy dư sau mỗi phép nhân giữ cả hai thừa số nhỏ hơn m.'],
-    ['Bộ nhớ', 'O(1)', 'Chỉ cần result, x và e. Trang này giữ lại các hàng để bạn đọc.'],
+    ['Bộ nhớ', 'O(1)', 'Chỉ cần result, x và e. Trang này giữ lại các hàng để em đọc.'],
   ],
   practiceTitle: 'Tự kiểm tra',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */

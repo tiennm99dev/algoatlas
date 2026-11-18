@@ -11,7 +11,7 @@ export const vi = {
   level: 'Trung bình',
   title: 'Mật mã khoá công khai và RSA',
   intro:
-    'Trong mật mã khoá công khai, ai cũng có thể khoá một thông điệp bằng chiếc khoá bạn công bố, nhưng chỉ khoá bí mật của bạn mới mở được. RSA dựng ổ khoá ấy từ hai sự thật: tính luỹ thừa theo modulo n thì nhanh, còn tách n = p·q ra thừa số thì khó. Bài này chạy toàn bộ cơ chế trên các số nguyên tố nhỏ, rồi để kẻ tấn công phá khoá, cho thấy kích thước khoá thật bảo vệ ta trước điều gì.',
+    'Trong mật mã khoá công khai, ai cũng có thể khoá một thông điệp bằng chiếc khoá em công bố, nhưng chỉ khoá bí mật của em mới mở được. RSA dựng ổ khoá ấy từ hai sự thật: tính luỹ thừa theo modulo n thì nhanh, còn tách n = p·q ra thừa số thì khó. Bài này chạy toàn bộ cơ chế trên các số nguyên tố nhỏ, rồi để kẻ tấn công phá khoá, cho thấy kích thước khoá thật bảo vệ ta trước điều gì.',
   summary:
     'Tạo một khoá RSA đồ chơi từ hai số nguyên tố nhỏ, mã hoá và giải mã một số bằng luỹ thừa modulo, rồi đóng vai kẻ tấn công phân tích n để thấy vì sao khoá thật phải rất lớn.',
   instruction:
@@ -205,7 +205,7 @@ export const vi = {
       type: 'number',
       prompt: 'Dùng cùng khoá đó, n = 33 và e = 3, cho thông điệp M = 4. Bản mã c là bao nhiêu?',
       answer: 31,
-      hints: ['Tính 4³ rồi lấy dư cho 33. Bạn có thể nhập M = 4 để kiểm tra.'],
+      hints: ['Tính 4³ rồi lấy dư cho 33. Em có thể nhập M = 4 để kiểm tra.'],
       solution: '4³ = 64 = 1·33 + 31, nên c = 31. Giải mã 31⁷ mod 33 lại được 4.',
     },
     {
@@ -263,5 +263,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Bài tiếp theo, luyện tập: bài toán lí thuyết số, cho bạn tự tính từng tổng ước và từng phép đếm theo số dư.',
+    'Bài tiếp theo, luyện tập: bài toán lí thuyết số, cho em tự tính từng tổng ước và từng phép đếm theo số dư.',
 };

@@ -11,11 +11,11 @@ export const vi = {
   level: 'Trung bình',
   title: 'Luyện tập: bài toán lí thuyết số',
   intro:
-    'Nhiều bài thi lập trình quy về việc đếm theo số dư hoặc tính tổng trên các ước. Sân tập này chạy bốn kĩ thuật kinh điển từng bước một và kiểm tra phần làm của bạn: tự tính tổng tạm thời tiếp theo, và nút Kiểm tra chỉ cho đi tiếp khi bạn tính đúng. Máy tính bên cạnh lo phần số học đồng dư trên đường đi.',
+    'Nhiều bài thi lập trình quy về việc đếm theo số dư hoặc tính tổng trên các ước. Sân tập này chạy bốn kĩ thuật kinh điển từng bước một và kiểm tra phần làm của em: tự tính tổng tạm thời tiếp theo, và nút Kiểm tra chỉ cho đi tiếp khi em tính đúng. Máy tính bên cạnh lo phần số học đồng dư trên đường đi.',
   summary:
-    'Luyện tính tổng các ước và đếm theo số dư trong một sân tập từng bước, nơi mỗi tổng tạm thời bạn tính đều được kiểm tra, kèm một máy tính đồng dư.',
+    'Luyện tính tổng các ước và đếm theo số dư trong một sân tập từng bước, nơi mỗi tổng tạm thời em tính đều được kiểm tra, kèm một máy tính đồng dư.',
   instruction:
-    'Chọn một bài toán và nhập đầu vào của riêng bạn. Ở mỗi bước, tính tổng tạm thời tiếp theo, nhập vào ô “Đến lượt bạn” rồi bấm Kiểm tra, hoặc bấm Bước tiếp để xem đáp số. Dùng máy tính cho phần tính toán, rồi trả lời các câu hỏi bên dưới.',
+    'Chọn một bài toán và nhập đầu vào của riêng em. Ở mỗi bước, tính tổng tạm thời tiếp theo, nhập vào ô “Đến lượt em” rồi bấm Kiểm tra, hoặc bấm Bước tiếp để xem đáp số. Dùng máy tính cho phần tính toán, rồi trả lời các câu hỏi bên dưới.',
   puzzleLabel: 'Bài toán',
   puzzles: {
     divisors: 'σ(n) và τ(n)',
@@ -45,7 +45,7 @@ export const vi = {
   seenStates: { lookup: 'đang tra', bumped: 'vừa đếm', plain: '' },
   seenMarkers: { lookup: '?', bumped: '+', plain: '' },
   legend: { lookup: '? Đang tra', bumped: '+ Giá trị này được đếm ở đây' },
-  tableTitle: 'Phần làm của bạn',
+  tableTitle: 'Phần làm của em',
   tableHead: {
     divisors: ['Số nguyên tố p', 'Số mũ e', '1 + p + … + pᵉ', 'σ đến giờ'],
     rangeSum: ['d', '⌊N / d⌋', 'd · ⌊N / d⌋', 'Tổng'],
@@ -56,7 +56,7 @@ export const vi = {
   divisorsTitle: 'Mọi ước của n',
   divisorsEmpty: 'liệt kê ở bước cuối',
 
-  askTitle: 'Đến lượt bạn',
+  askTitle: 'Đến lượt em',
   askLabels: {
     divisors: 'σ sau số nguyên tố này',
     rangeSum: 'Tổng sau d này',
@@ -90,8 +90,8 @@ export const vi = {
     tau: 'τ đến giờ',
     steps: 'Số bước',
     brute: 'Số lần kiểm tra nếu vét cạn',
-    right: 'Số câu bạn trả lời đúng',
-    wrong: 'Số câu bạn trả lời sai',
+    right: 'Số câu em trả lời đúng',
+    wrong: 'Số câu em trả lời sai',
   },
   /** @param {PracticeFrame} f */
   describe(f) {
@@ -165,7 +165,7 @@ export const vi = {
     'Nếu n = p₁^e₁ ··· pₖ^eₖ thì τ(n) = ∏(eᵢ + 1) và σ(n) = ∏(1 + pᵢ + … + pᵢ^eᵢ). Mỗi ước chọn một luỹ thừa của từng số nguyên tố, vì thế tổng tách được thành tích.',
     'τ(n) lẻ khi và chỉ khi n là số chính phương, vì các ước ghép đôi thành d và n/d, trừ √n.',
     'Đổi thứ tự một tổng kép: σ(1) + … + σ(N) = Σ d·⌊N/d⌋, vì d là ước của ⌊N/d⌋ số trong các số đến N. Cách này giảm O(N²) lần kiểm tra xuống còn O(N) vòng.',
-    'Đếm theo số dư thay vì theo cặp. (a + b) ≡ 0 (mod m) chỉ đòi hai số dư bù nhau, còn một mảng con có tổng ≡ 0 khi và chỉ khi hai tổng tiền tố ở hai đầu có cùng số dư. Một lượt duyệt với m ngăn thay cho O(n²) lần kiểm tra.',
+    'Đếm theo số dư thay vì theo cặp. (a + b) ≡ 0 (mod m) chỉ đòi hai số dư bù nhau, còn một mảng con có tổng ≡ 0 khi và chỉ khi hai prefix sum (tổng tiền tố) ở hai đầu có cùng số dư. Một lượt duyệt với m bucket (ngăn) thay cho O(n²) lần kiểm tra.',
     'Thử các giá trị 3, 3, 3, 3 với m = 3 ở cả hai bài đếm: mọi cặp và mọi mảng con đều được tính. So sánh các tổng với n(n − 1)/2 và n(n + 1)/2.',
   ],
   complexityHead: ['Kĩ thuật', 'Chi phí', 'Vì sao'],
@@ -188,7 +188,7 @@ export const vi = {
     [
       'Mảng con có tổng chia hết cho m',
       'O(n + m) thời gian, O(m) bộ nhớ',
-      'Cũng các ngăn ấy nhưng trên số dư của tiền tố, so với n(n + 1)/2 mảng con.',
+      'Cũng các bucket ấy nhưng trên số dư của tiền tố, so với n(n + 1)/2 mảng con.',
     ],
   ],
   practiceTitle: 'Bài tập',
