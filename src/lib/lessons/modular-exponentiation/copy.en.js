@@ -6,8 +6,8 @@ const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 export const en = {
   slug: 'modular-exponentiation',
   topic: 'number-theory',
-  level: 'Beginner',
-  title: 'Modular arithmetic and fast exponentiation',
+  level: 'Cơ bản',
+  title: 'Số học đồng dư và luỹ thừa nhanh',
   intro:
     'Modular arithmetic keeps only the remainder after dividing by m, and a ≡ b (mod m) says two numbers leave the same remainder. Since sums and products depend only on remainders, you can reduce after every step and keep the numbers small. Combined with repeated squaring, that computes a^e mod m in about log₂ e steps, even when a^e itself has hundreds of millions of digits.',
   summary:
@@ -160,6 +160,5 @@ export const en = {
         '10⁹ has 30 bits, and 13 of them are 1. So the code squares 30 times and multiplies 13 times: 43 in all.',
     },
   ],
-  nextTeaser:
-    'Next up: Modular inverse and Chinese remainder theorem, which undoes multiplication mod m and combines several remainders into one number.',
+  nextTeaser: 'Bài tiếp theo: Nghịch đảo modulo và định lí số dư Trung Hoa.',
 };

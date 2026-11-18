@@ -7,8 +7,8 @@ const plural = (n, one, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
 export const en = {
   slug: 'b-trees',
   topic: 'balanced-bst',
-  level: 'Intermediate',
-  title: 'B-trees',
+  level: 'Trung bình',
+  title: 'Cây B',
   intro:
     'A B-tree stores many keys in each node and has many children per node, so it stays only a few levels deep. A node that overflows splits and sends its median key up, one that runs short borrows or merges, and all the leaves stay at the same depth. Databases and file systems use it because one node fits one disk block, and reading a block is what costs time.',
   summary:
@@ -146,8 +146,7 @@ export const en = {
     ['Delete', 'O(logₘ n) node writes', 'A walk down, then at most one borrow or merge per level.'],
     ['Memory', 'O(n)', 'Nodes stay at least about half full, apart from the root.'],
   ],
-  nextTeaser:
-    'Next up: Treaps and skip lists, which reach the same logarithmic height by flipping coins instead of following strict balance rules.',
+  nextTeaser: 'Bài tiếp theo: Treap và skip list.',
   practiceTitle: 'Check yourself',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
   practice: [

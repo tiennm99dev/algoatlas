@@ -11,8 +11,8 @@ const topValue = (f) => f.items[f.items.length - 1];
 export const en = {
   slug: 'stacks',
   topic: 'stacks-queues',
-  level: 'Beginner',
-  title: 'Stacks',
+  level: 'Cơ bản',
+  title: 'Ngăn xếp',
   intro:
     'A stack is a pile of plates: you add a plate on top and take a plate from the top, so the last one in is the first one out (LIFO). It offers just push, pop and peek, and each touches only the top, so every operation costs O(1) whether the stack holds three items or three million.',
   summary:
@@ -179,6 +179,5 @@ export const en = {
         'push, pop and peek touch only the top. Finding a value can mean looking at every item: O(n).',
     },
   ],
-  nextTeaser:
-    'Next up: queues and deques, which add at one end and remove at the other, using a circular buffer.',
+  nextTeaser: 'Bài tiếp theo: Hàng đợi và hàng đợi hai đầu.',
 };

@@ -9,8 +9,8 @@ const term = (d) => (d < 0 && d !== -Infinity ? `(${show(d)})` : show(d));
 export const en = {
   slug: 'floyd-warshall',
   topic: 'shortest-paths',
-  level: 'Intermediate',
-  title: 'Floyd-Warshall',
+  level: 'Trung bình',
+  title: 'Thuật toán Floyd-Warshall',
   intro:
     'Floyd-Warshall finds the shortest path between every pair of vertices with three nested loops over a distance matrix. Phase k lets vertex k serve as a stop in the middle of a path; after the last phase, every vertex is allowed and the matrix holds all shortest distances. It takes O(V³) time, handles negative edges, and reveals a negative cycle on the diagonal.',
   summary:
@@ -171,6 +171,5 @@ export const en = {
       solution: 'O(V³): V phases × V rows × V columns, with O(1) work per comparison.',
     },
   ],
-  nextTeaser:
-    'Next up: Johnson’s algorithm, which reweights edges so that Dijkstra can solve all pairs on sparse graphs with negative edges.',
+  nextTeaser: 'Bài tiếp theo: Thuật toán Johnson.',
 };

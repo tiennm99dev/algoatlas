@@ -64,7 +64,7 @@ describe('segment intersection lesson', () => {
   it('ends the crossing preset with a red pair and an exact t', () => {
     render();
     expect(redLines()).toBe(0);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(cell('verdict')).toBe('Proper crossing');
     expect(cell('tests')).toBe('4');
     expect(redLines()).toBe(2);
@@ -74,16 +74,16 @@ describe('segment intersection lesson', () => {
 
   it('fills o1 to o4 one step at a time', () => {
     render();
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('o1 =');
     const rows = () =>
       [...document.querySelectorAll('[data-testid="orient-row"]')].map((r) =>
         r.querySelectorAll('td')[0].textContent?.trim(),
       );
     expect(rows().filter((v) => v !== m.pending)).toHaveLength(1);
-    click(button('Next step'));
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(rows().filter((v) => v !== m.pending)).toHaveLength(4);
   });
 
@@ -97,7 +97,7 @@ describe('segment intersection lesson', () => {
   ])('reads preset %s as %s at %s', (preset, verdict, where) => {
     render();
     pick(preset);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(cell('verdict')).toBe(verdict);
     expect(cell('where')).toBe(where);
   });
@@ -105,7 +105,7 @@ describe('segment intersection lesson', () => {
   it('keeps the pair grey when they miss', () => {
     render();
     pick('gap');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(redLines()).toBe(0);
     expect(cell('boxes')).toBe('4');
   });
@@ -198,15 +198,15 @@ describe('segment intersection lesson', () => {
       flushSync();
     };
     answer('2');
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     click(
       /** @type {HTMLButtonElement} */ (
-        [...q.querySelectorAll('button')].find((b) => b.textContent?.trim() === 'Show a hint')
+        [...q.querySelectorAll('button')].find((b) => b.textContent?.trim() === 'Xem gợi ý')
       ),
     );
     expect(q.textContent).toContain(/** @type {any} */ (m.practice[0]).hints[0]);
     answer('1.5');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

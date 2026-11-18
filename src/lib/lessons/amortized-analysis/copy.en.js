@@ -13,8 +13,8 @@ const num = (x) => (Number.isInteger(x) ? String(x) : x.toFixed(2));
 export const en = {
   slug: 'amortized-analysis',
   topic: 'complexity',
-  level: 'Advanced',
-  title: 'Amortized analysis: aggregate, accounting, potential',
+  level: 'Nâng cao',
+  title: 'Phân tích khấu hao: gộp, kế toán, thế năng',
   intro:
     'Some operations are usually cheap but now and then expensive: one increment of a binary counter can flip every bit. Amortized analysis bounds the total cost of a whole sequence of operations, so the rare expensive step is paid for by the many cheap ones. Unlike average-case analysis, it uses no probability: the bound holds for every sequence.',
   summary:
@@ -214,6 +214,5 @@ export const en = {
         'A coin is left on a bit when it becomes 1, and a 1 → 0 flip spends the coin on that same bit. So the bank always equals the number of 1s, which is never negative.',
     },
   ],
-  nextTeaser:
-    'Next up: Practice: estimating running time, where you sort code snippets into their Big-O classes.',
+  nextTeaser: 'Bài tiếp theo: Luyện tập: ước lượng thời gian chạy.',
 };

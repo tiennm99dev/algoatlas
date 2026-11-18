@@ -58,10 +58,10 @@ describe('fixed-parameter algorithms lesson', () => {
   it('searches the spider for a cover of 3', () => {
     render();
     expect(narration()).toContain('Is there a vertex cover of at most k = 3 vertices?');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('A – B is the first uncovered edge');
     expect(byTest('made')).toBe('1');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('made')).toBe('15');
     expect(byTest('answer')).toBe('yes, {B, C, D}');
     expect(byTest('brute')).toBe('64');
@@ -71,15 +71,15 @@ describe('fixed-parameter algorithms lesson', () => {
   it('says no for k = 2, and at once with the kernel', () => {
     render();
     commit(field('input[name="k"]'), '2');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('no');
     expect(byTest('made')).toBe('7');
     click(field('input[name="kernel"][value="on"]'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('A has more than 2 uncovered edges');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('3 edges are left: the answer is no');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('made')).toBe('0');
     expect(narration()).toBe('Done: the kernel answered no before any search.');
   });
@@ -94,22 +94,22 @@ describe('fixed-parameter algorithms lesson', () => {
   it('loads the two stars and follows a graph edit', () => {
     render();
     commit(field('select[name="preset"]'), 'stars');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('budget')).toBe('0');
     expect(byTest('answer')).toBe('yes, {A, B}');
     click(/** @type {HTMLInputElement} */ (document.querySelector('input[value="remove"]')));
-    click(/** @type {Element} */ (document.querySelector('[aria-label="Delete edge A and B"]')));
+    click(/** @type {Element} */ (document.querySelector('[aria-label="Xoá cạnh giữa A và B"]')));
     expect(field('select[name="preset"]').value).toBe('');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('yes, {A, B}');
   });
 
   it('jumps to a search node by pointer and keyboard', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     click(treeNode('Took A,'));
     expect(byTest('made')).toBe('2');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     treeNode('Root,').dispatchEvent(
       new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }),
     );
@@ -133,16 +133,16 @@ describe('fixed-parameter algorithms lesson', () => {
     answer.value = '16';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {Element} */ (hint));
     expect(q.textContent).toContain('A binary tree at most k deep');
     answer.value = '31';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).not.toContain('Not quite');
+    expect(q.textContent).not.toContain('Chưa đúng');
     expect(m.practice.flatMap((ex) => exerciseProblems(ex))).toEqual([]);
   });
 });

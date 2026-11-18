@@ -65,7 +65,7 @@ function stat(label) {
 
 /** Step until the narration matches. @param {string} part */
 function stepUntil(part) {
-  for (let k = 0; k < 400 && !narration().includes(part); k++) click(button('Next step'));
+  for (let k = 0; k < 400 && !narration().includes(part); k++) click(button('Bước tiếp'));
 }
 
 function practice() {
@@ -82,13 +82,13 @@ describe('amortized analysis lesson', () => {
     expect(narration()).toBe(
       'A 4-bit counter at 0000: no 1s, no coins, Φ = 0. We will run 16 increments.',
     );
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('Increment 1: start at bit 0 of 0000 (value 0).');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Bit 0 is 0: set it to 1');
     expect(stat(m.stats.phi)).toBe('1');
     expect(text()).toContain('Bit 0: 1, holds a coin, just set');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.total)).toBe('30');
     expect(stat(m.stats.bound)).toBe('32');
     expect(stat(m.stats.worst)).toBe('4');
@@ -107,7 +107,7 @@ describe('amortized analysis lesson', () => {
   it('reads the same run with each method', () => {
     render();
     commit(input('ops'), '3');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain(m.accounting.balance(6, 4, 2));
     expect(text()).toContain('0011₂ = 3');
     pickMethod('aggregate');
@@ -139,7 +139,7 @@ describe('amortized analysis lesson', () => {
     input('ops').dispatchEvent(new Event('input', { bubbles: true }));
     /** @type {HTMLFormElement} */ (input('bits').closest('form')).requestSubmit();
     flushSync();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.total)).toBe('127');
     expect(stat(m.stats.worst)).toBe('7');
   });
@@ -157,16 +157,16 @@ describe('amortized analysis lesson', () => {
     answer.value = '32';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '31';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

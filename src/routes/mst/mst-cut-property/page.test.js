@@ -93,13 +93,13 @@ describe('Cut property and MST basics lesson', () => {
   it('scans the starting cut and names the lightest crossing edge', () => {
     render();
     expect(text()).toContain('S = {A, B, C}. Scan every edge');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Edge A — B (weight 3): both ends are in S');
-    for (let i = 0; i < 3; i++) click(button('Next step'));
+    for (let i = 0; i < 3; i++) click(button('Bước tiếp'));
     expect(text()).toContain(
       'Edge B — D (weight 5) crosses the cut. It is the first crossing edge',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('The lightest crossing edge is B — D (weight 5).');
     expect(statValue(m.stats.crossing)).toBe('3');
     expect(statValue(m.stats.mst)).toBe('18');
@@ -110,7 +110,7 @@ describe('Cut property and MST basics lesson', () => {
     render();
     click(vertex(3));
     expect(vertex(3).getAttribute('aria-label')).toBe('Vertex D, side S');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('The lightest crossing edge is D — E (weight 7).');
     press(vertex(1), 'Enter');
     expect(vertex(1).getAttribute('aria-label')).toBe('Vertex B, other side');
@@ -121,15 +121,15 @@ describe('Cut property and MST basics lesson', () => {
     render();
     radio('cycle');
     expect(text()).toContain('Test edge C — D (weight 6). Search from C');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('is strictly the heaviest edge on the cycle C → B → D → C');
     commit(testSelect(), '6');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain(
       'The search ran out without reaching E. The reached vertices {A, B, C, D} form a cut',
     );
     commit(weightField('C — E'), '6');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('no MST contains D — E');
   });
 
@@ -162,11 +162,11 @@ describe('Cut property and MST basics lesson', () => {
     render();
     const q = /** @type {HTMLElement} */ (practice().querySelectorAll('ol > li')[0]);
     answer(q, '6');
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer(q, '5');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

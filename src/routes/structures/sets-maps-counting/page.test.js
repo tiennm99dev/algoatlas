@@ -48,7 +48,7 @@ const field = (/** @type {string} */ selector) =>
   /** @type {HTMLInputElement} */ (document.querySelector(selector));
 /** @param {number} n */
 const next = (n) => {
-  for (let i = 0; i < n; i++) click(button('Next step'));
+  for (let i = 0; i < n; i++) click(button('Bước tiếp'));
 };
 /** The map rows as "word count" pairs, in display order. */
 const mapRows = () =>
@@ -75,7 +75,7 @@ describe('sets, maps and frequency counting lesson', () => {
     next(6);
     expect(narration()).toBe('Yes: count[“the”] goes from 1 to 2.');
     expect(mapRows()[0]).toBe('the: 2');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe('Done. 12 words, 8 distinct. Most frequent: “the”, 4 times.');
     expect(mapRows().slice(0, 2)).toEqual(['the: 4', 'and: 2']);
     expect(byTest('lookups')).toBe('12');
@@ -89,7 +89,7 @@ describe('sets, maps and frequency counting lesson', () => {
     next(18);
     expect(narration()).toBe('Yes: “a” is already in seen. It is the first repeated word.');
     expect(byTest('first-repeat')).toBe('a');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe('Done. 9 distinct words out of 13; 4 words were repeats.');
     expect(document.querySelector('[data-testid="set"]')?.textContent).toContain('woodchuck');
     click(field('input[name="mode"][value="map"]'));
@@ -105,7 +105,7 @@ describe('sets, maps and frequency counting lesson', () => {
     expect(narration()).toBe(m.wordErrors.empty);
     expect(input.value).toBe('the cat and the hat and the bat sat on the mat');
     commit(input, 'B a, A b c');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(mapRows()).toEqual(['b: 2', 'a: 2', 'c: 1']);
     expect(byTest('repeats')).toBe('2');
   });
@@ -130,16 +130,16 @@ describe('sets, maps and frequency counting lesson', () => {
     answer.value = 'wood';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[1].hints[0]);
     answer.value = 'a';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

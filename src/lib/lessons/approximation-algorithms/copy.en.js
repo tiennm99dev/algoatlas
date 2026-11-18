@@ -11,8 +11,8 @@ const setText = (names, set) => (set.length ? `{${set.map((i) => names[i]).join(
 export const en = {
   slug: 'approximation-algorithms',
   topic: 'intractability',
-  level: 'Advanced',
-  title: 'Approximation algorithms',
+  level: 'Nâng cao',
+  title: 'Thuật toán xấp xỉ',
   intro:
     'When a problem is NP-hard, an exact answer may take exponential time. An approximation algorithm runs in polynomial time and proves its answer is within a fixed factor of the optimum, called the approximation ratio. Vertex cover has a simple 2-approximation, and greedy set cover stays within a factor of about ln n.',
   summary:
@@ -168,6 +168,5 @@ export const en = {
         'Greedy takes S₁ (4 new), then S₂ (just 5) and S₃ (just 6): 3 sets. The optimum S₂, S₃ uses 2.',
     },
   ],
-  nextTeaser:
-    'Next up: Fixed-parameter algorithms, which solve vertex cover exactly in O(2ᵏ · m) time, fast whenever the cover size k is small.',
+  nextTeaser: 'Bài tiếp theo: Thuật toán tham số cố định.',
 };

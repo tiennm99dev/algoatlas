@@ -84,18 +84,18 @@ describe('tree DP lesson', () => {
   it('solves the independent set in post-order and reads the choice back', () => {
     render();
     expect(narration()).toContain('Pick nodes of the largest total weight');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe(
       'Solve A: picked alone it brings inc = 3; left out, exc = 0. Its children come first.',
     );
-    for (let i = 0; i < 4; i++) click(button('Next step'));
+    for (let i = 0; i < 4; i++) click(button('Bước tiếp'));
     expect(narration()).toBe(
       'Fold in E (inc 6, exc 0). If B is picked, E must be left out: inc[B] += 0 → 5. If not, E takes its better value: exc[B] += 6 → 6.',
     );
     expect(node('E').getAttribute('aria-label')).toBe(
       'Node E, weight 6, include 6, exclude 0, child read now',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe('Best total 16, from the picked nodes A, E, F, G, H.');
     expect(byTest('answer')).toBe('16');
     expect(byTest('settled')).toBe('8 / 8');
@@ -107,7 +107,7 @@ describe('tree DP lesson', () => {
   it('reroots the tree for every distance sum', () => {
     render();
     click(field('input[name="problem"][value="reroot"]'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('11');
     expect(byTest('edges')).toBe('14 / 14');
     expect(byTest('naive')).toBe('56');
@@ -115,7 +115,7 @@ describe('tree DP lesson', () => {
       'Node D, distance sum 13, distance sum known',
     );
     expect(node('A').getAttribute('aria-label')).toBe('Node A, distance sum 11, best centre');
-    click(button('Previous step'));
+    click(button('Bước trước'));
     expect(narration()).toBe(
       'Move the root from D to H: 1 node comes one step closer and 7 move one step away. all[H] = 13 − 1 + 7 = 19.',
     );
@@ -128,7 +128,7 @@ describe('tree DP lesson', () => {
     click(node('C'));
     expect(field('input[name="weight"]').value).toBe('2');
     commit(field('input[name="weight"]'), '9');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('22');
     commit(field('input[name="weight"]'), '99');
     expect(narration()).toBe(m.weightError(20));
@@ -156,7 +156,7 @@ describe('tree DP lesson', () => {
     );
     commit(select, 'star');
     expect(nodeCount()).toBe(6);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('10');
   });
 
@@ -182,9 +182,9 @@ describe('tree DP lesson', () => {
     answer.value = '15';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     /** @type {HTMLButtonElement} */ (hint).click();
     flushSync();
@@ -192,7 +192,7 @@ describe('tree DP lesson', () => {
     answer.value = '16';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

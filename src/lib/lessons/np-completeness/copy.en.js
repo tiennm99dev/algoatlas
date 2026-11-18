@@ -10,8 +10,8 @@ const assignmentText = (f, a) => f.vars.map((v, i) => `${v} = ${a[i] ? 'T' : 'F'
 export const en = {
   slug: 'np-completeness',
   topic: 'intractability',
-  level: 'Advanced',
-  title: 'NP-completeness',
+  level: 'Nâng cao',
+  title: 'NP-đầy đủ',
   intro:
     'A problem is NP-hard when every problem in NP reduces to it, and NP-complete when it is also in NP itself. The Cook–Levin theorem gave the first one, SAT. Since then, each new NP-hardness proof is a single reduction from a problem already known to be hard, so the known NP-complete problems form a map connected by reduction arrows.',
   summary:
@@ -246,8 +246,7 @@ export const en = {
       solution: 'SAT, Boolean satisfiability: is there an assignment that makes a formula true?',
     },
   ],
-  nextTeaser:
-    'Next up: Approximation algorithms, which give up on the exact optimum and promise an answer within a fixed factor of it, such as a vertex cover at most twice the smallest.',
+  nextTeaser: 'Bài tiếp theo: Thuật toán xấp xỉ.',
 };
 
 /**

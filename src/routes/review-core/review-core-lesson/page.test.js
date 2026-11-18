@@ -80,7 +80,7 @@ describe('review: core algorithms', () => {
     render();
     expect(document.querySelector('h1')?.textContent).toBe(m.title);
     expect(questions()).toHaveLength(m.practice.length);
-    expect(document.body.textContent).toContain(`0 of ${m.practice.length}`);
+    expect(document.body.textContent).toContain(`Đã giải 0/${m.practice.length}`);
   });
 
   it('checks a typed number, wrong then right after a hint', () => {
@@ -89,13 +89,13 @@ describe('review: core algorithms', () => {
     const q = questions()[i];
     type(q, '300');
     submit(q);
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText(q, 'Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText(q, 'Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[i].hints[0]);
     type(q, '224 bits');
     submit(q);
-    expect(q.textContent).toContain('Correct!');
-    click(buttonByText(q, 'Show solution'));
+    expect(q.textContent).toContain('Đúng rồi!');
+    click(buttonByText(q, 'Xem lời giải'));
     expect(q.textContent).toContain(m.practice[i].solution);
   });
 
@@ -108,11 +108,11 @@ describe('review: core algorithms', () => {
     radios[0].click();
     flushSync();
     submit(q);
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     radios[2].click();
     flushSync();
     submit(q);
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
   });
 
   it('accepts the master theorem answer written in several ways', () => {
@@ -120,10 +120,10 @@ describe('review: core algorithms', () => {
     const q = questions()[indexOf('4T(n/2)')];
     type(q, 'O(n log n)');
     submit(q);
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     type(q, 'O( N^2 )');
     submit(q);
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
   });
 
   it('orders the settled vertices with the move buttons', () => {
@@ -137,7 +137,7 @@ describe('review: core algorithms', () => {
     submit(q);
     const order = [...q.querySelectorAll('ol li span.flex-1')].map((s) => s.textContent);
     expect(order).toEqual(['A', 'C', 'B', 'D', 'E']);
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
   });
 
   it('covers every core chapter with well-formed questions of every type', () => {

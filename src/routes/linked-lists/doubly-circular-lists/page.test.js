@@ -58,7 +58,7 @@ const listLabel = () =>
   document.querySelector('svg[role="group"]')?.getAttribute('aria-label') ?? '';
 /** @param {number} n */
 const next = (n) => {
-  for (let i = 0; i < n; i++) click(button('Next step'));
+  for (let i = 0; i < n; i++) click(button('Bước tiếp'));
 };
 
 function practice() {
@@ -87,7 +87,7 @@ describe('doubly and circular linked lists lesson', () => {
     expect(link('2-prev')?.getAttribute('class')).toContain('stroke-teal-700');
     next(1);
     expect(narration()).toBe('20 is freed after 2 pointer writes. The list holds 3 nodes.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(listLabel()).toBe(
       'Circular doubly linked list: S ⇄ 10 ⇄ 30 ⇄ 40 ⇄ back to S. Backwards: 40, 30, 10.',
     );
@@ -99,7 +99,7 @@ describe('doubly and circular linked lists lesson', () => {
     expect(byTest('selected')).toBe('30');
     click(buttonByText('Remove selected'));
     expect(narration()).toContain('Remove 30.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(listLabel()).toContain('S ⇄ 10 ⇄ 40 ⇄ back to S');
     expect(byTest('selected')).toBe('none');
   });
@@ -127,13 +127,13 @@ describe('doubly and circular linked lists lesson', () => {
 
   it('counts special cases only in the head and tail design', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('special')).toBe('0');
     commit(
       /** @type {HTMLInputElement} */ (document.querySelectorAll('input[name="mode"]')[1]),
       'plain',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('special')).toBe('1');
     expect(listLabel()).toBe(
       'Doubly linked list: null ← 10 ⇄ 30 ⇄ 40 → null. Backwards: 40, 30, 10.',
@@ -152,7 +152,7 @@ describe('doubly and circular linked lists lesson', () => {
     expect(narration()).toBe(
       'Make a node for 5 with prev = S and next = 10. Nothing points at it yet.',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(listLabel()).toContain('S ⇄ 5 ⇄ 10 ⇄ 30 ⇄ 40 ⇄ back to S');
   });
 
@@ -162,7 +162,7 @@ describe('doubly and circular linked lists lesson', () => {
     const form = /** @type {HTMLFormElement} */ (input('value').closest('form'));
     form.requestSubmit();
     flushSync();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(listLabel()).toContain('40 ⇄ 50 ⇄ back to S');
     expect(buttonByText('Insert at front').type).toBe('button');
   });
@@ -198,16 +198,16 @@ describe('doubly and circular linked lists lesson', () => {
     answer.value = '4';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '2';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

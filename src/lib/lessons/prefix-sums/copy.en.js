@@ -13,8 +13,8 @@ const term = (x) => (x < 0 ? `(${signed(x)})` : String(x));
 export const en = {
   slug: 'prefix-sums',
   topic: 'arrays-strings',
-  level: 'Intermediate',
-  title: 'Prefix sums and difference arrays',
+  level: 'Trung bình',
+  title: 'Tổng tiền tố và mảng hiệu',
   intro:
     'A prefix-sum array P stores the running totals of a: P[i] is the sum of the first i elements. After one O(n) pass, the sum of any range a[l..r] is P[r + 1] − P[l], two lookups in O(1). Run the idea backwards and you get a difference array, which adds a value to a whole range by changing just two entries.',
   summary:
@@ -186,6 +186,5 @@ export const en = {
         'q updates at O(1) each plus one O(n) prefix-sum pass: O(n + q). Updating every element of every range directly can cost O(n·q).',
     },
   ],
-  nextTeaser:
-    'Next up: String basics and manipulation, where you see why building a string by repeated concatenation can be quadratic.',
+  nextTeaser: 'Bài tiếp theo: Xâu cơ bản và thao tác trên xâu.',
 };

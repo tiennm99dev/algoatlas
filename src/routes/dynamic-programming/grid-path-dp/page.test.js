@@ -74,12 +74,12 @@ describe('grid and path DP lesson', () => {
     expect(narration()).toBe(
       'Count the paths from the top-left cell to the bottom-right cell of this 4 × 5 grid, moving only right or down.',
     );
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('Base case: one path reaches the start, the empty one. P[0][0] = 1.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('The first row has only the cell to the left: P[0][1] = 1.');
     expect(arrows()).toBe(1);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('7');
     expect(byTest('filled')).toBe('20 / 20');
     expect(byTest('open')).toBe('35');
@@ -94,7 +94,7 @@ describe('grid and path DP lesson', () => {
     expect(byTest('answer')).toBe('12');
     expect(cell(0, 1, 3).getAttribute('aria-label')).toBe('Cell (1, 3): wall');
     click(buttonByText(m.resetGrid));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('28');
   });
 
@@ -118,7 +118,7 @@ describe('grid and path DP lesson', () => {
 
   it('jumps to a cell of the table and shows its sum', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     click(cell(1, 3, 4));
     expect(byTest('sums')).toBe('above 3 + left 4 = 7');
     expect(narration()).toBe('A path arrives from above or from the left: P[3][4] = 3 + 4 = 7.');
@@ -131,11 +131,11 @@ describe('grid and path DP lesson', () => {
     render();
     click(field('input[name="mode"][value="min"]'));
     commit(field('select[name="preset"]'), 'costs');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('7');
     expect(narration()).toBe('The cheapest path costs 7 and visits 5 cells.');
     commit(field('select[name="preset"]'), 'trap');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('9');
     expect(byTest('greedy')).toBe('14');
     click(field('input[name="tool"][value="cost"]'));
@@ -154,7 +154,7 @@ describe('grid and path DP lesson', () => {
       'No path reaches the goal: walls block every route, so the cost stays ∞.',
     );
     click(field('input[name="mode"][value="count"]'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('0');
     expect(narration()).toBe('No path reaches the goal: walls block every route.');
   });
@@ -163,7 +163,7 @@ describe('grid and path DP lesson', () => {
     render();
     commit(field('input[name="rows"]'), '2');
     commit(field('input[name="cols"]'), '2');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('filled')).toBe('4 / 4');
     expect(byTest('open')).toBe('2');
     commit(field('input[name="rows"]'), '9');
@@ -191,9 +191,9 @@ describe('grid and path DP lesson', () => {
     answer.value = '6';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     /** @type {HTMLButtonElement} */ (hint).click();
     flushSync();
@@ -201,7 +201,7 @@ describe('grid and path DP lesson', () => {
     answer.value = '2';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

@@ -95,14 +95,14 @@ describe('Edmonds-Karp and Dinic lesson', () => {
   it('runs Edmonds-Karp with one BFS per augmenting path', () => {
     render();
     expect(text()).toContain('Each round runs BFS from S');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain(
       'BFS reached T in 3 arcs along S → A → C → T. Its bottleneck is b = 12.',
     );
     expect(arcTitles()).toContain('Arc S → A: room 16, path adds flow here');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(statValue(m.stats.value)).toBe('12');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain(
       'Done: 3 augmenting paths and 4 BFS runs found the maximum flow 23 from S to T.',
     );
@@ -114,17 +114,17 @@ describe('Edmonds-Karp and Dinic lesson', () => {
     render();
     radio('dinic');
     expect(text()).toContain('Each phase runs BFS once');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Phase 1: BFS puts T at level 3.');
     expect(arcTitles()).toContain('Arc B → A: room 4, outside the level graph');
-    click(button('Next step'));
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('DFS reached A, but no level-graph arc out of A has room');
     expect(document.querySelector('[data-vertex="1"] > title')?.textContent).toBe(
       'Vertex A, level 1, dead end this phase',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain(
       'Done: 3 augmenting paths and 3 BFS runs found the maximum flow 23 from S to T.',
     );
@@ -135,13 +135,13 @@ describe('Edmonds-Karp and Dinic lesson', () => {
     render();
     commit(select('preset'), 'layers');
     radio('dinic');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.searches.dinic)).toBe('2');
     expect(statValue(m.stats.paths)).toBe('4');
     radio('flow');
     expect(arcTitles()).toContain('Edge C → E: flow 3 of 4, carries flow');
     radio('ek');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.searches.ek)).toBe('5');
   });
 
@@ -149,7 +149,7 @@ describe('Edmonds-Karp and Dinic lesson', () => {
     render();
     commit(select('preset'), 'zigzag');
     commit(capacityField('A → T'), '5');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.value)).toBe('25');
     commit(capacityField('A → T'), '0');
     expect(text()).toContain(m.badCapacity(20));
@@ -157,9 +157,9 @@ describe('Edmonds-Karp and Dinic lesson', () => {
     commit(select('sink'), '0');
     expect(text()).toContain(m.sameEnds);
     click(buttonByText(m.resetGraph));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.value)).toBe('40');
-    click(button('First step'));
+    click(button('Về bước đầu'));
     press(document.body, 'ArrowRight');
     expect(text()).toContain('along S → A → T');
   });
@@ -168,11 +168,11 @@ describe('Edmonds-Karp and Dinic lesson', () => {
     render();
     const q = /** @type {HTMLElement} */ (practice().querySelectorAll('ol > li')[0]);
     answer(q, '3');
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer(q, '4');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

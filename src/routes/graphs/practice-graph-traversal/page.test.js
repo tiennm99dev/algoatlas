@@ -89,9 +89,9 @@ describe('practice traversal lesson', () => {
   it('runs BFS on the maze and compares it with DFS', () => {
     render();
     expect(text()).toContain('Put the source in the queue at distance 0.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Dequeue (0,0), at distance 0.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Reached the goal after 52 visits. The path back has 24 steps.');
     const visits = compareRow(m.compareRows.visits);
     expect([visits?.[0].textContent, visits?.[1].textContent]).toEqual(['52', '25']);
@@ -102,9 +102,9 @@ describe('practice traversal lesson', () => {
     render();
     click(buttonByText(m.puzzles.field));
     radio('dfs');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Pop (0,0) and visit it at depth 0.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Reached the goal after 90 visits. The path back has 89 steps.');
     const steps = compareRow(m.compareRows.steps);
     expect([steps?.[0].textContent, steps?.[1].textContent]).toEqual(['7', '89']);
@@ -114,7 +114,7 @@ describe('practice traversal lesson', () => {
     render();
     click(buttonByText(m.puzzles.fire));
     expect(text()).toContain('Put all 3 sources in the queue at distance 0');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('every reachable cell has its distance to the nearest source');
     expect(statValue(m.stats.reach)).toBe('6');
     expect(compareRow(m.floodRows.wrong)?.[1].textContent).toBe('76');
@@ -126,7 +126,7 @@ describe('practice traversal lesson', () => {
     radio('source');
     keyActivate(button('Row 0, column 2'));
     expect(text()).toContain('Source added at (0,2).');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Dequeue (0,0), at distance 0.');
     expect(statValue(m.stats.adds)).toBe('2');
     keyActivate(button('Row 0, column 4, Wall'));
@@ -139,7 +139,7 @@ describe('practice traversal lesson', () => {
     expect(text()).toContain(m.edits.goalRemoved);
     keyActivate(button('Row 2, column 2'));
     expect(text()).toContain('Goal moved to (2,2).');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.result)).toBe('6');
   });
 
@@ -165,7 +165,7 @@ describe('practice traversal lesson', () => {
     flushSync();
     expect(button('Row 6, column 11, Wall')).toBeTruthy();
     expect(button('Row 7, column 10, Wall')).toBeTruthy();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('the goal was never reached');
     expect(compareRow(m.compareRows.steps)?.[0].textContent).toBe('—');
   });
@@ -182,11 +182,11 @@ describe('practice traversal lesson', () => {
     render();
     const q = /** @type {HTMLElement} */ (practice().querySelectorAll('ol > li')[0]);
     answer(q, '25');
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer(q, '24');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

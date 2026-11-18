@@ -80,8 +80,8 @@ const palindrome = (s, c, r) => s.slice((c - r) / 2, (c - r) / 2 + r);
 export const en = {
   slug: 'practice-string-algorithms',
   topic: 'string-algorithms',
-  level: 'Advanced',
-  title: 'Practice: string problems',
+  level: 'Nâng cao',
+  title: 'Luyện tập: bài toán xâu',
   intro:
     'String problems reward picking the right tool. Which matcher wins depends on the text and the pattern, and questions about repeats and mirror images have their own linear-time answers. Race five matchers on your own text here, then read the same text for its periods and palindromes.',
   summary:
@@ -287,8 +287,7 @@ export const en = {
     ],
     ['Manacher', 'O(n)', 'The longest palindrome, or a count of every palindromic substring.'],
   ],
-  nextTeaser:
-    'Next up: GCD and extended Euclid, an old algorithm that at least halves its numbers every two steps and also solves linear equations in whole numbers.',
+  nextTeaser: 'Bài tiếp theo: ƯCLN và thuật toán Euclid mở rộng.',
   practiceTitle: 'Practice problems',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
   practice: [

@@ -9,8 +9,8 @@ const hText = (h) => (h < 0 ? '−1' : String(h));
 export const en = {
   slug: 'nary-trees',
   topic: 'trees',
-  level: 'Intermediate',
-  title: 'N-ary trees and tree recursion',
+  level: 'Trung bình',
+  title: 'Cây nhiều nhánh và đệ quy trên cây',
   intro:
     'An n-ary tree lets a node have any number of children, so each node keeps a list of them: files in folders, staff in an organisation, a parse of a sentence. Most questions about such a tree are answered by one recursion that asks every child first and then combines the answers on the way back up.',
   summary:
@@ -159,6 +159,5 @@ export const en = {
         'At the centre a = b = 0, so the bend is 0 + 0 + 2 = 2 edges: leaf – centre – leaf, however many leaves there are.',
     },
   ],
-  nextTeaser:
-    'Next up: practice tree problems, checking whether a tree is a binary search tree and finding lowest common ancestors.',
+  nextTeaser: 'Bài tiếp theo: Luyện tập: bài toán về cây.',
 };

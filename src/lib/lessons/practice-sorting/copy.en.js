@@ -33,8 +33,8 @@ const ordinal = (p) => `${p}${p === 1 ? 'st' : p === 2 ? 'nd' : p === 3 ? 'rd' :
 export const en = {
   slug: 'practice-sorting',
   topic: 'sorting',
-  level: 'Intermediate',
-  title: 'Practice: choosing a sort',
+  level: 'Trung bình',
+  title: 'Luyện tập: chọn thuật toán sắp xếp',
   intro:
     'No sort wins everywhere. The best choice depends on the input’s shape (random, nearly sorted, reversed, full of repeats) and on what the job demands: stability, little extra memory, a worst-case guarantee or few writes. Here six sorts race on the same cards, one comparison per step, and a constraint picker shows which sorts fit a set of needs.',
   summary:
@@ -292,6 +292,5 @@ export const en = {
         'Insertion sort is stable, in place, and does about n comparisons when only a few neighbours are out of order. Selection sort and heapsort are not stable, and merge sort needs a buffer.',
     },
   ],
-  nextTeaser:
-    'Next up: Linear search, the next chapter, where finding a value starts with a plain left-to-right scan.',
+  nextTeaser: 'Bài tiếp theo: Tìm kiếm tuần tự.',
 };

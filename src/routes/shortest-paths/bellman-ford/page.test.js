@@ -105,15 +105,15 @@ describe('Bellman-Ford lesson', () => {
     expect(text()).toContain(
       'Set the source’s label to 0 and every other label to ∞. With 5 vertices, at most 4 rounds are needed.',
     );
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Round 1: relax every edge once, in list order.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain(
       'Edge C → D (weight 3): d[C] is still ∞, so nothing to do this round.',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Done after 3 rounds and 24 edge checks');
-    click(button('Previous step'));
+    click(button('Bước trước'));
     expect(text()).toContain('Round 3 changed nothing, so the next round would not either.');
     expect(statValue(m.stats.relaxations)).toBe('24');
     expect(statValue(m.stats.updates)).toBe('5');
@@ -125,14 +125,14 @@ describe('Bellman-Ford lesson', () => {
   it('finishes in fewer rounds with a good edge order', () => {
     render();
     commit(presetSelect(), 'good');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Done after 2 rounds and 16 edge checks');
   });
 
   it('flags the negative cycle in round V', () => {
     render();
     commit(presetSelect(), 'cycle');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain(
       'Edge B → C (weight −2): 1 + (−2) = −1 < 1: after V − 1 rounds an edge can still be relaxed, so a negative cycle is reachable. Following the parent links finds A → B → D → A.',
     );
@@ -144,27 +144,27 @@ describe('Bellman-Ford lesson', () => {
   it('reruns on a typed weight, rejects a bad one, and resets', () => {
     render();
     commit(weightField('D → A'), '0');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Following the parent links finds A → B → D → A.');
     commit(weightField('D → A'), '1.5');
     expect(text()).toContain(m.badWeight(99));
     expect(weightField('D → A').value).toBe('0');
     click(buttonByText(m.resetGraph));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Done after 3 rounds');
   });
 
   it('changes the source, draws an edge, and steps with the keyboard', () => {
     render();
     commit(sourceSelect(), '2');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(vertex(0).getAttribute('aria-label')).toBe('Vertex S, d = ∞');
     radio('connect');
     click(vertex(2));
     click(vertex(0));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(vertex(0).getAttribute('aria-label')).toBe('Vertex S, d = 1');
-    click(button('First step'));
+    click(button('Về bước đầu'));
     press(document.body, 'ArrowRight');
     expect(text()).toContain('Round 1: relax every edge once');
   });
@@ -173,11 +173,11 @@ describe('Bellman-Ford lesson', () => {
     render();
     const q = /** @type {HTMLElement} */ (practice().querySelectorAll('ol > li')[0]);
     answer(q, '4');
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer(q, '3');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

@@ -16,8 +16,8 @@ const bits = (mask, n) => mask.toString(2).padStart(n, '0');
 export const en = {
   slug: 'bitmask-dp',
   topic: 'advanced-dp',
-  level: 'Advanced',
-  title: 'Bitmask DP and travelling salesman',
+  level: 'Nâng cao',
+  title: 'QHĐ trên mặt nạ bit và bài toán người du lịch',
   intro:
     'Some DP states need to remember a whole set: which cities a tour has already visited. When the set is small, store it as the bits of one number, a bitmask, so bit c is 1 when city c is in the set. The Held-Karp algorithm uses one state per (set of visited cities, current city) and solves the travelling salesman problem in O(2ⁿ · n²) instead of trying all (n − 1)! tours.',
   summary:
@@ -203,6 +203,5 @@ export const en = {
       solution: 'There are 2ⁿ · n states and each tries up to n next cities: O(2ⁿ · n²).',
     },
   ],
-  nextTeaser:
-    'Next up: DP on trees, where each node’s answer is built from its children’s answers in post-order.',
+  nextTeaser: 'Bài tiếp theo: QHĐ trên cây.',
 };

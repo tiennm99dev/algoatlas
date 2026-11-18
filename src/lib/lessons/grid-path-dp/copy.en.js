@@ -9,8 +9,8 @@ const num = (v) => (v === Infinity ? '∞' : String(v));
 export const en = {
   slug: 'grid-path-dp',
   topic: 'dynamic-programming',
-  level: 'Intermediate',
-  title: 'Grid and path DP',
+  level: 'Trung bình',
+  title: 'QHĐ trên lưới và đường đi',
   intro:
     'If you may only move right or down, a path reaches a cell from the cell above it or the cell to its left. So each cell’s answer follows from those two, and filling the grid row by row always has them ready. The same grid can count the paths or find the cheapest one, and a wall is just a cell no path may use.',
   summary:
@@ -252,6 +252,5 @@ export const en = {
       solution: 'm·n cells with at most two reads each: O(mn).',
     },
   ],
-  nextTeaser:
-    'Next up: Practice: dynamic programming problems, where you define the state and the transition yourself and test them on small inputs.',
+  nextTeaser: 'Bài tiếp theo: Luyện tập: bài toán quy hoạch động.',
 };

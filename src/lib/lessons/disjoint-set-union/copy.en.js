@@ -7,8 +7,8 @@ const groupText = (g) => `{${g.join(', ')}}`;
 export const en = {
   slug: 'disjoint-set-union',
   topic: 'union-find',
-  level: 'Beginner',
-  title: 'Disjoint set union',
+  level: 'Cơ bản',
+  title: 'Tập hợp rời nhau',
   intro:
     'A disjoint set union (union-find) keeps items in groups that never overlap. Each group is a tree stored in one parent array, and the root of the tree names the group. Two operations do all the work: find climbs to the root, and union hangs one root under the other.',
   summary:
@@ -147,6 +147,5 @@ export const en = {
         'Union-find supports adding links and asking whether two items share a set. Removing a link may split a set, which it cannot undo, and it stores no paths or history.',
     },
   ],
-  nextTeaser:
-    'Next up: Union by rank and path compression, two small tricks that keep the trees so flat that find runs in almost constant time.',
+  nextTeaser: 'Bài tiếp theo: Hợp theo hạng và nén đường đi.',
 };

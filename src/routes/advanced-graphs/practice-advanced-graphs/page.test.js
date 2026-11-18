@@ -104,9 +104,9 @@ describe('advanced graph practice', () => {
     expect(text()).toContain('The whole network is 1 connected piece. Pick a node to fail.');
     failNode('3');
     expect(text()).toContain('Now fail D.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('D fails: remove it and every link it has.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain(
       '3 parts still work together. That is more than the 1 before, so D is critical: an articulation point.',
     );
@@ -118,18 +118,18 @@ describe('advanced graph practice', () => {
   it('pressing a router fails it, and pressing it again restores it', () => {
     render();
     click(vertex(5));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.largest)).toBe('5');
     expect(vertex(5).getAttribute('aria-label')).toBe('Router F, failed');
     click(vertex(5));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('1 part still works together. Pick a node to fail and compare.');
   });
 
   it('a non-critical failure keeps the network whole', () => {
     render();
     failNode('4');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.critical)).toBe('no');
   });
 
@@ -139,11 +139,11 @@ describe('advanced graph practice', () => {
     click(vertex(4));
     click(vertex(5));
     failNode('3');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.after)).toBe('2');
     click(buttonByText(m.resetGraph));
     expect(statValue(m.stats.after)).toBe('0');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.critical)).toBe('—');
   });
 
@@ -151,14 +151,14 @@ describe('advanced graph practice', () => {
     render();
     radio('deps');
     expect(text()).toContain('Run Tarjan’s SCC search');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Done: 2 dependency cycles on 5 modules.');
     expect(chips(m.cyclesLabel)).toEqual(['F G', 'C D E']);
     expect(statValue(m.stats.buildable)).toBe('no');
     radio('remove');
-    click(edgeButton('Delete edge E to C'));
-    click(edgeButton('Delete edge G to F'));
-    click(button('Last step'));
+    click(edgeButton('Xoá cạnh từ E đến C'));
+    click(edgeButton('Xoá cạnh từ G đến F'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain(
       'Done: no cycle. Build in the order the components finished: E, G, D, C, B, F, A.',
     );
@@ -176,11 +176,11 @@ describe('advanced graph practice', () => {
     render();
     const q = /** @type {HTMLElement} */ (practice().querySelectorAll('ol > li')[0]);
     answer(q, '2');
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer(q, '3');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

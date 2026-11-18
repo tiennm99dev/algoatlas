@@ -36,8 +36,8 @@ const point = (x, y) => `(${fracText(x)}, ${fracText(y)})`;
 export const en = {
   slug: 'linear-programming',
   topic: 'algebraic-randomised',
-  level: 'Advanced',
-  title: 'Linear programming and the simplex method',
+  level: 'Nâng cao',
+  title: 'Quy hoạch tuyến tính và phương pháp đơn hình',
   intro:
     'A linear program maximises a linear objective such as 3x + 2y over the points that satisfy a list of linear inequalities, the feasible region. That region is a convex polygon (a polyhedron in more dimensions), and some optimum always sits at a corner. The simplex method starts at a corner and pivots along edges to a better neighbour until no edge improves the objective.',
   summary:
@@ -229,6 +229,5 @@ export const en = {
         'At (3, 1), x + 3y = 6 < 9, so the second constraint has slack and its dual price is 0. The other two are tight: 3 + 1 = 4 and x = 3.',
     },
   ],
-  nextTeaser:
-    'Next up: Randomised algorithms, where coin flips make quicksort fast on every input in expectation.',
+  nextTeaser: 'Bài tiếp theo: Thuật toán ngẫu nhiên.',
 };

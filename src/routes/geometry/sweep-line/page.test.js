@@ -82,20 +82,20 @@ describe('sweep line lesson', () => {
     render();
     expect(narration()).toContain('4 segments. All pairs would take 6 tests.');
     expect(sweepLine()).toBeNull();
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Sort the 8 end points');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('The line reaches x = 1, where A starts.');
     expect(cell('x')).toBe('1');
     expect(sweepLine()).not.toBeNull();
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('A joins the active set');
     expect(cell('active')).toBe('1');
   });
 
   it('stops the any-crossing sweep at its first hit', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(cell('answer')).toBe('Yes');
     expect(narration()).toMatch(/Stopped after \d+ pair tests?: at least one pair meets\./);
     expect(document.querySelectorAll('svg circle.stroke-state-swap')).toHaveLength(1);
@@ -105,7 +105,7 @@ describe('sweep line lesson', () => {
     render();
     pick('mesh');
     method('all');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toMatch(/^All done: 9 meetings found/);
     expect(document.querySelectorAll('svg circle.stroke-state-swap')).toHaveLength(9);
     expect(cell('active')).toBe('0');
@@ -115,7 +115,7 @@ describe('sweep line lesson', () => {
     render();
     pick('disjoint');
     expect(cell('answer')).toBe(m.pending);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(cell('answer')).toBe('No');
   });
 
@@ -130,7 +130,7 @@ describe('sweep line lesson', () => {
   it('counts a touch at a shared x as a meeting', () => {
     render();
     pick('touching');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(cell('answer')).toBe('Yes');
     expect(text()).toContain('A × B (6, 2)');
   });
@@ -138,7 +138,7 @@ describe('sweep line lesson', () => {
   it('reruns live when an end point moves', () => {
     render();
     pick('disjoint');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(cell('answer')).toBe('No');
     // B runs from (3, 4) to (8, 3); pulling its right end down to (8, 1) crosses D.
     press(point(3), 'ArrowDown', true);
@@ -203,15 +203,15 @@ describe('sweep line lesson', () => {
       flushSync();
     };
     answer('5');
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     click(
       /** @type {HTMLButtonElement} */ (
-        [...q.querySelectorAll('button')].find((b) => b.textContent?.trim() === 'Show a hint')
+        [...q.querySelectorAll('button')].find((b) => b.textContent?.trim() === 'Xem gợi ý')
       ),
     );
     expect(q.textContent).toContain(/** @type {any} */ (m.practice[0]).hints[0]);
     answer('10');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

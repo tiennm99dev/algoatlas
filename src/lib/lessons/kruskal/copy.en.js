@@ -9,8 +9,8 @@ const edgeWithWeight = (e, names) => (e ? `${edgeName(e, names)} (weight ${e.w})
 export const en = {
   slug: 'kruskal',
   topic: 'mst',
-  level: 'Intermediate',
-  title: 'Kruskal’s algorithm',
+  level: 'Trung bình',
+  title: 'Thuật toán Kruskal',
   intro:
     'Kruskal’s algorithm builds a minimum spanning tree by sorting the edges from lightest to heaviest and taking each edge that joins two different trees. An edge whose ends are already in the same tree would close a cycle, so it is skipped. Union-find answers “same tree?” in almost constant time, so sorting is the expensive part: O(E log E).',
   summary:
@@ -180,6 +180,5 @@ export const en = {
         'Sorting the edges costs O(E log E) = O(E log V), and the union-find work is only O(E α(V)), so the total is O(E log E).',
     },
   ],
-  nextTeaser:
-    'Next up: Prim’s algorithm, which grows one tree from a start vertex and keeps adding the cheapest edge leaving it.',
+  nextTeaser: 'Bài tiếp theo: Thuật toán Prim.',
 };

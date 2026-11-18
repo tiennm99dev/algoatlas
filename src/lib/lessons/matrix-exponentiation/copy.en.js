@@ -9,8 +9,8 @@ const num = (n) => n.toLocaleString('en-US');
 export const en = {
   slug: 'matrix-exponentiation',
   topic: 'algebraic-randomised',
-  level: 'Intermediate',
-  title: 'Matrix exponentiation',
+  level: 'Trung bình',
+  title: 'Luỹ thừa ma trận',
   intro:
     'A linear recurrence such as Fibonacci, Fₙ = Fₙ₋₁ + Fₙ₋₂, moves a small state vector one step by multiplying it by a fixed matrix M. So n steps are one multiplication by Mⁿ, and Mⁿ comes from repeated squaring in about log₂ n matrix products. That finds the 10¹⁵-th Fibonacci number mod 10⁹ + 7 in 69 matrix products instead of 10¹⁵ additions.',
   summary:
@@ -200,6 +200,5 @@ export const en = {
         'P is squared once per bit after the first (49 times) and multiplied into R once per set bit (20 times): 69 matrix products. Each costs 8 multiplications, so 69 · 8 = 552.',
     },
   ],
-  nextTeaser:
-    'Next up: Fast Fourier transform, which multiplies two polynomials in O(n log n) by evaluating them at the roots of unity.',
+  nextTeaser: 'Bài tiếp theo: Biến đổi Fourier nhanh.',
 };

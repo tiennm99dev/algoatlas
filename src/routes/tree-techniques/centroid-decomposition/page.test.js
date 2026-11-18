@@ -61,7 +61,7 @@ const node = (label) => {
 };
 /** @param {number} n */
 const next = (n) => {
-  for (let i = 0; i < n; i++) click(button('Next step'));
+  for (let i = 0; i < n; i++) click(button('Bước tiếp'));
 };
 
 function practice() {
@@ -111,7 +111,7 @@ describe('centroid decomposition lesson', () => {
 
   it('finishes with the centroid tree and the pair count', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe(
       'Done: the centroid tree has 4 levels for 14 nodes, and 41 nodes were sized in all pieces together. Pairs exactly 3 edges apart: 16.',
     );
@@ -122,7 +122,7 @@ describe('centroid decomposition lesson', () => {
 
   it('recounts for a new K on the same step and refuses a bad K', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     setK('2');
     expect(byTest('pairs')).toBe('15');
     expect(byTest('levels')).toBe('4');
@@ -134,11 +134,11 @@ describe('centroid decomposition lesson', () => {
   it('splits a path in the middle and a star at its centre', () => {
     render();
     choose('preset', 'path');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('levels')).toBe('4');
     choose('preset', 'star');
     setK('2');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('pairs')).toBe('28');
     expect(byTest('levels')).toBe('2');
   });
@@ -148,18 +148,18 @@ describe('centroid decomposition lesson', () => {
     click(node('N'));
     click(buttonByText('Add child'));
     expect(byTest('selected')).toBe('Selected: O');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('removed')).toBe('15');
     click(node('A'));
     click(buttonByText('Remove subtree'));
     expect(narration()).toBe(m.errors.root);
     click(node('B'));
     click(buttonByText('Remove subtree'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('removed')).toBe('6');
     click(buttonByText('Undo'));
     click(buttonByText('Undo'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('removed')).toBe('14');
   });
 
@@ -196,16 +196,16 @@ describe('centroid decomposition lesson', () => {
     answer.value = '15';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[1].hints[0]);
     answer.value = '4';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

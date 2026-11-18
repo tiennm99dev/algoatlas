@@ -6,8 +6,8 @@ const nm = (names, i) => names[i] ?? String(i);
 export const en = {
   slug: 'graph-representations',
   topic: 'graphs',
-  level: 'Beginner',
-  title: 'Graph representations',
+  level: 'Cơ bản',
+  title: 'Biểu diễn đồ thị',
   intro:
     'A graph is a set of vertices joined by edges: cities and roads, people and friendships, tasks and dependencies. Before an algorithm can walk a graph, the program has to store it, and the two classic choices are an adjacency matrix and adjacency lists. They hold the same edges but answer questions at very different costs.',
   summary:
@@ -152,6 +152,5 @@ export const en = {
         'A matrix needs 10¹² cells. The lists need about n + 2E ≈ 2 × 10⁸ entries, thousands of times less, and BFS over them costs O(n + E).',
     },
   ],
-  nextTeaser:
-    'Next up: breadth-first search on a grid, which explores a graph layer by layer with a queue.',
+  nextTeaser: 'Bài tiếp theo: Duyệt theo chiều rộng trên lưới.',
 };

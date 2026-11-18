@@ -27,8 +27,8 @@ const sum = (a, from, to) => a.slice(from, to + 1).reduce((s, v) => s + v, 0);
 export const en = {
   slug: 'practice-divide-and-conquer',
   topic: 'divide-and-conquer',
-  level: 'Intermediate',
-  title: 'Practice: divide and conquer problems',
+  level: 'Trung bình',
+  title: 'Luyện tập: bài toán chia để trị',
   intro:
     'In divide and conquer the split and the recursive calls are almost always the same: cut the range at mid and solve both halves. The real work, and nearly every bug, is in the combine step. Here you build the combine step for two classic problems, maximum subarray and majority element, check it on samples, and step through the run to find the first call it gets wrong.',
   summary:
@@ -58,8 +58,7 @@ export const en = {
     ['Brute force', 'O(n²)', 'Every subarray sum, or a count of every value.'],
     ['Extra memory', 'O(log n)', 'The call stack is about log₂ n calls deep.'],
   ],
-  nextTeaser:
-    'Next up: Greedy choice and exchange arguments, the next chapter, where one local choice per step can be enough for the best answer.',
+  nextTeaser: 'Bài tiếp theo: Lựa chọn tham lam và lập luận hoán đổi.',
   problemLabel: 'Problem',
   /** @type {Record<Problem, string>} */
   problems: { 'max-subarray': 'Maximum subarray', majority: 'Majority element' },

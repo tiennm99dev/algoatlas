@@ -35,8 +35,8 @@ const CARD_NAMES = {
 export const en = {
   slug: 'practice-complexity',
   topic: 'complexity',
-  level: 'Intermediate',
-  title: 'Practice: estimating running time',
+  level: 'Trung bình',
+  title: 'Luyện tập: ước lượng thời gian chạy',
   intro:
     'Estimating running time means counting how often the basic operation runs and keeping only the growth class. Here you sort ten code snippets into Big-O buckets, then test your guess with a doubling experiment: run the code for n = 1, 2, 4, … and see what happens to the count each time n doubles.',
   summary:
@@ -248,6 +248,5 @@ export const en = {
       solution: 'n passes of ⌈log₂ n⌉ doublings: n⌈log₂ n⌉ = Θ(n log n).',
     },
   ],
-  nextTeaser:
-    'Next up: Static and dynamic arrays, the first data structure, where these cost estimates meet real operations.',
+  nextTeaser: 'Bài tiếp theo: Mảng tĩnh và mảng động.',
 };

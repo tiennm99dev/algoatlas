@@ -10,8 +10,8 @@ const num = (x) => (Number.isInteger(x) ? String(x) : x.toFixed(2));
 export const en = {
   slug: 'static-dynamic-arrays',
   topic: 'arrays-strings',
-  level: 'Beginner',
-  title: 'Static and dynamic arrays',
+  level: 'Cơ bản',
+  title: 'Mảng tĩnh và mảng động',
   intro:
     'An array stores its elements side by side in one block of memory, so the address of element i is the start address plus i times the element size. That makes reading any index a single step. A static array has a fixed capacity; a dynamic array grows by moving everything into a bigger block when it runs out of room.',
   summary:
@@ -176,6 +176,5 @@ export const en = {
         'The elements sit side by side, so the address of A[i] follows from the start address by one multiplication and one addition.',
     },
   ],
-  nextTeaser:
-    'Next up: Amortized analysis of dynamic arrays, where a coin bank shows why doubling makes each push O(1) on average.',
+  nextTeaser: 'Bài tiếp theo: Phân tích khấu hao cho mảng động.',
 };

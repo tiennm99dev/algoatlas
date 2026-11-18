@@ -50,7 +50,7 @@ const field = (/** @type {string} */ selector) =>
 const pick = (name, value) => click(field(`input[name="${name}"][value="${value}"]`));
 /** @param {number} n */
 const next = (n) => {
-  for (let i = 0; i < n; i++) click(button('Next step'));
+  for (let i = 0; i < n; i++) click(button('Bước tiếp'));
 };
 
 function practice() {
@@ -87,7 +87,7 @@ describe('load factor and rehashing lesson', () => {
 
   it('ends with the total and the average cost', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe(
       '12 inserts cost 23 steps with 2 resizes: 1.92 steps per insert on average.',
     );
@@ -100,11 +100,11 @@ describe('load factor and rehashing lesson', () => {
     commit(field('input[name="count"]'), '20');
     pick('threshold', '1');
     pick('growth', 'add');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('work')).toBe('64');
     expect(byTest('per-insert')).toBe('3.20');
     pick('growth', 'double');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('work')).toBe('51');
   });
 
@@ -112,7 +112,7 @@ describe('load factor and rehashing lesson', () => {
     render();
     commit(field('input[name="count"]'), '32');
     pick('threshold', 'never');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('m')).toBe('4');
     expect(byTest('grows')).toBe('0');
     expect(byTest('gauge')).toBe('α = 32/4 = 8.00, never resizes');
@@ -121,7 +121,7 @@ describe('load factor and rehashing lesson', () => {
 
   it('steps back with the arrow keys', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     const before = narration();
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
     flushSync();
@@ -141,16 +141,16 @@ describe('load factor and rehashing lesson', () => {
     answer.value = '20';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[1].hints[0]);
     answer.value = '24';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

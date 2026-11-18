@@ -10,8 +10,8 @@ const fmt = (x) => x.toFixed(3);
 export const en = {
   slug: 'ternary-search',
   topic: 'searching',
-  level: 'Intermediate',
-  title: 'Ternary search',
+  level: 'Trung bình',
+  title: 'Tìm kiếm tam phân',
   intro:
     'A unimodal function climbs to a single peak and then falls. Ternary search finds that peak without derivatives: probe the function at two points that split the interval into thirds, and the lower probe tells you which outer third cannot hold the peak.',
   summary:
@@ -36,8 +36,7 @@ export const en = {
     ['On integers', 'O(log n)', 'The same rule on an index range, until three or fewer remain.'],
     ['Memory', 'O(1)', 'lo, hi and the two probes.'],
   ],
-  nextTeaser:
-    'Next up: Practice: searching problems, where you debug binary searches that loop forever or miss the target.',
+  nextTeaser: 'Bài tiếp theo: Luyện tập: bài toán tìm kiếm.',
   shapeLabel: 'Curve',
   shapes: /** @type {Record<Shape, string>} */ ({
     parabola: 'Parabola',

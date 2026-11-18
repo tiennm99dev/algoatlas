@@ -4,8 +4,8 @@
 export const en = {
   slug: 'bst',
   topic: 'trees',
-  level: 'Intermediate',
-  title: 'Binary search tree',
+  level: 'Trung bình',
+  title: 'Cây nhị phân tìm kiếm',
   intro:
     'A binary search tree keeps every key smaller than a node on its left and every larger key on its right. Search, insert, and delete each walk one path from the root, so their cost is the height of the tree.',
   summary:
@@ -106,6 +106,5 @@ export const en = {
     ['Time, worst', 'O(n)', 'Sorted inserts build a single long branch.'],
     ['Memory', 'O(n)', 'One node per key.'],
   ],
-  nextTeaser:
-    'Next up: N-ary trees and tree recursion, where a node may have any number of children and one recursive call per child does the work.',
+  nextTeaser: 'Bài tiếp theo: Cây nhiều nhánh và đệ quy trên cây.',
 };

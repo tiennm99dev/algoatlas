@@ -83,14 +83,14 @@ describe('connected components lesson', () => {
   it('labels the first island, then counts all nine', () => {
     render();
     expect(text()).toContain('No cell has a label yet.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('(0,0) is land with no label: a new island. Label it 1');
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('(0,1) is unlabelled land next to (0,0): label it 1 and enqueue it.');
     const queue = [...document.querySelectorAll('ol li')].map((li) => li.textContent?.trim());
     expect(queue).toContain('(0,1) (just labelled)');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.islands)).toBe('9');
     expect(statValue(m.stats.largest)).toBe('7');
     expect(text()).toContain('Scan finished: 9 islands, after 97 neighbour checks.');
@@ -100,7 +100,7 @@ describe('connected components lesson', () => {
   it('8 directions merge the diagonal chain', () => {
     render();
     radio('8');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.islands)).toBe('7');
     expect(button('Row 4, column 2, island 4')).toBeTruthy();
   });
@@ -109,7 +109,7 @@ describe('connected components lesson', () => {
     render();
     keyActivate(button('Row 0, column 3, Water'));
     expect(text()).toContain('Land added at (0,3).');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.islands)).toBe('10');
     keyActivate(button('Row 0, column 3, island 2'));
     expect(text()).toContain('Water at (0,3).');
@@ -134,11 +134,11 @@ describe('connected components lesson', () => {
   it('all water and reset change the map', () => {
     render();
     click(buttonByText(m.clearMap));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.islands)).toBe('0');
     expect(text()).toContain('Scan finished: 0 islands');
     click(buttonByText(m.resetMap));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.islands)).toBe('9');
   });
 
@@ -154,11 +154,11 @@ describe('connected components lesson', () => {
     render();
     const q = /** @type {HTMLElement} */ (practice().querySelectorAll('ol > li')[0]);
     answer(q, '7');
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer(q, '9');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

@@ -8,8 +8,8 @@ const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 export const en = {
   slug: 'practice-backtracking',
   topic: 'backtracking',
-  level: 'Intermediate',
-  title: 'Practice: backtracking problems',
+  level: 'Trung bình',
+  title: 'Luyện tập: bài toán quay lui',
   intro:
     'Two classic problems use the same three moves in different ways. Word search walks a letter grid, marking each cell it steps on and clearing the mark when it retreats. Combination sum picks numbers that may repeat, and prunes as soon as a number is too big. Work out the state and the undo for each one, then check yourself on the widget.',
   summary:
@@ -275,6 +275,5 @@ export const en = {
       solution: 'Mark it (choose), try the neighbours (explore), unmark it (unchoose).',
     },
   ],
-  nextTeaser:
-    'Next up: Why balance matters, which opens balanced search trees by showing what sorted input does to a plain BST.',
+  nextTeaser: 'Bài tiếp theo: Vì sao cân bằng quan trọng.',
 };

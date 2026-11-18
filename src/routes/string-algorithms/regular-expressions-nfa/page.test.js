@@ -49,12 +49,12 @@ const stat = (id) => document.querySelector(`[data-testid="${id}"]`)?.textConten
 const field = (name) =>
   /** @type {HTMLInputElement} */ (document.querySelector(`[name="${name}"]`));
 const titles = () => [...document.querySelectorAll('svg title')].map((t) => t.textContent ?? '');
-const toLast = () => click(button('Last step'));
+const toLast = () => click(button('Đến bước cuối'));
 /** @param {string} kindText */
 function stepUntil(kindText) {
   for (let i = 0; i < 500; i++) {
     if (narration().includes(kindText)) return;
-    click(button('Next step'));
+    click(button('Bước tiếp'));
   }
   throw new Error(`never narrated ${kindText}`);
 }
@@ -78,16 +78,14 @@ function checkFirstQuestion(wrong, right) {
   answer.value = wrong;
   answer.dispatchEvent(new Event('input', { bubbles: true }));
   submit();
-  expect(q.textContent).toContain('Not quite');
-  const hint = [...q.querySelectorAll('button')].find(
-    (b) => b.textContent?.trim() === 'Show a hint',
-  );
+  expect(q.textContent).toContain('Chưa đúng');
+  const hint = [...q.querySelectorAll('button')].find((b) => b.textContent?.trim() === 'Xem gợi ý');
   click(/** @type {HTMLButtonElement} */ (hint));
   expect(q.textContent).toContain(/** @type {any} */ (m.practice[0]).hints[0]);
   answer.value = right;
   answer.dispatchEvent(new Event('input', { bubbles: true }));
   submit();
-  expect(q.textContent).toContain('Correct!');
+  expect(q.textContent).toContain('Đúng rồi!');
   for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
 }
 
@@ -99,7 +97,7 @@ describe('Regular expressions lesson', () => {
     render();
     expect(narration()).toBe('Build the NFA of (a|b)*abb, starting from one state.');
     expect(drawnStates()).toBe(1);
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('a: add a letter edge');
     expect(drawnStates()).toBe(4);
     stepUntil('(a|b)*: add a loop back');

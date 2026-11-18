@@ -4,8 +4,8 @@
 export const en = {
   slug: 'algorithms-ram-model',
   topic: 'complexity',
-  level: 'Beginner',
-  title: 'Algorithms and the RAM model',
+  level: 'Cơ bản',
+  title: 'Thuật toán và mô hình RAM',
   intro:
     'An algorithm is a finite list of exact steps that turns any valid input into the right output. To compare algorithms without a stopwatch, we run them on an imaginary machine, the word-RAM, where every primitive operation costs one step, and count the steps.',
   summary:
@@ -134,6 +134,5 @@ export const en = {
         'The buggy loop returns 45 instead of 55. Efficiency only matters among correct algorithms, so use the correct loop (or, better, the formula).',
     },
   ],
-  nextTeaser:
-    'Next up: asymptotic notation, where Big-O, Omega and Theta keep only how the step count grows and drop the constants.',
+  nextTeaser: 'Bài tiếp theo: Kí hiệu tiệm cận: O lớn, Omega, Theta.',
 };

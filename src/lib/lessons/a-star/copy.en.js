@@ -1,13 +1,13 @@
 /** @typedef {import('$lib/algo-engine/a-star.js').AStarFrame} AStarFrame */
 /** @typedef {import('$lib/algo-engine/a-star.js').Heuristic} Heuristic */
-import { gridCopy } from '../grid-copy.en.js';
+import { gridCopy } from '../grid-copy.vi.js';
 
 export const en = {
   ...gridCopy,
   slug: 'a-star',
   topic: 'shortest-paths',
-  level: 'Advanced',
-  title: 'A* search',
+  level: 'Nâng cao',
+  title: 'Tìm kiếm A*',
   intro:
     'Dijkstra’s algorithm spreads out evenly in every direction, even away from the goal. A* search adds a heuristic h(n), an estimate of the cost still to go from n to the goal, and always expands the cell with the smallest f(n) = g(n) + h(n), where g(n) is the cost already paid. With a heuristic that never overestimates, A* still finds a shortest path, while expanding far fewer cells.',
   summary:
@@ -156,6 +156,5 @@ export const en = {
         'h = 0, Manhattan and Euclidean never exceed the true remaining cost, so all three are admissible; Manhattan is the best informed of them. 3 × Manhattan overestimates: one step from the goal it says 3.',
     },
   ],
-  nextTeaser:
-    'Next up: Practice: shortest-path problems, where you pick the right algorithm for each scenario and watch it run.',
+  nextTeaser: 'Bài tiếp theo: Luyện tập: bài toán đường đi ngắn nhất.',
 };

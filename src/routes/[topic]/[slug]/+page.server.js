@@ -1,4 +1,5 @@
 import { error } from '@sveltejs/kit';
+import { t } from '$lib/i18n/index.js';
 import { chapters, findLesson } from '$lib/curriculum/index.js';
 import { findRedirect, legacyRedirects } from '$lib/curriculum/legacy-redirects.js';
 import { lessonNeighbors } from '$lib/lessons/paths.js';
@@ -26,7 +27,7 @@ export function load({ params }) {
 
   const entry = findLesson(params.slug);
   if (!entry || entry.chapter.slug !== params.topic || hasStaticRoute(params.topic, params.slug)) {
-    error(404, 'Unknown lesson');
+    error(404, t().notFound.title);
   }
   // Stubs link to their neighbors in book order, written or not, so every page is reachable.
   const { prev, next } = lessonNeighbors(entry.lesson.slug);

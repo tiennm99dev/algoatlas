@@ -16,8 +16,8 @@ const OUTCOMES = {
 export const en = {
   slug: 'practice-searching',
   topic: 'searching',
-  level: 'Intermediate',
-  title: 'Practice: searching problems',
+  level: 'Trung bình',
+  title: 'Luyện tập: bài toán tìm kiếm',
   intro:
     'Binary search is short, and almost every bug in it sits on a boundary: the loop test, the update of lo or hi, or the starting value of hi. Here five versions of the same search differ by one line each. Run them on your own array, try every target at once, and see exactly where a version loops, misses or reads past the end.',
   summary:
@@ -59,8 +59,7 @@ export const en = {
       'When lo = hi and a[mid] > x, hi = mid leaves the window unchanged.',
     ],
   ],
-  nextTeaser:
-    'Next up: Singly linked lists, the next chapter, where data lives in nodes joined by pointers instead of a block of cells.',
+  nextTeaser: 'Bài tiếp theo: Danh sách liên kết đơn.',
   versionLabel: 'Version',
   /** @param {Version} v */
   versionName: (v) => `Version ${v}`,

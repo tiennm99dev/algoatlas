@@ -80,7 +80,7 @@ describe('practice: divide and conquer problems', () => {
     expect(text()).toContain('return max(L, R)');
     expect(byTest('samples-summary')).toBe('Your combine passes 1 of 5 arrays.');
     expect(byTest('expected')).toBe('6');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('returned')).toBe('4 ✕');
     expect(byTest('calls')).toBe('17');
     expect(byTest('reads')).toBe('38');
@@ -92,7 +92,7 @@ describe('practice: divide and conquer problems', () => {
     click(input('part-cross'));
     expect(text()).toContain('return max(L, R, C)');
     expect(byTest('samples-summary')).toContain('passes all 5 arrays');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('returned')).toBe('6 ✓');
     expect(text()).toContain('every call was right for its own range');
   });
@@ -114,10 +114,10 @@ describe('practice: divide and conquer problems', () => {
     click(input('part-right'));
     click(input('part-cross'));
     expect(byTest('samples-summary')).toBe('Your combine passes 4 of 5 arrays.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('the right answer, but call [0, 1] was wrong on the way.');
     click(sample('Sample 3'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('returned')).toBe('−8 ✕');
   });
 
@@ -128,13 +128,13 @@ describe('practice: divide and conquer problems', () => {
     expect(byTest('samples-summary')).toBe('Your combine passes 2 of 5 arrays.');
     click(input('part-count'));
     expect(byTest('samples-summary')).toContain('passes all 5 arrays');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('reads')).toBe('38');
     expect(byTest('returned')).toBe('4 ✓');
     click(input('part-left'));
     expect(byTest('samples-summary')).toBe('Your combine passes 4 of 5 arrays.');
     click(sample('Sample 2'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('returned')).toBe('none ✕');
   });
 
@@ -183,16 +183,16 @@ describe('practice: divide and conquer problems', () => {
     answer.value = '6';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '4';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

@@ -7,8 +7,8 @@ const plural = (k, one, many) => `${k} ${k === 1 ? one : many}`;
 export const en = {
   slug: 'linear-search',
   topic: 'searching',
-  level: 'Beginner',
-  title: 'Linear search',
+  level: 'Cơ bản',
+  title: 'Tìm kiếm tuần tự',
   intro:
     'Linear search checks the cells one by one from the left until it meets the value it wants or runs out of cells. It needs no order at all, so it works on any array, but a miss costs a look at every cell.',
   summary:
@@ -29,8 +29,7 @@ export const en = {
     ['Worst (x last or missing)', 'O(n)', 'Every cell is compared once.'],
     ['Memory', 'O(1)', 'Only the index i; the sentinel needs one spare slot.'],
   ],
-  nextTeaser:
-    'Next up: binary search, which needs sorted input but throws away half of the cells with each comparison.',
+  nextTeaser: 'Bài tiếp theo: Tìm kiếm nhị phân.',
   variantLabel: 'Variant',
   variants: /** @type {Record<LinearVariant, string>} */ ({
     plain: 'Plain',

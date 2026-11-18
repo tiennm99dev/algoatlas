@@ -60,10 +60,10 @@ const stat = (id) => document.querySelector(`[data-testid="${id}"]`)?.textConten
 /** @param {string} name */
 const field = (name) =>
   /** @type {HTMLInputElement} */ (document.querySelector(`[name="${name}"]`));
-const toLast = () => click(button('Last step'));
+const toLast = () => click(button('Đến bước cuối'));
 /** @param {number} times */
 const next = (times) => {
-  for (let i = 0; i < times; i++) click(button('Next step'));
+  for (let i = 0; i < times; i++) click(button('Bước tiếp'));
 };
 /** @param {string} value */
 function pickProblem(value) {
@@ -182,16 +182,16 @@ describe('algebraic practice lesson', () => {
     answer.value = '60';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(/** @type {any} */ (m.practice[4]).hints[0]);
     answer.value = '61';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 

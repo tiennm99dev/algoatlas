@@ -47,7 +47,7 @@ const text = () => document.body.textContent ?? '';
 describe('dijkstra lesson', () => {
   it('finds the cheapest route and compares it with the BFS route', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Reached the goal at cost 17');
     expect(text()).toContain('BFS route: 11 steps, cost 27');
     expect(text()).toContain('Dijkstra route: 17 steps, cost 17');
@@ -56,21 +56,21 @@ describe('dijkstra lesson', () => {
   it('adds mud from the keyboard and states its cost in the label', () => {
     render();
     pickTool('mud');
-    keyActivate(button('Row 0, column 0'));
-    expect(button('Row 0, column 0, mud, cost 5')).toBeTruthy();
+    keyActivate(button('Hàng 0, cột 0'));
+    expect(button('Hàng 0, cột 0, mud, cost 5')).toBeTruthy();
     expect(text()).toContain('Mud added at (0,0).');
   });
 
   it('a wall replaces the mud underneath it', () => {
     render();
-    keyActivate(button('Row 4, column 6, mud, cost 5'));
-    expect(button('Row 4, column 6, Wall')).toBeTruthy();
+    keyActivate(button('Hàng 4, cột 6, mud, cost 5'));
+    expect(button('Hàng 4, cột 6, Wall')).toBeTruthy();
   });
 
   it('announces the best cost in cell labels', () => {
     render();
-    click(button('Last step'));
-    expect(button('Row 4, column 2, Start, best cost 0')).toBeTruthy();
+    click(button('Đến bước cuối'));
+    expect(button('Hàng 4, cột 2, Start, best cost 0')).toBeTruthy();
   });
 
   it('reports no path when the goal is walled in', () => {
@@ -81,20 +81,20 @@ describe('dijkstra lesson', () => {
       [4, 12],
       [4, 14],
     ]) {
-      keyActivate(button(`Row ${r}, column ${c}`));
+      keyActivate(button(`Hàng ${r}, cột ${c}`));
     }
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('walls cut it off');
   });
 
   it('moving the start onto mud clears its cost and says so', () => {
     render();
     pickTool('start');
-    keyActivate(button('Row 4, column 7, mud, cost 5'));
-    expect(text()).toContain('Start moved to (4,7). The mud under it was cleared.');
+    keyActivate(button('Hàng 4, cột 7, mud, cost 5'));
+    expect(text()).toContain('Đã dời điểm xuất phát đến (4,7). The mud under it was cleared.');
     // No mud is announced under the start.
-    expect(button('Row 4, column 7, Start, best cost 0')).toBeTruthy();
-    const next = button('Next step');
+    expect(button('Hàng 4, cột 7, Start, best cost 0')).toBeTruthy();
+    const next = button('Bước tiếp');
     for (let i = 0; i < 20 && !text().includes('(4,8) is open and unreached'); i++) click(next);
     // The first hop into the neighboring mud costs 3 (the average of 1 and 5), not 5.
     expect(text()).toContain(
@@ -105,14 +105,14 @@ describe('dijkstra lesson', () => {
   it('moving the goal onto mud clears its cost too', () => {
     render();
     pickTool('goal');
-    keyActivate(button('Row 4, column 8, mud, cost 5'));
-    expect(button('Row 4, column 8, Goal')).toBeTruthy();
+    keyActivate(button('Hàng 4, cột 8, mud, cost 5'));
+    expect(button('Hàng 4, cột 8, Goal')).toBeTruthy();
     expect(text()).toContain('The mud under it was cleared.');
   });
 
   it('labels a stale pop as skipped, not as expanding', () => {
     render();
-    const next = button('Next step');
+    const next = button('Bước tiếp');
     for (let i = 0; i < 600 && !text().includes('a stale entry, skip it'); i++) click(next);
     expect(text()).toContain('a stale entry, skip it');
     expect(document.querySelector('button[aria-label*="Stale copy, skipped"]')).not.toBeNull();
@@ -121,14 +121,14 @@ describe('dijkstra lesson', () => {
 
   it('narrates a relaxation as popped cost plus step, naming a mud step', () => {
     render();
-    const next = button('Next step');
+    const next = button('Bước tiếp');
     for (let i = 0; i < 600 && !text().includes('(mud step)'); i++) click(next);
     expect(text()).toMatch(/\d+ \+ \d+ \(mud step\) = \d+/);
   });
 
   it('labels a stale queue entry and the hot chip as just pushed', () => {
     render();
-    const next = button('Next step');
+    const next = button('Bước tiếp');
     const chips = () => [...document.querySelectorAll('ol li')].map((c) => c.textContent ?? '');
     for (let i = 0; i < 600 && !chips().some((t) => t.includes('(stale)')); i++) click(next);
     expect(chips().some((t) => /^\(\d+,\d+\) \d+ \(stale\)$/.test(t.trim()))).toBe(true);
@@ -137,7 +137,7 @@ describe('dijkstra lesson', () => {
 
   it('lights only the live queue entry of the touched cell', () => {
     render();
-    const next = button('Next step');
+    const next = button('Bước tiếp');
     for (let i = 0; i < 600; i++) {
       click(next);
       const chips = [...document.querySelectorAll('ol li')];

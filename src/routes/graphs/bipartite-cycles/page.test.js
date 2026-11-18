@@ -80,13 +80,13 @@ describe('bipartite and cycles lesson', () => {
   it('two-colours the odd cycle until C and D clash', () => {
     render();
     expect(text()).toContain('No vertex has a colour yet.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('A has no colour: give it colour 1 and start a BFS from it.');
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('B has no colour, so it gets the other colour, 2.');
     expect(vertex(1).getAttribute('aria-label')).toBe('Vertex B, side 2');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain(
       'C and D both have colour 1, but an edge joins them. Odd cycle A, B, C, D, E: the graph is not bipartite.',
     );
@@ -98,7 +98,7 @@ describe('bipartite and cycles lesson', () => {
   it('colours the even cycle into two sides', () => {
     render();
     click(buttonByText(m.presets.even));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Bipartite. Side 1: A, C, E. Side 2: B, D, F.');
     expect(statValue(m.stats.checks)).toBe('14');
     expect(statValue(m.stats.sides)).toBe('3 | 3');
@@ -108,14 +108,14 @@ describe('bipartite and cycles lesson', () => {
     render();
     click(buttonByText(m.presets.diamond));
     radio('undirected');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Cycle A, B, D, C – A.');
     radio('directed');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('the directed graph has no cycle, so it is a DAG.');
     expect(statValue(m.stats.result)).toBe('no cycle');
-    const next = button('Next step');
-    click(button('First step'));
+    const next = button('Bước tiếp');
+    click(button('Về bước đầu'));
     for (let i = 0; i < 40 && !text().includes('is finished, so every path'); i++) click(next);
     expect(text()).toContain('Edge C → D: D is finished');
   });
@@ -124,21 +124,21 @@ describe('bipartite and cycles lesson', () => {
     render();
     click(buttonByText(m.presets.tree));
     radio('undirected');
-    click(button('Next step'));
-    click(button('Next step'));
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('B – A is the edge we arrived along, not a cycle. Skip it.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('the graph is a forest');
   });
 
   it('finds the directed cycle of the odd preset with a back edge', () => {
     render();
     radio('directed');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Cycle A, B, C, D, E → A.');
-    click(button('Previous step'));
+    click(button('Bước trước'));
     expect(text()).toContain('Edge E → A leads to A, which is still in progress: a back edge.');
   });
 
@@ -146,10 +146,10 @@ describe('bipartite and cycles lesson', () => {
     render();
     radio('remove');
     const edge = /** @type {Element} */ (
-      document.querySelector('[aria-label="Delete edge C and D"]')
+      document.querySelector('[aria-label="Xoá cạnh giữa C và D"]')
     );
     click(edge);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.result)).toBe('bipartite');
   });
 
@@ -163,11 +163,11 @@ describe('bipartite and cycles lesson', () => {
     render();
     const q = /** @type {HTMLElement} */ (practice().querySelectorAll('ol > li')[0]);
     answer(q, '3');
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer(q, '5');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

@@ -11,8 +11,8 @@ const units = (i, j) => (i === j ? `unit ${i}` : `units ${i}..${j}`);
 export const en = {
   slug: 'interval-dp',
   topic: 'dynamic-programming',
-  level: 'Advanced',
-  title: 'Interval DP: matrix chain and rod cutting',
+  level: 'Nâng cao',
+  title: 'QHĐ trên đoạn: nhân chuỗi ma trận và cắt thanh',
   intro:
     'Some problems have no natural left-to-right order: the last step can split the input anywhere. Interval DP lets cell (i, j) stand for the stretch from i to j and tries every split point k between them. Every split reads two shorter intervals, so the table fills by length, one diagonal at a time. Matrix chain multiplication and rod cutting are the classic examples.',
   summary:
@@ -280,6 +280,5 @@ export const en = {
       solution: 'O(n²) intervals with O(n) splits each: O(n³). Exactly (n³ − n) / 6 splits.',
     },
   ],
-  nextTeaser:
-    'Next up: Grid and path DP, where each cell of a grid is built from the cell above it and the cell to its left.',
+  nextTeaser: 'Bài tiếp theo: QHĐ trên lưới và đường đi.',
 };

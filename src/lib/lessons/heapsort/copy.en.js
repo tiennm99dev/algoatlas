@@ -3,8 +3,8 @@
 export const en = {
   slug: 'heapsort',
   topic: 'sorting',
-  level: 'Intermediate',
-  title: 'Heapsort',
+  level: 'Trung bình',
+  title: 'Sắp xếp vun đống',
   intro:
     'Heapsort first rearranges the array into a max-heap, a binary tree stored in the array where every parent is at least as large as its children. The largest value then sits at the root, so it swaps the root to the end, shrinks the heap by one and repairs it. It is O(n log n) even in the worst case and needs no extra array.',
   summary:
@@ -154,6 +154,5 @@ export const en = {
         'Extract 1 swaps 2a to slot 2: 1, 2b, 2a. Sifting 1 down swaps it with 2b: 2b, 1, 2a. Extract 2 swaps 2b to slot 1: 1, 2b, 2a. The two 2s ended in the wrong order, so heapsort is not stable.',
     },
   ],
-  nextTeaser:
-    'Next up: the comparison sort lower bound, which shows that no comparison sort can beat n log n.',
+  nextTeaser: 'Bài tiếp theo: Cận dưới của sắp xếp bằng so sánh.',
 };

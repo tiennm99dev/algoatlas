@@ -6,8 +6,8 @@ const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 export const en = {
   slug: 'rabin-karp',
   topic: 'string-algorithms',
-  level: 'Intermediate',
-  title: 'String hashing and Rabin-Karp',
+  level: 'Trung bình',
+  title: 'Băm xâu và thuật toán Rabin-Karp',
   intro:
     'Comparing two strings letter by letter is slow, but comparing two numbers takes one step. A polynomial hash turns a string into a number, and a rolling update slides it along a text in constant time per place. Rabin-Karp searches by comparing those numbers, and only reads the letters when the numbers agree.',
   summary:
@@ -194,6 +194,5 @@ export const en = {
         '1,000 windows × 1/101 ≈ 9.9, so about 10. Raising q to about a million makes it about 0.001.',
     },
   ],
-  nextTeaser:
-    'Next up: Prefix function and KMP, which reads the text in one pass, never moving backwards, by remembering how much of the pattern still matches after a mismatch.',
+  nextTeaser: 'Bài tiếp theo: Hàm tiền tố và thuật toán KMP.',
 };

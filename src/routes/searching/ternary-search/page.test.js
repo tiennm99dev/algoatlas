@@ -62,19 +62,19 @@ describe('ternary search lesson', () => {
   it('opens on the parabola and closes in on 3.7 in 11 rounds', () => {
     render();
     expect(text()).toContain('Look for the highest point of f on [0.000, 6.000]');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain(
       'f(m1) = f(2.000) = 3.555 and f(m2) = f(4.000) = 4.955, so f(m1) < f(m2).',
     );
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('lo = 2.000; the interval is now 4.000 wide.');
     expect(byTest('cut-left')).not.toBeNull();
     expect(byTest('cut-right')).toBeNull();
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('hi = 4.667');
     expect(byTest('cut-right')).not.toBeNull();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain(
       'The peak is at about x = 3.695, f(x) = 5.000, after 11 rounds and 22 evaluations.',
     );
@@ -85,7 +85,7 @@ describe('ternary search lesson', () => {
   it('a smaller ε runs more rounds', () => {
     render();
     click(radio('eps', '0.001'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('rounds')?.textContent?.trim()).toBe('22');
     expect(byTest('evaluations')?.textContent?.trim()).toBe('44');
     expect(text()).toContain('x = 3.700');
@@ -95,7 +95,7 @@ describe('ternary search lesson', () => {
     render();
     commit(/** @type {HTMLInputElement} */ (document.querySelector('input[name="peak"]')), '1.2');
     expect(text()).toContain('Peak at x = 1.2');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toMatch(/x = 1\.(19|20|21)\d/);
   });
 
@@ -106,7 +106,7 @@ describe('ternary search lesson', () => {
     slider.dispatchEvent(new Event('input', { bubbles: true }));
     flushSync();
     expect(text()).toContain('Peak at x = 4.5');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toMatch(/x = 4\.(49|50|51)\d/);
   });
 
@@ -114,22 +114,22 @@ describe('ternary search lesson', () => {
     render();
     click(radio('shape', 'two-peaks'));
     expect(document.querySelector('input[name="peak"]')).toBeNull();
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('f(m1) = f(2.000) = 0.646 and f(m2) = f(4.000) = 3.200');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('was discarded in the first round');
   });
 
   it('switching curves keeps the tent peak exact', () => {
     render();
     click(radio('shape', 'tent'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toMatch(/x = 3\.(69|70)\d, f\(x\) = 4\.9/);
   });
 
   it('zoom narrows the axis to the kept interval', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     const ticks = () =>
       [...(byTest('plot')?.querySelectorAll('text') ?? [])].map((t) => t.textContent);
     expect(ticks()).toContain('6');
@@ -141,8 +141,8 @@ describe('ternary search lesson', () => {
   it('lists the interval after each round', () => {
     render();
     expect(text()).toContain(m.intervalsEmpty);
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('[2.000, 6.000]');
   });
 
@@ -159,16 +159,16 @@ describe('ternary search lesson', () => {
     answer.value = '16';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '32';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

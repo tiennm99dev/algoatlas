@@ -62,25 +62,17 @@ export function normalizeUnit(unit) {
 }
 
 /**
- * Reads the digits part of a number written the English way: `.` is the decimal mark, and
- * commas or spaces group thousands in threes (`1,000,000`, `1 000 000`, `12,345.75`).
- * `3,5` is not a number here, because a comma never marks decimals.
+ * Reads the digits part of a typed number. The decimal mark is a point or, as Vietnamese writes
+ * it, a comma (`3.5` and `3,5` are both 3.5). Digits are never grouped: a space inside the digits
+ * or a second mark makes the input unreadable, so `1 000` and `1,000.5` are rejected rather than
+ * guessed at, and `1,000` reads as 1.
  * @param {string} digits
  * @returns {number | null}
  */
 function readDigits(digits) {
-  const s = digits.replace(SPACE_RE, ' ');
-  const at = s.indexOf('.');
-  if (at !== s.lastIndexOf('.')) return null;
-  const intPart = at < 0 ? s : s.slice(0, at) || '0';
-  const frac = at < 0 ? '' : s.slice(at + 1);
-  if (frac !== '' && !/^\d+$/.test(frac)) return null;
-  if (at >= 0 && frac === '') return null;
-  const grouped = /[ ,]/.test(intPart);
-  if (grouped && !/^\d{1,3}(?:([ ,])\d{3})(?:\1\d{3})*$/.test(intPart)) return null;
-  const whole = intPart.replace(/[ ,]/g, '');
-  if (!/^\d+$/.test(whole)) return null;
-  return Number(frac ? `${whole}.${frac}` : whole);
+  const m = /^(\d*)(?:[.,](\d+))?$/.exec(digits);
+  if (!m || (m[1] === '' && m[2] === undefined)) return null;
+  return Number(`${m[1] || '0'}${m[2] === undefined ? '' : `.${m[2]}`}`);
 }
 
 /**
@@ -90,7 +82,7 @@ function readDigits(digits) {
  */
 export function parseNumber(input) {
   const s = input.trim().replace(MINUS_RE, '-');
-  const m = /^([+-]?)\s*((?:\d|\.(?=\d))[\d.,\s]*?)\s*([^\d\s.,].*)?$/u.exec(s);
+  const m = /^([+-]?)\s*((?:\d|[.,](?=\d))[\d.,\s]*?)\s*([^\d\s.,].*)?$/u.exec(s);
   if (!m) return null;
   const [, sign, digits, unit = ''] = m;
   if (!/\d$/.test(digits)) return null;

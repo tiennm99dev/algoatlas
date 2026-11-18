@@ -11,8 +11,8 @@ const count = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 export const en = {
   slug: 'singly-linked-lists',
   topic: 'linked-lists',
-  level: 'Beginner',
-  title: 'Singly linked lists',
+  level: 'Cơ bản',
+  title: 'Danh sách liên kết đơn',
   intro:
     'A singly linked list stores each value in its own node, and each node holds a pointer to the next one. The list only remembers its head, so adding or removing at the front rewires one or two pointers, while reaching the i-th value means walking i links.',
   summary:
@@ -195,6 +195,5 @@ export const en = {
         'cur goes 5 → 18 → 23: two hops. Then prev (18) gets prev.next = cur.next, so 18 points at 41.',
     },
   ],
-  nextTeaser:
-    'Next up: doubly and circular linked lists, where a prev pointer and a sentinel make removal O(1).',
+  nextTeaser: 'Bài tiếp theo: Danh sách liên kết đôi và danh sách liên kết vòng.',
 };

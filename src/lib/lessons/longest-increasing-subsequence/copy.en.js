@@ -9,8 +9,8 @@ const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 export const en = {
   slug: 'longest-increasing-subsequence',
   topic: 'dynamic-programming',
-  level: 'Intermediate',
-  title: 'Longest increasing subsequence',
+  level: 'Trung bình',
+  title: 'Dãy con tăng dài nhất',
   intro:
     'A subsequence keeps some of the values in their original order, not necessarily next to each other. The longest increasing subsequence (LIS) is the longest one whose values strictly rise. The classic DP lets L[i] be the longest that ends at a[i] and checks every earlier j, which costs O(n²); patience sorting deals the values onto piles and finds each pile by binary search, which costs O(n log n).',
   summary:
@@ -208,6 +208,5 @@ export const en = {
         'A value only covers a top at least as big, so no pile rises and the tops strictly rise, and a new pile appears exactly when a value beats every top. But the tops need not be in sequence order: at the end of the example the top of pile 0 is 3, the last value. That is why back pointers rebuild the LIS.',
     },
   ],
-  nextTeaser:
-    'Next up: longest common subsequence and edit distance, which compare two sequences with a 2D table over their prefixes.',
+  nextTeaser: 'Bài tiếp theo: Dãy con chung dài nhất và khoảng cách sửa.',
 };

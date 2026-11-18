@@ -49,8 +49,8 @@ const stat = (id) => document.querySelector(`[data-testid="${id}"]`)?.textConten
 const field = (name) =>
   /** @type {HTMLInputElement} */ (document.querySelector(`[name="${name}"]`));
 const titles = () => [...document.querySelectorAll('svg title')].map((t) => t.textContent ?? '');
-const next = () => click(button('Next step'));
-const toLast = () => click(button('Last step'));
+const next = () => click(button('Bước tiếp'));
+const toLast = () => click(button('Đến bước cuối'));
 const toAttacker = () =>
   click(
     /** @type {HTMLInputElement} */ (
@@ -205,16 +205,16 @@ describe('RSA practice', () => {
     answer.value = '9';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(/** @type {any} */ (m.practice[0]).hints[0]);
     answer.value = '7';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 

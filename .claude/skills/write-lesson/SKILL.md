@@ -21,7 +21,7 @@ below passes.
    - `merge-quick-sort` (sorting): two algorithms behind one toggle, aux row, call stack.
    - Grid lessons (`bfs-grid`, `dfs-grid`, `dijkstra-grid`, `a-star`) share
      `grid-board.svelte`, `src/lib/player/grid-editor.svelte.js` and
-     `src/lib/lessons/grid-copy.en.js`. The editor's `reset()` puts back the starting walls,
+     `src/lib/lessons/grid-copy.vi.js`. The editor's `reset()` puts back the starting walls,
      start and goal (a "Reset grid" button); never rebuild them through its edits.
 4. `README.md` sections Lessons and Architecture.
 
@@ -31,13 +31,13 @@ For each lesson slug `<slug>` in topic `<topic>`, and nothing else:
 
 | File | Kinds |
 | --- | --- |
-| `src/lib/lessons/<slug>/copy.en.js` | all |
+| `src/lib/lessons/<slug>/copy.vi.js` | all |
 | `src/lib/algo-engine/<slug>.js` and `<slug>.test.js` | theory, practice (review needs none) |
 | `src/routes/<topic>/<slug>/+page.svelte` | all |
 | `src/routes/<topic>/<slug>/page.test.js` | all (no `+` prefix, so SvelteKit ignores it) |
 
 The topic in the route path is the chapter slug, even when it reads oddly (`/structures/...`
-is the hashing chapter). The registry discovers `copy.en.js` on its own and throws when `slug`
+is the hashing chapter). The registry discovers `copy.vi.js` on its own and throws when `slug`
 or `topic` does not match the curriculum; the static route replaces the stub automatically.
 
 Never edit `src/lib/components/`, `src/lib/player/`, `src/lib/curriculum/`,
@@ -67,7 +67,7 @@ be promoted.
   `nodes.map((n) => ({ ...n }))`). Frames must never alias each other or the input.
 - Export the pseudocode as `export const <name>Pseudocode = [ ... ]` (a `string[]`, two-space
   indents). Every line must be highlighted by some frame.
-- Export the frame typedef (`@typedef {object} <Name>Frame`) so `copy.en.js` and the page can
+- Export the frame typedef (`@typedef {object} <Name>Frame`) so `copy.vi.js` and the page can
   import it.
 - First frame `kind: 'start'`, last frame `kind: 'done'`, both with `lines` set sensibly.
 - Randomness only through an injected `rand = Math.random` parameter (presets, random input).
@@ -107,15 +107,15 @@ const frame = $derived(player.frame);
   narration is `m.describe(frame, ...)`, or a notice (below) on the frame it was raised on.
 - Pass `speed={player.speed}` to visualizers so colour transitions turn off at high speed.
 
-## 5. Copy (`copy.en.js`)
+## 5. Copy (`copy.vi.js`)
 
-Start with `@typedef` imports of the engine's frame types, then `export const en = { ... }`
+Start with `@typedef` imports of the engine's frame types, then `export const vi = { ... }`
 with every `LessonCopy` field from `src/lib/lessons/registry.js`:
 
 | Field | Notes |
 | --- | --- |
 | `slug`, `topic` | exactly the curriculum slug and chapter slug |
-| `level` | difficulty within the topic: `'Beginner'`, `'Intermediate'` or `'Advanced'` |
+| `level` | difficulty within the topic: `'Cơ bản'`, `'Trung bình'` or `'Nâng cao'` (`lessonLevels` in `site.vi.js`) |
 | `title` | the curriculum title, unchanged |
 | `intro` | two or three sentences: what it is and why it matters |
 | `summary` | one sentence for the meta description |
@@ -127,9 +127,12 @@ with every `LessonCopy` field from `src/lib/lessons/registry.js`:
 
 Plus every label the page shows (buttons, fields, legend, stat names, notices, aria labels)
 and `describe(frame, ...)` returning the narration for every frame `kind`. No user-facing
-string lives in the page or the engine. Plain English, short sentences, Unicode symbols
-(`≤`, `→`, `log₂ n`), curly apostrophes as in the reference copy. Any Vietnamese text uses the new tone-mark
-style: in an open syllable ending in `oa`, `oe` or `uy` the mark sits on the last vowel (hoá,
+string lives in the page or the engine. Vietnamese, addressing the reader as "bạn" and
+narrating the algorithm with "ta", short sentences, Unicode symbols (`≤`, `→`, `log₂ n`) and
+Vietnamese quotes “…”. Keep one Vietnamese term per concept across lessons, with the English in parentheses on its
+first use on a page ("ngăn xếp (stack)"); `src/lib/i18n/glossary.js` lists the English the copy
+may keep; `vietnamese-copy.test.js` checks
+every `copy.vi.js`. Vietnamese text uses the new tone-mark style: in an open syllable ending in `oa`, `oe` or `uy` the mark sits on the last vowel (hoá,
 khoẻ, thuỷ, never hóa, khỏe, thủy); `src/lib/components/tone-marks.test.js` rejects the old
 style.
 
@@ -139,7 +142,7 @@ style.
 <LessonLayout lesson={m}> ... </LessonLayout>
 ```
 
-with `import { en as m } from '$lib/lessons/<slug>/copy.en.js'`. `lesson-layout.svelte` renders
+with `import { en as m } from '$lib/lessons/<slug>/copy.vi.js'`. `lesson-layout.svelte` renders
 the back link, title, intro, the Try it box, takeaways, the complexity table and
 previous/next links; your page renders only the interactive part as its children.
 
@@ -281,7 +284,7 @@ Per kind:
   every topic of the level and at least three exercise types. The complexity table summarises
   the level's key costs (`complexityHead: ['Structure or algorithm', 'Cost', 'Why']`).
 
-Put the questions in `copy.en.js` as `practice` and pass `exercises={m.practice}` to the
+Put the questions in `copy.vi.js` as `practice` and pass `exercises={m.practice}` to the
 block. `src/lib/lessons/lesson-content.test.js` checks every written lesson on its own: the
 curriculum title, the layout copy, `step-controls` on theory pages, and, for practice and review
 lessons (or any lesson with `practice`), the minimums above and `exerciseProblems` over every

@@ -86,13 +86,13 @@ describe('review: advanced algorithms', () => {
     render();
     expect(document.querySelector('h1')?.textContent).toBe(m.title);
     expect(questions()).toHaveLength(m.practice.length);
-    expect(document.body.textContent).toContain(`0 of ${m.practice.length}`);
+    expect(document.body.textContent).toContain(`Đã giải 0/${m.practice.length}`);
   });
 
   it('ends the curriculum with a link back to all topics', () => {
     render();
     expect(document.body.textContent).toContain(m.nextTeaser);
-    expect([...document.querySelectorAll('a')].some((a) => a.textContent === 'All topics')).toBe(
+    expect([...document.querySelectorAll('a')].some((a) => a.textContent === 'Tất cả chủ đề')).toBe(
       true,
     );
   });
@@ -103,13 +103,13 @@ describe('review: advanced algorithms', () => {
     const q = questions()[i];
     type(q, '11');
     submit(q);
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText(q, 'Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText(q, 'Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[i].hints[0]);
     type(q, '15');
     submit(q);
-    expect(q.textContent).toContain('Correct!');
-    click(buttonByText(q, 'Show solution'));
+    expect(q.textContent).toContain('Đúng rồi!');
+    click(buttonByText(q, 'Xem lời giải'));
     expect(q.textContent).toContain(m.practice[i].solution);
   });
 
@@ -122,11 +122,11 @@ describe('review: advanced algorithms', () => {
     radios[1].click();
     flushSync();
     submit(q);
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     radios[0].click();
     flushSync();
     submit(q);
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
   });
 
   it('checks the ticked boxes of a several-answer question', () => {
@@ -138,11 +138,11 @@ describe('review: advanced algorithms', () => {
     for (const i of [0, 1, 2, 4]) boxes[i].click();
     flushSync();
     submit(q);
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     boxes[1].click();
     flushSync();
     submit(q);
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
   });
 
   it('accepts the prefix function written in several ways', () => {
@@ -150,13 +150,13 @@ describe('review: advanced algorithms', () => {
     const q = questions()[indexOf('abacaba')];
     type(q, '0, 0, 1, 0, 1, 2, 2');
     submit(q);
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     type(q, '0, 0, 1, 0, 1, 2, 3');
     submit(q);
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     type(q, '0 0 1 0 1 2 3');
     submit(q);
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
   });
 
   it('arranges the growth rates with the move buttons', () => {
@@ -171,14 +171,14 @@ describe('review: advanced algorithms', () => {
       while (orderShown(q).indexOf(item) > place) {
         click(
           /** @type {HTMLButtonElement} */ (
-            q.querySelector(`button[aria-label="Move “${item}” up"]`)
+            q.querySelector(`button[aria-label="Đưa “${item}” lên"]`)
           ),
         );
       }
     }
     expect(orderShown(q)).toEqual(target);
     submit(q);
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
   });
 
   it('covers every advanced chapter with well-formed questions of every type', () => {

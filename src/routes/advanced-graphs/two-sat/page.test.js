@@ -97,12 +97,12 @@ describe('2-SAT lesson', () => {
   it('builds the implication graph and reports an assignment', () => {
     render();
     expect(text()).toContain('One vertex per literal, no edges yet.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('(¬x₁ ∨ x₂): if x₁ then x₂, and if ¬x₂ then ¬x₁. Add both edges.');
     expect(statValue(m.stats.edges)).toBe('2');
-    for (let i = 0; i < 5; i++) click(button('Next step'));
+    for (let i = 0; i < 5; i++) click(button('Bước tiếp'));
     expect(text()).toContain('Tarjan finishes component C1: ¬x₄, x₃, x₂.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain(
       'Satisfiable: x₁ = true, x₂ = true, x₃ = true, x₄ = false. Every clause has a true literal.',
     );
@@ -116,8 +116,8 @@ describe('2-SAT lesson', () => {
 
   it('explains each choice from the component order', () => {
     render();
-    click(button('Last step'));
-    click(button('Previous step'));
+    click(button('Đến bước cuối'));
+    click(button('Bước trước'));
     expect(text()).toContain(
       'C1 (¬x₄) was found before C4 (x₄), so ¬x₄ is later in topological order: set x₄ = false.',
     );
@@ -126,10 +126,10 @@ describe('2-SAT lesson', () => {
   it('the unsatisfiable example reports the conflict', () => {
     render();
     click(buttonByText(m.unsatExample));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Unsatisfiable: the implications force x₁ to equal its own negation.');
     expect(statValue(m.stats.result)).toBe('UNSAT');
-    click(button('Previous step'));
+    click(button('Bước trước'));
     expect(text()).toContain('x₁ and ¬x₁ are both in C1');
   });
 
@@ -140,14 +140,14 @@ describe('2-SAT lesson', () => {
     // Turn the new (x₁ ∨ x₂) into (¬x₁ ∨ ¬x₃).
     choose('Clause 6, first literal', 1);
     choose('Clause 6, second literal', 5);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(chips(m.assignLabel)).toEqual(['x₁ = false', 'x₂ = true', 'x₃ = true', 'x₄ = false']);
     // (¬x₂ ∨ ¬x₃) instead makes it unsatisfiable.
     choose('Clause 6, first literal', 3);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.result)).toBe('UNSAT');
     click(button('Delete clause 6'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.result)).toBe('SAT');
   });
 
@@ -158,7 +158,7 @@ describe('2-SAT lesson', () => {
     click(buttonByText(m.addClause));
     expect(text()).toContain(m.full(8));
     expect(statValue(m.stats.clauses)).toBe('8');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).not.toContain(m.full(8));
   });
 
@@ -172,14 +172,14 @@ describe('2-SAT lesson', () => {
     render();
     const q = /** @type {HTMLElement} */ (practice().querySelectorAll('ol > li')[1]);
     answer(q, '2');
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLElement} */ (hint));
     expect(q.textContent).toContain(m.practice[1].hints[0]);
     answer(q, '4');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

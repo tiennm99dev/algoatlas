@@ -10,8 +10,8 @@ const listName = (j) => 'ABCDE'[j] ?? String(j + 1);
 export const en = {
   slug: 'priority-queue-applications',
   topic: 'heaps',
-  level: 'Intermediate',
-  title: 'Priority queue applications',
+  level: 'Trung bình',
+  title: 'Ứng dụng của hàng đợi ưu tiên',
   intro:
     'A priority queue hands out the most urgent item first, and a binary heap makes every push and pop O(log n). Many problems become easy once you ask, “which item should go next?”: merging k sorted lists, keeping the k largest values of a stream, and running events in time order.',
   summary:
@@ -214,6 +214,5 @@ export const en = {
         'Alarm (7) first; it adds coffee (10). Then mail (8), bus (9) and coffee (10): always the earliest pending time.',
     },
   ],
-  nextTeaser:
-    'Next up: Practice: heap problems, keeping a running median with two heaps and finding the k closest points.',
+  nextTeaser: 'Bài tiếp theo: Luyện tập: bài toán về heap.',
 };

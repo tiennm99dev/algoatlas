@@ -14,8 +14,8 @@ const ordinal = (k) => {
 export const en = {
   slug: 'strongly-connected-components',
   topic: 'advanced-graphs',
-  level: 'Intermediate',
-  title: 'Strongly connected components',
+  level: 'Trung bình',
+  title: 'Thành phần liên thông mạnh',
   intro:
     'In a directed graph, two vertices are strongly connected when each can reach the other. The graph splits into strongly connected components (SCCs): largest groups in which every vertex reaches every other. Collapse each SCC to one vertex and what is left, the condensation, has no cycle at all. Tarjan’s and Kosaraju’s algorithms both find the SCCs in O(V + E).',
   summary:
@@ -207,6 +207,5 @@ export const en = {
         'A → B → D → E → F → A is a new cycle, so {A, B, C} and {D, E, F} merge into one component of six vertices. With {G, H}, two components remain.',
     },
   ],
-  nextTeaser:
-    'Next up: bridges and articulation points, the edges and vertices whose loss splits an undirected graph, found with the same tin and low labels.',
+  nextTeaser: 'Bài tiếp theo: Cầu và đỉnh khớp.',
 };

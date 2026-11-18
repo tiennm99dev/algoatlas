@@ -15,8 +15,8 @@ const count = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 export const en = {
   slug: 'doubly-circular-lists',
   topic: 'linked-lists',
-  level: 'Beginner',
-  title: 'Doubly and circular linked lists',
+  level: 'Cơ bản',
+  title: 'Danh sách liên kết đôi và danh sách liên kết vòng',
   intro:
     'A doubly linked list gives every node a prev pointer as well as next, so you can walk both ways and unlink a node you already hold without searching for the node before it. Close the list into a circle around one dummy sentinel node and the empty list, the first node and the last node all look the same: no null checks at all.',
   summary:
@@ -212,6 +212,5 @@ export const en = {
         'Once x.next = n, the expression x.next.prev means n.prev, so the write sets n.prev = n. The old neighbour keeps prev = x, and walking backwards skips n.',
     },
   ],
-  nextTeaser:
-    'Next up: linked list techniques, where you reverse a list in place and catch a cycle with two pointers.',
+  nextTeaser: 'Bài tiếp theo: Kĩ thuật trên danh sách liên kết.',
 };

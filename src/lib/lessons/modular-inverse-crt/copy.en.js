@@ -10,8 +10,8 @@ const num = (v) => (v < 0 ? `−${-v}` : String(v));
 export const en = {
   slug: 'modular-inverse-crt',
   topic: 'number-theory',
-  level: 'Intermediate',
-  title: 'Modular inverse and Chinese remainder theorem',
+  level: 'Trung bình',
+  title: 'Nghịch đảo modulo và định lí số dư Trung Hoa',
   intro:
     'The inverse of a modulo m is the number x with a·x ≡ 1 (mod m): it is how you divide when only remainders exist. It exists exactly when gcd(a, m) = 1. With inverses you can also solve several congruences at once: the Chinese remainder theorem says that remainders for pairwise coprime moduli pin down exactly one number modulo their product.',
   summary:
@@ -266,6 +266,5 @@ export const en = {
         'The moduli share the factor 2, so solutions repeat every lcm(4, 6) = 12, not every 24. The smallest is x = 9.',
     },
   ],
-  nextTeaser:
-    'Next up: Sieve of Eratosthenes and factorisation, which finds every prime up to n by crossing out multiples.',
+  nextTeaser: 'Bài tiếp theo: Sàng Eratosthenes và phân tích thừa số.',
 };

@@ -15,8 +15,8 @@ function sum(coins, taken) {
 export const en = {
   slug: 'greedy-exchange-argument',
   topic: 'greedy',
-  level: 'Beginner',
-  title: 'Greedy choice and exchange arguments',
+  level: 'Cơ bản',
+  title: 'Lựa chọn tham lam và lập luận hoán đổi',
   intro:
     'A greedy algorithm builds its answer one choice at a time and never takes a choice back: at every step it picks what looks best right now. Paying an amount with the fewest coins by always taking the largest coin that fits is the classic example. It is fast and simple, but it is only correct when the problem has the greedy-choice property, and an exchange argument is how you prove it.',
   summary:
@@ -216,6 +216,5 @@ export const en = {
         'Start from an arbitrary optimal solution, exchange a part of it for the greedy choice, check that the result is feasible and costs no more, and conclude that an optimal solution exists that starts greedily.',
     },
   ],
-  nextTeaser:
-    'Next up: Interval scheduling, where picking the meeting that finishes earliest fits the most meetings into one room.',
+  nextTeaser: 'Bài tiếp theo: Lập lịch các đoạn.',
 };

@@ -56,12 +56,12 @@ const cell = (v) =>
   /** @type {HTMLElement} */ (
     document.querySelector(`[data-cell="${Math.floor((v - 1) / 10)}-${(v - 1) % 10}"]`)
   );
-const toLast = () => click(button('Last step'));
+const toLast = () => click(button('Đến bước cuối'));
 /** @param {string} kindText */
 function stepUntil(kindText) {
   for (let i = 0; i < 400; i++) {
     if (narration().includes(kindText)) return;
-    click(button('Next step'));
+    click(button('Bước tiếp'));
   }
   throw new Error(`never narrated ${kindText}`);
 }
@@ -70,11 +70,11 @@ describe('sieve lesson', () => {
   it('crosses out multiples prime by prime, then factorises', () => {
     render();
     expect(narration()).toContain('Write the numbers up to 60');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('2 was never crossed out');
     expect(stat('p')).toBe('2');
     expect(stat('primes')).toBe('1');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe(
       'Cross out 4 = 2·2. It is the first time, so its smallest prime factor is 2.',
     );
@@ -168,16 +168,16 @@ describe('sieve lesson', () => {
     answer.value = '25';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(/** @type {any} */ (m.practice[0]).hints[0]);
     answer.value = '24';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 

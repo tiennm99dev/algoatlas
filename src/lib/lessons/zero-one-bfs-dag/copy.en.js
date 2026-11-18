@@ -10,8 +10,8 @@ const term = (d) => (d < 0 && d !== -Infinity ? `(${show(d)})` : show(d));
 export const en = {
   slug: 'zero-one-bfs-dag',
   topic: 'shortest-paths',
-  level: 'Intermediate',
-  title: '0-1 BFS and DAG shortest paths',
+  level: 'Trung bình',
+  title: 'BFS 0-1 và đường đi ngắn nhất trên DAG',
   intro:
     'Dijkstra needs a heap because it must always find the closest unsettled vertex. Two common special cases get that order for free in O(V + E). When every weight is 0 or 1, a double-ended queue keeps vertices sorted by distance. When the graph is a DAG, relaxing vertices in topological order works even with negative weights, and the same pass finds longest paths.',
   summary:
@@ -217,6 +217,5 @@ export const en = {
         'In topological order every predecessor of u comes first, so all edges into u are relaxed before u is used. Dijkstra instead finalises by smallest label, which a later negative edge can undercut.',
     },
   ],
-  nextTeaser:
-    'Next up: Bellman-Ford, which handles negative weights on any graph and detects negative cycles.',
+  nextTeaser: 'Bài tiếp theo: Thuật toán Bellman-Ford.',
 };

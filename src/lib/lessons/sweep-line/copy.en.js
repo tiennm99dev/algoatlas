@@ -16,8 +16,8 @@ const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 export const en = {
   slug: 'sweep-line',
   topic: 'geometry',
-  level: 'Advanced',
-  title: 'Sweep line algorithms',
+  level: 'Nâng cao',
+  title: 'Thuật toán đường quét',
   intro:
     'Testing every pair of n segments costs n(n − 1)/2 checks, yet two segments can only meet where a vertical line passes through both. So slide such a line left to right, stopping only at end points, and keep just the segments under it: the active set. A 2D problem becomes a sequence of small 1D updates.',
   summary:
@@ -147,8 +147,7 @@ export const en = {
       'Crossings become events in a priority queue, each swapping two neighbours.',
     ],
   ],
-  nextTeaser:
-    'Next, Range trees and orthogonal range search answer which points lie in a rectangle, using a tree of trees.',
+  nextTeaser: 'Bài tiếp theo: Cây đoạn nhiều chiều và tìm kiếm trong hình chữ nhật.',
   practiceTitle: 'Check yourself',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
   practice: [

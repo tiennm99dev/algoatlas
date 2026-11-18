@@ -10,8 +10,8 @@ const num = (v) => String(Math.round(v * 100) / 100);
 export const en = {
   slug: 'branch-and-bound',
   topic: 'backtracking',
-  level: 'Advanced',
-  title: 'Branch and bound',
+  level: 'Nâng cao',
+  title: 'Nhánh cận',
   intro:
     'Plain backtracking prunes a branch that breaks a rule. In an optimisation problem, a branch can break no rule and still be useless, because it can never beat the best answer found so far. Branch and bound gives each node a bound, an optimistic limit on anything reachable from it, and drops a node as soon as that limit cannot beat the best so far.',
   summary:
@@ -217,6 +217,5 @@ export const en = {
       solution: 'A priority queue, usually a binary heap keyed by the bound.',
     },
   ],
-  nextTeaser:
-    'Next up: Practice: backtracking problems, with a word search that explores and retreats letter by letter, and combination sum.',
+  nextTeaser: 'Bài tiếp theo: Luyện tập: bài toán quay lui.',
 };

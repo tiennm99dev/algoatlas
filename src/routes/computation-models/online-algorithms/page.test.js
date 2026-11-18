@@ -92,8 +92,8 @@ describe('online algorithms lesson', () => {
     expect(stat(m.skiStats.ratio)).toBe('1.2');
     click(buttonByText(m.rent));
     expect(text()).toContain(m.notices.over);
-    click(button('First step'));
-    click(button('Next step'));
+    click(button('Về bước đầu'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Day 1: You rent: +1.');
   });
 
@@ -115,7 +115,7 @@ describe('online algorithms lesson', () => {
     expect(input('buy-day').value).toBe('10');
     expect(text()).toContain('The best plan, k = b, guarantees 2 − 1/b = 1.9.');
     commit(input('season'), '10');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.skiStats.ratio)).toBe('1.9');
     commit(input('buy-day'), '1');
     expect(text()).toContain('This plan’s competitive ratio: 10.');
@@ -127,17 +127,17 @@ describe('online algorithms lesson', () => {
     render();
     click(radio('mode', 'paging'));
     expect(text()).toContain('12 requests and a cache of 3 pages.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.pagingStats.lru)).toBe('10');
     expect(stat(m.pagingStats.fifo)).toBe('9');
     expect(stat(m.pagingStats.opt)).toBe('7');
     commit(input('cache'), '4');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.pagingStats.fifo)).toBe('10');
     commit(input('cache'), '3');
     click(buttonByText(m.presets.loop));
     expect(input('requests').value).toBe('ABCDABCDABCD');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.pagingStats.lru)).toBe('12');
     expect(stat(m.pagingStats.opt)).toBe('6');
   });
@@ -145,7 +145,7 @@ describe('online algorithms lesson', () => {
   it('steps through requests and refuses a bad sequence', () => {
     render();
     click(radio('mode', 'paging'));
-    for (let i = 0; i < 4; i++) click(button('Next step'));
+    for (let i = 0; i < 4; i++) click(button('Bước tiếp'));
     expect(text()).toContain(
       'Request 4, page D: LRU faults and evicts A; FIFO faults and evicts A; OPT faults and evicts C.',
     );
@@ -153,7 +153,7 @@ describe('online algorithms lesson', () => {
     expect(text()).toContain(m.notices.format);
     expect(input('requests').value).toBe('ABCDABEABCDE');
     commit(input('requests'), 'abab');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.pagingStats.opt)).toBe('2');
   });
 
@@ -161,15 +161,15 @@ describe('online algorithms lesson', () => {
     render();
     const q = question(0);
     answer(q, '2');
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     click(
       /** @type {HTMLElement} */ (
-        [...q.querySelectorAll('button')].find((b) => b.textContent?.trim() === 'Show a hint')
+        [...q.querySelectorAll('button')].find((b) => b.textContent?.trim() === 'Xem gợi ý')
       ),
     );
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer(q, '1.9');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

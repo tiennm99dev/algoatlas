@@ -96,7 +96,7 @@ describe('Prim’s algorithm lesson', () => {
     expect(text()).toContain(
       'Start the tree at A and push its 2 edges into the heap: A — B 3, A — C 4.',
     );
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain(
       'Pop A — B (weight 3), the lightest edge in the heap. B is outside the tree',
     );
@@ -104,9 +104,9 @@ describe('Prim’s algorithm lesson', () => {
       'Vertex B, just added or expanded, in the tree, joined 2',
     );
     let guard = 0;
-    while (!text().includes('it is stale') && guard++ < 40) click(button('Next step'));
+    while (!text().includes('it is stale') && guard++ < 40) click(button('Bước tiếp'));
     expect(text()).toContain('Pop A — C (weight 4), but C is already in the tree.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain(
       'All 6 vertices are in the tree, weight 18. 2 entries left in the heap are never popped.',
     );
@@ -119,11 +119,11 @@ describe('Prim’s algorithm lesson', () => {
     render();
     radio('array');
     expect(text()).toContain('Set key[A] = 0 and every other key to ∞.');
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Edge A — B (weight 3) is lighter than key[B] = ∞.');
     expect(text()).toContain('B 3 via A');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('weight 18, after 15 key comparisons.');
     expect(statValue(m.stats.comparisons)).toBe('15');
   });
@@ -131,13 +131,13 @@ describe('Prim’s algorithm lesson', () => {
   it('reruns for another start, a dense preset and a new weight, and rejects bad weights', () => {
     render();
     commit(select('start'), '5');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(vertex(0).getAttribute('aria-label')).toBe('Vertex A, in the tree, joined 6');
     commit(select('preset'), 'dense');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.weight)).toBe('17');
     commit(weightField('B — E'), '9');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.weight)).toBe('18');
     commit(weightField('B — E'), '-1');
     expect(text()).toContain(m.badWeight(99));
@@ -153,7 +153,7 @@ describe('Prim’s algorithm lesson', () => {
     click(vertex(5));
     click(vertex(4));
     click(vertex(5));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('1 vertex cannot be reached from A');
   });
 
@@ -167,14 +167,14 @@ describe('Prim’s algorithm lesson', () => {
     render();
     const q = /** @type {HTMLElement} */ (practice().querySelectorAll(':scope > ol > li')[1]);
     answer(q, '3');
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[1].hints[0]);
     answer(q, '2');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

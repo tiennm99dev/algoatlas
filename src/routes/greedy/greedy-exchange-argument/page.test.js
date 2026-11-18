@@ -80,18 +80,18 @@ describe('greedy change-making lesson', () => {
 
   it('steps through the sort and the first coin', () => {
     render();
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Sort the coins from largest to smallest: 4, 3, 1.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Coin 4: ⌊6 / 4⌋ = 1');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Take 1 × 4. 2 is left to pay.');
     expect(stat('Greedy coins')).toBe('1');
   });
 
   it('ends with greedy using one coin too many', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('Greedy paid 6 = 4 + 1 + 1, 3 coins, but 3 + 3 uses only 2.');
     expect(stat('Verdict')).toBe('Greedy uses too many coins');
     const strip = document.querySelector('[aria-label^="Coins:"]');
@@ -116,7 +116,7 @@ describe('greedy change-making lesson', () => {
     expect(summary()).toContain('Greedy is not optimal for');
     click(buttonByText('Step through the smallest one'));
     expect(narration()).toContain('Amount 14 loaded');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('Greedy paid 14 = 10 + 1 + 1 + 1 + 1, 5 coins, but 7 + 7');
   });
 
@@ -124,11 +124,11 @@ describe('greedy change-making lesson', () => {
     render();
     commit(field('preset'), 'noOne');
     commit(field('amount'), '9');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('Greedy got stuck with 1 unpaid, yet 9 = 3 + 3 + 3 works');
     expect(stat('Verdict')).toBe('Greedy is stuck');
     commit(field('amount'), '7');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('No combination of these coins pays 7');
     expect(stat('Fewest coins')).toBe('—');
   });
@@ -169,16 +169,16 @@ describe('greedy change-making lesson', () => {
     answer.value = '17';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[1].hints[0]);
     answer.value = '14';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

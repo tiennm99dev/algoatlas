@@ -6,8 +6,8 @@ const plural = (n, one, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
 export const en = {
   slug: 'binary-trees',
   topic: 'trees',
-  level: 'Beginner',
-  title: 'Binary trees and terminology',
+  level: 'Cơ bản',
+  title: 'Cây nhị phân và thuật ngữ',
   intro:
     'A binary tree is a root node whose left and right children are smaller binary trees, either of which may be empty. Depth counts the edges down from the root, height the edges down to the deepest leaf, and a complete tree packs into an array with no gaps.',
   summary:
@@ -177,6 +177,5 @@ export const en = {
         'B has no children, so it is a leaf. D and E sit at depth 2, which makes the height 2. They live in slots 5 and 6, so the array has 7 slots with gaps at 3 and 4.',
     },
   ],
-  nextTeaser:
-    'Next up: tree traversals, the four standard orders for visiting every node of a binary tree.',
+  nextTeaser: 'Bài tiếp theo: Duyệt cây.',
 };

@@ -88,11 +88,11 @@ describe('shortest-path properties lesson', () => {
   it('relaxes the edge list once and ends with exact labels', () => {
     render();
     expect(text()).toContain('Start: d[S] = 0 and every other label is ∞');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain(
       'Relax S → A (weight 6): d[S] + 6 = 0 + 6 = 6 < ∞, so lower d[A] to 6 and set parent[A] = S.',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Done after 7 relaxations: every label is the true shortest distance');
     expect(statValue(m.stats.exact)).toBe('5 / 5');
     expect(statValue(m.stats.updates)).toBe('5');
@@ -103,11 +103,11 @@ describe('shortest-path properties lesson', () => {
   it('shows how a bad order leaves labels wrong, and fixes them with more relaxations', () => {
     render();
     commit(presetSelect(), 'reverse');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain(
       'Relax B → D (weight 9): d[B] is ∞, so going through B gives nothing yet.',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('only 2 of 5 labels are exact');
     click(button(m.relaxAria('B → A')));
     expect(text()).toContain('d[B] + 3 = 2 + 3 = 5 < 6, so lower d[A] to 5');
@@ -122,7 +122,7 @@ describe('shortest-path properties lesson', () => {
   it('reruns the sequence when a weight changes and rejects a bad weight', () => {
     render();
     commit(weightField('S → B'), '9');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('S → A → C → D: weight 6 + 2 + 1 = 9.');
     commit(weightField('S → B'), '-3');
     expect(text()).toContain(m.badWeight(99));
@@ -152,11 +152,11 @@ describe('shortest-path properties lesson', () => {
     render();
     const q = /** @type {HTMLElement} */ (practice().querySelectorAll('ol > li')[0]);
     answer(q, '8');
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer(q, '9');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

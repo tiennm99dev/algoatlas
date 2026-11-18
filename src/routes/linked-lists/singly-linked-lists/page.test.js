@@ -58,7 +58,7 @@ const byTest = (id) => document.querySelector(`[data-testid="${id}"]`)?.textCont
 const listLabel = () => document.querySelector('svg[role="img"]')?.getAttribute('aria-label') ?? '';
 /** @param {number} n */
 const next = (n) => {
-  for (let i = 0; i < n; i++) click(button('Next step'));
+  for (let i = 0; i < n; i++) click(button('Bước tiếp'));
 };
 
 function practice() {
@@ -73,7 +73,7 @@ describe('singly linked lists lesson', () => {
   it('builds the four-node preset by inserting at the head', () => {
     render();
     expect(narration()).toBe('The list is empty: head is null.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(listLabel()).toBe('Singly linked list, head first: 12 → 7 → 30 → 4 → null.');
     expect(byTest('length')).toBe('4');
   });
@@ -89,7 +89,7 @@ describe('singly linked lists lesson', () => {
     expect(narration()).toContain('Move head to the new node');
     expect(byTest('writes')).toBe('2');
     expect(byTest('steps')).toBe('0');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(listLabel()).toContain('15 → 12 → 7 → 30 → 4 → null');
   });
 
@@ -119,14 +119,14 @@ describe('singly linked lists lesson', () => {
     for (let i = 0; i < 6 && !narration().includes('skips'); i++) next(1);
     expect(narration()).toContain('prev.next skips over 30: node 7 now points where 30 pointed.');
     expect(byTest('writes')).toBe('1');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(listLabel()).toContain('12 → 7 → 4 → null');
   });
 
   it('deletes the head, and refuses nothing on an empty list', () => {
     render();
     click(buttonByText('Delete head'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(listLabel()).toContain('7 → 30 → 4 → null');
     click(buttonByText('Reset'));
     click(buttonByText('Delete head'));
@@ -177,7 +177,7 @@ describe('singly linked lists lesson', () => {
 
   it('steps back with the arrow keys from the step controls', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     const before = narration();
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
     flushSync();
@@ -197,22 +197,22 @@ describe('singly linked lists lesson', () => {
     answer.value = '4';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '3';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 
   it('labels every node in the drawing', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('head');
     expect(document.querySelectorAll('svg[role="img"] title')).toHaveLength(4);
   });

@@ -53,7 +53,7 @@ const field = (/** @type {string} */ selector) =>
 
 /** Jump to the final frame by stepping. */
 function toEnd() {
-  const next = button('Last step');
+  const next = button('Đến bước cuối');
   click(next);
 }
 
@@ -75,7 +75,7 @@ describe('hash table lesson', () => {
     render();
     toEnd();
     click(field('input[value="multiply"]'));
-    expect(text()).toMatch(/Step 1 of/);
+    expect(text()).toMatch(/Bước 1\//);
     expect(text()).toContain('frac(k');
     toEnd();
     expect(text()).toContain('into 16 buckets');
@@ -126,7 +126,7 @@ describe('hash table lesson', () => {
     expect(document.querySelector('[role="alert"]')).toBeNull();
     const narration = document.querySelector('p[aria-live]');
     expect(narration?.textContent).toContain('Keys must be whole numbers from 0 to 999.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(document.querySelector('p[aria-live]')?.textContent).not.toContain('Keys must be');
   });
 
@@ -181,7 +181,7 @@ describe('hash table lesson', () => {
     expect(document.querySelector('p[aria-live]')?.textContent).toContain(
       'The search was cleared because the table changed.',
     );
-    expect(text()).toMatch(/Step 1 of/);
+    expect(text()).toMatch(/Bước 1\//);
   });
 
   it('gives each bucket index a spoken Bucket prefix', () => {

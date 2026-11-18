@@ -6,8 +6,8 @@ const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 export const en = {
   slug: 'suffix-arrays',
   topic: 'string-algorithms',
-  level: 'Advanced',
-  title: 'Suffix arrays and LCP',
+  level: 'Nâng cao',
+  title: 'Mảng hậu tố và LCP',
   intro:
     'A suffix array lists the start of every suffix of a text in sorted order, so any pattern can later be found by binary search. Prefix doubling builds it in about log₂ n rounds by sorting on 2, 4, 8, … letters, and Kasai’s algorithm then finds the longest common prefix of each pair of neighbours in O(n). Together they answer questions about repeats and substrings with one pass.',
   summary:
@@ -179,6 +179,5 @@ export const en = {
         'The rounds cover 2, 4 and 8 letters. After 8 letters every suffix differs, since each has a different length.',
     },
   ],
-  nextTeaser:
-    'Next up: Manacher’s algorithm, which reuses what it knows about mirror positions to find the longest palindrome in linear time.',
+  nextTeaser: 'Bài tiếp theo: Thuật toán Manacher.',
 };

@@ -20,8 +20,8 @@ const set = (list) => `{${list.join(', ')}}`;
 export const en = {
   slug: 'max-flow-min-cut',
   topic: 'flows',
-  level: 'Advanced',
-  title: 'Max-flow min-cut theorem',
+  level: 'Nâng cao',
+  title: 'Định lí luồng cực đại, lát cắt nhỏ nhất',
   intro:
     'An s-t cut splits the vertices into a side S that holds the source and a side T that holds the sink. Every unit of flow must cross from S to T, so no flow can be larger than the capacity of any cut. The max-flow min-cut theorem says the two meet: the largest flow equals the smallest cut, and the final residual graph shows where that cut is.',
   summary:
@@ -225,6 +225,5 @@ export const en = {
         '|f| = f(S → T) − f(T → S) ≤ f(S → T) ≤ c(S, T). Cut edges are saturated only for a maximum flow and a minimum cut.',
     },
   ],
-  nextTeaser:
-    'Next up: Bipartite matching, which pairs up two groups by turning the question into a maximum flow.',
+  nextTeaser: 'Bài tiếp theo: Ghép cặp trên đồ thị hai phía.',
 };

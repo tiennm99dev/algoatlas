@@ -56,7 +56,7 @@ const field = (/** @type {string} */ selector) =>
 const current = () =>
   document.querySelector('[data-testid="guide"] li[aria-current="step"]')?.textContent ?? '';
 const next = (/** @type {number} */ n) => {
-  for (let i = 0; i < n; i++) click(button('Next step'));
+  for (let i = 0; i < n; i++) click(button('Bước tiếp'));
 };
 
 function practice() {
@@ -87,7 +87,7 @@ describe('SRTBOT framework lesson', () => {
     const options = document.querySelectorAll('[data-testid="options"] li');
     expect(options).toHaveLength(2);
     expect(options[1].textContent).toContain(m.chosenMark);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(current()).toContain(m.stepNames.time);
     expect(byTest('answer')).toBe('104');
     expect(byTest('work')).toBe('29');
@@ -115,10 +115,10 @@ describe('SRTBOT framework lesson', () => {
     click(field('input[name="problem"][value="bowling"]'));
     commit(field('input[name="values"]'), '3 4 -1 5');
     expect(field('input[name="values"]').value).toBe('3, 4, −1, 5');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('17');
     click(buttonByText(m.exampleButton));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('104');
   });
 
@@ -151,16 +151,16 @@ describe('SRTBOT framework lesson', () => {
     answer.value = '12';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[1].hints[0]);
     answer.value = '17';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

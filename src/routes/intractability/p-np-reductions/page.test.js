@@ -50,14 +50,14 @@ describe('P, NP and reductions lesson', () => {
   it('builds H pair by pair, then verifies the certificate', () => {
     render();
     expect(narration()).toContain('The input is G and k = 4');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('A – B is an edge of G, so H gets no edge there');
-    click(button('Next step'));
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('A – E is not an edge of G, so add it to H');
     expect(byTest('map-steps')).toBe('4');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('map-steps')).toBe('15');
     expect(byTest('checks')).toBe('6');
     expect(byTest('verdict')).toBe('S is accepted.');
@@ -68,14 +68,14 @@ describe('P, NP and reductions lesson', () => {
   it('rejects a wrong certificate for a yes instance, then accepts a fixed one', () => {
     render();
     commit(field('select[name="preset"]'), 'house');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('verdict')).toBe('S is rejected.');
     expect(byTest('answer')).toBe('yes, for example {A, B, C}');
     click(button('Vertex D, in the certificate'));
     expect(narration()).toContain('The verifier rejects it at once');
     click(button('Vertex C, not in the certificate'));
     expect(narration()).toContain('A – B is an edge of G, and so not an edge of H');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('verdict')).toBe('S is accepted.');
     expect(field('select[name="preset"]').value).toBe('');
   });
@@ -83,7 +83,7 @@ describe('P, NP and reductions lesson', () => {
   it('changes k and refuses a bad one', () => {
     render();
     commit(field('input[name="k"]'), '5');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('no');
     expect(byTest('subsets')).toBe('6');
     commit(field('input[name="k"]'), '9');
@@ -94,8 +94,8 @@ describe('P, NP and reductions lesson', () => {
   it('follows an edit of G', () => {
     render();
     click(/** @type {HTMLInputElement} */ (document.querySelector('input[value="remove"]')));
-    click(/** @type {Element} */ (document.querySelector('[aria-label="Delete edge A and B"]')));
-    click(button('Last step'));
+    click(/** @type {Element} */ (document.querySelector('[aria-label="Xoá cạnh giữa A và B"]')));
+    click(button('Đến bước cuối'));
     expect(byTest('verdict')).toBe('S is rejected.');
     expect(byTest('answer')).toBe('no');
   });
@@ -123,16 +123,16 @@ describe('P, NP and reductions lesson', () => {
     answer.value = '30';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {Element} */ (hint));
     expect(q.textContent).toContain('n(n − 1)/2');
     answer.value = '15';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).not.toContain('Not quite');
+    expect(q.textContent).not.toContain('Chưa đúng');
     expect(m.practice.flatMap((ex) => exerciseProblems(ex))).toEqual([]);
   });
 });

@@ -36,8 +36,8 @@ function describeBoats(f) {
 export const en = {
   slug: 'practice-greedy',
   topic: 'greedy',
-  level: 'Advanced',
-  title: 'Practice: greedy problems',
+  level: 'Nâng cao',
+  title: 'Luyện tập: bài toán tham lam',
   intro:
     'A greedy rule is easy to invent and easy to get wrong. The working habit is: state the rule, hunt for a counterexample on small random cases, and only then try to prove it with an exchange argument or by showing that it stays ahead. Each card below holds a rule that is right and one that only sounds right.',
   summary:
@@ -285,6 +285,5 @@ export const en = {
       solution: 'One left-to-right scan with one max per cell: O(n).',
     },
   ],
-  nextTeaser:
-    'Next up: Memoization and tabulation, the two ways dynamic programming solves problems like 0/1 knapsack and coin change where greedy fails.',
+  nextTeaser: 'Bài tiếp theo: Đệ quy có nhớ và lập bảng.',
 };

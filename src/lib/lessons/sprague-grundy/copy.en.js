@@ -16,8 +16,8 @@ const moveText = (w, verb = 'take') =>
 export const en = {
   slug: 'sprague-grundy',
   topic: 'algebraic-randomised',
-  level: 'Advanced',
-  title: 'Game theory: Nim and Sprague-Grundy',
+  level: 'Nâng cao',
+  title: 'Lí thuyết trò chơi: Nim và Sprague-Grundy',
   intro:
     'In Nim two players take turns removing any number of stones from one pile, and whoever cannot move loses. A position is losing for the player to move exactly when the XOR of the pile sizes is 0, so you can win by always moving to an XOR of 0. The Sprague–Grundy theorem extends this to every impartial game: give each pile its Grundy number, the smallest value not reachable in one move, and XOR those instead.',
   summary:
@@ -204,6 +204,5 @@ export const en = {
         'g runs 0 1 0 1 2 3 2 0 1 0 … for h = 0, 1, 2, …, so g = 0 at 2, 7 and 9, while g(3) = 1 and g(6) = 2.',
     },
   ],
-  nextTeaser:
-    'Next up: Practice: algebraic and randomised problems, where you turn a linear recurrence into its matrix and multiply big numbers digit by digit.',
+  nextTeaser: 'Bài tiếp theo: Luyện tập: bài toán đại số và ngẫu nhiên.',
 };

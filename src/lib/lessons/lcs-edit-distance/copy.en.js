@@ -17,8 +17,8 @@ const opLabel = (o) =>
 export const en = {
   slug: 'lcs-edit-distance',
   topic: 'dynamic-programming',
-  level: 'Intermediate',
-  title: 'Longest common subsequence and edit distance',
+  level: 'Trung bình',
+  title: 'Dãy con chung dài nhất và khoảng cách sửa',
   intro:
     'To compare two strings, let a cell stand for a pair of prefixes: the first i letters of a and the first j letters of b. The longest common subsequence (LCS) asks how many letters both keep in order; edit distance asks how few inserts, deletes and replaces turn one into the other. Both fill an (m + 1) × (n + 1) table from three neighbours, then walk back from the corner to read the answer itself.',
   summary:
@@ -228,6 +228,5 @@ export const en = {
       solution: '(m + 1)(n + 1) cells with O(1) work each: O(mn).',
     },
   ],
-  nextTeaser:
-    'Next up: 0/1 knapsack and subset sum, where the second dimension of the table is the remaining capacity rather than a second string.',
+  nextTeaser: 'Bài tiếp theo: Cái túi 0/1 và tổng tập con.',
 };

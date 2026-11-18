@@ -7,8 +7,8 @@ const big = (n) => n.toLocaleString('en-US');
 export const en = {
   slug: 'practice-number-theory',
   topic: 'number-theory',
-  level: 'Intermediate',
-  title: 'Practice: number theory problems',
+  level: 'Trung bình',
+  title: 'Luyện tập: bài toán lí thuyết số',
   intro:
     'Many contest problems reduce to counting with remainders or summing over divisors. This sandbox runs four classic techniques one step at a time and checks your working: compute the next running total yourself, and Check moves on only when it is right. The calculator beside it does the modular arithmetic on the way.',
   summary:
@@ -259,6 +259,5 @@ export const en = {
       solution: '3·5 = 15 ≡ 1, so 3⁻¹ ≡ 5 (mod 7) and 5 ÷ 3 ≡ 5·5 = 25 ≡ 4. Check: 4·3 = 12 ≡ 5.',
     },
   ],
-  nextTeaser:
-    'Next up: Points, vectors and orientation, which starts computational geometry from one exact test: which way three points turn.',
+  nextTeaser: 'Bài tiếp theo: Điểm, vectơ và hướng quay.',
 };

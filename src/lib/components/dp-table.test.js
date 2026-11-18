@@ -48,12 +48,12 @@ describe('DpTable', () => {
     });
     expect(document.querySelector('svg')?.getAttribute('role')).toBe('img');
     expect([...document.querySelectorAll('title')].map((t) => t.textContent)).toEqual([
-      'Row 0, column 0: 0',
-      'Row 0, column 1: 0',
-      'Row 0, column 2: 0',
-      'Row 1, column 0: 0',
-      'Row 1, column 1: 1, current',
-      'Row 1, column 2: empty',
+      'Hàng 0, cột 0: 0',
+      'Hàng 0, cột 1: 0',
+      'Hàng 0, cột 2: 0',
+      'Hàng 1, cột 0: 0',
+      'Hàng 1, cột 1: 1, đang xét',
+      'Hàng 1, cột 2: trống',
     ]);
   });
 

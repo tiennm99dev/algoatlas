@@ -13,8 +13,8 @@ const POLICY_NAMES = { lru: 'LRU', fifo: 'FIFO', opt: 'OPT' };
 export const en = {
   slug: 'online-algorithms',
   topic: 'computation-models',
-  level: 'Advanced',
-  title: 'Online algorithms and competitive analysis',
+  level: 'Nâng cao',
+  title: 'Thuật toán trực tuyến và phân tích cạnh tranh',
   intro:
     'An online algorithm must decide as the input arrives, without seeing what comes next. We judge it by its competitive ratio: in the worst case, how much more it pays than the best offline solution, which knew the whole input in advance. Ski rental and paging are the two classic examples.',
   summary:
@@ -237,6 +237,5 @@ export const en = {
         'This is Belady’s anomaly: FIFO makes 9 faults with 3 pages and 10 with 4. LRU drops from 10 to 8, as a stack algorithm never gets worse with a bigger cache.',
     },
   ],
-  nextTeaser:
-    'Next up: Practice: choosing a model, where scenario cards ask which model of computation and which algorithm fit the job.',
+  nextTeaser: 'Bài tiếp theo: Luyện tập: chọn mô hình tính toán.',
 };

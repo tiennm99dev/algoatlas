@@ -64,7 +64,7 @@ const arcCount = () => document.querySelectorAll('path[marker-end]').length;
 
 /** @param {number} k */
 function next(k) {
-  for (let i = 0; i < k; i++) click(button('Next step'));
+  for (let i = 0; i < k; i++) click(button('Bước tiếp'));
 }
 
 /**
@@ -105,7 +105,7 @@ describe('Fenwick tree lesson', () => {
 
   it('steps back to the build', () => {
     render();
-    click(button('First step'));
+    click(button('Về bước đầu'));
     expect(text()).toContain('All 8 cells of t start at 0.');
     next(1);
     expect(text()).toContain('t[1] gets a[1] = 3');
@@ -115,7 +115,7 @@ describe('Fenwick tree lesson', () => {
 
   it('ends the log with the range sum and the totals', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     const last = fenwickTrace(
       [3, 1, 4, 1, 5, 9, 2, 6],
       [
@@ -145,8 +145,8 @@ describe('Fenwick tree lesson', () => {
     commit(input('from'), '3');
     click(buttonByText(m.rangeButton));
     expect(text()).toContain('prefix(6): start');
-    click(button('Last step'));
-    click(button('Previous step'));
+    click(button('Đến bước cuối'));
+    click(button('Bước trước'));
     expect(text()).toMatch(/a\[3\.\.6\] = prefix\(6\) − prefix\(2\)/);
   });
 
@@ -217,7 +217,7 @@ describe('Fenwick tree lesson', () => {
     expect(text()).not.toContain('prefix(7)');
     expect(text()).toContain('add(3, 5)');
     expect(input('index').value).toBe('4');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
   });
 
   it('checks a practice answer with a hint', () => {
@@ -236,13 +236,13 @@ describe('Fenwick tree lesson', () => {
     answer.value = '3';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     send();
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '4';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     send();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
   });
 
   it('keeps a refusal on Enter and runs no operation', () => {

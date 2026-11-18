@@ -13,8 +13,8 @@ const num = (v) => (v < 0 ? `−${-v}` : String(v));
 export const en = {
   slug: 'practice-hashing',
   topic: 'structures',
-  level: 'Intermediate',
-  title: 'Practice: hashing problems',
+  level: 'Trung bình',
+  title: 'Luyện tập: bài toán về băm',
   intro:
     'Two classic problems that a hash map solves in one pass. Two-sum asks for two numbers that add up to a target: instead of trying every pair, remember each number you pass and ask whether its partner is already there. Grouping anagrams gives every word the key “its letters, sorted”, so words with the same letters fall into the same list.',
   summary:
@@ -47,8 +47,7 @@ export const en = {
     ],
     ['Memory, anagrams', 'O(n·k)', 'Every word is stored once, in its group.'],
   ],
-  nextTeaser:
-    'Next up: recursion basics, where a function solves a problem by calling itself on a smaller copy and the call stack keeps track.',
+  nextTeaser: 'Bài tiếp theo: Đệ quy cơ bản.',
 
   problemLabel: 'Problem',
   problems: { 'two-sum': 'Two-sum', anagrams: 'Group anagrams' },

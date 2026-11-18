@@ -54,21 +54,21 @@ describe('N-queens and Sudoku lesson', () => {
   it('places and takes back queens as it steps', () => {
     render();
     expect(narration()).toContain('Put 4 queens on this 4 × 4 board');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('Row 0: column 0 is safe. Put a queen there.');
     expect(square(0, 0).textContent).toContain('♛');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe(
       'Row 1: columns 0 and 1 attacked, so skip. Column 2 is safe. Put a queen there.',
     );
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe(
       'Row 2: every column is attacked. This board cannot be finished, so back up to row 1.',
     );
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Take it back');
     expect(square(1, 2).textContent).toContain('♕');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('solutions')).toBe('1');
     expect(byTest('placed')).toBe('8');
     expect(byTest('removed')).toBe('4');
@@ -80,10 +80,10 @@ describe('N-queens and Sudoku lesson', () => {
     render();
     commit(field('input[name="n"]'), '6');
     click(field('input[name="goal"][value="all"]'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('solutions')).toBe('4');
     commit(field('input[name="n"]'), '3');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('solutions')).toBe('0');
     expect(narration()).toContain('No solution for n = 3');
   });
@@ -108,11 +108,11 @@ describe('N-queens and Sudoku lesson', () => {
     render();
     click(square(0, 1));
     expect(narration()).toContain('held in column 1');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('removed')).toBe('0');
     click(square(2, 2));
     expect(narration()).toBe(m.topRowOnly);
-    click(button('First step'));
+    click(button('Về bước đầu'));
     square(0, 2).dispatchEvent(
       new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }),
     );
@@ -130,9 +130,9 @@ describe('N-queens and Sudoku lesson', () => {
     render();
     toSudoku();
     expect(narration()).toContain('every digit from 1 to 4');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('fits, so write it and move on');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('result')).toBe('Solved');
     expect(byTest('removed')).toBe('3');
   });
@@ -145,8 +145,8 @@ describe('N-queens and Sudoku lesson', () => {
     expect(field('select[name="grid"]').value).toBe('');
     click(square(0, 1));
     click(square(0, 1));
-    click(button('Next step'));
-    click(button('Last step'));
+    click(button('Bước tiếp'));
+    click(button('Đến bước cuối'));
     expect(byTest('result')).toBe('No solution');
     const reset = [...document.querySelectorAll('button')].find(
       (b) => b.textContent?.trim() === m.resetGrid,
@@ -160,20 +160,20 @@ describe('N-queens and Sudoku lesson', () => {
     render();
     toSudoku();
     commit(field('select[name="grid"]'), 'nine');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('result')).toBe('Solved');
     expect(document.querySelectorAll('[data-square]')).toHaveLength(81);
     commit(field('select[name="grid"]'), 'clash');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('already break a rule');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('result')).toBe('No solution');
     expect(narration()).toBe('No solution: the clues clash, so the search never starts.');
   });
 
   it('keeps each puzzle where it was when switching', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     toSudoku();
     expect(byTest('placed')).toBe('0');
     click(field('input[name="puzzle"][value="queens"]'));
@@ -196,16 +196,16 @@ describe('N-queens and Sudoku lesson', () => {
     answer.value = '1';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {Element} */ (hint));
     expect(q.textContent).toContain('All solutions');
     answer.value = '2';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).not.toContain('Not quite');
+    expect(q.textContent).not.toContain('Chưa đúng');
     expect(m.practice.flatMap((ex) => exerciseProblems(ex))).toEqual([]);
   });
 });

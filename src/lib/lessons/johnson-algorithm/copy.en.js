@@ -9,8 +9,8 @@ const term = (d) => (d < 0 ? `(${show(d)})` : show(d));
 export const en = {
   slug: 'johnson-algorithm',
   topic: 'shortest-paths',
-  level: 'Advanced',
-  title: 'Johnson’s algorithm',
+  level: 'Nâng cao',
+  title: 'Thuật toán Johnson',
   intro:
     'Johnson’s algorithm finds the shortest paths between all pairs of vertices in a sparse graph that may have negative edge weights. One run of Bellman-Ford computes a potential h(v) for every vertex; reweighting each edge with w′(u, v) = w(u, v) + h(u) − h(v) makes every weight non-negative without changing which paths are shortest. Then Dijkstra can run from every vertex, which beats Floyd-Warshall’s O(V³) when the graph has few edges.',
   summary:
@@ -219,6 +219,5 @@ export const en = {
         'A constant shift adds 5 per edge, so it favours paths with fewer edges. Potentials add h(s) − h(t) to every s-to-t path, whatever its length, so the order of the paths is kept.',
     },
   ],
-  nextTeaser:
-    'Next up: A* search, which adds a heuristic to Dijkstra so that it heads straight for the goal.',
+  nextTeaser: 'Bài tiếp theo: Tìm kiếm A*.',
 };

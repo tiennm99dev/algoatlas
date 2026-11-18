@@ -11,8 +11,8 @@ const signed = (n) => String(n).replace('-', '−');
 export const en = {
   slug: 'recursion-basics',
   topic: 'recursion',
-  level: 'Beginner',
-  title: 'Recursion basics',
+  level: 'Cơ bản',
+  title: 'Đệ quy cơ bản',
   intro:
     'A recursive function solves a problem by calling itself on a smaller copy of it. It needs a base case, an input small enough to answer directly, and a recursive case that moves every call closer to it. Each call gets its own frame on the call stack, and the frames pop off in the reverse order they were pushed.',
   summary:
@@ -197,6 +197,5 @@ export const en = {
         'Nothing stops the calls: fact(0) calls fact(−1), which calls fact(−2), and so on. Every call pushes a frame, so the program crashes once the stack is full.',
     },
   ],
-  nextTeaser:
-    'Next up: recursion and induction. A base case and a step that shrinks the problem are exactly what a proof by induction needs.',
+  nextTeaser: 'Bài tiếp theo: Đệ quy và quy nạp.',
 };

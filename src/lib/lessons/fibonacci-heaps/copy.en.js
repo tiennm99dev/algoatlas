@@ -8,8 +8,8 @@ const count = (k, one, many) => `${k} ${k === 1 ? one : many}`;
 export const en = {
   slug: 'fibonacci-heaps',
   topic: 'advanced-heaps',
-  level: 'Advanced',
-  title: 'Binomial and Fibonacci heaps',
+  level: 'Nâng cao',
+  title: 'Heap nhị thức và heap Fibonacci',
   intro:
     'A binomial or Fibonacci heap is a forest of heap-ordered trees: every root is smaller than everything below it, and the smallest root is the minimum. Two such heaps merge just by joining their root lists, so these are mergeable heaps. A Fibonacci heap goes further and is lazy: insert and decrease-key only touch the root list, in O(1) amortized time, and the tidying waits for extract-min.',
   summary:
@@ -239,6 +239,5 @@ export const en = {
       solution: 'Φ = 6 + 2 · 2 = 10.',
     },
   ],
-  nextTeaser:
-    'Next up: van Emde Boas trees, which beat every comparison heap when the keys are integers from a fixed universe.',
+  nextTeaser: 'Bài tiếp theo: Cây van Emde Boas.',
 };

@@ -15,8 +15,8 @@ const ORDER_NAMES = {
 export const en = {
   slug: 'tree-traversals',
   topic: 'trees',
-  level: 'Beginner',
-  title: 'Tree traversals',
+  level: 'Cơ bản',
+  title: 'Duyệt cây',
   intro:
     'A traversal visits every node of a tree exactly once. Preorder visits a node before its subtrees, inorder between them and postorder after them; level order sweeps the tree level by level. Each runs in O(n), and each order answers different questions.',
   summary:
@@ -177,8 +177,7 @@ export const en = {
         'Postorder is a b + c d − ×: both operands come before their operator, so a stack calculator can push a and b, apply +, and so on.',
     },
   ],
-  nextTeaser:
-    'Next up: binary search trees, where inorder comes out sorted and every operation walks one path.',
+  nextTeaser: 'Bài tiếp theo: Cây nhị phân tìm kiếm.',
 };
 
 /** @param {number} n */

@@ -36,8 +36,8 @@ const NAMES = { n: 'n', nlogn: 'n log n', n2: 'n²', exp: '2ⁿ' };
 export const en = {
   slug: 'asymptotic-notation',
   topic: 'complexity',
-  level: 'Beginner',
-  title: 'Asymptotic notation: Big-O, Omega, Theta',
+  level: 'Cơ bản',
+  title: 'Kí hiệu tiệm cận: O lớn, Omega, Theta',
   intro:
     'Exact step counts such as 3n² + 20n + 50 are precise but noisy. Asymptotic notation keeps only how fast the count grows as n gets large: Big-O is an upper bound, Omega a lower bound, and Theta both at once.',
   summary:
@@ -160,6 +160,5 @@ export const en = {
         'At n = 1024: log n = 10, n = 1024, n log n = 10,240, n² ≈ 1 million, and 2ⁿ has 309 digits. So log n < n < n log n < n² < 2ⁿ.',
     },
   ],
-  nextTeaser:
-    'Next up: analysing loops and recursion, where a recursion tree turns a recurrence into a sum.',
+  nextTeaser: 'Bài tiếp theo: Phân tích vòng lặp và đệ quy.',
 };

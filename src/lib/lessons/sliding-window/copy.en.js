@@ -7,8 +7,8 @@ const plural = (k, word, many = `${word}s`) => `${k} ${k === 1 ? word : many}`;
 export const en = {
   slug: 'sliding-window',
   topic: 'arrays-strings',
-  level: 'Intermediate',
-  title: 'Sliding window',
+  level: 'Trung bình',
+  title: 'Cửa sổ trượt',
   intro:
     'A sliding window is a run of consecutive elements, a[l..r), that moves across an array while a running total follows it. When the window moves, only the element that enters and the element that leaves change the total, so each step costs O(1) instead of adding the whole window up again. That turns many “best subarray” questions from O(n·k) or O(n²) into one O(n) scan.',
   summary:
@@ -178,6 +178,5 @@ export const en = {
         'The inner loop can run many times for one r, but every run moves l right and l never passes n. So the inner loop runs at most n times in total, and the scan is O(n).',
     },
   ],
-  nextTeaser:
-    'Next up: Prefix sums and difference arrays, which answer any range sum with two lookups.',
+  nextTeaser: 'Bài tiếp theo: Tổng tiền tố và mảng hiệu.',
 };

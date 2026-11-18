@@ -25,8 +25,8 @@ function thetaText(r) {
 export const en = {
   slug: 'analysing-loops-recursion',
   topic: 'complexity',
-  level: 'Intermediate',
-  title: 'Analysing loops and recursion',
+  level: 'Trung bình',
+  title: 'Phân tích vòng lặp và đệ quy',
   intro:
     'A loop’s cost is a sum: add up what each pass does. A recursive algorithm’s cost is a recurrence such as T(n) = 2T(n/2) + n, and a recursion tree turns that recurrence back into a sum, one level at a time.',
   summary:
@@ -190,6 +190,5 @@ export const en = {
         'a = 4 > b^d = 2, so the leaves dominate: there are 4^(log₂ n) = n² of them, so T(n) = Θ(n²).',
     },
   ],
-  nextTeaser:
-    'Next up: best, worst and average case, where the same algorithm costs different amounts on different inputs.',
+  nextTeaser: 'Bài tiếp theo: Trường hợp tốt nhất, xấu nhất và trung bình.',
 };

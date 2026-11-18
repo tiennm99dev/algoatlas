@@ -95,35 +95,35 @@ describe('Ford-Fulkerson lesson', () => {
   it('pushes augmenting paths until the flow is maximum', () => {
     render();
     expect(text()).toContain('Every edge starts with flow 0.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain(
       'Depth-first search found S → A → C → B → D → T. Its smallest room is the bottleneck b = 4.',
     );
     expect(statValue(m.stats.bottleneck)).toBe('4');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(statValue(m.stats.value)).toBe('4');
     expect(arcTitles()).toContain('Edge C → B: flow 4 of 9, path adds flow here');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain(
       'Done after 4 augmenting paths and 67 arc checks: the maximum flow from S to T is 23.',
     );
     expect(statValue(m.stats.value)).toBe('23');
     expect(statValue(m.stats.paths)).toBe('4');
-    click(button('Previous step'));
+    click(button('Bước trước'));
     expect(text()).toContain('the search reached only S, A, B and D.');
   });
 
   it('shows the backward step and the residual view', () => {
     render();
     commit(select('preset'), 'cancel');
-    click(button('Next step'));
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Depth-first search found S → B ⇠ A → T.');
     expect(text()).toContain('uses A → B backwards');
     radio('residual');
     expect(arcTitles()).toContain('Backward arc B → A: can cancel 1, on the augmenting path');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('and take it off A → B');
     radio('flow');
     expect(arcTitles()).toContain('Edge A → B: flow 0 of 1, path cancels flow here');
@@ -134,13 +134,13 @@ describe('Ford-Fulkerson lesson', () => {
     commit(select('preset'), 'cancel');
     commit(capacityField('A → T'), '2');
     commit(capacityField('S → A'), '3');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.value)).toBe('3');
     commit(capacityField('S → A'), '25');
     expect(text()).toContain(m.badCapacity(20));
     expect(capacityField('S → A').value).toBe('3');
     click(buttonByText(m.resetGraph));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.value)).toBe('2');
   });
 
@@ -150,9 +150,9 @@ describe('Ford-Fulkerson lesson', () => {
     expect(text()).toContain(m.sameEnds);
     expect(select('sink').value).toBe('5');
     commit(select('sink'), '3');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('the maximum flow from S to C is 19');
-    click(button('First step'));
+    click(button('Về bước đầu'));
     press(document.body, 'ArrowRight');
     expect(text()).toContain('Depth-first search found S → A → C.');
   });
@@ -161,11 +161,11 @@ describe('Ford-Fulkerson lesson', () => {
     render();
     const q = /** @type {HTMLElement} */ (practice().querySelectorAll('ol > li')[0]);
     answer(q, '20');
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer(q, '23');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

@@ -94,25 +94,25 @@ describe('Bipartite matching lesson', () => {
   it('flips an augmenting path with Kuhn', () => {
     render();
     expect(text()).toContain('Kuhn’s algorithm takes the left vertices A, B, … in turn');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Start from A: clear the visited marks and run try(A).');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('A looks at 1: 1 is free.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(statValue(m.stats.size)).toBe('1');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(vertex(0)).toBe('Vertex A, matched');
     expect(vertex(1)).toBe('Vertex B, free, searching now');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain(
       'B looks at 1: 1 is taken by A. Can A move to another partner? Run try(A).',
     );
-    click(button('Next step'));
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Flip the path B – 1 – A – 2');
     expect(statValue(m.stats.size)).toBe('2');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Done: 4 pairs after 16 edge checks.');
     expect(statValue(m.stats.searches.kuhn)).toBe('4');
   });
@@ -120,38 +120,38 @@ describe('Bipartite matching lesson', () => {
   it('runs Hopcroft-Karp in two phases', () => {
     render();
     radio('hk');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain(
       'Phase 1: BFS from the free left vertices A, B, C and D finds that the shortest augmenting paths have 1 edge.',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Done: 4 pairs in 2 phases');
-    for (let i = 0; i < 3; i++) click(button('Previous step'));
+    for (let i = 0; i < 3; i++) click(button('Bước trước'));
     expect(text()).toContain('DFS from B found B – 1 – A – 2 – C – 3 – D – 4');
   });
 
   it('edits edges in the table, resizes the sides and resets', () => {
     render();
     commit(select('preset'), 'hall');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.size)).toBe('3');
     expect(vertex(1)).toBe('Vertex B, free');
     commit(select('right'), '4');
     click(cell(1, 3));
     expect(cell(1, 3).getAttribute('aria-label')).toBe('B – 4: edge');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.size)).toBe('4');
     expect(cell(1, 3).getAttribute('aria-label')).toBe('B – 4: edge, matched');
     press(cell(1, 3), 'Enter');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.size)).toBe('3');
     commit(select('left'), '2');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.size)).toBe('1');
     click(buttonByText(m.resetGraph));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.size)).toBe('3');
-    click(button('First step'));
+    click(button('Về bước đầu'));
     press(document.body, 'ArrowRight');
     expect(text()).toContain('Start from A');
   });
@@ -160,11 +160,11 @@ describe('Bipartite matching lesson', () => {
     render();
     const q = /** @type {HTMLElement} */ (practice().querySelectorAll('ol > li')[0]);
     answer(q, '2');
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer(q, '3');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

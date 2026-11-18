@@ -104,8 +104,8 @@ const bins = { p: 'Polynomial', npc: 'NP-complete', approx: 'Approximable' };
 export const en = {
   slug: 'practice-intractability',
   topic: 'intractability',
-  level: 'Advanced',
-  title: 'Practice: reductions and hardness',
+  level: 'Nâng cao',
+  title: 'Luyện tập: phép quy dẫn và độ khó',
   intro:
     'Before trying to solve a problem, decide how hard it is. Many easy and hard problems look almost the same: shortest and longest paths, Euler and Hamiltonian cycles, 2-SAT and 3-SAT. Recognising which one you have tells you whether to look for an exact algorithm, an approximation, or a reduction that proves neither exists.',
   summary:
@@ -266,6 +266,5 @@ export const en = {
         'Fractional knapsack is greedy in O(n log n), whatever the numbers. With W ≤ 1,000 the dynamic programming table is O(n · W), polynomial only because W is small. With any weights that table can be exponential in the input size, and 0/1 knapsack is NP-hard.',
     },
   ],
-  nextTeaser:
-    'Next up: Binomial and Fibonacci heaps, where a Fibonacci heap merges in O(1) and makes decrease-key cheap enough to speed up Dijkstra and Prim.',
+  nextTeaser: 'Bài tiếp theo: Heap nhị thức và heap Fibonacci.',
 };

@@ -33,8 +33,8 @@ function optionText(f, o) {
 export const en = {
   slug: 'srtbot-framework',
   topic: 'dynamic-programming',
-  level: 'Beginner',
-  title: 'The SRTBOT framework',
+  level: 'Cơ bản',
+  title: 'Khung SRTBOT',
   intro:
     'SRTBOT is a six-step recipe for designing a dynamic program: choose the Subproblems, Relate each one to smaller ones, check a Topological order exists, fix the Base cases, say how the Original problem is read from the subproblems, and bound the Time. Every dynamic program in this chapter is these six answers. Here you design two of them, bowling and maximum subarray, and then run the design on your own numbers.',
   summary:
@@ -290,6 +290,5 @@ export const en = {
       solution: 'n + 1 subproblems with O(1) work each: O(n).',
     },
   ],
-  nextTeaser:
-    'Next up: 1D DP: climbing stairs, coin change and house robber, where the state is a prefix and each cell reads a few cells before it.',
+  nextTeaser: 'Bài tiếp theo: QHĐ một chiều: leo cầu thang, đổi tiền, ăn trộm nhà.',
 };

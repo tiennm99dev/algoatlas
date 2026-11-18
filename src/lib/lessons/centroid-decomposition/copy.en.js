@@ -9,8 +9,8 @@ const half = (n) => String(n / 2);
 export const en = {
   slug: 'centroid-decomposition',
   topic: 'tree-techniques',
-  level: 'Advanced',
-  title: 'Centroid decomposition',
+  level: 'Nâng cao',
+  title: 'Phân rã trọng tâm',
   intro:
     'A centroid is a node whose removal leaves no piece with more than half of the tree. Remove it, then do the same in every piece that is left: the centroids form a new tree of depth O(log n). Every path in the original tree passes through exactly one highest centroid, so questions about all paths, such as how many pairs of nodes are K edges apart, split into small pieces.',
   summary:
@@ -183,6 +183,5 @@ export const en = {
         'Any two leaves are joined through the centre, so the count is 8 × 7 / 2 = 28, all found at the first centroid.',
     },
   ],
-  nextTeaser:
-    'Next up: Practice: advanced tree problems, running path and distance queries with heavy-light decomposition against the naive walk.',
+  nextTeaser: 'Bài tiếp theo: Luyện tập: bài toán cây nâng cao.',
 };

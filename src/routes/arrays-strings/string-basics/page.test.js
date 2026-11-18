@@ -72,7 +72,7 @@ function stat(label) {
 
 /** Step until the narration matches. @param {string} part */
 function stepUntil(part) {
-  for (let i = 0; i < 400 && !narration().includes(part); i++) click(button('Next step'));
+  for (let i = 0; i < 400 && !narration().includes(part); i++) click(button('Bước tiếp'));
 }
 
 function practice() {
@@ -96,12 +96,12 @@ describe('string basics lesson', () => {
     );
     expect(text()).toContain(m.blocks.t);
     expect(text()).toContain('Index 0: a, copied from');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe(
       'Write “c” after them and let s = t: 1 write and 2 copies for this piece. The old s is garbage now.',
     );
     expect(text()).toContain('Index 2: c, just written');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe(
       'Done: “abcdefghij” after 45 copies of old characters and 10 writes, 55 steps in total.',
     );
@@ -121,12 +121,12 @@ describe('string basics lesson', () => {
       'Piece 5, “e”, needs 5 slots but the buffer has 4. Allocate a new buffer of max(2 × 4, 5) = 8.',
     );
     expect(text()).toContain(m.blocks.newBuffer);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.copies)).toBe('22');
     expect(stat(m.stats.other)).toBe('55');
     expect(text()).toContain(m.blocks.result);
     commit(input('capacity'), '16');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.copies)).toBe('10');
     expect(stat(m.stats.garbage)).toBe('0');
   });
@@ -135,10 +135,10 @@ describe('string basics lesson', () => {
     render();
     click(buttonByText(m.presets.words));
     expect(input('pieces').value).toBe('The quick brown fox jumps');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('“Thequickbrownfoxjumps”');
     commit(input('pieces'), 'ab cd ef gh ij kl');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.copies)).toBe('30');
   });
 
@@ -188,16 +188,16 @@ describe('string basics lesson', () => {
     answer.value = '42';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '30';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

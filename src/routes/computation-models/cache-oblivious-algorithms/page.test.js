@@ -78,12 +78,12 @@ describe('cache-oblivious algorithms lesson', () => {
     render();
     expect(cells('A')).toHaveLength(64);
     expect(text()).toContain('Each matrix is 16 blocks of 4 words, and the cache holds 4 blocks.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('B[0][0] = A[0][0]: the read misses, so its block is fetched');
     expect(cells('A')[0].textContent).toBe('A[0][0], block A0, accessed now, a miss');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('B[1][0] = A[0][1]: the read hits; the write misses');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.transfers)).toBe('80');
     expect(stat(m.stats.split)).toBe('16 / 64');
     expect(text()).toContain('2.50 times the ideal 32');
@@ -92,14 +92,14 @@ describe('cache-oblivious algorithms lesson', () => {
   it('reaches the ideal with the recursive order and a Z-order layout', () => {
     render();
     click(radio('order', 'recursive'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.transfers)).toBe('56');
     commit(input('cache'), '7');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.transfers)).toBe('32');
     commit(input('cache'), '2');
     click(radio('layout', 'z'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.transfers)).toBe('32');
     expect(text()).toContain('the ideal: every block was fetched exactly once.');
   });
@@ -117,15 +117,15 @@ describe('cache-oblivious algorithms lesson', () => {
     render();
     const q = question(0);
     answer(q, '32');
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     click(
       /** @type {HTMLElement} */ (
-        [...q.querySelectorAll('button')].find((b) => b.textContent?.trim() === 'Show a hint')
+        [...q.querySelectorAll('button')].find((b) => b.textContent?.trim() === 'Xem gợi ý')
       ),
     );
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer(q, '80');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

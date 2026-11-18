@@ -70,7 +70,7 @@ function pickMode(value) {
 }
 /** Steps forward until the narration holds `part`. @param {string} part */
 function stepTo(part) {
-  for (let i = 0; i < 80 && !narration().includes(part); i++) click(button('Next step'));
+  for (let i = 0; i < 80 && !narration().includes(part); i++) click(button('Bước tiếp'));
   expect(narration()).toContain(part);
 }
 
@@ -83,7 +83,7 @@ describe('treaps and skip lists lesson', () => {
 
   it('drops level by level to the target', () => {
     render(Page);
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('drop to level 3');
     stepTo('move right');
     stepTo('Found 70 on the bottom level, after 6 comparisons.');
@@ -167,7 +167,7 @@ describe('treaps and skip lists lesson', () => {
     pickMode('treap');
     expect(narration()).toContain('The treap is empty.');
     stepTo('moves up');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('height')).toBe('4');
     expect(stat('rotations')).toBe('4');
     expect(document.querySelector('svg')?.textContent).toContain('p 7');
@@ -177,7 +177,7 @@ describe('treaps and skip lists lesson', () => {
     render(Page);
     commit(keyInput(), '40');
     click(buttonByText('Delete'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     pickMode('treap');
     commit(keyInput(), '45');
     priorityInput().value = '1';
@@ -186,7 +186,7 @@ describe('treaps and skip lists lesson', () => {
     pickMode('skip');
     expect(stat('size')).toBe('7');
     pickMode('treap');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('size')).toBe('8');
   });
 
@@ -194,13 +194,13 @@ describe('treaps and skip lists lesson', () => {
     render(Page);
     pickMode('treap');
     commit(presetSelect(), 'chain');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('height')).toBe('7');
     commit(keyInput(), '45');
     commit(priorityInput(), '0');
     click(buttonByText('Insert'));
     stepTo('Attach 45 as a leaf with priority 0.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('height')).toBe('5');
   });
 
@@ -226,7 +226,7 @@ describe('treaps and skip lists lesson', () => {
   it('deletes from the treap by rotating down', () => {
     render(Page);
     pickMode('treap');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     commit(keyInput(), '20');
     click(buttonByText('Delete'));
     stepTo('rotate it down until it is a leaf');
@@ -238,10 +238,10 @@ describe('treaps and skip lists lesson', () => {
   it('gives the same treap from the reordered pairs', () => {
     render(Page);
     pickMode('treap');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     const shape = document.querySelector('svg')?.getAttribute('aria-label');
     commit(presetSelect(), 'reordered');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(document.querySelector('svg')?.getAttribute('aria-label')).toBe(shape);
     expect(stat('height')).toBe('4');
     expect(stat('rotations')).toBe('5');
@@ -250,7 +250,7 @@ describe('treaps and skip lists lesson', () => {
   it('picks a treap node by pointer and keyboard', () => {
     render(Page);
     pickMode('treap');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     const nodes = [...document.querySelectorAll('svg [role="button"]')];
     expect(nodes.length).toBe(7);
     nodes[0].dispatchEvent(new MouseEvent('click', { bubbles: true }));
@@ -292,17 +292,17 @@ describe('treaps and skip lists lesson', () => {
       flushSync();
     };
     submit('5');
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     submit('6');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 
   it('marks the compared key on the level it was read from, even after the drop', () => {
     render(Page);
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('On level 4 the next is 80');
     const title = (/** @type {string} */ id) =>
       document.querySelector(`g[data-cell="${id}"] title`)?.textContent ?? '';
@@ -316,7 +316,7 @@ describe('treaps and skip lists lesson', () => {
     commit(towerSelect(), '5');
     click(buttonByText('Insert'));
     stepTo('the cap in this widget');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Link the new tower');
   });
 

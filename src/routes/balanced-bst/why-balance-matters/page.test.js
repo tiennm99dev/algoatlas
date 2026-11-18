@@ -67,7 +67,7 @@ describe('why balance matters lesson', () => {
 
   it('ends the sorted preset with a list against a shallow tree', () => {
     render(Page);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(heightOf('plain')).toBe('10');
     expect(heightOf('avl')).toBe('4');
     expect(narration()).toContain('Plain BST height 10 and 45 comparisons');
@@ -75,9 +75,9 @@ describe('why balance matters lesson', () => {
 
   it('narrates each tree in turn as it steps', () => {
     render(Page);
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Key 1 becomes the root of the plain BST.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Key 1 becomes the root of the AVL tree.');
   });
 
@@ -85,11 +85,11 @@ describe('why balance matters lesson', () => {
     render(Page);
     commit(keysInput(), '30, 10, 20');
     expect(presetSelect().value).toBe('');
-    for (let i = 0; i < 7; i++) click(button('Next step'));
+    for (let i = 0; i < 7; i++) click(button('Bước tiếp'));
     expect(narration()).toContain('The heavy side bends inward');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('rotate right at 30');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(heightOf('plain')).toBe('3');
     expect(heightOf('avl')).toBe('2');
   });
@@ -100,7 +100,7 @@ describe('why balance matters lesson', () => {
     keysInput().dispatchEvent(new Event('input', { bubbles: true }));
     /** @type {HTMLFormElement} */ (keysInput().closest('form')).requestSubmit();
     flushSync();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(heightOf('plain')).toBe('2');
   });
 
@@ -109,7 +109,7 @@ describe('why balance matters lesson', () => {
     commit(keysInput(), '1, 1');
     expect(narration()).toContain('Each key may appear only once.');
     expect(keysInput().value).toBe('1, 2, 3, 4, 5, 6, 7, 8, 9, 10');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).not.toContain('only once');
     commit(keysInput(), '');
     expect(narration()).toContain('Type at least one key.');
@@ -120,7 +120,7 @@ describe('why balance matters lesson', () => {
   it('switches presets, including a random one that can be picked twice', () => {
     render(Page);
     commit(presetSelect(), 'balanced');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(heightOf('plain')).toBe('4');
     expect(narration()).toContain('after 0 rotations');
     const rand = vi.spyOn(Math, 'random');
@@ -161,11 +161,11 @@ describe('why balance matters lesson', () => {
       flushSync();
     };
     submit('5');
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     submit('28');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

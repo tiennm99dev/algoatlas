@@ -11,8 +11,8 @@ const count = (k, one, many) => `${k} ${k === 1 ? one : many}`;
 export const en = {
   slug: 'practice-advanced-graphs',
   topic: 'advanced-graphs',
-  level: 'Advanced',
-  title: 'Practice: advanced graph problems',
+  level: 'Nâng cao',
+  title: 'Luyện tập: bài toán đồ thị nâng cao',
   intro:
     'Two everyday questions are graph problems in disguise. Which router, if it fails, cuts a network apart? That is an articulation point. Which modules can never be built because they need each other? That is a strongly connected component of more than one module. Knock out nodes and break cycles on graphs you edit, then answer the questions below.',
   summary:
@@ -213,6 +213,5 @@ export const en = {
         'The DFS from A goes A → B → C → D → E. E needs nothing and completes first, then G (reached from D), then D, C and B. Back at A it visits F, which needs only G, and A completes last: E, G, D, C, B, F, A.',
     },
   ],
-  nextTeaser:
-    'Next up: divide and conquer and the master theorem, splitting a problem into smaller copies and reading off its running time.',
+  nextTeaser: 'Bài tiếp theo: Chia để trị và định lí thợ.',
 };

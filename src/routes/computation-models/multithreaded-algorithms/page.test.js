@@ -75,12 +75,12 @@ describe('multithreaded algorithms lesson', () => {
     render();
     expect(dag()).toBe('Computation DAG with 22 strands: work 22, span 9.');
     expect(text()).toContain('no schedule on 2 processors can take fewer than max(T₁/P, T∞) = 11');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Step 1: P1 runs P-FIB(5) spawns.');
     expect(text()).toContain('1 processor idles: nothing else is ready.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Step 2: P1 runs P-FIB(4) spawns; P2 runs P-FIB(3) spawns.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Done in T_P = 13 steps on 2 processors');
     expect(row(2)).toContain('13');
   });
@@ -88,10 +88,10 @@ describe('multithreaded algorithms lesson', () => {
   it('rebuilds the schedule when the processors change', () => {
     render();
     commit(input('processors'), '8');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Done in T_P = 9 steps on 8 processors');
     commit(input('processors'), '1');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Done in T_P = 22 steps on 1 processor,');
   });
 
@@ -102,9 +102,9 @@ describe('multithreaded algorithms lesson', () => {
     commit(input('size'), '16');
     expect(dag()).toBe('Computation DAG with 46 strands: work 95, span 35.');
     commit(input('processors'), '4');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Done in T_P = 45 steps on 4 processors');
-    click(button('Previous step'));
+    click(button('Bước trước'));
     expect(text()).toContain('P1 runs merge 0–15');
   });
 
@@ -121,15 +121,15 @@ describe('multithreaded algorithms lesson', () => {
     render();
     const q = question(0);
     answer(q, '9');
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     click(
       /** @type {HTMLElement} */ (
-        [...q.querySelectorAll('button')].find((b) => b.textContent?.trim() === 'Show a hint')
+        [...q.querySelectorAll('button')].find((b) => b.textContent?.trim() === 'Xem gợi ý')
       ),
     );
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer(q, '11');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

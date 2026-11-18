@@ -50,7 +50,7 @@ const input = (name) =>
 const byTest = (id) => document.querySelector(`[data-testid="${id}"]`)?.textContent?.trim();
 /** @param {number} n */
 const next = (n) => {
-  for (let i = 0; i < n; i++) click(button('Next step'));
+  for (let i = 0; i < n; i++) click(button('Bước tiếp'));
 };
 
 function practice() {
@@ -80,7 +80,7 @@ describe('practice: linked list problems', () => {
     next(1);
     expect(narration()).toBe('1 < 2: link tail → 1 and move b on to 6.');
     expect(link('-2-next')?.getAttribute('class')).toContain('stroke-teal-700');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe('Merged: 1 → 2 → 5 → 6 → 7 → 9 → 12. 6 comparisons and no new nodes.');
     expect(byTest('answer')).toBe('1 → 2 → 5 → 6 → 7 → 9 → 12');
     expect(byTest('comparisons')).toBe('6');
@@ -105,7 +105,7 @@ describe('practice: linked list problems', () => {
     render();
     commit(input('list-a'), '1, 4, 6');
     commit(input('list-b'), '2, 3, 7');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('comparisons')).toBe(
       String(m.practice[0].type === 'number' && m.practice[0].answer),
     );
@@ -115,7 +115,7 @@ describe('practice: linked list problems', () => {
     render();
     pickProblem('middle');
     commit(input('list-a'), '10, 20, 30, 40, 50, 60');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('40');
     expect(narration()).toContain('the second of the two middle nodes of 6');
     expect(document.querySelector('input[name="list-b"]')).toBeNull();
@@ -128,7 +128,7 @@ describe('practice: linked list problems', () => {
     commit(input('n'), '2');
     next(2);
     expect(narration()).toBe('fast moves to 8: now 2 of 2 steps ahead of slow.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('removed 21');
     expect(narration()).toBe('Return dummy.next: 5 → 8 → 13 → 34. One pass, 8 pointer moves.');
   });
@@ -138,7 +138,7 @@ describe('practice: linked list problems', () => {
     pickProblem('nth');
     commit(input('list-a'), '5, 8, 13');
     commit(input('n'), '3');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('Return dummy.next: 8 → 13.');
     commit(input('n'), '4');
     expect(narration()).toBe(m.nError(3));
@@ -187,16 +187,16 @@ describe('practice: linked list problems', () => {
     field.value = '6';
     field.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     field.value = '5';
     field.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

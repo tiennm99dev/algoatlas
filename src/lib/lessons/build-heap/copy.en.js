@@ -3,8 +3,8 @@
 export const en = {
   slug: 'build-heap',
   topic: 'heaps',
-  level: 'Intermediate',
-  title: 'Building a heap in linear time',
+  level: 'Trung bình',
+  title: 'Dựng heap trong thời gian tuyến tính',
   intro:
     'To turn n values into a heap you could insert them one at a time, at O(log n) each. Bottom-up heapify does better: it treats the array as a tree, skips the leaves and sifts every other node down, from the last parent back to the root. The whole build costs only O(n), because most nodes sit near the bottom and can only sink a level or two.',
   summary:
@@ -185,6 +185,5 @@ export const en = {
         'A sift-down costs up to the node’s height. Half the nodes are leaves (height 0) and a quarter have height 1; only the root has height log₂ n. The sum Σ h · n/2^(h+1) stays below n. Skipping the leaves alone would still leave n/2 · log n.',
     },
   ],
-  nextTeaser:
-    'Next up: priority queue applications, where a min-heap merges k sorted lists, keeps the top k values and schedules events.',
+  nextTeaser: 'Bài tiếp theo: Ứng dụng của hàng đợi ưu tiên.',
 };

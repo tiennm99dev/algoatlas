@@ -10,8 +10,8 @@ const nodeOf = (f, id) => /** @type {RangeNode} */ (f.nodes.find((n) => n.id ===
 export const en = {
   slug: 'range-trees',
   topic: 'geometry',
-  level: 'Advanced',
-  title: 'Range trees and orthogonal range search',
+  level: 'Nâng cao',
+  title: 'Cây đoạn nhiều chiều và tìm kiếm trong hình chữ nhật',
   intro:
     'An orthogonal range query asks which points lie in an axis-parallel rectangle [x1, x2] × [y1, y2]. Checking every point costs O(n) per query. A range tree is a tree of trees: a balanced search tree on x whose every node also keeps its own points sorted by y, so a query touches only O(log n) nodes and binary searches O(log n) lists.',
   summary:
@@ -186,8 +186,7 @@ export const en = {
     ],
     ['Brute force', 'O(n) per query', 'Check every point against both ranges.'],
   ],
-  nextTeaser:
-    'Next, Practice: geometry problems turns orientation tests and convex hulls into problems you solve, with exact comparisons checked step by step.',
+  nextTeaser: 'Bài tiếp theo: Luyện tập: bài toán hình học.',
   practiceTitle: 'Check yourself',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
   practice: [

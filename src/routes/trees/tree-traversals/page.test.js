@@ -66,12 +66,12 @@ describe('tree traversals lesson', () => {
   it('runs preorder with an explicit stack and numbers the nodes', () => {
     render();
     expect(narration()).toBe('Preorder: push “expand A”, the whole tree, on the stack.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Pop “expand A”.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('Pop “visit A” and output it: visit number 1.');
     expect(nodeTitle('A')).toBe('Node A, visited 1st, acted on now');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe('Done: preorder is A B D E C F. Every node was visited once.');
     expect(byTest('visited')).toBe('6 of 6');
     expect(byTest('pushes')).toBe('12');
@@ -83,7 +83,7 @@ describe('tree traversals lesson', () => {
     pick('level');
     expect(narration()).toBe('Level order: put the root A in the queue.');
     expect(document.body.textContent).toContain('Queue (front → back)');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('level order is A B C D E F');
     expect(byTest('pushes')).toBe('6');
     expect(nodeTitle('F')).toBe('Node F, visited 6th');
@@ -96,7 +96,7 @@ describe('tree traversals lesson', () => {
       'expression',
     );
     pick('post');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('postorder is a b + c d − ×');
   });
 
@@ -107,14 +107,14 @@ describe('tree traversals lesson', () => {
     expect(field('input[name="tree"]').value).toBe('A, B, C, D, E, -, F');
     commit(field('input[name="tree"]'), 'R L');
     pick('in');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('inorder is L R');
     expect(field('input[name="tree"]').value).toBe('R, L');
   });
 
   it('steps back with the arrow keys', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     const before = narration();
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
     flushSync();
@@ -134,16 +134,16 @@ describe('tree traversals lesson', () => {
     answer.value = 'A B D E C F';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = 'd e b f c a';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

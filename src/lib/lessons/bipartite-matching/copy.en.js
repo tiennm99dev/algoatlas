@@ -19,8 +19,8 @@ const join = (list) =>
 export const en = {
   slug: 'bipartite-matching',
   topic: 'flows',
-  level: 'Advanced',
-  title: 'Bipartite matching',
+  level: 'Nâng cao',
+  title: 'Ghép cặp trên đồ thị hai phía',
   intro:
     'A bipartite graph has two groups, such as people and jobs, with edges only between the groups. A matching pairs vertices along edges so that nobody is used twice; the goal is as many pairs as possible. Add a source before the left group and a sink after the right group, give every edge capacity 1, and a maximum flow is a maximum matching. Kuhn’s and Hopcroft-Karp’s algorithms run that flow directly on the two columns.',
   summary:
@@ -196,6 +196,5 @@ export const en = {
         'Vertex-disjoint paths touch different vertices, so after one is flipped the others are still augmenting paths. Like a blocking flow in Dinic, the phase stops when no shortest path avoids them.',
     },
   ],
-  nextTeaser:
-    'Next up: Min-cost flow and the assignment problem, where each pair has a cost and the Hungarian algorithm finds the cheapest perfect matching.',
+  nextTeaser: 'Bài tiếp theo: Luồng chi phí nhỏ nhất và bài toán phân công.',
 };

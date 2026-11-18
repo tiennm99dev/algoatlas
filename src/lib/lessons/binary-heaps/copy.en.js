@@ -12,8 +12,8 @@ const ge = (h) => (h === 'min' ? '≥' : '≤');
 export const en = {
   slug: 'binary-heaps',
   topic: 'heaps',
-  level: 'Beginner',
-  title: 'Binary heaps',
+  level: 'Cơ bản',
+  title: 'Heap nhị phân',
   intro:
     'A binary heap is a complete binary tree where every parent comes before its children: in a min-heap no child is smaller than its parent, so the smallest value always sits at the root. Because the tree is complete, it packs into an array with no pointers at all. Insert and remove-the-top each walk one root-to-leaf path, so both cost O(log n).',
   summary:
@@ -190,6 +190,5 @@ export const en = {
         'Removing 1 and moving 3 to the root gives 3, 4, 2, 7, 5. The smaller child is 2 < 3, so they swap: 2, 4, 3, 7, 5. Slot 2 now has no children, so the sift ends.',
     },
   ],
-  nextTeaser:
-    'Next up: building a heap in linear time, where heapifying a whole array bottom-up costs only O(n).',
+  nextTeaser: 'Bài tiếp theo: Dựng heap trong thời gian tuyến tính.',
 };

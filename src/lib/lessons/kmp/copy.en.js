@@ -6,8 +6,8 @@ const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 export const en = {
   slug: 'kmp',
   topic: 'string-algorithms',
-  level: 'Intermediate',
-  title: 'Prefix function and KMP',
+  level: 'Trung bình',
+  title: 'Hàm tiền tố và thuật toán KMP',
   intro:
     'When a plain search fails after matching several letters, it starts over and rereads them. Knuth-Morris-Pratt never does: the prefix function of the pattern says how much of what just matched can still be the start of a match. So the text is read in one pass, for O(n + m) in total.',
   summary:
@@ -175,6 +175,5 @@ export const en = {
         'The matched text letters are exactly P[0..q), so everything about their overlaps is a fact about the pattern, computed in advance in π.',
     },
   ],
-  nextTeaser:
-    'Next up: Boyer-Moore, which compares from the right end of the pattern and often leaps over whole stretches of the text.',
+  nextTeaser: 'Bài tiếp theo: Thuật toán Boyer-Moore.',
 };

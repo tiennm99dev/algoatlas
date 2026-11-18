@@ -48,7 +48,7 @@ describe('registry', () => {
 
   it('uses only the known difficulty levels', () => {
     for (const lesson of lessons) {
-      expect(['Beginner', 'Intermediate', 'Advanced']).toContain(lesson.level);
+      expect(t().lessonLevels).toContain(lesson.level);
     }
   });
 
@@ -60,8 +60,8 @@ describe('registry', () => {
     }
   });
 
-  it('starts the learning path with a Beginner lesson', () => {
-    expect(lessons[0].level).toBe('Beginner');
+  it('starts the learning path with a lesson at the first level', () => {
+    expect(lessons[0].level).toBe('Cơ bản');
     expect(t().topics[lessons[0].topic].level).toBe(1);
   });
 

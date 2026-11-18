@@ -40,8 +40,8 @@ function rotation(f, name, field) {
 export const en = {
   slug: 'augmented-trees',
   topic: 'balanced-bst',
-  level: 'Advanced',
-  title: 'Ordered maps and augmented trees',
+  level: 'Nâng cao',
+  title: 'Ánh xạ có thứ tự và cây tăng cường',
   intro:
     'An ordered map keeps its keys sorted, so it can answer “what is next?” as well as “is it here?”. Store one small extra field in each node of a balanced tree and it answers more: subtree sizes give the k-th smallest key and the rank of a key, and the largest endpoint in each subtree finds overlapping intervals. Each query walks one path, so it stays O(log n).',
   summary:
@@ -314,8 +314,7 @@ export const en = {
     ],
     ['Memory', 'O(n)', 'One node per key, with one extra number each.'],
   ],
-  nextTeaser:
-    'Next up: Practice: balanced tree problems, where you run the same operations through a plain BST, an AVL tree and a skip list and compare the cost.',
+  nextTeaser: 'Bài tiếp theo: Luyện tập: bài toán cây cân bằng.',
   practiceTitle: 'Check yourself',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
   practice: [

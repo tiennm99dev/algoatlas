@@ -6,8 +6,8 @@ const coord = (cell, cols) => `(${Math.floor(cell / cols)},${cell % cols})`;
 export const en = {
   slug: 'connected-components',
   topic: 'graphs',
-  level: 'Intermediate',
-  title: 'Connected components and flood fill',
+  level: 'Trung bình',
+  title: 'Thành phần liên thông và loang',
   intro:
     'A connected component is a largest group of vertices in which every vertex can reach every other. To find them all, scan the vertices and start a BFS or DFS from each one that has no label yet: that search, a flood fill, labels exactly one component. On a map of land and water, each component is an island.',
   summary:
@@ -143,6 +143,5 @@ export const en = {
         'The first flood labels every cell of the island. When the scan later reaches another cell of it, the cell already has a label, so no new flood starts.',
     },
   ],
-  nextTeaser:
-    'Next up: topological sort, which orders the tasks of a dependency graph so each comes after everything it needs.',
+  nextTeaser: 'Bài tiếp theo: Sắp xếp tô-pô.',
 };

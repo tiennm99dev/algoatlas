@@ -30,8 +30,8 @@ function opText(op) {
 export const en = {
   slug: 'practice-range-queries',
   topic: 'range-queries',
-  level: 'Advanced',
-  title: 'Practice: range query problems',
+  level: 'Nâng cao',
+  title: 'Luyện tập: bài toán truy vấn đoạn',
   intro:
     'No range query structure wins everywhere. The right one depends on the mix of operations: whether the array changes, whether you need sums or minimums, how long the ranges are and how many queries there will be. Build a workload here, run it through six structures, and count what each one really touches.',
   summary:
@@ -185,8 +185,7 @@ export const en = {
       'Sqrt blocks keep about √n numbers, prefix sums and both trees O(n), and a sparse table O(n log n).',
     ],
   ],
-  nextTeaser:
-    'Next up: Tries, a tree of characters where every word shares its path with the words that start the same way.',
+  nextTeaser: 'Bài tiếp theo: Trie.',
   practiceTitle: 'Practice problems',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
   practice: [

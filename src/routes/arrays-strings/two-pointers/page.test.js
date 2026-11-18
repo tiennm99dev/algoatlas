@@ -87,15 +87,15 @@ describe('two pointers lesson', () => {
     expect(narration()).toBe(
       'Sorted array of 6. Looking for two values that add up to 10: lo starts at 0, hi at 5.',
     );
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('a[0] + a[5] = 1 + 11 = 12.');
     expect(text()).toContain('1 + 11 = 12 > 10');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('12 > 10');
     expect(narration()).toContain('move hi to 4');
-    expect(arrayLabel()).toContain('hi at 4');
+    expect(arrayLabel()).toContain('hi ở 4');
     expect(text()).toContain('Index 5: 11, ruled out');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe('Done: 4 + 6 = 10 after 5 sums; brute force could need 15.');
     expect(stat(m.stats.sums)).toBe('5');
     expect(stat(m.stats.pairs)).toBe('15');
@@ -105,7 +105,7 @@ describe('two pointers lesson', () => {
   it('checks n − 1 sums when no pair exists', () => {
     render();
     commit(input('target'), '99');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.sums)).toBe('5');
     expect(stat(m.stats.result)).toBe('none');
     expect(narration()).toContain('no pair after 5 sums');
@@ -117,13 +117,13 @@ describe('two pointers lesson', () => {
     expect(input('pivot')).not.toBeNull();
     expect(text()).toContain('partition(a, p):');
     expect(narration()).toBe('Partition 6 values around p = 5: i starts at 0, j at 5.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('swap them to get 4 and 8');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.swaps)).toBe('2');
     expect(stat(m.stats.reads)).toBe('7');
     expect(stat(m.stats.result)).toBe('3');
-    expect(arrayLabel()).toContain('< p covers 0 to 2');
+    expect(arrayLabel()).toContain('< p phủ từ 0 đến 2');
     expect(narration()).toBe(
       'Done: i passed j. a[0..3) holds the 3 values < 5 and a[3..6) the rest, after 2 swaps and no extra array.',
     );
@@ -151,7 +151,7 @@ describe('two pointers lesson', () => {
   it('draws random values with a reachable target', () => {
     render();
     click(buttonByText(m.randomButton));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.result)).not.toBe('none');
     expect(input('values').value.split(', ')).toHaveLength(6);
   });
@@ -169,16 +169,16 @@ describe('two pointers lesson', () => {
     answer.value = '15';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '5';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

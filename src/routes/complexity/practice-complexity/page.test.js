@@ -81,12 +81,12 @@ describe('practice: estimating running time', () => {
   it('measures the first card as n doubles', () => {
     render();
     expect(narration()).toContain('Two full loops: we will run it for n = 1, 2, 4, …');
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe(
       'n = 2: the highlighted line ran 4 times. Doubling n multiplied the count by 4 (+3).',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.count)).toBe('1,048,576');
     expect(stat(m.stats.ratio)).toBe('× 4');
     expect(narration()).toContain('Done at n = 1,024 with 1,048,576 operations.');
@@ -98,7 +98,7 @@ describe('practice: estimating running time', () => {
     expect(card('triangle').getAttribute('aria-pressed')).toBe('true');
     expect(status()).toBe(m.picked(m.cards.triangle));
     expect(document.body.textContent).toContain(m.measuring(m.cards.triangle));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.count)).toBe('524,800');
     click(button(m.putHereLabel('O(n²)')));
     expect(bucket('O(n²)').textContent).toContain(m.cards.triangle);
@@ -143,7 +143,7 @@ describe('practice: estimating running time', () => {
     flushSync();
     expect(bucket('O(2ⁿ)').textContent).toContain(m.cards.fib);
     expect(document.body.textContent).toContain(m.measuring(m.cards.fib));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.count)).toBe('3,193');
     const target = card('single');
     target.focus();
@@ -166,16 +166,16 @@ describe('practice: estimating running time', () => {
     answer.value = '4096';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
-    answer.value = '2,080';
+    answer.value = '2080';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

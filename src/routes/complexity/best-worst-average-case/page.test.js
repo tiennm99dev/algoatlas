@@ -74,9 +74,9 @@ describe('best, worst and average case lesson', () => {
   it('finds 25 at index 4 after 5 comparisons', () => {
     render();
     expect(narration()).toBe('Search for x = 25 in 8 elements, from left to right.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Compare A[0] = 42 with 25: not equal.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('Comparisons (this run)')).toBe('5');
     expect(narration()).toContain('the average (n + 1)/2 = 4.5');
   });
@@ -84,10 +84,10 @@ describe('best, worst and average case lesson', () => {
   it('runs the best and worst cases and logs them', () => {
     render();
     click(buttonByText('Best case'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('Comparisons (this run)')).toBe('1');
     click(buttonByText('Worst case'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('Comparisons (this run)')).toBe('8');
     expect(narration()).toContain('This run cost 8 comparisons.');
     expect(input('target').value).toBe('0');
@@ -112,7 +112,7 @@ describe('best, worst and average case lesson', () => {
     commit(input('target'), '93');
     /** @type {HTMLFormElement} */ (input('target').closest('form')).requestSubmit();
     flushSync();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('Comparisons (this run)')).toBe('4');
     commit(input('target'), '120');
     expect(narration()).toBe(m.targetError);
@@ -133,7 +133,7 @@ describe('best, worst and average case lesson', () => {
 
   it('marks the outcome bar in the profile chart', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     const hot = document.querySelector('rect.fill-state-active');
     expect(hot).toBeTruthy();
     expect(document.querySelectorAll('svg[aria-label^="Bar chart"] rect')).toHaveLength(9);
@@ -152,16 +152,16 @@ describe('best, worst and average case lesson', () => {
     answer.value = '5';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[2].hints[0]);
     answer.value = '7';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

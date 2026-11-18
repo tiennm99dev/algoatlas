@@ -12,8 +12,8 @@ const question = ([x, y]) => `${NAMES[x]} < ${NAMES[y]}`;
 export const en = {
   slug: 'comparison-sort-lower-bound',
   topic: 'sorting',
-  level: 'Advanced',
-  title: 'Comparison sort lower bound',
+  level: 'Nâng cao',
+  title: 'Cận dưới của sắp xếp bằng so sánh',
   intro:
     'Every sort so far learns about its input only by comparing two items. Draw all the questions it could ask as a binary tree: each inner node is one comparison and each leaf one possible sorted order. Since n items can arrive in n! orders, the tree needs at least n! leaves, so some path is at least log₂ n! deep. That is why no comparison sort beats n log n in the worst case.',
   summary:
@@ -171,6 +171,5 @@ export const en = {
         'Counting sort never compares two keys: it uses each key as an array index. The others are comparison sorts, so they need Ω(n log n) comparisons in the worst case.',
     },
   ],
-  nextTeaser:
-    'Next up: counting sort and radix sort, which step around the bound by never comparing keys.',
+  nextTeaser: 'Bài tiếp theo: Sắp xếp đếm và sắp xếp theo cơ số.',
 };

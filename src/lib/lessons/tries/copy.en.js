@@ -7,8 +7,8 @@ const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 export const en = {
   slug: 'tries',
   topic: 'string-algorithms',
-  level: 'Beginner',
-  title: 'Tries',
+  level: 'Cơ bản',
+  title: 'Trie',
   intro:
     'A trie, or prefix tree, stores a set of words as a tree of letters: every word that starts the same way shares the same path from the root. Looking up a word walks one node per letter, so the cost depends on the length of the word and not on how many words are stored.',
   summary:
@@ -224,6 +224,5 @@ export const en = {
         'The words have 13 letters. The distinct prefixes are s, st, sto, stop, sta, star and start, so 7 nodes are enough: sharing saves 13 − 7 = 6.',
     },
   ],
-  nextTeaser:
-    'Next up: String hashing and Rabin-Karp, which turns each window of a text into a number so that comparing strings costs one comparison.',
+  nextTeaser: 'Bài tiếp theo: Băm xâu và thuật toán Rabin-Karp.',
 };

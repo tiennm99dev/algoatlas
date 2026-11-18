@@ -56,14 +56,14 @@ describe('reductions and hardness practice', () => {
     expect(narration()).toContain('Sort the 8 cards');
     sort('eulerCircuit', 'p');
     sort('hamCycle', 'p');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Euler circuit: right, Polynomial.');
     expect(byTest('verdict-eulerCircuit')).toContain('✓ Right.');
     expect(byTest('verdict-hamCycle')).toBeUndefined();
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Hamiltonian cycle: not Polynomial, it is NP-complete.');
     expect(byTest('wrong')).toBe('1');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('2-SAT: not sorted. It is Polynomial.');
   });
 
@@ -119,16 +119,16 @@ describe('reductions and hardness practice', () => {
     answer.value = '4';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {Element} */ (hint));
     expect(q.textContent).toContain('Check all and count');
     answer.value = '3';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).not.toContain('Not quite');
+    expect(q.textContent).not.toContain('Chưa đúng');
     expect(m.practice.flatMap((ex) => exerciseProblems(ex))).toEqual([]);
   });
 });

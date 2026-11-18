@@ -61,7 +61,7 @@ const node = (label) => {
 };
 /** @param {number} n */
 const next = (n) => {
-  for (let i = 0; i < n; i++) click(button('Next step'));
+  for (let i = 0; i < n; i++) click(button('Bước tiếp'));
 };
 
 function practice() {
@@ -105,7 +105,7 @@ describe('heavy-light decomposition lesson', () => {
 
   it('splits the path M – L into three chain ranges', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe(
       'Path sum = 8 + 6 + 20 = 34, from 3 ranges and 29 segment-tree nodes. Walking the path one node at a time reads 8 nodes.',
     );
@@ -123,7 +123,7 @@ describe('heavy-light decomposition lesson', () => {
     expect(narration()).toBe(
       'Every chain is now a block of positions. Sum the values on the path K – L (3 nodes).',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('sum')).toBe(String(5 + 2 + 8));
     expect(byTest('ranges')).toBe('2');
   });
@@ -131,7 +131,7 @@ describe('heavy-light decomposition lesson', () => {
   it('answers a path query on one chain with a single range', () => {
     render();
     choose('preset', 'path');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('ranges')).toBe('1');
     expect(byTest('sum')).toBe('30');
   });
@@ -140,12 +140,12 @@ describe('heavy-light decomposition lesson', () => {
     render();
     click(node('L'));
     setValue('0');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('sum')).toBe('26');
     setValue('12');
     expect(narration()).toBe(m.errors.value(9));
     click(buttonByText('Undo'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('sum')).toBe('34');
   });
 
@@ -160,7 +160,7 @@ describe('heavy-light decomposition lesson', () => {
     click(node('C'));
     click(buttonByText('Remove subtree'));
     // L went with C's subtree, so v falls back to the root A.
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('sum')).toBe(String(3 + 1 + 1 + 6 + 9));
     expect(byTest('ranges')).toBe('1');
   });
@@ -191,16 +191,16 @@ describe('heavy-light decomposition lesson', () => {
     answer.value = '7';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '6';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

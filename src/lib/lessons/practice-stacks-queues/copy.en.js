@@ -19,8 +19,8 @@ const opChip = (op) =>
 export const en = {
   slug: 'practice-stacks-queues',
   topic: 'stacks-queues',
-  level: 'Intermediate',
-  title: 'Practice: stacks and queues',
+  level: 'Trung bình',
+  title: 'Luyện tập: ngăn xếp và hàng đợi',
   intro:
     'Two interview classics that bend one structure into another. A queue built from two stacks pours its inbox into its outbox only when the outbox runs dry, so each item moves once and dequeue costs O(1) amortized. A min-stack keeps a second stack of minimums beside the main one, so getMin is O(1) too.',
   summary:
@@ -232,6 +232,5 @@ export const en = {
         'mins holds a single 3. Popping the second 3 matches mins.top and pops it, leaving mins empty while the main stack still holds 3. Using ≤ keeps one 3 on mins per copy.',
     },
   ],
-  nextTeaser:
-    'Next up: hash tables, which turn a key into an array index to find it in O(1) on average.',
+  nextTeaser: 'Bài tiếp theo: Bảng băm.',
 };

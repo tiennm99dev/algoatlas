@@ -68,14 +68,14 @@ describe('1D DP lesson', () => {
     expect(narration()).toBe(
       'Count the ways to climb 5 steps. The row has a cell per step, dp[0] to dp[5].',
     );
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe(
       'The last move to step 2 climbed 1 step (from 1) or 2 (from 0). Count both: dp[2] = dp[1] + dp[0] = 1 + 1 = 2.',
     );
     expect(arcs()).toHaveLength(2);
     expect(titles()[2]).toBe('dp[2]: 2, filled now');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(arcs()).toHaveLength(0);
     expect(byTest('result')).toBe('8');
     expect(byTest('lookups')).toBe('8');
@@ -85,19 +85,19 @@ describe('1D DP lesson', () => {
   it('finds the fewest coins and the coins used', () => {
     render();
     click(field('input[name="problem"][value="coins"]'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('result')).toBe('2');
     expect(byTest('lookups')).toBe('13');
     expect(chips()).toEqual(['3', '3']);
     expect(titles()[3]).toBe('dp[3]: 1, on the best chain');
-    click(button('Previous step'));
+    click(button('Bước trước'));
     expect(arcs()).toHaveLength(3);
     expect(narration()).toBe(
       'Try each coin as the last one: coin 1 → dp[5] + 1 = 3; coin 3 → dp[3] + 1 = 2; coin 4 → dp[2] + 1 = 3. The fewest is 2, with coin 3 last.',
     );
     commit(field('input[name="coins"]'), '2 5');
     commit(field('input[name="amount"]'), '3');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('result')).toBe('∞');
     expect(narration()).toBe('dp[3] = ∞: these coins cannot make 3.');
   });
@@ -105,11 +105,11 @@ describe('1D DP lesson', () => {
   it('robs the best houses', () => {
     render();
     click(field('input[name="problem"][value="robber"]'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('result')).toBe('12');
     expect(chips()).toEqual(['house 1', 'house 3', 'house 5']);
     commit(field('input[name="houses"]'), '5, 1, 1, 5');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('result')).toBe('10');
     expect(chips()).toEqual(['house 1', 'house 4']);
   });
@@ -147,16 +147,16 @@ describe('1D DP lesson', () => {
     answer.value = '3';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[1].hints[0]);
     answer.value = '2';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

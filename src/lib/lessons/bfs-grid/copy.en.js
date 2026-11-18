@@ -1,12 +1,12 @@
 /** @typedef {import('$lib/algo-engine/graph.js').BfsFrame} BfsFrame */
-import { gridCopy } from '../grid-copy.en.js';
+import { gridCopy } from '../grid-copy.vi.js';
 
 export const en = {
   ...gridCopy,
   slug: 'bfs-grid',
   topic: 'graphs',
-  level: 'Beginner',
-  title: 'Breadth-first search on a grid',
+  level: 'Cơ bản',
+  title: 'Duyệt theo chiều rộng trên lưới',
   intro:
     'BFS explores a graph in rings: first every cell one step from the start, then every cell two steps away, and so on. Because of that order, the first time it reaches the goal it has found a shortest path.',
   summary:
@@ -64,6 +64,5 @@ export const en = {
     ],
     ['Memory', 'O(V)', 'The visited set and the queue can each hold every cell.'],
   ],
-  nextTeaser:
-    'Next up: depth-first search on a grid, which follows one path as deep as it can before backing up.',
+  nextTeaser: 'Bài tiếp theo: Duyệt theo chiều sâu trên lưới.',
 };

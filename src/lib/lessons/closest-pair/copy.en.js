@@ -17,8 +17,8 @@ const allPairs = (n) => (n * (n - 1)) / 2;
 export const en = {
   slug: 'closest-pair',
   topic: 'divide-and-conquer',
-  level: 'Advanced',
-  title: 'Closest pair of points',
+  level: 'Nâng cao',
+  title: 'Cặp điểm gần nhất',
   intro:
     'Given n points in the plane, find the two that are closest together. Checking every pair costs O(n²). Divide and conquer splits the points by a vertical line, solves each half, and then only has to look at a thin strip around the line, which brings the cost down to O(n log n).',
   summary:
@@ -219,8 +219,7 @@ export const en = {
         'If p is left of the line and q right of it, then line − p.x ≤ q.x − p.x ≤ dist(p, q) < d, and the same for q. So both points of any closer crossing pair lie in the strip.',
     },
   ],
-  nextTeaser:
-    'Next up: Practice: divide and conquer problems, where you write the combine step for maximum subarray and majority element.',
+  nextTeaser: 'Bài tiếp theo: Luyện tập: bài toán chia để trị.',
 };
 
 /** Squared distance between two points of a frame, by id. @param {ClosestFrame} f @param {number} a @param {number} b */

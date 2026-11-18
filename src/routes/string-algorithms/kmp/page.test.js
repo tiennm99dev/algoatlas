@@ -49,12 +49,12 @@ const stat = (id) => document.querySelector(`[data-testid="${id}"]`)?.textConten
 const field = (name) =>
   /** @type {HTMLInputElement} */ (document.querySelector(`[name="${name}"]`));
 const titles = () => [...document.querySelectorAll('svg title')].map((t) => t.textContent ?? '');
-const toLast = () => click(button('Last step'));
+const toLast = () => click(button('Đến bước cuối'));
 /** @param {string} kindText */
 function stepUntil(kindText) {
   for (let i = 0; i < 400; i++) {
     if (narration().includes(kindText)) return;
-    click(button('Next step'));
+    click(button('Bước tiếp'));
   }
   throw new Error(`never narrated ${kindText}`);
 }
@@ -63,7 +63,7 @@ describe('KMP lesson', () => {
   it('builds the prefix function, then searches to the expected counters', () => {
     render();
     expect(narration()).toContain('First compute the prefix function of ababd');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe(
       'P[1] = b against P[0] = a: different, and nothing is matched, so move on to the next letter.',
     );
@@ -95,7 +95,7 @@ describe('KMP lesson', () => {
     expect(titles().some((t) => t.includes('full match'))).toBe(true);
     expect(titles()).toContain('Pattern row column 0: a, full match');
     expect(titles()).toContain('Pattern row column 3: b, full match');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('To catch overlaps');
     // The border ab stays under the text letters it matched, at columns 2 and 3.
     expect(titles()).toContain('Pattern row column 2: a, border kept after the jump');
@@ -170,16 +170,16 @@ describe('KMP lesson', () => {
     answer.value = '3';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(/** @type {any} */ (m.practice[0]).hints[0]);
     answer.value = '2';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

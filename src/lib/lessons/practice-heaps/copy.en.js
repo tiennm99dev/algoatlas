@@ -12,8 +12,8 @@ const sq = (v) => (v < 0 ? `(${v})²` : `${v}²`);
 export const en = {
   slug: 'practice-heaps',
   topic: 'heaps',
-  level: 'Intermediate',
-  title: 'Practice: heap problems',
+  level: 'Trung bình',
+  title: 'Luyện tập: bài toán về heap',
   intro:
     'Two classic heap problems. A running median splits the stream into two halves: a max-heap of the smaller half and a min-heap of the larger half, with sizes kept equal or low one ahead, so the median sits on their tops. The k closest points keep a max-heap of size k, whose root is the farthest point still in the answer.',
   summary:
@@ -248,6 +248,5 @@ export const en = {
         'A new point can only displace the farthest of the k kept points. A max-heap by distance puts exactly that point at the root, so one comparison decides and one sift repairs.',
     },
   ],
-  nextTeaser:
-    'Next up: graph representations, storing the same graph as an adjacency matrix or as adjacency lists.',
+  nextTeaser: 'Bài tiếp theo: Biểu diễn đồ thị.',
 };

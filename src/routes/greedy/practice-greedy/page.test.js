@@ -97,11 +97,11 @@ describe('greedy practice lesson', () => {
 
   it('steps the wrong rule onto a zero and reports the counterexample', () => {
     render();
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Jump 2 from cell 0 to cell 2. 1 jump so far.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Cell 2 holds 0: the rule is stuck there.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain(
       'The rule answers no, but the right answer is yes: a counterexample',
     );
@@ -115,11 +115,11 @@ describe('greedy practice lesson', () => {
     pickRule('right');
     expect(narration()).toContain('Rule: Track the farthest reach.');
     expect(text()).toContain('reach = max(reach, i + a[i])');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain(
       'Cell 0 is reachable (0 ≤ reach). From it you can get to 2, so reach = 2.',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('The rule answers yes, which is right on this input.');
     expect(stat('Farthest reach')).toBe('8');
   });
@@ -132,7 +132,7 @@ describe('greedy practice lesson', () => {
     expect(report()).toContain('Shortest counterexample:');
     click(buttonByText('Load the counterexample'));
     expect(narration()).toContain('Counterexample loaded');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('a counterexample, so this rule is wrong');
   });
 
@@ -148,31 +148,31 @@ describe('greedy practice lesson', () => {
     render();
     card('jumps');
     expect(/** @type {HTMLInputElement} */ (field('values')).value).toBe('2, 3, 1, 1, 4');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('The rule answers 3 jumps, but the right answer is 2 jumps');
     pickRule('right');
     expect(text()).toContain('if i = end:');
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain(
       'Cell 0 is the end of the range covered by 0 jumps, so take jump 1: it can land anywhere up to cell 2.',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('The rule answers 2 jumps, which is right');
   });
 
   it('fills boats with the two lightest and with heaviest plus lightest', () => {
     render();
     card('boats');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Sort the weights: 1, 2, 8, 9.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Boat 1: the two lightest, 1 and 2, share it.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('The rule answers 3 boats, but the right answer is 2 boats');
     expect(text()).toContain('1 + 2');
     pickRule('right');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('The rule answers 2 boats, which is right');
     expect(text()).toContain('9 + 1');
     expect(document.querySelector('[aria-label^="Cells:"]')?.textContent).toContain('b2');
@@ -187,7 +187,7 @@ describe('greedy practice lesson', () => {
     commit(field('values'), '0 3');
     expect(narration()).toContain('Keep every weight between 1 and 9.');
     commit(field('values'), '5 5 5');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('Right answer')).toBe('2 boats');
   });
 
@@ -198,7 +198,7 @@ describe('greedy practice lesson', () => {
     input.dispatchEvent(new Event('input', { bubbles: true }));
     input.form?.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
     flushSync();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('The rule answers yes, which is right');
     click(buttonByText('Random input'));
     expect(text()).toContain('New input loaded.');
@@ -217,16 +217,16 @@ describe('greedy practice lesson', () => {
     answer.value = '2';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[1].hints[0]);
     answer.value = '3';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

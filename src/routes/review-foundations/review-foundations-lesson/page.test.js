@@ -63,7 +63,7 @@ describe('review: foundations', () => {
     render();
     expect(document.querySelector('h1')?.textContent).toBe(m.title);
     expect(questions()).toHaveLength(m.practice.length);
-    expect(document.body.textContent).toContain(`0 of ${m.practice.length}`);
+    expect(document.body.textContent).toContain(`Đã giải 0/${m.practice.length}`);
   });
 
   it('checks a typed number, wrong then right after a hint', () => {
@@ -72,13 +72,13 @@ describe('review: foundations', () => {
     const q = questions()[i];
     type(q, '32');
     submit(q);
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText(q, 'Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText(q, 'Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[i].hints[0]);
     type(q, '31 copies');
     submit(q);
-    expect(q.textContent).toContain('Correct!');
-    click(buttonByText(q, 'Show solution'));
+    expect(q.textContent).toContain('Đúng rồi!');
+    click(buttonByText(q, 'Xem lời giải'));
     expect(q.textContent).toContain(m.practice[i].solution);
   });
 
@@ -92,11 +92,11 @@ describe('review: foundations', () => {
     radios[1].click();
     flushSync();
     submit(q);
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     radios[0].click();
     flushSync();
     submit(q);
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
   });
 
   it('accepts the stack output written in several ways', () => {
@@ -105,10 +105,10 @@ describe('review: foundations', () => {
     const q = questions()[i];
     type(q, '3, 4, 2');
     submit(q);
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     type(q, '2,4,3');
     submit(q);
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
   });
 
   it('orders the BST keys in preorder with the move buttons', () => {
@@ -126,7 +126,7 @@ describe('review: foundations', () => {
     submit(q);
     const order = [...q.querySelectorAll('ol li span.flex-1')].map((s) => s.textContent);
     expect(order).toEqual(['50', '30', '20', '40', '70', '60', '80']);
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
   });
 
   it('covers every foundations chapter with well-formed, correct questions', () => {

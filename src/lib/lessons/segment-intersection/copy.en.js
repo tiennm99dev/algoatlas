@@ -24,8 +24,8 @@ const side = (v) => (v === null ? '' : v > 0 ? 'left' : v < 0 ? 'right' : 'on th
 export const en = {
   slug: 'segment-intersection',
   topic: 'geometry',
-  level: 'Intermediate',
-  title: 'Segment intersection',
+  level: 'Trung bình',
+  title: 'Giao của hai đoạn thẳng',
   intro:
     'Do two segments meet? Solving for the crossing point means division and special cases for parallel lines. Four orientation tests decide it exactly: the segments cross when each one’s ends lie on opposite sides of the other. A collinear end needs one extra check, and only then do you divide to find where.',
   summary:
@@ -152,8 +152,7 @@ export const en = {
       'One constant-time test per pair; a sweep line does better when few meet.',
     ],
   ],
-  nextTeaser:
-    'Next, Polygon area and point in polygon turns edges into an area sum and a ray test.',
+  nextTeaser: 'Bài tiếp theo: Diện tích đa giác và điểm trong đa giác.',
   practiceTitle: 'Check yourself',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
   practice: [

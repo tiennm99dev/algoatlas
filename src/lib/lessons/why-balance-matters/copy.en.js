@@ -6,8 +6,8 @@ const plural = (n, one, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
 export const en = {
   slug: 'why-balance-matters',
   topic: 'balanced-bst',
-  level: 'Beginner',
-  title: 'Why balance matters',
+  level: 'Cơ bản',
+  title: 'Vì sao cân bằng quan trọng',
   intro:
     'A binary search tree costs one step per level, so its speed depends entirely on its height. Insert keys in sorted order and a plain BST degenerates into a list of height n, while a balancing tree keeps its height near log₂ n by using small local moves called rotations.',
   summary:
@@ -102,8 +102,7 @@ export const en = {
     ['One rotation', 'O(1)', 'Only a constant number of links change, whatever the tree size.'],
     ['Memory', 'O(n)', 'One node per key, plus a stored height in each AVL node.'],
   ],
-  nextTeaser:
-    'Next up: AVL trees, where you read balance factors and pick between single and double rotations yourself.',
+  nextTeaser: 'Bài tiếp theo: Cây AVL.',
   practiceTitle: 'Check yourself',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
   practice: [

@@ -10,8 +10,8 @@ const list = (items) =>
 export const en = {
   slug: 'distributed-algorithms',
   topic: 'computation-models',
-  level: 'Intermediate',
-  title: 'Distributed algorithms',
+  level: 'Trung bình',
+  title: 'Thuật toán phân tán',
   intro:
     'In a distributed system every node is a separate machine that sees only its own state and the messages from its neighbours. In the synchronous model the nodes move in lockstep rounds: send, receive, update. Electing one leader is the classic first task, and FloodMax solves it in D rounds while building a breadth-first search tree on the way.',
   summary:
@@ -168,6 +168,5 @@ export const en = {
         'All nodes stay identical round after round: each sees only its own ID, so each declares itself leader. Breaking symmetry needs distinct IDs or randomness.',
     },
   ],
-  nextTeaser:
-    'Next up: cache-oblivious algorithms, where the cost that matters is how many blocks move between memory and the cache.',
+  nextTeaser: 'Bài tiếp theo: Thuật toán không phụ thuộc cache.',
 };

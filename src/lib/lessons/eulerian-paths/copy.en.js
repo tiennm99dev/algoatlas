@@ -8,8 +8,8 @@ const join = (names, list) => list.map((i) => nm(names, i)).join(', ');
 export const en = {
   slug: 'eulerian-paths',
   topic: 'advanced-graphs',
-  level: 'Intermediate',
-  title: 'Eulerian paths and circuits',
+  level: 'Trung bình',
+  title: 'Đường đi và chu trình Euler',
   intro:
     'An Euler path uses every edge of a graph exactly once; an Euler circuit is one that ends where it started. Euler showed in 1736, with the bridges of Königsberg, that the answer depends only on degrees: a connected graph has an Euler circuit when every degree is even, and an Euler path when exactly two degrees are odd. Hierholzer’s algorithm then draws one in O(V + E).',
   summary:
@@ -151,6 +151,5 @@ export const en = {
         'E drops to degree 3 and G to degree 1: exactly two odd vertices. An Euler path exists, and it must start at one of them and end at the other.',
     },
   ],
-  nextTeaser:
-    'Next up: 2-SAT, which turns clauses of two literals into an implication graph and solves them with strongly connected components.',
+  nextTeaser: 'Bài tiếp theo: Bài toán 2-SAT.',
 };

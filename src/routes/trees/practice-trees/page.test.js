@@ -59,7 +59,7 @@ const node = (key) => {
 };
 /** @param {number} n */
 const next = (n) => {
-  for (let i = 0; i < n; i++) click(button('Next step'));
+  for (let i = 0; i < n; i++) click(button('Bước tiếp'));
 };
 
 function practice() {
@@ -82,7 +82,7 @@ describe('practice: tree problems lesson', () => {
     expect(narration()).toBe(
       'Go left: keys there must be smaller than 50, so the range becomes (−∞, 50).',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe('Every key lies inside its range: this is a valid BST.');
     expect(byTest('result')).toBe('valid');
     expect(byTest('comparisons')).toBe('14');
@@ -91,15 +91,15 @@ describe('practice: tree problems lesson', () => {
   it('catches the trap that the parent-only check misses', () => {
     render();
     commit(presetSelect(), 'trap');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('result')).toBe('not a BST');
-    click(button('Previous step'));
+    click(button('Bước trước'));
     expect(narration()).toBe(
       '60 breaks the BST property: an ancestor needs every key here to be in (30, 50). Return false.',
     );
     expect(byTest('inorder-verdict')).toBe('Not increasing: not a BST.');
     click(field('input[name="method"][value="local"]'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('result')).toBe('valid');
   });
 
@@ -107,11 +107,11 @@ describe('practice: tree problems lesson', () => {
     render();
     click(field('input[name="problem"][value="lca"]'));
     expect(byTest('picks')).toBe('p = 20, q = 40');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe('Done in 2 steps: LCA(20, 40) = 30.');
     click(node(60));
     expect(byTest('picks')).toBe('p = 40, q = 60');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe('Done in 1 step: LCA(40, 60) = 50.');
     expect(byTest('answer')).toBe('50');
   });
@@ -137,7 +137,7 @@ describe('practice: tree problems lesson', () => {
     expect(byTest('picks')).toBe('p = 70, q = 20');
     click(node(60));
     expect(byTest('picks')).toBe('p = 20, q = 60');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('50');
     expect(byTest('not-bst')).toContain('Lowest common ancestor by parent links: 30.');
   });
@@ -148,7 +148,7 @@ describe('practice: tree problems lesson', () => {
     expect(narration()).toBe(m.keyErrors.duplicate);
     expect(field('input[name="keys"]').value).toBe('50, 30, 70, 20, 40, 60, 80');
     commit(field('input[name="keys"]'), '8 3 9');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('result')).toBe('valid');
   });
 
@@ -165,16 +165,16 @@ describe('practice: tree problems lesson', () => {
     answer.value = '30';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[1].hints[0]);
     answer.value = '60';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

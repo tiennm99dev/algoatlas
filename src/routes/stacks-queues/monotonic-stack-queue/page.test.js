@@ -61,7 +61,7 @@ const pickMode = (value) =>
   );
 /** @param {number} n */
 const next = (n) => {
-  for (let i = 0; i < n; i++) click(button('Next step'));
+  for (let i = 0; i < n; i++) click(button('Bước tiếp'));
 };
 
 function practice() {
@@ -87,7 +87,7 @@ describe('monotonic stack and queue lesson', () => {
 
   it('finishes with every answer and the 2n bound', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(label('Next greater answers')).toBe('Next greater answers: 7, 7, 8, 5, 5, 8, -1, -1.');
     expect(byTest('pushes')).toBe('8');
     expect(byTest('pops')).toBe('6');
@@ -97,19 +97,19 @@ describe('monotonic stack and queue lesson', () => {
   it('never pops on falling input', () => {
     render();
     commit(/** @type {HTMLSelectElement} */ (document.querySelector('select')), 'falling');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('pops')).toBe('0');
   });
 
   it('finds sliding window maxima with a deque', () => {
     render();
     pickMode('window-max');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(label('Window maxima')).toBe('Window maxima: 7, 7, 7, 5, 8, 8.');
-    click(button('Previous step'));
+    click(button('Bước trước'));
     expect(narration()).toBe('The window a[5..7] is complete: its maximum is the front, a[6] = 8.');
     commit(input('k'), '2');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(label('Window maxima')).toBe('Window maxima: 4, 7, 7, 3, 5, 8, 8.');
   });
 
@@ -121,7 +121,7 @@ describe('monotonic stack and queue lesson', () => {
     const seen = [];
     for (let i = 0; i < 20; i++) {
       seen.push(narration());
-      click(button('Next step'));
+      click(button('Bước tiếp'));
     }
     expect(seen).toContain('Index 0 has slid out of the window a[1..2]: pop it from the front.');
   });
@@ -145,13 +145,13 @@ describe('monotonic stack and queue lesson', () => {
     /** @type {HTMLFormElement} */ (input('values').closest('form')).requestSubmit();
     flushSync();
     expect(input('k').value).toBe('2');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(label('Window maxima')).toBe('Window maxima: 5.');
   });
 
   it('steps back with the arrow keys', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     const before = narration();
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
     flushSync();
@@ -171,16 +171,16 @@ describe('monotonic stack and queue lesson', () => {
     answer.value = '8';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '5';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

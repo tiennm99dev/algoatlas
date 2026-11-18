@@ -95,16 +95,16 @@ describe('eulerian paths lesson', () => {
     render();
     expect(text()).toContain('Count degrees: every degree is even.');
     expect(vertex(2).getAttribute('aria-label')).toBe('Vertex C, deg 4');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('so an Euler circuit exists. Start at A.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Walk A — B and push B. 1 unused edge is left at A.');
     expect(vertex(1).getAttribute('aria-label')).toBe('Vertex B, pen is here, 1 left');
-    for (let i = 0; i < 3; i++) click(button('Next step'));
+    for (let i = 0; i < 3; i++) click(button('Bước tiếp'));
     expect(text()).toContain('A has no unused edge: pop it onto the route. Back up to C.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('C still has unused edges: start a detour cycle here along C — D.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain(
       'Euler circuit A → B → C → D → E → F → G → E → C → A, using all 9 edges once.',
     );
@@ -116,11 +116,11 @@ describe('eulerian paths lesson', () => {
   it('removing G — E gives a path from E to G', () => {
     render();
     radio('remove');
-    click(edgeButton('Delete edge G and E'));
+    click(edgeButton('Xoá cạnh giữa G và E'));
     expect(text()).toContain('Count degrees: 2 odd (E, G).');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Exactly two odd vertices, E, G');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Euler path E → ');
     expect(text()).toMatch(/→ G, using all 8 edges once/);
     click(buttonByText(m.resetGraph));
@@ -134,7 +134,7 @@ describe('eulerian paths lesson', () => {
     click(vertex(3));
     click(vertex(1));
     click(vertex(6));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('4 vertices have odd degree (A, B, D, G)');
     expect(text()).toContain('no Euler path exists');
   });
@@ -149,11 +149,11 @@ describe('eulerian paths lesson', () => {
     render();
     const q = /** @type {HTMLElement} */ (practice().querySelectorAll('ol > li')[0]);
     answer(q, '2');
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer(q, '0');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

@@ -86,7 +86,7 @@ describe('dynamic programming practice lesson', () => {
     expect(byTest('samples-summary')).toBe(
       'All 5 samples pass: the cells keep the promise and the answer is right.',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('got')).toBe('6 ✓');
     expect(byTest('expected')).toBe('6');
     expect(byTest('wrong')).toBe('0');
@@ -101,10 +101,10 @@ describe('dynamic programming practice lesson', () => {
     render();
     click(field('input[name="state"][value="ending"]'));
     click(term('a'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('Base: dp[0] = 0.');
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe(
       'a[i] → 1; dp[i−1] + a[i] → −1. dp[2] = 1. ✓ It matches the meaning you chose.',
     );
@@ -120,16 +120,16 @@ describe('dynamic programming practice lesson', () => {
     click(term('prev-if'));
     click(term('prev2'));
     click(term('prev2-if'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('got')).toBe('0 ✕');
     expect(byTest('expected')).toBe('3');
     click(field('input[name="base"][value="1"]'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('got')).toBe('3 ✓');
     expect(byTest('samples-summary')).toContain('All 5 samples pass');
     click(sample('Sample 5'));
     expect(field('input[name="values"]').value).toBe('100');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('got')).toBe('0 ✓');
   });
 
@@ -137,7 +137,7 @@ describe('dynamic programming practice lesson', () => {
     render();
     click(field('input[name="problem"][value="climb"]'));
     click(field('input[name="state"][value="every"]'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('wrong')).toBe('0');
     expect(narration()).toBe(
       'Every cell keeps its promise, but the answer is wrong. Either the state does not answer the question, or the answer is read from the wrong place.',
@@ -194,16 +194,16 @@ describe('dynamic programming practice lesson', () => {
     answer.value = '2';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '3';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

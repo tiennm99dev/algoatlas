@@ -76,14 +76,14 @@ describe('asymptotic notation lesson', () => {
     render();
     expect(narration()).toContain('f(n) = 3n² + 20n + 50');
     expect(plotLabel()).toContain('Empty log-scale plot');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('n = 1: f(n) = 73, n² = 1, ratio 73.');
     expect(stat('Ratio f(n) / g(n)')).toBe('73');
   });
 
   it('ends with a Θ verdict and its witness constants', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('= Θ(n²): 3·n² ≤ f(n) ≤ 73·n² for every n ≥ 1');
     expect(document.body.textContent).toContain('Θ (tight)');
   });
@@ -91,17 +91,17 @@ describe('asymptotic notation lesson', () => {
   it('gives O only against 2ⁿ and Ω only against n log n', () => {
     render();
     pickBound('exp');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('O(2ⁿ) but not Ω(2ⁿ): f(n) ≤ 73·2ⁿ for every n ≥ 4');
     pickBound('nlogn');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('Ω(n log n) but not O(n log n)');
   });
 
   it('shows an undefined ratio where n log n is 0', () => {
     render();
     pickBound('nlogn');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('so the ratio is undefined here');
     expect(stat('Ratio f(n) / g(n)')).toBe('—');
   });
@@ -110,7 +110,7 @@ describe('asymptotic notation lesson', () => {
     render();
     commit('a', '0');
     commit('b', '0');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('f(n) = 50 = O(n²)');
     commit('c', '0');
     expect(narration()).toBe(m.zeroError);
@@ -126,7 +126,7 @@ describe('asymptotic notation lesson', () => {
   it('shortens the run when the largest n changes', () => {
     render();
     commit('maxN', '5');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(plotLabel()).toContain('up to n = 5');
   });
 
@@ -143,16 +143,16 @@ describe('asymptotic notation lesson', () => {
     input.value = '22';
     input.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[2].hints[0]);
     input.value = '23';
     input.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

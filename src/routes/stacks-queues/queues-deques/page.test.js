@@ -69,7 +69,7 @@ describe('queues and deques lesson', () => {
   it('builds the short queue and draws every slot of the ring', () => {
     render();
     expect(narration()).toContain('An empty circular buffer');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(ringLabel()).toBe(
       'Circular buffer of 8 slots, head = 0, tail = 4, size = 4. Front to back: 12, 5, 31, 8.',
     );
@@ -80,7 +80,7 @@ describe('queues and deques lesson', () => {
     render();
     click(buttonByText('Dequeue'));
     expect(narration()).toContain('dequeue(): size = 4');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Read 12 from slot 0 and move head to 1');
     expect(byTest('result')).toBe('12');
     expect(byTest('naive-shifts')).toBe('3');
@@ -90,8 +90,8 @@ describe('queues and deques lesson', () => {
   it('wraps the tail into slot 0', () => {
     render();
     commit(preset(), 'wrap');
-    click(button('Last step'));
-    click(button('Previous step'));
+    click(button('Đến bước cuối'));
+    click(button('Bước trước'));
     expect(narration()).toContain('Write 90 into slot 0');
     expect(narration()).toContain('wrapped around');
     expect(byTest('wraps')).toBe('1');
@@ -103,23 +103,23 @@ describe('queues and deques lesson', () => {
     click(buttonByText('Reset'));
     commit(valueInput(), '9');
     click(buttonByText('Push front'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Step head back to slot 7 and write 9 there');
     expect(byTest('head')).toBe('7');
     click(buttonByText('Pop back'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Read 9 from slot 7');
   });
 
   it('refuses a ninth item and a pop from an empty buffer', () => {
     render();
     commit(preset(), 'full');
-    click(button('Last step'));
-    click(button('Previous step'));
+    click(button('Đến bước cuối'));
+    click(button('Bước trước'));
     expect(narration()).toContain('Full: all 8 slots are in use, so 9 is refused');
     click(buttonByText('Reset'));
     click(buttonByText('Dequeue'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('Empty: there is nothing to remove. The buffer is unchanged.');
   });
 
@@ -148,7 +148,7 @@ describe('queues and deques lesson', () => {
 
   it('steps back with the arrow keys', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     const before = narration();
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
     flushSync();
@@ -168,16 +168,16 @@ describe('queues and deques lesson', () => {
     answer.value = '9';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '1';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

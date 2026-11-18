@@ -49,12 +49,12 @@ const stat = (id) => document.querySelector(`[data-testid="${id}"]`)?.textConten
 const field = (name) =>
   /** @type {HTMLInputElement} */ (document.querySelector(`[name="${name}"]`));
 const titles = () => [...document.querySelectorAll('svg title')].map((t) => t.textContent ?? '');
-const toLast = () => click(button('Last step'));
+const toLast = () => click(button('Đến bước cuối'));
 /** @param {string} kindText */
 function stepUntil(kindText) {
   for (let i = 0; i < 400; i++) {
     if (narration().includes(kindText)) return;
-    click(button('Next step'));
+    click(button('Bước tiếp'));
   }
   throw new Error(`never narrated ${kindText}`);
 }
@@ -63,7 +63,7 @@ describe('Rabin-Karp lesson', () => {
   it('sets up the hashes, then rolls the window and finishes with the counters', () => {
     render();
     expect(narration()).toBe('Search abracadabra for abra, with base 31 and modulus 101.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('b^(m − 1)');
     stepUntil('Slide one place');
     expect(stat('roll')).toMatch(/^\(31 · \(\d+ − a·\d+\) \+ c\) mod 101 = \d+$/);
@@ -127,7 +127,7 @@ describe('Rabin-Karp lesson', () => {
 
   it('keeps its place when a field is committed unchanged', () => {
     render();
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     const shown = narration();
     commit(field('text'), 'abracadabra');
     commit(field('mod'), '101');
@@ -164,16 +164,16 @@ describe('Rabin-Karp lesson', () => {
     answer.value = '321';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(/** @type {any} */ (m.practice[0]).hints[0]);
     answer.value = '123';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

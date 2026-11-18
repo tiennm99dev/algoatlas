@@ -9,8 +9,8 @@ const term = (d) => (d < 0 && d !== -Infinity ? `(${show(d)})` : show(d));
 export const en = {
   slug: 'bellman-ford',
   topic: 'shortest-paths',
-  level: 'Intermediate',
-  title: 'Bellman-Ford',
+  level: 'Trung bình',
+  title: 'Thuật toán Bellman-Ford',
   intro:
     'Bellman-Ford relaxes every edge, round after round. It is slower than Dijkstra, O(V·E), but it allows negative edge weights. It also answers a question Dijkstra cannot: is there a negative cycle reachable from the source, which would make shortest paths meaningless?',
   summary:
@@ -193,6 +193,5 @@ export const en = {
         'Round 1 relaxes the first edge of the path (among others), round 2 the second, and so on. A shortest path never repeats a vertex, so it has at most V − 1 edges.',
     },
   ],
-  nextTeaser:
-    'Next up: Floyd-Warshall, which finds the shortest paths between every pair of vertices at once.',
+  nextTeaser: 'Bài tiếp theo: Thuật toán Floyd-Warshall.',
 };

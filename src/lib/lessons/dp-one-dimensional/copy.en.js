@@ -13,8 +13,8 @@ const list = (items) =>
 export const en = {
   slug: 'dp-one-dimensional',
   topic: 'dynamic-programming',
-  level: 'Beginner',
-  title: '1D DP: climbing stairs, coin change, house robber',
+  level: 'Cơ bản',
+  title: 'QHĐ một chiều: leo cầu thang, đổi tiền, ăn trộm nhà',
   intro:
     'Many dynamic programs need only a row of cells: dp[i] answers the problem for a prefix of the input, the first i steps, the amount i or the first i houses. Each cell is built from a few cells to its left, so filling the row left to right always has what it needs. The same row can count (how many ways) or optimise (fewest coins, most money); only the way the cells are combined changes.',
   summary:
@@ -216,6 +216,5 @@ export const en = {
         'Climbing stairs adds the ways through both choices, dp[i − 1] + dp[i − 2]. Coin change takes a minimum and house robber a maximum, keeping only the best choice.',
     },
   ],
-  nextTeaser:
-    'Next up: longest increasing subsequence, where each cell may read every cell before it, and a clever pile trick cuts the work to O(n log n).',
+  nextTeaser: 'Bài tiếp theo: Dãy con tăng dài nhất.',
 };

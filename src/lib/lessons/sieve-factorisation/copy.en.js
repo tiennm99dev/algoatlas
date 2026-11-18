@@ -6,8 +6,8 @@ const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 export const en = {
   slug: 'sieve-factorisation',
   topic: 'number-theory',
-  level: 'Beginner',
-  title: 'Sieve of Eratosthenes and factorisation',
+  level: 'Cơ bản',
+  title: 'Sàng Eratosthenes và phân tích thừa số',
   intro:
     'To find every prime up to n, do not test each number. Start from 2 and cross out the multiples of each prime you reach: whatever survives is prime. If each number also remembers the first prime that crossed it out, its smallest prime factor, the same table factorises any number up to n in a handful of divisions.',
   summary:
@@ -176,6 +176,5 @@ export const en = {
         'Each is 7·k with k < 7, so k has a prime factor below 7 and that prime already crossed the number out.',
     },
   ],
-  nextTeaser:
-    'Next up: Primality testing, which decides whether one huge number is prime without any table, using witnesses.',
+  nextTeaser: 'Bài tiếp theo: Kiểm tra số nguyên tố.',
 };

@@ -62,7 +62,7 @@ const presetSelect = () =>
   /** @type {HTMLSelectElement} */ (document.querySelector('select[name="preset"]'));
 /** @param {number} n */
 const next = (n) => {
-  for (let i = 0; i < n; i++) click(button('Next step'));
+  for (let i = 0; i < n; i++) click(button('Bước tiếp'));
 };
 
 function practice() {
@@ -91,7 +91,7 @@ describe('n-ary trees and tree recursion lesson', () => {
     expect(narration()).toBe(
       'C reports size 1 and height 0. B’s size grows to 2; its two tallest children are now a = 0, b = −1.',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe(
       'Done: 10 nodes, height 3, diameter 5 edges: H – G – F – A – B – C, bending at A.',
     );
@@ -173,16 +173,16 @@ describe('n-ary trees and tree recursion lesson', () => {
     answer.value = '4';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '5';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

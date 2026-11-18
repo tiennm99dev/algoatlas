@@ -72,7 +72,7 @@ describe('Karatsuba and Strassen lesson', () => {
   it('splits 1213 × 3141 into four products first', () => {
     render();
     expect(narration()).toContain('Multiply 1213 × 3141');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('split at m = 2');
     expect(narration()).toContain('Four products: 12·31, 12·41, 13·31 and 13·41.');
     expect(calls()).toHaveLength(5);
@@ -80,11 +80,11 @@ describe('Karatsuba and Strassen lesson', () => {
 
   it('ends with 16 one-digit products, then 9 with Karatsuba', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('1213 × 3141 = 3810033, using 16 one-digit multiplications');
     pick('three');
     expect(text()).toContain('Now using Karatsuba’s three products per split.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('using 9 one-digit multiplications');
     expect(stat('One-digit multiplications')).toBe('9');
   });
@@ -94,7 +94,7 @@ describe('Karatsuba and Strassen lesson', () => {
     pick('three');
     let seen = false;
     for (let i = 0; i < 40 && !seen; i++) {
-      click(button('Next step'));
+      click(button('Bước tiếp'));
       seen = narration().startsWith('z₁ = ');
     }
     expect(seen).toBe(true);
@@ -111,7 +111,7 @@ describe('Karatsuba and Strassen lesson', () => {
 
   it('lets a learner select a call to see its split', () => {
     render();
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     const root = /** @type {HTMLElement} */ (calls()[0]);
     root.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     flushSync();
@@ -127,7 +127,7 @@ describe('Karatsuba and Strassen lesson', () => {
     expect(narration()).toContain('at most 6 digits');
     commit(field('y'), '7');
     commit(field('x'), '8');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('8 × 7 = 56, using 1 one-digit multiplication in 1 call');
   });
 
@@ -140,9 +140,9 @@ describe('Karatsuba and Strassen lesson', () => {
     render();
     pick('matrices');
     expect(narration()).toContain('The definition needs 8 products');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('M₁ = (A₁₁ + A₂₂)(B₁₁ + B₂₂) = 5 × 13 = 65.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('C = [19 22; 43 50], with 7 multiplications and 18 additions');
     expect(stat('Multiplications')).toBe('7');
     expect(stat('Additions and subtractions')).toBe('18');
@@ -152,7 +152,7 @@ describe('Karatsuba and Strassen lesson', () => {
     render();
     pick('matrices');
     commit(field('A'), '1 0; 0 1');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('C = [5 6; 7 8]');
     commit(field('B'), '1 2 3');
     expect(narration()).toContain('Type four whole numbers');
@@ -174,16 +174,16 @@ describe('Karatsuba and Strassen lesson', () => {
     answer.value = '64';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[4].hints[0]);
     answer.value = '49';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

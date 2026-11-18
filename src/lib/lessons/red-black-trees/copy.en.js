@@ -7,8 +7,8 @@ const plural = (n, one, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
 export const en = {
   slug: 'red-black-trees',
   topic: 'balanced-bst',
-  level: 'Advanced',
-  title: 'Red-black trees',
+  level: 'Nâng cao',
+  title: 'Cây đỏ đen',
   intro:
     'A red-black tree gives every node a colour and enforces a few colour rules instead of exact heights. Red nodes can never stack, and every path has the same number of black nodes, so the longest path is at most twice the shortest. An insert is repaired with recolouring and at most two rotations.',
   summary:
@@ -163,8 +163,7 @@ export const en = {
     ['One rotation', 'O(1)', 'A fixed number of links change.'],
     ['Memory', 'O(n)', 'One node per key, plus a single colour bit each.'],
   ],
-  nextTeaser:
-    'Next up: B-trees, which pack many keys into each node and split them upward, so a search touches very few disk blocks.',
+  nextTeaser: 'Bài tiếp theo: Cây B.',
   practiceTitle: 'Check yourself',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
   practice: [

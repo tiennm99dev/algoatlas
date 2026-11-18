@@ -10,8 +10,8 @@ const count = (k, one, many) => `${k} ${k === 1 ? one : many}`;
 export const en = {
   slug: 'prim',
   topic: 'mst',
-  level: 'Intermediate',
-  title: 'Prim’s algorithm',
+  level: 'Trung bình',
+  title: 'Thuật toán Prim',
   intro:
     'Prim’s algorithm grows one tree from a start vertex. At every step it adds the cheapest edge with one end in the tree and the other outside, which the cut property says is safe. A heap of crossing edges makes that O(E log V), best on sparse graphs; an array of keys makes it O(V²), best on dense ones.',
   summary:
@@ -201,6 +201,5 @@ export const en = {
         'E is about 500,000, so the heap version does about 500,000 × log₂ 1,000 ≈ 5 million heap steps, while the array version does about V² = 1 million. On dense graphs the array wins.',
     },
   ],
-  nextTeaser:
-    'Next up: Practice: MST problems, where you predict a minimum spanning tree and use it to find bottleneck paths and the second-best tree.',
+  nextTeaser: 'Bài tiếp theo: Luyện tập: bài toán cây khung nhỏ nhất.',
 };

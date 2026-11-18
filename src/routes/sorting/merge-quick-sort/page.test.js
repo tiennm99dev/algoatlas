@@ -57,7 +57,7 @@ function buttonByText(label) {
 
 const text = () => document.body.textContent ?? '';
 const scrub = () =>
-  /** @type {HTMLInputElement} */ (document.querySelector('input[aria-label="Step"]'));
+  /** @type {HTMLInputElement} */ (document.querySelector('input[aria-label="Bước"]'));
 
 /** @param {number} index */
 function seek(index) {
@@ -70,7 +70,7 @@ function seek(index) {
 describe('merge and quick sort lesson', () => {
   it('splits the whole array on the first step', () => {
     render();
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Split [0–11] at 5');
   });
 
@@ -108,7 +108,7 @@ describe('merge and quick sort lesson', () => {
 
   it('finishes sorted with the totals in the narration', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toMatch(/Sorted with \d+ comparisons and \d+ writes\./);
     expect(document.querySelector('[role="img"]')?.getAttribute('aria-label')).toContain(
       '12 of 12 sorted',
@@ -190,7 +190,7 @@ describe('merge and quick sort lesson', () => {
     flushSync();
     // Median-of-three on a fresh trace differs per array, so find the frame from what is drawn.
     const last = /** @type {HTMLInputElement} */ (
-      document.querySelector('input[aria-label="Step"]')
+      document.querySelector('input[aria-label="Bước"]')
     );
     const frames = Number(last.max) + 1;
     let seen = false;
@@ -213,7 +213,7 @@ describe('merge and quick sort lesson', () => {
       `Array: ${expected.join(', ')}.`,
     );
     pickAlgo('quick');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('(max 11, balanced ≈ 4)');
   });
 
@@ -233,13 +233,13 @@ describe('merge and quick sort lesson', () => {
 
   it('states the stability verdict in the done narration', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).not.toContain('Equal values');
     choose('select.field', 'few-unique');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toMatch(/writes\. Equal values kept their order\./);
     pickAlgo('quick');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     const narration = text();
     const reordered = narration.match(
       /Equal values were reordered: \d+ \(originally \d+\w\w\) now follows/,
@@ -252,7 +252,7 @@ describe('merge and quick sort lesson', () => {
     render();
     choose('select.field', 'reversed');
     expect(text()).toContain('New array loaded.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     const range = /** @type {HTMLInputElement} */ (document.querySelector('input[type="range"]'));
     range.value = '8';
     range.dispatchEvent(new Event('change', { bubbles: true }));
@@ -267,7 +267,7 @@ describe('merge and quick sort lesson', () => {
     render();
     click(buttonByText('New array'));
     expect(text()).toContain('New array loaded.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).not.toContain('New array loaded.');
   });
 });

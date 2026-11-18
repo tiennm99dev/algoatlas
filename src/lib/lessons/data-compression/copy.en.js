@@ -7,8 +7,8 @@ const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 export const en = {
   slug: 'data-compression',
   topic: 'string-algorithms',
-  level: 'Intermediate',
-  title: 'Data compression: run-length, Huffman and LZW',
+  level: 'Trung bình',
+  title: 'Nén dữ liệu: mã loạt dài, Huffman và LZW',
   intro:
     'Text compresses because it repeats, but there is more than one kind of repetition. Run-length encoding collapses a letter repeated in a row, Huffman coding gives common letters short codes, and LZW builds a dictionary of strings it has already seen. Running all three on one text shows what each one can and cannot see.',
   summary:
@@ -201,6 +201,5 @@ export const en = {
         'Eight runs cost 128 bits. LZW emits 8 codes for 72 bits, and Huffman gives each letter 3 bits for 24.',
     },
   ],
-  nextTeaser:
-    'Next up: Practice: string problems, where you choose the right matcher and work with palindromes and periods.',
+  nextTeaser: 'Bài tiếp theo: Luyện tập: bài toán xâu.',
 };

@@ -52,7 +52,7 @@ function commit(el, value) {
 
 /** @param {number} index */
 function seek(index) {
-  const el = /** @type {HTMLInputElement} */ (document.querySelector('input[aria-label="Step"]'));
+  const el = /** @type {HTMLInputElement} */ (document.querySelector('input[aria-label="Bước"]'));
   el.value = String(index);
   el.dispatchEvent(new Event('input', { bubbles: true }));
   flushSync();
@@ -88,7 +88,7 @@ describe('counting inversions lesson', () => {
 
   it('counts 14 inversions on the example and lists them', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('14 inversions, found with');
     expect(stat('Inversions')).toBe('14');
     expect(text()).toContain('8 > 4');
@@ -118,7 +118,7 @@ describe('counting inversions lesson', () => {
   it('takes from the left on ties, so repeated values add nothing', () => {
     render();
     commit(valuesField(), '5, 5, 5, 5');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('0 inversions');
     expect(narration()).toContain('already sorted');
   });
@@ -130,7 +130,7 @@ describe('counting inversions lesson', () => {
       'reversed',
     );
     expect(text()).toContain('New array loaded.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('66 inversions');
     expect(narration()).toContain('Every pair is inverted');
   });
@@ -153,7 +153,7 @@ describe('counting inversions lesson', () => {
     field.dispatchEvent(new Event('input', { bubbles: true }));
     field.form?.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
     flushSync();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('1 inversion, found with 1 comparison');
   });
 
@@ -179,16 +179,16 @@ describe('counting inversions lesson', () => {
     answer.value = '3';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[1].hints[0]);
     answer.value = '5';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

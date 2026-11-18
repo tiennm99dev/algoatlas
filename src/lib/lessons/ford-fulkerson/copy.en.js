@@ -17,8 +17,8 @@ const join = (list) =>
 export const en = {
   slug: 'ford-fulkerson',
   topic: 'flows',
-  level: 'Intermediate',
-  title: 'Flow networks and Ford-Fulkerson',
+  level: 'Trung bình',
+  title: 'Mạng luồng và thuật toán Ford-Fulkerson',
   intro:
     'A flow network is a directed graph whose edges carry a capacity: how much can pass through per unit of time, like water through a pipe. Goods leave a source s and arrive at a sink t, and every other vertex passes on exactly what it receives. Ford-Fulkerson finds the largest possible flow by pushing more along augmenting paths of the residual graph until none is left.',
   summary:
@@ -205,6 +205,5 @@ export const en = {
         'Capacity and conservation are the two rules of a flow, and conservation forces the net flow out of s to arrive at t as net flow in. Edges out of s need not be full: at the end S → A carries 12 of 16.',
     },
   ],
-  nextTeaser:
-    'Next up: Edmonds-Karp and Dinic, which pick the augmenting paths with breadth-first search so the number of rounds no longer depends on the capacities.',
+  nextTeaser: 'Bài tiếp theo: Thuật toán Edmonds-Karp và Dinic.',
 };

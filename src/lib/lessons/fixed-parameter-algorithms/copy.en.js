@@ -10,8 +10,8 @@ const setText = (names, set) => (set.length ? `{${set.map((i) => names[i]).join(
 export const en = {
   slug: 'fixed-parameter-algorithms',
   topic: 'intractability',
-  level: 'Advanced',
-  title: 'Fixed-parameter algorithms',
+  level: 'Nâng cao',
+  title: 'Thuật toán tham số cố định',
   intro:
     'NP-hard does not always mean hopeless. Parameterised complexity measures the running time in the input size n and a second number k, such as the size of the answer. A problem is fixed-parameter tractable when it can be solved in f(k) · poly(n) time: exponential only in k. Vertex cover is the classic example, solved in O(2ᵏ · m) by a search tree at most k deep.',
   summary:
@@ -191,6 +191,5 @@ export const en = {
         '2ᵏ · n and k! · n³ separate k from n. In nᵏ and n^(k/2) the exponent of n grows with k, so they are not FPT.',
     },
   ],
-  nextTeaser:
-    'Next up: Practice: reductions and hardness, where you sort problem cards into polynomial, NP-complete and approximable.',
+  nextTeaser: 'Bài tiếp theo: Luyện tập: phép quy dẫn và độ khó.',
 };

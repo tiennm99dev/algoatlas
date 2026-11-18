@@ -83,21 +83,21 @@ describe('interval scheduling lesson', () => {
 
   it('sorts by finish time and keeps the first interval', () => {
     render();
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Sort by finish time');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('A [1, 4): nothing is kept yet, so it fits.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Keep A; lastFinish becomes 4.');
     expect(bar('A')).toContain('Kept or placed');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('B [3, 5): 3 < lastFinish 4, so it clashes with A [1, 4).');
     expect(bar('A')).toContain('Clashes with the scanned one');
   });
 
   it('keeps four activities by earliest finish', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('Kept 4 intervals: A, D, H, K.');
     expect(stat('Kept')).toBe('4');
     expect(stat('Clash checks')).toBe('11');
@@ -111,7 +111,7 @@ describe('interval scheduling lesson', () => {
     commit(field('rule'), 'shortest');
     expect(narration()).toContain('Rule: Select: shortest first.');
     expect(text()).toContain('if I clashes with no interval in chosen:');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('Kept 1 interval: B. Earliest finish keeps 2');
     expect(text()).toMatch(/Select: earliest finish\s*2 intervals/);
   });
@@ -120,11 +120,11 @@ describe('interval scheduling lesson', () => {
     render();
     commit(field('preset'), 'startTrap');
     commit(field('rule'), 'start');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('Kept 1 interval: A. Earliest finish keeps 3');
     commit(field('rule'), 'rooms');
     expect(text()).toContain('free = empty min-heap of room finish times');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('2 rooms hold every interval. At time 1, 2 intervals overlap');
     expect(stat('Rooms')).toBe('2');
     expect(stat('Depth')).toBe('2');
@@ -134,12 +134,12 @@ describe('interval scheduling lesson', () => {
   it('partitions the classic activities into 6 rooms', () => {
     render();
     commit(field('rule'), 'rooms');
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('C [0, 6): no room is open yet.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Open room R1 for C.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('6 rooms hold every interval. At time 8, 6 intervals overlap');
     expect(text()).toContain('R1: ');
   });
@@ -147,7 +147,7 @@ describe('interval scheduling lesson', () => {
   it('reads typed intervals and refuses bad ones', () => {
     render();
     commit(field('intervals'), '1-4, 4-6');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('Kept 2 intervals: A, B.');
     commit(field('intervals'), '5-3');
     expect(narration()).toContain('Every interval must end after it starts.');
@@ -181,16 +181,16 @@ describe('interval scheduling lesson', () => {
     answer.value = '5';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[1].hints[0]);
     answer.value = '6';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

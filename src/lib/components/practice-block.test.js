@@ -90,33 +90,33 @@ describe('PracticeBlock', () => {
     const q = question(0);
     type(q, '');
     submit(q);
-    expect(status(q)).toBe('Answer the question first.');
-    type(q, '3,5');
+    expect(status(q)).toBe('Hãy trả lời câu hỏi trước đã.');
+    type(q, '3 5');
     submit(q);
-    expect(status(q)).toMatch(/plain number/);
+    expect(status(q)).toMatch(/Hãy nhập một số/);
     type(q, '8');
     submit(q);
-    expect(status(q)).toBe('Not quite. Try again, or open a hint.');
+    expect(status(q)).toBe('Chưa đúng, thử lại nhé. Bạn có thể mở gợi ý.');
     type(q, '7 comparisons');
     submit(q);
-    expect(status(q)).toBe('Correct!');
-    expect(q.textContent).toContain('Solved');
-    expect(text()).toContain('1 of 5 solved');
+    expect(status(q)).toBe('Đúng rồi!');
+    expect(q.textContent).toContain('Đã giải');
+    expect(text()).toContain('Đã giải 1/5');
   });
 
   it('reveals hints one at a time and the solution only after a try', () => {
     render();
     const q = question(0);
-    expect(() => buttonIn(q, 'Show solution')).toThrow();
-    click(buttonIn(q, 'Show a hint'));
+    expect(() => buttonIn(q, 'Xem lời giải')).toThrow();
+    click(buttonIn(q, 'Xem gợi ý'));
     expect(q.textContent).toContain('First hint');
     expect(q.textContent).not.toContain('Second hint');
-    click(buttonIn(q, 'Next hint (1 of 2)'));
+    click(buttonIn(q, 'Gợi ý tiếp (1/2)'));
     expect(q.textContent).toContain('Second hint');
-    expect(() => buttonIn(q, 'Next hint (2 of 2)')).toThrow();
+    expect(() => buttonIn(q, 'Gợi ý tiếp (2/2)')).toThrow();
     type(q, '1');
     submit(q);
-    click(buttonIn(q, 'Show solution'));
+    click(buttonIn(q, 'Xem lời giải'));
     expect(q.textContent).toContain('Because.');
   });
 
@@ -128,10 +128,10 @@ describe('PracticeBlock', () => {
     );
     click(radios[0]);
     submit(q);
-    expect(status(q)).toMatch(/Not quite/);
+    expect(status(q)).toMatch(/Chưa đúng/);
     click(radios[1]);
     submit(q);
-    expect(status(q)).toBe('Correct!');
+    expect(status(q)).toBe('Đúng rồi!');
   });
 
   it('checks a set of picks', () => {
@@ -142,10 +142,10 @@ describe('PracticeBlock', () => {
     );
     click(boxes[0]);
     submit(q);
-    expect(status(q)).toMatch(/Not quite/);
+    expect(status(q)).toMatch(/Chưa đúng/);
     click(boxes[2]);
     submit(q);
-    expect(status(q)).toBe('Correct!');
+    expect(status(q)).toBe('Đúng rồi!');
   });
 
   it('accepts a cost formula with free spacing', () => {
@@ -153,7 +153,7 @@ describe('PracticeBlock', () => {
     const q = question(3);
     type(q, 'o( N log N )');
     submit(q);
-    expect(status(q)).toBe('Correct!');
+    expect(status(q)).toBe('Đúng rồi!');
   });
 
   it('reorders items with the move buttons and keeps focus on the moved item', async () => {
@@ -162,18 +162,18 @@ describe('PracticeBlock', () => {
     const order = () => [...q.querySelectorAll('ol li span.flex-1')].map((s) => s.textContent);
     expect(order()).toEqual(['n²', 'log n', 'n']);
     submit(q);
-    expect(status(q)).toMatch(/Not quite/);
-    const up = buttonIn(q, 'Move “log n” up');
+    expect(status(q)).toMatch(/Chưa đúng/);
+    const up = buttonIn(q, 'Đưa “log n” lên');
     up.focus();
     click(up);
     await tick();
     expect(order()).toEqual(['log n', 'n²', 'n']);
-    expect(document.activeElement?.getAttribute('aria-label')).toBe('Move “log n” up');
-    expect(q.textContent).toContain('“log n” is now position 1 of 3.');
-    click(buttonIn(q, 'Move “n” up'));
+    expect(document.activeElement?.getAttribute('aria-label')).toBe('Đưa “log n” lên');
+    expect(q.textContent).toContain('“log n” giờ ở vị trí 1/3.');
+    click(buttonIn(q, 'Đưa “n” lên'));
     expect(order()).toEqual(['log n', 'n', 'n²']);
     submit(q);
-    expect(status(q)).toBe('Correct!');
+    expect(status(q)).toBe('Đúng rồi!');
   });
 
   it('remembers solved questions per id and resets them', () => {
@@ -185,10 +185,10 @@ describe('PracticeBlock', () => {
     unmount(/** @type {any} */ (app));
     document.body.innerHTML = '';
     render('remember');
-    expect(text()).toContain('1 of 5 solved');
-    expect(question(1).textContent).toContain('Solved');
-    click(buttonIn(document.body, 'Reset progress'));
-    expect(text()).toContain('0 of 5 solved');
+    expect(text()).toContain('Đã giải 1/5');
+    expect(question(1).textContent).toContain('Đã giải');
+    click(buttonIn(document.body, 'Làm lại từ đầu'));
+    expect(text()).toContain('Đã giải 0/5');
     expect(localStorage.getItem('tintuong:practice:remember')).toBeNull();
   });
 
@@ -197,7 +197,7 @@ describe('PracticeBlock', () => {
     (old) => {
       localStorage.setItem(`${old}:practice:legacy`, '[0, 2]');
       render('legacy');
-      expect(text()).toContain('2 of 5 solved');
+      expect(text()).toContain('Đã giải 2/5');
       expect(localStorage.getItem('tintuong:practice:legacy')).toBe('[0, 2]');
       expect(localStorage.getItem(`${old}:practice:legacy`)).toBeNull();
     },
@@ -208,7 +208,7 @@ describe('PracticeBlock', () => {
     localStorage.setItem('algorithmally:practice:both', '[0, 2]');
     localStorage.setItem('algoatlas:practice:both', '[3]');
     render('both');
-    expect(text()).toContain('1 of 5 solved');
+    expect(text()).toContain('Đã giải 1/5');
     expect(localStorage.getItem('tintuong:practice:both')).toBe('[1]');
     expect(localStorage.getItem('algorithmally:practice:both')).toBeNull();
     expect(localStorage.getItem('algoatlas:practice:both')).toBeNull();
@@ -218,7 +218,7 @@ describe('PracticeBlock', () => {
     localStorage.setItem('algorithmally:practice:older', '[1]');
     localStorage.setItem('algoatlas:practice:older', '[0, 2]');
     render('older');
-    expect(text()).toContain('1 of 5 solved');
+    expect(text()).toContain('Đã giải 1/5');
     expect(localStorage.getItem('tintuong:practice:older')).toBe('[1]');
     expect(localStorage.getItem('algorithmally:practice:older')).toBeNull();
     expect(localStorage.getItem('algoatlas:practice:older')).toBeNull();
@@ -227,11 +227,11 @@ describe('PracticeBlock', () => {
   it('ignores unreadable stored progress', () => {
     localStorage.setItem('tintuong:practice:bad', '{"x":1}');
     render('bad');
-    expect(text()).toContain('0 of 5 solved');
+    expect(text()).toContain('Đã giải 0/5');
     localStorage.setItem('tintuong:practice:range', '[0, 9, -1, 0, "2"]');
     unmount(/** @type {any} */ (app));
     render('range');
-    expect(text()).toContain('1 of 5 solved');
+    expect(text()).toContain('Đã giải 1/5');
   });
 
   it('still works when storage throws', () => {
@@ -245,7 +245,7 @@ describe('PracticeBlock', () => {
     const q = question(1);
     click(/** @type {HTMLInputElement} */ (q.querySelectorAll('input[type="radio"]')[1]));
     submit(q);
-    expect(status(q)).toBe('Correct!');
-    expect(text()).toContain('1 of 5 solved');
+    expect(status(q)).toBe('Đúng rồi!');
+    expect(text()).toContain('Đã giải 1/5');
   });
 });

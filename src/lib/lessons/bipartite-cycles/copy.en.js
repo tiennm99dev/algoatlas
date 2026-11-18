@@ -8,8 +8,8 @@ const join = (names, list) => list.map((i) => nm(names, i)).join(', ');
 export const en = {
   slug: 'bipartite-cycles',
   topic: 'graphs',
-  level: 'Intermediate',
-  title: 'Bipartite check and cycle detection',
+  level: 'Trung bình',
+  title: 'Kiểm tra đồ thị hai phía và phát hiện chu trình',
   intro:
     'A graph is bipartite when its vertices split into two sides with every edge crossing between them, like students and the clubs they join. A BFS can try to two-colour the graph, and it fails exactly when the graph has a cycle of odd length. The same search ideas detect cycles, but what counts as a cycle depends on whether the edges are directed.',
   summary:
@@ -196,6 +196,5 @@ export const en = {
         'The hexagon has 6 edges plus the chord A – D, so 7 edges, each checked from both ends: 14.',
     },
   ],
-  nextTeaser:
-    'Next up: practice traversal problems, choosing BFS or DFS for grid puzzles and running BFS from many sources at once.',
+  nextTeaser: 'Bài tiếp theo: Luyện tập: bài toán duyệt đồ thị.',
 };

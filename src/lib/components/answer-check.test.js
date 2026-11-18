@@ -26,10 +26,11 @@ describe('parseNumber', () => {
     ['−2.25', -2.25],
     ['+4', 4],
     ['.5', 0.5],
-    ['1,000', 1000],
-    ['1,000,000', 1000000],
-    ['1 000 000', 1000000],
-    ['12,345.75', 12345.75],
+    ['3,5', 3.5],
+    [',5', 0.5],
+    ['-2,25', -2.25],
+    ['1,000', 1],
+    ['1000000', 1000000],
     ['0', 0],
   ])('reads %j as %d', (input, value) => {
     expect(parseNumber(input)).toEqual({ value, unit: '' });
@@ -39,17 +40,28 @@ describe('parseNumber', () => {
     ['7 comparisons', 7, 'comparisons'],
     ['12ms', 12, 'ms'],
     ['50%', 50, '%'],
-    ['1,024 bytes', 1024, 'bytes'],
+    ['1024 bytes', 1024, 'bytes'],
+    ['1,5 ms', 1.5, 'ms'],
   ])('splits %j into a value and a unit', (input, value, unit) => {
     expect(parseNumber(input)).toEqual({ value, unit });
   });
 
-  it.each(['', 'abc', '3,5', '1,00', '1,0000', '1.2.3', '12 34', '3.', '3..5', '-', '1,000 000'])(
-    'rejects %j',
-    (input) => {
-      expect(parseNumber(input)).toBeNull();
-    },
-  );
+  it.each([
+    '',
+    'abc',
+    '1,000,000',
+    '1 000 000',
+    '12,345.75',
+    '1.2.3',
+    '12 34',
+    '3.',
+    '3,',
+    '3..5',
+    '-',
+    '1,000 000',
+  ])('rejects %j', (input) => {
+    expect(parseNumber(input)).toBeNull();
+  });
 });
 
 describe('normalizeUnit', () => {
@@ -100,7 +112,8 @@ describe('checkAnswer: number', () => {
     expect(reason(ex, '   ')).toBe('empty');
     expect(reason(ex, undefined)).toBe('empty');
     expect(reason(ex, 'three and a half')).toBe('invalid');
-    expect(reason(ex, '3,5')).toBe('invalid');
+    expect(reason(ex, '3,5')).toBe('correct');
+    expect(reason(ex, '3 5')).toBe('invalid');
     expect(reason(ex, ['3.5'])).toBe('invalid');
   });
 
@@ -132,7 +145,7 @@ describe('checkAnswer: number', () => {
     expect(reason(sum, '0.3')).toBe('correct');
   });
 
-  it('handles negatives and grouped thousands', () => {
+  it('handles negatives and refuses grouped thousands', () => {
     /** @type {Exercise} */
     const neg = { ...base, type: 'number', answer: -12 };
     /** @type {Exercise} */
@@ -140,8 +153,9 @@ describe('checkAnswer: number', () => {
     expect(reason(neg, '-12')).toBe('correct');
     expect(reason(neg, '−12')).toBe('correct');
     expect(reason(neg, '12')).toBe('wrong');
-    expect(reason(big, '1,048,576')).toBe('correct');
-    expect(reason(big, '1 048 576')).toBe('correct');
+    expect(reason(big, '1048576')).toBe('correct');
+    expect(reason(big, '1,048,576')).toBe('invalid');
+    expect(reason(big, '1 048 576')).toBe('invalid');
   });
 });
 

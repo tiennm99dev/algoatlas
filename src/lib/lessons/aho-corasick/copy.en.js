@@ -10,8 +10,8 @@ const name = (f, id) => (id === 0 ? 'the root' : `“${prefixOf(f.nodes, id)}”
 export const en = {
   slug: 'aho-corasick',
   topic: 'string-algorithms',
-  level: 'Advanced',
-  title: 'Aho-Corasick',
+  level: 'Nâng cao',
+  title: 'Thuật toán Aho-Corasick',
   intro:
     'Searching for many patterns one at a time repeats work for every pattern. Aho-Corasick puts them all in one trie and adds failure links, so a mismatch falls back to the longest suffix still in the trie instead of restarting. One pass over the text then finds every pattern, however many there are.',
   summary:
@@ -214,6 +214,5 @@ export const en = {
         'abc has no x edge, so it follows its failure link to bc. bc has an x edge (from bcx), so one hop is enough.',
     },
   ],
-  nextTeaser:
-    'Next up: Suffix arrays and LCP, which sort every suffix of one text so that any pattern can be looked up later.',
+  nextTeaser: 'Bài tiếp theo: Mảng hậu tố và LCP.',
 };

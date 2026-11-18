@@ -88,12 +88,12 @@ describe('strongly connected components lesson', () => {
     render();
     expect(text()).toContain('Every vertex starts unvisited.');
     expect(text()).toContain(m.condensedWait);
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Visit A: tin = low = 0. Push A on the stack.');
     expect(vertex(0).getAttribute('aria-label')).toBe('Vertex A, current, tin 0, low 0');
-    for (let i = 0; i < 5; i++) click(button('Next step'));
+    for (let i = 0; i < 5; i++) click(button('Bước tiếp'));
     expect(text()).toContain('Edge C → A: A is still on the stack');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Done: 3 components.');
     expect(statValue(m.stats.comps)).toBe('3');
     expect(statValue(m.stats.edges)).toBe('10');
@@ -106,7 +106,7 @@ describe('strongly connected components lesson', () => {
     render();
     radio('kosaraju');
     expect(text()).toContain('Pass 1: run a DFS');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.edges)).toBe('20');
     expect(statValue(m.stats.pass)).toBe('2 / 2');
     expect(chips(m.compsLabel)).toEqual(['C1: G H', 'C2: A B C', 'C3: D E F']);
@@ -119,11 +119,11 @@ describe('strongly connected components lesson', () => {
     radio('connect');
     click(vertex(5));
     click(vertex(0));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.comps)).toBe('2');
     expect(text()).toContain('2 components and 1 edge between them.');
     click(buttonByText(m.resetGraph));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.comps)).toBe('3');
   });
 
@@ -137,11 +137,11 @@ describe('strongly connected components lesson', () => {
     render();
     const q = /** @type {HTMLElement} */ (practice().querySelectorAll('ol > li')[0]);
     answer(q, '2');
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer(q, '3');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

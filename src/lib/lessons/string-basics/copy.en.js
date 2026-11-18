@@ -13,8 +13,8 @@ const text = (cells) => cells.filter((c) => c !== null).join('');
 export const en = {
   slug: 'string-basics',
   topic: 'arrays-strings',
-  level: 'Beginner',
-  title: 'String basics and manipulation',
+  level: 'Cơ bản',
+  title: 'Xâu cơ bản và thao tác trên xâu',
   intro:
     'A string is an array of characters, and every character is a number, its code point, stored in bytes by an encoding such as UTF-8 or UTF-16. In Java, Python and JavaScript strings are immutable: an operation that seems to change a string builds a new one. That makes s = s + p in a loop copy everything again and again, and a string builder the right tool for joining many pieces.',
   summary:
@@ -217,6 +217,5 @@ export const en = {
         'The loop runs only n times, but step i copies the i characters joined so far: 0 + 1 + … + (n − 1) = n(n − 1)/2 copies. A builder avoids that by writing into spare capacity.',
     },
   ],
-  nextTeaser:
-    'Next up: Practice: array and string problems, where you pick two pointers, a sliding window or prefix sums for each problem and watch it run.',
+  nextTeaser: 'Bài tiếp theo: Luyện tập: bài toán về mảng và xâu.',
 };

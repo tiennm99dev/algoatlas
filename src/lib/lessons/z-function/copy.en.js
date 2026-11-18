@@ -6,8 +6,8 @@ const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 export const en = {
   slug: 'z-function',
   topic: 'string-algorithms',
-  level: 'Intermediate',
-  title: 'Z-function',
+  level: 'Trung bình',
+  title: 'Hàm Z',
   intro:
     'The Z-function records, for each position of a string, how many letters from there match the start of the string. Computing each value from scratch can take O(n²), but the rightmost match found so far, the Z-box, already tells what the letters inside it look like. That gets the whole array in O(n), and with a separator it is a pattern matcher too.',
   summary:
@@ -174,6 +174,5 @@ export const en = {
         'Without the box each position reads to the end: 11 + 10 + … + 1 = 66. With the box only the first position reads letters: 11. So 66 − 11 = 55 are saved.',
     },
   ],
-  nextTeaser:
-    'Next up: Aho-Corasick, which adds failure links to a trie so that many patterns can be found in a single pass over the text.',
+  nextTeaser: 'Bài tiếp theo: Thuật toán Aho-Corasick.',
 };

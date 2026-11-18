@@ -58,8 +58,8 @@ const programs = {
 export const en = {
   slug: 'recursion-induction',
   topic: 'recursion',
-  level: 'Intermediate',
-  title: 'Recursion and induction',
+  level: 'Trung bình',
+  title: 'Đệ quy và quy nạp',
   intro:
     'How do you know a loop or a recursion is correct, for every input and not just the ones you tried? A loop invariant is a statement that is true before the loop starts and stays true after every pass, so on exit it says the job is done. A recursion is proved the same way, by induction: show the base case, then show that each call is right whenever the smaller call it makes is right.',
   summary:
@@ -271,6 +271,5 @@ export const en = {
         'There are n = 10 odd numbers up to 19, so the sum is 10² = 100. Base case: 1 = 1². Step: n² + (2n + 1) = (n + 1)².',
     },
   ],
-  nextTeaser:
-    'Next up: practice recursive thinking. Solve the towers of Hanoi and list every subset by trusting the smaller call.',
+  nextTeaser: 'Bài tiếp theo: Luyện tập: tư duy đệ quy.',
 };

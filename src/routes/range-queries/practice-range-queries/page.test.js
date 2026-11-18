@@ -81,16 +81,16 @@ describe('practice: range query problems lesson', () => {
   it('rewinds to the start and steps through the build and the operations', () => {
     render();
     commit(field('ops'), 's0-3 u1=5');
-    click(button('First step'));
+    click(button('Về bước đầu'));
     expect(narration()).toContain('1,024 cells and nothing built yet');
     expect(stat('fenwick-total')).toBe('0');
     expect(stat('cheapest')).toBe(m.noValue);
 
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Built, in touches: Plain array 0, Prefix sums 1,025');
     expect(stat('prefix-build')).toBe('1,025');
 
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Sum of a[0..3] is');
     expect(narration()).toContain('Plain array 4, Prefix sums 2');
     expect(narration()).toContain('Sparse table cannot answer it and drops out.');
@@ -100,12 +100,12 @@ describe('practice: range query problems lesson', () => {
       'Sum of a[0..3] in an array of 1,024 cells.',
     );
 
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Set a[1] = 5.');
     expect(stat('prefix-cost')).toBe('1,023');
     expect(stat('answer')).toBe(m.noValue);
 
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Cheapest: Plain array with 5 touches.');
     expect(document.querySelector('[data-testid="range-track"]')).toBeNull();
     expect(document.body.textContent).toContain(m.rangeIdle);
@@ -280,11 +280,11 @@ describe('practice: range query problems lesson', () => {
 
   it('shows the chips around the current step', () => {
     render();
-    click(button('First step'));
+    click(button('Về bước đầu'));
     const chips = () => [...document.querySelectorAll('ol li')].map((li) => li.textContent?.trim());
     const first = field('ops').value.split(' ');
     expect(chips()).toContain(first[0]);
-    for (let i = 0; i < 40; i++) click(button('Next step'));
+    for (let i = 0; i < 40; i++) click(button('Bước tiếp'));
     expect(chips()).toContain(first[39]);
     expect(chips()).not.toContain(first[0]);
     expect(document.body.textContent).toContain(`(${m.opsHotLabel})`);
@@ -310,14 +310,14 @@ describe('practice: range query problems lesson', () => {
       flushSync();
     };
     submit('99');
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
-    submit('4,435');
-    expect(q.textContent).not.toContain('Not quite');
+    submit('4435');
+    expect(q.textContent).not.toContain('Chưa đúng');
   });
 
   it('names a single touch in the singular', () => {

@@ -67,7 +67,7 @@ const pickProblem = (value) =>
   );
 /** @param {number} n */
 const next = (n) => {
-  for (let i = 0; i < n; i++) click(button('Next step'));
+  for (let i = 0; i < n; i++) click(button('Bước tiếp'));
 };
 
 function practice() {
@@ -94,7 +94,7 @@ describe('practice: stacks and queues lesson', () => {
 
   it('ends the mixed log with 4 pours and 2 stack ops per queue op', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('transfers')).toBe('4');
     expect(byTest('stack-ops')).toBe('16');
     expect(byTest('per-op')).toBe('2.00');
@@ -109,8 +109,8 @@ describe('practice: stacks and queues lesson', () => {
     expect(narration()).toBe('enqueue(42): push 42 onto the inbox. One stack operation.');
     click(buttonByText('Dequeue'));
     click(buttonByText('Dequeue'));
-    click(button('Last step'));
-    click(button('Previous step'));
+    click(button('Đến bước cuối'));
+    click(button('Bước trước'));
     expect(narration()).toContain('the queue is empty');
   });
 
@@ -126,22 +126,22 @@ describe('practice: stacks and queues lesson', () => {
   it('tracks the minimum with a second stack in the min-stack', () => {
     render();
     pickProblem('min-stack');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(label('mins')).toBe('mins (top = minimum), bottom to top: 5, 3. Top is 3.');
     expect(byTest('min')).toBe('3');
-    click(button('Previous step'));
+    click(button('Bước trước'));
     expect(narration()).toBe('getMin() reads the top of mins: 3. No searching.');
     click(buttonByText('Undo last'));
     commit(valueInput(), '9');
     click(buttonByText('Push'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('9 > the minimum 3: mins stays as it is.');
   });
 
   it('loads a preset and undoes', () => {
     render();
     commit(/** @type {HTMLSelectElement} */ (document.querySelector('select')), 'burst');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('transfers')).toBe('5');
     click(buttonByText('Undo last'));
     expect(byTest('queue-ops')).toBe('9');
@@ -149,7 +149,7 @@ describe('practice: stacks and queues lesson', () => {
 
   it('steps back with the arrow keys', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     const before = narration();
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
     flushSync();
@@ -169,16 +169,16 @@ describe('practice: stacks and queues lesson', () => {
     answer.value = '3';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '4';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

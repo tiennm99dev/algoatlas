@@ -7,8 +7,8 @@ const big = (n) => n.toLocaleString('en-US');
 export const en = {
   slug: 'rsa-cryptography',
   topic: 'number-theory',
-  level: 'Intermediate',
-  title: 'Public-key cryptography and RSA',
+  level: 'Trung bình',
+  title: 'Mật mã khoá công khai và RSA',
   intro:
     'In public-key cryptography, anyone can lock a message with a key you publish, but only your private key opens it. RSA builds that lock from two facts: fast powers mod n are easy, and pulling n = p·q apart is hard. This lesson runs the whole scheme on small primes, then lets an attacker break the key to show what real key sizes protect against.',
   summary:
@@ -271,6 +271,5 @@ export const en = {
         'p and q give φ. φ limits the choice of e. e and φ give d. Only then is (n, e) published.',
     },
   ],
-  nextTeaser:
-    'Next up: Practice: number theory problems, a sandbox for modular counting and divisor sums where you check each step yourself.',
+  nextTeaser: 'Bài tiếp theo: Luyện tập: bài toán lí thuyết số.',
 };

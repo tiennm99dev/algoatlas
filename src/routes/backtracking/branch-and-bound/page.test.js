@@ -50,12 +50,12 @@ describe('branch and bound lesson', () => {
   it('steps from the root bound to the optimum', () => {
     render();
     expect(narration()).toContain('the bound is 175');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('highest bound is 175');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Take D: value 95 is a new best');
     expect(byTest('best')).toBe('95');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('best')).toBe('150');
     expect(byTest('made')).toBe('21');
     expect(byTest('expanded')).toBe('10');
@@ -73,10 +73,10 @@ describe('branch and bound lesson', () => {
   it('compares the two search orders', () => {
     render();
     commit(field('select[name="preset"]'), 'order');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('made')).toBe('27');
     click(field('input[name="order"][value="depth"]'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('made')).toBe('71');
     expect(byTest('best')).toBe('87');
   });
@@ -84,10 +84,10 @@ describe('branch and bound lesson', () => {
   it('edits the items and the capacity', () => {
     render();
     commit(field('input[name="items"]'), '1:10 2:15');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('best')).toBe('25');
     commit(field('input[name="capacity"]'), '1');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('best')).toBe('10');
     expect(field('select[name="preset"]').value).toBe('');
   });
@@ -106,10 +106,10 @@ describe('branch and bound lesson', () => {
 
   it('jumps to a node by pointer and keyboard', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     click(/** @type {Element} */ (document.querySelector('[data-node="0"]')));
     expect(byTest('made')).toBe('1');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     /** @type {Element} */ (document.querySelector('[data-node="0"]')).dispatchEvent(
       new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }),
     );
@@ -133,16 +133,16 @@ describe('branch and bound lesson', () => {
     answer.value = '150';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {Element} */ (hint));
     expect(q.textContent).toContain('Sort by value per weight');
     answer.value = '175';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).not.toContain('Not quite');
+    expect(q.textContent).not.toContain('Chưa đúng');
     expect(m.practice.flatMap((ex) => exerciseProblems(ex))).toEqual([]);
   });
 });

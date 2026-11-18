@@ -8,8 +8,8 @@ const join = (names, list) => list.map((i) => nm(names, i)).join(', ');
 export const en = {
   slug: 'topological-sort',
   topic: 'graphs',
-  level: 'Intermediate',
-  title: 'Topological sort',
+  level: 'Trung bình',
+  title: 'Sắp xếp tô-pô',
   intro:
     'A directed acyclic graph (DAG) can model tasks and their dependencies: an edge u → v says u must happen before v. A topological order lists every vertex so that all edges point forward. It exists exactly when the graph has no directed cycle, and two classic algorithms find one in O(V + E): Kahn’s algorithm and the reversed DFS finish order.',
   summary:
@@ -190,6 +190,5 @@ export const en = {
         'Each unplaced vertex still has an incoming edge from another unplaced vertex. Walking those edges backwards among finitely many vertices must repeat one, which is a directed cycle.',
     },
   ],
-  nextTeaser:
-    'Next up: bipartite check and cycle detection, two-colouring a graph and finding the cycles that break it.',
+  nextTeaser: 'Bài tiếp theo: Kiểm tra đồ thị hai phía và phát hiện chu trình.',
 };

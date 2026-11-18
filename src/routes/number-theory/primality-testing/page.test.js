@@ -59,12 +59,12 @@ const rows = () =>
       .map((c) => (c.textContent ?? '').replace(/\s+/g, ' ').trim())
       .join(' '),
   );
-const toLast = () => click(button('Last step'));
+const toLast = () => click(button('Đến bước cuối'));
 /** @param {string} kindText */
 function stepUntil(kindText) {
   for (let i = 0; i < 400; i++) {
     if (narration().includes(kindText)) return;
-    click(button('Next step'));
+    click(button('Bước tiếp'));
   }
   throw new Error(`never narrated ${kindText}`);
 }
@@ -76,7 +76,7 @@ describe('primality testing lesson', () => {
     expect(stat('verdict')).toBe('…');
     stepUntil('Split off the powers of two');
     expect(stat('decomposition')).toBe('n − 1 = 560 = 2^4 · 35');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('Base 2: x = a^35 mod 561 = 263.');
     expect(rows()[0]).toBe('2 263 …');
     stepUntil('a square root of 1');
@@ -188,16 +188,16 @@ describe('primality testing lesson', () => {
     answer.value = '3';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(/** @type {any} */ (m.practice[0]).hints[0]);
     answer.value = '97';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 

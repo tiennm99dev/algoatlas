@@ -68,9 +68,9 @@ describe('sparse table lesson', () => {
   it('starts on the build and ends with the query answer', () => {
     render();
     expect(text()).toContain('Build the table for 8 values with min, then answer a[1..6].');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Level 0 holds blocks of length 1');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(document.querySelector('[data-testid="result-line"]')?.textContent).toContain(
       'min(st[2][1], st[2][3]) = min(1, 1) = 1',
     );
@@ -82,7 +82,7 @@ describe('sparse table lesson', () => {
     commit(input('l'), '4');
     commit(input('r'), '7');
     expect(text()).toContain('The range has 4 cells. The largest power of two that fits is 2^2');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(document.querySelector('[data-testid="result-line"]')?.textContent).toContain(
       'min(st[2][4], st[2][4]) = min(1, 1) = 1',
     );
@@ -103,14 +103,14 @@ describe('sparse table lesson', () => {
   it('shows the overlap failing under sum', () => {
     render();
     click(/** @type {Element} */ (document.querySelector('input[value="sum"]')));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('wrong answer 31 instead of 23');
   });
 
   it('changes the table when the operation changes', () => {
     render();
     click(/** @type {Element} */ (document.querySelector('input[value="max"]')));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(document.querySelector('[data-testid="result-line"]')?.textContent).toContain(
       'max(7, 7) = 7',
     );
@@ -118,7 +118,7 @@ describe('sparse table lesson', () => {
 
   it('inspects a table cell, and explains a block that does not fit', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     click(tableCell('st[2][1]'));
     expect(document.querySelector('[data-testid="inspect-line"]')?.textContent).toContain(
       'st[2][1] covers a[1..4], 4 cells: min = 1.',
@@ -144,7 +144,7 @@ describe('sparse table lesson', () => {
     commit(input('values'), '9, 3, 6');
     expect(input('r').value).toBe('2');
     expect(input('l').value).toBe('1');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(document.querySelector('[data-testid="result-line"]')?.textContent).toContain('= 3');
   });
 
@@ -164,13 +164,13 @@ describe('sparse table lesson', () => {
     answer.value = '3';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     send();
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '2';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     send();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
   });
 
   it('does not call a sum wrong when the shared cells add up to 0', () => {
@@ -179,14 +179,14 @@ describe('sparse table lesson', () => {
     commit(input('l'), '0');
     commit(input('r'), '2');
     click(/** @type {Element} */ (document.querySelector('input[value="sum"]')));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('the right answer 2, by luck');
     expect(text()).not.toContain('wrong answer');
   });
 
   it('clears a refusal when a valid table cell is inspected next', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     click(tableCell(m.tableCellLabel(3, 1, null, false, '')));
     expect(text()).toContain('No block here');
     click(tableCell(m.tableCellLabel(0, 1, 2, true, '')));

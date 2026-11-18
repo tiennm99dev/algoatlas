@@ -10,8 +10,8 @@ const opName = (op) => op;
 export const en = {
   slug: 'sparse-table',
   topic: 'range-queries',
-  level: 'Intermediate',
-  title: 'Sparse table',
+  level: 'Trung bình',
+  title: 'Bảng thưa',
   intro:
     'A sparse table answers range minimum questions on an array that never changes. It stores the answer for every block whose length is a power of two, then covers any range with two of those blocks. They overlap, and for min that does no harm, so each query takes O(1).',
   summary:
@@ -212,6 +212,5 @@ export const en = {
         'A cell belongs to up to 2^k blocks at level k, so one update can invalidate many table cells. Sparse tables suit static data; a segment tree handles updates and queries in O(log n).',
     },
   ],
-  nextTeaser:
-    'Next up: Fenwick tree, where sums come back and updates are allowed, using one small array and the lowest set bit of each index.',
+  nextTeaser: 'Bài tiếp theo: Cây Fenwick.',
 };

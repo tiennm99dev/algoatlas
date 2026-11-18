@@ -9,8 +9,8 @@ const allPairs = (n) => (n * (n - 1)) / 2;
 export const en = {
   slug: 'counting-inversions',
   topic: 'divide-and-conquer',
-  level: 'Intermediate',
-  title: 'Counting inversions',
+  level: 'Trung bình',
+  title: 'Đếm nghịch thế',
   intro:
     'An inversion is a pair of positions i < j whose values are out of order, a[i] > a[j]. The count says how far an array is from sorted, and it compares two rankings of the same items. Checking every pair costs O(n²); merge sort counts them all in O(n log n) while it sorts.',
   summary:
@@ -196,6 +196,5 @@ export const en = {
         'Counting adds only O(1) work to each step of the merge, so T(n) = 2T(n/2) + Θ(n) = Θ(n log n), the same as merge sort.',
     },
   ],
-  nextTeaser:
-    'Next up: Quickselect and median of medians, which find the k-th smallest value without sorting the whole array.',
+  nextTeaser: 'Bài tiếp theo: Quickselect và trung vị của các trung vị.',
 };

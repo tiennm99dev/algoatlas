@@ -67,9 +67,9 @@ describe('memoization and tabulation lesson', () => {
     expect(narration()).toBe(
       'Ready to call fib(5). Plain recursion stores nothing, so it will work out the same values again and again.',
     );
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('Call fib(5). Is 5 ≤ 1?');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('result')).toBe('5');
     expect(byTest('calls')).toBe('15');
     expect(byTest('additions')).toBe('7');
@@ -84,27 +84,27 @@ describe('memoization and tabulation lesson', () => {
   it('collapses the tree with memoization and drops it with tabulation', () => {
     render();
     click(field('input[name="mode"][value="memo"]'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('calls')).toBe('9');
     expect(byTest('hits')).toBe('3');
     expect(byTest('additions')).toBe('4');
     expect(treeNodes()).toBe(9);
     expect(cellTitles('memo[5]')).toEqual(['memo[5]: 5, the answer']);
-    click(button('Previous step'));
+    click(button('Bước trước'));
     expect(narration()).toBe(
       'fib(5) = fib(4) + fib(3) = 3 + 2 = 5. Store it in memo[5] so every later call can look it up.',
     );
 
     click(field('input[name="mode"][value="table"]'));
     expect(byTest('no-tree')).toBe(m.tableTreeText);
-    click(button('Next step'));
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe(
       'dp[3] = dp[2] + dp[1] = 1 + 1 = 2. Both cells were filled earlier in the loop.',
     );
     expect(cellTitles('dp[1]')).toEqual(['dp[1]: 1, read now']);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('calls')).toBe('0');
     expect(byTest('additions')).toBe('4');
     expect(byTest('result')).toBe('5');
@@ -116,14 +116,14 @@ describe('memoization and tabulation lesson', () => {
     expect(narration()).toBe(m.nError(8));
     expect(field('input[name="n"]').value).toBe('5');
     commit(field('input[name="n"]'), '6');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('calls')).toBe('25');
     expect(byTest('result')).toBe('8');
   });
 
   it('steps back with the arrow keys', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     const before = narration();
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
     flushSync();
@@ -143,16 +143,16 @@ describe('memoization and tabulation lesson', () => {
     answer.value = '24';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '25';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

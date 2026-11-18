@@ -9,6 +9,6 @@ export function entries() {
 
 /** @type {import('./$types').PageServerLoad} */
 export function load({ params }) {
-  if (!Object.hasOwn(t().topics, params.topic)) error(404, 'Unknown topic');
+  if (!Object.hasOwn(t().topics, params.topic)) error(404, t().notFound.title);
   return { topic: params.topic, written: lessonsByTopic(params.topic).map(lessonCard) };
 }

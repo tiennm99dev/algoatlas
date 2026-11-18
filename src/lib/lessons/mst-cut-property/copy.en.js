@@ -12,8 +12,8 @@ const set = (list) => `{${list.join(', ')}}`;
 export const en = {
   slug: 'mst-cut-property',
   topic: 'mst',
-  level: 'Intermediate',
-  title: 'Cut property and MST basics',
+  level: 'Trung bình',
+  title: 'Tính chất lát cắt và cây khung nhỏ nhất cơ bản',
   intro:
     'A spanning tree of a connected graph keeps every vertex and just enough edges, V − 1 of them, to connect them all with no cycle. A minimum spanning tree (MST) is one whose edge weights add up to the least total. Two simple rules decide which edges belong in it: the cut property and the cycle property.',
   summary:
@@ -242,6 +242,5 @@ export const en = {
         'A — C is out (A — B 3 and B — C 2 join A and C), and C — E is out (C — B, B — D, D — E all lighter than 8). B — D is the lightest edge across {A, B, C}, and D — E is the lightest edge across {A, B, C, D}, so both are in.',
     },
   ],
-  nextTeaser:
-    'Next up: Kruskal’s algorithm, which sorts the edges by weight and uses union-find to take each lightest edge that joins two separate pieces.',
+  nextTeaser: 'Bài tiếp theo: Thuật toán Kruskal.',
 };

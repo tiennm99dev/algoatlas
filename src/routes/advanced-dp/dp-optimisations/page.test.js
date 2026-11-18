@@ -69,14 +69,14 @@ describe('DP optimisations lesson', () => {
   it('builds the hull, skips a parallel line and walks the queries', () => {
     render();
     expect(narration()).toContain('6 lines and 11 queries');
-    for (let i = 0; i < 7; i++) click(button('Next step'));
+    for (let i = 0; i < 7; i++) click(button('Bước tiếp'));
     expect(narration()).toBe('L2 stays: it is lowest from x = 2 until L3 takes over at x = 4.');
-    for (let i = 0; i < 3; i++) click(button('Next step'));
+    for (let i = 0; i < 3; i++) click(button('Bước tiếp'));
     expect(narration()).toBe(
       'L4 is parallel to L3 and not lower, so it is never the lowest. Skip it.',
     );
     expect(chips(m.linesTitle).some((c) => c?.startsWith('L4: y = 9 ✕'))).toBe(true);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(chips(m.hullTitle)).toEqual(['L1', 'L2', 'L3', 'L5', 'L6']);
     expect(byTest('checks')).toBe('3 / 3');
     expect(byTest('moves')).toBe('4 / 4');
@@ -93,11 +93,11 @@ describe('DP optimisations lesson', () => {
     const at = hullTrace(HULL_PRESETS[1].lines, HULL_PRESETS[1].queries).findIndex(
       (f) => f.kind === 'check' && f.pops,
     );
-    for (let i = 0; i < at; i++) click(button('Next step'));
+    for (let i = 0; i < at; i++) click(button('Bước tiếp'));
     expect(narration()).toBe(
       'L3 is useless: L1 crosses L2 at x = 5, not after x = 6 where L3 would take over. Pop L3.',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(chips(m.hullTitle)).toEqual(['L4', 'L2', 'L1', 'L5']);
   });
 
@@ -108,7 +108,7 @@ describe('DP optimisations lesson', () => {
     expect(field('input[name="lines"]').value).toBe('1 0, -1 10');
     commit(field('input[name="queries"]'), '7 3 3');
     expect(field('input[name="queries"]').value).toBe('3 7');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe(
       '2 answers with 0 hull checks and 2 pointer comparisons, against 4 for trying every line at every x.',
     );
@@ -124,9 +124,9 @@ describe('DP optimisations lesson', () => {
 
   it('draws not-yet-added and removed lines dashed', () => {
     render();
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     const before = dashed();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(dashed()).toBeLessThan(before);
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
     flushSync();
@@ -154,9 +154,9 @@ describe('DP optimisations lesson', () => {
     answer.value = '7';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     /** @type {HTMLButtonElement} */ (hint).click();
     flushSync();
@@ -164,7 +164,7 @@ describe('DP optimisations lesson', () => {
     answer.value = '6';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

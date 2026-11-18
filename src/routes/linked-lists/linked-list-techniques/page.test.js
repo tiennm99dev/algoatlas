@@ -51,7 +51,7 @@ const listLabel = () =>
   document.querySelector('[data-node]')?.closest('svg')?.getAttribute('aria-label') ?? '';
 /** @param {number} n */
 const next = (n) => {
-  for (let i = 0; i < n; i++) click(button('Next step'));
+  for (let i = 0; i < n; i++) click(button('Bước tiếp'));
 };
 
 function practice() {
@@ -73,7 +73,7 @@ describe('linked list techniques lesson', () => {
     expect(narration()).toContain('slow and fast both start at the head, 3.');
     next(6);
     expect(narration()).toContain('slow and fast meet at 6 after 5 rounds');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe(
       'The cycle starts at #2 (5), found with 19 pointer moves and two extra pointers.',
     );
@@ -85,16 +85,16 @@ describe('linked list techniques lesson', () => {
   it('stops when fast runs off a list without a cycle', () => {
     render();
     commit(/** @type {HTMLSelectElement} */ (document.querySelector('select[name="cycle"]')), '-1');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe('No cycle, found with 9 pointer moves and two extra pointers.');
-    click(button('Previous step'));
+    click(button('Bước trước'));
     expect(narration()).toContain('fast reached the end of the list after 3 rounds');
   });
 
   it('points the tail at a node clicked in the drawing', () => {
     render();
     click(node(0));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('The cycle starts at #0 (3)');
     expect(byTest('mu')).toBe('0');
   });
@@ -105,7 +105,7 @@ describe('linked list techniques lesson', () => {
     g.focus();
     g.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     flushSync();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('The cycle starts at #6 (2)');
     expect(byTest('lambda')).toBe('1');
   });
@@ -124,7 +124,7 @@ describe('linked list techniques lesson', () => {
     next(2);
     next(1);
     expect(link('1-next')?.getAttribute('class')).toContain('stroke-teal-700');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe(
       'head = prev = 2. The list is reversed with 7 arrow flips and three extra pointers.',
     );
@@ -154,7 +154,7 @@ describe('linked list techniques lesson', () => {
   it('keeps the cycle inside a shorter list', () => {
     render();
     commit(input('values'), '4, 7');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('The cycle starts at #1 (7)');
   });
 
@@ -171,16 +171,16 @@ describe('linked list techniques lesson', () => {
     answer.value = '5';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[1].hints[0]);
     answer.value = '2';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

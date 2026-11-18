@@ -13,8 +13,8 @@ const num = (v) => (v < 0 ? `−${-v}` : String(v));
 export const en = {
   slug: 'gcd-extended-euclid',
   topic: 'number-theory',
-  level: 'Beginner',
-  title: 'GCD and extended Euclid',
+  level: 'Cơ bản',
+  title: 'ƯCLN và thuật toán Euclid mở rộng',
   intro:
     'The greatest common divisor of two numbers is the largest number that divides both. Euclid’s algorithm finds it with a few divisions, because gcd(a, b) = gcd(b, a mod b), and with a little bookkeeping it also writes the gcd as a·x + b·y. Those coefficients are what solve equations in integers, and later give modular inverses.',
   summary:
@@ -198,6 +198,5 @@ export const en = {
         'x = 0, 1, 2, 3 leave 3, −4, −11, −18, none a multiple of 5. x = 4 leaves 3 − 28 = −25 = 5·(−5), so x = 4 and y = −5.',
     },
   ],
-  nextTeaser:
-    'Next up: Modular arithmetic and fast exponentiation, where a power with a huge exponent takes only a few dozen multiplications.',
+  nextTeaser: 'Bài tiếp theo: Số học đồng dư và luỹ thừa nhanh.',
 };

@@ -7,8 +7,8 @@ const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 export const en = {
   slug: 'manacher',
   topic: 'string-algorithms',
-  level: 'Intermediate',
-  title: 'Manacher’s algorithm',
+  level: 'Trung bình',
+  title: 'Thuật toán Manacher',
   intro:
     'The simple way to find the longest palindrome expands around every centre, which takes O(n²) on repetitive text. Manacher’s algorithm notices that the inside of a palindrome is mirrored, so a centre inside a known palindrome already knows most of its radius. That single idea gives every palindromic radius in O(n).',
   summary:
@@ -188,6 +188,5 @@ export const en = {
         'Plain expansion makes 64 comparisons on T for aaaaaaaa, one for each step out from each centre. Manacher makes only 15 here, so 49 are saved.',
     },
   ],
-  nextTeaser:
-    'Next up: Regular expressions and NFA simulation, which turns a whole pattern language into a graph of states.',
+  nextTeaser: 'Bài tiếp theo: Biểu thức chính quy và mô phỏng NFA.',
 };

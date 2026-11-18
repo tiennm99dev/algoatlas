@@ -10,8 +10,8 @@ const shown = (s) => (s === '' ? '∅' : s);
 export const en = {
   slug: 'permutations-subsets',
   topic: 'backtracking',
-  level: 'Intermediate',
-  title: 'Permutations, combinations and subsets',
+  level: 'Trung bình',
+  title: 'Hoán vị, tổ hợp và tập con',
   intro:
     'Permutations, combinations and subsets are the three classic things to generate, and one recursion handles them all: pick an item, recurse, unpick it. They differ only in which items a call may pick next. Permutations may use any item not used yet, while combinations and subsets only look forward from the last one picked, which is what stops {A, B} from appearing a second time as {B, A}.',
   summary:
@@ -192,6 +192,5 @@ export const en = {
       solution: 'n! results of length n, each copied once: O(n · n!).',
     },
   ],
-  nextTeaser:
-    'Next up: N-queens and Sudoku, where constraint checks prune choices long before a board is full.',
+  nextTeaser: 'Bài tiếp theo: Bài toán N quân hậu và Sudoku.',
 };

@@ -68,9 +68,9 @@ describe('linear search lesson', () => {
   it('opens on the plain scan and finds 63 after 7 comparisons', () => {
     render();
     expect(text()).toContain('Scan the 10 cells from left to right for 63');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Is 0 < 10? Yes. Compare a[0] = 31 with 63: not equal');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Found 63 at index 6 after 7 comparisons.');
     expect(stat('comparisons')).toBe('7');
     expect(stat('bound-checks')).toBe('7');
@@ -83,7 +83,7 @@ describe('linear search lesson', () => {
     click(/** @type {HTMLElement} */ (document.querySelector('input[value="sentinel"]')));
     expect(text()).toContain('as a sentinel');
     expect(text()).toContain('a[n] = x; i = 0');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('this is a real copy: return 6.');
     expect(stat('comparisons')).toBe('7');
     expect(stat('bound-checks')).toBe('1');
@@ -94,7 +94,7 @@ describe('linear search lesson', () => {
   it('a missing target costs n comparisons and n + 1 bound checks', () => {
     render();
     commit(input('target'), '5');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Is 10 < 10? No: every cell was checked. 5 is not in the array');
     expect(stat('total')).toBe('21');
     expect(stat('final-sentinel')).toBe('11 comparisons + 1 bound check = 12');
@@ -103,10 +103,10 @@ describe('linear search lesson', () => {
   it('presets move the target to either end', () => {
     render();
     click(buttonByText('Target at the front'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Found 31 at index 0 after 1 comparison.');
     click(buttonByText('Target at the end'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Found 14 at index 9 after 10 comparisons.');
   });
 
@@ -114,7 +114,7 @@ describe('linear search lesson', () => {
     render();
     commit(input('values'), '4 7 7 2');
     commit(input('target'), '7');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Found 7 at index 1 after 2 comparisons.');
   });
 
@@ -137,7 +137,7 @@ describe('linear search lesson', () => {
     cell(1).dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     flushSync();
     expect(text()).toContain('Searching for 8 now.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Found 8 at index 1 after 2 comparisons.');
   });
 
@@ -154,13 +154,13 @@ describe('linear search lesson', () => {
     answer.value = '6';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '7';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
   });
 
   it('has well-formed practice questions', () => {

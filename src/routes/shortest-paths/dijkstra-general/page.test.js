@@ -95,17 +95,17 @@ describe('Dijkstra on general graphs lesson', () => {
     expect(text()).toContain(
       'Set dist[A] = 0 and every other label to ∞. Push (0, A) into the heap.',
     );
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Pop (0, A), the smallest entry, and it matches dist[A]. Settle A');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain(
       'Edge A — B (weight 4): 0 + 4 = 4 < ∞. Lower dist[B] and push (4, B).',
     );
-    for (let i = 0; i < 4; i++) click(button('Next step'));
+    for (let i = 0; i < 4; i++) click(button('Bước tiếp'));
     expect(text()).toContain(
       'Edge C — B (weight 2): 1 + 2 = 3 < 4. Lower dist[B] and push (3, B); the old (4, B) stays in the heap, now stale.',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain(
       'The heap is empty. 6 vertices settled with 10 pushes and 10 pops, 4 of them stale.',
     );
@@ -117,23 +117,23 @@ describe('Dijkstra on general graphs lesson', () => {
   it('shows a stale pop in the narration and the heap', () => {
     render();
     let guard = 0;
-    while (!text().includes('this entry is stale') && guard++ < 40) click(button('Next step'));
+    while (!text().includes('this entry is stale') && guard++ < 40) click(button('Bước tiếp'));
     expect(text()).toContain('Pop (4, B), but dist[B] is already 3');
   });
 
   it('reruns when the source or a weight changes, and rejects a bad weight', () => {
     render();
     commit(sourceSelect(), '5');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(vertex(0).getAttribute('aria-label')).toBe('Vertex A, d = 13, settled');
     commit(weightField('A — C'), '5');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(vertex(0).getAttribute('aria-label')).toBe('Vertex A, d = 14, settled');
     commit(weightField('A — C'), 'x');
     expect(text()).toContain(m.badWeight(99));
     expect(weightField('A — C').value).toBe('5');
     click(buttonByText(m.resetGraph));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.stale)).toBe('4');
   });
 
@@ -142,7 +142,7 @@ describe('Dijkstra on general graphs lesson', () => {
     radio('connect');
     click(vertex(0));
     click(vertex(5));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(vertex(5).getAttribute('aria-label')).toBe('Vertex F, d = 1, settled');
     expect(weightField('A — F').value).toBe('1');
   });
@@ -157,11 +157,11 @@ describe('Dijkstra on general graphs lesson', () => {
     render();
     const q = /** @type {HTMLElement} */ (practice().querySelectorAll('ol > li')[0]);
     answer(q, '14');
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer(q, '13');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

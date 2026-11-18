@@ -52,7 +52,7 @@ function commit(el, value) {
 
 /** @param {number} index */
 function seek(index) {
-  const el = /** @type {HTMLInputElement} */ (document.querySelector('input[aria-label="Step"]'));
+  const el = /** @type {HTMLInputElement} */ (document.querySelector('input[aria-label="Bước"]'));
   el.value = String(index);
   el.dispatchEvent(new Event('input', { bubbles: true }));
   flushSync();
@@ -93,7 +93,7 @@ describe('quickselect lesson', () => {
 
   it('finds the answer and reports rounds and comparisons', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('The 6th smallest is 38, found in 2 rounds with 21 comparisons');
     expect(stat('Rounds')).toBe('2');
   });
@@ -133,7 +133,7 @@ describe('quickselect lesson', () => {
   it('runs the random rule without breaking the answer', () => {
     render();
     pickRule('random');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('The 6th smallest is 38');
   });
 
@@ -142,10 +142,10 @@ describe('quickselect lesson', () => {
     commit(field('preset'), 'sorted');
     expect(text()).toContain('New array loaded.');
     commit(field('k'), '1');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('found in 11 rounds with 66 comparisons');
     pickRule('mom');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('found in 3 rounds with 36 comparisons');
   });
 
@@ -188,16 +188,16 @@ describe('quickselect lesson', () => {
     answer.value = '12';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[2].hints[0]);
     answer.value = '9';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

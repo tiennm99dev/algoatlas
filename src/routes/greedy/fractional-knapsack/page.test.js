@@ -82,18 +82,18 @@ describe('fractional knapsack lesson', () => {
 
   it('sorts by value per weight and packs whole items first', () => {
     render();
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Sort by value per weight, highest first: A (6), B (5), C (4).');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('50 units of room, so all of it fits.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Take all of A: +60. Value 60, 40 units left.');
     expect(rows()[0]).toContain('A ✓');
   });
 
   it('cuts the last item to two thirds and reaches 240', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('Done: value 240, with only C cut, to 2/3.');
     expect(stat('Value packed')).toBe('240');
     expect(stat('Room left')).toBe('0');
@@ -109,14 +109,14 @@ describe('fractional knapsack lesson', () => {
   it('stops early when the knapsack fills, and packs everything when it all fits', () => {
     render();
     commit(field('capacity'), '25');
-    click(button('Last step'));
-    click(button('Previous step'));
+    click(button('Đến bước cuối'));
+    click(button('Bước trước'));
     expect(narration()).toContain(
       'The knapsack is full, so stop: C and every item after it stay out.',
     );
     commit(field('preset'), 'roomy');
     expect(text()).toContain('New example loaded.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('Every item fits whole: value 280 with 40 units to spare.');
   });
 
@@ -129,7 +129,7 @@ describe('fractional knapsack lesson', () => {
     expect(narration()).toContain('The capacity must be a whole number from 1 to 200.');
     expect(/** @type {HTMLInputElement} */ (field('capacity')).value).toBe('50');
     commit(field('items'), '10/5 9/3');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('Every item fits whole: value 19');
   });
 
@@ -148,15 +148,15 @@ describe('fractional knapsack lesson', () => {
     pickProblem('jobs');
     expect(narration()).toContain('Schedule 5 jobs, each one time slot long, in slots 1 to 3.');
     expect(stat('Best possible')).toBe('142');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain(
       'Sort by profit, highest first: A (100), C (27), D (25), B (19), E (15).',
     );
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('slot 2 is the latest free one');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Put A in slot 2');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain(
       'Done: profit 142, the best any schedule can earn. Skipped: D, B.',
     );
@@ -169,9 +169,9 @@ describe('fractional knapsack lesson', () => {
     render();
     pickProblem('jobs');
     commit(field('preset'), 'crowded');
-    click(button('Last step'));
-    click(button('Previous step'));
-    click(button('Previous step'));
+    click(button('Đến bước cuối'));
+    click(button('Bước trước'));
+    click(button('Bước trước'));
     expect(narration()).toContain('D: profit 6, deadline 3. Slots 3, 2, 1 are all taken.');
     commit(field('jobs'), '5/11');
     expect(narration()).toContain('Keep every deadline between 1 and 10.');
@@ -191,16 +191,16 @@ describe('fractional knapsack lesson', () => {
     answer.value = '220';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '240';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

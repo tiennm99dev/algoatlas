@@ -6,8 +6,8 @@ const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 export const en = {
   slug: 'boyer-moore',
   topic: 'string-algorithms',
-  level: 'Intermediate',
-  title: 'Boyer-Moore',
+  level: 'Trung bình',
+  title: 'Thuật toán Boyer-Moore',
   intro:
     'Boyer-Moore compares the pattern with the text from right to left. A mismatch reveals a text letter, and the pattern can jump until that letter lines up with its rightmost copy in the pattern, or past it when the pattern has no such letter. On long patterns over large alphabets it can skip most of the text without reading it. This lesson uses the bad-character rule alone.',
   summary:
@@ -194,6 +194,5 @@ export const en = {
         'Each of the 12 alignments reads all 5 letters, failing on the b, and then moves by 1: 12 × 5 = 60. The plain matcher fails at once on this input and makes just 12.',
     },
   ],
-  nextTeaser:
-    'Next up: Z-function, which records for each position how long a stretch of the string repeats its own prefix.',
+  nextTeaser: 'Bài tiếp theo: Hàm Z.',
 };

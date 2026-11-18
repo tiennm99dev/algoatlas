@@ -20,7 +20,7 @@ export const binaryPseudocode = [
   '  if a[mid] == target: return mid',
   '  if a[mid] < target: lo = mid + 1',
   '  else: hi = mid - 1',
-  'return "not found"',
+  'return "không tìm thấy"',
 ];
 
 /** @param {number} lo @param {number} hi */

@@ -27,7 +27,7 @@ export const bubblePseudocode = [
   '    if a[i] > a[i+1]:',
   '      swap(a[i], a[i+1]); swapped = true',
   '  if not swapped: stop',
-  'done — array is sorted',
+  'xong — mảng đã được sắp xếp',
 ];
 
 export const insertionPseudocode = [
@@ -36,7 +36,7 @@ export const insertionPseudocode = [
   '  while j >= 0 and a[j] > key:',
   '    a[j+1] = a[j]; j = j - 1',
   '  a[j+1] = key',
-  'done — array is sorted',
+  'xong — mảng đã được sắp xếp',
 ];
 
 /** @param {number[]} values @returns {Item[]} */

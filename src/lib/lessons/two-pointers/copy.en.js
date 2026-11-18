@@ -7,8 +7,8 @@ const plural = (k, word, many = `${word}s`) => `${k} ${k === 1 ? word : many}`;
 export const en = {
   slug: 'two-pointers',
   topic: 'arrays-strings',
-  level: 'Beginner',
-  title: 'Two pointers',
+  level: 'Cơ bản',
+  title: 'Hai con trỏ',
   intro:
     'Two pointers keep two indices into one array and move them towards each other, so each step rules out at least one element for good. On a sorted array that finds a pair with a given sum in one pass, O(n) instead of checking all n(n − 1)/2 pairs. The same converging walk partitions an array in place with no extra memory.',
   summary:
@@ -181,6 +181,5 @@ export const en = {
       solution: 'At most n − 1 sums, each O(1): O(n).',
     },
   ],
-  nextTeaser:
-    'Next up: Sliding window, where two pointers move the same way and carry a running sum along.',
+  nextTeaser: 'Bài tiếp theo: Cửa sổ trượt.',
 };

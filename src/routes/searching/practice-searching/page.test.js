@@ -73,7 +73,7 @@ describe('practice: searching problems', () => {
       'Version B: look for 12 in 7 sorted values, starting with lo = 0 and hi = 6.',
     );
     expect(text()).toContain('while lo < hi:');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Wrong: 12 is at index 2, and that cell was never read.');
     expect(byTest('verdict')).toBe('✕ misses x');
     expect(byTest('result')).toBe('-1');
@@ -85,7 +85,7 @@ describe('practice: searching problems', () => {
     render();
     click(buttonByText('Version A'));
     expect(byTest('targets-summary')).toBe('Version A is correct on all 30 targets.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Return 2: a[2] = 12. Correct after 3 probes.');
   });
 
@@ -94,7 +94,7 @@ describe('practice: searching problems', () => {
     click(buttonByText('Version C'));
     click(targetCell(30));
     expect(input('target').value).toBe('30');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('lo = 5, hi = 6 is a state this run has been in before.');
     expect(byTest('result')).toBe('never');
     expect(byTest('broken')).toBe('24 of 30');
@@ -105,7 +105,7 @@ describe('practice: searching problems', () => {
     render();
     click(buttonByText('Version D'));
     commit(input('target'), '31');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('mid = 7 = n, so reading a[7] goes past the end of the array.');
     expect(byTest('verdict')).toBe('⚠ reads past the end');
   });
@@ -158,16 +158,16 @@ describe('practice: searching problems', () => {
     answer.value = '24';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[2].hints[0]);
     answer.value = '22';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

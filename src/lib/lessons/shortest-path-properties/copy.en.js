@@ -6,8 +6,8 @@ const show = (d) => (d === Infinity ? '∞' : String(d));
 export const en = {
   slug: 'shortest-path-properties',
   topic: 'shortest-paths',
-  level: 'Beginner',
-  title: 'Weighted graphs and shortest-path properties',
+  level: 'Cơ bản',
+  title: 'Đồ thị có trọng số và tính chất của đường đi ngắn nhất',
   intro:
     'In a weighted graph every edge has a cost, and the weight of a path is the sum of its edge weights. A shortest path from s to v is a path of least weight; its weight is the distance δ(s, v). Every shortest-path algorithm in this chapter is built from one move, relaxing an edge, and differs only in the order it relaxes them.',
   summary:
@@ -193,6 +193,5 @@ export const en = {
         'If some path to A were cheaper than S → B → A, swapping it in would give a cheaper path to D, a contradiction. So every prefix of a shortest path is shortest. The other statements need not hold.',
     },
   ],
-  nextTeaser:
-    'Next up: Dijkstra’s algorithm on a grid, which relaxes edges in order of distance using a priority queue.',
+  nextTeaser: 'Bài tiếp theo: Thuật toán Dijkstra trên lưới.',
 };

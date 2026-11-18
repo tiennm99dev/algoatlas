@@ -3,661 +3,720 @@
   "levels": [
     {
       "level": 1,
-      "title": "Foundations",
+      "title": "Nền tảng",
       "chapters": [
         {
           "no": 1,
-          "title": "Complexity analysis",
+          "title": "Phân tích độ phức tạp",
           "slug": "complexity",
           "strand": "analysis",
-          "blurb": "Count the steps an algorithm takes and describe how that count grows with the input.",
+          "blurb": "Đếm số bước một thuật toán thực hiện và mô tả số bước đó tăng thế nào theo đầu vào.",
           "lessons": [
             {
               "no": 1,
-              "title": "Algorithms and the RAM model",
+              "title": "Thuật toán và mô hình RAM",
               "slug": "algorithms-ram-model",
               "kind": "theory",
               "keyIdeas": [
-                "what an algorithm is",
-                "word-RAM cost model",
-                "correctness vs efficiency"
+                "thuật toán là gì",
+                "mô hình chi phí word-RAM",
+                "tính đúng đắn và tính hiệu quả"
               ],
-              "interactiveIdea": "Step counter that tallies primitive operations as a small loop runs on a toy RAM machine."
+              "interactiveIdea": "Bộ đếm bước cộng dồn các phép toán cơ bản khi một vòng lặp nhỏ chạy trên một máy RAM mô phỏng."
             },
             {
               "no": 2,
-              "title": "Asymptotic notation: Big-O, Omega, Theta",
+              "title": "Kí hiệu tiệm cận: O lớn, Omega, Theta",
               "slug": "asymptotic-notation",
               "kind": "theory",
-              "keyIdeas": ["growth rates", "dominant terms", "O, Omega, Theta bounds"],
-              "interactiveIdea": "Draggable log-scale plot comparing n, n log n, n^2 and 2^n with a slider for n."
+              "keyIdeas": ["tốc độ tăng", "số hạng trội", "cận O, Omega, Theta"],
+              "interactiveIdea": "Đồ thị thang lôgarit kéo thả được, so sánh n, n log n, n^2 và 2^n với thanh trượt chọn n."
             },
             {
               "no": 3,
-              "title": "Analysing loops and recursion",
+              "title": "Phân tích vòng lặp và đệ quy",
               "slug": "analysing-loops-recursion",
               "kind": "theory",
-              "keyIdeas": ["nested loop counting", "recurrence relations", "recursion trees"],
-              "interactiveIdea": "Recursion-tree builder that expands T(n) level by level and sums the cost per level."
+              "keyIdeas": ["đếm vòng lặp lồng nhau", "hệ thức truy hồi", "cây đệ quy"],
+              "interactiveIdea": "Công cụ dựng cây đệ quy, mở rộng T(n) từng tầng và cộng chi phí của mỗi tầng."
             },
             {
               "no": 4,
-              "title": "Best, worst and average case",
+              "title": "Trường hợp tốt nhất, xấu nhất và trung bình",
               "slug": "best-worst-average-case",
               "kind": "theory",
-              "keyIdeas": ["input-dependent cost", "worst-case guarantees", "expected cost"],
-              "interactiveIdea": "Run linear search on random, best and worst inputs and plot the comparison counts."
+              "keyIdeas": [
+                "chi phí phụ thuộc đầu vào",
+                "bảo đảm trong trường hợp xấu nhất",
+                "chi phí kì vọng"
+              ],
+              "interactiveIdea": "Chạy tìm kiếm tuần tự trên đầu vào ngẫu nhiên, tốt nhất và xấu nhất rồi vẽ số phép so sánh."
             },
             {
               "no": 5,
-              "title": "Space complexity",
+              "title": "Độ phức tạp bộ nhớ",
               "slug": "space-complexity",
               "kind": "theory",
-              "keyIdeas": ["auxiliary space", "call-stack depth", "in-place algorithms"],
-              "interactiveIdea": "Memory bar that grows with the call stack while a recursive function runs."
+              "keyIdeas": ["bộ nhớ phụ", "độ sâu ngăn xếp lời gọi", "thuật toán tại chỗ"],
+              "interactiveIdea": "Thanh bộ nhớ dài ra theo ngăn xếp lời gọi khi một hàm đệ quy chạy."
             },
             {
               "no": 6,
-              "title": "Amortized analysis: aggregate, accounting, potential",
+              "title": "Phân tích khấu hao: gộp, kế toán, thế năng",
               "slug": "amortized-analysis",
               "kind": "theory",
-              "keyIdeas": [
-                "aggregate method",
-                "accounting method with credits",
-                "potential function"
-              ],
-              "interactiveIdea": "Binary counter whose increments deposit and spend credit coins, with a running potential graph."
+              "keyIdeas": ["phương pháp gộp", "phương pháp kế toán với tín dụng", "hàm thế năng"],
+              "interactiveIdea": "Bộ đếm nhị phân mà mỗi lần tăng gửi vào và tiêu đi các đồng xu tín dụng, kèm đồ thị thế năng."
             },
             {
               "no": 7,
-              "title": "Practice: estimating running time",
+              "title": "Luyện tập: ước lượng thời gian chạy",
               "slug": "practice-complexity",
               "kind": "practice",
-              "keyIdeas": ["count operations", "match code to growth class"],
-              "interactiveIdea": "Quiz cards: drag each code snippet to its Big-O bucket and check the answer."
+              "keyIdeas": ["đếm số phép toán", "ghép đoạn mã với lớp tốc độ tăng"],
+              "interactiveIdea": "Thẻ câu hỏi: kéo mỗi đoạn mã vào ô O lớn của nó rồi kiểm tra đáp án."
             }
           ]
         },
         {
           "no": 2,
-          "title": "Arrays and strings",
+          "title": "Mảng và xâu",
           "slug": "arrays-strings",
           "strand": "linear-structures",
-          "blurb": "Work with contiguous data: growable arrays, two pointers, sliding windows, and prefix sums.",
+          "blurb": "Làm việc với dữ liệu nằm liền nhau: mảng động, hai con trỏ, cửa sổ trượt và tổng tiền tố.",
           "lessons": [
             {
               "no": 1,
-              "title": "Static and dynamic arrays",
+              "title": "Mảng tĩnh và mảng động",
               "slug": "static-dynamic-arrays",
               "kind": "theory",
-              "keyIdeas": ["contiguous memory", "index access O(1)", "resizing by doubling"],
-              "interactiveIdea": "Animated array that doubles capacity on push, showing copy cost and spare slots."
+              "keyIdeas": [
+                "bộ nhớ liền nhau",
+                "truy cập theo chỉ số O(1)",
+                "đổi kích thước bằng cách gấp đôi"
+              ],
+              "interactiveIdea": "Mảng động gấp đôi sức chứa khi thêm phần tử, cho thấy chi phí sao chép và các ô còn trống."
             },
             {
               "no": 2,
-              "title": "Amortized analysis of dynamic arrays",
+              "title": "Phân tích khấu hao cho mảng động",
               "slug": "amortized-dynamic-arrays",
               "kind": "theory",
-              "keyIdeas": ["aggregate method", "accounting method", "O(1) amortized append"],
-              "interactiveIdea": "Coin bank counter that charges each append and spends coins when the array resizes."
+              "keyIdeas": ["phương pháp gộp", "phương pháp kế toán", "thêm vào cuối O(1) khấu hao"],
+              "interactiveIdea": "Ống heo đếm xu, thu phí mỗi lần thêm vào cuối và tiêu xu khi mảng đổi kích thước."
             },
             {
               "no": 3,
-              "title": "Two pointers",
+              "title": "Hai con trỏ",
               "slug": "two-pointers",
               "kind": "theory",
-              "keyIdeas": ["converging pointers", "sorted-array pair search", "in-place partition"],
-              "interactiveIdea": "Two coloured pointers moving inward over a sorted array to find a target sum."
+              "keyIdeas": [
+                "hai con trỏ tiến lại gần nhau",
+                "tìm cặp trong mảng đã sắp xếp",
+                "phân hoạch tại chỗ"
+              ],
+              "interactiveIdea": "Hai con trỏ màu tiến vào giữa một mảng đã sắp xếp để tìm cặp có tổng cho trước."
             },
             {
               "no": 4,
-              "title": "Sliding window",
+              "title": "Cửa sổ trượt",
               "slug": "sliding-window",
               "kind": "theory",
               "keyIdeas": [
-                "fixed and variable windows",
-                "running aggregate",
-                "O(n) subarray scans"
+                "cửa sổ cố định và cửa sổ co giãn",
+                "giá trị gộp cập nhật dần",
+                "quét mảng con trong O(n)"
               ],
-              "interactiveIdea": "Resizable highlighted window sliding over an array with its running sum shown."
+              "interactiveIdea": "Cửa sổ tô sáng, đổi được kích thước, trượt trên mảng và hiện tổng hiện tại."
             },
             {
               "no": 5,
-              "title": "Prefix sums and difference arrays",
+              "title": "Tổng tiền tố và mảng hiệu",
               "slug": "prefix-sums",
               "kind": "theory",
-              "keyIdeas": ["cumulative sums", "O(1) range sum", "range updates via differences"],
-              "interactiveIdea": "Array with its prefix-sum row; select a range to see the two-lookup subtraction."
+              "keyIdeas": ["tổng cộng dồn", "tổng đoạn trong O(1)", "cập nhật đoạn bằng mảng hiệu"],
+              "interactiveIdea": "Mảng kèm hàng tổng tiền tố; chọn một đoạn để thấy phép trừ chỉ cần hai lần tra."
             },
             {
               "no": 6,
-              "title": "String basics and manipulation",
+              "title": "Xâu cơ bản và thao tác trên xâu",
               "slug": "string-basics",
               "kind": "theory",
               "keyIdeas": [
-                "characters and encodings",
-                "immutability",
-                "builder vs concatenation cost"
+                "kí tự và bảng mã",
+                "tính bất biến",
+                "chi phí của bộ dựng xâu so với phép nối"
               ],
-              "interactiveIdea": "String builder demo contrasting repeated concatenation copies with a growing buffer."
+              "interactiveIdea": "Minh hoạ bộ dựng xâu, so sánh các bản sao của phép nối lặp lại với một bộ đệm lớn dần."
             },
             {
               "no": 7,
-              "title": "Practice: array and string problems",
+              "title": "Luyện tập: bài toán về mảng và xâu",
               "slug": "practice-arrays-strings",
               "kind": "practice",
-              "keyIdeas": ["choose two pointers or window", "prefix-sum tricks"],
-              "interactiveIdea": "Problem runner where the learner picks a technique and watches it solve sample inputs."
+              "keyIdeas": ["chọn hai con trỏ hay cửa sổ", "mẹo dùng tổng tiền tố"],
+              "interactiveIdea": "Bộ chạy bài toán: người học chọn một kĩ thuật và xem nó giải các đầu vào mẫu."
             }
           ]
         },
         {
           "no": 3,
-          "title": "Sorting",
+          "title": "Sắp xếp",
           "slug": "sorting",
           "strand": "sorting-searching",
-          "blurb": "Put things in order, and see why some ways cost far more comparisons than others.",
+          "blurb": "Đưa dữ liệu về đúng thứ tự, và xem vì sao có cách tốn nhiều phép so sánh hơn hẳn cách khác.",
           "lessons": [
             {
               "no": 1,
-              "title": "Bubble sort & insertion sort",
+              "title": "Sắp xếp nổi bọt và sắp xếp chèn",
               "slug": "bubble-insertion-sort",
               "kind": "theory",
-              "keyIdeas": ["adjacent swaps", "shifting into a sorted prefix", "O(n^2) comparisons"],
-              "interactiveIdea": "Bar chart that steps through bubble and insertion sort, highlighting compares and swaps."
+              "keyIdeas": [
+                "đổi chỗ hai phần tử kề nhau",
+                "dời phần tử vào tiền tố đã sắp xếp",
+                "O(n^2) phép so sánh"
+              ],
+              "interactiveIdea": "Biểu đồ cột chạy từng bước sắp xếp nổi bọt và sắp xếp chèn, tô sáng các phép so sánh và đổi chỗ."
             },
             {
               "no": 2,
-              "title": "Selection sort and stability",
+              "title": "Sắp xếp chọn và tính ổn định",
               "slug": "selection-sort-stability",
               "kind": "theory",
-              "keyIdeas": ["select the minimum", "stable vs unstable sorts", "in-place sorting"],
-              "interactiveIdea": "Cards with equal keys in different colours to show whether a sort keeps their order."
+              "keyIdeas": [
+                "chọn phần tử nhỏ nhất",
+                "sắp xếp ổn định và không ổn định",
+                "sắp xếp tại chỗ"
+              ],
+              "interactiveIdea": "Các thẻ có khoá bằng nhau mang màu khác nhau, cho thấy phép sắp xếp có giữ thứ tự của chúng không."
             },
             {
               "no": 3,
-              "title": "Merge sort & quicksort",
+              "title": "Sắp xếp trộn và sắp xếp nhanh",
               "slug": "merge-quick-sort",
               "kind": "theory",
-              "keyIdeas": [
-                "divide and conquer",
-                "merging sorted halves",
-                "partition around a pivot"
-              ],
-              "interactiveIdea": "Split-and-merge tree view beside a partition animation with a pivot selector."
+              "keyIdeas": ["chia để trị", "trộn hai nửa đã sắp xếp", "phân hoạch quanh chốt"],
+              "interactiveIdea": "Cây chia và trộn đặt cạnh hoạt cảnh phân hoạch, có nút chọn chốt."
             },
             {
               "no": 4,
-              "title": "Heapsort",
+              "title": "Sắp xếp vun đống",
               "slug": "heapsort",
               "kind": "theory",
-              "keyIdeas": ["build a max-heap", "repeated extract-max", "in-place O(n log n)"],
-              "interactiveIdea": "Linked array and tree views of a heap shrinking as the max is swapped to the end."
+              "keyIdeas": [
+                "dựng heap lớn nhất",
+                "lặp lại việc lấy phần tử lớn nhất",
+                "O(n log n) tại chỗ"
+              ],
+              "interactiveIdea": "Hai khung mảng và cây liên kết của một heap co lại khi phần tử lớn nhất được đổi về cuối."
             },
             {
               "no": 5,
-              "title": "Comparison sort lower bound",
+              "title": "Cận dưới của sắp xếp bằng so sánh",
               "slug": "comparison-sort-lower-bound",
               "kind": "theory",
-              "keyIdeas": ["decision trees", "log2(n!) leaves", "Omega(n log n)"],
-              "interactiveIdea": "Interactive decision tree for sorting three items, counting leaves and depth."
+              "keyIdeas": ["cây quyết định", "log2(n!) lá", "Omega(n log n)"],
+              "interactiveIdea": "Cây quyết định tương tác để sắp xếp ba phần tử, đếm số lá và độ sâu."
             },
             {
               "no": 6,
-              "title": "Counting sort and radix sort",
+              "title": "Sắp xếp đếm và sắp xếp theo cơ số",
               "slug": "counting-radix-sort",
               "kind": "theory",
-              "keyIdeas": ["counting keys", "stable digit passes", "linear-time sorting"],
-              "interactiveIdea": "Buckets filling digit by digit as radix sort passes over the numbers."
+              "keyIdeas": [
+                "đếm số lần xuất hiện của khoá",
+                "các lượt ổn định theo từng chữ số",
+                "sắp xếp trong thời gian tuyến tính"
+              ],
+              "interactiveIdea": "Các ngăn đầy dần theo từng chữ số khi sắp xếp theo cơ số đi qua dãy số."
             },
             {
               "no": 7,
-              "title": "Sorting applications",
+              "title": "Ứng dụng của sắp xếp",
               "slug": "sorting-applications",
               "kind": "theory",
-              "keyIdeas": ["deduplication", "interval scheduling by start", "custom comparators"],
-              "interactiveIdea": "Interval list that becomes mergeable once sorted, with a comparator toggle."
+              "keyIdeas": [
+                "loại bỏ trùng lặp",
+                "lập lịch đoạn theo điểm đầu",
+                "hàm so sánh tự viết"
+              ],
+              "interactiveIdea": "Danh sách các đoạn trở nên gộp được sau khi sắp xếp, có nút đổi hàm so sánh."
             },
             {
               "no": 8,
-              "title": "Practice: choosing a sort",
+              "title": "Luyện tập: chọn thuật toán sắp xếp",
               "slug": "practice-sorting",
               "kind": "practice",
-              "keyIdeas": ["match sort to constraints", "stability and memory trade-offs"],
-              "interactiveIdea": "Race panel running several sorts on the same input, with input-shape presets."
+              "keyIdeas": [
+                "chọn thuật toán sắp xếp theo ràng buộc",
+                "đánh đổi giữa tính ổn định và bộ nhớ"
+              ],
+              "interactiveIdea": "Bảng đua chạy nhiều thuật toán sắp xếp trên cùng đầu vào, có sẵn các kiểu đầu vào mẫu."
             }
           ]
         },
         {
           "no": 4,
-          "title": "Searching",
+          "title": "Tìm kiếm",
           "slug": "searching",
           "strand": "sorting-searching",
-          "blurb": "Find a value fast by throwing away half of the candidates at every step.",
+          "blurb": "Tìm một giá trị thật nhanh bằng cách loại bỏ một nửa số ứng viên ở mỗi bước.",
           "lessons": [
             {
               "no": 1,
-              "title": "Linear search",
+              "title": "Tìm kiếm tuần tự",
               "slug": "linear-search",
               "kind": "theory",
-              "keyIdeas": ["sequential scan", "sentinel", "O(n) worst case"],
-              "interactiveIdea": "Pointer scanning an unsorted array with a running comparison counter."
+              "keyIdeas": ["quét lần lượt", "phần tử cầm canh", "O(n) trong trường hợp xấu nhất"],
+              "interactiveIdea": "Con trỏ quét một mảng chưa sắp xếp, kèm bộ đếm số phép so sánh."
             },
             {
               "no": 2,
-              "title": "Binary search",
+              "title": "Tìm kiếm nhị phân",
               "slug": "binary-search",
               "kind": "theory",
-              "keyIdeas": ["halving the interval", "sorted input", "O(log n)"],
-              "interactiveIdea": "Low, mid and high markers narrowing over a sorted array toward the target."
+              "keyIdeas": ["chia đôi khoảng tìm", "đầu vào đã sắp xếp", "O(log n)"],
+              "interactiveIdea": "Ba mốc lo, mid và hi thu hẹp dần trên một mảng đã sắp xếp về phía giá trị cần tìm."
             },
             {
               "no": 3,
-              "title": "Lower bound & upper bound",
+              "title": "Cận dưới và cận trên",
               "slug": "lower-upper-bound",
               "kind": "theory",
-              "keyIdeas": ["first position >= x", "first position > x", "counting equal keys"],
-              "interactiveIdea": "Sorted array with duplicates where both bounds are found and the equal range is shaded."
+              "keyIdeas": ["vị trí đầu tiên >= x", "vị trí đầu tiên > x", "đếm số khoá bằng nhau"],
+              "interactiveIdea": "Mảng đã sắp xếp có phần tử trùng, nơi tìm cả hai cận và tô bóng đoạn các phần tử bằng nhau."
             },
             {
               "no": 4,
-              "title": "Binary search on the answer",
+              "title": "Tìm kiếm nhị phân trên đáp án",
               "slug": "binary-search-on-answer",
               "kind": "theory",
-              "keyIdeas": ["monotone predicate", "search over values", "feasibility check"],
-              "interactiveIdea": "Predicate strip of false/true cells where the boundary is located by halving."
+              "keyIdeas": ["vị từ đơn điệu", "tìm kiếm trên miền giá trị", "kiểm tra tính khả thi"],
+              "interactiveIdea": "Dải ô sai/đúng của vị từ, nơi ranh giới được tìm bằng cách chia đôi."
             },
             {
               "no": 5,
-              "title": "Ternary search",
+              "title": "Tìm kiếm tam phân",
               "slug": "ternary-search",
               "kind": "theory",
-              "keyIdeas": ["unimodal functions", "discarding a third", "real-valued search"],
-              "interactiveIdea": "Plot of a unimodal function with two probes closing in on the peak."
+              "keyIdeas": ["hàm đơn đỉnh", "bỏ đi một phần ba", "tìm kiếm trên số thực"],
+              "interactiveIdea": "Đồ thị một hàm đơn đỉnh với hai điểm thăm dò khép dần về đỉnh."
             },
             {
               "no": 6,
-              "title": "Practice: searching problems",
+              "title": "Luyện tập: bài toán tìm kiếm",
               "slug": "practice-searching",
               "kind": "practice",
-              "keyIdeas": ["spot a monotone predicate", "off-by-one boundaries"],
-              "interactiveIdea": "Boundary debugger that shows where a buggy binary search loops or misses."
+              "keyIdeas": ["nhận ra vị từ đơn điệu", "ranh giới lệch một đơn vị"],
+              "interactiveIdea": "Công cụ gỡ lỗi ranh giới, chỉ ra chỗ một phép tìm kiếm nhị phân có lỗi bị lặp mãi hoặc bỏ sót."
             }
           ]
         },
         {
           "no": 5,
-          "title": "Linked lists",
+          "title": "Danh sách liên kết",
           "slug": "linked-lists",
           "strand": "linear-structures",
-          "blurb": "Chain nodes with pointers so that inserting and removing in the middle stays cheap.",
+          "blurb": "Nối các nút bằng con trỏ để việc chèn và xoá ở giữa danh sách vẫn rẻ.",
           "lessons": [
             {
               "no": 1,
-              "title": "Singly linked lists",
+              "title": "Danh sách liên kết đơn",
               "slug": "singly-linked-lists",
               "kind": "theory",
-              "keyIdeas": ["nodes and pointers", "insert and delete at head", "O(n) access"],
-              "interactiveIdea": "Node boxes with arrows that rewire live as insert and delete run."
+              "keyIdeas": ["nút và con trỏ", "chèn và xoá ở đầu", "truy cập O(n)"],
+              "interactiveIdea": "Các hộp nút có mũi tên nối lại ngay khi thao tác chèn và xoá chạy."
             },
             {
               "no": 2,
-              "title": "Doubly and circular linked lists",
+              "title": "Danh sách liên kết đôi và danh sách liên kết vòng",
               "slug": "doubly-circular-lists",
               "kind": "theory",
-              "keyIdeas": ["prev and next pointers", "sentinel nodes", "O(1) removal given a node"],
-              "interactiveIdea": "Doubly linked chain where removing a node shows both pointer updates."
+              "keyIdeas": [
+                "con trỏ tới nút trước và nút sau",
+                "nút cầm canh",
+                "xoá O(1) khi đã có nút"
+              ],
+              "interactiveIdea": "Chuỗi liên kết đôi, khi xoá một nút sẽ thấy cả hai con trỏ được cập nhật."
             },
             {
               "no": 3,
-              "title": "Linked list techniques",
+              "title": "Kĩ thuật trên danh sách liên kết",
               "slug": "linked-list-techniques",
               "kind": "theory",
-              "keyIdeas": ["reversal", "fast and slow pointers", "cycle detection (Floyd)"],
-              "interactiveIdea": "Tortoise and hare pointers racing around a list with a cycle until they meet."
+              "keyIdeas": [
+                "đảo ngược",
+                "con trỏ nhanh và con trỏ chậm",
+                "phát hiện chu trình (Floyd)"
+              ],
+              "interactiveIdea": "Con trỏ rùa và thỏ chạy vòng quanh một danh sách có chu trình cho đến khi gặp nhau."
             },
             {
               "no": 4,
-              "title": "Practice: linked list problems",
+              "title": "Luyện tập: bài toán danh sách liên kết",
               "slug": "practice-linked-lists",
               "kind": "practice",
-              "keyIdeas": ["merge two lists", "find the middle", "remove nth from end"],
-              "interactiveIdea": "Pointer sandbox where the learner steps through solutions on custom lists."
+              "keyIdeas": ["trộn hai danh sách", "tìm nút ở giữa", "xoá nút thứ n tính từ cuối"],
+              "interactiveIdea": "Hộp cát con trỏ, nơi người học chạy từng bước lời giải trên danh sách tự tạo."
             }
           ]
         },
         {
           "no": 6,
-          "title": "Stacks and queues",
+          "title": "Ngăn xếp và hàng đợi",
           "slug": "stacks-queues",
           "strand": "linear-structures",
-          "blurb": "Add and remove at the ends: last in, first out, or first in, first out.",
+          "blurb": "Thêm và lấy ra ở hai đầu: vào sau ra trước, hoặc vào trước ra trước.",
           "lessons": [
             {
               "no": 1,
-              "title": "Stacks",
+              "title": "Ngăn xếp",
               "slug": "stacks",
               "kind": "theory",
-              "keyIdeas": ["LIFO", "push and pop", "array or list implementation"],
-              "interactiveIdea": "Stack of plates that animates push and pop with the top pointer."
+              "keyIdeas": [
+                "vào sau ra trước (LIFO)",
+                "push và pop",
+                "cài đặt bằng mảng hoặc danh sách"
+              ],
+              "interactiveIdea": "Chồng đĩa có hoạt cảnh push và pop cùng con trỏ đỉnh."
             },
             {
               "no": 2,
-              "title": "Queues and deques",
+              "title": "Hàng đợi và hàng đợi hai đầu",
               "slug": "queues-deques",
               "kind": "theory",
-              "keyIdeas": ["FIFO", "circular buffer", "double-ended queue"],
-              "interactiveIdea": "Circular buffer ring with head and tail indices wrapping around."
+              "keyIdeas": ["vào trước ra trước (FIFO)", "bộ đệm vòng", "hàng đợi hai đầu"],
+              "interactiveIdea": "Vòng bộ đệm với chỉ số đầu và cuối quay vòng."
             },
             {
               "no": 3,
-              "title": "Stack applications",
+              "title": "Ứng dụng của ngăn xếp",
               "slug": "stack-applications",
               "kind": "theory",
-              "keyIdeas": ["balanced brackets", "expression evaluation", "call stack"],
-              "interactiveIdea": "Bracket checker that pushes and pops as each character is read."
+              "keyIdeas": [
+                "kiểm tra dấu ngoặc cân đối",
+                "tính giá trị biểu thức",
+                "ngăn xếp lời gọi"
+              ],
+              "interactiveIdea": "Bộ kiểm tra dấu ngoặc push và pop khi đọc từng kí tự."
             },
             {
               "no": 4,
-              "title": "Monotonic stack and queue",
+              "title": "Ngăn xếp đơn điệu và hàng đợi đơn điệu",
               "slug": "monotonic-stack-queue",
               "kind": "theory",
-              "keyIdeas": ["next greater element", "sliding window maximum", "amortized O(n)"],
-              "interactiveIdea": "Bars with a monotonic stack beside them that pops shorter bars as each new bar arrives."
+              "keyIdeas": [
+                "phần tử lớn hơn kế tiếp",
+                "giá trị lớn nhất trên cửa sổ trượt",
+                "O(n) khấu hao"
+              ],
+              "interactiveIdea": "Các cột kèm một ngăn xếp đơn điệu bên cạnh, lấy ra các cột thấp hơn khi mỗi cột mới đến."
             },
             {
               "no": 5,
-              "title": "Practice: stacks and queues",
+              "title": "Luyện tập: ngăn xếp và hàng đợi",
               "slug": "practice-stacks-queues",
               "kind": "practice",
-              "keyIdeas": ["queue from two stacks", "min-stack"],
-              "interactiveIdea": "Two-stack queue visualiser showing when elements transfer between stacks."
+              "keyIdeas": ["hàng đợi từ hai ngăn xếp", "ngăn xếp giữ giá trị nhỏ nhất"],
+              "interactiveIdea": "Minh hoạ hàng đợi từ hai ngăn xếp, cho thấy lúc nào phần tử được chuyển giữa hai ngăn xếp."
             }
           ]
         },
         {
           "no": 7,
-          "title": "Hashing",
+          "title": "Băm",
           "slug": "structures",
           "strand": "linear-structures",
-          "blurb": "Turn a key into a bucket number so that adding, finding, and removing take about one step.",
+          "blurb": "Biến một khoá thành số thứ tự của ngăn, để việc thêm, tìm và xoá chỉ tốn khoảng một bước.",
           "lessons": [
             {
               "no": 1,
-              "title": "Hash table",
+              "title": "Bảng băm",
               "slug": "hash-table",
               "kind": "theory",
-              "keyIdeas": ["hash function to bucket", "collisions", "average O(1) lookup"],
-              "interactiveIdea": "Buckets that fill as keys are inserted, with the hash value of each key shown."
+              "keyIdeas": ["hàm băm chọn ngăn", "va chạm", "tra cứu O(1) trung bình"],
+              "interactiveIdea": "Các ngăn đầy dần khi thêm khoá, kèm giá trị băm của mỗi khoá."
             },
             {
               "no": 2,
-              "title": "Collision resolution: chaining vs open addressing",
+              "title": "Xử lí va chạm: móc nối và địa chỉ mở",
               "slug": "collision-resolution",
               "kind": "theory",
-              "keyIdeas": ["separate chaining", "linear and quadratic probing", "double hashing"],
-              "interactiveIdea": "Side-by-side table using chaining and probing on the same key sequence."
+              "keyIdeas": ["móc nối riêng", "dò tuyến tính và dò bậc hai", "băm kép"],
+              "interactiveIdea": "Hai bảng đặt cạnh nhau, một dùng móc nối và một dùng phép dò, trên cùng một dãy khoá."
             },
             {
               "no": 3,
-              "title": "Load factor and rehashing",
+              "title": "Hệ số tải và băm lại",
               "slug": "load-factor-rehashing",
               "kind": "theory",
-              "keyIdeas": ["load factor alpha", "resize threshold", "amortized rehash cost"],
-              "interactiveIdea": "Load-factor gauge that triggers a rehash animation when it crosses the threshold."
+              "keyIdeas": ["hệ số tải alpha", "ngưỡng đổi kích thước", "chi phí băm lại khấu hao"],
+              "interactiveIdea": "Đồng hồ hệ số tải kích hoạt hoạt cảnh băm lại khi vượt ngưỡng."
             },
             {
               "no": 4,
-              "title": "Designing hash functions",
+              "title": "Thiết kế hàm băm",
               "slug": "hash-functions",
               "kind": "theory",
-              "keyIdeas": ["uniform distribution", "universal hashing", "adversarial inputs"],
-              "interactiveIdea": "Histogram of bucket counts for a weak versus a good hash on the same keys."
+              "keyIdeas": ["phân bố đều", "băm phổ quát", "đầu vào do đối thủ chọn"],
+              "interactiveIdea": "Biểu đồ số khoá trong mỗi ngăn của một hàm băm kém so với một hàm băm tốt trên cùng các khoá."
             },
             {
               "no": 5,
-              "title": "Sets, maps and frequency counting",
+              "title": "Tập hợp, ánh xạ và đếm tần suất",
               "slug": "sets-maps-counting",
               "kind": "theory",
-              "keyIdeas": ["set membership", "key-value maps", "counting with hashes"],
-              "interactiveIdea": "Word stream feeding a live frequency map sorted by count."
+              "keyIdeas": ["kiểm tra thuộc tập hợp", "ánh xạ khoá – giá trị", "đếm bằng hàm băm"],
+              "interactiveIdea": "Dòng từ đưa vào một bảng tần suất cập nhật liên tục, sắp theo số lần xuất hiện."
             },
             {
               "no": 6,
-              "title": "Practice: hashing problems",
+              "title": "Luyện tập: bài toán về băm",
               "slug": "practice-hashing",
               "kind": "practice",
-              "keyIdeas": ["two-sum with a map", "grouping by key"],
-              "interactiveIdea": "Problem runner that shows the hash map contents after each step."
+              "keyIdeas": ["tìm cặp có tổng cho trước bằng ánh xạ", "nhóm theo khoá"],
+              "interactiveIdea": "Bộ chạy bài toán hiện nội dung bảng băm sau mỗi bước."
             }
           ]
         },
         {
           "no": 8,
-          "title": "Recursion",
+          "title": "Đệ quy",
           "slug": "recursion",
           "strand": "paradigms",
-          "blurb": "Solve a problem by solving smaller copies of itself, and prove it works by induction.",
+          "blurb": "Giải một bài toán bằng cách giải các bản nhỏ hơn của chính nó, và chứng minh cách làm đúng bằng quy nạp.",
           "lessons": [
             {
               "no": 1,
-              "title": "Recursion basics",
+              "title": "Đệ quy cơ bản",
               "slug": "recursion-basics",
               "kind": "theory",
-              "keyIdeas": ["base case", "recursive case", "call stack frames"],
-              "interactiveIdea": "Call-stack panel that pushes and pops frames for factorial and Fibonacci."
+              "keyIdeas": [
+                "trường hợp cơ sở",
+                "trường hợp đệ quy",
+                "các khung trên ngăn xếp lời gọi"
+              ],
+              "interactiveIdea": "Khung ngăn xếp lời gọi đẩy vào và lấy ra các khung khi tính giai thừa và số Fibonacci."
             },
             {
               "no": 2,
-              "title": "Recursion and induction",
+              "title": "Đệ quy và quy nạp",
               "slug": "recursion-induction",
               "kind": "theory",
-              "keyIdeas": ["proof by induction", "loop invariants", "correctness arguments"],
-              "interactiveIdea": "Invariant checker that highlights the invariant before and after each loop step."
+              "keyIdeas": ["chứng minh quy nạp", "bất biến vòng lặp", "lập luận về tính đúng đắn"],
+              "interactiveIdea": "Bộ kiểm tra bất biến, tô sáng bất biến trước và sau mỗi bước của vòng lặp."
             },
             {
               "no": 3,
-              "title": "Practice: recursive thinking",
+              "title": "Luyện tập: tư duy đệ quy",
               "slug": "practice-recursion",
               "kind": "practice",
-              "keyIdeas": ["towers of Hanoi", "generate subsets"],
-              "interactiveIdea": "Towers of Hanoi board solved recursively with the call tree alongside."
+              "keyIdeas": ["tháp Hà Nội", "sinh các tập con"],
+              "interactiveIdea": "Bàn chơi tháp Hà Nội được giải bằng đệ quy, kèm cây lời gọi bên cạnh."
             }
           ]
         },
         {
           "no": 9,
-          "title": "Trees",
+          "title": "Cây",
           "slug": "trees",
           "strand": "trees",
-          "blurb": "Organise data in branches, walk it in every order, and keep keys sorted in a search tree.",
+          "blurb": "Tổ chức dữ liệu theo nhánh, duyệt nó theo mọi thứ tự và giữ khoá có thứ tự trong cây tìm kiếm.",
           "lessons": [
             {
               "no": 1,
-              "title": "Binary trees and terminology",
+              "title": "Cây nhị phân và thuật ngữ",
               "slug": "binary-trees",
               "kind": "theory",
               "keyIdeas": [
-                "root, leaf, depth, height",
-                "full and complete trees",
-                "array representation"
+                "gốc, lá, độ sâu, chiều cao",
+                "cây đầy đủ và cây hoàn chỉnh",
+                "biểu diễn bằng mảng"
               ],
-              "interactiveIdea": "Editable tree that labels depth and height of each node as nodes are added."
+              "interactiveIdea": "Cây sửa được, ghi độ sâu và chiều cao của mỗi nút khi thêm nút."
             },
             {
               "no": 2,
-              "title": "Tree traversals",
+              "title": "Duyệt cây",
               "slug": "tree-traversals",
               "kind": "theory",
-              "keyIdeas": ["preorder, inorder, postorder", "level order", "iterative traversal"],
-              "interactiveIdea": "Traversal player that numbers nodes in visit order for each traversal type."
+              "keyIdeas": [
+                "duyệt trước, duyệt giữa, duyệt sau",
+                "duyệt theo tầng",
+                "duyệt không đệ quy"
+              ],
+              "interactiveIdea": "Bộ phát phép duyệt đánh số các nút theo thứ tự thăm của từng kiểu duyệt."
             },
             {
               "no": 3,
-              "title": "Binary search tree",
+              "title": "Cây nhị phân tìm kiếm",
               "slug": "bst",
               "kind": "theory",
               "keyIdeas": [
-                "BST ordering property",
-                "search, insert, delete",
-                "height decides cost"
+                "tính chất thứ tự của BST",
+                "tìm, chèn, xoá",
+                "chiều cao quyết định chi phí"
               ],
-              "interactiveIdea": "BST that animates search paths and the three delete cases."
+              "interactiveIdea": "Cây BST có hoạt cảnh đường tìm kiếm và ba trường hợp xoá."
             },
             {
               "no": 4,
-              "title": "N-ary trees and tree recursion",
+              "title": "Cây nhiều nhánh và đệ quy trên cây",
               "slug": "nary-trees",
               "kind": "theory",
-              "keyIdeas": ["children lists", "subtree sizes", "tree diameter"],
-              "interactiveIdea": "General tree where subtree sizes bubble up from the leaves."
+              "keyIdeas": ["danh sách con", "kích thước cây con", "đường kính của cây"],
+              "interactiveIdea": "Cây tổng quát, nơi kích thước cây con được tính dần từ lá lên."
             },
             {
               "no": 5,
-              "title": "Practice: tree problems",
+              "title": "Luyện tập: bài toán về cây",
               "slug": "practice-trees",
               "kind": "practice",
-              "keyIdeas": ["validate a BST", "lowest common ancestor in a BST"],
-              "interactiveIdea": "Tree sandbox where the learner checks a BST and finds ancestors by clicking."
+              "keyIdeas": ["kiểm tra một cây có phải BST", "tổ tiên chung gần nhất trong BST"],
+              "interactiveIdea": "Hộp cát cây, nơi người học kiểm tra một cây BST và nhấp chuột để tìm tổ tiên."
             }
           ]
         },
         {
           "no": 10,
-          "title": "Heaps and priority queues",
+          "title": "Heap và hàng đợi ưu tiên",
           "slug": "heaps",
           "strand": "trees",
-          "blurb": "Keep the smallest item on top so that a priority queue serves it in logarithmic time.",
+          "blurb": "Giữ phần tử nhỏ nhất ở trên cùng để hàng đợi ưu tiên lấy được nó trong thời gian lôgarit.",
           "lessons": [
             {
               "no": 1,
-              "title": "Binary heaps",
+              "title": "Heap nhị phân",
               "slug": "binary-heaps",
               "kind": "theory",
-              "keyIdeas": ["heap property", "sift up and sift down", "array-backed tree"],
-              "interactiveIdea": "Synced array and tree views of a heap during insert and extract."
+              "keyIdeas": ["tính chất heap", "vun lên và vun xuống", "cây lưu trong mảng"],
+              "interactiveIdea": "Hai khung mảng và cây của heap đồng bộ với nhau khi chèn và lấy ra."
             },
             {
               "no": 2,
-              "title": "Building a heap in linear time",
+              "title": "Dựng heap trong thời gian tuyến tính",
               "slug": "build-heap",
               "kind": "theory",
-              "keyIdeas": ["bottom-up heapify", "O(n) build", "why not O(n log n)"],
-              "interactiveIdea": "Bottom-up heapify animation with a cost counter per level."
+              "keyIdeas": [
+                "vun heap từ dưới lên",
+                "dựng trong O(n)",
+                "vì sao không phải O(n log n)"
+              ],
+              "interactiveIdea": "Hoạt cảnh vun heap từ dưới lên, kèm bộ đếm chi phí ở mỗi tầng."
             },
             {
               "no": 3,
-              "title": "Priority queue applications",
+              "title": "Ứng dụng của hàng đợi ưu tiên",
               "slug": "priority-queue-applications",
               "kind": "theory",
-              "keyIdeas": ["top-k elements", "merge k sorted lists", "event scheduling"],
-              "interactiveIdea": "Merge-k-lists animation pulling the smallest head from a min-heap."
+              "keyIdeas": ["k phần tử lớn nhất", "trộn k danh sách đã sắp xếp", "lập lịch sự kiện"],
+              "interactiveIdea": "Hoạt cảnh trộn k danh sách, mỗi lần lấy phần tử đầu nhỏ nhất ra khỏi heap nhỏ nhất."
             },
             {
               "no": 4,
-              "title": "Practice: heap problems",
+              "title": "Luyện tập: bài toán về heap",
               "slug": "practice-heaps",
               "kind": "practice",
-              "keyIdeas": ["running median with two heaps", "k closest points"],
-              "interactiveIdea": "Two-heap balance view keeping the running median of a stream."
+              "keyIdeas": ["trung vị động bằng hai heap", "k điểm gần nhất"],
+              "interactiveIdea": "Khung cân bằng hai heap, giữ trung vị của một dòng số đang chảy vào."
             }
           ]
         },
         {
           "no": 11,
-          "title": "Graph basics and traversal",
+          "title": "Đồ thị cơ bản và phép duyệt",
           "slug": "graphs",
           "strand": "graphs",
-          "blurb": "Model connections as nodes and edges, then explore them breadth-first and depth-first.",
+          "blurb": "Mô hình hoá các mối nối bằng đỉnh và cạnh, rồi khám phá chúng theo chiều rộng và chiều sâu.",
           "lessons": [
             {
               "no": 1,
-              "title": "Graph representations",
+              "title": "Biểu diễn đồ thị",
               "slug": "graph-representations",
               "kind": "theory",
               "keyIdeas": [
-                "vertices and edges",
-                "adjacency list vs matrix",
-                "directed and weighted graphs"
+                "đỉnh và cạnh",
+                "danh sách kề và ma trận kề",
+                "đồ thị có hướng và có trọng số"
               ],
-              "interactiveIdea": "Editable graph with synced adjacency list and matrix panels."
+              "interactiveIdea": "Đồ thị sửa được, đồng bộ với hai khung danh sách kề và ma trận kề."
             },
             {
               "no": 2,
-              "title": "Breadth-first search on a grid",
+              "title": "Duyệt theo chiều rộng trên lưới",
               "slug": "bfs-grid",
               "kind": "theory",
               "keyIdeas": [
-                "queue frontier",
-                "layers by distance",
-                "shortest path in unweighted graphs"
+                "biên là một hàng đợi",
+                "các lớp theo khoảng cách",
+                "đường đi ngắn nhất trên đồ thị không trọng số"
               ],
-              "interactiveIdea": "Grid where BFS floods outward layer by layer from the start cell."
+              "interactiveIdea": "Lưới nơi BFS lan ra từng lớp một từ ô xuất phát."
             },
             {
               "no": 3,
-              "title": "Depth-first search on a grid",
+              "title": "Duyệt theo chiều sâu trên lưới",
               "slug": "dfs-grid",
               "kind": "theory",
               "keyIdeas": [
-                "stack or recursion",
-                "backtracking along paths",
-                "discovery and finish order"
+                "ngăn xếp hoặc đệ quy",
+                "quay lui dọc đường đi",
+                "thứ tự phát hiện và thứ tự kết thúc"
               ],
-              "interactiveIdea": "Grid where DFS dives down one path and backtracks at dead ends."
+              "interactiveIdea": "Lưới nơi DFS lao theo một đường và quay lui ở ngõ cụt."
             },
             {
               "no": 4,
-              "title": "Connected components and flood fill",
+              "title": "Thành phần liên thông và loang",
               "slug": "connected-components",
               "kind": "theory",
-              "keyIdeas": ["component labelling", "flood fill", "counting islands"],
-              "interactiveIdea": "Island map that colours each component as flood fill reaches it."
+              "keyIdeas": ["gán nhãn thành phần", "thuật toán loang", "đếm số hòn đảo"],
+              "interactiveIdea": "Bản đồ đảo tô màu từng thành phần khi phép loang chạm đến."
             },
             {
               "no": 5,
-              "title": "Topological sort",
+              "title": "Sắp xếp tô-pô",
               "slug": "topological-sort",
               "kind": "theory",
-              "keyIdeas": ["DAGs", "Kahn's algorithm", "DFS finish order"],
-              "interactiveIdea": "Task dependency DAG whose nodes peel off in topological order."
+              "keyIdeas": ["DAG", "thuật toán Kahn", "thứ tự kết thúc của DFS"],
+              "interactiveIdea": "DAG phụ thuộc giữa các công việc, các đỉnh lần lượt được gỡ ra theo thứ tự tô-pô."
             },
             {
               "no": 6,
-              "title": "Bipartite check and cycle detection",
+              "title": "Kiểm tra đồ thị hai phía và phát hiện chu trình",
               "slug": "bipartite-cycles",
               "kind": "theory",
-              "keyIdeas": ["two-colouring", "back edges", "directed vs undirected cycles"],
-              "interactiveIdea": "Graph that tries to 2-colour itself and highlights the odd cycle when it fails."
+              "keyIdeas": ["tô hai màu", "cạnh ngược", "chu trình có hướng và vô hướng"],
+              "interactiveIdea": "Đồ thị tự thử tô hai màu và tô sáng chu trình lẻ khi thất bại."
             },
             {
               "no": 7,
-              "title": "Practice: traversal problems",
+              "title": "Luyện tập: bài toán duyệt đồ thị",
               "slug": "practice-graph-traversal",
               "kind": "practice",
-              "keyIdeas": ["choose BFS or DFS", "multi-source BFS"],
-              "interactiveIdea": "Grid puzzles where the learner picks BFS or DFS and compares visit counts."
+              "keyIdeas": ["chọn BFS hay DFS", "BFS nhiều nguồn"],
+              "interactiveIdea": "Câu đố trên lưới, nơi người học chọn BFS hoặc DFS và so sánh số ô đã thăm."
             }
           ]
         },
         {
           "no": 12,
-          "title": "Review: foundations",
+          "title": "Ôn tập: nền tảng",
           "slug": "review-foundations",
           "strand": "review",
-          "blurb": "Check what you learned across the foundations before moving on to core algorithms.",
+          "blurb": "Kiểm tra những gì bạn đã học trong phần nền tảng trước khi sang các thuật toán cốt lõi.",
           "lessons": [
             {
               "no": 1,
-              "title": "Review: foundations",
+              "title": "Ôn tập: nền tảng",
               "slug": "review-foundations-lesson",
               "kind": "review",
               "keyIdeas": [
-                "complexity of core operations",
-                "choosing a structure",
-                "sorting and searching recap"
+                "độ phức tạp của các thao tác cơ bản",
+                "chọn cấu trúc dữ liệu",
+                "ôn lại sắp xếp và tìm kiếm"
               ],
-              "interactiveIdea": "Mixed quiz that asks which structure or algorithm fits each scenario, with instant feedback."
+              "interactiveIdea": "Bài trắc nghiệm tổng hợp hỏi cấu trúc dữ liệu hay thuật toán nào hợp với mỗi tình huống, có phản hồi ngay."
             }
           ]
         }
@@ -665,579 +724,595 @@
     },
     {
       "level": 2,
-      "title": "Core algorithms",
+      "title": "Thuật toán cốt lõi",
       "chapters": [
         {
           "no": 1,
-          "title": "Shortest paths",
+          "title": "Đường đi ngắn nhất",
           "slug": "shortest-paths",
           "strand": "graphs",
-          "blurb": "Find the cheapest route through a weighted graph with Dijkstra, Bellman-Ford, and friends.",
+          "blurb": "Tìm đường rẻ nhất qua một đồ thị có trọng số bằng thuật toán Dijkstra, Bellman-Ford và các thuật toán họ hàng.",
           "lessons": [
             {
               "no": 1,
-              "title": "Weighted graphs and shortest-path properties",
+              "title": "Đồ thị có trọng số và tính chất của đường đi ngắn nhất",
               "slug": "shortest-path-properties",
               "kind": "theory",
-              "keyIdeas": ["path weight", "relaxation", "optimal substructure"],
-              "interactiveIdea": "Edge relaxation demo where tightening one edge updates the distance labels."
+              "keyIdeas": ["trọng số đường đi", "nới lỏng cạnh", "cấu trúc con tối ưu"],
+              "interactiveIdea": "Minh hoạ nới lỏng cạnh, nơi siết một cạnh sẽ cập nhật các nhãn khoảng cách."
             },
             {
               "no": 2,
-              "title": "Dijkstra’s algorithm on a grid",
+              "title": "Thuật toán Dijkstra trên lưới",
               "slug": "dijkstra-grid",
               "kind": "theory",
-              "keyIdeas": ["min-priority queue", "non-negative weights", "settled cells"],
-              "interactiveIdea": "Weighted grid where Dijkstra settles cells in order of distance."
+              "keyIdeas": ["hàng đợi ưu tiên nhỏ nhất", "trọng số không âm", "các ô đã chốt"],
+              "interactiveIdea": "Lưới có trọng số, nơi thuật toán Dijkstra chốt các ô theo thứ tự khoảng cách."
             },
             {
               "no": 3,
-              "title": "Dijkstra on general graphs",
+              "title": "Thuật toán Dijkstra trên đồ thị tổng quát",
               "slug": "dijkstra-general",
               "kind": "theory",
-              "keyIdeas": ["binary-heap implementation", "O((V+E) log V)", "lazy deletion"],
-              "interactiveIdea": "Graph view with the priority queue contents shown beside each step."
+              "keyIdeas": ["cài đặt bằng heap nhị phân", "O((V+E) log V)", "xoá lười"],
+              "interactiveIdea": "Khung đồ thị kèm nội dung hàng đợi ưu tiên ở mỗi bước."
             },
             {
               "no": 4,
-              "title": "0-1 BFS and DAG shortest paths",
+              "title": "BFS 0-1 và đường đi ngắn nhất trên DAG",
               "slug": "zero-one-bfs-dag",
               "kind": "theory",
               "keyIdeas": [
-                "deque for 0/1 weights",
-                "relax in topological order",
-                "longest path in a DAG"
+                "hàng đợi hai đầu cho trọng số 0/1",
+                "nới lỏng theo thứ tự tô-pô",
+                "đường đi dài nhất trên DAG"
               ],
-              "interactiveIdea": "Deque panel pushing 0-edges to the front and 1-edges to the back."
+              "interactiveIdea": "Khung hàng đợi hai đầu, đẩy cạnh 0 vào đầu hàng và cạnh 1 vào cuối hàng."
             },
             {
               "no": 5,
-              "title": "Bellman-Ford",
+              "title": "Thuật toán Bellman-Ford",
               "slug": "bellman-ford",
               "kind": "theory",
-              "keyIdeas": [
-                "V-1 rounds of relaxation",
-                "negative weights",
-                "negative-cycle detection"
-              ],
-              "interactiveIdea": "Round-by-round relaxation table that flags a negative cycle in round V."
+              "keyIdeas": ["V-1 vòng nới lỏng", "trọng số âm", "phát hiện chu trình âm"],
+              "interactiveIdea": "Bảng nới lỏng theo từng vòng, đánh dấu chu trình âm ở vòng thứ V."
             },
             {
               "no": 6,
-              "title": "Floyd-Warshall",
+              "title": "Thuật toán Floyd-Warshall",
               "slug": "floyd-warshall",
               "kind": "theory",
-              "keyIdeas": ["all-pairs shortest paths", "intermediate vertex k", "O(V^3)"],
-              "interactiveIdea": "Distance matrix that updates as each intermediate vertex k is allowed."
+              "keyIdeas": ["đường đi ngắn nhất giữa mọi cặp đỉnh", "đỉnh trung gian k", "O(V^3)"],
+              "interactiveIdea": "Ma trận khoảng cách cập nhật mỗi khi cho phép thêm một đỉnh trung gian k."
             },
             {
               "no": 7,
-              "title": "Johnson’s algorithm",
+              "title": "Thuật toán Johnson",
               "slug": "johnson-algorithm",
               "kind": "theory",
               "keyIdeas": [
-                "reweighting with potentials",
-                "Bellman-Ford then Dijkstra",
-                "sparse all-pairs"
+                "đổi trọng số bằng thế năng",
+                "Bellman-Ford rồi Dijkstra",
+                "mọi cặp đỉnh trên đồ thị thưa"
               ],
-              "interactiveIdea": "Before-and-after edge weights showing how potentials remove negative weights."
+              "interactiveIdea": "Trọng số cạnh trước và sau, cho thấy thế năng xoá bỏ trọng số âm ra sao."
             },
             {
               "no": 8,
-              "title": "A* search",
+              "title": "Tìm kiếm A*",
               "slug": "a-star",
               "kind": "theory",
-              "keyIdeas": ["heuristic h(n)", "admissible and consistent", "f = g + h"],
-              "interactiveIdea": "Grid comparing cells expanded by Dijkstra and A* with a heuristic toggle."
+              "keyIdeas": ["hàm ước lượng h(n)", "chấp nhận được và nhất quán", "f = g + h"],
+              "interactiveIdea": "Lưới so sánh số ô Dijkstra và A* mở rộng, có nút bật tắt hàm ước lượng."
             },
             {
               "no": 9,
-              "title": "Practice: shortest-path problems",
+              "title": "Luyện tập: bài toán đường đi ngắn nhất",
               "slug": "practice-shortest-paths",
               "kind": "practice",
-              "keyIdeas": ["pick the right algorithm", "state-space graphs"],
-              "interactiveIdea": "Scenario cards where the learner picks an algorithm and sees it run."
+              "keyIdeas": ["chọn đúng thuật toán", "đồ thị không gian trạng thái"],
+              "interactiveIdea": "Thẻ tình huống, nơi người học chọn một thuật toán và xem nó chạy."
             }
           ]
         },
         {
           "no": 2,
-          "title": "Union-find",
+          "title": "Hợp và tìm",
           "slug": "union-find",
           "strand": "structures",
-          "blurb": "Merge groups and ask whether two items share one, in almost constant time.",
+          "blurb": "Gộp các nhóm và hỏi hai phần tử có chung nhóm không, trong thời gian gần như hằng số.",
           "lessons": [
             {
               "no": 1,
-              "title": "Disjoint set union",
+              "title": "Tập hợp rời nhau",
               "slug": "disjoint-set-union",
               "kind": "theory",
-              "keyIdeas": ["find and union", "representative roots", "dynamic connectivity"],
-              "interactiveIdea": "Forest of sets that merges as union operations are applied."
+              "keyIdeas": ["find và union", "gốc đại diện", "liên thông động"],
+              "interactiveIdea": "Rừng các tập gộp lại khi các phép union được áp dụng."
             },
             {
               "no": 2,
-              "title": "Union by rank and path compression",
+              "title": "Hợp theo hạng và nén đường đi",
               "slug": "union-by-rank-path-compression",
               "kind": "theory",
-              "keyIdeas": ["rank heuristic", "path compression", "inverse Ackermann time"],
-              "interactiveIdea": "Tall tree flattening under path compression with a find-cost counter."
+              "keyIdeas": ["quy tắc theo hạng", "nén đường đi", "thời gian hàm Ackermann ngược"],
+              "interactiveIdea": "Cây cao bị làm phẳng nhờ nén đường đi, kèm bộ đếm chi phí của find."
             },
             {
               "no": 3,
-              "title": "Practice: union-find problems",
+              "title": "Luyện tập: bài toán hợp và tìm",
               "slug": "practice-union-find",
               "kind": "practice",
-              "keyIdeas": ["count components online", "detect a cycle while adding edges"],
-              "interactiveIdea": "Edge stream that colours components and flags the edge closing a cycle."
+              "keyIdeas": ["đếm thành phần trực tuyến", "phát hiện chu trình khi thêm cạnh"],
+              "interactiveIdea": "Dòng cạnh tô màu các thành phần và đánh dấu cạnh khép kín một chu trình."
             }
           ]
         },
         {
           "no": 3,
-          "title": "Minimum spanning trees",
+          "title": "Cây khung nhỏ nhất",
           "slug": "mst",
           "strand": "graphs",
-          "blurb": "Connect every node with the least total edge weight, using Kruskal’s and Prim’s algorithms.",
+          "blurb": "Nối mọi đỉnh với tổng trọng số cạnh nhỏ nhất, bằng thuật toán Kruskal và thuật toán Prim.",
           "lessons": [
             {
               "no": 1,
-              "title": "Cut property and MST basics",
+              "title": "Tính chất lát cắt và cây khung nhỏ nhất cơ bản",
               "slug": "mst-cut-property",
               "kind": "theory",
-              "keyIdeas": ["spanning trees", "cut property", "cycle property"],
-              "interactiveIdea": "Draggable cut across a graph highlighting the lightest crossing edge."
+              "keyIdeas": ["cây khung", "tính chất lát cắt", "tính chất chu trình"],
+              "interactiveIdea": "Lát cắt kéo được qua đồ thị, tô sáng cạnh nhẹ nhất đi qua lát cắt."
             },
             {
               "no": 2,
-              "title": "Kruskal’s algorithm",
+              "title": "Thuật toán Kruskal",
               "slug": "kruskal",
               "kind": "theory",
-              "keyIdeas": ["sort edges by weight", "union-find to avoid cycles", "O(E log E)"],
-              "interactiveIdea": "Sorted edge list feeding a graph where accepted edges join components."
+              "keyIdeas": [
+                "sắp xếp cạnh theo trọng số",
+                "dùng DSU để tránh chu trình",
+                "O(E log E)"
+              ],
+              "interactiveIdea": "Danh sách cạnh đã sắp xếp đưa vào đồ thị, nơi các cạnh được nhận sẽ nối các thành phần."
             },
             {
               "no": 3,
-              "title": "Prim’s algorithm",
+              "title": "Thuật toán Prim",
               "slug": "prim",
               "kind": "theory",
               "keyIdeas": [
-                "grow one tree",
-                "priority queue of crossing edges",
-                "dense vs sparse graphs"
+                "mở rộng một cây",
+                "hàng đợi ưu tiên các cạnh cắt",
+                "đồ thị dày và đồ thị thưa"
               ],
-              "interactiveIdea": "Tree growing from a start vertex, adding the cheapest frontier edge each step."
+              "interactiveIdea": "Cây mọc ra từ một đỉnh xuất phát, mỗi bước thêm cạnh biên rẻ nhất."
             },
             {
               "no": 4,
-              "title": "Practice: MST problems",
+              "title": "Luyện tập: bài toán cây khung nhỏ nhất",
               "slug": "practice-mst",
               "kind": "practice",
-              "keyIdeas": ["minimum bottleneck path", "second-best MST"],
-              "interactiveIdea": "Graph editor where the learner predicts the MST and checks it."
+              "keyIdeas": ["đường đi có cạnh lớn nhất nhỏ nhất", "cây khung nhỏ thứ hai"],
+              "interactiveIdea": "Trình sửa đồ thị, nơi người học đoán cây khung nhỏ nhất rồi kiểm tra."
             }
           ]
         },
         {
           "no": 4,
-          "title": "Advanced graph algorithms",
+          "title": "Thuật toán đồ thị nâng cao",
           "slug": "advanced-graphs",
           "strand": "graphs",
-          "blurb": "Find strongly connected parts, weak links, Euler tours, and solve 2-SAT with graphs.",
+          "blurb": "Tìm các phần liên thông mạnh, các mối nối yếu, chu trình Euler, và giải 2-SAT bằng đồ thị.",
           "lessons": [
             {
               "no": 1,
-              "title": "Strongly connected components",
+              "title": "Thành phần liên thông mạnh",
               "slug": "strongly-connected-components",
               "kind": "theory",
-              "keyIdeas": ["Kosaraju", "Tarjan low-link", "condensation DAG"],
-              "interactiveIdea": "Directed graph that collapses into its condensation DAG after SCCs are found."
+              "keyIdeas": ["thuật toán Kosaraju", "low-link của Tarjan", "DAG rút gọn"],
+              "interactiveIdea": "Đồ thị có hướng co lại thành DAG rút gọn sau khi tìm xong các thành phần liên thông mạnh."
             },
             {
               "no": 2,
-              "title": "Bridges and articulation points",
+              "title": "Cầu và đỉnh khớp",
               "slug": "bridges-articulation-points",
               "kind": "theory",
-              "keyIdeas": ["DFS tree", "low-link values", "critical edges and vertices"],
-              "interactiveIdea": "DFS tree with tin/low labels that marks bridges in red."
+              "keyIdeas": ["cây DFS", "giá trị low-link", "cạnh và đỉnh xung yếu"],
+              "interactiveIdea": "Cây DFS có nhãn tin/low, đánh dấu cầu bằng màu đỏ."
             },
             {
               "no": 3,
-              "title": "Eulerian paths and circuits",
+              "title": "Đường đi và chu trình Euler",
               "slug": "eulerian-paths",
               "kind": "theory",
-              "keyIdeas": ["degree conditions", "Hierholzer's algorithm", "every edge once"],
-              "interactiveIdea": "Pen tracing an Euler circuit edge by edge as Hierholzer splices cycles."
+              "keyIdeas": [
+                "điều kiện về bậc",
+                "thuật toán Hierholzer",
+                "đi qua mỗi cạnh đúng một lần"
+              ],
+              "interactiveIdea": "Ngòi bút vẽ chu trình Euler từng cạnh một khi thuật toán Hierholzer ghép các chu trình."
             },
             {
               "no": 4,
-              "title": "2-SAT",
+              "title": "Bài toán 2-SAT",
               "slug": "two-sat",
               "kind": "theory",
               "keyIdeas": [
-                "implication graph",
-                "SCC-based satisfiability",
-                "assignment from topological order"
+                "đồ thị kéo theo",
+                "tính thoả được dựa trên thành phần liên thông mạnh",
+                "phép gán từ thứ tự tô-pô"
               ],
-              "interactiveIdea": "Clause list that builds an implication graph and reports a satisfying assignment."
+              "interactiveIdea": "Danh sách mệnh đề dựng đồ thị kéo theo và cho một phép gán thoả mãn."
             },
             {
               "no": 5,
-              "title": "Practice: advanced graph problems",
+              "title": "Luyện tập: bài toán đồ thị nâng cao",
               "slug": "practice-advanced-graphs",
               "kind": "practice",
-              "keyIdeas": ["network reliability", "dependency cycles"],
-              "interactiveIdea": "Network map where removing a node shows which parts disconnect."
+              "keyIdeas": ["độ tin cậy của mạng", "chu trình phụ thuộc"],
+              "interactiveIdea": "Bản đồ mạng, nơi bỏ một đỉnh sẽ cho thấy những phần nào bị tách rời."
             }
           ]
         },
         {
           "no": 5,
-          "title": "Divide and conquer",
+          "title": "Chia để trị",
           "slug": "divide-and-conquer",
           "strand": "paradigms",
-          "blurb": "Split a problem in parts, solve each, combine the answers, and read the cost off the master theorem.",
+          "blurb": "Chia bài toán thành nhiều phần, giải từng phần, ghép các đáp án lại, và đọc chi phí từ định lí thợ.",
           "lessons": [
             {
               "no": 1,
-              "title": "Divide and conquer and the master theorem",
+              "title": "Chia để trị và định lí thợ",
               "slug": "master-theorem",
               "kind": "theory",
-              "keyIdeas": ["divide, conquer, combine", "recurrence a T(n/b) + f(n)", "three cases"],
-              "interactiveIdea": "Master-theorem calculator with a recursion tree that recolours by dominant level."
+              "keyIdeas": ["chia, trị, kết hợp", "hệ thức a T(n/b) + f(n)", "ba trường hợp"],
+              "interactiveIdea": "Máy tính định lí thợ kèm cây đệ quy, tô màu lại theo tầng trội."
             },
             {
               "no": 2,
-              "title": "Counting inversions",
+              "title": "Đếm nghịch thế",
               "slug": "counting-inversions",
               "kind": "theory",
-              "keyIdeas": ["merge-sort extension", "cross inversions", "O(n log n)"],
-              "interactiveIdea": "Merge step that counts inversions as elements cross from right to left."
+              "keyIdeas": ["mở rộng sắp xếp trộn", "nghịch thế chéo", "O(n log n)"],
+              "interactiveIdea": "Bước trộn đếm nghịch thế khi phần tử đi từ nửa phải sang trái."
             },
             {
               "no": 3,
-              "title": "Quickselect and median of medians",
+              "title": "Quickselect và trung vị của các trung vị",
               "slug": "quickselect",
               "kind": "theory",
               "keyIdeas": [
-                "k-th order statistic",
-                "expected linear time",
-                "worst-case linear selection"
+                "thống kê thứ tự thứ k",
+                "thời gian tuyến tính kì vọng",
+                "chọn trong thời gian tuyến tính ở trường hợp xấu nhất"
               ],
-              "interactiveIdea": "Partition animation that discards one side each round to find the k-th element."
+              "interactiveIdea": "Hoạt cảnh phân hoạch, mỗi vòng bỏ đi một bên để tìm phần tử thứ k."
             },
             {
               "no": 4,
-              "title": "Karatsuba and Strassen",
+              "title": "Thuật toán Karatsuba và Strassen",
               "slug": "karatsuba-strassen",
               "kind": "theory",
-              "keyIdeas": [
-                "fewer recursive multiplications",
-                "O(n^1.585)",
-                "matrix multiplication"
-              ],
-              "interactiveIdea": "Multiplication tree comparing four versus three recursive products."
+              "keyIdeas": ["ít phép nhân đệ quy hơn", "O(n^1.585)", "nhân ma trận"],
+              "interactiveIdea": "Cây phép nhân so sánh bốn và ba tích đệ quy."
             },
             {
               "no": 5,
-              "title": "Closest pair of points",
+              "title": "Cặp điểm gần nhất",
               "slug": "closest-pair",
               "kind": "theory",
-              "keyIdeas": ["split by x", "strip of width 2d", "O(n log n)"],
-              "interactiveIdea": "Point cloud with the dividing line and strip where cross pairs are checked."
+              "keyIdeas": ["chia theo x", "dải rộng 2d", "O(n log n)"],
+              "interactiveIdea": "Đám điểm với đường chia và dải nơi các cặp chéo được kiểm tra."
             },
             {
               "no": 6,
-              "title": "Practice: divide and conquer problems",
+              "title": "Luyện tập: bài toán chia để trị",
               "slug": "practice-divide-and-conquer",
               "kind": "practice",
-              "keyIdeas": ["maximum subarray", "majority element"],
-              "interactiveIdea": "Split view where the learner writes the combine step and checks it on samples."
+              "keyIdeas": ["đoạn con có tổng lớn nhất", "phần tử chiếm đa số"],
+              "interactiveIdea": "Khung chia đôi, nơi người học viết bước kết hợp và kiểm tra trên dữ liệu mẫu."
             }
           ]
         },
         {
           "no": 6,
-          "title": "Greedy algorithms",
+          "title": "Thuật toán tham lam",
           "slug": "greedy",
           "strand": "paradigms",
-          "blurb": "Make the best local choice at every step, and learn when that is enough for the best answer.",
+          "blurb": "Chọn phương án tốt nhất tại chỗ ở mỗi bước, và biết khi nào như thế là đủ để có đáp án tối ưu.",
           "lessons": [
             {
               "no": 1,
-              "title": "Greedy choice and exchange arguments",
+              "title": "Lựa chọn tham lam và lập luận hoán đổi",
               "slug": "greedy-exchange-argument",
               "kind": "theory",
-              "keyIdeas": ["greedy-choice property", "exchange argument", "when greedy fails"],
-              "interactiveIdea": "Counterexample explorer showing coin change succeed and fail for different coin sets."
+              "keyIdeas": [
+                "tính chất lựa chọn tham lam",
+                "lập luận hoán đổi",
+                "khi nào tham lam thất bại"
+              ],
+              "interactiveIdea": "Công cụ khám phá phản ví dụ, cho thấy bài toán đổi tiền thành công và thất bại với các bộ mệnh giá khác nhau."
             },
             {
               "no": 2,
-              "title": "Interval scheduling",
+              "title": "Lập lịch các đoạn",
               "slug": "interval-scheduling",
               "kind": "theory",
-              "keyIdeas": ["earliest finish time", "activity selection", "interval partitioning"],
-              "interactiveIdea": "Timeline of intervals where the earliest-finishing compatible one is picked each step."
+              "keyIdeas": ["kết thúc sớm nhất", "chọn hoạt động", "phân hoạch các đoạn"],
+              "interactiveIdea": "Dòng thời gian các đoạn, mỗi bước chọn đoạn tương thích kết thúc sớm nhất."
             },
             {
               "no": 3,
-              "title": "Huffman coding",
+              "title": "Mã hoá Huffman",
               "slug": "huffman-coding",
               "kind": "theory",
-              "keyIdeas": ["prefix-free codes", "merge two least frequent", "optimal code length"],
-              "interactiveIdea": "Frequency nodes merging into a Huffman tree with code bits on edges."
+              "keyIdeas": [
+                "mã phi tiền tố",
+                "gộp hai phần tử ít xuất hiện nhất",
+                "độ dài mã tối ưu"
+              ],
+              "interactiveIdea": "Các nút tần suất gộp dần thành cây Huffman, với bit mã ghi trên cạnh."
             },
             {
               "no": 4,
-              "title": "Fractional knapsack and scheduling with deadlines",
+              "title": "Cái túi phân số và lập lịch có hạn chót",
               "slug": "fractional-knapsack",
               "kind": "theory",
-              "keyIdeas": ["value per weight", "job sequencing", "matroid intuition"],
-              "interactiveIdea": "Knapsack filling by value density with a fraction bar on the last item."
+              "keyIdeas": [
+                "giá trị trên mỗi đơn vị khối lượng",
+                "xếp lịch công việc",
+                "trực giác về matroid"
+              ],
+              "interactiveIdea": "Cái túi được lấp đầy theo mật độ giá trị, có thanh phân số cho món cuối cùng."
             },
             {
               "no": 5,
-              "title": "Practice: greedy problems",
+              "title": "Luyện tập: bài toán tham lam",
               "slug": "practice-greedy",
               "kind": "practice",
-              "keyIdeas": ["prove or disprove greedy", "jump game"],
-              "interactiveIdea": "Puzzle cards where the learner tests a greedy rule against random cases."
+              "keyIdeas": ["chứng minh hoặc bác bỏ cách tham lam", "trò chơi nhảy"],
+              "interactiveIdea": "Thẻ câu đố, nơi người học thử một quy tắc tham lam trên các trường hợp ngẫu nhiên."
             }
           ]
         },
         {
           "no": 7,
-          "title": "Dynamic programming",
+          "title": "Quy hoạch động",
           "slug": "dynamic-programming",
           "strand": "paradigms",
-          "blurb": "Break a problem into overlapping subproblems and reuse each answer instead of recomputing it.",
+          "blurb": "Chia bài toán thành các bài toán con gối nhau và dùng lại mỗi đáp án thay vì tính lại.",
           "lessons": [
             {
               "no": 1,
-              "title": "Memoization and tabulation",
+              "title": "Đệ quy có nhớ và lập bảng",
               "slug": "memoization-tabulation",
               "kind": "theory",
-              "keyIdeas": ["overlapping subproblems", "top-down vs bottom-up", "Fibonacci"],
-              "interactiveIdea": "Fibonacci call tree that collapses into a table once memoization is on."
+              "keyIdeas": [
+                "bài toán con gối nhau",
+                "từ trên xuống và từ dưới lên",
+                "dãy Fibonacci"
+              ],
+              "interactiveIdea": "Cây lời gọi Fibonacci thu gọn thành một bảng khi bật đệ quy có nhớ."
             },
             {
               "no": 2,
-              "title": "The SRTBOT framework",
+              "title": "Khung SRTBOT",
               "slug": "srtbot-framework",
               "kind": "theory",
               "keyIdeas": [
-                "subproblems and relations",
-                "topological order",
-                "base cases and original problem"
+                "bài toán con và quan hệ",
+                "thứ tự tô-pô",
+                "trường hợp cơ sở và bài toán gốc"
               ],
-              "interactiveIdea": "Guided form that walks through the six SRTBOT steps for a chosen problem."
+              "interactiveIdea": "Biểu mẫu hướng dẫn đi qua sáu bước SRTBOT cho một bài toán được chọn."
             },
             {
               "no": 3,
-              "title": "1D DP: climbing stairs, coin change, house robber",
+              "title": "QHĐ một chiều: leo cầu thang, đổi tiền, ăn trộm nhà",
               "slug": "dp-one-dimensional",
               "kind": "theory",
               "keyIdeas": [
-                "state as a prefix",
-                "transition from smaller states",
-                "counting vs optimising"
+                "trạng thái là một tiền tố",
+                "chuyển từ các trạng thái nhỏ hơn",
+                "đếm và tối ưu"
               ],
-              "interactiveIdea": "Row of DP cells filling left to right with arrows to the cells each one uses."
+              "interactiveIdea": "Hàng ô QHĐ lấp đầy từ trái sang phải, có mũi tên chỉ đến các ô mà mỗi ô dùng."
             },
             {
               "no": 4,
-              "title": "Longest increasing subsequence",
+              "title": "Dãy con tăng dài nhất",
               "slug": "longest-increasing-subsequence",
               "kind": "theory",
-              "keyIdeas": ["O(n^2) DP", "patience sorting", "O(n log n) with binary search"],
-              "interactiveIdea": "Patience-sorting piles beside the sequence, rebuilding the LIS at the end."
+              "keyIdeas": [
+                "QHĐ O(n^2)",
+                "sắp xếp kiểu xếp bài",
+                "O(n log n) với tìm kiếm nhị phân"
+              ],
+              "interactiveIdea": "Các chồng bài cạnh dãy số, dựng lại dãy con tăng dài nhất ở cuối."
             },
             {
               "no": 5,
-              "title": "Longest common subsequence and edit distance",
+              "title": "Dãy con chung dài nhất và khoảng cách sửa",
               "slug": "lcs-edit-distance",
               "kind": "theory",
               "keyIdeas": [
-                "2D table over prefixes",
-                "insert, delete, replace",
-                "path reconstruction"
+                "bảng hai chiều trên các tiền tố",
+                "chèn, xoá, thay",
+                "truy vết đường đi"
               ],
-              "interactiveIdea": "2D grid filling cell by cell, then tracing the optimal alignment path."
+              "interactiveIdea": "Lưới hai chiều lấp đầy từng ô, rồi lần theo đường căn chỉnh tối ưu."
             },
             {
               "no": 6,
-              "title": "0/1 knapsack and subset sum",
+              "title": "Cái túi 0/1 và tổng tập con",
               "slug": "knapsack-subset-sum",
               "kind": "theory",
-              "keyIdeas": ["capacity dimension", "pseudo-polynomial time", "space optimisation"],
-              "interactiveIdea": "Knapsack table with an item and capacity slider showing take or skip choices."
+              "keyIdeas": ["chiều sức chứa", "thời gian giả đa thức", "tối ưu bộ nhớ"],
+              "interactiveIdea": "Bảng cái túi với thanh trượt món đồ và sức chứa, cho thấy lựa chọn lấy hay bỏ."
             },
             {
               "no": 7,
-              "title": "Interval DP: matrix chain and rod cutting",
+              "title": "QHĐ trên đoạn: nhân chuỗi ma trận và cắt thanh",
               "slug": "interval-dp",
               "kind": "theory",
-              "keyIdeas": ["DP over intervals", "split point k", "fill by length"],
-              "interactiveIdea": "Triangular table filling by interval length with the best split highlighted."
+              "keyIdeas": ["QHĐ trên các đoạn", "điểm chia k", "lấp theo độ dài"],
+              "interactiveIdea": "Bảng tam giác lấp theo độ dài đoạn, tô sáng điểm chia tốt nhất."
             },
             {
               "no": 8,
-              "title": "Grid and path DP",
+              "title": "QHĐ trên lưới và đường đi",
               "slug": "grid-path-dp",
               "kind": "theory",
-              "keyIdeas": ["paths in a grid", "minimum path sum", "obstacles"],
-              "interactiveIdea": "Editable grid where each cell shows the number of paths or the best cost to reach it."
+              "keyIdeas": ["đường đi trên lưới", "tổng đường đi nhỏ nhất", "chướng ngại vật"],
+              "interactiveIdea": "Lưới sửa được, mỗi ô hiện số đường đi hoặc chi phí tốt nhất để đến đó."
             },
             {
               "no": 9,
-              "title": "Practice: dynamic programming problems",
+              "title": "Luyện tập: bài toán quy hoạch động",
               "slug": "practice-dynamic-programming",
               "kind": "practice",
-              "keyIdeas": ["define the state", "find the transition"],
-              "interactiveIdea": "State designer where the learner proposes a recurrence and tests it on small inputs."
+              "keyIdeas": ["xác định trạng thái", "tìm công thức chuyển"],
+              "interactiveIdea": "Công cụ thiết kế trạng thái, nơi người học đề xuất hệ thức truy hồi và thử trên đầu vào nhỏ."
             }
           ]
         },
         {
           "no": 8,
-          "title": "Backtracking",
+          "title": "Quay lui",
           "slug": "backtracking",
           "strand": "paradigms",
-          "blurb": "Search every possibility, and prune the branches that cannot lead to a solution.",
+          "blurb": "Thử mọi khả năng, và cắt tỉa những nhánh không thể dẫn đến lời giải.",
           "lessons": [
             {
               "no": 1,
-              "title": "Backtracking and the search tree",
+              "title": "Quay lui và cây tìm kiếm",
               "slug": "backtracking-search-tree",
               "kind": "theory",
-              "keyIdeas": ["choose, explore, unchoose", "state-space tree", "pruning"],
-              "interactiveIdea": "State-space tree that grows and prunes branches as choices fail."
+              "keyIdeas": ["chọn, khám phá, bỏ chọn", "cây không gian trạng thái", "cắt tỉa"],
+              "interactiveIdea": "Cây không gian trạng thái mọc ra và bị cắt tỉa khi các lựa chọn thất bại."
             },
             {
               "no": 2,
-              "title": "Permutations, combinations and subsets",
+              "title": "Hoán vị, tổ hợp và tập con",
               "slug": "permutations-subsets",
               "kind": "theory",
               "keyIdeas": [
-                "generating all arrangements",
-                "avoiding duplicates",
-                "output-sensitive cost"
+                "sinh mọi cách sắp xếp",
+                "tránh trùng lặp",
+                "chi phí phụ thuộc kích thước đầu ra"
               ],
-              "interactiveIdea": "Generator panel listing permutations as the recursion picks and unpicks items."
+              "interactiveIdea": "Khung sinh liệt kê các hoán vị khi đệ quy chọn và bỏ chọn từng phần tử."
             },
             {
               "no": 3,
-              "title": "N-queens and Sudoku",
+              "title": "Bài toán N quân hậu và Sudoku",
               "slug": "n-queens-sudoku",
               "kind": "theory",
-              "keyIdeas": ["constraint checks", "placing and undoing", "pruning by constraints"],
-              "interactiveIdea": "Chess board placing queens and backing up when a conflict appears."
+              "keyIdeas": ["kiểm tra ràng buộc", "đặt và gỡ", "cắt tỉa bằng ràng buộc"],
+              "interactiveIdea": "Bàn cờ đặt các quân hậu và lùi lại khi xuất hiện xung đột."
             },
             {
               "no": 4,
-              "title": "Branch and bound",
+              "title": "Nhánh cận",
               "slug": "branch-and-bound",
               "kind": "theory",
-              "keyIdeas": ["bounds to prune", "best-first search", "optimisation problems"],
-              "interactiveIdea": "Search tree where branches with a bound worse than the best found are greyed out."
+              "keyIdeas": ["dùng cận để cắt tỉa", "tìm kiếm tốt nhất trước", "bài toán tối ưu"],
+              "interactiveIdea": "Cây tìm kiếm, nơi các nhánh có cận kém hơn lời giải tốt nhất đã tìm được bị làm mờ."
             },
             {
               "no": 5,
-              "title": "Practice: backtracking problems",
+              "title": "Luyện tập: bài toán quay lui",
               "slug": "practice-backtracking",
               "kind": "practice",
-              "keyIdeas": ["word search", "combination sum"],
-              "interactiveIdea": "Grid word-search where the path explores and retreats letter by letter."
+              "keyIdeas": ["tìm từ trên lưới", "tổ hợp có tổng cho trước"],
+              "interactiveIdea": "Lưới tìm từ, nơi đường đi khám phá và lùi lại từng chữ cái một."
             }
           ]
         },
         {
           "no": 9,
-          "title": "Balanced search trees",
+          "title": "Cây tìm kiếm cân bằng",
           "slug": "balanced-bst",
           "strand": "trees",
-          "blurb": "Keep search trees shallow with rotations and splits, so every operation stays logarithmic.",
+          "blurb": "Giữ cây tìm kiếm thấp bằng phép quay và phép tách, để mọi thao tác đều tốn thời gian lôgarit.",
           "lessons": [
             {
               "no": 1,
-              "title": "Why balance matters",
+              "title": "Vì sao cân bằng quan trọng",
               "slug": "why-balance-matters",
               "kind": "theory",
-              "keyIdeas": ["degenerate BSTs", "height O(log n)", "rotations"],
-              "interactiveIdea": "Insert sorted keys into a plain BST and an AVL tree and compare their heights."
+              "keyIdeas": ["BST suy biến", "chiều cao O(log n)", "phép quay"],
+              "interactiveIdea": "Chèn các khoá đã sắp xếp vào một BST thường và một cây AVL rồi so sánh chiều cao."
             },
             {
               "no": 2,
-              "title": "AVL trees",
+              "title": "Cây AVL",
               "slug": "avl-trees",
               "kind": "theory",
               "keyIdeas": [
-                "balance factor",
-                "single and double rotations",
-                "height-balanced invariant"
+                "hệ số cân bằng",
+                "phép quay đơn và quay kép",
+                "bất biến cân bằng theo chiều cao"
               ],
-              "interactiveIdea": "AVL tree that shows balance factors and animates the rotation that fixes them."
+              "interactiveIdea": "Cây AVL hiện hệ số cân bằng và có hoạt cảnh phép quay sửa chúng."
             },
             {
               "no": 3,
-              "title": "Red-black trees",
+              "title": "Cây đỏ đen",
               "slug": "red-black-trees",
               "kind": "theory",
-              "keyIdeas": ["colour rules", "recolour and rotate", "black height"],
-              "interactiveIdea": "Red-black tree inserting keys with recolouring and rotation steps narrated."
+              "keyIdeas": ["quy tắc màu", "tô lại màu và quay", "chiều cao đen"],
+              "interactiveIdea": "Cây đỏ đen chèn khoá, có lời thuật cho các bước tô lại màu và quay."
             },
             {
               "no": 4,
-              "title": "B-trees",
+              "title": "Cây B",
               "slug": "b-trees",
               "kind": "theory",
-              "keyIdeas": ["multi-way nodes", "split and merge", "disk-friendly access"],
-              "interactiveIdea": "B-tree of order 3 splitting nodes upward as keys are inserted."
+              "keyIdeas": ["nút nhiều nhánh", "tách và gộp", "truy cập thân thiện với đĩa"],
+              "interactiveIdea": "Cây B bậc 3 tách nút đẩy lên trên khi chèn khoá."
             },
             {
               "no": 5,
-              "title": "Treaps and skip lists",
+              "title": "Treap và skip list",
               "slug": "treaps-skip-lists",
               "kind": "theory",
-              "keyIdeas": ["randomised balance", "heap priorities", "probabilistic levels"],
-              "interactiveIdea": "Skip list with coin-flip levels and a search path that drops level by level."
+              "keyIdeas": ["cân bằng ngẫu nhiên", "độ ưu tiên kiểu heap", "các tầng theo xác suất"],
+              "interactiveIdea": "Skip list có tầng chọn bằng tung đồng xu, và đường tìm kiếm tụt xuống từng tầng."
             },
             {
               "no": 6,
-              "title": "Ordered maps and augmented trees",
+              "title": "Ánh xạ có thứ tự và cây tăng cường",
               "slug": "augmented-trees",
               "kind": "theory",
-              "keyIdeas": ["order statistics", "subtree size augmentation", "interval trees"],
-              "interactiveIdea": "Tree with subtree sizes that answers rank and k-th smallest queries."
+              "keyIdeas": ["thống kê thứ tự", "tăng cường bằng kích thước cây con", "cây đoạn"],
+              "interactiveIdea": "Cây có kích thước cây con, trả lời truy vấn thứ hạng và phần tử nhỏ thứ k."
             },
             {
               "no": 7,
-              "title": "Practice: balanced tree problems",
+              "title": "Luyện tập: bài toán cây cân bằng",
               "slug": "practice-balanced-bst",
               "kind": "practice",
-              "keyIdeas": ["choose a balanced structure", "rank queries"],
-              "interactiveIdea": "Operation sequence runner comparing BST, AVL and skip list costs."
+              "keyIdeas": ["chọn cấu trúc cân bằng", "truy vấn thứ hạng"],
+              "interactiveIdea": "Bộ chạy dãy thao tác, so sánh chi phí của BST, cây AVL và skip list."
             }
           ]
         },
         {
           "no": 10,
-          "title": "Review: core algorithms",
+          "title": "Ôn tập: thuật toán cốt lõi",
           "slug": "review-core",
           "strand": "review",
-          "blurb": "Check what you learned across the core algorithms before moving on to advanced topics.",
+          "blurb": "Kiểm tra những gì bạn đã học về các thuật toán cốt lõi trước khi sang các chủ đề nâng cao.",
           "lessons": [
             {
               "no": 1,
-              "title": "Review: core algorithms",
+              "title": "Ôn tập: thuật toán cốt lõi",
               "slug": "review-core-lesson",
               "kind": "review",
-              "keyIdeas": [
-                "graph algorithm selection",
-                "paradigm recognition",
-                "balanced trees recap"
-              ],
-              "interactiveIdea": "Mixed quiz that maps problem statements to paradigms and algorithms."
+              "keyIdeas": ["chọn thuật toán đồ thị", "nhận ra mô hình giải", "ôn lại cây cân bằng"],
+              "interactiveIdea": "Bài trắc nghiệm tổng hợp ghép đề bài với mô hình giải và thuật toán."
             }
           ]
         }
@@ -1245,705 +1320,777 @@
     },
     {
       "level": 3,
-      "title": "Advanced topics",
+      "title": "Chủ đề nâng cao",
       "chapters": [
         {
           "no": 1,
-          "title": "Range query structures",
+          "title": "Cấu trúc truy vấn đoạn",
           "slug": "range-queries",
           "strand": "structures",
-          "blurb": "Answer sums and minimums over any range, and update values, in logarithmic time.",
+          "blurb": "Trả lời tổng và giá trị nhỏ nhất trên một đoạn bất kì, và cập nhật giá trị, trong thời gian lôgarit.",
           "lessons": [
             {
               "no": 1,
-              "title": "Sparse table",
+              "title": "Bảng thưa",
               "slug": "sparse-table",
               "kind": "theory",
-              "keyIdeas": ["power-of-two ranges", "O(1) idempotent queries", "O(n log n) build"],
-              "interactiveIdea": "Table of overlapping power-of-two blocks covering a selected range."
+              "keyIdeas": [
+                "đoạn có độ dài luỹ thừa của 2",
+                "truy vấn O(1) cho phép toán luỹ đẳng",
+                "dựng trong O(n log n)"
+              ],
+              "interactiveIdea": "Bảng các khối độ dài luỹ thừa của 2 chồng lên nhau, phủ một đoạn được chọn."
             },
             {
               "no": 2,
-              "title": "Fenwick tree",
+              "title": "Cây Fenwick",
               "slug": "fenwick-tree",
               "kind": "theory",
-              "keyIdeas": ["lowbit indexing", "prefix sums with updates", "O(log n) operations"],
-              "interactiveIdea": "Fenwick array with the index jumps of update and query drawn as arcs."
+              "keyIdeas": [
+                "đánh chỉ số bằng bit thấp nhất",
+                "tổng tiền tố có cập nhật",
+                "thao tác O(log n)"
+              ],
+              "interactiveIdea": "Mảng Fenwick với các bước nhảy chỉ số của cập nhật và truy vấn vẽ thành cung."
             },
             {
               "no": 3,
-              "title": "Segment tree",
+              "title": "Cây phân đoạn",
               "slug": "segment-tree",
               "kind": "theory",
-              "keyIdeas": ["recursive range splits", "point update, range query", "merge function"],
-              "interactiveIdea": "Segment tree that lights up the nodes covering a dragged query range."
+              "keyIdeas": ["chia đoạn đệ quy", "cập nhật điểm, truy vấn đoạn", "hàm gộp"],
+              "interactiveIdea": "Cây phân đoạn sáng lên các nút phủ một đoạn truy vấn được kéo chọn."
             },
             {
               "no": 4,
-              "title": "Lazy propagation",
+              "title": "Cập nhật lười",
               "slug": "lazy-propagation",
               "kind": "theory",
-              "keyIdeas": ["range updates", "pending tags", "push down"],
-              "interactiveIdea": "Segment tree with lazy tags that push down only when a query needs them."
+              "keyIdeas": ["cập nhật đoạn", "nhãn chờ", "đẩy xuống"],
+              "interactiveIdea": "Cây phân đoạn có nhãn lười, chỉ đẩy xuống khi một truy vấn cần đến."
             },
             {
               "no": 5,
-              "title": "Sqrt decomposition and Mo’s algorithm",
+              "title": "Chia căn và thuật toán Mo",
               "slug": "sqrt-decomposition",
               "kind": "theory",
-              "keyIdeas": ["blocks of size sqrt(n)", "offline query ordering", "O((n+q) sqrt n)"],
-              "interactiveIdea": "Array split into blocks with a query range covering partial and full blocks."
+              "keyIdeas": [
+                "khối kích thước sqrt(n)",
+                "sắp thứ tự truy vấn ngoại tuyến",
+                "O((n+q) sqrt n)"
+              ],
+              "interactiveIdea": "Mảng chia thành các khối, với một đoạn truy vấn phủ khối thiếu và khối đầy đủ."
             },
             {
               "no": 6,
-              "title": "Practice: range query problems",
+              "title": "Luyện tập: bài toán truy vấn đoạn",
               "slug": "practice-range-queries",
               "kind": "practice",
-              "keyIdeas": ["choose Fenwick or segment tree", "range min and sum"],
-              "interactiveIdea": "Query workload builder that compares the cost of each structure."
+              "keyIdeas": [
+                "chọn cây Fenwick hay cây phân đoạn",
+                "giá trị nhỏ nhất và tổng trên đoạn"
+              ],
+              "interactiveIdea": "Công cụ dựng tập truy vấn, so sánh chi phí của từng cấu trúc."
             }
           ]
         },
         {
           "no": 2,
-          "title": "Tries and string algorithms",
+          "title": "Trie và thuật toán xử lí xâu",
           "slug": "string-algorithms",
           "strand": "strings",
-          "blurb": "Search, index, and compress text with tries, KMP, hashing, and suffix arrays.",
+          "blurb": "Tìm kiếm, đánh chỉ mục và nén văn bản bằng trie, KMP, hàm băm và mảng hậu tố.",
           "lessons": [
             {
               "no": 1,
-              "title": "Tries",
+              "title": "Trie",
               "slug": "tries",
               "kind": "theory",
-              "keyIdeas": ["prefix tree", "insert and search", "autocomplete"],
-              "interactiveIdea": "Trie that grows as words are typed and highlights matching prefixes."
+              "keyIdeas": ["cây tiền tố", "chèn và tìm", "tự động hoàn thành"],
+              "interactiveIdea": "Trie lớn dần khi gõ từ và tô sáng các tiền tố khớp."
             },
             {
               "no": 2,
-              "title": "String hashing and Rabin-Karp",
+              "title": "Băm xâu và thuật toán Rabin-Karp",
               "slug": "rabin-karp",
               "kind": "theory",
-              "keyIdeas": ["polynomial rolling hash", "collision probability", "substring search"],
-              "interactiveIdea": "Rolling-hash window sliding over text with the hash updated each step."
+              "keyIdeas": ["hàm băm đa thức cuộn", "xác suất va chạm", "tìm xâu con"],
+              "interactiveIdea": "Cửa sổ băm cuộn trượt trên văn bản, giá trị băm cập nhật ở mỗi bước."
             },
             {
               "no": 3,
-              "title": "Prefix function and KMP",
+              "title": "Hàm tiền tố và thuật toán KMP",
               "slug": "kmp",
               "kind": "theory",
-              "keyIdeas": ["failure function", "no backtracking in text", "O(n + m)"],
-              "interactiveIdea": "Pattern with its prefix-function array and the fallback jump on a mismatch."
+              "keyIdeas": ["hàm thất bại", "không lùi lại trên văn bản", "O(n + m)"],
+              "interactiveIdea": "Mẫu kèm mảng hàm tiền tố và bước nhảy lùi khi không khớp."
             },
             {
               "no": 4,
-              "title": "Boyer-Moore",
+              "title": "Thuật toán Boyer-Moore",
               "slug": "boyer-moore",
               "kind": "theory",
-              "keyIdeas": ["bad-character rule", "right-to-left scanning", "sublinear skips"],
-              "interactiveIdea": "Pattern sliding over text with the skip distance shown at each mismatch."
+              "keyIdeas": ["quy tắc kí tự xấu", "so từ phải sang trái", "nhảy dưới tuyến tính"],
+              "interactiveIdea": "Mẫu trượt trên văn bản, hiện khoảng nhảy ở mỗi lần không khớp."
             },
             {
               "no": 5,
-              "title": "Z-function",
+              "title": "Hàm Z",
               "slug": "z-function",
               "kind": "theory",
-              "keyIdeas": ["Z-box", "longest prefix match", "pattern matching"],
-              "interactiveIdea": "Z-box window sliding over the string as Z values are computed."
+              "keyIdeas": ["hộp Z", "đoạn khớp tiền tố dài nhất", "so khớp mẫu"],
+              "interactiveIdea": "Cửa sổ hộp Z trượt trên xâu khi các giá trị Z được tính."
             },
             {
               "no": 6,
-              "title": "Aho-Corasick",
+              "title": "Thuật toán Aho-Corasick",
               "slug": "aho-corasick",
               "kind": "theory",
-              "keyIdeas": ["trie with failure links", "multi-pattern search", "output links"],
-              "interactiveIdea": "Trie with dashed failure links and the active state moving as text is read."
+              "keyIdeas": [
+                "trie có liên kết thất bại",
+                "tìm nhiều mẫu cùng lúc",
+                "liên kết đầu ra"
+              ],
+              "interactiveIdea": "Trie có liên kết thất bại vẽ nét đứt, và trạng thái hiện tại di chuyển khi đọc văn bản."
             },
             {
               "no": 7,
-              "title": "Suffix arrays and LCP",
+              "title": "Mảng hậu tố và LCP",
               "slug": "suffix-arrays",
               "kind": "theory",
-              "keyIdeas": ["sorted suffixes", "prefix doubling", "Kasai LCP"],
-              "interactiveIdea": "List of sorted suffixes with LCP bars between neighbours."
+              "keyIdeas": [
+                "các hậu tố đã sắp xếp",
+                "nhân đôi tiền tố",
+                "thuật toán Kasai tính LCP"
+              ],
+              "interactiveIdea": "Danh sách hậu tố đã sắp xếp, với thanh LCP giữa các hậu tố kề nhau."
             },
             {
               "no": 8,
-              "title": "Manacher’s algorithm",
+              "title": "Thuật toán Manacher",
               "slug": "manacher",
               "kind": "theory",
-              "keyIdeas": ["palindromic radii", "mirror trick", "O(n) longest palindrome"],
-              "interactiveIdea": "Palindrome radii drawn as arcs with the current centre and mirror shown."
+              "keyIdeas": [
+                "bán kính đối xứng",
+                "mẹo soi gương",
+                "xâu đối xứng dài nhất trong O(n)"
+              ],
+              "interactiveIdea": "Bán kính đối xứng vẽ thành cung, có tâm hiện tại và tâm đối xứng qua gương."
             },
             {
               "no": 9,
-              "title": "Regular expressions and NFA simulation",
+              "title": "Biểu thức chính quy và mô phỏng NFA",
               "slug": "regular-expressions-nfa",
               "kind": "theory",
-              "keyIdeas": ["regex to NFA", "epsilon transitions", "simulating the set of states"],
-              "interactiveIdea": "Regex typed by the learner builds an NFA graph that lights up active states as input is read."
+              "keyIdeas": [
+                "từ biểu thức chính quy sang NFA",
+                "chuyển trạng thái epsilon",
+                "mô phỏng tập trạng thái"
+              ],
+              "interactiveIdea": "Biểu thức chính quy do người học gõ dựng thành đồ thị NFA, sáng lên các trạng thái đang hoạt động khi đọc đầu vào."
             },
             {
               "no": 10,
-              "title": "Data compression: run-length, Huffman and LZW",
+              "title": "Nén dữ liệu: mã loạt dài, Huffman và LZW",
               "slug": "data-compression",
               "kind": "theory",
-              "keyIdeas": ["run-length encoding", "prefix-free codes", "LZW dictionary growth"],
-              "interactiveIdea": "Text box whose compressed bit stream and LZW dictionary grow side by side."
+              "keyIdeas": ["mã hoá loạt dài", "mã phi tiền tố", "từ điển LZW lớn dần"],
+              "interactiveIdea": "Ô văn bản có dòng bit nén và từ điển LZW lớn dần cạnh nhau."
             },
             {
               "no": 11,
-              "title": "Practice: string problems",
+              "title": "Luyện tập: bài toán xâu",
               "slug": "practice-string-algorithms",
               "kind": "practice",
-              "keyIdeas": ["choose the right matcher", "palindromes and periods"],
-              "interactiveIdea": "Text playground running several matchers on the same input with step counts."
+              "keyIdeas": ["chọn đúng thuật toán so khớp", "xâu đối xứng và chu kì"],
+              "interactiveIdea": "Sân chơi văn bản chạy nhiều thuật toán so khớp trên cùng đầu vào, kèm số bước."
             }
           ]
         },
         {
           "no": 3,
-          "title": "Number theory",
+          "title": "Lí thuyết số",
           "slug": "number-theory",
           "strand": "math",
-          "blurb": "Compute with divisibility, primes, and modular arithmetic, the tools behind RSA.",
+          "blurb": "Tính toán với tính chia hết, số nguyên tố và số học đồng dư, những công cụ đứng sau RSA.",
           "lessons": [
             {
               "no": 1,
-              "title": "GCD and extended Euclid",
+              "title": "ƯCLN và thuật toán Euclid mở rộng",
               "slug": "gcd-extended-euclid",
               "kind": "theory",
               "keyIdeas": [
-                "Euclidean algorithm",
-                "Bezout coefficients",
-                "linear Diophantine equations"
+                "thuật toán Euclid",
+                "hệ số Bézout",
+                "phương trình Diophantine tuyến tính"
               ],
-              "interactiveIdea": "Rectangle tiling that shrinks by squares as the Euclidean algorithm runs."
+              "interactiveIdea": "Hình chữ nhật được lát bằng các hình vuông co dần khi thuật toán Euclid chạy."
             },
             {
               "no": 2,
-              "title": "Modular arithmetic and fast exponentiation",
+              "title": "Số học đồng dư và luỹ thừa nhanh",
               "slug": "modular-exponentiation",
               "kind": "theory",
-              "keyIdeas": ["congruences", "binary exponentiation", "O(log n) power"],
-              "interactiveIdea": "Exponent bits lighting up as repeated squaring builds the power."
+              "keyIdeas": ["đồng dư thức", "luỹ thừa nhị phân", "tính luỹ thừa trong O(log n)"],
+              "interactiveIdea": "Các bit của số mũ sáng lên khi bình phương lặp lại dựng nên luỹ thừa."
             },
             {
               "no": 3,
-              "title": "Modular inverse and Chinese remainder theorem",
+              "title": "Nghịch đảo modulo và định lí số dư Trung Hoa",
               "slug": "modular-inverse-crt",
               "kind": "theory",
-              "keyIdeas": [
-                "inverse via Euclid or Fermat",
-                "system of congruences",
-                "combining moduli"
-              ],
-              "interactiveIdea": "Clock faces for each modulus that align on the CRT solution."
+              "keyIdeas": ["nghịch đảo qua Euclid hoặc Fermat", "hệ đồng dư", "ghép các modulo"],
+              "interactiveIdea": "Mặt đồng hồ cho mỗi modulo, cùng khớp tại nghiệm của định lí số dư Trung Hoa."
             },
             {
               "no": 4,
-              "title": "Sieve of Eratosthenes and factorisation",
+              "title": "Sàng Eratosthenes và phân tích thừa số",
               "slug": "sieve-factorisation",
               "kind": "theory",
-              "keyIdeas": ["crossing out multiples", "smallest prime factor", "O(n log log n)"],
-              "interactiveIdea": "Number grid crossing out multiples prime by prime."
+              "keyIdeas": ["gạch bỏ các bội", "ước nguyên tố nhỏ nhất", "O(n log log n)"],
+              "interactiveIdea": "Lưới số gạch bỏ các bội theo từng số nguyên tố."
             },
             {
               "no": 5,
-              "title": "Primality testing",
+              "title": "Kiểm tra số nguyên tố",
               "slug": "primality-testing",
               "kind": "theory",
-              "keyIdeas": ["trial division", "Fermat test", "Miller-Rabin"],
-              "interactiveIdea": "Witness tester that shows Miller-Rabin rounds for a chosen number."
+              "keyIdeas": ["chia thử", "phép thử Fermat", "phép thử Miller-Rabin"],
+              "interactiveIdea": "Bộ thử nhân chứng hiện các vòng Miller-Rabin cho một số được chọn."
             },
             {
               "no": 6,
-              "title": "Combinatorics: binomials and Catalan numbers",
+              "title": "Tổ hợp: hệ số nhị thức và số Catalan",
               "slug": "combinatorics",
               "kind": "theory",
-              "keyIdeas": ["Pascal's triangle", "n choose k mod p", "Catalan structures"],
-              "interactiveIdea": "Pascal's triangle that colours entries and links Catalan numbers to bracket sequences."
+              "keyIdeas": [
+                "tam giác Pascal",
+                "tổ hợp chập k của n theo modulo p",
+                "các cấu trúc Catalan"
+              ],
+              "interactiveIdea": "Tam giác Pascal tô màu các số và nối số Catalan với dãy ngoặc."
             },
             {
               "no": 7,
-              "title": "Public-key cryptography and RSA",
+              "title": "Mật mã khoá công khai và RSA",
               "slug": "rsa-cryptography",
               "kind": "theory",
               "keyIdeas": [
-                "key generation",
-                "encryption with modular powers",
-                "why factoring is hard"
+                "sinh khoá",
+                "mã hoá bằng luỹ thừa modulo",
+                "vì sao phân tích thừa số là khó"
               ],
-              "interactiveIdea": "Toy RSA with small primes where learners encrypt and decrypt a number step by step."
+              "interactiveIdea": "RSA đồ chơi với số nguyên tố nhỏ, nơi người học mã hoá và giải mã một số từng bước."
             },
             {
               "no": 8,
-              "title": "Practice: number theory problems",
+              "title": "Luyện tập: bài toán lí thuyết số",
               "slug": "practice-number-theory",
               "kind": "practice",
-              "keyIdeas": ["modular counting", "divisor sums"],
-              "interactiveIdea": "Calculator sandbox that checks answers to modular problems step by step."
+              "keyIdeas": ["đếm theo modulo", "tổng các ước"],
+              "interactiveIdea": "Hộp cát máy tính kiểm tra từng bước đáp án của các bài toán modulo."
             }
           ]
         },
         {
           "no": 4,
-          "title": "Computational geometry",
+          "title": "Hình học tính toán",
           "slug": "geometry",
           "strand": "geometry",
-          "blurb": "Reason about points, segments, and polygons with exact orientation tests and sweeps.",
+          "blurb": "Lập luận về điểm, đoạn thẳng và đa giác bằng phép thử hướng quay chính xác và đường quét.",
           "lessons": [
             {
               "no": 1,
-              "title": "Points, vectors and orientation",
+              "title": "Điểm, vectơ và hướng quay",
               "slug": "geometry-orientation",
               "kind": "theory",
-              "keyIdeas": ["dot and cross product", "orientation test", "precision issues"],
-              "interactiveIdea": "Three draggable points with a live cross-product sign and turn direction."
+              "keyIdeas": [
+                "tích vô hướng và tích có hướng",
+                "phép thử hướng quay",
+                "vấn đề độ chính xác"
+              ],
+              "interactiveIdea": "Ba điểm kéo được, có dấu tích có hướng và chiều quay cập nhật liên tục."
             },
             {
               "no": 2,
-              "title": "Segment intersection",
+              "title": "Giao của hai đoạn thẳng",
               "slug": "segment-intersection",
               "kind": "theory",
-              "keyIdeas": ["orientation-based test", "collinear cases", "intersection point"],
-              "interactiveIdea": "Two draggable segments that turn red when they intersect."
+              "keyIdeas": [
+                "phép thử dựa trên hướng quay",
+                "trường hợp thẳng hàng",
+                "tìm giao điểm"
+              ],
+              "interactiveIdea": "Hai đoạn thẳng kéo được, chuyển đỏ khi cắt nhau."
             },
             {
               "no": 3,
-              "title": "Polygon area and point in polygon",
+              "title": "Diện tích đa giác và điểm trong đa giác",
               "slug": "polygon-area",
               "kind": "theory",
-              "keyIdeas": ["shoelace formula", "ray casting", "winding number"],
-              "interactiveIdea": "Editable polygon with the shoelace terms and a ray-cast point test."
+              "keyIdeas": ["công thức dây giày", "chiếu tia", "chỉ số vòng quay"],
+              "interactiveIdea": "Đa giác sửa được, kèm các số hạng của công thức dây giày và phép thử điểm bằng chiếu tia."
             },
             {
               "no": 4,
-              "title": "Convex hull",
+              "title": "Bao lồi",
               "slug": "convex-hull",
               "kind": "theory",
-              "keyIdeas": ["Graham scan", "Andrew's monotone chain", "O(n log n)"],
-              "interactiveIdea": "Point cloud where the hull is built and concave turns are popped off."
+              "keyIdeas": ["thuật toán Graham", "chuỗi đơn điệu của Andrew", "O(n log n)"],
+              "interactiveIdea": "Đám điểm nơi bao lồi được dựng dần và các khúc quay lõm bị loại ra."
             },
             {
               "no": 5,
-              "title": "Sweep line algorithms",
+              "title": "Thuật toán đường quét",
               "slug": "sweep-line",
               "kind": "theory",
-              "keyIdeas": ["events sorted by x", "active set", "segment intersections"],
-              "interactiveIdea": "Vertical sweep line moving across segments with the active set listed."
+              "keyIdeas": ["sự kiện sắp theo x", "tập đang xét", "giao của các đoạn thẳng"],
+              "interactiveIdea": "Đường quét dọc di chuyển qua các đoạn thẳng, kèm danh sách tập đang xét."
             },
             {
               "no": 6,
-              "title": "Range trees and orthogonal range search",
+              "title": "Cây đoạn nhiều chiều và tìm kiếm trong hình chữ nhật",
               "slug": "range-trees",
               "kind": "theory",
-              "keyIdeas": ["2D range queries", "tree of trees", "fractional cascading idea"],
-              "interactiveIdea": "Draggable query rectangle over points with the visited range-tree nodes highlighted."
+              "keyIdeas": [
+                "truy vấn đoạn hai chiều",
+                "cây của các cây",
+                "ý tưởng phân tầng phân số"
+              ],
+              "interactiveIdea": "Hình chữ nhật truy vấn kéo được trên các điểm, tô sáng các nút cây đã thăm."
             },
             {
               "no": 7,
-              "title": "Practice: geometry problems",
+              "title": "Luyện tập: bài toán hình học",
               "slug": "practice-geometry",
               "kind": "practice",
-              "keyIdeas": ["robust comparisons", "hull applications"],
-              "interactiveIdea": "Geometry sandbox where the learner places points and checks predictions."
+              "keyIdeas": ["phép so sánh vững chắc", "ứng dụng của bao lồi"],
+              "interactiveIdea": "Hộp cát hình học, nơi người học đặt điểm và kiểm tra dự đoán."
             }
           ]
         },
         {
           "no": 5,
-          "title": "Network flows and matching",
+          "title": "Luồng trên mạng và ghép cặp",
           "slug": "flows",
           "strand": "graphs",
-          "blurb": "Push the most flow through a network, and use it to match pairs and find minimum cuts.",
+          "blurb": "Đẩy luồng lớn nhất qua một mạng, rồi dùng nó để ghép cặp và tìm lát cắt nhỏ nhất.",
           "lessons": [
             {
               "no": 1,
-              "title": "Flow networks and Ford-Fulkerson",
+              "title": "Mạng luồng và thuật toán Ford-Fulkerson",
               "slug": "ford-fulkerson",
               "kind": "theory",
-              "keyIdeas": [
-                "capacities and flow conservation",
-                "residual graph",
-                "augmenting paths"
-              ],
-              "interactiveIdea": "Flow network with residual edges and an augmenting path pushed each step."
+              "keyIdeas": ["sức chứa và bảo toàn luồng", "đồ thị thặng dư", "đường tăng luồng"],
+              "interactiveIdea": "Mạng luồng có các cạnh thặng dư, mỗi bước đẩy luồng theo một đường tăng luồng."
             },
             {
               "no": 2,
-              "title": "Edmonds-Karp and Dinic",
+              "title": "Thuật toán Edmonds-Karp và Dinic",
               "slug": "edmonds-karp-dinic",
               "kind": "theory",
-              "keyIdeas": ["BFS augmenting paths", "level graphs", "blocking flows"],
-              "interactiveIdea": "Level graph view showing blocking flows pushed phase by phase."
+              "keyIdeas": ["tìm đường tăng luồng bằng BFS", "đồ thị phân tầng", "luồng chặn"],
+              "interactiveIdea": "Khung đồ thị phân tầng, cho thấy luồng chặn được đẩy qua từng pha."
             },
             {
               "no": 3,
-              "title": "Max-flow min-cut theorem",
+              "title": "Định lí luồng cực đại, lát cắt nhỏ nhất",
               "slug": "max-flow-min-cut",
               "kind": "theory",
-              "keyIdeas": ["s-t cuts", "cut capacity", "finding the min cut"],
-              "interactiveIdea": "Final residual graph with the reachable set shaded and cut edges marked."
+              "keyIdeas": ["lát cắt s-t", "sức chứa của lát cắt", "tìm lát cắt nhỏ nhất"],
+              "interactiveIdea": "Đồ thị thặng dư cuối cùng, tô bóng tập đỉnh đến được và đánh dấu các cạnh cắt."
             },
             {
               "no": 4,
-              "title": "Bipartite matching",
+              "title": "Ghép cặp trên đồ thị hai phía",
               "slug": "bipartite-matching",
               "kind": "theory",
-              "keyIdeas": ["reduction to max flow", "augmenting paths (Kuhn)", "Hopcroft-Karp"],
-              "interactiveIdea": "Two columns of vertices where matches flip along augmenting paths."
+              "keyIdeas": [
+                "quy dẫn về luồng cực đại",
+                "đường tăng (Kuhn)",
+                "thuật toán Hopcroft-Karp"
+              ],
+              "interactiveIdea": "Hai cột đỉnh, nơi các cặp ghép lật dọc theo đường tăng."
             },
             {
               "no": 5,
-              "title": "Min-cost flow and the assignment problem",
+              "title": "Luồng chi phí nhỏ nhất và bài toán phân công",
               "slug": "min-cost-flow",
               "kind": "theory",
-              "keyIdeas": ["costs on edges", "successive shortest paths", "Hungarian algorithm"],
-              "interactiveIdea": "Cost matrix where the Hungarian algorithm adjusts potentials to find an assignment."
+              "keyIdeas": [
+                "chi phí trên cạnh",
+                "lần lượt các đường đi ngắn nhất",
+                "thuật toán Hungary"
+              ],
+              "interactiveIdea": "Ma trận chi phí, nơi thuật toán Hungary điều chỉnh thế năng để tìm một phép phân công."
             },
             {
               "no": 6,
-              "title": "Practice: flow modelling",
+              "title": "Luyện tập: mô hình hoá bằng luồng",
               "slug": "practice-flows",
               "kind": "practice",
-              "keyIdeas": ["model problems as flows", "vertex capacities"],
-              "interactiveIdea": "Modelling canvas where the learner builds a flow network for a word problem."
+              "keyIdeas": ["mô hình hoá bài toán thành luồng", "sức chứa trên đỉnh"],
+              "interactiveIdea": "Bảng vẽ mô hình, nơi người học dựng một mạng luồng cho một bài toán có lời văn."
             }
           ]
         },
         {
           "no": 6,
-          "title": "Advanced dynamic programming",
+          "title": "Quy hoạch động nâng cao",
           "slug": "advanced-dp",
           "strand": "paradigms",
-          "blurb": "Extend dynamic programming to subsets, trees, and digits, and make it run faster.",
+          "blurb": "Mở rộng quy hoạch động sang tập con, cây và chữ số, và làm nó chạy nhanh hơn.",
           "lessons": [
             {
               "no": 1,
-              "title": "Bitmask DP and travelling salesman",
+              "title": "QHĐ trên mặt nạ bit và bài toán người du lịch",
               "slug": "bitmask-dp",
               "kind": "theory",
-              "keyIdeas": ["subsets as bitmasks", "Held-Karp", "O(2^n n^2)"],
-              "interactiveIdea": "Bitmask table showing visited cities as lit bits in each state."
+              "keyIdeas": ["tập con dưới dạng mặt nạ bit", "thuật toán Held-Karp", "O(2^n n^2)"],
+              "interactiveIdea": "Bảng mặt nạ bit, mỗi trạng thái hiện các thành phố đã thăm dưới dạng bit sáng."
             },
             {
               "no": 2,
-              "title": "DP on trees",
+              "title": "QHĐ trên cây",
               "slug": "tree-dp",
               "kind": "theory",
-              "keyIdeas": ["post-order states", "rerooting", "maximum independent set"],
-              "interactiveIdea": "Tree where each node shows include and exclude values computed from children."
+              "keyIdeas": ["trạng thái theo thứ tự duyệt sau", "đổi gốc", "tập độc lập lớn nhất"],
+              "interactiveIdea": "Cây nơi mỗi nút hiện giá trị khi chọn và khi bỏ, tính từ các con."
             },
             {
               "no": 3,
-              "title": "Digit DP",
+              "title": "QHĐ chữ số",
               "slug": "digit-dp",
               "kind": "theory",
-              "keyIdeas": ["tight flag", "count numbers with a property", "position by position"],
-              "interactiveIdea": "Digit-by-digit state machine with the tight constraint highlighted."
+              "keyIdeas": ["cờ chặn trên", "đếm các số có một tính chất", "đi từng vị trí"],
+              "interactiveIdea": "Máy trạng thái theo từng chữ số, tô sáng ràng buộc chặn trên."
             },
             {
               "no": 4,
-              "title": "DP optimisations",
+              "title": "Tối ưu quy hoạch động",
               "slug": "dp-optimisations",
               "kind": "theory",
-              "keyIdeas": ["monotone queue", "convex hull trick", "divide and conquer DP, Knuth"],
-              "interactiveIdea": "Lines on a plot where the convex hull trick keeps only the lower envelope."
+              "keyIdeas": [
+                "hàng đợi đơn điệu",
+                "bao lồi các đường thẳng",
+                "QHĐ chia để trị, Knuth"
+              ],
+              "interactiveIdea": "Các đường thẳng trên đồ thị, nơi mẹo bao lồi chỉ giữ lại đường bao dưới."
             },
             {
               "no": 5,
-              "title": "Practice: advanced DP problems",
+              "title": "Luyện tập: bài toán QHĐ nâng cao",
               "slug": "practice-advanced-dp",
               "kind": "practice",
-              "keyIdeas": ["state compression", "choose an optimisation"],
-              "interactiveIdea": "Problem runner that compares naive and optimised DP run times."
+              "keyIdeas": ["nén trạng thái", "chọn một cách tối ưu"],
+              "interactiveIdea": "Bộ chạy bài toán so sánh thời gian chạy của QHĐ thô và QHĐ đã tối ưu."
             }
           ]
         },
         {
           "no": 7,
-          "title": "Trees: advanced techniques",
+          "title": "Cây: kĩ thuật nâng cao",
           "slug": "tree-techniques",
           "strand": "trees",
-          "blurb": "Answer path and ancestor queries on trees by lifting, decomposing, and splitting them.",
+          "blurb": "Trả lời truy vấn đường đi và tổ tiên trên cây bằng cách nhảy lên, phân rã và chia cắt cây.",
           "lessons": [
             {
               "no": 1,
-              "title": "Lowest common ancestor and binary lifting",
+              "title": "Tổ tiên chung gần nhất và nhảy nhị phân",
               "slug": "lca-binary-lifting",
               "kind": "theory",
-              "keyIdeas": ["ancestor jump table", "Euler tour + RMQ", "O(log n) queries"],
-              "interactiveIdea": "Tree with power-of-two jump pointers used to lift two nodes to their LCA."
+              "keyIdeas": ["bảng nhảy tổ tiên", "chu trình Euler + RMQ", "truy vấn O(log n)"],
+              "interactiveIdea": "Cây có con trỏ nhảy theo luỹ thừa của 2, dùng để nhấc hai nút lên đến LCA."
             },
             {
               "no": 2,
-              "title": "Heavy-light decomposition",
+              "title": "Phân rã nặng nhẹ",
               "slug": "heavy-light-decomposition",
               "kind": "theory",
-              "keyIdeas": ["heavy edges", "path to O(log n) chains", "segment tree over chains"],
-              "interactiveIdea": "Tree coloured into heavy chains with a path query split across them."
+              "keyIdeas": [
+                "cạnh nặng",
+                "đường đi thành O(log n) chuỗi",
+                "cây phân đoạn trên các chuỗi"
+              ],
+              "interactiveIdea": "Cây tô màu thành các chuỗi nặng, với một truy vấn đường đi được chia qua các chuỗi."
             },
             {
               "no": 3,
-              "title": "Centroid decomposition",
+              "title": "Phân rã trọng tâm",
               "slug": "centroid-decomposition",
               "kind": "theory",
-              "keyIdeas": ["centroid of a tree", "recursive split", "path counting"],
-              "interactiveIdea": "Tree that removes its centroid and recurses, building the centroid tree."
+              "keyIdeas": ["trọng tâm của cây", "chia đệ quy", "đếm đường đi"],
+              "interactiveIdea": "Cây bỏ trọng tâm rồi đệ quy, dựng nên cây trọng tâm."
             },
             {
               "no": 4,
-              "title": "Practice: advanced tree problems",
+              "title": "Luyện tập: bài toán cây nâng cao",
               "slug": "practice-tree-techniques",
               "kind": "practice",
-              "keyIdeas": ["path queries", "distance queries"],
-              "interactiveIdea": "Query panel that runs path queries on a tree with HLD and naive approaches."
+              "keyIdeas": ["truy vấn đường đi", "truy vấn khoảng cách"],
+              "interactiveIdea": "Khung truy vấn chạy truy vấn đường đi trên cây bằng HLD và bằng cách thô."
             }
           ]
         },
         {
           "no": 8,
-          "title": "Algebraic and randomised algorithms",
+          "title": "Thuật toán đại số và ngẫu nhiên",
           "slug": "algebraic-randomised",
           "strand": "math",
-          "blurb": "Speed up algebra with FFT and matrix tricks, and let randomness make algorithms simple.",
+          "blurb": "Tăng tốc phép tính đại số bằng FFT và các mẹo với ma trận, và để tính ngẫu nhiên làm thuật toán đơn giản hơn.",
           "lessons": [
             {
               "no": 1,
-              "title": "Matrix exponentiation",
+              "title": "Luỹ thừa ma trận",
               "slug": "matrix-exponentiation",
               "kind": "theory",
-              "keyIdeas": ["linear recurrences", "fast power of matrices", "Fibonacci in O(log n)"],
-              "interactiveIdea": "Matrix squaring steps that compute a large Fibonacci number."
+              "keyIdeas": [
+                "hệ thức truy hồi tuyến tính",
+                "luỹ thừa nhanh ma trận",
+                "số Fibonacci trong O(log n)"
+              ],
+              "interactiveIdea": "Các bước bình phương ma trận để tính một số Fibonacci lớn."
             },
             {
               "no": 2,
-              "title": "Fast Fourier transform",
+              "title": "Biến đổi Fourier nhanh",
               "slug": "fast-fourier-transform",
               "kind": "theory",
-              "keyIdeas": ["polynomial multiplication", "roots of unity", "O(n log n)"],
-              "interactiveIdea": "Butterfly diagram showing FFT combining evaluations at roots of unity."
+              "keyIdeas": ["nhân đa thức", "căn của đơn vị", "O(n log n)"],
+              "interactiveIdea": "Sơ đồ cánh bướm cho thấy FFT ghép các giá trị tại căn của đơn vị."
             },
             {
               "no": 3,
-              "title": "Matrix operations: LUP decomposition",
+              "title": "Phép toán ma trận: phân tích LUP",
               "slug": "lup-decomposition",
               "kind": "theory",
-              "keyIdeas": ["Gaussian elimination", "LU and LUP factors", "solving linear systems"],
-              "interactiveIdea": "Matrix that is reduced row by row into L, U and a permutation."
+              "keyIdeas": ["khử Gauss", "các nhân tử LU và LUP", "giải hệ phương trình tuyến tính"],
+              "interactiveIdea": "Ma trận được khử từng hàng thành L, U và một hoán vị."
             },
             {
               "no": 4,
-              "title": "Linear programming and the simplex method",
+              "title": "Quy hoạch tuyến tính và phương pháp đơn hình",
               "slug": "linear-programming",
               "kind": "theory",
-              "keyIdeas": ["feasible region", "objective function", "simplex pivoting", "duality"],
-              "interactiveIdea": "2D feasible polygon with the simplex walk moving vertex to vertex toward the optimum."
+              "keyIdeas": [
+                "miền chấp nhận được",
+                "hàm mục tiêu",
+                "phép xoay đơn hình",
+                "tính đối ngẫu"
+              ],
+              "interactiveIdea": "Đa giác chấp nhận được hai chiều, phương pháp đơn hình đi từ đỉnh này sang đỉnh khác về phía tối ưu."
             },
             {
               "no": 5,
-              "title": "Randomised algorithms",
+              "title": "Thuật toán ngẫu nhiên",
               "slug": "randomised-algorithms",
               "kind": "theory",
-              "keyIdeas": ["Las Vegas vs Monte Carlo", "randomised quicksort", "expected analysis"],
-              "interactiveIdea": "Repeated runs of randomised quicksort plotting the distribution of comparisons."
+              "keyIdeas": [
+                "Las Vegas và Monte Carlo",
+                "sắp xếp nhanh ngẫu nhiên",
+                "phân tích kì vọng"
+              ],
+              "interactiveIdea": "Chạy nhiều lần sắp xếp nhanh ngẫu nhiên và vẽ phân bố số phép so sánh."
             },
             {
               "no": 6,
-              "title": "Universal and perfect hashing",
+              "title": "Băm phổ quát và băm hoàn hảo",
               "slug": "universal-perfect-hashing",
               "kind": "theory",
-              "keyIdeas": [
-                "universal hash families",
-                "expected collisions",
-                "two-level perfect hashing"
-              ],
-              "interactiveIdea": "Keys hashed by randomly drawn functions, with collision counts averaged over many draws."
+              "keyIdeas": ["họ hàm băm phổ quát", "số va chạm kì vọng", "băm hoàn hảo hai tầng"],
+              "interactiveIdea": "Các khoá được băm bằng những hàm chọn ngẫu nhiên, số va chạm lấy trung bình qua nhiều lần chọn."
             },
             {
               "no": 7,
-              "title": "Game theory: Nim and Sprague-Grundy",
+              "title": "Lí thuyết trò chơi: Nim và Sprague-Grundy",
               "slug": "sprague-grundy",
               "kind": "theory",
-              "keyIdeas": ["winning and losing positions", "Grundy numbers", "XOR of piles"],
-              "interactiveIdea": "Playable Nim board that shows the XOR and the winning move."
+              "keyIdeas": ["thế thắng và thế thua", "số Grundy", "XOR các đống"],
+              "interactiveIdea": "Bàn Nim chơi được, hiện giá trị XOR và nước đi thắng."
             },
             {
               "no": 8,
-              "title": "Practice: algebraic and randomised problems",
+              "title": "Luyện tập: bài toán đại số và ngẫu nhiên",
               "slug": "practice-algebraic-randomised",
               "kind": "practice",
-              "keyIdeas": ["recurrence to matrix", "big-number multiplication"],
-              "interactiveIdea": "Recurrence builder that turns a linear recurrence into its matrix."
+              "keyIdeas": ["từ hệ thức truy hồi sang ma trận", "nhân số lớn"],
+              "interactiveIdea": "Công cụ biến một hệ thức truy hồi tuyến tính thành ma trận của nó."
             }
           ]
         },
         {
           "no": 9,
-          "title": "Complexity theory and intractability",
+          "title": "Lí thuyết độ phức tạp và bài toán khó",
           "slug": "intractability",
           "strand": "analysis",
-          "blurb": "Recognise problems that are likely too hard to solve exactly, and what to do about them.",
+          "blurb": "Nhận ra những bài toán nhiều khả năng quá khó để giải chính xác, và biết phải làm gì với chúng.",
           "lessons": [
             {
               "no": 1,
-              "title": "P, NP and reductions",
+              "title": "P, NP và phép quy dẫn",
               "slug": "p-np-reductions",
               "kind": "theory",
-              "keyIdeas": ["decision problems", "polynomial-time reductions", "verifiers"],
-              "interactiveIdea": "Reduction diagram turning an instance of one problem into another."
+              "keyIdeas": [
+                "bài toán quyết định",
+                "quy dẫn trong thời gian đa thức",
+                "bộ kiểm chứng"
+              ],
+              "interactiveIdea": "Sơ đồ quy dẫn biến một thể hiện của bài toán này thành một thể hiện của bài toán khác."
             },
             {
               "no": 2,
-              "title": "NP-completeness",
+              "title": "NP-đầy đủ",
               "slug": "np-completeness",
               "kind": "theory",
-              "keyIdeas": ["Cook-Levin", "SAT, 3-SAT, vertex cover", "proving NP-hardness"],
-              "interactiveIdea": "Map of classic NP-complete problems linked by reduction arrows."
+              "keyIdeas": ["định lí Cook-Levin", "SAT, 3-SAT, phủ đỉnh", "chứng minh NP-khó"],
+              "interactiveIdea": "Bản đồ các bài toán NP-đầy đủ kinh điển, nối với nhau bằng mũi tên quy dẫn."
             },
             {
               "no": 3,
-              "title": "Approximation algorithms",
+              "title": "Thuật toán xấp xỉ",
               "slug": "approximation-algorithms",
               "kind": "theory",
-              "keyIdeas": ["approximation ratio", "vertex cover 2-approx", "greedy set cover"],
-              "interactiveIdea": "Graph where the 2-approximate vertex cover is compared with the optimum."
+              "keyIdeas": ["tỉ số xấp xỉ", "phủ đỉnh xấp xỉ 2", "phủ tập tham lam"],
+              "interactiveIdea": "Đồ thị nơi phủ đỉnh xấp xỉ 2 được so sánh với lời giải tối ưu."
             },
             {
               "no": 4,
-              "title": "Fixed-parameter algorithms",
+              "title": "Thuật toán tham số cố định",
               "slug": "fixed-parameter-algorithms",
               "kind": "theory",
-              "keyIdeas": ["parameterised complexity", "bounded search trees", "kernelisation"],
-              "interactiveIdea": "Vertex-cover search tree whose depth is capped by the parameter k."
+              "keyIdeas": ["độ phức tạp tham số hoá", "cây tìm kiếm bị chặn", "rút gọn hạt nhân"],
+              "interactiveIdea": "Cây tìm kiếm phủ đỉnh có độ sâu bị chặn bởi tham số k."
             },
             {
               "no": 5,
-              "title": "Practice: reductions and hardness",
+              "title": "Luyện tập: phép quy dẫn và độ khó",
               "slug": "practice-intractability",
               "kind": "practice",
               "keyIdeas": [
-                "choosing a reduction source",
-                "exact vs approximate",
-                "recognising NP-hard problems"
+                "chọn bài toán nguồn để quy dẫn",
+                "chính xác và xấp xỉ",
+                "nhận ra bài toán NP-khó"
               ],
-              "interactiveIdea": "Problem cards to sort into polynomial, NP-complete or approximable."
+              "interactiveIdea": "Thẻ bài toán cần xếp vào nhóm đa thức, NP-đầy đủ hoặc xấp xỉ được."
             }
           ]
         },
         {
           "no": 10,
-          "title": "Advanced heaps and integer structures",
+          "title": "Heap nâng cao và cấu trúc cho số nguyên",
           "slug": "advanced-heaps",
           "strand": "structures",
-          "blurb": "Go beyond binary heaps with Fibonacci heaps and van Emde Boas trees.",
+          "blurb": "Đi xa hơn heap nhị phân với heap Fibonacci và cây van Emde Boas.",
           "lessons": [
             {
               "no": 1,
-              "title": "Binomial and Fibonacci heaps",
+              "title": "Heap nhị thức và heap Fibonacci",
               "slug": "fibonacci-heaps",
               "kind": "theory",
-              "keyIdeas": ["mergeable heaps", "lazy consolidation", "O(1) amortized decrease-key"],
-              "interactiveIdea": "Forest of heap-ordered trees that consolidates when extract-min runs."
+              "keyIdeas": ["heap gộp được", "hợp nhất lười", "giảm khoá O(1) khấu hao"],
+              "interactiveIdea": "Rừng các cây có thứ tự heap, hợp nhất lại khi chạy lấy phần tử nhỏ nhất."
             },
             {
               "no": 2,
-              "title": "van Emde Boas trees",
+              "title": "Cây van Emde Boas",
               "slug": "van-emde-boas",
               "kind": "theory",
               "keyIdeas": [
-                "universe of size u",
-                "recursive sqrt(u) clusters",
-                "O(log log u) operations"
+                "vũ trụ kích thước u",
+                "chia đệ quy thành sqrt(u) cụm",
+                "thao tác O(log log u)"
               ],
-              "interactiveIdea": "Bit universe split into clusters and summary, with a successor query traced through levels."
+              "interactiveIdea": "Vũ trụ bit chia thành các cụm và một bản tóm tắt, với truy vấn phần tử kế tiếp đi qua các tầng."
             },
             {
               "no": 3,
-              "title": "Practice: advanced heaps",
+              "title": "Luyện tập: heap nâng cao",
               "slug": "practice-advanced-heaps",
               "kind": "practice",
               "keyIdeas": [
-                "choosing a priority queue",
-                "Dijkstra with Fibonacci heaps",
-                "integer keys"
+                "chọn hàng đợi ưu tiên",
+                "thuật toán Dijkstra với heap Fibonacci",
+                "khoá số nguyên"
               ],
-              "interactiveIdea": "Operation mix sliders comparing binary, Fibonacci and vEB costs."
+              "interactiveIdea": "Thanh trượt pha trộn thao tác, so sánh chi phí của heap nhị phân, heap Fibonacci và cây vEB."
             }
           ]
         },
         {
           "no": 11,
-          "title": "Other models of computation",
+          "title": "Các mô hình tính toán khác",
           "slug": "computation-models",
           "strand": "analysis",
-          "blurb": "See how algorithms change on many processors, many machines, caches, and unknown input.",
+          "blurb": "Xem thuật toán thay đổi ra sao khi chạy trên nhiều bộ xử lí, nhiều máy, có bộ nhớ đệm, hay khi chưa biết trước đầu vào.",
           "lessons": [
             {
               "no": 1,
-              "title": "Multithreaded algorithms",
+              "title": "Thuật toán đa luồng",
               "slug": "multithreaded-algorithms",
               "kind": "theory",
-              "keyIdeas": ["fork-join parallelism", "work and span", "parallel merge sort"],
-              "interactiveIdea": "Computation DAG with work and span counters as the thread count changes."
+              "keyIdeas": ["song song fork-join", "work và span", "sắp xếp trộn song song"],
+              "interactiveIdea": "DAG tính toán kèm bộ đếm work và span khi số luồng thay đổi."
             },
             {
               "no": 2,
-              "title": "Distributed algorithms",
+              "title": "Thuật toán phân tán",
               "slug": "distributed-algorithms",
               "kind": "theory",
               "keyIdeas": [
-                "synchronous rounds",
-                "leader election and symmetry breaking",
-                "distributed BFS trees"
+                "các vòng đồng bộ",
+                "bầu thủ lĩnh và phá vỡ đối xứng",
+                "cây BFS phân tán"
               ],
-              "interactiveIdea": "Network of nodes exchanging messages round by round to elect a leader."
+              "interactiveIdea": "Mạng các nút trao đổi thông điệp theo từng vòng để bầu ra thủ lĩnh."
             },
             {
               "no": 3,
-              "title": "Cache-oblivious algorithms",
+              "title": "Thuật toán không phụ thuộc cache",
               "slug": "cache-oblivious-algorithms",
               "kind": "theory",
-              "keyIdeas": ["external-memory model", "block transfers", "recursive layouts"],
-              "interactiveIdea": "Memory grid counting cache misses for row-major vs recursive matrix traversal."
+              "keyIdeas": ["mô hình bộ nhớ ngoài", "chuyển khối", "bố cục đệ quy"],
+              "interactiveIdea": "Lưới bộ nhớ đếm số lần trượt cache khi duyệt ma trận theo hàng so với duyệt đệ quy."
             },
             {
               "no": 4,
-              "title": "Online algorithms and competitive analysis",
+              "title": "Thuật toán trực tuyến và phân tích cạnh tranh",
               "slug": "online-algorithms",
               "kind": "theory",
-              "keyIdeas": ["competitive ratio", "ski rental", "paging and LRU"],
-              "interactiveIdea": "Ski-rental game where the learner decides each day and sees the ratio to the optimum."
+              "keyIdeas": ["tỉ số cạnh tranh", "bài toán thuê ván trượt", "phân trang và LRU"],
+              "interactiveIdea": "Trò chơi thuê ván trượt, nơi người học quyết định từng ngày và xem tỉ số so với tối ưu."
             },
             {
               "no": 5,
-              "title": "Practice: choosing a model",
+              "title": "Luyện tập: chọn mô hình tính toán",
               "slug": "practice-computation-models",
               "kind": "practice",
-              "keyIdeas": ["parallel vs sequential", "memory hierarchy costs", "online vs offline"],
-              "interactiveIdea": "Scenario cards matched to the right model and algorithm."
+              "keyIdeas": [
+                "song song và tuần tự",
+                "chi phí của hệ thống phân cấp bộ nhớ",
+                "trực tuyến và ngoại tuyến"
+              ],
+              "interactiveIdea": "Thẻ tình huống cần ghép với đúng mô hình và thuật toán."
             }
           ]
         },
         {
           "no": 12,
-          "title": "Review: advanced topics",
+          "title": "Ôn tập: chủ đề nâng cao",
           "slug": "review-advanced",
           "strand": "review",
-          "blurb": "Check what you learned across the advanced topics.",
+          "blurb": "Kiểm tra những gì bạn đã học trong các chủ đề nâng cao.",
           "lessons": [
             {
               "no": 1,
-              "title": "Review: advanced algorithms",
+              "title": "Ôn tập: thuật toán nâng cao",
               "slug": "review-advanced-lesson",
               "kind": "review",
               "keyIdeas": [
-                "structure and algorithm selection",
-                "complexity limits",
-                "problem-solving recap"
+                "chọn cấu trúc và thuật toán",
+                "giới hạn của độ phức tạp",
+                "ôn lại cách giải bài toán"
               ],
-              "interactiveIdea": "Mixed quiz covering advanced structures, strings, flows and complexity classes."
+              "interactiveIdea": "Bài trắc nghiệm tổng hợp về các cấu trúc nâng cao, xâu, luồng và các lớp độ phức tạp."
             }
           ]
         }

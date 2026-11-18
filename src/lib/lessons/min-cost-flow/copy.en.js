@@ -17,8 +17,8 @@ const factorial = (n) => (n <= 1 ? 1 : n * factorial(n - 1));
 export const en = {
   slug: 'min-cost-flow',
   topic: 'flows',
-  level: 'Advanced',
-  title: 'Min-cost flow and the assignment problem',
+  level: 'Nâng cao',
+  title: 'Luồng chi phí nhỏ nhất và bài toán phân công',
   intro:
     'When every edge also has a cost per unit of flow, the question becomes: how do we send a required amount of flow as cheaply as possible? The assignment problem is the classic case: n workers, n jobs, a cost for each pair, and every worker needs a different job. The Hungarian algorithm solves it in O(n³) by adding one worker at a time along a cheapest augmenting path, guided by potentials on the rows and columns.',
   summary:
@@ -201,6 +201,5 @@ export const en = {
         'Each of the n rows adds at most n columns to its tree, and each addition updates n slacks: O(n³).',
     },
   ],
-  nextTeaser:
-    'Next up: Practice: flow modelling, where you turn word problems into flow networks, including vertex capacities.',
+  nextTeaser: 'Bài tiếp theo: Luyện tập: mô hình hoá bằng luồng.',
 };

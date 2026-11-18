@@ -56,7 +56,7 @@ function statValue(label) {
 describe('dfs lesson', () => {
   it('finds a long path on the default grid and compares it with BFS', () => {
     render(Page);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('path of 54 steps');
     expect(statValue('BFS shortest path')).toBe('22');
     expect(statValue('DFS path length')).toBe('54');
@@ -64,22 +64,22 @@ describe('dfs lesson', () => {
 
   it('keyboard activation toggles a wall and rebuilds the trace', () => {
     render(Page);
-    keyActivate(button('Row 0, column 0'));
-    expect(button('Row 0, column 0, Wall')).toBeTruthy();
-    expect(text()).toMatch(/Step 1 of \d+/);
-    expect(text()).toContain('Wall added at (0,0).');
+    keyActivate(button('Hàng 0, cột 0'));
+    expect(button('Hàng 0, cột 0, Wall')).toBeTruthy();
+    expect(text()).toMatch(/Bước 1\/\d+/);
+    expect(text()).toContain('Đã thêm tường ở (0,0).');
   });
 
   it('announces visit numbers in cell labels', () => {
     render(Page);
-    click(button('Last step'));
-    expect(button('Row 4, column 2, Start, visit 1')).toBeTruthy();
+    click(button('Đến bước cuối'));
+    expect(button('Hàng 4, cột 2, Start, visit 1')).toBeTruthy();
   });
 
   it('narrates a push and lists it on the stack', () => {
     render(Page);
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Push (4,1): open and not visited yet.');
     const stack = [...document.querySelectorAll('ol li')].map((li) => li.textContent?.trim());
     expect(stack).toContain('(4,1) (just pushed)');
@@ -93,19 +93,19 @@ describe('dfs lesson', () => {
       [5, 12],
       [5, 14],
     ]) {
-      keyActivate(button(`Row ${r}, column ${c}`));
+      keyActivate(button(`Hàng ${r}, cột ${c}`));
     }
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('walls cut it off');
     expect(statValue('BFS shortest path')).toBe('—');
   });
 
   it('moves focus with the arrow keys', () => {
     render(Page);
-    const startCell = button('Row 4, column 2, Start');
+    const startCell = button('Hàng 4, cột 2, Start');
     startCell.focus();
     key(startCell, { key: 'ArrowRight' });
-    expect(document.activeElement).toBe(button('Row 4, column 3'));
+    expect(document.activeElement).toBe(button('Hàng 4, cột 3'));
   });
 
   it('labels a skipped stale copy as skipped, not as expanding', () => {
@@ -121,9 +121,9 @@ describe('dfs lesson', () => {
       [5, 12],
       [5, 14],
     ]) {
-      keyActivate(button(`Row ${r}, column ${c}`));
+      keyActivate(button(`Hàng ${r}, cột ${c}`));
     }
-    const next = button('Next step');
+    const next = button('Bước tiếp');
     for (let i = 0; i < 400 && !text().includes('so skip it'); i++) click(next);
     expect(text()).toContain('so skip it');
     const cell = document.querySelector('button[aria-label*="Stale, skipped"]');
@@ -133,8 +133,8 @@ describe('dfs lesson', () => {
 
   it('announces the top stack entry as just pushed', () => {
     render(Page);
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     const hot = document.querySelectorAll('ol li .sr-only');
     expect(hot).toHaveLength(1);
     expect(hot[0].textContent).toBe(' (just pushed)');

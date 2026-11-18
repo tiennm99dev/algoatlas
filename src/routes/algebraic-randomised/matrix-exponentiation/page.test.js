@@ -57,7 +57,7 @@ const field = (name) =>
 /** @param {string} id */
 const cells = (id) =>
   [...document.querySelectorAll(`[data-testid="${id}"] td`)].map((td) => td.textContent?.trim());
-const toLast = () => click(button('Last step'));
+const toLast = () => click(button('Đến bước cuối'));
 /** @param {string} value */
 function pickMode(value) {
   const radio = /** @type {HTMLInputElement} */ (
@@ -74,14 +74,14 @@ describe('matrix exponentiation lesson', () => {
     expect(cells('matrix-m')).toEqual(['1', '1', '1', '0']);
     expect(cells('matrix-r')).toEqual(['1', '0', '0', '1']);
     expect(stat('answer')).toBe(m.answerPending);
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('bit 0 is 0');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('square P = P · P to get M^2');
     expect(cells('matrix-p')).toEqual(['2', '1', '1', '1']);
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('bit 1 is 1');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Now R = M^2');
     expect(stat('invariant')).toBe('R = M^2, P = M^2');
     toLast();
@@ -162,16 +162,16 @@ describe('matrix exponentiation lesson', () => {
     answer.value = '10';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(/** @type {any} */ (m.practice[0]).hints[0]);
     answer.value = '5';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 

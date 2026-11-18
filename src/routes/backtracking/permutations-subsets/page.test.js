@@ -50,9 +50,9 @@ describe('permutations, combinations and subsets lesson', () => {
   it('lists the permutations as the recursion picks and unpicks', () => {
     render();
     expect(narration()).toContain('Generate every permutation of 3 items');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('Pick A. The path is now A.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('results')).toBe('6');
     expect(byTest('calls')).toBe('16');
     expect(byTest('copied')).toBe('18');
@@ -63,10 +63,10 @@ describe('permutations, combinations and subsets lesson', () => {
   it('skips duplicates only when asked to', () => {
     render();
     commit(field('input[name="items"]'), 'A A B');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('results')).toBe('6');
     click(field('input[name="unique"][value="on"]'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('results')).toBe('3');
     expect(byTest('skipped')).not.toBe('0');
   });
@@ -74,27 +74,27 @@ describe('permutations, combinations and subsets lesson', () => {
   it('switches between the three problems', () => {
     render();
     click(field('input[name="mode"][value="subset"]'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('results')).toBe('8');
     click(field('input[name="mode"][value="comb"]'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('results')).toBe('3');
     commit(field('input[name="k"]'), '1');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('results')).toBe('3');
     commit(field('input[name="k"]'), '3');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('results')).toBe('1');
   });
 
   it('loads an example', () => {
     render();
     commit(field('select[name="preset"]'), 'five');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('results')).toBe('10');
     expect(field('input[name="items"]').value).toBe('A B C D E');
     commit(field('select[name="preset"]'), 'twins');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('results')).toBe('6');
   });
 
@@ -120,10 +120,10 @@ describe('permutations, combinations and subsets lesson', () => {
 
   it('jumps to a call from the tree, by pointer and by keyboard', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     click(/** @type {Element} */ (document.querySelector('[data-node="0"]')));
     expect(byTest('calls')).toBe('1');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     /** @type {Element} */ (document.querySelector('[data-node="0"]')).dispatchEvent(
       new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }),
     );
@@ -147,16 +147,16 @@ describe('permutations, combinations and subsets lesson', () => {
     answer.value = '12';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {Element} */ (hint));
     expect(q.textContent).toContain('Four ways');
     answer.value = '24';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).not.toContain('Not quite');
+    expect(q.textContent).not.toContain('Chưa đúng');
     expect(m.practice.flatMap((ex) => exerciseProblems(ex))).toEqual([]);
   });
 });

@@ -7,8 +7,8 @@ const show = (d) => (d === Infinity ? '∞' : String(d));
 export const en = {
   slug: 'dijkstra-general',
   topic: 'shortest-paths',
-  level: 'Intermediate',
-  title: 'Dijkstra on general graphs',
+  level: 'Trung bình',
+  title: 'Thuật toán Dijkstra trên đồ thị tổng quát',
   intro:
     'On a graph with non-negative edge weights, Dijkstra’s algorithm settles vertices in order of distance from the source. A binary min-heap finds the next closest vertex in O(log V). Instead of updating an entry inside the heap, the usual implementation pushes a fresh entry and skips the old, stale one later: lazy deletion.',
   summary:
@@ -177,6 +177,5 @@ export const en = {
         'Dijkstra fixes a vertex’s label when it is popped, trusting that every other route is at least as long. A negative edge can make a longer-looking route cheaper after the vertex is settled. Bellman-Ford handles negative weights.',
     },
   ],
-  nextTeaser:
-    'Next up: 0-1 BFS and DAG shortest paths, two special cases that need no heap at all.',
+  nextTeaser: 'Bài tiếp theo: BFS 0-1 và đường đi ngắn nhất trên DAG.',
 };

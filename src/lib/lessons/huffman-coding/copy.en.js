@@ -22,8 +22,8 @@ const twoPlaces = (x) => x.toFixed(2);
 export const en = {
   slug: 'huffman-coding',
   topic: 'greedy',
-  level: 'Intermediate',
-  title: 'Huffman coding',
+  level: 'Trung bình',
+  title: 'Mã hoá Huffman',
   intro:
     'A fixed-length code spends the same number of bits on every symbol. Huffman coding gives frequent symbols short codes and rare symbols long ones, and keeps the code prefix-free, so no code is the start of another and a bit string decodes without separators. Its greedy rule, merge the two least frequent trees, builds a code with the fewest total bits possible.',
   summary:
@@ -193,6 +193,5 @@ export const en = {
         'An exchange argument shows that swapping the two rarest symbols into the deepest sibling pair never adds bits, so some optimal tree has them as siblings. Merging them first is a safe greedy choice.',
     },
   ],
-  nextTeaser:
-    'Next up: Fractional knapsack and scheduling with deadlines, where ranking items by value per weight and jobs by profit is enough for the best answer.',
+  nextTeaser: 'Bài tiếp theo: Cái túi phân số và lập lịch có hạn chót.',
 };

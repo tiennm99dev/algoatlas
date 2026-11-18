@@ -36,8 +36,8 @@ const count = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 export const en = {
   slug: 'practice-linked-lists',
   topic: 'linked-lists',
-  level: 'Intermediate',
-  title: 'Practice: linked list problems',
+  level: 'Trung bình',
+  title: 'Luyện tập: bài toán danh sách liên kết',
   intro:
     'Three classic problems, each solved by moving a few pointers through the list instead of copying it. Merge two sorted lists by relinking their nodes behind a dummy node, find the middle with slow and fast pointers, and remove the nth node from the end in one pass by keeping fast n nodes ahead of slow.',
   summary:
@@ -251,5 +251,5 @@ export const en = {
         'Start both at the dummy, open a gap of n, slide both until fast is on the last node, then unlink slow.next.',
     },
   ],
-  nextTeaser: 'Next up: stacks, where everything happens at one end: last in, first out.',
+  nextTeaser: 'Bài tiếp theo: Ngăn xếp.',
 };

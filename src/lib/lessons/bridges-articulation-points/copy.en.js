@@ -6,8 +6,8 @@ const nm = (names, i) => names[i] ?? String(i);
 export const en = {
   slug: 'bridges-articulation-points',
   topic: 'advanced-graphs',
-  level: 'Intermediate',
-  title: 'Bridges and articulation points',
+  level: 'Trung bình',
+  title: 'Cầu và đỉnh khớp',
   intro:
     'A bridge is an edge whose removal disconnects an undirected graph; an articulation point (cut vertex) is a vertex whose removal does. They are the single points of failure of a network. One DFS finds them all in O(V + E): it numbers each vertex with its discovery time tin and computes low, the highest point its subtree can climb back to.',
   summary:
@@ -181,6 +181,5 @@ export const en = {
         'E — F — D — E is a cycle, so E — F is no longer a bridge, and every edge now lies on some cycle: 0 bridges. C and F stay articulation points.',
     },
   ],
-  nextTeaser:
-    'Next up: Eulerian paths and circuits, tracing every edge exactly once with Hierholzer’s algorithm.',
+  nextTeaser: 'Bài tiếp theo: Đường đi và chu trình Euler.',
 };

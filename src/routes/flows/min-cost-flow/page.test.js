@@ -93,21 +93,21 @@ describe('Min-cost flow and the assignment problem lesson', () => {
   it('shifts potentials and flips paths to the cheapest assignment', () => {
     render();
     expect(text()).toContain('All potentials start at 0');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Add worker A.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('The smallest slack is δ = 2, at column 2 (from row A).');
     expect(cellTitle('worker A, job 2:')).toBe('worker A, job 2: 2, smallest slack');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Add δ = 2 to u of row A. Tree edges stay at 0');
     expect(cellTitle('worker A, u:')).toBe('worker A, u: 2, potential shifted now');
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Flip the path: A → 2. 1 of 4 rows assigned, cost 2; Σ u + Σ v = 2.');
     expect(cellTitle('worker A, job 2:')).toBe(
       'worker A, job 2: 0, flipped into the assignment now',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain(
       'Done: A → 2, B → 1, C → 3 and D → 4 costs 13, and Σ u + Σ v = 13 as well, which proves no assignment is cheaper. Brute force would compare 24 assignments.',
     );
@@ -121,30 +121,30 @@ describe('Min-cost flow and the assignment problem lesson', () => {
   it('solves the greedy trap and the five by five matrix', () => {
     render();
     commit(select('preset'), 'trap');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.cost)).toBe('8');
     commit(select('preset'), 'five');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Brute force would compare 120 assignments.');
   });
 
   it('reruns on a new cost, refuses a bad one, resizes and resets', () => {
     render();
     commit(costField('A', '2'), '20');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.cost)).toBe('18');
     commit(costField('A', '2'), '100');
     expect(text()).toContain(m.badCost(99));
     expect(costField('A', '2').value).toBe('20');
     commit(select('size'), '2');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.cost)).toBe('13');
     commit(select('size'), '3');
     expect(costField('C', '3').value).toBe('10');
     click(buttonByText(m.resetCosts));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.cost)).toBe('13');
-    click(button('First step'));
+    click(button('Về bước đầu'));
     press(document.body, 'ArrowRight');
     expect(text()).toContain('Add worker A.');
   });
@@ -153,11 +153,11 @@ describe('Min-cost flow and the assignment problem lesson', () => {
     render();
     const q = /** @type {HTMLElement} */ (practice().querySelectorAll('ol > li')[0]);
     answer(q, '14');
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer(q, '13');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

@@ -65,7 +65,7 @@ const input = (name) =>
 
 /** @param {number} k */
 function next(k) {
-  for (let i = 0; i < k; i++) click(button('Next step'));
+  for (let i = 0; i < k; i++) click(button('Bước tiếp'));
 }
 
 const opsCard = () =>
@@ -107,14 +107,14 @@ describe('sqrt decomposition lesson: blocks', () => {
     render();
     next(8);
     expect(text()).toContain('a[5] becomes 0, and block 1’s sum shifts to 13.');
-    click(button('Last step'));
-    click(button('Previous step'));
+    click(button('Đến bước cuối'));
+    click(button('Bước trước'));
     expect(text()).toContain('The sum is 55, from 6 reads instead of 12.');
   });
 
   it('steps back to the build', () => {
     render();
-    click(button('First step'));
+    click(button('Về bước đầu'));
     expect(text()).toContain('Split 16 values into blocks of 4');
     next(1);
     expect(text()).toContain('a[0] = 3 is in block 0, whose sum is now 3.');
@@ -275,7 +275,7 @@ describe('sqrt decomposition lesson: Mo’s algorithm', () => {
   it('answers in the typed slots and reports both move counts', () => {
     render();
     openMo();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toMatch(/Done: \d+ moves in sorted order, against \d+ in the typed order\./);
     expect(text()).toContain('Answers: 3, 3, 4, 2, 4, 4, in the typed order.');
   });
@@ -318,7 +318,7 @@ describe('sqrt decomposition lesson: Mo’s algorithm', () => {
     openMo();
     commit(input('mo-values'), '1, 2, 1, 3');
     expect(input('queries').value).toBe('0 3, 1 3, 2 3');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Answers: 3, 3, 2, in the typed order.');
   });
 
@@ -350,13 +350,13 @@ describe('sqrt decomposition lesson: Mo’s algorithm', () => {
     answer.value = '50';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     send();
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '10';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     send();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
   });
 });
 

@@ -55,7 +55,7 @@ function pickAlgo(value) {
 
 /** @param {number} index */
 function seek(index) {
-  const el = /** @type {HTMLInputElement} */ (document.querySelector('input[aria-label="Step"]'));
+  const el = /** @type {HTMLInputElement} */ (document.querySelector('input[aria-label="Bước"]'));
   el.value = String(index);
   el.dispatchEvent(new Event('input', { bubbles: true }));
   flushSync();
@@ -70,7 +70,7 @@ const cells = (aria) =>
     (t) => t.textContent,
   );
 const stepCount = () =>
-  Number(/** @type {HTMLInputElement} */ (document.querySelector('input[aria-label="Step"]')).max) +
+  Number(/** @type {HTMLInputElement} */ (document.querySelector('input[aria-label="Bước"]')).max) +
   1;
 
 function practice() {
@@ -85,7 +85,7 @@ describe('counting sort and radix sort lesson', () => {
   it('tallies keys, then turns the tallies into end positions', () => {
     render();
     expect(text()).toContain('The largest key is 5, so count has 6 cells, all 0.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('a[0] = 2: add one to count[2], which is now 1.');
     seek(9);
     expect(text()).toContain('count[1] += count[0]: 2 keys are ≤ 1');
@@ -97,7 +97,7 @@ describe('counting sort and radix sort lesson', () => {
     render();
     seek(14);
     expect(text()).toContain('a[7] = 3c: count[3] drops to 6, so it goes to out[6]');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Sorted in 21 loop steps: n = 8 to count, k = 5 to sum, n to place.');
     const out = cells(m.outputAria).join(' | ');
     expect(out).toContain('Slot 4: 3a');
@@ -110,9 +110,9 @@ describe('counting sort and radix sort lesson', () => {
     pickAlgo('radix');
     expect(keysInput().value).toBe('170, 45, 75, 90, 802, 24, 2, 66');
     expect(text()).toContain('The largest key, 802, has 3 digits');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Pass 1: sort by the ones digit.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('170 has ones digit 0: append it to bucket 0.');
     expect(document.querySelector('li[aria-label="Bucket 0: 170"]')).not.toBeNull();
   });
@@ -132,7 +132,7 @@ describe('counting sort and radix sort lesson', () => {
       '75',
       '66',
     ]);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Sorted in 3 passes and 48 moves, without comparing two keys.');
   });
 
@@ -171,13 +171,13 @@ describe('counting sort and radix sort lesson', () => {
     answer.value = '3';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '7';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

@@ -1,12 +1,12 @@
 /** @typedef {import('$lib/algo-engine/dfs-grid.js').DfsFrame} DfsFrame */
-import { gridCopy } from '../grid-copy.en.js';
+import { gridCopy } from '../grid-copy.vi.js';
 
 export const en = {
   ...gridCopy,
   slug: 'dfs-grid',
   topic: 'graphs',
-  level: 'Intermediate',
-  title: 'Depth-first search on a grid',
+  level: 'Trung bình',
+  title: 'Duyệt theo chiều sâu trên lưới',
   intro:
     'DFS dives down one corridor as far as it can and backs up only when it is stuck. It reaches every cell BFS reaches, but the first path it finds to the goal is usually not the shortest.',
   summary:
@@ -73,6 +73,5 @@ export const en = {
       'The stack can hold a duplicate entry per edge until the stale ones are skipped.',
     ],
   ],
-  nextTeaser:
-    'Next up: connected components and flood fill, where repeated searches label every separate region of the grid.',
+  nextTeaser: 'Bài tiếp theo: Thành phần liên thông và loang.',
 };

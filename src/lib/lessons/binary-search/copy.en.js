@@ -3,8 +3,8 @@
 export const en = {
   slug: 'binary-search',
   topic: 'searching',
-  level: 'Beginner',
-  title: 'Binary search',
+  level: 'Cơ bản',
+  title: 'Tìm kiếm nhị phân',
   intro:
     'In a sorted array, one comparison tells you which half the target is in. Throw the other half away and repeat: a million elements take at most 20 comparisons.',
   summary:
@@ -71,6 +71,5 @@ export const en = {
     ['Worst', 'O(log n)', 'The window halves every step until it is empty.'],
     ['Linear scan', 'O(n)', 'Without sorting you must read every element.'],
   ],
-  nextTeaser:
-    'Next up: lower bound and upper bound, binary search for the first position that fits and a count of duplicates.',
+  nextTeaser: 'Bài tiếp theo: Cận dưới và cận trên.',
 };

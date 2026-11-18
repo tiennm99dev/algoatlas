@@ -14,8 +14,8 @@ const card = (c) => (c ? `${c.key}${tagName(c.tag)}` : '');
 export const en = {
   slug: 'selection-sort-stability',
   topic: 'sorting',
-  level: 'Beginner',
-  title: 'Selection sort and stability',
+  level: 'Cơ bản',
+  title: 'Sắp xếp chọn và tính ổn định',
   intro:
     'Selection sort scans the unsorted part for the smallest card and puts it at the front, one slot per pass. It sorts in place with very few writes, but its long swaps can jump one card over an equal one. A sort that keeps equal keys in their original order is called stable.',
   summary:
@@ -189,6 +189,5 @@ export const en = {
         'Bubble and insertion sort only swap neighbours when the left one is strictly larger, and merge sort takes from the left run on ties, so all three are stable. Selection sort with swaps and Lomuto quicksort make long swaps that can jump over an equal key.',
     },
   ],
-  nextTeaser:
-    'Next up: merge sort and quicksort, two divide-and-conquer sorts that break the O(n²) barrier.',
+  nextTeaser: 'Bài tiếp theo: Sắp xếp trộn và sắp xếp nhanh.',
 };

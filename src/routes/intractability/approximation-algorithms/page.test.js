@@ -53,12 +53,12 @@ describe('approximation algorithms lesson', () => {
     render();
     expect(narration()).toContain('Read the 6 edges in order');
     expect(byTest('optimum')).toBe('3');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Neither end of A – B is in the cover. Take both');
     expect(byTest('cover')).toBe('2');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('A – C already has an end in the cover. Skip it.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('cover')).toBe('6');
     expect(byTest('side')).toBe('3');
     expect(byTest('ratio')).toBe('2');
@@ -70,9 +70,9 @@ describe('approximation algorithms lesson', () => {
   it('switches to greedy and compares', () => {
     render();
     click(field('input[name="algorithm"][value="greedy"]'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('A touches 3 uncovered edges, the most of any vertex');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('cover')).toBe('4');
     expect(byTest('ratio')).toBe('1.33');
     expect(narration()).toContain('The optimum {B, C, D} has 3');
@@ -81,20 +81,20 @@ describe('approximation algorithms lesson', () => {
   it('loads the star and the path', () => {
     render();
     commit(field('select[name="preset"]'), 'star');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('ratio')).toBe('2');
     commit(field('select[name="preset"]'), 'path');
     click(field('input[name="algorithm"][value="greedy"]'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('ratio')).toBe('1');
   });
 
   it('follows an edit of the graph', () => {
     render();
     click(/** @type {HTMLInputElement} */ (document.querySelector('input[value="remove"]')));
-    click(/** @type {Element} */ (document.querySelector('[aria-label="Delete edge A and B"]')));
+    click(/** @type {Element} */ (document.querySelector('[aria-label="Xoá cạnh giữa A và B"]')));
     expect(field('select[name="preset"]').value).toBe('');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('optimum')).toBe('3');
     expect(byTest('cover')).toBe('6');
   });
@@ -122,16 +122,16 @@ describe('approximation algorithms lesson', () => {
     answer.value = '3';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {Element} */ (hint));
     expect(q.textContent).toContain('read Cover size');
     answer.value = '6';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).not.toContain('Not quite');
+    expect(q.textContent).not.toContain('Chưa đúng');
     expect(m.practice.flatMap((ex) => exerciseProblems(ex))).toEqual([]);
   });
 });

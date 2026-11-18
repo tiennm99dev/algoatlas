@@ -64,9 +64,9 @@ describe('binary heaps lesson', () => {
   it('starts on an empty min-heap and runs the log to the end', () => {
     render();
     expect(text()).toContain('An empty min-heap.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Insert 42: put it in the next free slot, 0');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     const last = binaryHeapTrace(makeHeapOps('build')).at(-1);
     expect(heapLabel()).toContain(`Min-heap of 8, array: ${last?.values.join(', ')}.`);
     expect(text()).toContain(`${last?.comparisons} comparisons and ${last?.swaps} swaps`);
@@ -77,7 +77,7 @@ describe('binary heaps lesson', () => {
     commit(valueInput(), '1');
     submit();
     expect(text()).toContain('Insert 1: put it in the next free slot, 8');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(heapLabel()).toMatch(/^Min-heap of 9, array: 1, /);
   });
 
@@ -85,7 +85,7 @@ describe('binary heaps lesson', () => {
     render();
     click(buttonByText('Extract min'));
     expect(text()).toContain('Take the root 8, the smallest value.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Removed, in order');
     expect(heapLabel()).toMatch(/^Min-heap of 7, /);
   });
@@ -109,8 +109,8 @@ describe('binary heaps lesson', () => {
     click(buttonByText('Extract min'));
     expect(text()).toContain(m.emptyError);
     commit(/** @type {HTMLSelectElement} */ (document.querySelector('select')), 'drain');
-    click(button('Last step'));
-    expect(text()).toContain('The heap is empty.');
+    click(button('Đến bước cuối'));
+    expect(text()).toContain('Heap đang rỗng.');
   });
 
   it('refuses a bad value and keeps the last valid one', () => {
@@ -134,10 +134,10 @@ describe('binary heaps lesson', () => {
 
   it('shows a slot’s parent and children from the keyboard', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     const cells = [...document.querySelectorAll('[role="button"]')];
     const slot3 = /** @type {HTMLElement} */ (
-      cells.find((c) => c.getAttribute('aria-label')?.startsWith('Slot 3:'))
+      cells.find((c) => c.getAttribute('aria-label')?.startsWith('Ô 3:'))
     );
     slot3.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     flushSync();
@@ -160,13 +160,13 @@ describe('binary heaps lesson', () => {
     answer.value = '4';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     send();
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '5';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     send();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

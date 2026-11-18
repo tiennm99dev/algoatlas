@@ -13,8 +13,8 @@ const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 export const en = {
   slug: 'practice-geometry',
   topic: 'geometry',
-  level: 'Advanced',
-  title: 'Practice: geometry problems',
+  level: 'Nâng cao',
+  title: 'Luyện tập: bài toán hình học',
   intro:
     'Geometry code goes wrong in two ways: a comparison that rounds the wrong way, and a problem solved by brute force when a convex hull would do. This sandbox runs three classic problems on points you place. Before each step, predict the exact whole number it computes, and Check moves on only when you are right.',
   summary:
@@ -197,8 +197,7 @@ export const en = {
     ['Farthest pair, brute force', 'O(n²) time', 'Compares all n(n − 1)/2 pairs.'],
     ['Memory', 'O(n)', 'The points, the hull and a few running totals.'],
   ],
-  nextTeaser:
-    'Next, Flow networks and Ford-Fulkerson push as much flow as possible from a source to a sink along augmenting paths.',
+  nextTeaser: 'Bài tiếp theo: Mạng luồng và thuật toán Ford-Fulkerson.',
   practiceTitle: 'Solve with the sandbox',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
   practice: [

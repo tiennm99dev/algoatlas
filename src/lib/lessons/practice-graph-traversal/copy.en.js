@@ -6,8 +6,8 @@ const coord = (cell, cols) => `(${Math.floor(cell / cols)},${cell % cols})`;
 export const en = {
   slug: 'practice-graph-traversal',
   topic: 'graphs',
-  level: 'Intermediate',
-  title: 'Practice: traversal problems',
+  level: 'Trung bình',
+  title: 'Luyện tập: bài toán duyệt đồ thị',
   intro:
     'Most grid and graph puzzles are a BFS or a DFS in disguise; the skill is choosing the right one. BFS finds shortest paths and distances when every step costs the same, and it can start from many sources at once. DFS reaches every cell just as surely, but the first path it finds can be far from the shortest.',
   summary:
@@ -218,5 +218,5 @@ export const en = {
         'Knight moves form an unweighted graph and the question asks for a shortest path, which is exactly what BFS gives. Dijkstra also works but is unnecessary when every step costs 1.',
     },
   ],
-  nextTeaser: 'Next up: Review: foundations, a quiz across every topic of the first level.',
+  nextTeaser: 'Bài tiếp theo: Ôn tập: nền tảng.',
 };

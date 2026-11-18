@@ -17,8 +17,8 @@ const count = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`;
 export const en = {
   slug: 'edmonds-karp-dinic',
   topic: 'flows',
-  level: 'Advanced',
-  title: 'Edmonds-Karp and Dinic',
+  level: 'Nâng cao',
+  title: 'Thuật toán Edmonds-Karp và Dinic',
   intro:
     'Ford-Fulkerson works with any augmenting path, but a poor choice can make it push a tiny amount per round. Edmonds-Karp always takes a shortest path, found by breadth-first search, which caps the number of rounds at O(V·E) whatever the capacities. Dinic goes further: one BFS builds a level graph, and depth-first search pushes a whole blocking flow through it before the next BFS.',
   summary:
@@ -232,6 +232,5 @@ export const en = {
         'Pushing along u → v (level up by one) can only create the backward arc v → u, which goes down a level. So no new shortcut appears, and the blocking flow has cut every path of the old length: the next shortest path is longer.',
     },
   ],
-  nextTeaser:
-    'Next up: the Max-flow min-cut theorem, which reads a minimum cut straight out of the final residual graph.',
+  nextTeaser: 'Bài tiếp theo: Định lí luồng cực đại, lát cắt nhỏ nhất.',
 };

@@ -1,12 +1,12 @@
 /** @typedef {import('$lib/algo-engine/dijkstra-grid.js').DijkstraFrame} DijkstraFrame */
-import { gridCopy } from '../grid-copy.en.js';
+import { gridCopy } from '../grid-copy.vi.js';
 
 export const en = {
   ...gridCopy,
   slug: 'dijkstra-grid',
   topic: 'shortest-paths',
-  level: 'Intermediate',
-  title: 'Dijkstra’s algorithm on a grid',
+  level: 'Trung bình',
+  title: 'Thuật toán Dijkstra trên lưới',
   intro:
     'When some steps cost more than others, the path with the fewest steps is no longer the cheapest. Dijkstra’s algorithm always expands the cheapest known cell next, so when it reaches the goal it has found the cheapest route. A step costs the average of the two cells it joins: 1 on open ground, 5 inside mud, 3 onto or off it.',
   summary:
@@ -105,6 +105,5 @@ export const en = {
     ],
     ['Memory', 'O(V + E)', 'The queue can hold one entry per relaxation, stale ones included.'],
   ],
-  nextTeaser:
-    'Next up: Dijkstra on general graphs, the same algorithm on any weighted graph stored as adjacency lists.',
+  nextTeaser: 'Bài tiếp theo: Thuật toán Dijkstra trên đồ thị tổng quát.',
 };

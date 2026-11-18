@@ -54,7 +54,7 @@ const stat = (id) => document.querySelector(`[data-testid="${id}"]`)?.textConten
 const field = (name) =>
   /** @type {HTMLInputElement} */ (document.querySelector(`[name="${name}"]`));
 const titles = () => [...document.querySelectorAll('svg title')].map((t) => t.textContent ?? '');
-const toLast = () => click(button('Last step'));
+const toLast = () => click(button('Đến bước cuối'));
 
 describe('modular exponentiation lesson', () => {
   it('walks 3 to the 13 mod 7, bit by bit', () => {
@@ -62,15 +62,15 @@ describe('modular exponentiation lesson', () => {
     expect(narration()).toContain('In binary e is 1101');
     expect(stat('result')).toBe('1');
     expect(stat('x')).toBe('3');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('bit 0 is 1');
     expect(titles()).toContain('Bit with weight 2 to the 0: 1, being read');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('result = 1·3 mod 7 = 3, so now result ≡ a^1.');
     expect(stat('invariant')).toBe('result ≡ a^1 (mod 7)');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('x = 3·3 mod 7 = 2');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('bit 1 is 0');
     toLast();
     expect(stat('result')).toBe('3');
@@ -137,16 +137,16 @@ describe('modular exponentiation lesson', () => {
     answer.value = '7';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(/** @type {any} */ (m.practice[1]).hints[0]);
     answer.value = '8';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 

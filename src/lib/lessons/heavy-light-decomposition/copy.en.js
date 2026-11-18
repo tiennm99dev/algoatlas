@@ -6,8 +6,8 @@ const plural = (n, one, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
 export const en = {
   slug: 'heavy-light-decomposition',
   topic: 'tree-techniques',
-  level: 'Advanced',
-  title: 'Heavy-light decomposition',
+  level: 'Nâng cao',
+  title: 'Phân rã nặng nhẹ',
   intro:
     'Heavy-light decomposition (HLD) cuts a tree into chains so that any path crosses only O(log n) of them. Number the nodes chain by chain and every chain becomes a block of an array, so a path query (sum, maximum, update) becomes a few range queries on one segment tree.',
   summary:
@@ -184,6 +184,5 @@ export const en = {
         'The heavy sibling is at least as big as a light child c, so 2·size(c) < size(parent). Each light edge on the way down halves the size, and a size cannot halve more than log₂ n times.',
     },
   ],
-  nextTeaser:
-    'Next up: centroid decomposition, which splits a tree at its centre again and again to count paths.',
+  nextTeaser: 'Bài tiếp theo: Phân rã trọng tâm.',
 };

@@ -21,8 +21,8 @@ const count = (k, one, many = `${one}s`) => `${k} ${k === 1 ? one : many}`;
 export const en = {
   slug: 'practice-flows',
   topic: 'flows',
-  level: 'Advanced',
-  title: 'Practice: flow modelling',
+  level: 'Nâng cao',
+  title: 'Luyện tập: mô hình hoá bằng luồng',
   intro:
     'Most flow problems do not arrive as a network. They arrive as a story about farms, routers, students or trucks, and the real work is building the network: what flows, where it starts and ends, and which limits become capacities. Once the model is right, any maximum-flow algorithm gives the answer, and the minimum cut says what limits it.',
   summary:
@@ -289,6 +289,5 @@ export const en = {
         'Each split adds the edge v → v′ and the vertex v′, so there are 14 + 4 = 18 edges (and 9 + 4 = 13 vertices).',
     },
   ],
-  nextTeaser:
-    'Next up: Bitmask DP and travelling salesman, which runs dynamic programming over subsets stored as bits.',
+  nextTeaser: 'Bài tiếp theo: QHĐ trên mặt nạ bit và bài toán người du lịch.',
 };

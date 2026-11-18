@@ -80,15 +80,15 @@ describe('topological sort lesson', () => {
   it('runs Kahn on the dinner graph', () => {
     render();
     expect(text()).toContain('Count the edges into each task: A 0, B 1, C 1, D 0, E 2, F 1, G 2.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Tasks with in-degree 0 need nothing first: queue A, D.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Dequeue A and place it at position 1.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Remove A → B: B now has in-degree 0, so enqueue it.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Remove A → E: E still waits on 1 more.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Done. Order: A, D, B, E, C, F, G. Every edge points forward.');
     expect(statValue(m.stats.backward)).toBe('0');
     expect(statValue(m.stats.placed)).toBe('7 / 7');
@@ -98,9 +98,9 @@ describe('topological sort lesson', () => {
     render();
     radio('dfs');
     expect(text()).toContain('Every task starts unvisited.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Visit A: mark it in progress.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Reverse the finish order: D, A, E, B, C, F, G.');
     const card = [...document.querySelectorAll('h2')].find(
       (h) => h.textContent?.trim() === m.resultLabel,
@@ -114,15 +114,15 @@ describe('topological sort lesson', () => {
     radio('connect');
     click(vertex(6));
     click(vertex(0));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('The queue is empty but A, B, C, E, F, G were never placed');
     expect(statValue(m.stats.backward)).toBe('—');
     radio('dfs');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Cycle A, B, C, F, G → A: no topological order exists.');
     expect(vertex(6).getAttribute('aria-label')).toContain('on the cycle');
     click(buttonByText(m.resetGraph));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Reverse the finish order');
   });
 
@@ -134,7 +134,7 @@ describe('topological sort lesson', () => {
 
   it('labels each task with its state and in-degree', () => {
     render();
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(vertex(0).getAttribute('aria-label')).toBe('Task A, queued, in 0');
     expect(vertex(4).getAttribute('aria-label')).toBe('Task E, in 2');
   });
@@ -143,11 +143,11 @@ describe('topological sort lesson', () => {
     render();
     const q = /** @type {HTMLElement} */ (practice().querySelectorAll('ol > li')[0]);
     answer(q, 'A, B, C, D, E, F, G');
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer(q, 'A,D,B,E,C,F,G');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

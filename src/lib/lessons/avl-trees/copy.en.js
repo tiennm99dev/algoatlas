@@ -25,8 +25,8 @@ function tallest(n) {
 export const en = {
   slug: 'avl-trees',
   topic: 'balanced-bst',
-  level: 'Intermediate',
-  title: 'AVL trees',
+  level: 'Trung bình',
+  title: 'Cây AVL',
   intro:
     'An AVL tree is a binary search tree in which the heights of every node’s two subtrees differ by at most 1. Each node stores its height, and after a change the ancestors recheck their balance factor on the way up and rotate as soon as one reaches ±2.',
   summary:
@@ -175,8 +175,7 @@ export const en = {
     ['One rotation', 'O(1)', 'A fixed number of links and two stored heights change.'],
     ['Memory', 'O(n)', 'One node per key, each with a small stored height.'],
   ],
-  nextTeaser:
-    'Next up: Red-black trees, which relax the balance rule so most inserts can fix themselves by recolouring.',
+  nextTeaser: 'Bài tiếp theo: Cây đỏ đen.',
   practiceTitle: 'Check yourself',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
   practice: [

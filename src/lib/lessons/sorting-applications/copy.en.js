@@ -13,8 +13,8 @@ const count = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 export const en = {
   slug: 'sorting-applications',
   topic: 'sorting',
-  level: 'Intermediate',
-  title: 'Sorting applications',
+  level: 'Trung bình',
+  title: 'Ứng dụng của sắp xếp',
   intro:
     'Many problems get easy once the data is sorted, because sorting puts related items next to each other. Overlapping intervals become neighbours, so one scan merges them; equal values become neighbours, so one scan removes repeats. The key you sort by is chosen with a comparator, and the wrong one gives a wrong answer.',
   summary:
@@ -207,6 +207,5 @@ export const en = {
         'Order by end: 1-3, 4-5, 2-6. 1-3 opens a block; 4-5 starts at 4 > 3, so a new block; 2-6 starts at 2 ≤ 5 and joins the second block. The scan reports 2 blocks, but 2-6 overlaps both, so all three should be one block 1-6.',
     },
   ],
-  nextTeaser:
-    'Next up: practice choosing a sort, racing several algorithms on inputs of different shapes.',
+  nextTeaser: 'Bài tiếp theo: Luyện tập: chọn thuật toán sắp xếp.',
 };

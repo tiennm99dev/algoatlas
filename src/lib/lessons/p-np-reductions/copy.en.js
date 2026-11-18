@@ -9,8 +9,8 @@ const setText = (names, set) => (set.length ? `{${set.map((i) => names[i]).join(
 export const en = {
   slug: 'p-np-reductions',
   topic: 'intractability',
-  level: 'Advanced',
-  title: 'P, NP and reductions',
+  level: 'Nâng cao',
+  title: 'P, NP và phép quy dẫn',
   intro:
     'Complexity theory sorts decision problems, questions with a yes or no answer. P holds the ones a computer can answer in polynomial time. NP holds the ones whose yes answers can be checked in polynomial time, given a certificate. A reduction turns every instance of one problem into an instance of another with the same answer, which is how we compare how hard two problems are.',
   summary:
@@ -173,6 +173,5 @@ export const en = {
         'The first and third ask yes or no. The other two ask for an object or a number; adding a target k turns them into decision problems.',
     },
   ],
-  nextTeaser:
-    'Next up: NP-completeness, where Cook and Levin show SAT is the hardest problem in NP and reductions spread that hardness to 3-SAT, vertex cover and more.',
+  nextTeaser: 'Bài tiếp theo: NP-đầy đủ.',
 };

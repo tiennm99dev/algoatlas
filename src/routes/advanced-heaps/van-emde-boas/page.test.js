@@ -64,10 +64,10 @@ describe('van Emde Boas trees lesson', () => {
   it('starts on u = 16 and runs the textbook log to the end', () => {
     render();
     expect(text()).toContain('A van Emde Boas tree over u = 16: 4 clusters of 4 keys');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('insert(V, 2) on size 16: high(2) = 0, low(2) = 2.');
     expect(split()).toBe(m.split(2, 16, 0, 2));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(gridLabel()).toContain('stored: 2, 3, 4, 5, 7, 14, 15.');
     expect(text()).toMatch(/Last successor\s*14/);
   });
@@ -77,12 +77,12 @@ describe('van Emde Boas trees lesson', () => {
     commit(valueInput(), '8');
     click(buttonByText(m.ops.successor));
     expect(text()).toContain('successor(V, 8) on size 16: high(8) = 2, low(8) = 0.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Cluster 2 has nothing after 0: ask the summary');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('successor(V.S, 2) on size 4');
     expect(text()).toMatch(/Open calls \(outermost first\)\s*V\s*V\.S\s/);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toMatch(/Last successor\s*14/);
   });
 
@@ -91,11 +91,11 @@ describe('van Emde Boas trees lesson', () => {
     commit(valueInput(), '9');
     submit();
     expect(text()).toContain('insert(V, 9) on size 16');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(gridLabel()).toContain('stored: 2, 3, 4, 5, 7, 9, 14, 15.');
     click(buttonByText(m.ops.delete));
     expect(text()).toContain('delete(V, 9) on size 16');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(gridLabel()).toContain('stored: 2, 3, 4, 5, 7, 14, 15.');
   });
 
@@ -116,7 +116,7 @@ describe('van Emde Boas trees lesson', () => {
     render();
     click(/** @type {HTMLInputElement} */ (document.querySelector('input[value="256"]')));
     expect(text()).toContain('over u = 256: 16 clusters of 16 keys');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(gridLabel()).toContain('stored: 9, 40, 43, 117, 200, 203.');
     expect(text()).toMatch(/Last successor\s*200/);
     expect(text()).toMatch(/Levels reached\s*4/);
@@ -128,12 +128,12 @@ describe('van Emde Boas trees lesson', () => {
   it('undoes, resets and loads a preset', () => {
     render();
     click(buttonByText(m.undo));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toMatch(/Last successor\s*7/);
     click(buttonByText(m.reset));
     expect(gridLabel()).toContain('stored: none.');
     commit(/** @type {HTMLSelectElement} */ (document.querySelector('select')), 'deletes');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(gridLabel()).toContain('stored: 3, 4, 5, 14.');
   });
 
@@ -153,17 +153,17 @@ describe('van Emde Boas trees lesson', () => {
     answer.value = '2';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     send();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     click(
       /** @type {HTMLElement} */ (
-        [...q.querySelectorAll('button')].find((b) => b.textContent?.trim() === 'Show a hint')
+        [...q.querySelectorAll('button')].find((b) => b.textContent?.trim() === 'Xem gợi ý')
       ),
     );
     expect(q.textContent).toContain(m.practice[1].hints[0]);
     answer.value = '3';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     send();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

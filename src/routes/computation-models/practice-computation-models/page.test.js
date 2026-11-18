@@ -78,11 +78,11 @@ describe('practice: choosing a model lesson', () => {
     render();
     expect(text()).toContain('Sum a big array: Add up n numbers');
     expect(row('loop')).toContain(m.costPending);
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Right model: Parallel (work and span).');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(row('loop')).toContain('1,048,575 steps');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(row('chunks')).toContain('131,074 steps');
     expect(row('chunks')).toContain(m.bestMark);
     expect(text()).toContain('Your algorithm is not the cheapest here.');
@@ -112,7 +112,7 @@ describe('practice: choosing a model lesson', () => {
     expect(row('serial')).toContain(m.bestMark);
     expect(row('serial')).toContain('20,971,520 steps');
     commit(field('p'), '16');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(row('parallelMerge')).toContain('1,318,720 steps');
     expect(row('parallelMerge')).toContain(m.bestMark);
   });
@@ -131,15 +131,15 @@ describe('practice: choosing a model lesson', () => {
     render();
     const q = question(0);
     answer(q, '131092');
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     click(
       /** @type {HTMLElement} */ (
-        [...q.querySelectorAll('button')].find((b) => b.textContent?.trim() === 'Show a hint')
+        [...q.querySelectorAll('button')].find((b) => b.textContent?.trim() === 'Xem gợi ý')
       ),
     );
     expect(q.textContent).toContain(m.practice[0].hints[0]);
-    answer(q, '131,074');
-    expect(q.textContent).toContain('Correct!');
+    answer(q, '131074');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

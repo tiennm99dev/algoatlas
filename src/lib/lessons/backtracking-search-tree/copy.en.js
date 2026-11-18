@@ -7,8 +7,8 @@ const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 export const en = {
   slug: 'backtracking-search-tree',
   topic: 'backtracking',
-  level: 'Beginner',
-  title: 'Backtracking and the search tree',
+  level: 'Cơ bản',
+  title: 'Quay lui và cây tìm kiếm',
   intro:
     'Backtracking solves a problem by making one choice at a time, following it as far as it goes, then undoing it to try the next one. All the possible choices form a tree, the state-space tree, and the search is a depth-first walk over it. Pruning is what makes it practical: as soon as a branch cannot lead to an answer, the whole subtree below it is skipped.',
   summary:
@@ -218,6 +218,5 @@ export const en = {
       solution: 'The path has at most n levels, so O(n): one stack frame and one choice per level.',
     },
   ],
-  nextTeaser:
-    'Next up: Permutations, combinations and subsets, where the same three moves generate every arrangement without repeats.',
+  nextTeaser: 'Bài tiếp theo: Hoán vị, tổ hợp và tập con.',
 };

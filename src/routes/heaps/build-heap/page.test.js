@@ -65,15 +65,15 @@ describe('build heap lesson', () => {
   it('starts bottom-up at the last parent', () => {
     render();
     expect(text()).toContain('Slots 7 to 14 are leaves');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Sift down slot 6 (75). Both of its subtrees are already heaps.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Children of slot 6: 81 and 17. The smaller is 17 at slot 14.');
   });
 
   it('ends with a min-heap and the per-level table filled', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     const last = buildHeapTrace(INITIAL).at(-1);
     expect(arrayLabel()).toBe(`Array: ${last?.values.join(', ')}.`);
     expect(text()).toContain(`The array is a min-heap after ${last?.swaps} swaps`);
@@ -90,7 +90,7 @@ describe('build heap lesson', () => {
     render();
     click(/** @type {HTMLInputElement} */ (document.querySelector('input[value="one-by-one"]')));
     expect(text()).toContain('Slot 0 alone is a heap.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Insert slot 1 (21) into the heap of slots 0 to 0');
     const oneByOne = buildHeapTrace(INITIAL, 'one-by-one').at(-1)?.swaps;
     expect(statValue(m.stats.oneByOne(15))).toBe(String(oneByOne));
@@ -100,7 +100,7 @@ describe('build heap lesson', () => {
   it('loads typed values and refuses bad ones', () => {
     render();
     commit(valuesInput(), '9, 4, 7, 1, 8, 2, 6');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(arrayLabel()).toBe('Array: 1, 4, 2, 9, 8, 7, 6.');
     commit(valuesInput(), '9, 4, 300');
     expect(text()).toContain(m.valueErrors.range);
@@ -150,13 +150,13 @@ describe('build heap lesson', () => {
     answer.value = '10';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     send();
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '9';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     send();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

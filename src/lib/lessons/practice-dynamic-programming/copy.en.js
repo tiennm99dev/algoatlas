@@ -19,8 +19,8 @@ const TERM_LABELS = {
 export const en = {
   slug: 'practice-dynamic-programming',
   topic: 'dynamic-programming',
-  level: 'Intermediate',
-  title: 'Practice: dynamic programming problems',
+  level: 'Trung bình',
+  title: 'Luyện tập: bài toán quy hoạch động',
   intro:
     'Solving a new DP problem comes down to two decisions: what dp[i] means, and how dp[i] follows from smaller cells. Here you make both decisions yourself on three problems. Your design runs on small inputs, every cell is checked against a brute-force value for the meaning you declared, and the answer is checked against the problem. So you see not only that a design fails but where and why.',
   summary:
@@ -282,6 +282,5 @@ export const en = {
         'State first, then the transition, then base cases and the answer, then test. A failed test usually sends you back to the state.',
     },
   ],
-  nextTeaser:
-    'Next up: Backtracking and the search tree, for problems that must try choices one by one when no table of smaller answers will do.',
+  nextTeaser: 'Bài tiếp theo: Quay lui và cây tìm kiếm.',
 };

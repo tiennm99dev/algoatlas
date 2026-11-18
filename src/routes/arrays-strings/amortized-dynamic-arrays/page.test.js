@@ -65,7 +65,7 @@ function stat(label) {
 
 /** Step until the narration matches. @param {string} part */
 function stepUntil(part) {
-  for (let k = 0; k < 400 && !narration().includes(part); k++) click(button('Next step'));
+  for (let k = 0; k < 400 && !narration().includes(part); k++) click(button('Bước tiếp'));
 }
 
 function practice() {
@@ -82,11 +82,11 @@ describe('amortized dynamic arrays lesson', () => {
     expect(narration()).toBe(
       'An empty dynamic array with capacity 1 and an empty bank. We will run 9 appends, each charged 3 coins.',
     );
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('Append 1: pay 3 coins into the bank, which now holds 3.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Write 1 into A[0] for 1 coin. Append 1 cost 1 step');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.total)).toBe('24');
     expect(stat(m.stats.bound)).toBe('27');
     expect(stat(m.stats.bank)).toBe('3');
@@ -98,7 +98,7 @@ describe('amortized dynamic arrays lesson', () => {
     render();
     stepUntil('Allocate a block of 4 slots');
     expect(text()).toContain(m.oldBlockTitle);
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('Copy element 0 for 1 coin. Bank: 5.');
     stepUntil('Resize done');
     expect(text()).not.toContain(m.oldBlockTitle);
@@ -111,7 +111,7 @@ describe('amortized dynamic arrays lesson', () => {
     expect(narration()).toBe('Copy element 3 for 1 coin. Bank: −1 — in debt!');
     expect(stat(m.stats.op)).toBe('5 / 9');
     expect(text()).toContain(m.debt);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain(m.accounting.broke(5, 2));
     expect(narration()).toContain('The bank went into debt on append 5, so c = 2 is not enough.');
   });
@@ -119,7 +119,7 @@ describe('amortized dynamic arrays lesson', () => {
   it('adds up the same run with the aggregate method', () => {
     render();
     pickMethod('aggregate');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('9 appends: 9 writes + copies 1 + 2 + 4 + 8 = 9 + 15 = 24 steps.');
     expect(text()).toContain('24 < 3 × 9 = 27, an average of 2.67 steps per append.');
   });
@@ -136,7 +136,7 @@ describe('amortized dynamic arrays lesson', () => {
     input('appends').dispatchEvent(new Event('input', { bubbles: true }));
     /** @type {HTMLFormElement} */ (input('appends').closest('form')).requestSubmit();
     flushSync();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.total)).toBe('127');
     expect(stat(m.stats.worst)).toBe('33');
     expect(stat(m.stats.bank)).toBe('65');
@@ -155,16 +155,16 @@ describe('amortized dynamic arrays lesson', () => {
     answer.value = '48';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '31';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

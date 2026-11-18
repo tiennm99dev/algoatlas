@@ -6,8 +6,8 @@ const plural = (k, one, many) => `${k} ${k === 1 ? one : many}`;
 export const en = {
   slug: 'binary-search-on-answer',
   topic: 'searching',
-  level: 'Intermediate',
-  title: 'Binary search on the answer',
+  level: 'Trung bình',
+  title: 'Tìm kiếm nhị phân trên đáp án',
   intro:
     'Sometimes there is no sorted array to search, only a question with a yes-or-no test: “can it be done with capacity c?”. When every c above a working value also works, the answers form a strip of false cells followed by true cells, and binary search finds the boundary without trying every c.',
   summary:
@@ -32,8 +32,7 @@ export const en = {
     ['Trying every capacity upward', 'O(n · S)', 'Up to S checks before the first true.'],
     ['Memory', 'O(1)', 'lo, hi, mid and the running load.'],
   ],
-  nextTeaser:
-    'Next up: ternary search, which finds the peak of a function that rises and then falls.',
+  nextTeaser: 'Bài tiếp theo: Tìm kiếm tam phân.',
   weightsLabel: 'Parcel weights',
   daysLabel: 'Days D',
   tryLabel: 'Try a capacity',

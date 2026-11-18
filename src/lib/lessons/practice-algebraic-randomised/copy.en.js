@@ -33,8 +33,8 @@ const startText = (rec) => rec.initial.map((v, i) => `a${sub(i)} = ${v}`).join('
 export const en = {
   slug: 'practice-algebraic-randomised',
   topic: 'algebraic-randomised',
-  level: 'Advanced',
-  title: 'Practice: algebraic and randomised problems',
+  level: 'Nâng cao',
+  title: 'Luyện tập: bài toán đại số và ngẫu nhiên',
   intro:
     'Two algebra moves solve a large family of contest problems. A linear recurrence becomes a matrix, so its n-th term takes O(k³ log n) time even for n near 10¹⁵. And multiplying two big numbers is a convolution of their digits followed by carrying, which is why FFT, a fast polynomial product, also multiplies huge integers fast.',
   summary:
@@ -265,6 +265,5 @@ export const en = {
         'The 7 column sums leave a final carry, which becomes an 8th digit: 9999 × 9999 = 99,980,001.',
     },
   ],
-  nextTeaser:
-    'Next up: P, NP and reductions, where the question turns from how fast a problem can be solved to whether any fast algorithm can exist.',
+  nextTeaser: 'Bài tiếp theo: P, NP và phép quy dẫn.',
 };

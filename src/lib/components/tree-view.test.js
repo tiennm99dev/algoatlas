@@ -49,10 +49,10 @@ describe('TreeView', () => {
     expect(document.querySelector('svg')?.getAttribute('role')).toBe('img');
     expect(document.querySelectorAll('line')).toHaveLength(3);
     expect([...document.querySelectorAll('title')].map((t) => t.textContent)).toEqual([
-      '50, depth 0',
-      '30, depth 1',
-      '20, depth 2',
-      '70, depth 1, compared',
+      '50, độ sâu 0',
+      '30, độ sâu 1',
+      '20, độ sâu 2',
+      '70, độ sâu 1, đang so sánh',
     ]);
     expect(document.body.textContent).toContain('R');
   });
@@ -66,12 +66,12 @@ describe('TreeView', () => {
   it('walks the tree with arrow keys and picks with Enter', () => {
     const onselect = vi.fn();
     render(TreeView, { roots: bst(), binary: true, ariaLabel: 'BST', onselect });
-    const root = byLabel('50, depth 0');
+    const root = byLabel('50, độ sâu 0');
     expect(root.getAttribute('tabindex')).toBe('0');
     press(root, 'ArrowDown');
-    expect(document.activeElement).toBe(byLabel('30, depth 1'));
+    expect(document.activeElement).toBe(byLabel('30, độ sâu 1'));
     press(/** @type {Element} */ (document.activeElement), 'ArrowRight');
-    expect(document.activeElement).toBe(byLabel('70, depth 1, compared'));
+    expect(document.activeElement).toBe(byLabel('70, độ sâu 1, đang so sánh'));
     press(/** @type {Element} */ (document.activeElement), 'ArrowUp');
     expect(document.activeElement).toBe(root);
     press(root, 'Enter');
@@ -84,23 +84,23 @@ describe('HeapView', () => {
     render(HeapView, { values: [9, 7, 8, 1], size: 3 });
     const titles = [...document.querySelectorAll('title')].map((t) => t.textContent);
     expect(titles).toEqual([
-      'Slot 0: 9',
-      'Slot 1: 7',
-      'Slot 2: 8',
-      'Slot 0: 9',
-      'Slot 1: 7',
-      'Slot 2: 8',
-      'Slot 3: 1, sorted',
+      'Ô 0: 9',
+      'Ô 1: 7',
+      'Ô 2: 8',
+      'Ô 0: 9',
+      'Ô 1: 7',
+      'Ô 2: 8',
+      'Ô 3: 1, đã xếp',
     ]);
     expect(document.querySelector('svg')?.getAttribute('aria-label')).toBe(
-      'Heap of 3 as an array: 9, 7, 8.',
+      'Heap gồm 3 phần tử, dạng mảng: 9, 7, 8.',
     );
   });
 
   it('picks a slot from either drawing', () => {
     const onselect = vi.fn();
     render(HeapView, { values: [9, 7, 8], onselect });
-    const [inTree, inArray] = document.querySelectorAll('[aria-label="Slot 2: 8"]');
+    const [inTree, inArray] = document.querySelectorAll('[aria-label="Ô 2: 8"]');
     press(inTree, 'Enter');
     expect(onselect).toHaveBeenLastCalledWith(2);
     press(inArray, ' ');
@@ -116,32 +116,34 @@ describe('UnionFindForest', () => {
     });
     const titles = [...document.querySelectorAll('title')].map((t) => t.textContent);
     expect(titles.slice(0, 4)).toEqual([
-      '0 is a root',
-      'parent of 1 is 0',
-      'parent of 2 is 1',
-      '3 is a root',
+      '0 là gốc',
+      'cha của 1 là 0',
+      'cha của 2 là 1',
+      '3 là gốc',
     ]);
-    expect(document.querySelector('svg')?.getAttribute('aria-label')).toBe('4 elements in 2 sets.');
+    expect(document.querySelector('svg')?.getAttribute('aria-label')).toBe(
+      '4 phần tử thuộc 2 tập.',
+    );
     expect(document.body.textContent).toContain('r1');
-    expect(document.body.textContent).toContain('parent');
+    expect(document.body.textContent).toContain('cha');
   });
 
   it('keeps keyboard focus on the same element when the trees change shape', () => {
     const props = reactiveProps({ parent: [0, 0, 1, 3], onselect: vi.fn() });
     render(UnionFindForest, props);
-    const node = byLabel('3 is a root');
+    const node = byLabel('3 là gốc');
     node.focus();
     expect(document.activeElement).toBe(node);
     // Union puts 0's tree under 3, so 3 now heads the only tree and is laid out first.
     props.parent = [3, 0, 1, 3];
     flushSync();
-    expect(document.activeElement?.getAttribute('aria-label')).toBe('3 is a root');
+    expect(document.activeElement?.getAttribute('aria-label')).toBe('3 là gốc');
     // A find on the root leaves its tree as it is and focus where it was.
     props.parent = [3, 0, 1, 3];
     flushSync();
-    expect(document.activeElement?.getAttribute('aria-label')).toBe('3 is a root');
+    expect(document.activeElement?.getAttribute('aria-label')).toBe('3 là gốc');
     press(/** @type {Element} */ (document.activeElement), 'ArrowDown');
-    expect(document.activeElement?.getAttribute('aria-label')).toBe('parent of 0 is 3');
+    expect(document.activeElement?.getAttribute('aria-label')).toBe('cha của 0 là 3');
   });
 
   it('hides the parent row on request', () => {

@@ -66,23 +66,23 @@ describe('digit DP lesson', () => {
   it('fills digit by digit and lets the tight prefix die', () => {
     render();
     expect(narration()).toContain('Count the numbers from 0 to 345 whose digits add up to 10.');
-    for (let i = 0; i < 3; i++) click(button('Next step'));
+    for (let i = 0; i < 3; i++) click(button('Bước tiếp'));
     expect(narration()).toBe(
       'The tight prefix (sum 0) may take a digit below 3, from 0 to 2. Each one falls below N and becomes loose: +1 to sums 0..2.',
     );
     expect(labelled('Digit 3')).toEqual(['Digit 3: allowed, stays tight']);
     expect(labelled('Digit 4')).toEqual(['Digit 4: blocked, the number would pass N']);
     expect(labelled('Digit 1:')).toEqual(['Digit 1: allowed, the prefix is loose']);
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe(
       'Or the tight prefix takes 3 itself and still equals N’s prefix: t = 0 + 3 = 3.',
     );
-    for (let i = 0; i < 4; i++) click(button('Next step'));
+    for (let i = 0; i < 4; i++) click(button('Bước tiếp'));
     expect(narration()).toBe(
       '1 loose prefix has sum 1. It is already below N, so any digit 0–9 may follow: add 1 to sums 1..10.',
     );
     expect(labelled('1 digit, sum 1:')).toEqual(['1 digit, sum 1: 1, spread now']);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('33');
     expect(byTest('transitions')).toBe('155 / 155');
     expect(byTest('brute')).toBe('346');
@@ -95,7 +95,7 @@ describe('digit DP lesson', () => {
     render();
     commit(field('input[name="limit"]'), '1234');
     expect(field('select[name="preset"]').value).toBe('');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     const want = digitTrace(1234, 10).at(-1)?.result;
     expect(byTest('answer')).toBe(String(want));
     expect(narration()).toContain('plus N itself');
@@ -105,7 +105,7 @@ describe('digit DP lesson', () => {
     render();
     commit(field('input[name="limit"]'), '5');
     commit(field('input[name="target"]'), '5');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('1');
     expect(narration()).toBe(
       '1 number: 0 loose ones with sum 5, plus N itself, whose tight prefix ends at 5.',
@@ -121,7 +121,7 @@ describe('digit DP lesson', () => {
     expect(narration()).toBe(m.targetError(20));
     expect(field('input[name="target"]').value).toBe('10');
     commit(field('input[name="target"]'), '3');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe(String(digitTrace(345, 3).at(-1)?.result));
   });
 
@@ -132,7 +132,7 @@ describe('digit DP lesson', () => {
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
     flushSync();
     expect(narration()).toContain('Before the first digit');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('21');
   });
 
@@ -159,9 +159,9 @@ describe('digit DP lesson', () => {
     answer.value = '34';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     /** @type {HTMLButtonElement} */ (hint).click();
     flushSync();
@@ -169,7 +169,7 @@ describe('digit DP lesson', () => {
     answer.value = '33';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
     const cost = m.practice.find((ex) => ex.type === 'text');
     for (const typed of ['O(len * S)', 'O(10 * len * S)'])

@@ -96,16 +96,16 @@ describe('Kruskal’s algorithm lesson', () => {
     render();
     expect(text()).toContain('Sort the 9 edges by weight: E — F 1, B — C 2, A — B 3, A — C 4');
     expect(sortedRows()[0]).toBe('E — F, weight 1, waiting');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain(
       'Edge E — F (weight 1): find(E) = E and find(F) = F are different roots',
     );
     expect(sortedRows()[0]).toBe('E — F, weight 1, now');
-    for (let i = 0; i < 3; i++) click(button('Next step'));
+    for (let i = 0; i < 3; i++) click(button('Bước tiếp'));
     expect(text()).toContain(
       'Edge A — C (weight 4): find(A) = find(C) = B, so both ends are already in one tree.',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Done: the minimum spanning tree has 5 edges and weight 18');
     expect(statValue(m.stats.considered)).toBe('7');
     expect(statValue(m.stats.rejected)).toBe('2');
@@ -116,21 +116,21 @@ describe('Kruskal’s algorithm lesson', () => {
 
   it('shows the stop before the last edges are read', () => {
     render();
-    click(button('Last step'));
-    click(button('Previous step'));
+    click(button('Đến bước cuối'));
+    click(button('Bước trước'));
     expect(text()).toContain('Stop: the 2 remaining edges are never looked at.');
   });
 
   it('reruns when a weight changes, and rejects a bad weight', () => {
     render();
     commit(weightField('D — E'), '10');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.weight)).toBe('19');
     commit(weightField('D — E'), '0');
     expect(text()).toContain(m.badWeight(99));
     expect(weightField('D — E').value).toBe('10');
     click(buttonByText(m.resetGraph));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.weight)).toBe('18');
   });
 
@@ -141,11 +141,11 @@ describe('Kruskal’s algorithm lesson', () => {
     click(vertex(5));
     click(vertex(4));
     click(vertex(5));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('The edges ran out with 2 trees left');
     click(buttonByText(m.resetGraph));
     click(buttonByText(m.randomWeights));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.accepted)).toBe('5');
   });
 
@@ -163,14 +163,14 @@ describe('Kruskal’s algorithm lesson', () => {
     render();
     const q = /** @type {HTMLElement} */ (practice().querySelectorAll(':scope > ol > li')[1]);
     answer(q, '9');
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[1].hints[0]);
     answer(q, '7');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

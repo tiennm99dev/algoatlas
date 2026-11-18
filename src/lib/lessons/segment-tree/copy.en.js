@@ -19,8 +19,8 @@ const range = (lo, hi) => `[${lo}, ${hi}]`;
 export const en = {
   slug: 'segment-tree',
   topic: 'range-queries',
-  level: 'Intermediate',
-  title: 'Segment tree',
+  level: 'Trung bình',
+  title: 'Cây phân đoạn',
   intro:
     'A segment tree is a binary tree of ranges: the root covers the whole array, each node splits its range in half, and each leaf is one value. Every node stores the merge of its range. Any query range breaks into at most two nodes per level, so range queries and point updates both take O(log n).',
   summary:
@@ -218,6 +218,5 @@ export const en = {
         'Gcd, max and matrix product are associative. Matrix product is not commutative, which is fine because the left child stays on the left. An average of two averages depends on the grouping, so a node would need to store a sum and a count instead.',
     },
   ],
-  nextTeaser:
-    'Next up: Lazy propagation, where one update changes a whole range and each node postpones the work until a query needs it.',
+  nextTeaser: 'Bài tiếp theo: Cập nhật lười.',
 };

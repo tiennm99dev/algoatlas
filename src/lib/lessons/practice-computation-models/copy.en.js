@@ -139,8 +139,8 @@ const CARDS = {
 export const en = {
   slug: 'practice-computation-models',
   topic: 'computation-models',
-  level: 'Advanced',
-  title: 'Practice: choosing a model',
+  level: 'Nâng cao',
+  title: 'Luyện tập: chọn mô hình tính toán',
   intro:
     'The right algorithm depends on what the job pays for. On many cores it is time steps, set by work and span; across machines it is rounds and messages; with big data it is block transfers; and with unknown input it is the ratio to the offline optimum. Match each scenario card to its model and its best algorithm.',
   summary:
@@ -297,6 +297,5 @@ export const en = {
         'Renting or buying and choosing which page to evict are made before the future is known, so they are online problems. Summing is parallel and the election is distributed.',
     },
   ],
-  nextTeaser:
-    'Next up: Review: advanced algorithms, a mixed quiz over advanced structures, strings, flows and complexity.',
+  nextTeaser: 'Bài tiếp theo: Ôn tập: thuật toán nâng cao.',
 };

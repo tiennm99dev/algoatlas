@@ -7,8 +7,8 @@ const placeName = (place) => ({ 1: 'ones', 10: 'tens', 100: 'hundreds' })[place]
 export const en = {
   slug: 'counting-radix-sort',
   topic: 'sorting',
-  level: 'Intermediate',
-  title: 'Counting sort and radix sort',
+  level: 'Trung bình',
+  title: 'Sắp xếp đếm và sắp xếp theo cơ số',
   intro:
     'When keys are small whole numbers, you can sort without comparing them at all. Counting sort counts how often each key appears and works out where each key’s block starts. Radix sort applies a stable pass to one digit at a time, from the ones digit up. Both run in linear time when the keys are short.',
   summary:
@@ -183,6 +183,5 @@ export const en = {
         'After the ones pass, 21 is before 22. In the tens pass they tie, and a stable pass keeps 21 first. An unstable pass could swap them and undo the ones pass.',
     },
   ],
-  nextTeaser:
-    'Next up: sorting applications, where sorting first turns hard problems such as merging intervals into a single scan.',
+  nextTeaser: 'Bài tiếp theo: Ứng dụng của sắp xếp.',
 };

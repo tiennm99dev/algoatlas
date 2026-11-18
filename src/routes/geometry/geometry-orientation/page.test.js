@@ -65,7 +65,7 @@ describe('points, vectors and orientation lesson', () => {
 
   it('steps to the worked example’s numbers', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(cell('cross')).toBe('18');
     expect(cell('dot')).toBe('13');
     expect(cell('area')).toBe('9');
@@ -75,11 +75,11 @@ describe('points, vectors and orientation lesson', () => {
 
   it('narrates each product while stepping', () => {
     render();
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('u = b − a = (4, 1)');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('v = c − a = (2, 5)');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Dot = u.x · v.x + u.y · v.y = 13');
   });
 
@@ -87,10 +87,10 @@ describe('points, vectors and orientation lesson', () => {
     render();
     pick('right');
     expect(cell('turn')).toBe(m.pending);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(cell('turn')).toBe('Right turn');
     pick('collinear');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(cell('turn')).toBe('Collinear');
     expect(cell('area')).toBe('0');
   });
@@ -98,7 +98,7 @@ describe('points, vectors and orientation lesson', () => {
   it('shows floats disagreeing with the exact answer on the float trap', () => {
     render();
     pick('floatTrap');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(cell('turn')).toBe('Collinear');
     expect(cell('float-row')).toContain('Right turn');
     expect(cell('epsilon-row')).toBe('Collinear');
@@ -179,14 +179,14 @@ describe('points, vectors and orientation lesson', () => {
       flushSync();
     };
     answer('7');
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(/** @type {any} */ (m.practice[0]).hints[0]);
     answer('11');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

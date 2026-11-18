@@ -65,7 +65,7 @@ describe('practice: balanced tree problems lesson', () => {
     render();
     expect(narration()).toContain('Nothing has run yet');
     expect(stat('bst-total')).toBe('0');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('bst-total')).toBe('170');
     expect(stat('avl-total')).toBe('62');
     expect(stat('bst-height')).toBe('15');
@@ -79,16 +79,16 @@ describe('practice: balanced tree problems lesson', () => {
     render();
     commit(opsField(), 'i2 i1 i3 s3 d9 i3');
     expect(narration()).toContain('Nothing has run yet');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('Insert 2. Comparisons: plain BST 0, AVL tree 0, skip list 0.');
-    click(button('Next step'));
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Search for 3: found.');
     expect(stat('bst-cost')).toBe('2');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('9 is not stored, so the delete changes nothing.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('3 is already stored');
     expect(stat('keys')).toBe('3');
   });
@@ -96,9 +96,9 @@ describe('practice: balanced tree problems lesson', () => {
   it('reports AVL rotations in the narration', () => {
     render();
     commit(opsField(), 'i1 i2 i3');
-    click(button('Next step'));
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('The AVL tree needed 1 rotation.');
     expect(stat('rotations')).toBe('1');
     expect(stat('avl-height')).toBe('2');
@@ -108,7 +108,7 @@ describe('practice: balanced tree problems lesson', () => {
   it('rank costs less with stored counts, and the switch keeps the current step', () => {
     render();
     commit(presetSelect(), 'scoreboard');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('avl-total')).toBe('117');
     click(rankRadio('counted'));
     expect(stat('avl-total')).toBe('67');
@@ -121,8 +121,8 @@ describe('practice: balanced tree problems lesson', () => {
     render();
     commit(opsField(), 'i10 i20 i30 i40 i50 r35');
     expect(stat('rank')).toBe(m.noRank);
-    click(button('Last step'));
-    click(button('Previous step'));
+    click(button('Đến bước cuối'));
+    click(button('Bước trước'));
     expect(stat('rank')).toBe('4');
     expect(narration()).toContain('The rank of 35 is 4, found by comparing keys in sorted order.');
     click(rankRadio('counted'));
@@ -131,7 +131,7 @@ describe('practice: balanced tree problems lesson', () => {
 
   it('draws the skip list towers, and new coins can change only the skip list', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     const before = [stat('bst-total'), stat('avl-total')];
     expect(
       document.querySelector('[data-testid="skip-list"] table')?.getAttribute('aria-label'),
@@ -150,7 +150,7 @@ describe('practice: balanced tree problems lesson', () => {
     render();
     click(buttonByText(m.coins));
     commit(presetSelect(), 'shuffled');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('skip-total')).toBe('95');
     expect(stat('bst-total')).toBe('57');
     expect(opsField().value).toContain('i7 i2 i13');
@@ -167,7 +167,7 @@ describe('practice: balanced tree problems lesson', () => {
     commit(opsField(), 'i1 i2 i3 i4 i5 i6 i7 i8 i9 i10 i11 i12 i13 i14 i15 i16');
     expect(narration()).toBe(m.opErrors.full);
     expect(opsField().value).toBe(kept);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('bst-total')).toBe('170');
   });
 
@@ -179,12 +179,12 @@ describe('practice: balanced tree problems lesson', () => {
       .closest('form')
       ?.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
     flushSync();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('keys')).toBe('2');
     expect(presetSelect().value).toBe('');
     commit(presetSelect(), 'random');
     expect(presetSelect().value).toBe('');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('keys')).toBe('11');
   });
 
@@ -208,13 +208,13 @@ describe('practice: balanced tree problems lesson', () => {
       flushSync();
     };
     submit('15');
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[1].hints[0]);
     submit('4');
-    expect(q.textContent).not.toContain('Not quite');
+    expect(q.textContent).not.toContain('Chưa đúng');
   });
 });

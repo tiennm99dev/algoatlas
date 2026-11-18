@@ -71,23 +71,23 @@ describe('selection sort and stability lesson', () => {
   it('starts on the first pass and scans for the minimum', () => {
     render();
     expect(cards()).toBe('Cards in order: 3a, 4a, 3b, 1a, 4b, 2a. 0 of 6 in final place.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Pass 1: fill slot 0. Start with min = 0 (3a).');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('4a is not smaller than 3a: min stays at slot 0.');
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('1a < the old minimum: min moves to slot 3.');
   });
 
   it('ends unstable with the swap version and stable with the shift version', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Sorted with 15 comparisons and 4 slots written.');
     expect(text()).toContain('Not stable here: key 3 now reads b, a.');
     expect(cards()).toContain('1a, 2a, 3b, 3a, 4b, 4a');
     pickVariant('shift');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Sorted with 15 comparisons and 11 slots written.');
     expect(text()).toContain('Every repeated key kept its input order.');
     expect(cards()).toContain('1a, 2a, 3a, 3b, 4a, 4b');
@@ -103,10 +103,10 @@ describe('selection sort and stability lesson', () => {
 
   it('describes the jump of a swap and the shift of a rotation', () => {
     render();
-    for (let i = 0; i < 7; i++) click(button('Next step'));
+    for (let i = 0; i < 7; i++) click(button('Bước tiếp'));
     expect(text()).toContain('Swap slots 0 and 3: 1a goes to the front, and 3a jumps to slot 3');
     pickVariant('shift');
-    for (let i = 0; i < 7; i++) click(button('Next step'));
+    for (let i = 0; i < 7; i++) click(button('Bước tiếp'));
     expect(text()).toContain('shift the 3 cards in slots 0 to 2 one slot right');
   });
 
@@ -114,7 +114,7 @@ describe('selection sort and stability lesson', () => {
     render();
     commit(keysInput(), '2, 2, 1');
     expect(cards()).toBe('Cards in order: 2a, 2b, 1a. 0 of 3 in final place.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(cards()).toContain('1a, 2b, 2a');
     expect(text()).toContain('2: b → a');
     expect(text()).toContain('✕ reordered');
@@ -151,7 +151,7 @@ describe('selection sort and stability lesson', () => {
     render();
     commit(keysInput(), '4, 1, 3');
     expect(text()).toContain('No key repeats.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('No key repeats, so stability cannot show.');
   });
 
@@ -168,13 +168,13 @@ describe('selection sort and stability lesson', () => {
     answer.value = '64';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '28';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

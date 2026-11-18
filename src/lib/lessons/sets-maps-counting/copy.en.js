@@ -17,8 +17,8 @@ const listWords = (words) =>
 export const en = {
   slug: 'sets-maps-counting',
   topic: 'structures',
-  level: 'Beginner',
-  title: 'Sets, maps and frequency counting',
+  level: 'Cơ bản',
+  title: 'Tập hợp, ánh xạ và đếm tần suất',
   intro:
     'Most programs use hash tables through two interfaces. A set answers “is x in here?”; a map stores a value for each key, such as how many times a word has appeared. Both cost O(1) per operation on average, so one pass over a stream of n words counts them all in O(n).',
   summary:
@@ -40,8 +40,7 @@ export const en = {
     ['Same with a list', 'O(n · d)', 'Each word may be compared with all d distinct words.'],
     ['Memory', 'O(d)', 'One entry per distinct word.'],
   ],
-  nextTeaser:
-    'Next up: practice hashing problems, where a map finds two numbers that add up to a target and groups anagrams in one pass.',
+  nextTeaser: 'Bài tiếp theo: Luyện tập: bài toán về băm.',
 
   modeLabel: 'Structure',
   modes: { map: 'Map (count)', set: 'Set (seen)' },

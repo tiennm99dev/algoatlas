@@ -78,7 +78,7 @@ describe('stacks lesson', () => {
   it('starts empty and builds the three-plate preset', () => {
     render();
     expect(narration()).toContain('top = −1');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(svgLabel('Stack')).toBe('Stack, bottom to top: 3, 8, 5. Top is 5.');
     expect(byTest('top')).toBe('2');
     expect(byTest('pushes')).toBe('3');
@@ -89,7 +89,7 @@ describe('stacks lesson', () => {
     commit(valueInput(), '42');
     click(buttonByText('Push'));
     expect(narration()).toContain('push(42): top = 2, below 5');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('a[3] = 42');
     expect(byTest('top')).toBe('3');
   });
@@ -97,7 +97,7 @@ describe('stacks lesson', () => {
   it('pops the last value pushed and leaves a stale slot', () => {
     render();
     click(buttonByText('Pop'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Read 5 from a[2]');
     expect(byTest('result')).toBe('5');
     expect(svgLabel('Array')).toContain('a[2] 5 (stale)');
@@ -108,11 +108,11 @@ describe('stacks lesson', () => {
   it('overflows the array but not the linked list', () => {
     render();
     commit(/** @type {HTMLSelectElement} */ (document.querySelector('select')), 'overflow');
-    click(button('Last step'));
-    click(button('Previous step'));
+    click(button('Đến bước cuối'));
+    click(button('Bước trước'));
     expect(narration()).toContain('Stack overflow: 5 has nowhere to go');
     pickImpl('linked');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('7 items on the stack, 5 on top');
     expect(svgLabel('Linked')).toContain('Linked list from top: 5 → 6 → 1 → 7 → 2 → 9 → 4 → null');
   });
@@ -124,7 +124,7 @@ describe('stacks lesson', () => {
     click(buttonByText('Push'));
     expect(narration()).toContain('point its next at the current top, 5');
     expect(svgLabel('New node')).toContain('New node 11, not linked yet');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(byTest('top')).toBe('11');
   });
 
@@ -132,7 +132,7 @@ describe('stacks lesson', () => {
     render();
     click(buttonByText('Reset'));
     click(buttonByText('Pop'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('Stack underflow: there is nothing to pop. The stack is unchanged.');
   });
 
@@ -169,7 +169,7 @@ describe('stacks lesson', () => {
 
   it('steps back with the arrow keys', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     const before = narration();
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
     flushSync();
@@ -189,16 +189,16 @@ describe('stacks lesson', () => {
     answer.value = '5';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '3';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

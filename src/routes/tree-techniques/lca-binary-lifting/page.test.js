@@ -61,7 +61,7 @@ const node = (label) => {
 };
 /** @param {number} n */
 const next = (n) => {
-  for (let i = 0; i < n; i++) click(button('Next step'));
+  for (let i = 0; i < n; i++) click(button('Bước tiếp'));
 };
 
 function practice() {
@@ -89,7 +89,7 @@ describe('lowest common ancestor and binary lifting lesson', () => {
 
   it('answers the family query and agrees with the Euler tour', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe('lca = B, after 10 table reads and 3 pointer moves.');
     expect(byTest('lca')).toBe('B');
     expect(byTest('d')).toBe('2');
@@ -103,7 +103,7 @@ describe('lowest common ancestor and binary lifting lesson', () => {
     render();
     choose('v', '12');
     expect(narration()).toBe('Table done (56 cells). Now ask lca(N, M).');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('lca')).toBe('A');
     expect(byTest('euler')).toContain('the shallowest entry is A (depth 0)');
   });
@@ -113,7 +113,7 @@ describe('lowest common ancestor and binary lifting lesson', () => {
     choose('u', '1');
     next(1);
     expect(narration()).toContain('I is deeper, so swap: u = I (depth 3), v = B (depth 1).');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('lca')).toBe('B');
     expect(narration()).toBe('lca = B, after 1 table read and 1 pointer move.');
   });
@@ -121,7 +121,7 @@ describe('lowest common ancestor and binary lifting lesson', () => {
   it('lifts along a 16-node path by 8, 4, 2 and 1', () => {
     render();
     choose('preset', 'path');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('d')).toBe('15');
     expect(byTest('reads')).toBe('4');
     expect(byTest('lca')).toBe('A');
@@ -140,11 +140,11 @@ describe('lowest common ancestor and binary lifting lesson', () => {
     click(buttonByText('Remove subtree'));
     // N went with D's subtree, so u falls back to the nearest kept ancestor, B.
     expect(byTest('selected')).toBe('Selected: B');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('lca')).toBe('B');
     click(buttonByText('Undo'));
     click(buttonByText('Undo'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('cells')).toBe('56');
   });
 
@@ -181,16 +181,16 @@ describe('lowest common ancestor and binary lifting lesson', () => {
     answer.value = '14';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '56';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

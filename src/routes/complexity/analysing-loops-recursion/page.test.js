@@ -78,16 +78,16 @@ describe('analysing loops and recursion lesson', () => {
 
   it('sums level 0, then splits it into two calls', () => {
     render();
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Level 0: 1 call of size 16, each doing 16 work');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('level 1 has 2');
     expect(stat('Calls drawn')).toBe('3');
   });
 
   it('ends merge sort at T(16) = 80 with every level costing 16', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('T(16) = 80, so T(n) = Θ(n log n).');
     expect(stat('Running total')).toBe('80');
     expect(stat('Calls drawn')).toBe('31');
@@ -98,7 +98,7 @@ describe('analysing loops and recursion lesson', () => {
     render();
     commit(presetSelect(), 'karatsuba');
     expect(input('a').value).toBe('3');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('T(8) = 65');
     expect(narration()).toContain('the aᵏ = 27 leaves dominate');
   });
@@ -107,7 +107,7 @@ describe('analysing loops and recursion lesson', () => {
     render();
     commit(input('d'), '2');
     expect(presetSelect().value).toBe('');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('the root’s n² dominates');
     commit(input('a'), '4');
     expect(narration()).toBe(m.fieldError(85));
@@ -118,7 +118,7 @@ describe('analysing loops and recursion lesson', () => {
 
   it('picks a call with the keyboard and shows its subtree cost', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     const root = /** @type {SVGElement} */ (document.querySelector('svg [tabindex="0"]'));
     root.focus();
     root.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
@@ -142,16 +142,16 @@ describe('analysing loops and recursion lesson', () => {
     answer.value = '64';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[2].hints[0]);
     answer.value = '80';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

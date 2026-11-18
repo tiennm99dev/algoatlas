@@ -48,12 +48,12 @@ const stat = (id) => document.querySelector(`[data-testid="${id}"]`)?.textConten
 /** @param {string} name */
 const field = (name) =>
   /** @type {HTMLInputElement} */ (document.querySelector(`[name="${name}"]`));
-const toLast = () => click(button('Last step'));
+const toLast = () => click(button('Đến bước cuối'));
 /** @param {string} kindText */
 function stepUntil(kindText) {
   for (let i = 0; i < 500; i++) {
     if (narration().includes(kindText)) return;
-    click(button('Next step'));
+    click(button('Bước tiếp'));
   }
   throw new Error(`never narrated ${kindText}`);
 }
@@ -69,7 +69,7 @@ describe('Suffix arrays lesson', () => {
     render();
     expect(rows()).toEqual(['banana', 'anana', 'nana', 'ana', 'na', 'a']);
     expect(narration()).toContain('a = 0, b = 1');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('cover 2 letters');
     expect(document.querySelector('[data-testid="row-0"]')?.textContent).toContain('1, 0');
     stepUntil('Every rank is different');
@@ -143,6 +143,6 @@ describe('Suffix arrays lesson', () => {
       new Event('submit', { bubbles: true, cancelable: true }),
     );
     flushSync();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
   });
 });

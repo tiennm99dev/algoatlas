@@ -60,8 +60,8 @@ const stat = (id) => document.querySelector(`[data-testid="${id}"]`)?.textConten
 /** @param {string} name */
 const field = (name) =>
   /** @type {HTMLInputElement} */ (document.querySelector(`[name="${name}"]`));
-const next = () => click(button('Next step'));
-const toLast = () => click(button('Last step'));
+const next = () => click(button('Bước tiếp'));
+const toLast = () => click(button('Đến bước cuối'));
 /** @param {string} value */
 function answer(value) {
   const input = field('guess');
@@ -256,16 +256,16 @@ describe('number theory practice', () => {
     input.value = '810';
     input.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(/** @type {any} */ (m.practice[0]).hints[0]);
     input.value = '1170';
     input.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 

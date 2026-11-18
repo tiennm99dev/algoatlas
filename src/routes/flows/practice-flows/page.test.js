@@ -111,7 +111,7 @@ describe('Flow modelling practice', () => {
     expect(text()).toContain(m.scenarios.supply.story);
     expect(text()).toContain('Your model has 7 vertices and 6 edges.');
     expect(status()).toContain(m.check.idle);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.value)).toBe('0');
 
     click(buttonByText(m.checkModel));
@@ -127,13 +127,13 @@ describe('Flow modelling practice', () => {
     expect(status()).toContain(m.check.ok(15));
 
     radio('run');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Pushed 3 along S → F → P → T. Flow so far: 3.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.value)).toBe('15');
     expect(statValue(m.stats.cut)).toBe('15');
     expect(text()).toContain('Your model carries at most 15.');
-    click(button('Previous step'));
+    click(button('Bước trước'));
     expect(text()).toContain(
       'S still reaches {S, F}; the full edges F → D, F → P and S → G leave that side, a minimum cut of 5 + 3 + 7 = 15.',
     );
@@ -142,7 +142,7 @@ describe('Flow modelling practice', () => {
     expect(document.querySelector('[data-vertex="1"] > title')?.textContent).toBe(
       'Vertex F, S side of the cut',
     );
-    click(button('First step'));
+    click(button('Về bước đầu'));
     press(document.body, 'ArrowRight');
     expect(text()).toContain('Pushed 3 along S → F → P → T.');
   });
@@ -151,7 +151,7 @@ describe('Flow modelling practice', () => {
     render();
     commit(scenario(), 'routers');
     expect(text()).toContain(m.scenarios.routers.story);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.value)).toBe('14');
     click(buttonByText(m.checkModel));
     expect(status()).toContain('Not yet: 5 edges missing, 3 edges the story does not need.');
@@ -161,8 +161,8 @@ describe('Flow modelling practice', () => {
     expect(text()).toContain(m.shownModel);
     click(buttonByText(m.checkModel));
     expect(status()).toContain(m.check.ok(12));
-    click(button('Last step'));
-    click(button('Previous step'));
+    click(button('Đến bước cuối'));
+    click(button('Bước trước'));
     expect(text()).toContain(
       'the full edges S → B and A → A′ leave that side, a minimum cut of 6 + 6 = 12.',
     );
@@ -186,8 +186,8 @@ describe('Flow modelling practice', () => {
     radio('remove');
     click(vertex(6));
     expect(text()).toContain('The model needs both S and T.');
-    click(buttonByText('Add node'));
-    expect(vertex(6).getAttribute('aria-label')).toContain('Node T,');
+    click(buttonByText('Thêm đỉnh'));
+    expect(vertex(6).getAttribute('aria-label')).toContain('Đỉnh T,');
     expect(text()).not.toContain('The model needs both S and T.');
     click(buttonByText(m.resetDrawing));
     expect(text()).toContain('Your model has 7 vertices and 6 edges.');
@@ -197,11 +197,11 @@ describe('Flow modelling practice', () => {
     render();
     const q = /** @type {HTMLElement} */ (practice().querySelectorAll('ol > li')[0]);
     answer(q, '16');
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer(q, '15');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

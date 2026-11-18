@@ -28,24 +28,30 @@ const minimums = {
 };
 
 /**
- * Lower case, `&` as 'and', typographic apostrophes as `'` and runs of spaces as one, so a
+ * Lower case, `&` as 'và', typographic apostrophes as `'` and runs of spaces as one, so a
  * title and the sentence that mentions it compare as plain words.
  * @param {string} s
  */
 const words = (s) =>
-  s.toLowerCase().replace(/&/g, 'and').replace(/[’‘]/g, "'").replace(/\s+/g, ' ').trim();
+  s
+    .normalize('NFC')
+    .toLowerCase()
+    .replace(/&/g, 'và')
+    .replace(/[’‘]/g, "'")
+    .replace(/\s+/g, ' ')
+    .trim();
 
 /**
  * The words of a lesson title that its teaser must contain: the part before a colon
- * ('Amortized analysis' of 'Amortized analysis: aggregate, …'), or for 'Practice: …' and
- * 'Review: …' titles, both the kind and the part after the colon.
+ * ('phân tích khấu hao' of 'Phân tích khấu hao: gộp, …'), or for 'Luyện tập: …' and
+ * 'Ôn tập: …' titles, both the kind and the part after the colon.
  * @param {string} title
  * @returns {string[]}
  */
 function titleWords(title) {
   const [head, ...rest] = words(title).split(':');
   const tail = rest.join(':').trim();
-  return (head === 'practice' || head === 'review') && tail ? [head, tail] : [head.trim()];
+  return (head === 'luyện tập' || head === 'ôn tập') && tail ? [head, tail] : [head.trim()];
 }
 
 describe('next-lesson teasers', () => {

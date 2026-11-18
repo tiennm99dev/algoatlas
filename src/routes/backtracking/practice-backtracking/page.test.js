@@ -53,11 +53,11 @@ describe('practice: backtracking problems lesson', () => {
   it('walks a word search to the end', () => {
     render();
     expect(narration()).toContain('Look for ABCCED');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe(
       'Cell (0, 0) holds A, letter 1 of 6. Mark it as used and try its neighbours for B.',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('result')).toBe('Found');
     expect(byTest('matched')).toBe('6 / 6');
     expect(byTest('checked')).toBe('9');
@@ -67,21 +67,21 @@ describe('practice: backtracking problems lesson', () => {
   it('retreats when a path dead-ends', () => {
     render();
     commit(field('select[name="word-preset"]'), 'absent');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('result')).toBe('Not found');
     expect(byTest('retreats')).toBe('4');
     expect(byTest('matched')).toBe('0 / 4');
     expect(narration()).toContain('ABCB is not in the grid');
-    click(button('First step'));
+    click(button('Về bước đầu'));
     let guard = 0;
-    while (!narration().includes('retreat.') && guard++ < 40) click(button('Next step'));
+    while (!narration().includes('retreat.') && guard++ < 40) click(button('Bước tiếp'));
     expect(narration()).toContain('Clear its mark');
   });
 
   it('says when a run is too long to show', () => {
     render();
     commit(field('select[name="word-preset"]'), 'trap');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('result')).toBe('Too long');
     expect(narration()).toContain('too many paths');
   });
@@ -92,7 +92,7 @@ describe('practice: backtracking problems lesson', () => {
     expect(field('input[name="grid"]').value).toBe('AB CD');
     commit(field('input[name="word"]'), 'acdb');
     expect(field('input[name="word"]').value).toBe('ACDB');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('result')).toBe('Found');
     expect(field('select[name="word-preset"]').value).toBe('');
   });
@@ -137,11 +137,11 @@ describe('practice: backtracking problems lesson', () => {
     render();
     toSum();
     expect(narration()).toContain('adds up to 7');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe(
       'Pick 2, leaving 5 to reach. The next call may pick 2 again, but nothing before it.',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('solutions')).toBe('2');
     expect(byTest('calls')).toBe('10');
     expect(byTest('stops')).toBe('7');
@@ -154,10 +154,10 @@ describe('practice: backtracking problems lesson', () => {
     commit(field('input[name="candidates"]'), '5 3 5');
     expect(field('input[name="candidates"]').value).toBe('3 5');
     commit(field('input[name="total"]'), '8');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('solutions')).toBe('1');
     commit(field('select[name="sum-preset"]'), 'ten');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('solutions')).toBe('6');
     click(/** @type {Element} */ (document.querySelector('[data-node="0"]')));
     expect(byTest('calls')).toBe('1');
@@ -165,7 +165,7 @@ describe('practice: backtracking problems lesson', () => {
 
   it('keeps each problem where it was when switching', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     toSum();
     expect(byTest('calls')).toBe('1');
     click(field('input[name="problem"][value="word"]'));
@@ -188,16 +188,16 @@ describe('practice: backtracking problems lesson', () => {
     answer.value = '2';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {Element} */ (hint));
     expect(q.textContent).toContain('read Retreats');
     answer.value = '4';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).not.toContain('Not quite');
+    expect(q.textContent).not.toContain('Chưa đúng');
     expect(m.practice.flatMap((ex) => exerciseProblems(ex))).toEqual([]);
   });
 });

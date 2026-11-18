@@ -64,10 +64,10 @@ describe('NP-completeness lesson', () => {
   it('builds the gadget and covers it with a satisfying assignment', () => {
     render();
     expect(narration()).toContain('φ has n = 3 variables and m = 3 clauses');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Variable a: add vertices a and ¬a');
     expect(byTest('vertices')).toBe('2');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('vertices')).toBe('15');
     expect(byTest('edges')).toBe('21');
     expect(byTest('k')).toBe('9');
@@ -78,28 +78,28 @@ describe('NP-completeness lesson', () => {
   it('an assignment that misses leaves an edge uncovered, and a flip fixes it', () => {
     render();
     commit(field('select[name="preset"]'), 'missed');
-    click(button('Last step'));
-    click(button('Previous step'));
+    click(button('Đến bước cuối'));
+    click(button('Bước trước'));
     expect(narration()).toContain('1 edge is not covered: this assignment fails');
     expect(narration()).toContain('φ is still satisfiable, for example with a = F, b = F, c = T');
     expect(byTest('result')).toBe('1 edge uncovered');
     click(button('c is false; press to flip it'));
     expect(narration()).toContain('a is false, so take vertex ¬a');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('result')).toBe('covered: φ is satisfied');
   });
 
   it('loads an unsatisfiable formula and edits the formula', () => {
     render();
     commit(field('select[name="preset"]'), 'unsatisfiable');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('φ is unsatisfiable');
     commit(field('input[name="formula"]'), '(a ∨ a ∨ b) & (¬a ∨ ¬a ∨ b) & (¬b ∨ ¬b ∨ a)');
     expect(field('input[name="formula"]').value).toBe(
       '(a ∨ a ∨ b) ∧ (¬a ∨ ¬a ∨ b) ∧ (¬b ∨ ¬b ∨ a)',
     );
     click(button('b is false; press to flip it'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('result')).toBe('covered: φ is satisfied');
     expect(field('select[name="preset"]').value).toBe('');
   });
@@ -129,16 +129,16 @@ describe('NP-completeness lesson', () => {
     answer.value = '5';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {Element} */ (hint));
     expect(q.textContent).toContain('Two per variable');
     answer.value = '12';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).not.toContain('Not quite');
+    expect(q.textContent).not.toContain('Chưa đúng');
     expect(m.practice.flatMap((ex) => exerciseProblems(ex))).toEqual([]);
   });
 });

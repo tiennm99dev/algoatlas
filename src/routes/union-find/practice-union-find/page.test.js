@@ -84,7 +84,7 @@ describe('union-find practice lesson', () => {
     render();
     expect(narration()).toContain('9 edges will arrive one at a time');
     expect(statValue('Components')).toBe('8');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe(
       'All 9 edges processed: 2 components, 3 edges closed a cycle, the first was #4.',
     );
@@ -96,9 +96,9 @@ describe('union-find practice lesson', () => {
 
   it('flags the edge that closes the first cycle', () => {
     render();
-    for (let i = 0; i < 7; i++) click(button('Next step'));
+    for (let i = 0; i < 7; i++) click(button('Bước tiếp'));
     expect(narration()).toBe('Edge #4 A–D: find(A) = A, find(D) = A.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('#4 A–D closes a cycle');
     expect(text()).toContain('#4 A–D ✕');
     expect(text()).toContain('#4: 5');
@@ -112,7 +112,7 @@ describe('union-find practice lesson', () => {
     form.requestSubmit();
     flushSync();
     expect(narration()).toBe('Edge #10 H–A: find(H) = H, find(A) = A.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue('Components')).toBe('1');
     commit(select('to'), '7');
     click(buttonByText('Add edge'));
@@ -127,13 +127,13 @@ describe('union-find practice lesson', () => {
   it('undoes, clears and loads the spanning tree stream', () => {
     render();
     click(buttonByText('Undo last'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue('Edges that closed a cycle')).toBe('2');
     click(buttonByText('Clear'));
     expect(text()).toContain('no edges yet');
     expect(buttonByText('Clear').getAttribute('aria-disabled')).toBe('true');
     commit(select('preset'), 'tree');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue('Components')).toBe('1');
     expect(statValue('First cycle edge')).toBe('—');
   });
@@ -165,11 +165,11 @@ describe('union-find practice lesson', () => {
     render();
     const q = /** @type {HTMLElement} */ (practice().querySelectorAll('ol > li')[0]);
     answer(q, '1');
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer(q, '2');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

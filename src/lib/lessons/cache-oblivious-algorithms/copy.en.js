@@ -11,8 +11,8 @@ const list = (items) =>
 export const en = {
   slug: 'cache-oblivious-algorithms',
   topic: 'computation-models',
-  level: 'Advanced',
-  title: 'Cache-oblivious algorithms',
+  level: 'Nâng cao',
+  title: 'Thuật toán không phụ thuộc cache',
   intro:
     'On a real machine, reading one word from main memory brings in a whole block of B neighbouring words, and the cache keeps only M words. When data is big, the number of block transfers decides the running time far more than the number of instructions. A cache-oblivious algorithm keeps that number low for every B and M without knowing either: it splits the problem recursively until the pieces fit.',
   summary:
@@ -157,6 +157,5 @@ export const en = {
         'Each 2 × 2 square of A is one block, and its transpose in B is one block too. The recursion finishes a square before moving on, so one block of each matrix is all it needs: 16 + 16 = 32.',
     },
   ],
-  nextTeaser:
-    'Next up: online algorithms and competitive analysis, where decisions are made before the future is known and compared with the best offline choice.',
+  nextTeaser: 'Bài tiếp theo: Thuật toán trực tuyến và phân tích cạnh tranh.',
 };

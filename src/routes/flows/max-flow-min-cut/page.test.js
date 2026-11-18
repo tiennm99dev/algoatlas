@@ -98,20 +98,20 @@ describe('Max-flow min-cut lesson', () => {
   it('finds the flow, shades the reachable set and reads off the cut', () => {
     render();
     expect(text()).toContain('First find a maximum flow from S to T');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Pushed 12 along S → A → C → T. Flow value: 12.');
-    for (let i = 0; i < 3; i++) click(button('Next step'));
+    for (let i = 0; i < 3; i++) click(button('Bước tiếp'));
     expect(text()).toContain('the flow of value 23 is maximum.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain(
       'Take S from the queue. Its arcs with room reach A and B, which join the S side.',
     );
     expect(vertexTitle(0)).toBe('Vertex S, source, taken from the queue now, reachable from s');
     expect(vertexTitle(1)).toBe('Vertex A, just reached, reachable from s');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Take A from the queue. It reaches no new vertex');
-    click(button('Last step'));
-    click(button('Previous step'));
+    click(button('Đến bước cuối'));
+    click(button('Bước trước'));
     expect(text()).toContain(
       'S = {S, A, B, D}, and T holds the rest. The cut edges A → C, D → C and D → T are all saturated, and edges from T back to S carry nothing, so c(S, T) = 12 + 7 + 4 = 23 = |f|.',
     );
@@ -144,11 +144,11 @@ describe('Max-flow min-cut lesson', () => {
   it('returns the smallest minimum cut on ties and reruns on edits', () => {
     render();
     commit(select('preset'), 'ties');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('A minimum cut of capacity 7, equal to the maximum flow.');
     expect(vertexTitle(1)).toBe('Vertex A');
     commit(capacityField('S → A'), '9');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.cut)).toBe('7');
     expect(vertexTitle(1)).toBe('Vertex A, S side');
     commit(capacityField('S → A'), 'x');
@@ -156,9 +156,9 @@ describe('Max-flow min-cut lesson', () => {
     commit(select('source'), '3');
     expect(text()).toContain(m.sameEnds);
     click(buttonByText(m.resetGraph));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(vertexTitle(1)).toBe('Vertex A');
-    click(button('First step'));
+    click(button('Về bước đầu'));
     press(document.body, 'ArrowRight');
     expect(text()).toContain('Pushed 2 along S → A → T.');
   });
@@ -167,11 +167,11 @@ describe('Max-flow min-cut lesson', () => {
     render();
     const q = /** @type {HTMLElement} */ (practice().querySelectorAll('ol > li')[0]);
     answer(q, '23');
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer(q, '25');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

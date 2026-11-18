@@ -18,8 +18,8 @@ const PAIR = /** @type {Record<string, string>} */ ({ ')': '(', ']': '[', '}': '
 export const en = {
   slug: 'stack-applications',
   topic: 'stacks-queues',
-  level: 'Intermediate',
-  title: 'Stack applications',
+  level: 'Trung bình',
+  title: 'Ứng dụng của ngăn xếp',
   intro:
     'Whenever the most recent unfinished thing must be finished first, a stack fits. A bracket checker pushes every opening bracket and pops it when its partner closes; a postfix calculator pushes numbers and lets each operator pop its two operands; and the computer’s own call stack pushes a frame for every function call and pops it on return.',
   summary:
@@ -213,6 +213,5 @@ export const en = {
         'fact(5), fact(4), fact(3), fact(2) and fact(1) are all waiting at once before fact(1) returns: 5 frames.',
     },
   ],
-  nextTeaser:
-    'Next up: the monotonic stack and queue, which keep values in order to find next greater elements and window maxima in O(n).',
+  nextTeaser: 'Bài tiếp theo: Ngăn xếp đơn điệu và hàng đợi đơn điệu.',
 };

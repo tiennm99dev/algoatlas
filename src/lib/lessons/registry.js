@@ -8,7 +8,7 @@ export { lessonNeighbors, lessonPath, topicPath } from './paths.js';
  * @typedef {object} LessonCopy
  * @property {string} slug
  * @property {string} topic  The curriculum chapter slug the lesson sits in.
- * @property {string} level  Difficulty within the topic: Beginner, Intermediate, or Advanced.
+ * @property {string} level  Difficulty within the topic, one of `lessonLevels` in `site.vi.js`.
  * @property {string} title
  * @property {string} intro
  * @property {string} [summary]  One sentence for the meta description; falls back to `intro`.
@@ -21,9 +21,10 @@ export { lessonNeighbors, lessonPath, topicPath } from './paths.js';
  *   questions for the page's practice block; required for practice and review lessons.
  */
 
-// A lesson registers itself by adding `<slug>/copy.en.js`; the curriculum decides its place.
-const modules = /** @type {Record<string, {en: LessonCopy}>} */ (
-  import.meta.glob('./*/copy.en.js', { eager: true })
+// A lesson registers itself by adding `<slug>/copy.vi.js`; the curriculum decides its place.
+// Lessons still on the old `copy.en.js` name are read too, until every copy is renamed.
+const modules = /** @type {Record<string, {vi?: LessonCopy, en?: LessonCopy}>} */ (
+  import.meta.glob(['./*/copy.vi.js', './*/copy.en.js'], { eager: true })
 );
 
 /**
@@ -31,13 +32,16 @@ const modules = /** @type {Record<string, {en: LessonCopy}>} */ (
  * @type {LessonCopy[]}
  */
 export const lessons = Object.values(modules)
-  .map(({ en }) => {
-    const entry = findLesson(en.slug);
-    if (!entry) throw new Error(`Lesson ${en.slug} is not in the curriculum`);
-    if (entry.chapter.slug !== en.topic) {
-      throw new Error(`Lesson ${en.slug} belongs to topic ${entry.chapter.slug}, not ${en.topic}`);
+  .map((mod) => {
+    const copy = /** @type {LessonCopy} */ (mod.vi ?? mod.en);
+    const entry = findLesson(copy.slug);
+    if (!entry) throw new Error(`Lesson ${copy.slug} is not in the curriculum`);
+    if (entry.chapter.slug !== copy.topic) {
+      throw new Error(
+        `Lesson ${copy.slug} belongs to topic ${entry.chapter.slug}, not ${copy.topic}`,
+      );
     }
-    return en;
+    return copy;
   })
   .sort((a, b) => lessonOrder.indexOf(a.slug) - lessonOrder.indexOf(b.slug));
 

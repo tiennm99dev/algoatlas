@@ -49,12 +49,12 @@ const stat = (id) => document.querySelector(`[data-testid="${id}"]`)?.textConten
 const field = (name) =>
   /** @type {HTMLInputElement} */ (document.querySelector(`[name="${name}"]`));
 const titles = () => [...document.querySelectorAll('svg title')].map((t) => t.textContent ?? '');
-const toLast = () => click(button('Last step'));
+const toLast = () => click(button('Đến bước cuối'));
 /** @param {string} kindText */
 function stepUntil(kindText) {
   for (let i = 0; i < 400; i++) {
     if (narration().includes(kindText)) return;
-    click(button('Next step'));
+    click(button('Bước tiếp'));
   }
   throw new Error(`never narrated ${kindText}`);
 }
@@ -63,13 +63,13 @@ describe('Boyer-Moore lesson', () => {
   it('fills the table, then runs the classic example to the expected counters', () => {
     render();
     expect(narration()).toBe('First note where each letter of example last appears.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('P[0] = e, so last[e] = 0.');
     stepUntil('Put P at position 0');
     expect(titles()).toContain('Last index column 0: 2');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('P[6] = e differs from T[6] = a.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('The rightmost a in P is at 2: line it up with the text, skip 4.');
     expect(stat('rule')).toBe('max(1, j − last[a]) = max(1, 6 − (2)) = 4');
     toLast();
@@ -108,7 +108,7 @@ describe('Boyer-Moore lesson', () => {
     commit(field('text'), 'abaab');
     commit(field('pattern'), 'ab');
     stepUntil('occurs at 0');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('Line up the next letter, a, with its rightmost copy in P: skip 2.');
   });
 
@@ -117,7 +117,7 @@ describe('Boyer-Moore lesson', () => {
     commit(field('text'), 'abxab');
     commit(field('pattern'), 'ab');
     stepUntil('occurs at 0');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('The next letter, x, is not in P, so jump past it: skip 3.');
   });
 
@@ -126,7 +126,7 @@ describe('Boyer-Moore lesson', () => {
     commit(field('preset'), 'matches');
     stepUntil('occurs at 0');
     expect(titles().some((t) => t.includes('full match'))).toBe(true);
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('The next letter, c, is not in P, so jump past it: skip 5.');
     toLast();
     expect(narration()).toContain('3 matches');
@@ -174,16 +174,16 @@ describe('Boyer-Moore lesson', () => {
     answer.value = '6';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(/** @type {any} */ (m.practice[0]).hints[0]);
     answer.value = '7';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

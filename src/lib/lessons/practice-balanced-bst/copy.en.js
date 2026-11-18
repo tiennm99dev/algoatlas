@@ -23,8 +23,8 @@ function cheapest(f) {
 export const en = {
   slug: 'practice-balanced-bst',
   topic: 'balanced-bst',
-  level: 'Intermediate',
-  title: 'Practice: balanced tree problems',
+  level: 'Trung bình',
+  title: 'Luyện tập: bài toán cây cân bằng',
   intro:
     'Choosing an ordered structure comes down to what it will actually be asked to do. Run one sequence of operations through a plain BST, an AVL tree and a skip list, count the comparisons each spends, and see when balance earns its keep and what a rank query costs with and without stored counts.',
   summary:
@@ -152,8 +152,7 @@ export const en = {
     ['Rank, stored counts', 'O(log n)', 'One walk, reading one stored count per node.'],
     ['Memory', 'O(n)', 'All three use one node per key; a skip list averages 2 links per key.'],
   ],
-  nextTeaser:
-    'Next up: Review: core algorithms, a quiz across everything from shortest paths to balanced trees.',
+  nextTeaser: 'Bài tiếp theo: Ôn tập: thuật toán cốt lõi.',
   practiceTitle: 'Practice problems',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
   practice: [

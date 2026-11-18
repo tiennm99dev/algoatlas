@@ -61,10 +61,10 @@ const work = () =>
 /** @param {string} role */
 const roles = (role) =>
   document.querySelectorAll(`[data-testid="work"] td[data-role="${role}"]`).length;
-const toLast = () => click(button('Last step'));
+const toLast = () => click(button('Đến bước cuối'));
 /** @param {number} times */
 const next = (times) => {
-  for (let i = 0; i < times; i++) click(button('Next step'));
+  for (let i = 0; i < times; i++) click(button('Bước tiếp'));
 };
 /** @param {string} value */
 function pickPivoting(value) {
@@ -107,7 +107,7 @@ describe('LUP decomposition lesson', () => {
     toLast();
     expect(narration()).toContain('Stopped on a zero pivot');
     expect(document.querySelector('[data-testid="factor-L"]')).toBeNull();
-    click(button('Previous step'));
+    click(button('Bước trước'));
     expect(narration()).toContain('plain LU cannot divide by it');
     pickPivoting('lup');
     toLast();
@@ -163,16 +163,16 @@ describe('LUP decomposition lesson', () => {
     answer.value = '1';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(/** @type {any} */ (m.practice[1]).hints[0]);
     answer.value = '2';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 

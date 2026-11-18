@@ -16,8 +16,8 @@ const low = (i) => i & -i;
 export const en = {
   slug: 'fenwick-tree',
   topic: 'range-queries',
-  level: 'Intermediate',
-  title: 'Fenwick tree',
+  level: 'Trung bình',
+  title: 'Cây Fenwick',
   intro:
     'A Fenwick tree, also called a binary indexed tree, keeps prefix sums while values change. It is a single array where each cell sums a block of values, and the block’s length is the lowest set bit of the cell’s index. Reads and updates each jump through about log₂ n cells at most.',
   summary:
@@ -217,6 +217,5 @@ export const en = {
         'A range sum subtracts prefix(l − 1) from prefix(r). Knowing the minimum of a longer prefix and of a shorter one does not give the minimum of the part between, so it needs another structure.',
     },
   ],
-  nextTeaser:
-    'Next up: Segment tree, a real tree of ranges that merges with any associative function, so range minimum works with updates too.',
+  nextTeaser: 'Bài tiếp theo: Cây phân đoạn.',
 };

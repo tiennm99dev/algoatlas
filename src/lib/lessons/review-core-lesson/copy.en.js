@@ -1,8 +1,8 @@
 export const en = {
   slug: 'review-core-lesson',
   topic: 'review-core',
-  level: 'Advanced',
-  title: 'Review: core algorithms',
+  level: 'Nâng cao',
+  title: 'Ôn tập: thuật toán cốt lõi',
   intro:
     'This quiz mixes questions from every chapter of the core algorithms: shortest paths, union-find, minimum spanning trees, advanced graphs, divide and conquer, greedy algorithms, dynamic programming, backtracking and balanced search trees. Many questions describe a problem and ask which algorithm or paradigm fits it, because recognising the shape of a problem is the skill these chapters build; the rest have you run an algorithm by hand.',
   summary:
@@ -100,7 +100,7 @@ export const en = {
       'Wide nodes keep the tree very shallow, so few slow disk reads are needed.',
     ],
   ],
-  nextTeaser: 'Next up: Sparse table, the start of the advanced topics level.',
+  nextTeaser: 'Bài tiếp theo: Bảng thưa.',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
   practice: [
     {

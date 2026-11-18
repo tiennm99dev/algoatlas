@@ -6,8 +6,8 @@ const big = (n) => n.toLocaleString('en-US');
 export const en = {
   slug: 'practice-advanced-dp',
   topic: 'advanced-dp',
-  level: 'Advanced',
-  title: 'Practice: advanced DP problems',
+  level: 'Nâng cao',
+  title: 'Luyện tập: bài toán QHĐ nâng cao',
   intro:
     'Knowing the recurrence is half of an advanced DP problem; the other half is noticing which state compression or optimisation makes it fast enough. This runner solves three problems twice, naively and optimised, on the same input. Both must give the same answer, and the work and time counters show how far apart they grow.',
   summary:
@@ -165,6 +165,5 @@ export const en = {
         'The naive method reads 24 values; the deque does 27 steps. The queue only wins once n·k grows, which the growth table shows.',
     },
   ],
-  nextTeaser:
-    'Next up: Lowest common ancestor and binary lifting, which answers ancestor questions on a tree by jumping powers of two.',
+  nextTeaser: 'Bài tiếp theo: Tổ tiên chung gần nhất và nhảy nhị phân.',
 };

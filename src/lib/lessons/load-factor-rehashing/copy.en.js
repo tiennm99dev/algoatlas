@@ -15,8 +15,8 @@ const GROWTH_TEXT = { double: 'doubling m', add: 'adding 4 buckets' };
 export const en = {
   slug: 'load-factor-rehashing',
   topic: 'structures',
-  level: 'Intermediate',
-  title: 'Load factor and rehashing',
+  level: 'Trung bình',
+  title: 'Hệ số tải và băm lại',
   intro:
     'The load factor α = n/m, keys per bucket, decides how long a chain or a probe run gets. A table keeps α small by growing: when α passes a threshold it allocates more buckets and rehashes every key into them. One resize is expensive, but if the table doubles, the total cost stays O(1) per insert.',
   summary:
@@ -46,8 +46,7 @@ export const en = {
     ],
     ['Memory', 'O(n + m)', 'With doubling, m stays within a constant factor of n.'],
   ],
-  nextTeaser:
-    'Next up: designing hash functions, where a weak hash piles keys into a few buckets and a randomly chosen one spreads them even against an adversary.',
+  nextTeaser: 'Bài tiếp theo: Thiết kế hàm băm.',
 
   countLabel: 'Inserts',
   thresholdLabel: 'Resize threshold',

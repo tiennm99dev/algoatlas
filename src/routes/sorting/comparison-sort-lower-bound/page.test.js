@@ -80,11 +80,11 @@ describe('comparison sort lower bound lesson', () => {
   it('walks the insertion tree for C < A < B in three questions', () => {
     render();
     expect(stat(m.stats.possible)).toBe('6');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Is B < A? No. 3 of 6 orders still fit.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Is C < B? Yes. 2 of 6 orders still fit.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Leaf reached after 3 comparisons: the sorted order is C < A < B.');
     expect(stat(m.stats.possible)).toBe('1');
     expect(node('Leaf: C < A < B').getAttribute('aria-label')).toContain('the answer');
@@ -96,7 +96,7 @@ describe('comparison sort lower bound lesson', () => {
       /** @type {HTMLSelectElement} */ (document.querySelector('select[name="order"]')),
       'ABC',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Leaf reached after 2 comparisons: the sorted order is A < B < C.');
   });
 
@@ -166,13 +166,13 @@ describe('comparison sort lower bound lesson', () => {
     answer.value = '16';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '24';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

@@ -21,8 +21,8 @@ function fraction(p, q) {
 export const en = {
   slug: 'fractional-knapsack',
   topic: 'greedy',
-  level: 'Intermediate',
-  title: 'Fractional knapsack and scheduling with deadlines',
+  level: 'Trung bình',
+  title: 'Cái túi phân số và lập lịch có hạn chót',
   intro:
     'Two problems where one sort and one pass give the best answer. In the fractional knapsack you may cut items, so you fill the bag with the best value per kilogram first and cut only the last item. In job sequencing every job takes one time slot and pays only if it finishes by its deadline, so you take the most profitable jobs first, each as late as it can go.',
   summary:
@@ -247,6 +247,5 @@ export const en = {
         'Job sets that can all meet their deadlines satisfy the matroid exchange property: a smaller such set can always take a job from a larger one. Knapsack-feasible sets break it: with W = 35, the set holding one 30-unit item cannot take either item of the larger set of two 10-unit items. Without that property greedy can lose, as 160 against 220 shows.',
     },
   ],
-  nextTeaser:
-    'Next up: Practice: greedy problems, where you test greedy rules against random cases and prove or break them, starting with the jump game.',
+  nextTeaser: 'Bài tiếp theo: Luyện tập: bài toán tham lam.',
 };

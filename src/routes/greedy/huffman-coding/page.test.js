@@ -82,10 +82,10 @@ describe('Huffman coding lesson', () => {
 
   it('picks the two lightest and merges them', () => {
     render();
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Take the two lightest trees: f (5) and e (9).');
     expect(node('f, weight 5')).toContain('One of the two lightest');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Merge them under a node of weight 14');
     expect(narration()).toContain('5 trees left.');
     expect(stat('Huffman bits')).toBe('14');
@@ -94,7 +94,7 @@ describe('Huffman coding lesson', () => {
 
   it('reads the codes and reaches 224 bits', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain(
       'Done: 224 bits in all, 2.24 bits per symbol on average, against 300 bits for a fixed 3-bit code.',
     );
@@ -108,7 +108,7 @@ describe('Huffman coding lesson', () => {
       'e 9 1101 36',
       'f 5 1100 20',
     ]);
-    click(button('Previous step'));
+    click(button('Bước trước'));
     expect(narration()).toContain(
       'd: follow the edges from the root to read 111, 3 bits × 16 = 48 bits.',
     );
@@ -117,7 +117,7 @@ describe('Huffman coding lesson', () => {
 
   it('jumps to the step that reads a leaf’s code when the leaf is picked', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     const leaf = /** @type {HTMLElement} */ (
       document.querySelector('g[role="button"][aria-label^="f, weight 5"]')
     );
@@ -141,7 +141,7 @@ describe('Huffman coding lesson', () => {
     expect(/** @type {HTMLInputElement} */ (field('frequencies')).value).toBe(
       'a:5, b:2, r:2, c:1, d:1',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('Done: 23 bits in all');
     expect(stat('Fixed-length bits')).toBe('33');
   });
@@ -150,7 +150,7 @@ describe('Huffman coding lesson', () => {
     render();
     commit(field('preset'), 'equal');
     expect(text()).toContain('New frequencies loaded.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('Huffman bits')).toBe('40');
     expect(stat('Fixed-length bits')).toBe('40');
   });
@@ -192,16 +192,16 @@ describe('Huffman coding lesson', () => {
     answer.value = '33';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[1].hints[0]);
     answer.value = '23';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

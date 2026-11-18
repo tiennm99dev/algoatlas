@@ -72,7 +72,7 @@ function stat(label) {
 
 /** Step until the narration matches. @param {string} part */
 function stepUntil(part) {
-  for (let i = 0; i < 400 && !narration().includes(part); i++) click(button('Next step'));
+  for (let i = 0; i < 400 && !narration().includes(part); i++) click(button('Bước tiếp'));
 }
 
 const arrayLabel = () =>
@@ -92,17 +92,17 @@ describe('sliding window lesson', () => {
     expect(narration()).toBe(
       'Find the largest sum of 3 consecutive values among 6. Start by adding up the first window.',
     );
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('Add a[0] = 2: the first window’s sum is 2 so far.');
     stepUntil('Slide right');
     expect(narration()).toBe(
       'Slide right: add a[3] = 1 and take out a[0] = 2, so the sum is 7, not more than the best 8.',
     );
     expect(text()).toContain('Running sum: 8 + 1 − 2 = 7');
-    expect(arrayLabel()).toContain('sum 7 covers 1 to 3');
-    expect(arrayLabel()).toContain('best covers 0 to 2');
+    expect(arrayLabel()).toContain('sum 7 phủ từ 1 đến 3');
+    expect(arrayLabel()).toContain('best phủ từ 0 đến 2');
     expect(text()).toContain('Index 3: 1, just added to the sum');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe(
       'Done: the best window is a[2..5) with sum 9, after 9 updates instead of 12.',
     );
@@ -117,7 +117,7 @@ describe('sliding window lesson', () => {
     expect(text()).toContain('shortestWindow(a, S):');
     stepUntil('Take out');
     expect(narration()).toBe('Take out a[0] = 2 and move l to 1: sum 6.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe(
       'Done: the shortest window is a[0..3), length 3. Each value entered once and left at most once: 9 updates.',
     );
@@ -125,7 +125,7 @@ describe('sliding window lesson', () => {
     expect(stat(m.stats.shrinks)).toBe('3');
     expect(stat(m.stats.brute)).toBe('21');
     commit(input('s'), '100');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.bestLength)).toBe(m.none);
     expect(narration()).toContain('no run of values reaches 100');
   });
@@ -134,7 +134,7 @@ describe('sliding window lesson', () => {
     render();
     pickMode('variable');
     commit(input('values'), '2 3 1 2 4 3');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.bestLength)).toBe('2');
     expect(stat(m.stats.shrinks)).toBe('5');
     expect(input('values').value).toBe('2, 3, 1, 2, 4, 3');
@@ -152,7 +152,7 @@ describe('sliding window lesson', () => {
     expect(input('k').value).toBe('3');
     commit(input('values'), '4 4');
     expect(input('k').value).toBe('2');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.best)).toBe('8');
   });
 
@@ -160,7 +160,7 @@ describe('sliding window lesson', () => {
     render();
     click(buttonByText(m.randomButton));
     expect(input('values').value.split(', ')).toHaveLength(12);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.updates)).toBe(String(3 + 2 * 9));
   });
 
@@ -177,16 +177,16 @@ describe('sliding window lesson', () => {
     answer.value = '8';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '9';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

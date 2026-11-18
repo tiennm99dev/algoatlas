@@ -49,7 +49,7 @@ const field = (/** @type {string} */ selector) =>
   /** @type {HTMLInputElement} */ (document.querySelector(selector));
 /** @param {number} n */
 const next = (n) => {
-  for (let i = 0; i < n; i++) click(button('Next step'));
+  for (let i = 0; i < n; i++) click(button('Bước tiếp'));
 };
 
 function practice() {
@@ -83,7 +83,7 @@ describe('practice: recursive thinking lesson', () => {
       'Peg A: disks 3, bottom first. Peg B: disks 2, bottom first. Peg C: disks 1, bottom first.',
     );
     expect(byTest('depth')).toBe('2');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe('Solved: 3 disks in 7 moves, which is 2³ − 1, the fewest possible.');
     expect(byTest('moves')).toBe('7 of 7');
     expect(boardLabel()).toBe('Peg A: empty. Peg B: empty. Peg C: disks 3, 2, 1, bottom first.');
@@ -95,7 +95,7 @@ describe('practice: recursive thinking lesson', () => {
     expect(narration()).toBe(m.disksError(6));
     expect(field('input[name="disks"]').value).toBe('3');
     commit(field('input[name="disks"]'), '4');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('moves')).toBe('15 of 15');
     expect(byTest('calls')).toBe('15');
   });
@@ -109,7 +109,7 @@ describe('practice: recursive thinking lesson', () => {
     expect(narration()).toBe(
       'Back in subsets(2, {}): every subset without c is listed. Now take c.',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('outputs')).toBe('8 of 8');
     expect(byTest('calls')).toBe('15');
     expect(document.querySelectorAll('svg[role="img"] circle')).toHaveLength(15);
@@ -123,13 +123,13 @@ describe('practice: recursive thinking lesson', () => {
     expect(narration()).toBe(m.itemErrors.duplicate);
     expect(field('input[name="items"]').value).toBe('a, b, c');
     commit(field('input[name="items"]'), 'xy');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('outputs')).toBe('4 of 4');
   });
 
   it('steps back with the arrow keys', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     const before = narration();
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
     flushSync();
@@ -149,16 +149,16 @@ describe('practice: recursive thinking lesson', () => {
     answer.value = '32';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '31';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

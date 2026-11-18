@@ -59,7 +59,7 @@ const arrayLabel = () =>
 
 /** @param {number} index */
 function seek(index) {
-  const el = /** @type {HTMLInputElement} */ (document.querySelector('input[aria-label="Step"]'));
+  const el = /** @type {HTMLInputElement} */ (document.querySelector('input[aria-label="Bước"]'));
   el.value = String(index);
   el.dispatchEvent(new Event('input', { bubbles: true }));
   flushSync();
@@ -77,9 +77,9 @@ describe('heapsort lesson', () => {
   it('starts the build at the last internal node', () => {
     render();
     expect(text()).toContain('sift down each internal node from slot 4 back to slot 0');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Sift down slot 4 (91)');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Slot 4 has one child, 80 at slot 9.');
   });
 
@@ -100,7 +100,7 @@ describe('heapsort lesson', () => {
 
   it('ends sorted with the totals', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     const last = heapsortTrace(INITIAL).at(-1);
     expect(text()).toContain(
       `Sorted with ${last?.comparisons} comparisons and ${last?.swaps} swaps, all inside the array.`,
@@ -159,13 +159,13 @@ describe('heapsort lesson', () => {
     answer.value = '10, 4, 3, 5, 1';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '10, 5, 3, 4, 1';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

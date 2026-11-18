@@ -8,8 +8,8 @@ const span = (a, b) => (a === b ? `sum ${a}` : `sums ${a}..${b}`);
 export const en = {
   slug: 'digit-dp',
   topic: 'advanced-dp',
-  level: 'Advanced',
-  title: 'Digit DP',
+  level: 'Nâng cao',
+  title: 'QHĐ chữ số',
   intro:
     'How many numbers from 0 to N have a digit sum of exactly S? Checking each one costs O(N), far too slow for N = 10¹⁸. Digit DP builds the numbers digit by digit instead, keeping only what the future needs: the digit sum so far, and one tight flag that says whether the prefix still equals N’s prefix, so the next digit is capped by N’s digit.',
   summary:
@@ -193,6 +193,5 @@ export const en = {
       solution: 'len positions × (S + 1) sums × 10 digits: O(len · S · 10).',
     },
   ],
-  nextTeaser:
-    'Next up: DP optimisations, such as the convex hull trick that keeps only the lines of a lower envelope.',
+  nextTeaser: 'Bài tiếp theo: Tối ưu quy hoạch động.',
 };

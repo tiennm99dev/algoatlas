@@ -144,17 +144,17 @@ describe('MST problems lesson', () => {
     expect(text()).toContain(
       'Find a path from A to F whose heaviest edge is as light as possible.',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain(
       'Minimum bottleneck path: A → B → D → E → F. Its heaviest edge weighs 7.',
     );
     expect(statValue(m.stats.bottleneck)).toBe('7');
     expect(vertex(0).getAttribute('aria-label')).toBe('Vertex A, from');
     expect(vertex(3).getAttribute('aria-label')).toBe('Vertex D, on the path');
-    click(button('Previous step'));
+    click(button('Bước trước'));
     expect(text()).toContain('Edge D — E (7) joins the tree of A to the tree of F.');
     commit(select('target'), '2');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Minimum bottleneck path: A → B → C. Its heaviest edge weighs 3.');
   });
 
@@ -162,11 +162,11 @@ describe('MST problems lesson', () => {
     render();
     radio('second');
     expect(text()).toContain('The minimum spanning tree T weighs 18.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain(
       'Add A — C (4): the T-path between its ends has heaviest edge A — B (3). 18 − 3 + 4 = 19',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain(
       'Second-best spanning tree: add A — C (4), drop A — B (3), weight 19.',
     );
@@ -200,14 +200,14 @@ describe('MST problems lesson', () => {
     render();
     const q = /** @type {HTMLElement} */ (practice().querySelectorAll(':scope > ol > li')[0]);
     answer(q, '9');
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer(q, '7');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

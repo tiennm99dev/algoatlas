@@ -57,13 +57,13 @@ const intervalRadio = () =>
   /** @type {HTMLInputElement} */ (document.querySelector('input[name="mode"][value="interval"]'));
 /** @param {number} n */
 const next = (n) => {
-  for (let i = 0; i < n; i++) click(button('Next step'));
+  for (let i = 0; i < n; i++) click(button('Bước tiếp'));
 };
 /** Step until the narration contains the text. @param {string} text */
 function stepTo(text) {
   for (let i = 0; i < 400; i++) {
     if (narration().includes(text)) return;
-    click(button('Next step'));
+    click(button('Bước tiếp'));
   }
   throw new Error(`never narrated: ${text}`);
 }
@@ -111,8 +111,8 @@ describe('ordered maps and augmented trees lesson', () => {
 
   it('refuses an out-of-range k from the root size alone', () => {
     render();
-    click(button('Last step'));
-    click(button('Previous step'));
+    click(button('Đến bước cuối'));
+    click(button('Bước trước'));
     expect(narration()).toBe(
       'There is no 9th smallest key: the root’s size says the tree holds 7 keys. No walk is needed.',
     );
@@ -123,16 +123,16 @@ describe('ordered maps and augmented trees lesson', () => {
     render();
     commit(input('key'), '25');
     click(buttonByText(m.insert));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('size')).toBe('8');
     click(buttonByText(m.rank));
-    click(button('Last step'));
-    click(button('Previous step'));
+    click(button('Đến bước cuối'));
+    click(button('Bước trước'));
     expect(stat('answer')).toBe('3');
     commit(input('key'), '3');
     click(buttonByText(m.select));
-    click(button('Last step'));
-    click(button('Previous step'));
+    click(button('Đến bước cuối'));
+    click(button('Bước trước'));
     expect(stat('answer')).toBe('25');
   });
 
@@ -142,7 +142,7 @@ describe('ordered maps and augmented trees lesson', () => {
     expect(narration()).toBe(m.emptyTree);
     stepTo('rotate left at 10');
     expect(narration()).toContain('20 now has size 3 and 10 has size 1');
-    click(button('Previous step'));
+    click(button('Bước trước'));
     expect(narration()).toBe('At 10: size = 1 + 0 + 2 = 3.');
   });
 
@@ -239,16 +239,16 @@ describe('ordered maps and augmented trees lesson', () => {
     commit(input('high'), '50');
     click(buttonByText(m.overlap));
     stepTo('so no interval overlaps [40, 50]');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('size')).toBe('10');
     click(buttonByText(m.remove));
     expect(narration()).not.toBe(m.orderError);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('size')).toBe('10');
     commit(input('low'), '16');
     commit(input('high'), '21');
     click(buttonByText(m.remove));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('size')).toBe('9');
   });
 
@@ -283,13 +283,13 @@ describe('ordered maps and augmented trees lesson', () => {
       flushSync();
     };
     submit('30');
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[1].hints[0]);
     submit('60');
-    expect(q.textContent).not.toContain('Not quite');
+    expect(q.textContent).not.toContain('Chưa đúng');
   });
 });

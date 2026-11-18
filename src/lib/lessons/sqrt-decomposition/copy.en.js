@@ -12,8 +12,8 @@ const show = (x) => (x < 0 ? `−${-x}` : String(x));
 export const en = {
   slug: 'sqrt-decomposition',
   topic: 'range-queries',
-  level: 'Advanced',
-  title: 'Sqrt decomposition and Mo’s algorithm',
+  level: 'Nâng cao',
+  title: 'Chia căn và thuật toán Mo',
   intro:
     'Sqrt decomposition splits an array into blocks of about √n cells and stores one answer per block, so a range query reads a few loose cells and a few whole blocks: O(√n) with almost no code. Mo’s algorithm uses the same blocks in another way. When all queries are known in advance, it reorders them so one sliding window can answer them all with little movement.',
   summary:
@@ -288,6 +288,5 @@ export const en = {
       solution: 'Left end: q·√n. Right end: n·√n. So the total is O((n + q)·√n).',
     },
   ],
-  nextTeaser:
-    'Next up: Practice: range query problems, where you build a workload and compare what each structure would cost on it.',
+  nextTeaser: 'Bài tiếp theo: Luyện tập: bài toán truy vấn đoạn.',
 };

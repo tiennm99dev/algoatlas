@@ -37,8 +37,8 @@ const STATE_NAMES = {
 export const en = {
   slug: 'multithreaded-algorithms',
   topic: 'computation-models',
-  level: 'Intermediate',
-  title: 'Multithreaded algorithms',
+  level: 'Trung bình',
+  title: 'Thuật toán đa luồng',
   intro:
     'A multithreaded program says what may run in parallel with two keywords: spawn starts a call that can run alongside its parent, and sync waits for every spawned call to finish. Its run is a DAG of strands, and two numbers predict its speed on any machine: the work T₁, the total of all strands, and the span T∞, the longest path through the DAG.',
   summary:
@@ -194,6 +194,5 @@ export const en = {
         'No schedule beats the span T∞ = 35, and 30 of those steps are the merges on the critical path. The parallelism T₁/T∞ = 95/35 ≈ 2.71 caps the speedup, however many processors run.',
     },
   ],
-  nextTeaser:
-    'Next up: distributed algorithms, where machines on a network exchange messages round by round to elect a leader.',
+  nextTeaser: 'Bài tiếp theo: Thuật toán phân tán.',
 };

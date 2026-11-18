@@ -9,8 +9,8 @@ const oneDp = (x) => (Math.round(x * 10) / 10).toFixed(1);
 export const en = {
   slug: 'randomised-algorithms',
   topic: 'algebraic-randomised',
-  level: 'Intermediate',
-  title: 'Randomised algorithms',
+  level: 'Trung bình',
+  title: 'Thuật toán ngẫu nhiên',
   intro:
     'A randomised algorithm flips coins as it runs. A Las Vegas algorithm, such as randomised quicksort, always returns the right answer but its running time is random; a Monte Carlo algorithm, such as the Miller–Rabin primality test, always runs fast but may be wrong with a small probability. Picking the pivot at random means no fixed input is bad: every input sorts in expected O(n log n) time.',
   summary:
@@ -191,6 +191,5 @@ export const en = {
         'The pair spans 3 keys, so the probability is 2 / (3 − 1 + 1) = 2/3: if the middle key is the first pivot, the two end up on different sides and are never compared.',
     },
   ],
-  nextTeaser:
-    'Next up: Universal and perfect hashing, where a randomly drawn hash function keeps collisions rare for every set of keys.',
+  nextTeaser: 'Bài tiếp theo: Băm phổ quát và băm hoàn hảo.',
 };

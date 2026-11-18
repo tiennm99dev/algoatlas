@@ -70,12 +70,12 @@ describe('GraphCanvas', () => {
     render({ nodeState: (/** @type {number} */ id) => (id === 1 ? 'active' : '') });
     expect(svg().getAttribute('role')).toBe('img');
     expect(svg().getAttribute('aria-label')).toBe(
-      'Sample graph. Undirected graph with 3 nodes and 1 edge.',
+      'Sample graph. Đồ thị vô hướng gồm 3 đỉnh và 1 cạnh.',
     );
     expect([...document.querySelectorAll('title')].map((t) => t.textContent)).toEqual([
-      'Node A, 1 edge',
-      'Node B, 1 edge, current',
-      'Node C, 0 edges',
+      'Đỉnh A, 1 cạnh',
+      'Đỉnh B, 1 cạnh, đang xét',
+      'Đỉnh C, 0 cạnh',
     ]);
     expect(document.querySelectorAll('[role="button"]')).toHaveLength(0);
   });
@@ -128,13 +128,13 @@ describe('GraphCanvas', () => {
   it('adds nodes until the cap and reports each change', () => {
     const onchange = vi.fn();
     render({ editable: true, maxNodes: 4, onchange });
-    click(button('Add node'));
+    click(button('Thêm đỉnh'));
     expect(onchange).toHaveBeenCalledTimes(1);
     expect(onchange.mock.calls[0][0].nodes).toHaveLength(4);
     expect(document.querySelectorAll('[data-node]')).toHaveLength(4);
-    click(button('Add node'));
+    click(button('Thêm đỉnh'));
     expect(onchange).toHaveBeenCalledTimes(1);
-    expect(document.body.textContent).toContain('The graph is full.');
+    expect(document.body.textContent).toContain('Đồ thị đã đầy.');
   });
 
   it('connects and disconnects two nodes with the keyboard, with the chosen weight', async () => {
@@ -146,7 +146,7 @@ describe('GraphCanvas', () => {
     weight.dispatchEvent(new Event('change', { bubbles: true }));
     flushSync();
     await press(node(1), 'Enter');
-    expect(document.body.textContent).toContain('From B: pick the node to connect or disconnect.');
+    expect(document.body.textContent).toContain('Từ B: chọn đỉnh để nối hoặc bỏ nối.');
     await press(node(2), 'Enter');
     expect(onchange.mock.lastCall?.[0].edges).toEqual([
       { from: 0, to: 1, weight: 3 },
@@ -163,7 +163,7 @@ describe('GraphCanvas', () => {
     pickTool('connect');
     await press(node(0), 'Enter');
     await press(node(0), 'Enter');
-    expect(document.body.textContent).toContain('An edge needs two different nodes.');
+    expect(document.body.textContent).toContain('Một cạnh cần hai đỉnh khác nhau.');
     await press(node(0), 'Enter');
     await press(node(0), 'Escape');
     expect(document.querySelector('[role="status"]')?.textContent).toBe('');
@@ -192,7 +192,7 @@ describe('GraphCanvas', () => {
     expect(document.querySelector('line[role="button"]')).toBeNull();
     pickTool('remove');
     const edge = /** @type {SVGLineElement} */ (document.querySelector('line[role="button"]'));
-    expect(edge.getAttribute('aria-label')).toBe('Delete edge A and B');
+    expect(edge.getAttribute('aria-label')).toBe('Xoá cạnh giữa A và B');
     await press(edge, 'Enter');
     expect(onchange.mock.lastCall?.[0].edges).toEqual([]);
   });

@@ -11,8 +11,8 @@ const FIXED_NAMES = { mod: 'k mod 16', multiply: 'the multiplication method' };
 export const en = {
   slug: 'hash-functions',
   topic: 'structures',
-  level: 'Intermediate',
-  title: 'Designing hash functions',
+  level: 'Trung bình',
+  title: 'Thiết kế hàm băm',
   intro:
     'A hash table is only as fast as its hash function is even: the goal is for every key to be equally likely to land in any bucket. Any fixed function has inputs that all collide, and an adversary who knows it can send exactly those. Universal hashing picks the function at random when the table is made, so no input is bad on average.',
   summary:
@@ -45,8 +45,7 @@ export const en = {
     ],
     ['Computing h(k)', 'O(1)', 'A multiply, an add and two remainders.'],
   ],
-  nextTeaser:
-    'Next up: sets, maps and frequency counting, where a hash table answers “have I seen this?” and “how many times?” in O(1) on average.',
+  nextTeaser: 'Bài tiếp theo: Tập hợp, ánh xạ và đếm tần suất.',
 
   fixedLabel: 'Fixed hash',
   fixedOptions: { mod: 'k mod 16', multiply: 'Multiplication' },

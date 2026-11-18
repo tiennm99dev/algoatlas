@@ -83,19 +83,19 @@ describe('bitmask DP lesson', () => {
     render();
     expect(narration()).toContain('Visit all 4 cities');
     expect(rows()).toBe(8);
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe(
       'Mask 1 = 0001: only A is visited and the walk stands on A, so dp[{A}][A] = 0.',
     );
     expect(cell(1, 0)?.textContent?.trim()).toBe('0●');
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe(
       'From {A} at A, go to B: 0 + 5 = 5 for dp[{A, B}][B]. The first walk to that state.',
     );
     expect(cell(3, 1)?.getAttribute('aria-label')).toBe('dp[{A, B}][B]: 5, improved');
     expect(cell(3, 0)?.textContent?.trim()).toBe(m.outside);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe('The shortest tour is A → C → D → B → A, length 20.');
     expect(byTest('best')).toBe('20');
     expect(byTest('tries')).toBe('15 / 15');
@@ -109,7 +109,7 @@ describe('bitmask DP lesson', () => {
     render();
     pick('six');
     expect(rows()).toBe(32);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('best')).toBe('26');
     expect(byTest('tours')).toBe('120');
     click(buttonByText(m.addCity));
@@ -129,7 +129,7 @@ describe('bitmask DP lesson', () => {
     render();
     press(city(3), 'ArrowLeft', true);
     expect(city(3).getAttribute('aria-label')).toContain('City D at (6, 4)');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     const want = heldKarpTrace(
       distances([...CITY_PRESETS[0].cities.slice(0, 3), { x: 6, y: 4 }]),
     ).at(-1)?.result;
@@ -174,9 +174,9 @@ describe('bitmask DP lesson', () => {
     answer.value = '11';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     /** @type {HTMLButtonElement} */ (hint).click();
     flushSync();
@@ -184,7 +184,7 @@ describe('bitmask DP lesson', () => {
     answer.value = '13';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
     const cost = m.practice.find((ex) => ex.type === 'text');
     for (const typed of ['O(2^n * n^2)', 'O(n²·2ⁿ)'])

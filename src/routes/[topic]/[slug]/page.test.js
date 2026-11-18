@@ -90,7 +90,7 @@ describe('stub route entries', () => {
     expect(trees[0].topics).toEqual([
       {
         topic: 'trees',
-        title: 'Trees',
+        title: 'Cây',
         planned: plan.lessons.length,
         stubs: plan.lessons.filter((l) => !hasStaticRoute('trees', l.slug)).map((l) => l.slug),
       },

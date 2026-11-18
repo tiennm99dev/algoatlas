@@ -11,8 +11,8 @@ const listOf = (xs) =>
 export const en = {
   slug: 'n-queens-sudoku',
   topic: 'backtracking',
-  level: 'Intermediate',
-  title: 'N-queens and Sudoku',
+  level: 'Trung bình',
+  title: 'Bài toán N quân hậu và Sudoku',
   intro:
     'N-queens and Sudoku are constraint problems: fill in choices so that no rule is ever broken. Backtracking fits them well, because a rule can be checked the moment a choice is made. A clash in the first few squares throws away every board that would have started that way, without ever building one.',
   summary:
@@ -255,6 +255,5 @@ export const en = {
         'One queen per row means two can never share one. That removes one rule and shrinks the choices from n² squares to n per queen.',
     },
   ],
-  nextTeaser:
-    'Next up: Branch and bound, which adds a best-so-far score to backtracking so an optimisation problem can prune too.',
+  nextTeaser: 'Bài tiếp theo: Nhánh cận.',
 };

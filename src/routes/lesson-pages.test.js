@@ -82,9 +82,9 @@ const text = () => document.body.textContent ?? '';
 describe('sorting lesson', () => {
   it('steps forward through the trace', () => {
     render(SortPage);
-    expect(text()).toMatch(/Step 1 of \d+/);
-    click(button('Next step'));
-    click(button('Next step'));
+    expect(text()).toMatch(/Bước 1\/\d+/);
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('42 > 17: out of order.');
   });
 
@@ -92,7 +92,7 @@ describe('sorting lesson', () => {
     render(SortPage);
     click(/** @type {HTMLInputElement} */ (document.querySelector('input[value="insertion"]')));
     expect(text()).toContain('key = a[i]; j = i - 1');
-    expect(text()).toMatch(/Step 1 of \d+/);
+    expect(text()).toMatch(/Bước 1\/\d+/);
   });
 
   it('shows both algorithms’ totals for the current array', () => {
@@ -110,61 +110,61 @@ describe('sorting lesson', () => {
 
   it('keeps arrow shortcuts working after a button was clicked', () => {
     render(SortPage);
-    const next = button('Next step');
+    const next = button('Bước tiếp');
     click(next);
     key(next, { key: 'ArrowRight' });
-    expect(text()).toMatch(/Step 3 of \d+/);
+    expect(text()).toMatch(/Bước 3\/\d+/);
   });
 
   it('leaves modified arrows to the browser', () => {
     render(SortPage);
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     key(document.body, { key: 'ArrowLeft', altKey: true });
-    expect(text()).toMatch(/Step 2 of \d+/);
+    expect(text()).toMatch(/Bước 2\/\d+/);
   });
 
   it('keeps the step buttons focusable at the ends of the trace', () => {
     render(SortPage);
-    const next = button('Next step');
+    const next = button('Bước tiếp');
     next.focus();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(next.getAttribute('aria-disabled')).toBe('true');
     expect(next.disabled).toBe(false);
     expect(document.activeElement).toBe(next);
     click(next);
-    expect(text()).toMatch(/Step (\d+) of \1/);
+    expect(text()).toMatch(/Bước (\d+)\/\1/);
   });
 
   it('announces where playback stopped', async () => {
     vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
     render(SortPage);
-    click(buttonByText('Play'));
+    click(buttonByText('Phát'));
     vi.advanceTimersByTime(500);
     flushSync();
-    click(buttonByText('Pause'));
+    click(buttonByText('Tạm dừng'));
     // The status line is cleared first so a repeated message is announced again.
     await tick();
     flushSync();
     expect(document.querySelector('[role="status"]')?.textContent).toMatch(
-      /^Paused at step 2 of \d+\.$/,
+      /^Đã dừng ở bước 2\/\d+\.$/,
     );
   });
 
   it('lets Space scroll the page outside the player but toggles playback inside it', () => {
     render(SortPage);
     key(document.body, { key: ' ' });
-    expect(buttonByText('Play')).toBeTruthy();
+    expect(buttonByText('Phát')).toBeTruthy();
     const scope = /** @type {HTMLElement} */ (document.querySelector('[data-player-scope]'));
     key(scope, { key: ' ' });
-    expect(buttonByText('Pause')).toBeTruthy();
+    expect(buttonByText('Tạm dừng')).toBeTruthy();
     key(scope, { key: ' ' });
-    expect(buttonByText('Play')).toBeTruthy();
+    expect(buttonByText('Phát')).toBeTruthy();
   });
 
   it('stops autoplay when the lesson unmounts', () => {
     vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
     render(SortPage);
-    click(buttonByText('Play'));
+    click(buttonByText('Phát'));
     if (app) unmount(app);
     app = null;
     // A leaked player keeps rescheduling its tick; a stopped one schedules nothing.
@@ -189,13 +189,13 @@ describe('lesson layout at phone width', () => {
 describe('binary search lesson', () => {
   it('watch mode reaches the target', () => {
     render(BinaryPage);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('a[11] = 53. Found it after');
   });
 
   it('ignores a target the learner is still typing', () => {
     render(BinaryPage);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     const input = /** @type {HTMLInputElement} */ (document.querySelector('input[type="number"]'));
     input.value = '5';
     input.dispatchEvent(new Event('input', { bubbles: true }));
@@ -232,7 +232,7 @@ describe('binary search lesson', () => {
 
   it('labels every cell ruled out once the watch is over, and names the hit', () => {
     render(BinaryPage);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(button('Index 11, value 53, found')).toBeTruthy();
     expect(button('Index 12, value 58, ruled out')).toBeTruthy();
   });
@@ -241,62 +241,62 @@ describe('binary search lesson', () => {
 describe('bfs lesson', () => {
   it('finds the shortest path on the default grid', () => {
     render(BfsPage);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toMatch(/shortest path of \d+ steps/);
   });
 
   it('keyboard activation toggles a wall and rebuilds the trace', () => {
     render(BfsPage);
-    keyActivate(button('Row 0, column 0'));
-    expect(button('Row 0, column 0, Wall')).toBeTruthy();
-    expect(text()).toMatch(/Step 1 of \d+/);
+    keyActivate(button('Hàng 0, cột 0'));
+    expect(button('Hàng 0, cột 0, Wall')).toBeTruthy();
+    expect(text()).toMatch(/Bước 1\/\d+/);
   });
 
   it('announces distances in cell labels', () => {
     render(BfsPage);
-    click(button('Last step'));
-    expect(button('Row 4, column 2, Start, distance 0')).toBeTruthy();
+    click(button('Đến bước cuối'));
+    expect(button('Hàng 4, cột 2, Start, distance 0')).toBeTruthy();
   });
 
   it('explains why a start move onto a wall is refused', () => {
     render(BfsPage);
     click(/** @type {HTMLInputElement} */ (document.querySelector('input[value="start"]')));
-    keyActivate(button('Row 0, column 6, Wall'));
-    expect(text()).toContain('Pick an open cell');
+    keyActivate(button('Hàng 0, cột 6, Wall'));
+    expect(text()).toContain('Hãy chọn một ô trống');
   });
 
   it('drops a refusal notice as soon as the learner steps on', () => {
     render(BfsPage);
     click(/** @type {HTMLInputElement} */ (document.querySelector('input[value="start"]')));
-    keyActivate(button('Row 0, column 6, Wall'));
-    expect(text()).toContain('Pick an open cell');
-    click(button('Next step'));
-    expect(text()).not.toContain('Pick an open cell');
+    keyActivate(button('Hàng 0, cột 6, Wall'));
+    expect(text()).toContain('Hãy chọn một ô trống');
+    click(button('Bước tiếp'));
+    expect(text()).not.toContain('Hãy chọn một ô trống');
     expect(text()).toContain('Dequeue (4,2)');
   });
 
   it('confirms keyboard edits in the narration', () => {
     render(BfsPage);
-    keyActivate(button('Row 0, column 0'));
-    expect(text()).toContain('Wall added at (0,0).');
-    keyActivate(button('Row 0, column 0, Wall'));
-    expect(text()).toContain('Wall removed at (0,0).');
-    keyActivate(button('Row 4, column 2, Start, distance 0'));
-    expect(text()).toContain('Pick an open cell');
+    keyActivate(button('Hàng 0, cột 0'));
+    expect(text()).toContain('Đã thêm tường ở (0,0).');
+    keyActivate(button('Hàng 0, cột 0, Wall'));
+    expect(text()).toContain('Đã bỏ tường ở (0,0).');
+    keyActivate(button('Hàng 4, cột 2, Start, distance 0'));
+    expect(text()).toContain('Hãy chọn một ô trống');
     click(/** @type {HTMLInputElement} */ (document.querySelector('input[value="goal"]')));
-    expect(text()).not.toContain('Pick an open cell');
-    keyActivate(button('Row 0, column 0'));
-    expect(text()).toContain('Goal moved to (0,0).');
-    expect(button('Row 0, column 0, Goal')).toBeTruthy();
+    expect(text()).not.toContain('Hãy chọn một ô trống');
+    keyActivate(button('Hàng 0, cột 0'));
+    expect(text()).toContain('Đã dời đích đến (0,0).');
+    expect(button('Hàng 0, cột 0, Goal')).toBeTruthy();
   });
 
   it('moves focus with the arrow keys', () => {
     render(BfsPage);
-    const startCell = button('Row 4, column 2, Start, distance 0');
+    const startCell = button('Hàng 4, cột 2, Start, distance 0');
     startCell.focus();
     key(startCell, { key: 'ArrowRight' });
-    expect(document.activeElement).toBe(button('Row 4, column 3'));
-    expect(button('Row 4, column 3').tabIndex).toBe(0);
+    expect(document.activeElement).toBe(button('Hàng 4, cột 3'));
+    expect(button('Hàng 4, cột 3').tabIndex).toBe(0);
     expect(startCell.tabIndex).toBe(-1);
   });
 
@@ -307,10 +307,10 @@ describe('bfs lesson', () => {
       render(BfsPage);
       const grid = /** @type {HTMLElement} */ (document.querySelector('[role="grid"]'));
       expect(grid.style.gridTemplateColumns).toContain('repeat(10,');
-      const startCell = button('Row 4, column 2, Start, distance 0');
+      const startCell = button('Hàng 4, cột 2, Start, distance 0');
       startCell.focus();
       key(startCell, { key: 'ArrowRight' });
-      expect(document.activeElement).toBe(button('Row 5, column 2'));
+      expect(document.activeElement).toBe(button('Hàng 5, cột 2'));
     } finally {
       window.matchMedia = real;
     }
@@ -325,9 +325,9 @@ describe('bfs lesson', () => {
       [5, 12],
       [5, 14],
     ]) {
-      keyActivate(button(`Row ${r}, column ${c}`));
+      keyActivate(button(`Hàng ${r}, cột ${c}`));
     }
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('walls cut it off');
   });
 });
@@ -382,9 +382,9 @@ describe('site chrome', () => {
 
   it('links each level to its home section and marks the level of the open topic', () => {
     expect(currentTopics('/sorting/')).toEqual([
-      ['Level 1: Foundations', 'true'],
-      ['Level 2: Core algorithms', null],
-      ['Level 3: Advanced topics', null],
+      ['Phần 1: Nền tảng', 'true'],
+      ['Phần 2: Thuật toán cốt lõi', null],
+      ['Phần 3: Chủ đề nâng cao', null],
     ]);
     const hrefs = [...document.querySelectorAll('nav a')].map((a) => a.getAttribute('href'));
     expect(hrefs).toEqual(['/#level-1', '/#level-2', '/#level-3']);
@@ -392,7 +392,7 @@ describe('site chrome', () => {
 
   it('marks the level of an open lesson and nothing on the home page', () => {
     expect(currentTopics('/shortest-paths/dijkstra-grid/')[1]).toEqual([
-      'Level 2: Core algorithms',
+      'Phần 2: Thuật toán cốt lõi',
       'true',
     ]);
     unmount(/** @type {Record<string, any>} */ (app));
@@ -408,7 +408,7 @@ describe('site chrome', () => {
   });
 
   describe('lesson navigation', () => {
-    const nav = () => document.querySelector('nav[aria-label="Lesson navigation"]');
+    const nav = () => document.querySelector('nav[aria-label="Điều hướng bài học"]');
     const hrefs = () =>
       [...(nav()?.querySelectorAll('a') ?? [])].map((a) => a.getAttribute('href'));
 
@@ -439,22 +439,22 @@ describe('site chrome', () => {
       expect(nav()?.textContent).toContain(last.nextTeaser);
       if (next) {
         expect(links.at(-1)).toMatch(new RegExp(`${next.path}$`));
-        expect(nav()?.textContent).toContain('Next lesson');
+        expect(nav()?.textContent).toContain('Bài sau');
       } else {
         expect(links.at(-1)).toMatch(/\/$/);
-        expect(nav()?.textContent).toContain('All topics');
+        expect(nav()?.textContent).toContain('Tất cả chủ đề');
       }
     });
 
-    it('names the back link after the topic and leads the banner with "Try it:"', () => {
+    it('names the back link after the topic and leads the banner with "Thử xem:"', () => {
       render(BinaryPage);
-      expect(text()).toContain('All lessons in Searching');
-      expect(document.querySelector('header strong')?.textContent).toBe('Try it:');
+      expect(text()).toContain('Các bài trong Tìm kiếm');
+      expect(document.querySelector('header strong')?.textContent).toBe('Thử xem:');
     });
 
     it('glosses O(…) under the complexity heading', () => {
       render(BinaryPage);
-      expect(text()).toContain('says how the number of steps grows');
+      expect(text()).toContain('cho biết số bước tăng thế nào');
     });
   });
 
@@ -482,7 +482,7 @@ describe('site chrome', () => {
     const cards = [...document.querySelectorAll('section > ul > li')].map((li) => ({
       title: li.querySelector('h2')?.textContent?.trim(),
       href: li.querySelector('a')?.getAttribute('href'),
-      soon: li.textContent?.includes('Coming soon') ?? false,
+      soon: li.textContent?.includes('Sắp ra mắt') ?? false,
     }));
     const plan = levels[0].chapters.find((c) => c.slug === 'trees')?.lessons ?? [];
     expect(cards.map((c) => c.title)).toEqual(plan.map((l) => l.title));
@@ -492,7 +492,7 @@ describe('site chrome', () => {
     expect(cards.filter((c) => !c.soon).map((c) => c.title)).toEqual(
       written.map((p) => lessons.find((l) => l.slug === p.slug)?.title),
     );
-    expect(cards.filter((c) => !c.soon).map((c) => c.title)).toContain('Binary search tree');
+    expect(cards.filter((c) => !c.soon).map((c) => c.title)).toContain('Cây nhị phân tìm kiếm');
   });
 });
 
@@ -512,12 +512,12 @@ describe('home page', () => {
     render(HomePage, { data: homeLoad(/** @type {any} */ ({})) });
     const sorting = /** @type {HTMLElement} */ (
       [...document.querySelectorAll('li')].find(
-        (li) => li.querySelector('h4')?.textContent?.trim() === 'Sorting',
+        (li) => li.querySelector('h4')?.textContent?.trim() === 'Sắp xếp',
       )
     );
     const written = lessons.filter((l) => l.topic === 'sorting');
     const planned = levels[0].chapters.find((c) => c.slug === 'sorting')?.lessons.length;
-    expect(sorting.textContent).toContain(`${written.length} of ${planned} lessons ready`);
+    expect(sorting.textContent).toContain(`${written.length}/${planned} bài đã sẵn sàng`);
     const links = [...sorting.querySelectorAll(':scope ul a')].map((a) => a.getAttribute('href'));
     expect(links).toEqual(written.map(lessonPath));
     expect(links).toContain('/sorting/bubble-insertion-sort/');
@@ -528,7 +528,7 @@ describe('home page', () => {
     const cta = /** @type {HTMLAnchorElement} */ (document.querySelector('a.btn-primary'));
     expect(cta.getAttribute('href')).toBe(lessonPath(lessons[0]));
     expect(cta.textContent).toContain(
-      `Start with ${t().topics[lessons[0].topic].title.toLowerCase()}`,
+      `Bắt đầu với ${t().topics[lessons[0].topic].title.toLowerCase()}`,
     );
   });
 });

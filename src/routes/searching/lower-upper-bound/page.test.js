@@ -49,7 +49,7 @@ const cell = (i) => /** @type {HTMLElement} */ (document.querySelector(`[data-in
 describe('lower and upper bound lesson', () => {
   it('lower bound ends at 8 and shades the four copies', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Lower bound of 17 is 8.');
     expect(text()).toContain('4 copies of 17');
     for (let i = 8; i <= 11; i++) expect(cell(i).className).toContain('bg-state-sorted');
@@ -61,7 +61,7 @@ describe('lower and upper bound lesson', () => {
     render();
     click(/** @type {HTMLElement} */ (document.querySelector('input[value="upper"]')));
     expect(text()).toContain('if a[mid] <= x:');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Upper bound of 17 is 12.');
     expect(text()).toContain('4 copies of 17');
   });
@@ -69,7 +69,7 @@ describe('lower and upper bound lesson', () => {
   it('a target above every value gives n and no copies', () => {
     render();
     commit(targetInput(), '99');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Lower bound of 99 is 15.');
     expect(text()).toContain('0 copies of 99');
   });
@@ -80,7 +80,7 @@ describe('lower and upper bound lesson', () => {
     input.value = '5';
     input.dispatchEvent(new Event('input', { bubbles: true }));
     flushSync();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Lower bound of 17 is 8.');
   });
 
@@ -95,7 +95,7 @@ describe('lower and upper bound lesson', () => {
     render();
     expect(text()).toContain('—');
     expect(text()).not.toContain('copies of 17');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('copies of 17');
   });
 
@@ -107,10 +107,10 @@ describe('lower and upper bound lesson', () => {
     // Opening window is [0, 15) over 16 slots.
     expect(fill.style.left).toBe('0%');
     expect(parseFloat(fill.style.width)).toBeCloseTo((15 / 16) * 100, 5);
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(parseFloat(fill.style.width)).toBeLessThan((15 / 16) * 100);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(parseFloat(fill.style.width)).toBe(0);
   });
 
@@ -125,7 +125,7 @@ describe('lower and upper bound lesson', () => {
 
   it('announces a new array even when the target repeats', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     const newArray = /** @type {HTMLElement} */ (
       [...document.querySelectorAll('button')].find((b) => b.textContent === 'New array')
     );

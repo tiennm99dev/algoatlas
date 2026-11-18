@@ -21,8 +21,8 @@ const wrapNote = (wrapped) => (wrapped ? ' The index ran past slot 7, so it wrap
 export const en = {
   slug: 'queues-deques',
   topic: 'stacks-queues',
-  level: 'Beginner',
-  title: 'Queues and deques',
+  level: 'Cơ bản',
+  title: 'Hàng đợi và hàng đợi hai đầu',
   intro:
     'A queue is a line at a ticket counter: people join at the back and leave from the front, so the first in is the first out (FIFO). A circular buffer stores it in a fixed array whose end wraps around to its start, so both ends move in O(1) and nothing ever shifts. A deque (double-ended queue) allows adding and removing at both ends.',
   summary:
@@ -181,6 +181,5 @@ export const en = {
         'The 5 remaining items each shift one place left, so a[0] is again the front. The circular buffer just moves head instead.',
     },
   ],
-  nextTeaser:
-    'Next up: stack applications, where a stack checks brackets, evaluates expressions and runs function calls.',
+  nextTeaser: 'Bài tiếp theo: Ứng dụng của ngăn xếp.',
 };

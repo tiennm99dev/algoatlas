@@ -16,8 +16,8 @@ const plural = (k, word) => `${k} ${word}${k === 1 ? '' : 's'}`;
 export const en = {
   slug: 'space-complexity',
   topic: 'complexity',
-  level: 'Intermediate',
-  title: 'Space complexity',
+  level: 'Trung bình',
+  title: 'Độ phức tạp bộ nhớ',
   intro:
     'Algorithms use memory as well as time. Space complexity counts the extra memory an algorithm needs beyond its input, the auxiliary space, and that includes the call stack: every recursive call that has not returned yet still holds a frame.',
   summary:
@@ -177,6 +177,5 @@ export const en = {
         'Insertion sort, two-pointer reversal and heapsort only move elements inside the input. Array merge sort copies into a buffer of n elements, so it needs Θ(n) extra space.',
     },
   ],
-  nextTeaser:
-    'Next up: amortized analysis, where an occasional expensive step is paid for by many cheap ones.',
+  nextTeaser: 'Bài tiếp theo: Phân tích khấu hao: gộp, kế toán, thế năng.',
 };

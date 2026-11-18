@@ -7,8 +7,8 @@ const links = (k) => `${k} ${k === 1 ? 'link' : 'links'}`;
 export const en = {
   slug: 'union-by-rank-path-compression',
   topic: 'union-find',
-  level: 'Intermediate',
-  title: 'Union by rank and path compression',
+  level: 'Trung bình',
+  title: 'Hợp theo hạng và nén đường đi',
   intro:
     'A plain union-find forest can grow into a long chain, and then every find climbs all of it. Two small changes fix this: union by rank hangs the shorter tree under the taller one, and path compression points every element a find walks past straight at the root. Together they make each operation cost α(n), the inverse Ackermann function, which is at most 4 for any input that fits in our universe.',
   summary:
@@ -179,6 +179,5 @@ export const en = {
         'The inverse Ackermann function α(n). Tarjan proved the O(m α(n)) bound, and it is tight for this structure.',
     },
   ],
-  nextTeaser:
-    'Next up: Practice: union-find problems, where an edge stream counts components online and flags the edge that closes a cycle.',
+  nextTeaser: 'Bài tiếp theo: Luyện tập: bài toán hợp và tìm.',
 };

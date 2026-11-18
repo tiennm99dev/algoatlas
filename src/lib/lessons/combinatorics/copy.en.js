@@ -8,8 +8,8 @@ const big = (n) => n.toLocaleString('en-US');
 export const en = {
   slug: 'combinatorics',
   topic: 'number-theory',
-  level: 'Intermediate',
-  title: 'Combinatorics: binomials and Catalan numbers',
+  level: 'Trung bình',
+  title: 'Tổ hợp: hệ số nhị thức và số Catalan',
   intro:
     'C(n, k), read “n choose k”, counts the ways to pick k items from n. Pascal’s triangle builds every C(n, k) by adding, so a contest answer “mod p” never needs a huge number. Factorial tables and Lucas’s theorem reach n far beyond any table. The Catalan numbers, which come straight out of the triangle, count balanced brackets, binary trees and many other shapes.',
   summary:
@@ -306,6 +306,5 @@ export const en = {
         'Balanced brackets, binary trees with n nodes and triangulations of an (n + 2)-sided polygon are all counted by Cₙ. A set of 5 items has 2⁵ = 32 subsets.',
     },
   ],
-  nextTeaser:
-    'Next up: Public-key cryptography and RSA, where fast powers and modular inverses let strangers exchange secrets in public.',
+  nextTeaser: 'Bài tiếp theo: Mật mã khoá công khai và RSA.',
 };

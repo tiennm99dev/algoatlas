@@ -73,7 +73,7 @@ describe('RAM model lesson', () => {
   it('starts the loop on n = 4 and ends after 5n + 4 = 24 steps', () => {
     render();
     expect(narration()).toContain('Call sumTo(4).');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe('Done after 24 primitive steps.');
     expect(stat('Total primitive steps')).toBe('24');
     expect(stat('Comparisons')).toBe('5');
@@ -82,7 +82,7 @@ describe('RAM model lesson', () => {
 
   it('marks the variables read and written on a step', () => {
     render();
-    for (let k = 0; k < 4; k++) click(button('Next step'));
+    for (let k = 0; k < 4; k++) click(button('Bước tiếp'));
     expect(narration()).toContain('s = s + i makes s = 1');
     expect(text()).toContain('s = 1, written');
     expect(text()).toContain('i = 1, read');
@@ -91,7 +91,7 @@ describe('RAM model lesson', () => {
   it('switches to the formula and finishes in 5 steps', () => {
     render();
     pickProgram('formula');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('Total primitive steps')).toBe('5');
     expect(text()).toContain('n = 30: 5 steps');
   });
@@ -100,7 +100,7 @@ describe('RAM model lesson', () => {
     render();
     commit(nInput(), '10');
     pickProgram('buggy');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('Total primitive steps')).toBe('49');
     expect(text()).toContain('Returned 45: wrong ✗');
   });
@@ -108,7 +108,7 @@ describe('RAM model lesson', () => {
   it('rebuilds the run when n changes and keeps the last valid n', () => {
     render();
     commit(nInput(), '30');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('Total primitive steps')).toBe('154');
     commit(nInput(), '31');
     expect(nInput().value).toBe('30');
@@ -123,7 +123,7 @@ describe('RAM model lesson', () => {
     nInput().dispatchEvent(new Event('input', { bubbles: true }));
     /** @type {HTMLFormElement} */ (nInput().closest('form')).requestSubmit();
     flushSync();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('Total primitive steps')).toBe('14');
   });
 
@@ -140,16 +140,16 @@ describe('RAM model lesson', () => {
     input.value = '35';
     input.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     input.value = '39';
     input.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

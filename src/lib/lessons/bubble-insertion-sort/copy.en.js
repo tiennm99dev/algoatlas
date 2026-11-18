@@ -3,8 +3,8 @@
 export const en = {
   slug: 'bubble-insertion-sort',
   topic: 'sorting',
-  level: 'Beginner',
-  title: 'Bubble sort & insertion sort',
+  level: 'Cơ bản',
+  title: 'Sắp xếp nổi bọt và sắp xếp chèn',
   intro:
     'Two of the simplest ways to sort: bubble sort keeps swapping neighbors that are out of order, insertion sort grows a sorted prefix one card at a time. Both are O(n²) in the worst case — but they behave very differently on data that is almost sorted.',
   summary:
@@ -78,6 +78,5 @@ export const en = {
     ['Average', 'O(n²)', 'About half of all pairs are out of order.'],
     ['Worst', 'O(n²)', 'Reversed: every pair of elements must swap once.'],
   ],
-  nextTeaser:
-    'Next up: selection sort and stability, where a sort that swaps far-apart items can change the order of equal keys.',
+  nextTeaser: 'Bài tiếp theo: Sắp xếp chọn và tính ổn định.',
 };

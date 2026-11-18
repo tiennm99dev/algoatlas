@@ -48,7 +48,7 @@ const field = (/** @type {string} */ selector) =>
   /** @type {HTMLInputElement} */ (document.querySelector(selector));
 /** @param {number} n */
 const next = (n) => {
-  for (let i = 0; i < n; i++) click(button('Next step'));
+  for (let i = 0; i < n; i++) click(button('Bước tiếp'));
 };
 /** The map as [key, value] rows, without markers and screen-reader states. */
 const mapRows = () =>
@@ -86,13 +86,13 @@ describe('practice: hashing problems lesson', () => {
   it('runs the presets and reports a missing pair', () => {
     render();
     commit(field('select[name="preset"]'), 'late');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe('Done: (4, 5) after 6 lookups, which settled 15 pairs.');
     commit(field('select[name="preset"]'), 'none');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('result')).toBe('no pair');
     expect(byTest('entries')).toBe('4');
-    click(button('Previous step'));
+    click(button('Bước trước'));
     expect(narration()).toBe('No two numbers add up to 20: 4 lookups settled all 6 pairs.');
   });
 
@@ -100,7 +100,7 @@ describe('practice: hashing problems lesson', () => {
     render();
     commit(field('input[name="nums"]'), '5');
     commit(field('input[name="target"]'), '10');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe('Done: there is no pair.');
     commit(field('input[name="nums"]'), '5, x');
     expect(narration()).toBe(m.numsErrors.format);
@@ -109,7 +109,7 @@ describe('practice: hashing problems lesson', () => {
     expect(narration()).toBe(m.targetError);
     expect(field('input[name="target"]').value).toBe('10');
     commit(field('input[name="nums"]'), '−3, 13');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('result')).toBe('(0, 1)');
   });
 
@@ -120,7 +120,7 @@ describe('practice: hashing problems lesson', () => {
     expect(narration()).toBe('“eat” sorted is “aet”. Is “aet” in groups?');
     next(3);
     expect(narration()).toBe('Yes: append “tea” to groups[“aet”], which now holds 2 words.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe('Done: 6 words in 3 groups.');
     expect(mapRows()).toEqual([
       ['aet', 'eat, tea, ate'],
@@ -130,13 +130,13 @@ describe('practice: hashing problems lesson', () => {
     commit(field('input[name="words"]'), 'dog god 7');
     expect(narration()).toBe(m.wordErrors.format);
     commit(field('input[name="words"]'), 'Dog god cat');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('groups')).toBe('2');
   });
 
   it('steps back with the arrow keys', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     const before = narration();
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
     flushSync();
@@ -156,16 +156,16 @@ describe('practice: hashing problems lesson', () => {
     answer.value = '0, 0';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[2].hints[0]);
     answer.value = '(0, 2)';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

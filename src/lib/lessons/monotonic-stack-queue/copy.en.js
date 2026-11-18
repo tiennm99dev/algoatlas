@@ -13,8 +13,8 @@ const heldValues = (f) => f.held.map((j) => f.items[j]).join(', ');
 export const en = {
   slug: 'monotonic-stack-queue',
   topic: 'stacks-queues',
-  level: 'Advanced',
-  title: 'Monotonic stack and queue',
+  level: 'Nâng cao',
+  title: 'Ngăn xếp đơn điệu và hàng đợi đơn điệu',
   intro:
     'A monotonic stack or queue keeps its values in sorted order by throwing away every value that can no longer be an answer. Each new bar pops the shorter bars it beats, so finding every next greater element, or the maximum of every sliding window, takes one left-to-right pass: each index is pushed once and popped at most once, O(n) in total.',
   summary:
@@ -182,6 +182,5 @@ export const en = {
         'There are n pushes and at most n pops in total, so the work over all steps is at most about 2n: amortized O(1) per value.',
     },
   ],
-  nextTeaser:
-    'Next up: practice with stacks and queues, building a queue from two stacks and a stack that knows its minimum.',
+  nextTeaser: 'Bài tiếp theo: Luyện tập: ngăn xếp và hàng đợi.',
 };

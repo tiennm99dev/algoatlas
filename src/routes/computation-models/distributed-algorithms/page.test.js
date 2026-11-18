@@ -71,20 +71,20 @@ describe('distributed algorithms lesson', () => {
   it('elects the largest ID on the ring, round by round', () => {
     render();
     expect(text()).toContain('The diameter is D = 3, so every node runs 3 rounds.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain(
       'Round 1: 6 nodes send their largest ID to every neighbour: 12 messages.',
     );
     expect(text()).toContain('A → B: 3');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain(
       'Round 1: A learns 7 from B, C learns 9 from D and E learns 9 from D.',
     );
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain(
       'Round 2: only the 3 nodes whose maximum changed last round send: 6 messages.',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Done: D leads after 22 messages in 3 rounds.');
     expect(stat(m.stats.sent)).toBe('22');
     expect(stat(m.stats.leaders)).toBe('1');
@@ -93,34 +93,34 @@ describe('distributed algorithms lesson', () => {
   it('counts more messages when every node sends every round', () => {
     render();
     click(radio('variant', 'every'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.sent)).toBe('36');
     click(buttonByText(m.presets.path));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.sent)).toBe('50');
     click(radio('variant', 'change'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.sent)).toBe('19');
   });
 
   it('fails to break symmetry when every ID is equal', () => {
     render();
     click(radio('ids', 'equal'));
-    click(button('Last step'));
-    click(button('Previous step'));
+    click(button('Đến bước cuối'));
+    click(button('Bước trước'));
     expect(text()).toContain(
       'All 6 nodes have seen only the ID 1, so every one declares itself leader.',
     );
     click(buttonByText(m.shuffle));
     expect(radio('ids', 'unique').checked).toBe(true);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.leaders)).toBe('1');
   });
 
   it('elects one leader per piece after a node is added', () => {
     render();
-    click(buttonByText('Add node'));
-    click(button('Last step'));
+    click(buttonByText('Thêm đỉnh'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.leaders)).toBe('2');
     expect(text()).toContain('2 leaders, so the election failed.');
   });
@@ -129,15 +129,15 @@ describe('distributed algorithms lesson', () => {
     render();
     const q = question(0);
     answer(q, '50');
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     click(
       /** @type {HTMLElement} */ (
-        [...q.querySelectorAll('button')].find((b) => b.textContent?.trim() === 'Show a hint')
+        [...q.querySelectorAll('button')].find((b) => b.textContent?.trim() === 'Xem gợi ý')
       ),
     );
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer(q, '19');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

@@ -11,8 +11,8 @@ const withWeight = (e, names) => (e ? `${edgeName(e, names)} (${e.w})` : '');
 export const en = {
   slug: 'practice-mst',
   topic: 'mst',
-  level: 'Advanced',
-  title: 'Practice: MST problems',
+  level: 'Nâng cao',
+  title: 'Luyện tập: bài toán cây khung nhỏ nhất',
   intro:
     'A minimum spanning tree answers more than “cheapest network”. Its path between two vertices is a minimum bottleneck path, the route whose heaviest edge is as light as possible. And one swap of a tree edge for an outside edge gives the second-best spanning tree. Predict trees on a graph you edit, then check them.',
   summary:
@@ -254,6 +254,5 @@ export const en = {
         'Removing f splits the tree into two parts, with s on one side and t on the other. Any s–t path must cross that cut. If all its edges were lighter than f, one of them crosses that cut, and swapping f for it gives a spanning tree lighter than the minimum, which is impossible. The MST path is not always the shortest path: A → B → C has total 5 against 4 for A — C.',
     },
   ],
-  nextTeaser:
-    'Next up: Strongly connected components, where directed graphs split into groups of vertices that can all reach each other.',
+  nextTeaser: 'Bài tiếp theo: Thành phần liên thông mạnh.',
 };

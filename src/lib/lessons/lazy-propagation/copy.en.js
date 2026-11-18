@@ -16,8 +16,8 @@ const range = (lo, hi) => `[${lo}, ${hi}]`;
 export const en = {
   slug: 'lazy-propagation',
   topic: 'range-queries',
-  level: 'Advanced',
-  title: 'Lazy propagation',
+  level: 'Nâng cao',
+  title: 'Cập nhật lười',
   intro:
     'A plain segment tree changes one value at a time, so adding to a whole range would touch up to 2n − 1 nodes. Lazy propagation stops at the nodes that fit inside the range and leaves a tag saying “your children are still owed this”. The tag moves down only when a later operation needs to go below that node, so range updates and range queries both take O(log n).',
   summary:
@@ -250,6 +250,5 @@ export const en = {
       solution: 'At most four nodes per level over about log₂ n levels: O(log n).',
     },
   ],
-  nextTeaser:
-    'Next up: Sqrt decomposition and Mo’s algorithm, a simpler trade: split the array into blocks of about √n, and reorder queries when they can be answered offline.',
+  nextTeaser: 'Bài tiếp theo: Chia căn và thuật toán Mo.',
 };

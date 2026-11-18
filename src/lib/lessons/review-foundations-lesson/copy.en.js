@@ -1,8 +1,8 @@
 export const en = {
   slug: 'review-foundations-lesson',
   topic: 'review-foundations',
-  level: 'Intermediate',
-  title: 'Review: foundations',
+  level: 'Trung bình',
+  title: 'Ôn tập: nền tảng',
   intro:
     'This quiz mixes questions from every chapter of the foundations: complexity, arrays and strings, sorting, searching, linked lists, stacks and queues, hashing, recursion, trees, heaps and graphs. Most questions describe a job and ask which structure or algorithm fits it, because choosing well matters as much as knowing how each one works.',
   summary:
@@ -70,8 +70,7 @@ export const en = {
       'Every vertex is visited once and every adjacency-list edge is scanned once (twice when undirected).',
     ],
   ],
-  nextTeaser:
-    'Next up: Weighted graphs and shortest-path properties, the start of the core algorithms level.',
+  nextTeaser: 'Bài tiếp theo: Đồ thị có trọng số và tính chất của đường đi ngắn nhất.',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
   practice: [
     {

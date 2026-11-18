@@ -13,8 +13,8 @@ const coins = (b) => (b < 0 ? `−${-b}` : String(b));
 export const en = {
   slug: 'amortized-dynamic-arrays',
   topic: 'arrays-strings',
-  level: 'Intermediate',
-  title: 'Amortized analysis of dynamic arrays',
+  level: 'Trung bình',
+  title: 'Phân tích khấu hao cho mảng động',
   intro:
     'A dynamic array that doubles when full makes most appends cost 1 step, but the append that triggers a resize copies the whole array. Amortized analysis shows that the expensive appends are rare enough that any n appends cost under 3n steps in total, so each append is O(1) amortized. No probability is involved: the bound holds for every run.',
   summary:
@@ -196,6 +196,5 @@ export const en = {
         'It bounds the total: n appends cost at most a constant times n, here under 3n. A single append can still cost Θ(n), and no randomness is assumed.',
     },
   ],
-  nextTeaser:
-    'Next up: Two pointers, where two indices walk towards each other to find a pair in one pass.',
+  nextTeaser: 'Bài tiếp theo: Hai con trỏ.',
 };

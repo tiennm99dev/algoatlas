@@ -14,8 +14,8 @@ const vector = (v) => `(${v.map((f) => (f ? fracText(f) : '?')).join(', ')})`;
 export const en = {
   slug: 'lup-decomposition',
   topic: 'algebraic-randomised',
-  level: 'Intermediate',
-  title: 'Matrix operations: LUP decomposition',
+  level: 'Trung bình',
+  title: 'Phép toán ma trận: phân tích LUP',
   intro:
     'Gaussian elimination solves A·x = b by clearing each column below a pivot. Keeping the multipliers it used, instead of throwing them away, factors A into a lower triangle L and an upper triangle U. With row swaps recorded in a permutation P, this LUP decomposition P·A = L·U costs O(n³) once, after which every right-hand side b is solved by two triangular substitutions in O(n²).',
   summary:
@@ -190,6 +190,5 @@ export const en = {
         'First factor once, then solve the lower triangle for y top down, then the upper triangle for x bottom up.',
     },
   ],
-  nextTeaser:
-    'Next up: Linear programming and the simplex method, which walks the corners of a feasible region to optimise a linear objective.',
+  nextTeaser: 'Bài tiếp theo: Quy hoạch tuyến tính và phương pháp đơn hình.',
 };

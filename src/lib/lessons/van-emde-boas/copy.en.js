@@ -8,8 +8,8 @@ const count = (k, one, many) => `${k} ${k === 1 ? one : many}`;
 export const en = {
   slug: 'van-emde-boas',
   topic: 'advanced-heaps',
-  level: 'Advanced',
-  title: 'van Emde Boas trees',
+  level: 'Nâng cao',
+  title: 'Cây van Emde Boas',
   intro:
     'When the keys are integers from a fixed universe {0, 1, …, u − 1}, a van Emde Boas tree beats every comparison-based structure. It splits the universe into √u clusters of √u keys, plus a summary that says which clusters hold anything, and does the same inside each of them. Each operation recurses into only one structure of size √u, so insert, delete, successor, min and max take O(log log u) time.',
   summary:
@@ -251,6 +251,5 @@ export const en = {
         'An empty structure takes a key by setting min = max, with no call below. Only the summary insert does real work, so T(u) = T(√u) + O(1) = O(log log u).',
     },
   ],
-  nextTeaser:
-    'Next up: Practice: advanced heaps, where you weigh binary, Fibonacci and van Emde Boas priority queues against real operation mixes.',
+  nextTeaser: 'Bài tiếp theo: Luyện tập: heap nâng cao.',
 };

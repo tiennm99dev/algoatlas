@@ -71,7 +71,7 @@ describe('binary search on the answer lesson', () => {
     expect(text()).toContain('Candidates run from 10, the heaviest parcel, to 48');
     expect(document.querySelectorAll('g[data-cap]')).toHaveLength(39);
     expect(text()).toContain(m.packEmpty);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('The smallest capacity that ships everything in 3 days is 18');
     expect(byTest('checks')).toBe('5');
     expect(byTest('linear')).toBe('9');
@@ -82,10 +82,10 @@ describe('binary search on the answer lesson', () => {
 
   it('shows the greedy packing of a checked capacity', () => {
     render();
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Test the middle capacity, mid = 29.');
     expect(kind(29)).toBe('mid');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('At capacity 29 the greedy packing needs 2 days, within D = 3.');
     expect(byTest('verdict')).toBe('2 days ≤ D = 3: ✓ works');
     // The check runs every line of feasible(c), shown in its own code panel.
@@ -94,7 +94,7 @@ describe('binary search on the answer lesson', () => {
     expect(
       document.querySelector('li[aria-label="Day 1: 7 + 2 + 5 + 10 = 24 of 29"]'),
     ).not.toBeNull();
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('hi = 29');
     expect(kind(30)).toBe('yes');
   });
@@ -102,7 +102,7 @@ describe('binary search on the answer lesson', () => {
   it('changing D reruns the search', () => {
     render();
     commit(input('days'), '2');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('in 2 days is 24');
   });
 
@@ -110,7 +110,7 @@ describe('binary search on the answer lesson', () => {
     render();
     commit(input('weights'), '15 15');
     expect(input('days').value).toBe('2');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('in 2 days is 15');
   });
 
@@ -130,7 +130,7 @@ describe('binary search on the answer lesson', () => {
     render();
     commit(input('try'), '17');
     expect(byTest('verdict')).toBe('4 days > D = 3: ✕ fails');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).not.toContain('4 days > D = 3');
   });
 
@@ -169,16 +169,16 @@ describe('binary search on the answer lesson', () => {
     answer.value = '23';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[1].hints[0]);
     answer.value = '24';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

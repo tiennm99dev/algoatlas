@@ -7,8 +7,8 @@ const plural = (n, one, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
 export const en = {
   slug: 'practice-tree-techniques',
   topic: 'tree-techniques',
-  level: 'Advanced',
-  title: 'Practice: advanced tree problems',
+  level: 'Nâng cao',
+  title: 'Luyện tập: bài toán cây nâng cao',
   intro:
     'Two classic tree problems: the sum of the values on a path, and the distance between two nodes, while values keep changing. Run your own list of queries with heavy-light decomposition and with the plain walk along the path, and compare the work each one does.',
   summary:
@@ -194,6 +194,5 @@ export const en = {
         'u climbs depth[u] − depth[lca] edges and v climbs depth[v] − depth[lca], so dist(u, v) = depth[u] + depth[v] − 2·depth[lca].',
     },
   ],
-  nextTeaser:
-    'Next up: matrix exponentiation, which raises a matrix to a huge power in O(log k) multiplications.',
+  nextTeaser: 'Bài tiếp theo: Luỹ thừa ma trận.',
 };

@@ -7,8 +7,8 @@ const plural = (c) => `${c} comparison${c === 1 ? '' : 's'}`;
 export const en = {
   slug: 'hash-table',
   topic: 'structures',
-  level: 'Beginner',
-  title: 'Hash table',
+  level: 'Cơ bản',
+  title: 'Bảng băm',
   intro:
     'A hash table turns a key into a bucket number, so finding the key means looking in one short list instead of the whole collection. Watch keys land in buckets, collide, and get spread out again when the table grows.',
   summary:
@@ -32,8 +32,7 @@ export const en = {
       'Doubling spreads the cost of rehashing over the inserts that filled the table.',
     ],
   ],
-  nextTeaser:
-    'Next up: collision resolution, comparing chaining with open addressing for when two keys land in the same bucket.',
+  nextTeaser: 'Bài tiếp theo: Xử lí va chạm: móc nối và địa chỉ mở.',
 
   hashLabel: 'Hash',
   hashes: {

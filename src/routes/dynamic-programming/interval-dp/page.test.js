@@ -65,18 +65,18 @@ describe('interval DP lesson', () => {
     expect(narration()).toBe(
       'Multiply 3 matrices with the fewest scalar multiplications. The product is the same in any order, but the work is not.',
     );
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('Length 1: one matrix needs no multiplication, so the diagonal is 0.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Length 2');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('Interval A1..A2: start at ∞ and try 1 split.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe(
       'Split after A1: 0 + 0 + 10·100·5 = 5000. The first option, so it is the best so far.',
     );
     expect(arrows()).toBe(2);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('7500');
     expect(byTest('baseline')).toBe('75000');
     expect(byTest('order')).toBe('((A1 A2) A3)');
@@ -104,17 +104,17 @@ describe('interval DP lesson', () => {
     click(field('input[name="problem"][value="rod"]'));
     expect(field('input[name="input"]').value).toBe('1, 5, 8, 9');
     commit(field('select[name="preset"]'), 'eight');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe(
       'Length 1: one unit cannot be cut, so each cell on the diagonal is its price, 1.',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('22');
     expect(byTest('baseline')).toBe('20');
     expect(byTest('order')).toBe('2 + 6');
     expect(byTest('orders')).toBe('128');
     commit(field('select[name="preset"]'), 'whole');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe('The best price: 9, with pieces 3.');
   });
 
@@ -122,7 +122,7 @@ describe('interval DP lesson', () => {
     render();
     commit(field('input[name="input"]'), '2, 3, 4');
     expect(field('select[name="preset"]').value).toBe('');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('24');
     commit(field('input[name="input"]'), '5');
     expect(narration()).toBe('Type 2 to 8 dimensions: n matrices have n + 1.');
@@ -165,9 +165,9 @@ describe('interval DP lesson', () => {
     answer.value = '5375';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     /** @type {HTMLButtonElement} */ (hint).click();
     flushSync();
@@ -175,7 +175,7 @@ describe('interval DP lesson', () => {
     answer.value = '7125';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

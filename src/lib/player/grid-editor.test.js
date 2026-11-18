@@ -1,10 +1,10 @@
 import { describe, expect, it, vi } from 'vitest';
-import { gridCopy } from '$lib/lessons/grid-copy.en.js';
+import { gridCopy } from '$lib/lessons/grid-copy.vi.js';
 import { createGridEditor } from './grid-editor.svelte.js';
 
 const ROWS = 4;
 const COLS = 5;
-const copy = { ...gridCopy, edits: { ...gridCopy.edits, terrainCleared: 'Mud cleared.' } };
+const copy = { ...gridCopy, edits: { ...gridCopy.edits, terrainCleared: 'Đã dọn bùn.' } };
 
 /** @param {Record<string, any>} [extra] */
 function make(extra = {}) {
@@ -40,8 +40,8 @@ function mudLayer() {
       clear: (/** @type {number} */ c) => mud.delete(c),
       randomize: () => new Set([3]),
       reset: () => mud.clear(),
-      added: (/** @type {string} */ at) => `Mud added at ${at}.`,
-      removed: (/** @type {string} */ at) => `Mud removed at ${at}.`,
+      added: (/** @type {string} */ at) => `Đã thêm bùn ở ${at}.`,
+      removed: (/** @type {string} */ at) => `Đã bỏ bùn ở ${at}.`,
     },
   };
 }
@@ -61,10 +61,10 @@ describe('createGridEditor', () => {
     expect(editor.walls.has(2)).toBe(true);
     expect(trace).toHaveBeenCalledTimes(2);
     expect(editor.player.index).toBe(0);
-    expect(editor.narration('frame text')).toBe('Wall added at (0,2).');
+    expect(editor.narration('frame text')).toBe('Đã thêm tường ở (0,2).');
     editor.edit(2);
     expect(editor.walls.has(2)).toBe(false);
-    expect(editor.narration('frame text')).toBe('Wall removed at (0,2).');
+    expect(editor.narration('frame text')).toBe('Đã bỏ tường ở (0,2).');
   });
 
   it('refuses a wall on the start or goal without rebuilding', () => {
@@ -81,7 +81,7 @@ describe('createGridEditor', () => {
     editor.tool = 'start';
     editor.edit(1);
     expect(editor.start).toBe(1);
-    expect(editor.narration('x')).toBe('Start moved to (0,1).');
+    expect(editor.narration('x')).toBe('Đã dời điểm xuất phát đến (0,1).');
     editor.tool = 'goal';
     editor.edit(18);
     expect(editor.goal).toBe(18);
@@ -158,7 +158,7 @@ describe('createGridEditor', () => {
       editor.tool = 'mud';
       editor.edit(2);
       expect(mud.has(2)).toBe(true);
-      expect(editor.narration('x')).toBe('Mud added at (0,2).');
+      expect(editor.narration('x')).toBe('Đã thêm bùn ở (0,2).');
       editor.edit(2);
       expect(mud.has(2)).toBe(false);
       editor.edit(7);
@@ -185,13 +185,13 @@ describe('createGridEditor', () => {
       editor.edit(12);
       expect(editor.start).toBe(12);
       expect(mud.has(12)).toBe(false);
-      expect(editor.narration('x')).toBe('Start moved to (2,2). Mud cleared.');
+      expect(editor.narration('x')).toBe('Đã dời điểm xuất phát đến (2,2). Đã dọn bùn.');
       mud.add(13);
       editor.tool = 'goal';
       editor.edit(13);
       expect(mud.has(13)).toBe(false);
       editor.edit(14);
-      expect(editor.narration('x')).toBe('Goal moved to (2,4).');
+      expect(editor.narration('x')).toBe('Đã dời đích đến (2,4).');
     });
 
     it('scatter takes the walls from the terrain, and clear resets it', () => {

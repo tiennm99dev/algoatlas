@@ -11,8 +11,8 @@ const count = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 export const en = {
   slug: 'linked-list-techniques',
   topic: 'linked-lists',
-  level: 'Intermediate',
-  title: 'Linked list techniques',
+  level: 'Trung bình',
+  title: 'Kĩ thuật trên danh sách liên kết',
   intro:
     'Most linked list problems are solved by moving a few pointers carefully rather than by copying nodes. Reversal walks prev, curr and next down the list and flips one arrow at a time; the tortoise and hare move one and two steps at a time to find the middle or to catch a cycle, all in O(1) extra memory.',
   summary:
@@ -180,6 +180,5 @@ export const en = {
         'Both run in O(n) time, but the hash set stores up to n nodes while Floyd keeps only slow and fast.',
     },
   ],
-  nextTeaser:
-    'Next up: practice linked list problems, where you merge lists, find the middle and remove the nth node from the end.',
+  nextTeaser: 'Bài tiếp theo: Luyện tập: bài toán danh sách liên kết.',
 };

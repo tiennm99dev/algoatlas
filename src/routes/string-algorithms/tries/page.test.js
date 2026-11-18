@@ -68,7 +68,7 @@ const node = (label) => {
   if (!el) throw new Error(`no node ${label}`);
   return /** @type {SVGGElement} */ (el);
 };
-const toLast = () => click(button('Last step'));
+const toLast = () => click(button('Đến bước cuối'));
 const chipsOf = (/** @type {string} */ title) => {
   const card = [...document.querySelectorAll('h2')].find((h) => h.textContent === title);
   return [...(card?.parentElement?.querySelectorAll('li') ?? [])].map((li) =>
@@ -82,12 +82,12 @@ describe('tries lesson', () => {
     expect(stat('nodes')).toBe('10');
     expect(node('Prefix car,').getAttribute('aria-label')).toContain('matches what you typed');
     expect(chipsOf(m.resultsTitle)).toEqual(['car', 'card', 'care']);
-    click(button('First step'));
+    click(button('Về bước đầu'));
     expect(narration()).toBe('The trie starts as a single empty root.');
     expect(stat('nodes')).toBe('0');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('Insert car: start at the root.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('No child for c, so create one');
     toLast();
     expect(stat('words')).toBe('6');
@@ -101,7 +101,7 @@ describe('tries lesson', () => {
     commit(wordField(), 'cart');
     click(buttonByText('Insert'));
     expect(narration()).toBe('Insert cart: start at the root.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Letter c already has a node');
     toLast();
     expect(stat('words')).toBe('7');
@@ -113,17 +113,17 @@ describe('tries lesson', () => {
     commit(wordField(), 'ca');
     click(buttonByText('Search'));
     toLast();
-    click(button('Previous step'));
+    click(button('Bước trước'));
     expect(narration()).toContain('ca is only a prefix of longer words');
     commit(wordField(), 'cat');
     click(buttonByText('Search'));
     toLast();
-    click(button('Previous step'));
+    click(button('Bước trước'));
     expect(narration()).toContain('cat is stored');
     commit(wordField(), 'cow');
     click(buttonByText('Search'));
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('No child for o');
   });
 
@@ -132,16 +132,16 @@ describe('tries lesson', () => {
     commit(wordField(), 'ca');
     click(buttonByText('Autocomplete'));
     toLast();
-    click(button('Previous step'));
+    click(button('Bước trước'));
     expect(narration()).toBe('Autocomplete found 4 words after touching 6 nodes.');
     expect(chipsOf(m.resultsTitle)).toEqual(['car', 'card', 'care', 'cat']);
   });
 
   it('never claims a negative saving or an empty word list while a word is going in', () => {
     render();
-    click(button('First step'));
+    click(button('Về bước đầu'));
     for (let i = 0; i < 40; i++) {
-      click(button('Next step'));
+      click(button('Bước tiếp'));
       expect(document.body.textContent).not.toMatch(/saves -/);
       expect(stat('live')).not.toContain('starts 0 words');
     }
@@ -248,16 +248,16 @@ describe('tries lesson', () => {
     answer.value = '5';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(/** @type {any} */ (m.practice[0]).hints[0]);
     answer.value = '7';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

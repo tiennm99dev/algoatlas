@@ -14,8 +14,8 @@ const opChip = (op) =>
 export const en = {
   slug: 'treaps-skip-lists',
   topic: 'balanced-bst',
-  level: 'Advanced',
-  title: 'Treaps and skip lists',
+  level: 'Nâng cao',
+  title: 'Treap và skip list',
   intro:
     'Instead of strict balance rules, these structures use randomness. A skip list stacks sorted linked lists, with each key’s tower height set by coin flips, so a search rides the high levels and drops down. A treap gives each key a random priority and keeps the tree a BST by key and a min-heap by priority, so the smallest priority is the root. Both reach O(log n) expected time, whatever the insert order.',
   summary:
@@ -250,8 +250,7 @@ export const en = {
       'A skip list averages about 2 links per key; a treap stores one priority per key.',
     ],
   ],
-  nextTeaser:
-    'Next up: Ordered maps and augmented trees, where each node also stores its subtree size to answer rank and k-th smallest queries.',
+  nextTeaser: 'Bài tiếp theo: Ánh xạ có thứ tự và cây tăng cường.',
   practiceTitle: 'Check yourself',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
   practice: [

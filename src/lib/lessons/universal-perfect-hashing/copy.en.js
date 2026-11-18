@@ -13,8 +13,8 @@ const working = (k, a, b, m, p) =>
 export const en = {
   slug: 'universal-perfect-hashing',
   topic: 'algebraic-randomised',
-  level: 'Advanced',
-  title: 'Universal and perfect hashing',
+  level: 'Nâng cao',
+  title: 'Băm phổ quát và băm hoàn hảo',
   intro:
     'Any one fixed hash function has a bad set of keys that all land in the same slot, and an adversary who knows the function can send exactly that set. Universal hashing draws the function at random from a family where two keys collide with probability at most 1/m, so every key set is good on average. Two levels of it build a perfect hash table for a fixed key set: no collisions at all, lookups in O(1) time in the worst case, and only O(n) memory.',
   summary:
@@ -218,6 +218,5 @@ export const en = {
         'Lookups are two hashes and one comparison, and memory is n + Σ nⱼ² < 5n. A new key may collide in its bucket and force that bucket, or even the whole table, to be rebuilt, so perfect hashing suits static key sets.',
     },
   ],
-  nextTeaser:
-    'Next up: Game theory: Nim and Sprague-Grundy, where the XOR of the pile sizes tells you who wins.',
+  nextTeaser: 'Bài tiếp theo: Lí thuyết trò chơi: Nim và Sprague-Grundy.',
 };

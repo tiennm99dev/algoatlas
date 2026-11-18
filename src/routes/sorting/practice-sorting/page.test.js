@@ -83,9 +83,9 @@ describe('practice: choosing a sort', () => {
     expect(narration()).toContain('Six sorts each get their own copy of the same 12 cards.');
     expect(stat(m.stats.length)).toBe('66');
     expect(row(m.sorts.merge)).toEqual(Array(5).fill(m.pending));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Step 1: every running sort has made 1 comparison.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.running)).toBe('0 of 6');
     expect(narration()).toContain('Merge sort finished first with 30 comparisons');
     expect(narration()).toContain('Bubble sort and Selection sort needed 66');
@@ -98,7 +98,7 @@ describe('practice: choosing a sort', () => {
 
   it('fills a row when its sort finishes', () => {
     render();
-    for (let k = 0; k < 30; k++) click(button('Next step'));
+    for (let k = 0; k < 30; k++) click(button('Bước tiếp'));
     expect(narration()).toContain('Merge sort finishes now. 5 sorts are still running.');
     expect(row(m.sorts.merge)[0]).toBe('30');
     expect(row(m.sorts.quick)[0]).toBe(m.pending);
@@ -113,11 +113,11 @@ describe('practice: choosing a sort', () => {
     expect(field('values').value).toBe(
       '5, 11, 17, 23, 29, 35, 41, 47, 53, 59, 65, 71, 77, 83, 89, 95',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(row(m.sorts.quick)).toEqual(['120', '0', '15', '0', '– no repeats']);
     expect(row(m.sorts.insertion)[0]).toBe('15');
     click(buttonByText(m.shapes.reversed));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(row(m.sorts.bubble).slice(0, 2)).toEqual(['120', '240']);
     expect(row(m.sorts.merge)[0]).toBe('32');
   });
@@ -135,7 +135,7 @@ describe('practice: choosing a sort', () => {
     commit(field('size'), '40');
     expect(narration()).toBe(m.sizeError);
     expect(field('size').value).toBe('3');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Step 1');
     // Enter in the cards field submits the form.
     field('values').value = '9, 8, 7, 6';
@@ -184,16 +184,16 @@ describe('practice: choosing a sort', () => {
     answer.value = '4';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[2].hints[0]);
     answer.value = '15';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

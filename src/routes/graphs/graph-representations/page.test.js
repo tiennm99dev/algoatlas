@@ -88,11 +88,11 @@ describe('graph representations lesson', () => {
     render();
     expect(text()).toContain('Start with a 5 × 5 matrix of zeros and 5 empty lists.');
     expect(statValue(m.stats.matrixCells)).toBe('25');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Edge A – B: set matrix[A][B] = 1 and append B to A’s list.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('store it the other way too: matrix[B][A] = 1');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('each of the 6 edges appears twice');
     expect(statValue(m.stats.listEntries)).toBe('12');
     expect(listRows()[0]).toBe('A → B, C');
@@ -102,7 +102,7 @@ describe('graph representations lesson', () => {
   it('switching to directed stores each edge once and breaks the symmetry', () => {
     render();
     radio('directed');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.listEntries)).toBe('6');
     expect(matrixCell(0, 1).getAttribute('aria-label')).toBe('Row A, column B: 1');
     expect(matrixCell(1, 0).getAttribute('aria-label')).toBe('Row B, column A: 0');
@@ -111,7 +111,7 @@ describe('graph representations lesson', () => {
   it('weighted mode writes the edge weights', () => {
     render();
     radio('weighted');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(matrixCell(1, 3).getAttribute('aria-label')).toBe('Row B, column D: 10');
     expect(listRows()[1]).toBe('B → A·4, C·5, D·10');
   });
@@ -152,14 +152,14 @@ describe('graph representations lesson', () => {
 
   it('adding a vertex and an edge rebuilds the trace', () => {
     render();
-    click(buttonByText('Add node'));
+    click(buttonByText('Thêm đỉnh'));
     expect(statValue(m.stats.vertices)).toBe('6');
     expect(statValue(m.stats.matrixCells)).toBe('36');
     radio('connect');
     click(vertex(5));
     click(vertex(0));
     expect(statValue(m.stats.edges)).toBe('7');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(listRows()[5]).toBe('F → A');
     click(buttonByText(m.resetGraph));
     expect(statValue(m.stats.vertices)).toBe('5');
@@ -169,11 +169,11 @@ describe('graph representations lesson', () => {
     render();
     const q = /** @type {HTMLElement} */ (practice().querySelectorAll('ol > li')[0]);
     answer(q, '6');
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer(q, '12');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

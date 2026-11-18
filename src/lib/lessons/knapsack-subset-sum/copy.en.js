@@ -12,8 +12,8 @@ const yesNo = (v) => (v ? 'true' : 'false');
 export const en = {
   slug: 'knapsack-subset-sum',
   topic: 'dynamic-programming',
-  level: 'Intermediate',
-  title: '0/1 knapsack and subset sum',
+  level: 'Trung bình',
+  title: 'Cái túi 0/1 và tổng tập con',
   intro:
     'Items cannot be cut, so the best choice for one item depends on how much room the others leave. The table therefore gets a capacity dimension: cell (i, c) answers the problem for the first i items and capacity c, and each cell decides only whether to take or skip item i. Subset sum is the same table with true and false instead of values.',
   summary:
@@ -320,6 +320,5 @@ export const en = {
         'One row of W + 1 cells: O(W), down from O(nW). The value survives; the items do not.',
     },
   ],
-  nextTeaser:
-    'Next up: Interval DP, where a cell stands for a whole stretch of the input and the choice is where to split it.',
+  nextTeaser: 'Bài tiếp theo: QHĐ trên đoạn: nhân chuỗi ma trận và cắt thanh.',
 };

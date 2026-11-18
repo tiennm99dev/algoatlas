@@ -50,7 +50,7 @@ const byTest = (id) => document.querySelector(`[data-testid="${id}"]`)?.textCont
 const stackLabel = () =>
   [...document.querySelectorAll('svg[role="img"]')]
     .map((s) => s.getAttribute('aria-label') ?? '')
-    .find((l) => l.startsWith('Stack') || l.startsWith('The stack')) ?? '';
+    .find((l) => l.startsWith('Ngăn xếp')) ?? '';
 /** @param {string} value */
 const pickMode = (value) =>
   click(
@@ -60,7 +60,7 @@ const pickMode = (value) =>
   );
 /** @param {number} n */
 const next = (n) => {
-  for (let i = 0; i < n; i++) click(button('Next step'));
+  for (let i = 0; i < n; i++) click(button('Bước tiếp'));
 };
 
 function practice() {
@@ -79,10 +79,10 @@ describe('stack applications lesson', () => {
     expect(narration()).toBe(
       'character 3 is (, an opening bracket: push it. It waits for its partner.',
     );
-    expect(stackLabel()).toBe('Stack, bottom to top: {, [, (.');
+    expect(stackLabel()).toBe('Ngăn xếp, từ đáy lên đỉnh: {, [, (.');
     next(1);
     expect(narration()).toContain('the top was (: they match, so pop it');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('verdict')).toBe('balanced');
     expect(byTest('depth')).toBe('3');
   });
@@ -90,8 +90,8 @@ describe('stack applications lesson', () => {
   it('stops at a closer that meets the wrong opener', () => {
     render();
     commit(input('brackets'), '(a[b)]');
-    click(button('Last step'));
-    click(button('Previous step'));
+    click(button('Đến bước cuối'));
+    click(button('Bước trước'));
     expect(narration()).toContain('character 5 is ), but the top is [');
     expect(byTest('verdict')).toBe('unbalanced');
   });
@@ -99,8 +99,8 @@ describe('stack applications lesson', () => {
   it('reports openers left at the end and a closer with nothing open', () => {
     render();
     commit(/** @type {HTMLSelectElement} */ (document.querySelector('select')), 'open');
-    click(button('Last step'));
-    click(button('Previous step'));
+    click(button('Đến bước cuối'));
+    click(button('Bước trước'));
     expect(narration()).toContain('1 opener never closed');
     commit(input('brackets'), ')');
     next(1);
@@ -120,7 +120,7 @@ describe('stack applications lesson', () => {
     commit(input('postfix'), '8 3 -');
     next(3);
     expect(narration()).toBe('- is an operator: pop b = 3, then a = 8.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('verdict')).toBe('5');
   });
 
@@ -136,8 +136,8 @@ describe('stack applications lesson', () => {
     render();
     pickMode('postfix');
     commit(/** @type {HTMLSelectElement} */ (document.querySelector('select')), 'missing');
-    click(button('Last step'));
-    click(button('Previous step'));
+    click(button('Đến bước cuối'));
+    click(button('Bước trước'));
     expect(narration()).toContain('+ needs two values, but the stack holds 1');
   });
 
@@ -146,10 +146,10 @@ describe('stack applications lesson', () => {
     pickMode('calls');
     commit(input('n'), '3');
     next(3);
-    expect(stackLabel()).toBe('Stack, bottom to top: fact(3), fact(2), fact(1).');
+    expect(stackLabel()).toBe('Ngăn xếp, từ đáy lên đỉnh: fact(3), fact(2), fact(1).');
     next(2);
     expect(narration()).toBe('fact(2) resumes: 2 × 1 = 2. Return it and pop the frame.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('verdict')).toBe('fact = 6');
     commit(input('n'), '12');
     expect(narration()).toBe(m.nError);
@@ -162,13 +162,13 @@ describe('stack applications lesson', () => {
     input('brackets').dispatchEvent(new Event('input', { bubbles: true }));
     /** @type {HTMLFormElement} */ (input('brackets').closest('form')).requestSubmit();
     flushSync();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('pushes')).toBe('1');
   });
 
   it('steps back with the arrow keys', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     const before = narration();
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
     flushSync();
@@ -188,16 +188,16 @@ describe('stack applications lesson', () => {
     answer.value = '20';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '30';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

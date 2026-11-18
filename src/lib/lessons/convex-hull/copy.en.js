@@ -9,8 +9,8 @@ const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 export const en = {
   slug: 'convex-hull',
   topic: 'geometry',
-  level: 'Intermediate',
-  title: 'Convex hull',
+  level: 'Trung bình',
+  title: 'Bao lồi',
   intro:
     'The convex hull is the smallest convex polygon around a set of points, the shape a rubber band snaps to. Sort the points, then walk them with a stack: whenever the newest three make a turn that is not left, the middle one cannot be a corner, so pop it. Each point is pushed once and popped at most once, so after an O(n log n) sort the scan is only O(n).',
   summary:
@@ -138,8 +138,7 @@ export const en = {
       'Sorting dominates. On points already sorted, the scan alone is O(n).',
     ],
   ],
-  nextTeaser:
-    'Next, Sweep line algorithms move a vertical line across the plane and keep only the active set of segments in view.',
+  nextTeaser: 'Bài tiếp theo: Thuật toán đường quét.',
   practiceTitle: 'Check yourself',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
   practice: [

@@ -3,8 +3,8 @@
 export const en = {
   slug: 'lower-upper-bound',
   topic: 'searching',
-  level: 'Intermediate',
-  title: 'Lower bound & upper bound',
+  level: 'Trung bình',
+  title: 'Cận dưới và cận trên',
   intro:
     'Binary search can answer more than "is it here?". Lower bound finds the first position whose value is at least x; upper bound finds the first position whose value is greater than x. Every copy of x sits between the two.',
   summary:
@@ -25,8 +25,7 @@ export const en = {
     ['Counting x', 'O(log n)', 'Two searches: upper − lower.'],
     ['Memory', 'O(1)', 'Only lo, hi, and mid.'],
   ],
-  nextTeaser:
-    'Next up: binary search on the answer, which guesses the answer itself and halves the range of guesses.',
+  nextTeaser: 'Bài tiếp theo: Tìm kiếm nhị phân trên đáp án.',
   variantLabel: 'Search for',
   variants: { lower: 'Lower bound', upper: 'Upper bound' },
   targetLabel: 'Target x',

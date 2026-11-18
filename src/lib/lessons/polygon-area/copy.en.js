@@ -13,8 +13,8 @@ const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 export const en = {
   slug: 'polygon-area',
   topic: 'geometry',
-  level: 'Intermediate',
-  title: 'Polygon area and point in polygon',
+  level: 'Trung bình',
+  title: 'Diện tích đa giác và điểm trong đa giác',
   intro:
     'Walk once around a polygon’s edges and you can answer two questions. The shoelace formula adds one signed term per edge to get the area and the direction of travel. Ray casting and the winding number count how the edges pass a point to say whether it is inside.',
   summary:
@@ -182,8 +182,7 @@ export const en = {
       'Binary search over the fan of triangles from one vertex.',
     ],
   ],
-  nextTeaser:
-    'Next, Convex hull wraps a cloud of points in the smallest convex polygon by popping off concave turns.',
+  nextTeaser: 'Bài tiếp theo: Bao lồi.',
   practiceTitle: 'Check yourself',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
   practice: [

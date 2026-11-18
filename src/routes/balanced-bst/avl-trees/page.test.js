@@ -61,7 +61,7 @@ describe('AVL trees lesson', () => {
   it('starts empty and walks the left-right case to a balanced tree', () => {
     render(Page);
     expect(narration()).toContain('The tree is empty.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('height')).toBe('2');
     expect(stat('rotations')).toBe('2');
     expect(narration()).toContain('every balance factor within ±1');
@@ -73,8 +73,8 @@ describe('AVL trees lesson', () => {
     const seen = [];
     for (let i = 0; i < 20; i++) {
       seen.push(narration());
-      if (button('Next step').getAttribute('aria-disabled') === 'true') break;
-      click(button('Next step'));
+      if (button('Bước tiếp').getAttribute('aria-disabled') === 'true') break;
+      click(button('Bước tiếp'));
     }
     const all = seen.join(' | ');
     expect(all).toContain('10 < 30, so go left.');
@@ -87,7 +87,7 @@ describe('AVL trees lesson', () => {
     render(Page);
     for (let i = 0; i < 40; i++) {
       if (narration().includes('LR case')) break;
-      click(button('Next step'));
+      click(button('Bước tiếp'));
     }
     expect(document.querySelector('[data-testid="case-LR"]')?.textContent).toContain('(now)');
     expect(document.querySelector('[data-testid="case-LL"]')?.textContent).not.toContain('(now)');
@@ -105,7 +105,7 @@ describe('AVL trees lesson', () => {
 
   it('shows balance factors on the nodes', () => {
     render(Page);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(document.querySelector('svg')?.textContent).toContain('bf 0');
   });
 
@@ -114,21 +114,21 @@ describe('AVL trees lesson', () => {
     commit(keyInput(), '25');
     click(buttonByText('Insert'));
     expect(narration()).toContain('Compare 25 with 20.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('height')).toBe('3');
     commit(keyInput(), '25');
     click(buttonByText('Search'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('height')).toBe('3');
     click(buttonByText('Delete'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('height')).toBe('2');
   });
 
   it('runs a preset, undoes its last step and resets', () => {
     render(Page);
     commit(presetSelect(), 'sorted');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('rotations')).toBe('6');
     expect(stat('height')).toBe('4');
     click(buttonByText('Undo last'));
@@ -142,12 +142,12 @@ describe('AVL trees lesson', () => {
   it('repairs at two levels on the cascading delete', () => {
     render(Page);
     commit(presetSelect(), 'cascade');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('op-rotations')).toBe('0');
     expect(stat('height')).toBe('4');
     let delta = 0;
-    while (button('Previous step').getAttribute('aria-disabled') !== 'true' && delta < 40) {
-      click(button('Previous step'));
+    while (button('Bước trước').getAttribute('aria-disabled') !== 'true' && delta < 40) {
+      click(button('Bước trước'));
       delta++;
       if (stat('op-rotations') === '3') break;
     }
@@ -164,7 +164,7 @@ describe('AVL trees lesson', () => {
     click(buttonByText('Search'));
     expect(narration()).toContain('whole numbers from 0 to 99');
     expect(keyInput().value).toBe('45');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).not.toContain('whole numbers');
   });
 
@@ -185,7 +185,7 @@ describe('AVL trees lesson', () => {
 
   it('lets a node be picked by pointer and keyboard', () => {
     render(Page);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     const nodes = [...document.querySelectorAll('svg [role="button"]')];
     expect(nodes.length).toBe(3);
     nodes[0].dispatchEvent(new MouseEvent('click', { bubbles: true }));
@@ -228,11 +228,11 @@ describe('AVL trees lesson', () => {
       flushSync();
     };
     submit('5');
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     submit('2');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

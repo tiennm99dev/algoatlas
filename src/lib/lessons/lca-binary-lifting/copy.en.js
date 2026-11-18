@@ -9,8 +9,8 @@ const pow = (k) => `2${'⁰¹²³⁴⁵⁶⁷⁸⁹'[k]}`;
 export const en = {
   slug: 'lca-binary-lifting',
   topic: 'tree-techniques',
-  level: 'Intermediate',
-  title: 'Lowest common ancestor and binary lifting',
+  level: 'Trung bình',
+  title: 'Tổ tiên chung gần nhất và nhảy nhị phân',
   intro:
     'The lowest common ancestor (LCA) of two nodes is the deepest node that has both of them below it: the place where their paths to the root meet. Walking up one parent at a time costs O(depth) per query. Binary lifting stores, for every node, its ancestors 1, 2, 4, 8, … levels up, so any climb splits into O(log n) jumps.',
   summary:
@@ -210,6 +210,5 @@ export const en = {
         'up[k][v] = up[k−1][up[k−1][v]]: first jump 2ᵏ⁻¹ levels from v, then 2ᵏ⁻¹ more from where that lands.',
     },
   ],
-  nextTeaser:
-    'Next up: heavy-light decomposition, which cuts a tree into chains so a whole path query becomes a few segment-tree ranges.',
+  nextTeaser: 'Bài tiếp theo: Phân rã nặng nhẹ.',
 };

@@ -49,20 +49,20 @@ const stat = (id) => document.querySelector(`[data-testid="${id}"]`)?.textConten
 const field = (name) =>
   /** @type {HTMLInputElement} */ (document.querySelector(`[name="${name}"]`));
 const titles = () => [...document.querySelectorAll('svg title')].map((t) => t.textContent ?? '');
-const toLast = () => click(button('Last step'));
+const toLast = () => click(button('Đến bước cuối'));
 
 describe('GCD and extended Euclid lesson', () => {
   it('walks 240 and 46 to the gcd, the coefficients and the squares', () => {
     render();
     expect(narration()).toBe(m.describe(gcdTrace(240, 46, 10)[0]));
     expect(stat('g')).toBe('—');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('240 = 5·46 + 10');
     expect(stat('divisions')).toBe('1');
     expect(stat('subtractions')).toBe('5');
     expect(titles()).toContain('Square of side 46, cut by division 1, just cut');
     expect(titles()).toContain('Part left to cut, 10 by 46');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('New row: r = 10');
     toLast();
     expect(stat('divisions')).toBe('5');
@@ -106,7 +106,7 @@ describe('GCD and extended Euclid lesson', () => {
   it('shows the swap when a is smaller than b', () => {
     render();
     commit(field('preset'), 'tall');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('q = 0');
     expect(stat('subtractions')).toBe('0');
   });
@@ -162,16 +162,16 @@ describe('GCD and extended Euclid lesson', () => {
     answer.value = '7';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(/** @type {any} */ (m.practice[0]).hints[0]);
     answer.value = '21';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 

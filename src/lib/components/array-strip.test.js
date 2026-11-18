@@ -42,7 +42,7 @@ describe('ArrayStrip', () => {
     });
     expect(svg().getAttribute('role')).toBe('img');
     expect(svg().getAttribute('aria-label')).toBe(
-      'Sorted array. lo at 0. hi at 4. window covers 1 to 2',
+      'Sorted array. lo ở 0. hi ở 4. window phủ từ 1 đến 2',
     );
     expect(document.querySelectorAll('[role="button"]')).toHaveLength(0);
   });
@@ -50,7 +50,12 @@ describe('ArrayStrip', () => {
   it('names each cell with its index, value and state', () => {
     render({ stateOf: (/** @type {number} */ i) => (i === 2 ? 'compare' : '') });
     const titles = [...document.querySelectorAll('title')].map((t) => t.textContent);
-    expect(titles).toEqual(['Index 0: 5', 'Index 1: 8', 'Index 2: 13, compared', 'Index 3: 21']);
+    expect(titles).toEqual([
+      'Chỉ số 0: 5',
+      'Chỉ số 1: 8',
+      'Chỉ số 2: 13, đang so sánh',
+      'Chỉ số 3: 21',
+    ]);
     expect(document.querySelectorAll('rect')[2].getAttribute('class')).toContain(
       'fill-state-compare',
     );

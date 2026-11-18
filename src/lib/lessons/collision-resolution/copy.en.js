@@ -15,8 +15,8 @@ const METHOD_NAMES = {
 export const en = {
   slug: 'collision-resolution',
   topic: 'structures',
-  level: 'Beginner',
-  title: 'Collision resolution: chaining vs open addressing',
+  level: 'Cơ bản',
+  title: 'Xử lí va chạm: móc nối và địa chỉ mở',
   intro:
     'Two keys often hash to the same bucket. Separate chaining keeps a list in every bucket; open addressing stores every key in the table itself and, on a collision, probes other slots in a fixed order. Fill both kinds of table with the same keys and compare where the keys end up and what each lookup costs.',
   summary:
@@ -49,8 +49,7 @@ export const en = {
       'Chaining adds a list node per key; open addressing uses only the m slots, so it needs n ≤ m.',
     ],
   ],
-  nextTeaser:
-    'Next up: load factor and rehashing, which keeps α small by growing the table, at an amortized O(1) cost per insert.',
+  nextTeaser: 'Bài tiếp theo: Hệ số tải và băm lại.',
 
   methodLabel: 'Probing',
   methods: {

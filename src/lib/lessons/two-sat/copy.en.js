@@ -16,8 +16,8 @@ const bool = (v) => (v === 1 ? 'true' : 'false');
 export const en = {
   slug: 'two-sat',
   topic: 'advanced-graphs',
-  level: 'Advanced',
-  title: '2-SAT',
+  level: 'Nâng cao',
+  title: 'Bài toán 2-SAT',
   intro:
     '2-SAT asks whether true/false values can satisfy a formula made of clauses with two literals each, such as (x₁ ∨ ¬x₂). With three literals per clause the problem is NP-complete, but with two it is solvable in linear time: each clause becomes two implications, and the strongly connected components of the resulting implication graph decide everything.',
   summary:
@@ -200,6 +200,5 @@ export const en = {
         'x₂ must be false. Then (x₄ ∨ x₂) forces x₄, (¬x₃ ∨ ¬x₄) forces ¬x₃, (x₁ ∨ x₃) forces x₁, and (¬x₁ ∨ x₂) forces x₂: a contradiction. All eight literals end in one component.',
     },
   ],
-  nextTeaser:
-    'Next up: Practice: advanced graph problems, finding the weak points of a network and the cycles in a dependency graph.',
+  nextTeaser: 'Bài tiếp theo: Luyện tập: bài toán đồ thị nâng cao.',
 };

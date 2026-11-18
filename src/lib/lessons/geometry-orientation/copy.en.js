@@ -18,8 +18,8 @@ const TURN = { left: 'Left turn', right: 'Right turn', collinear: 'Collinear' };
 export const en = {
   slug: 'geometry-orientation',
   topic: 'geometry',
-  level: 'Beginner',
-  title: 'Points, vectors and orientation',
+  level: 'Cơ bản',
+  title: 'Điểm, vectơ và hướng quay',
   intro:
     'Almost all computational geometry reduces to one question: going from a to b, is c on the left, on the right, or straight ahead? The cross product answers it with two multiplications and a subtraction, with no angles and no division. On whole numbers the answer is exact, and on floats it can be wrong.',
   summary:
@@ -134,8 +134,7 @@ export const en = {
       'Trigonometry returns rounded floats, and the comparison needs care near ±π.',
     ],
   ],
-  nextTeaser:
-    'Next, Segment intersection uses four orientation tests to decide whether two segments meet.',
+  nextTeaser: 'Bài tiếp theo: Giao của hai đoạn thẳng.',
   practiceTitle: 'Check yourself',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
   practice: [

@@ -9,8 +9,8 @@ const node = (v) => String.fromCharCode(65 + v);
 export const en = {
   slug: 'tree-dp',
   topic: 'advanced-dp',
-  level: 'Advanced',
-  title: 'DP on trees',
+  level: 'Nâng cao',
+  title: 'QHĐ trên cây',
   intro:
     'A rooted tree splits into subtrees that share nothing, so a node’s answer can be built from its children’s answers. Visit the tree in post-order, children before their parent, and keep a few numbers per node, such as the best total with the node taken and with it left out. Rerooting adds a second, top-down pass that turns one root’s answer into every node’s answer in O(n).',
   summary:
@@ -222,6 +222,5 @@ export const en = {
       solution: 'One post-order pass and one pre-order pass, each O(1) per edge: O(n) in total.',
     },
   ],
-  nextTeaser:
-    'Next up: Digit DP, which counts numbers up to N with a property by filling their digits one position at a time.',
+  nextTeaser: 'Bài tiếp theo: QHĐ chữ số.',
 };

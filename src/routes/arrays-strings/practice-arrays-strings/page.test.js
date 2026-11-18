@@ -107,12 +107,12 @@ describe('array and string practice lesson', () => {
     expect(narration()).toBe(
       'Find a pair with sum 14. Put lo on the first value and hi on the last.',
     );
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe(
       'a[0] + a[6] = 1 + 15 = 16 > 14: too big. a[lo] is the smallest partner left for a[hi], so move hi left.',
     );
     expect(text()).toContain('Index 6: 15, read now');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe('Done: a[1] + a[5] = 14, after 3 steps.');
     expect(stat(m.stats.answer)).toBe('(1, 5)');
     expect(text()).toContain('Index 1: 3, part of the answer');
@@ -132,7 +132,7 @@ describe('array and string practice lesson', () => {
     expect(text()).toContain(m.noCode);
     pickTechnique('brute');
     expect(verdict()).toContain('Brute force: Works, but not the best');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.steps)).toBe('10');
   });
 
@@ -141,14 +141,14 @@ describe('array and string practice lesson', () => {
     pickProblem('shortest-window');
     expect(text()).toContain(m.statements['shortest-window']);
     pickTechnique('window');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.answer)).toBe('2');
     expect(narration()).toBe('Done: the shortest run is a[4..5], length 2, after 11 steps.');
     pickTechnique('prefix');
     expect(text()).toContain(m.auxTitles.prefix);
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('P[1] = P[0] + a[0] = 0 + 2 = 2.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.steps)).toBe('23');
     expect(compareSteps()['Brute force']).toBe('17');
   });
@@ -158,10 +158,10 @@ describe('array and string practice lesson', () => {
     pickProblem('range-sums');
     pickTechnique('prefix');
     expect(input('queries').value).toBe('0 3, 2 6, 5 5, 1 7');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.answer)).toBe('7, 11, −1, 15');
     commit(input('queries'), '0 7');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.answer)).toBe('18');
     expect(stat(m.stats.steps)).toBe('9');
     commit(input('queries'), '3 9');
@@ -175,12 +175,12 @@ describe('array and string practice lesson', () => {
     pickTechnique('brute');
     expect(text()).toContain(m.auxTitles.reversed);
     commit(input('values'), 'lever');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.answer)).toBe(m.no);
     expect(text()).toContain('Index 0: l, does not match');
     click(buttonByText(m.sampleButton));
     expect(input('values').value).toBe('racecar');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.answer)).toBe(m.yes);
   });
 
@@ -220,16 +220,16 @@ describe('array and string practice lesson', () => {
     answer.value = '3';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '10';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

@@ -45,7 +45,7 @@ const narration = () => document.querySelector('p[aria-live]')?.textContent?.tri
 const byTest = (id) => document.querySelector(`[data-testid="${id}"]`)?.textContent?.trim();
 /** @param {number} n */
 const next = (n) => {
-  for (let i = 0; i < n; i++) click(button('Next step'));
+  for (let i = 0; i < n; i++) click(button('Bước tiếp'));
 };
 
 function practice() {
@@ -91,7 +91,7 @@ describe('advanced tree problems practice', () => {
     );
     next(1);
     expect(nodeName('D')).toBe('Node D, value 0, value just set');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('naive')).toBe('34');
     expect(byTest('hld')).toBe('75');
     expect(narration()).toContain('naive 34, HLD 75, the naive walk did less here.');
@@ -102,9 +102,9 @@ describe('advanced tree problems practice', () => {
     render();
     typeOps('dist k o, set a 9, sum a a');
     expect(opsField()).toBe('dist K O, set A 9, sum A A');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('–');
-    click(button('Previous step'));
+    click(button('Bước trước'));
     expect(byTest('answer')).toBe('9');
     typeOps('sum A Q');
     expect(narration()).toBe(m.opErrors.node);
@@ -119,7 +119,7 @@ describe('advanced tree problems practice', () => {
     render();
     choose('preset', 'caterpillar');
     expect(opsField()).toBe('sum N Z, dist N Z, sum Y Z, set G 9, sum N Z');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('naive')).toBe('50');
     expect(byTest('hld')).toBe('80');
     expect(byTest('step')).toBe('5 / 5');
@@ -138,16 +138,16 @@ describe('advanced tree problems practice', () => {
     answer.value = '34';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '33';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

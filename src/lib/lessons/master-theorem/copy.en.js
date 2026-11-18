@@ -82,8 +82,8 @@ const plural = (x, word) => `${x.toLocaleString('en-US')} ${word}${x === 1 ? '' 
 export const en = {
   slug: 'master-theorem',
   topic: 'divide-and-conquer',
-  level: 'Intermediate',
-  title: 'Divide and conquer and the master theorem',
+  level: 'Trung bình',
+  title: 'Chia để trị và định lí thợ',
   intro:
     'A divide-and-conquer algorithm splits a problem into a smaller copies, solves each recursively, and combines the answers. Its running time is a recurrence T(n) = a·T(n/b) + f(n), and the master theorem reads the answer off by comparing f(n) with n^(log_b a), the number of leaves in the recursion tree.',
   summary:
@@ -290,6 +290,5 @@ export const en = {
         'The leaves are aᵏ = 7³ = 343 calls, which equals n^(log₂ 7) = 8^2.807… = 343. Since log₂ 7 ≈ 2.81 > 2, the leaves dominate: Θ(n^2.81).',
     },
   ],
-  nextTeaser:
-    'Next up: Counting inversions, where merge sort counts the out-of-order pairs in O(n log n) instead of checking all n² pairs.',
+  nextTeaser: 'Bài tiếp theo: Đếm nghịch thế.',
 };

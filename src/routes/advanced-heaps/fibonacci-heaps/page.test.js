@@ -71,9 +71,9 @@ describe('binomial and Fibonacci heaps lesson', () => {
   it('starts lazily and consolidates on extract-min', () => {
     render();
     expect(text()).toContain('An empty Fibonacci heap');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Insert 41: add it to the root list as a one-node tree');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(forestLabel()).toContain('1 tree holding 8 keys.');
     expect(text()).toContain('All operations done: 7 links, 0 cuts.');
   });
@@ -82,7 +82,7 @@ describe('binomial and Fibonacci heaps lesson', () => {
     render();
     expect(text()).toContain(m.tableIdle);
     // Step past nine inserts, the extract and the promotion to the first scan.
-    for (let i = 0; i < 12; i++) click(button('Next step'));
+    for (let i = 0; i < 12; i++) click(button('Bước tiếp'));
     expect(text()).toContain('Consolidate: take the root');
     expect(document.querySelector('svg[aria-label^="Degree table"]')).not.toBeNull();
   });
@@ -94,7 +94,7 @@ describe('binomial and Fibonacci heaps lesson', () => {
     expect(text()).toContain('Insert 1: add it to the root list');
     click(buttonByText(m.extract));
     expect(text()).toContain('Extract min: the min pointer names 1.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(forestLabel()).toContain('holding 8 keys.');
   });
 
@@ -103,19 +103,19 @@ describe('binomial and Fibonacci heaps lesson', () => {
     click(/** @type {HTMLInputElement} */ (document.querySelector('input[value="binomial"]')));
     expect(text()).toContain('Sift-up swaps');
     commit(/** @type {HTMLSelectElement} */ (document.querySelector('select')), 'counter');
-    click(button('Next step'));
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Insert 9: it starts as a carry');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('also has degree 0, so the two trees must link');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(forestLabel()).toContain('1 tree holding 8 keys.');
   });
 
   it('decreases a chosen key from the keyboard and cuts it out', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     const leaf = node('Key 46,');
     leaf.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     flushSync();
@@ -123,9 +123,9 @@ describe('binomial and Fibonacci heaps lesson', () => {
     commit(input('key'), '2');
     click(buttonByText(m.decrease));
     expect(text()).toContain('Decrease 46 to 2. Its parent holds 39.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('cut 2 out with its subtree');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(forestLabel()).toContain('2 trees holding 8 keys.');
     expect(text()).toContain('46↓2');
   });
@@ -134,7 +134,7 @@ describe('binomial and Fibonacci heaps lesson', () => {
     render();
     click(buttonByText(m.decrease));
     expect(text()).toContain(m.pickFirst);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     node('Key 18,').dispatchEvent(new MouseEvent('click', { bubbles: true }));
     flushSync();
     commit(input('key'), '30');
@@ -180,13 +180,13 @@ describe('binomial and Fibonacci heaps lesson', () => {
     answer.value = '4';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     send();
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '3';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     send();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

@@ -1,8 +1,8 @@
 export const en = {
   slug: 'review-advanced-lesson',
   topic: 'review-advanced',
-  level: 'Advanced',
-  title: 'Review: advanced algorithms',
+  level: 'Nâng cao',
+  title: 'Ôn tập: thuật toán nâng cao',
   intro:
     'This quiz mixes questions from every chapter of the advanced topics: range query structures, string algorithms, number theory, geometry, network flows, advanced dynamic programming, tree techniques, algebraic and randomised algorithms, intractability, advanced heaps and other models of computation. Some questions ask which structure or algorithm fits a job, some ask where the limits of what is computable fast lie, and the rest have you run an algorithm by hand.',
   summary:

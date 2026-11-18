@@ -88,7 +88,7 @@ function reweighted(name) {
 
 /** Steps forward until the narration contains `needle`. @param {string} needle */
 function stepUntil(needle) {
-  const next = button('Next step');
+  const next = button('Bước tiếp');
   for (let i = 0; i < 400 && !text().includes(needle); i++) click(next);
   expect(text()).toContain(needle);
 }
@@ -117,7 +117,7 @@ describe('Johnson’s algorithm lesson', () => {
       'Add a new vertex q with an edge of weight 0 to each of the 5 vertices.',
     );
     expect(statValue(m.stats.phase)).toBe(m.phases.start);
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Bellman-Ford round 1');
     stepUntil('Round 3 changed nothing, so the potentials are final');
     expect(text()).toContain('h(C) = −5');
@@ -127,7 +127,7 @@ describe('Johnson’s algorithm lesson', () => {
     stepUntil('Dijkstra from A is done.');
     expect(matrixRow('A')).toEqual(['0', '1', '−3', '2', '−4']);
     expect(matrixRow('B')).toEqual(['—', '—', '—', '—', '—']);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Done: 5 Dijkstra runs filled the whole matrix');
     expect(matrixRow('B')).toEqual(['3', '0', '−4', '1', '−1']);
     expect(matrixRow('E')).toEqual(['8', '5', '1', '6', '0']);
@@ -137,7 +137,7 @@ describe('Johnson’s algorithm lesson', () => {
 
   it('shows the reweighted graph in the w′ view', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     radio('wp');
     const svg = document.querySelector(`svg[aria-label^="${m.graphAriaReweighted}"]`);
     expect(svg).not.toBeNull();
@@ -151,12 +151,12 @@ describe('Johnson’s algorithm lesson', () => {
   it('stops at a negative cycle', () => {
     render();
     commit(presetSelect(), 'cycle');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain(
       'Stopped: with a negative cycle there is no all-pairs answer to give.',
     );
     expect(statValue(m.stats.phase)).toBe(m.phases.cycle);
-    click(button('Previous step'));
+    click(button('Bước trước'));
     expect(text()).toContain('so the graph has a negative cycle: B → D → C → B.');
     expect(vertex(1).getAttribute('aria-label')).toContain('on the negative cycle');
   });
@@ -164,7 +164,7 @@ describe('Johnson’s algorithm lesson', () => {
   it('keeps every h at 0 when no weight is negative', () => {
     render();
     commit(presetSelect(), 'positive');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     for (const v of 'ABCDE') expect(text()).toContain(`h(${v}) = 0`);
     expect(reweighted('D → C')).toBe('5');
   });
@@ -172,13 +172,13 @@ describe('Johnson’s algorithm lesson', () => {
   it('reruns on a typed weight, rejects a bad one, and resets', () => {
     render();
     commit(weightField('D → C'), '-6');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Stopped: with a negative cycle');
     commit(weightField('D → C'), 'abc');
     expect(text()).toContain(m.badWeight(99));
     expect(weightField('D → C').value).toBe('-6');
     click(buttonByText(m.resetGraph));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Done: 5 Dijkstra runs');
   });
 
@@ -192,11 +192,11 @@ describe('Johnson’s algorithm lesson', () => {
     render();
     const q = /** @type {HTMLElement} */ (practice().querySelectorAll('ol > li')[0]);
     answer(q, '-4');
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer(q, '−5');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

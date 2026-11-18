@@ -61,7 +61,7 @@ const presetSelect = () =>
   /** @type {HTMLSelectElement} */ (document.querySelector('select[name="preset"]'));
 /** @param {number} n */
 const next = (n) => {
-  for (let i = 0; i < n; i++) click(button('Next step'));
+  for (let i = 0; i < n; i++) click(button('Bước tiếp'));
 };
 
 function practice() {
@@ -83,7 +83,7 @@ describe('binary trees and terminology lesson', () => {
     next(3);
     expect(narration()).toBe('D has no children: it is a leaf, with height 0.');
     expect(byTest('height')).toBe('?');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe(
       'Done: height 2, 3 leaves. A perfect tree of this height would have 7 nodes.',
     );
@@ -172,16 +172,16 @@ describe('binary trees and terminology lesson', () => {
     answer.value = '8';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '15';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

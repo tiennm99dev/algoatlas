@@ -66,7 +66,7 @@ function pickOrder(value) {
 }
 /** Steps forward until the narration holds `part`. @param {string} part */
 function stepTo(part) {
-  for (let i = 0; i < 80 && !narration().includes(part); i++) click(button('Next step'));
+  for (let i = 0; i < 80 && !narration().includes(part); i++) click(button('Bước tiếp'));
   expect(narration()).toContain(part);
 }
 const treeLabel = () => document.querySelector('svg[role="img"]')?.getAttribute('aria-label') ?? '';
@@ -75,7 +75,7 @@ describe('B-trees lesson', () => {
   it('starts empty and grows to three levels at order 3', () => {
     render(Page);
     expect(narration()).toContain('The tree is empty.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('height')).toBe('3');
     expect(stat('splits')).toBe('4');
     expect(treeLabel()).toContain('Level 1: 40. Level 2: 20, 60. Level 3: 10, 30, 50, 70.');
@@ -108,7 +108,7 @@ describe('B-trees lesson', () => {
     expect(stat('height')).toBe('2');
     stepTo('sits in an inner node');
     stepTo('A sibling can spare a key');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('fixes')).toBe('3');
     expect(treeLabel()).toContain('Level 1: 20, 50. Level 2: 10, 30, 60.');
   });
@@ -118,13 +118,13 @@ describe('B-trees lesson', () => {
     commit(keyInput(), '45');
     click(buttonByText('Insert'));
     expect(narration()).toContain('Read a node');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('size')).toBe('8');
     click(buttonByText('Search'));
     stepTo('Found 45 after');
     expect(stat('reads')).toBe('3');
     click(buttonByText('Delete'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('size')).toBe('7');
   });
 
@@ -150,7 +150,7 @@ describe('B-trees lesson', () => {
     click(buttonByText('Search'));
     expect(narration()).toContain('whole numbers from 0 to 99');
     expect(keyInput().value).toBe('45');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).not.toContain('whole numbers');
   });
 
@@ -205,11 +205,11 @@ describe('B-trees lesson', () => {
       flushSync();
     };
     submit('5');
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     submit('3');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 
@@ -217,7 +217,7 @@ describe('B-trees lesson', () => {
     render(Page);
     const title = () => document.querySelector('g[data-node] title')?.textContent ?? '';
     stepTo('Read a node');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     stepTo('Add 20 to the leaf');
     expect(title()).toContain('changed now');
     expect(title()).not.toContain('being read');

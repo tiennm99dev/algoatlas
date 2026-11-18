@@ -56,7 +56,7 @@ const field = (name) =>
   /** @type {HTMLInputElement} */ (document.querySelector(`[name="${name}"]`));
 const titles = () =>
   [...document.querySelectorAll('[data-cell]')].map((t) => t.getAttribute('aria-label') ?? '');
-const toLast = () => click(button('Last step'));
+const toLast = () => click(button('Đến bước cuối'));
 /** @param {string} value */
 const pickMode = (value) =>
   click(
@@ -69,11 +69,11 @@ describe('combinatorics lesson, Pascal view', () => {
   it('fills the triangle by adding the two cells above', () => {
     render();
     expect(narration()).toContain('Build rows 0 to 6');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('C(0, 0) = 1');
-    click(button('Next step'));
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('C(2, 1) = C(1, 0) + C(1, 1) = 1 + 1 = 2.');
     expect(stat('additions')).toBe('1');
     expect(titles()).toContain('C(2, 1) shows 2, being filled');
@@ -165,9 +165,9 @@ describe('combinatorics lesson, Lucas view', () => {
     commit(field('lucas-preset'), 'lucas');
     expect(field('n').value).toBe('1000');
     expect(narration()).toContain('Here n ≥ p');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('nᵢ = 1,000 mod 13 = 12 and kᵢ = 300 mod 13 = 1');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('C(12, 1) ≡ 12');
     expect(stat('formula')).toContain('≡ 12');
     toLast();
@@ -199,8 +199,8 @@ describe('combinatorics lesson, Lucas view', () => {
     render();
     pickMode('lucas');
     commit(field('lucas-preset'), 'zero');
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('kᵢ = 2 is more than nᵢ = 0');
     toLast();
     expect(stat('result')).toBe('0');
@@ -230,7 +230,7 @@ describe('combinatorics lesson, Catalan view', () => {
     render();
     pickMode('brackets');
     expect(stat('prefix')).toBe(m.emptyPrefix);
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(stat('prefix')).toBe('(');
     toLast();
     expect(stat('found')).toBe('5');
@@ -284,16 +284,16 @@ describe('combinatorics practice', () => {
     answer.value = '21';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(/** @type {any} */ (m.practice[0]).hints[0]);
     answer.value = '35';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 

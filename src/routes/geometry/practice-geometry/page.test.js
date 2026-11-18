@@ -92,7 +92,7 @@ describe('geometry practice', () => {
   it('checks a predicted cross product and moves on only when it is right', () => {
     render();
     expect(narration()).toContain('Line A → B runs from A (1, 1) to B (11, 6)');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('p = C (2, 5)');
     guess('30');
     expect(cell('feedback')).toContain('Not quite');
@@ -106,14 +106,14 @@ describe('geometry practice', () => {
 
   it('asks for a whole number first', () => {
     render();
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     guess('');
     expect(cell('feedback')).toBe(m.askEmpty);
   });
 
   it('finds the points on line AB exactly', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(cell('left')).toBe('3');
     expect(cell('right')).toBe('2');
     expect(cell('on')).toBe('2');
@@ -124,12 +124,12 @@ describe('geometry practice', () => {
   it('sums the fence area with the shoelace terms', () => {
     render();
     choose('puzzle', 'fence');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('The hull has 6 corners');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     guess('-7');
     expect(cell('twice')).toBe('−7');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(cell('area')).toBe('46.5');
     expect(cell('perimeter')).toBe('27.38');
   });
@@ -137,7 +137,7 @@ describe('geometry practice', () => {
   it('compares only hull corners for the farthest pair', () => {
     render();
     choose('puzzle', 'diameter');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(cell('best')).toBe('125');
     expect(cell('pairs')).toBe('15');
     expect(cell('brute')).toBe('36');
@@ -148,11 +148,11 @@ describe('geometry practice', () => {
     render();
     choose('puzzle', 'fence');
     choose('preset', 'square');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(cell('area')).toBe('48');
     // E at (6, 4) moves out past the top edge to (6, 8): a fifth corner adds a triangle of 4.
     for (let i = 0; i < 4; i++) press(point(4), 'ArrowUp', true);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(cell('corners')).toBe('5');
     expect(cell('area')).toBe('52');
   });
@@ -172,11 +172,11 @@ describe('geometry practice', () => {
     commit(field('x'), '12');
     commit(field('y'), '0');
     click(buttonByText(m.addPoint));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(cell('right')).toBe('3');
     press(point(9), 'Delete');
     await Promise.resolve();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(cell('right')).toBe('2');
     choose('preset', 'triangle');
     for (const id of [5, 4, 3, 2]) press(point(id), 'Delete');
@@ -235,15 +235,15 @@ describe('geometry practice', () => {
       flushSync();
     };
     answer('3');
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     click(
       /** @type {HTMLButtonElement} */ (
-        [...q.querySelectorAll('button')].find((b) => b.textContent?.trim() === 'Show a hint')
+        [...q.querySelectorAll('button')].find((b) => b.textContent?.trim() === 'Xem gợi ý')
       ),
     );
     expect(q.textContent).toContain(/** @type {any} */ (m.practice[0]).hints[0]);
     answer('2');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

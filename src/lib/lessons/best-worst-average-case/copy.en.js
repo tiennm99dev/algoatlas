@@ -7,8 +7,8 @@ const num = (x) => x.toLocaleString('en-US', { maximumFractionDigits: 2 });
 export const en = {
   slug: 'best-worst-average-case',
   topic: 'complexity',
-  level: 'Beginner',
-  title: 'Best, worst and average case',
+  level: 'Cơ bản',
+  title: 'Trường hợp tốt nhất, xấu nhất và trung bình',
   intro:
     'The same algorithm can be fast on one input and slow on another of the same size. Linear search finds the first element in one comparison but needs all n when the target is missing, so we describe its cost by case: best, worst, and average (expected).',
   summary:
@@ -145,6 +145,5 @@ export const en = {
         'No input of size n costs more than the worst case, so it is a promise that holds whatever the input. It need not be common, and it can differ a lot from the average (quicksort: n² against n log n).',
     },
   ],
-  nextTeaser:
-    'Next up: space complexity, which counts memory the way we have been counting steps, call stack included.',
+  nextTeaser: 'Bài tiếp theo: Độ phức tạp bộ nhớ.',
 };

@@ -67,7 +67,7 @@ function stat(label) {
 
 /** Step until the narration matches. @param {string} part */
 function stepUntil(part) {
-  for (let i = 0; i < 400 && !narration().includes(part); i++) click(button('Next step'));
+  for (let i = 0; i < 400 && !narration().includes(part); i++) click(button('Bước tiếp'));
 }
 
 /** @param {number} i */
@@ -96,10 +96,10 @@ describe('prefix sums lesson', () => {
     expect(narration()).toBe(
       'Build P for 8 values: P[0] = 0, the sum of no elements. Then answer the sum of a[2..5].',
     );
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('P[1] = P[0] + a[0] = 0 + 3 = 3.');
     expect(text()).toContain('P[1]: 3, just written');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(queryLine()).toBe('a[2] + … + a[5] = P[6] − P[2] = 23 − 4 = 19');
     expect(stat(m.stats.result)).toBe('19');
     expect(stat(m.stats.lookups)).toBe('2');
@@ -138,7 +138,7 @@ describe('prefix sums lesson', () => {
     expect(narration()).toBe(m.valueErrors.format);
     commit(input('values'), '4 −1 2');
     expect(input('r').value).toBe('2');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.result)).toBe('2');
   });
 
@@ -146,16 +146,16 @@ describe('prefix sums lesson', () => {
     render();
     pickMode('difference');
     expect(text()).toContain('addRange(l, r, v):');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('D[0] = a[0] = 3.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('D[1] = a[1] − a[0] = 1 − 3 = −2.');
     stepUntil('Update 2');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe(
       'r + 1 = 8 = n: the range runs to the end, so nothing needs cancelling. 1 cell changed instead of 6.',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Updated array: 3, 6, 7, 4, 3, 7, 0, 4');
     expect(stat(m.stats.writes)).toBe('3');
     expect(stat(m.stats.naiveWrites)).toBe('9');
@@ -175,7 +175,7 @@ describe('prefix sums lesson', () => {
     expect(narration()).toBe(m.updateErrors.format);
     commit(input('values'), '0 0 0 0 0 0');
     commit(input('updates'), '1 3 5; 2 5 2');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Updated array: 0, 5, 7, 7, 2, 2');
     expect(text()).toContain('D[4]: −5');
   });
@@ -193,16 +193,16 @@ describe('prefix sums lesson', () => {
     answer.value = '23';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '14';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

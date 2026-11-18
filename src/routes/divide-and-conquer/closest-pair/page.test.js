@@ -52,7 +52,7 @@ function commit(el, value) {
 
 /** @param {number} index */
 function seek(index) {
-  const el = /** @type {HTMLInputElement} */ (document.querySelector('input[aria-label="Step"]'));
+  const el = /** @type {HTMLInputElement} */ (document.querySelector('input[aria-label="Bước"]'));
   el.value = String(index);
   el.dispatchEvent(new Event('input', { bubbles: true }));
   flushSync();
@@ -104,7 +104,7 @@ describe('closest pair lesson', () => {
 
   it('finds E–F across the dividing line with fewer checks than all pairs', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('The closest pair is E–F at distance 5.39 (√29)');
     expect(Number(stat('Distance computations'))).toBeLessThan(45);
     expect(points()[4].getAttribute('aria-label')).toContain('in the closest pair');
@@ -208,16 +208,16 @@ describe('closest pair lesson', () => {
     answer.value = '6';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '5';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

@@ -52,10 +52,10 @@ describe('backtracking and the search tree lesson', () => {
     render();
     expect(narration()).toContain('Start at the root');
     expect(nodes()).toHaveLength(1);
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('Choose 3 and explore that branch. The sum is now 3.');
     expect(nodes()).toHaveLength(2);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('visited')).toBe('19 / 31');
     expect(byTest('pruned')).toBe('8');
     expect(byTest('solutions')).toBe('2');
@@ -67,22 +67,22 @@ describe('backtracking and the search tree lesson', () => {
   it('visits more nodes with weaker pruning', () => {
     render();
     click(field('input[name="prune"][value="off"]'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('visited')).toBe('31 / 31');
     expect(byTest('pruned')).toBe('0');
     click(field('input[name="prune"][value="over"]'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('visited')).toBe('25 / 31');
   });
 
   it('loads an example and edits the numbers and target', () => {
     render();
     commit(field('select[name="preset"]'), 'all');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('visited')).toBe('11 / 63');
     commit(field('input[name="numbers"]'), '2 3');
     commit(field('input[name="target"]'), '5');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('solutions')).toBe('1');
     expect(document.body.textContent).toContain('{2, 3}');
   });
@@ -99,10 +99,10 @@ describe('backtracking and the search tree lesson', () => {
 
   it('jumps to a node from the pointer and the keyboard', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     click(/** @type {Element} */ (document.querySelector('[data-node="0"]')));
     expect(byTest('visited')).toBe('1 / 31');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     /** @type {Element} */ (document.querySelector('[data-node="0"]')).dispatchEvent(
       new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }),
     );
@@ -133,16 +133,16 @@ describe('backtracking and the search tree lesson', () => {
     answer.value = '30';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {Element} */ (hint));
     expect(q.textContent).toContain('full binary tree');
     answer.value = '31';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).not.toContain('Not quite');
+    expect(q.textContent).not.toContain('Chưa đúng');
     expect(m.practice.flatMap((ex) => exerciseProblems(ex))).toEqual([]);
   });
 });

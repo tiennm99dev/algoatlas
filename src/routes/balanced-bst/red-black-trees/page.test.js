@@ -58,7 +58,7 @@ const narration = () => document.querySelector('p[aria-live]')?.textContent ?? '
 const stat = (id) => document.querySelector(`[data-testid="${id}"]`)?.textContent?.trim();
 /** Steps forward until the narration holds `part`. @param {string} part */
 function stepTo(part) {
-  for (let i = 0; i < 120 && !narration().includes(part); i++) click(button('Next step'));
+  for (let i = 0; i < 120 && !narration().includes(part); i++) click(button('Bước tiếp'));
   expect(narration()).toContain(part);
 }
 
@@ -66,7 +66,7 @@ describe('red-black trees lesson', () => {
   it('starts empty and ends the textbook example with root 7', () => {
     render(Page);
     expect(narration()).toContain('The tree is empty.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('black-height')).toBe('2');
     expect(stat('height')).toBe('4');
     expect(stat('rotations')).toBe('2');
@@ -77,7 +77,7 @@ describe('red-black trees lesson', () => {
 
   it('shows colour in text as well as on the fill', () => {
     render(Page);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(document.querySelectorAll('svg [data-color="red"]').length).toBeGreaterThan(0);
     expect(document.querySelector('svg')?.textContent).toContain('B bh 2');
     expect(document.querySelector('svg title')?.textContent).toMatch(/Key \d+, (red|black), bh/);
@@ -109,7 +109,7 @@ describe('red-black trees lesson', () => {
     commit(keyInput(), '6');
     click(buttonByText('Insert'));
     expect(narration()).toContain('Compare 6 with 7.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('size')).toBe('10');
     click(buttonByText('Search'));
     stepTo('Found 6');
@@ -139,7 +139,7 @@ describe('red-black trees lesson', () => {
     click(buttonByText('Search'));
     expect(narration()).toContain('whole numbers from 0 to 99');
     expect(keyInput().value).toBe('45');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).not.toContain('whole numbers');
   });
 
@@ -194,11 +194,11 @@ describe('red-black trees lesson', () => {
       flushSync();
     };
     submit('5');
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     submit('3');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 

@@ -14,8 +14,8 @@ const algoNames = { bfs: 'BFS', dijkstra: 'Dijkstra', 'bellman-ford': 'Bellman-F
 export const en = {
   slug: 'practice-shortest-paths',
   topic: 'shortest-paths',
-  level: 'Advanced',
-  title: 'Practice: shortest-path problems',
+  level: 'Nâng cao',
+  title: 'Luyện tập: bài toán đường đi ngắn nhất',
   intro:
     'The hard part of a shortest-path problem is often not the algorithm but the choice of it. Equal edge costs call for BFS, non-negative weights for Dijkstra, negative weights for Bellman-Ford. Many puzzles are graphs in disguise too: the vertices are the states of the puzzle and the edges are the moves.',
   summary:
@@ -285,6 +285,5 @@ export const en = {
         'Floyd-Warshall: all pairs in O(V³) with three short loops, and negative weights are fine. Dijkstra breaks on negative weights; on a dense graph Johnson brings no gain over Floyd-Warshall.',
     },
   ],
-  nextTeaser:
-    'Next up: Disjoint set union, a structure that tracks which items belong together as groups merge.',
+  nextTeaser: 'Bài tiếp theo: Tập hợp rời nhau.',
 };

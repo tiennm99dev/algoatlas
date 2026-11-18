@@ -9,8 +9,8 @@ const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 export const en = {
   slug: 'memoization-tabulation',
   topic: 'dynamic-programming',
-  level: 'Beginner',
-  title: 'Memoization and tabulation',
+  level: 'Cơ bản',
+  title: 'Đệ quy có nhớ và lập bảng',
   intro:
     'Plain recursion for Fibonacci works out fib(2) again and again, because the subproblems overlap: fib(5) and fib(4) both need fib(3). Dynamic programming stores each subproblem’s answer once and reuses it. Memoization does this top-down, keeping the recursion and caching its results; tabulation does it bottom-up, filling a table from the base cases with no recursion at all.',
   summary:
@@ -220,6 +220,5 @@ export const en = {
         'Both store every subproblem’s answer once and get the same result in O(n) time. Memoization is top-down: it starts at fib(n) and recurses, so it solves only the subproblems it reaches. Tabulation is bottom-up: a loop fills the table in an order where every needed cell is already done.',
     },
   ],
-  nextTeaser:
-    'Next up: the SRTBOT framework, a six-step recipe for designing any dynamic program, from choosing the subproblems to bounding the running time.',
+  nextTeaser: 'Bài tiếp theo: Khung SRTBOT.',
 };

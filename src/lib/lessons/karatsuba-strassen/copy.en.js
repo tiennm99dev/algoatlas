@@ -87,8 +87,8 @@ const matrixText = (C) => `[${C.map((r) => r.map((v) => num(v ?? 0)).join(' ')).
 export const en = {
   slug: 'karatsuba-strassen',
   topic: 'divide-and-conquer',
-  level: 'Advanced',
-  title: 'Karatsuba and Strassen',
+  level: 'Nâng cao',
+  title: 'Thuật toán Karatsuba và Strassen',
   intro:
     'Splitting two n-digit numbers in half gives four half-size products, and four products of half the size cost as much as the schoolbook method: Θ(n²). Karatsuba saw that three products are enough, which brings the cost down to Θ(n^1.585). Strassen found the same trick for matrices: seven block products instead of eight.',
   summary:
@@ -330,6 +330,5 @@ export const en = {
       solution: '7 · 7 = 49 multiplications, against 8 · 8 = 64 = 4³ for the definition.',
     },
   ],
-  nextTeaser:
-    'Next up: Closest pair of points, which splits the points by x and checks only a narrow strip around the dividing line.',
+  nextTeaser: 'Bài tiếp theo: Cặp điểm gần nhất.',
 };

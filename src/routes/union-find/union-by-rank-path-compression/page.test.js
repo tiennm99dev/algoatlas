@@ -90,7 +90,7 @@ describe('union by rank and path compression lesson', () => {
   it('climbs the nine-link chain and flattens it with compression', () => {
     render();
     expect(narration()).toContain('Every element is its own root with rank 0.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe(
       'Done: 1 set, tallest tree 1 link, 10 links followed and 8 entries re-pointed.',
     );
@@ -100,7 +100,7 @@ describe('union by rank and path compression lesson', () => {
   it('narrates a compression step', () => {
     render();
     let guard = 0;
-    while (!narration().startsWith('Path compression') && guard++ < 200) click(button('Next step'));
+    while (!narration().startsWith('Path compression') && guard++ < 200) click(button('Bước tiếp'));
     expect(narration()).toBe(
       'Path compression: 0 pointed at 1; now it points straight at the root 9.',
     );
@@ -109,7 +109,7 @@ describe('union by rank and path compression lesson', () => {
   it('keeps the chain tall with compression off', () => {
     render();
     radio('off');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue('Links followed (total)')).toBe('17');
     expect(statValue('Tallest tree (links)')).toBe('9');
     expect(tableRow('Plain, no compression')?.textContent).toContain('(shown)');
@@ -118,7 +118,7 @@ describe('union by rank and path compression lesson', () => {
   it('never forms the chain with union by rank and shows ranks', () => {
     render();
     radio('rank');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue('Tallest tree (links)')).toBe('1');
     expect(statValue('Links followed (total)')).toBe('8');
     expect(text()).toContain('r1');
@@ -144,7 +144,7 @@ describe('union by rank and path compression lesson', () => {
     flushSync();
     expect(narration()).toBe('Find the root of a = 2: start at 2.');
     const node = /** @type {HTMLElement} */ (
-      document.querySelector('g[role="button"][aria-label^="5 is a root"]')
+      document.querySelector('g[role="button"][aria-label^="5 là gốc"]')
     );
     node.focus();
     node.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
@@ -170,11 +170,11 @@ describe('union by rank and path compression lesson', () => {
     render();
     const q = /** @type {HTMLElement} */ (practice().querySelectorAll('ol > li')[0]);
     answer(q, '8');
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer(q, '1');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

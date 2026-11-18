@@ -9,9 +9,9 @@ describe('curriculum', () => {
   it('has three levels and 34 chapters', () => {
     expect(levels.map((l) => l.level)).toEqual([1, 2, 3]);
     expect(levels.map((l) => l.title)).toEqual([
-      'Foundations',
-      'Core algorithms',
-      'Advanced topics',
+      'Nền tảng',
+      'Thuật toán cốt lõi',
+      'Chủ đề nâng cao',
     ]);
     expect(chapters).toHaveLength(34);
     expect(allLessons.length).toBeGreaterThanOrEqual(186);
@@ -21,7 +21,7 @@ describe('curriculum', () => {
     for (const c of chapters) {
       expect(c.title.length).toBeGreaterThan(0);
       expect(c.strand).toMatch(/^[a-z-]+$/);
-      expect(c.blurb).toMatch(/^[A-Z].{20,}\.$/);
+      expect(c.blurb).toMatch(/^\p{Lu}.{20,}\.$/u);
       expect(c.lessons.length).toBeGreaterThan(0);
     }
   });
@@ -54,7 +54,7 @@ describe('curriculum', () => {
     expect(t().topicOrder).toBe(topicOrder);
     expect(t().topics).toBe(topics);
     expect(topics['shortest-paths']).toEqual({
-      title: 'Shortest paths',
+      title: 'Đường đi ngắn nhất',
       blurb: chapters.find((c) => c.slug === 'shortest-paths')?.blurb,
       level: 2,
     });

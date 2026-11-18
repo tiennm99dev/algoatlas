@@ -84,21 +84,21 @@ describe('practice heaps lesson', () => {
   it('splits the stream into two halves and reports the median', () => {
     render();
     expect(text()).toContain('Low is a max-heap of the smaller half');
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Low is empty, so 5 goes into low.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Odd count: the median is low’s top, 5.');
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('15 > low’s top 5, so it belongs to the larger half');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Even count: the median is (5 + 15) / 2 = 10.');
   });
 
   it('ends with the running medians', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.median)).toBe('7');
     const last = medianTrace([5, 15, 1, 3, 8, 7, 9, 10, 2]).at(-1);
     expect(last?.medians).toEqual([5, 10, 5, 4, 5, 6, 7, 7.5, 7]);
@@ -111,7 +111,7 @@ describe('practice heaps lesson', () => {
   it('loads a typed stream and refuses bad ones', () => {
     render();
     commit(input('stream'), '1, 2, 3, 4, 5');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.moves)).toBe('2');
     expect(statValue(m.stats.median)).toBe('3');
     commit(input('stream'), '1, 200');
@@ -123,14 +123,14 @@ describe('practice heaps lesson', () => {
     render();
     closest();
     expect(text()).toContain('Keep the 3 closest points in a max-heap');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Read A (1, 2): distance² = 1² + 2² = 5.');
-    click(button('Next step'));
-    click(button('Next step'));
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Read C (-2, -2): distance² = (-2)² + (-2)² = 8.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('The 3 closest: D, G, A.');
     expect(svgLabel('Points:')).toContain('A (1, 2)');
   });
@@ -139,14 +139,14 @@ describe('practice heaps lesson', () => {
     render();
     closest();
     commit(input('k'), '1');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('The 1 closest: D.');
     commit(input('k'), '0');
     expect(text()).toContain(m.kError);
     commit(input('points'), '(1, 2) (1, 2)');
     expect(text()).toContain(m.pointErrors.duplicate);
     commit(input('points'), '(3, 4) (0, 2)');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('The 1 closest: B.');
   });
 
@@ -168,11 +168,11 @@ describe('practice heaps lesson', () => {
     render();
     const q = /** @type {HTMLElement} */ (practice().querySelectorAll('ol > li')[0]);
     answer(q, '5');
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer(q, '4');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

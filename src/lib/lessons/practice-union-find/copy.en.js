@@ -11,8 +11,8 @@ const plural = (k, one = 'component', many = 'components') => `${k} ${k === 1 ? 
 export const en = {
   slug: 'practice-union-find',
   topic: 'union-find',
-  level: 'Intermediate',
-  title: 'Practice: union-find problems',
+  level: 'Trung bình',
+  title: 'Luyện tập: bài toán hợp và tìm',
   intro:
     'Union-find shines when a graph arrives one edge at a time. Each new edge costs two finds: if both ends already share a root, the edge closes a cycle; otherwise a union merges two components. The component count and the first cycle are known after every edge, with no search over the whole graph.',
   summary:
@@ -187,6 +187,5 @@ export const en = {
         'Both are correct, but a BFS per edge costs O(V + E) each time, while union-find keeps the components up to date for nearly constant time per edge. It cannot delete edges and says nothing about cycle lengths.',
     },
   ],
-  nextTeaser:
-    'Next up: Cut property and MST basics, where the lightest edge across any cut belongs to a minimum spanning tree, the idea behind Kruskal’s use of union-find.',
+  nextTeaser: 'Bài tiếp theo: Tính chất lát cắt và cây khung nhỏ nhất cơ bản.',
 };

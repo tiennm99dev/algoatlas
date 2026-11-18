@@ -17,8 +17,8 @@ function stability(items) {
 export const en = {
   slug: 'merge-quick-sort',
   topic: 'sorting',
-  level: 'Intermediate',
-  title: 'Merge sort & quicksort',
+  level: 'Trung bình',
+  title: 'Sắp xếp trộn và sắp xếp nhanh',
   intro:
     'Both break the O(n²) barrier by divide and conquer. Merge sort splits the array in half, sorts each half, and merges the two sorted runs. Quicksort picks a pivot, moves smaller values to its left, and sorts each side. While you step, bars outside the range a call is working on are dimmed.',
   summary:
@@ -183,6 +183,5 @@ export const en = {
       'Merge needs a buffer; quicksort needs only its call stack.',
     ],
   ],
-  nextTeaser:
-    'Next up: heapsort, which sorts in place in O(n log n) by building a heap and taking its top again and again.',
+  nextTeaser: 'Bài tiếp theo: Sắp xếp vun đống.',
 };

@@ -91,9 +91,9 @@ describe('Floyd-Warshall lesson', () => {
     render();
     expect(text()).toContain('Start with direct edges only');
     expect(cell('D', 'A').getAttribute('aria-label')).toBe('From D to A: ∞, picked');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Phase k = A: paths may now pass through A.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Done: 64 comparisons');
     expect(cell('D', 'A').getAttribute('aria-label')).toBe('From D to A: 3, picked');
     expect(cell('A', 'B').getAttribute('aria-label')).toBe('From A to B: −1');
@@ -108,13 +108,13 @@ describe('Floyd-Warshall lesson', () => {
     expect(cell('B', 'C').getAttribute('aria-label')).toBe('From B to C: 2, row or column k');
     let guard = 0;
     while (!text().includes('Going through B is shorter') && guard++ < 20)
-      click(button('Next step'));
+      click(button('Bước tiếp'));
     expect(text()).toContain('D → B → A: −1 + 4 = 3 < ∞. Going through B is shorter');
   });
 
   it('picks a cell with the pointer and the keyboard', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     click(cell('A', 'B'));
     expect(text()).toContain('A → B: A → C → D → B, weight −1.');
     press(cell('A', 'B'), 'ArrowRight');
@@ -125,7 +125,7 @@ describe('Floyd-Warshall lesson', () => {
   it('flags a negative cycle on the diagonal', () => {
     render();
     commit(presetSelect(), 'cycle');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('The diagonal is negative for A, B, C, D');
     expect(text()).toContain('the path runs into a negative cycle');
   });
@@ -133,7 +133,7 @@ describe('Floyd-Warshall lesson', () => {
   it('reruns on a typed weight, rejects a bad one, and steps with the keyboard', () => {
     render();
     commit(weightField('B → A'), '1');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(cell('D', 'A').getAttribute('aria-label')).toBe('From D to A: 0, picked');
     commit(weightField('B → A'), 'abc');
     expect(text()).toContain(m.badWeight(99));
@@ -147,11 +147,11 @@ describe('Floyd-Warshall lesson', () => {
     render();
     const q = /** @type {HTMLElement} */ (practice().querySelectorAll('ol > li')[0]);
     answer(q, '4');
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer(q, '3');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

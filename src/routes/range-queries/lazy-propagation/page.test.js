@@ -63,7 +63,7 @@ const opsCard = () =>
 
 /** @param {number} k */
 function next(k) {
-  for (let i = 0; i < k; i++) click(button('Next step'));
+  for (let i = 0; i < k; i++) click(button('Bước tiếp'));
 }
 
 /**
@@ -112,8 +112,8 @@ describe('lazy propagation lesson', () => {
 
   it('answers the query after pushing along one path', () => {
     render();
-    click(button('Last step'));
-    click(button('Previous step'));
+    click(button('Đến bước cuối'));
+    click(button('Bước trước'));
     expect(text()).toContain('The sum of [5, 5] is 13, after 2 pushes.');
     expect(text()).toContain('[0, 3] +5');
   });
@@ -208,13 +208,13 @@ describe('lazy propagation lesson', () => {
     answer.value = '15';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     send();
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '1';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     send();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
   });
 
   it('keeps a refusal on Enter and runs no operation', () => {

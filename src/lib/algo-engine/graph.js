@@ -25,13 +25,13 @@
 
 export const bfsPseudocode = [
   'queue = [start]; visited = {start}',
-  'while queue is not empty:',
+  'while queue khác rỗng:',
   '  cell = queue.dequeue()',
-  '  if cell == goal: walk parents back; stop',
-  '  for each neighbor of cell (up, right, down, left):',
-  '    if neighbor is open and not visited:',
+  '  if cell == goal: lần theo parent để dựng đường đi; stop',
+  '  for neighbor in neighbors(cell):  // lên, phải, xuống, trái',
+  '    if open(neighbor) and neighbor not in visited:',
   '      visited.add(neighbor); parent[neighbor] = cell; queue.enqueue(neighbor)',
-  'no path — goal is walled off',
+  'không có đường đi — đích bị tường vây kín',
 ];
 
 /**

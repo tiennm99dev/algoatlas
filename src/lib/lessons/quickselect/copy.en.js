@@ -14,8 +14,8 @@ const plural = (x, word) => `${x} ${word}${x === 1 ? '' : 's'}`;
 export const en = {
   slug: 'quickselect',
   topic: 'divide-and-conquer',
-  level: 'Advanced',
-  title: 'Quickselect and median of medians',
+  level: 'Nâng cao',
+  title: 'Quickselect và trung vị của các trung vị',
   intro:
     'The k-th order statistic is the value that would sit at slot k − 1 if the array were sorted: k = 1 is the minimum, k = ⌈n/2⌉ the median. Quickselect finds it without sorting. It partitions around a pivot like quicksort, then keeps only the side that holds slot k − 1, so every round throws part of the array away.',
   summary:
@@ -225,6 +225,5 @@ export const en = {
         'Choose the pivot, partition so it lands at its sorted slot p, compare p with k − 1 (stop if equal), and discard the other side.',
     },
   ],
-  nextTeaser:
-    'Next up: Karatsuba and Strassen, which multiply numbers and matrices with fewer recursive products than the schoolbook method.',
+  nextTeaser: 'Bài tiếp theo: Thuật toán Karatsuba và Strassen.',
 };

@@ -87,9 +87,9 @@ describe('bridges and articulation points lesson', () => {
   it('labels tin/low and finds the bridge and the cut vertices', () => {
     render();
     expect(text()).toContain('Every vertex starts unvisited.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Start a DFS tree at A: tin = low = 0. A is its root.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Done: 1 bridge and 3 articulation points, after 20 edge checks.');
     expect(statValue(m.stats.bridges)).toBe('1');
     expect(chips(m.bridgesLabel)).toEqual(['E — F']);
@@ -104,7 +104,7 @@ describe('bridges and articulation points lesson', () => {
     render();
     const frames = 40;
     for (let i = 0; i < frames && !text().includes('Back from F to E'); i++)
-      click(button('Next step'));
+      click(button('Bước tiếp'));
     expect(text()).toContain(
       'Back from F to E: low[E] = 2. low[F] = 5 > tin[E] = 4: nothing under F climbs back to E, so E — F is a bridge and E is an articulation point.',
     );
@@ -116,11 +116,11 @@ describe('bridges and articulation points lesson', () => {
     radio('connect');
     click(vertex(3));
     click(vertex(5));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.bridges)).toBe('0');
     expect(chips(m.cutsLabel)).toEqual(['C', 'F']);
     click(buttonByText(m.resetGraph));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.bridges)).toBe('1');
   });
 
@@ -130,10 +130,10 @@ describe('bridges and articulation points lesson', () => {
     // Removing B — C leaves B hanging off A, so the DFS from A has two tree children.
     click(vertex(1));
     click(vertex(2));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(chips(m.bridgesLabel)).toEqual(['A — B', 'E — F', 'C — A']);
     expect(chips(m.cutsLabel)).toEqual(['A', 'C', 'E', 'F']);
-    click(button('Previous step'));
+    click(button('Bước trước'));
     expect(text()).toContain('A is a root with 2 tree children.');
   });
 
@@ -147,11 +147,11 @@ describe('bridges and articulation points lesson', () => {
     render();
     const q = /** @type {HTMLElement} */ (practice().querySelectorAll('ol > li')[0]);
     answer(q, '3');
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer(q, '1');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

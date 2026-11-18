@@ -20,8 +20,8 @@ const plural = (n, one, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
 export const en = {
   slug: 'practice-recursion',
   topic: 'recursion',
-  level: 'Intermediate',
-  title: 'Practice: recursive thinking',
+  level: 'Trung bình',
+  title: 'Luyện tập: tư duy đệ quy',
   intro:
     'Recursive thinking means trusting the smaller call. To move a tower of n disks, assume you can already move n − 1 of them, and the whole plan fits in three lines. To list every subset, decide one item, leave it out or take it, and let the smaller call list the rest.',
   summary:
@@ -245,8 +245,7 @@ export const en = {
         'The call tree is a full binary tree with 2³ = 8 leaves (one per subset) and 7 inner calls: 2⁴ − 1 = 15 calls.',
     },
   ],
-  nextTeaser:
-    'Next up: binary trees and terminology. A tree is a recursive structure: a root with smaller trees below it.',
+  nextTeaser: 'Bài tiếp theo: Cây nhị phân và thuật ngữ.',
 };
 
 /** @param {number} n */

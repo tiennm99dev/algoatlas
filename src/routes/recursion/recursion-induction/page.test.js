@@ -49,7 +49,7 @@ const field = (/** @type {string} */ selector) =>
   /** @type {HTMLInputElement} */ (document.querySelector(selector));
 /** @param {number} n */
 const next = (n) => {
-  for (let i = 0; i < n; i++) click(button('Next step'));
+  for (let i = 0; i < n; i++) click(button('Bước tiếp'));
 };
 
 function practice() {
@@ -75,7 +75,7 @@ describe('recursion and induction lesson', () => {
       'Maintenance, after the pass (i = 1): s = 5, and a[0] = 5. The invariant holds ✓.',
     );
     expect(byTest('verdict')).toBe('✓ holds');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe(
       'Done: the answer is 10. All 8 checks held, so the argument goes through for this input and, by the same reasoning, for every input.',
     );
@@ -91,7 +91,7 @@ describe('recursion and induction lesson', () => {
     expect(narration()).toBe(
       'Initialization, before the first pass (i = 1): s = 0, and a[0] = 5. The invariant is broken ✗.',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('failed')).toBe('7');
     expect(byTest('passed')).toBe('0');
     expect(byTest('answer')).toContain('(wrong)');
@@ -102,15 +102,15 @@ describe('recursion and induction lesson', () => {
     commit(field('select[name="program"]'), 'insertion');
     click(field('input[name="buggy"]'));
     commit(field('select[name="preset"]'), 'sorted');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('failed')).toBe('0');
     expect(narration()).toContain('All 6 checks held on this input, yet the bug is still there');
     expect(narration()).not.toContain('by the same reasoning');
     commit(field('select[name="preset"]'), 'reversed');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('answer')).toContain('9, 0, 2, 4, 7');
     expect(byTest('failed')).toBe('5');
-    click(button('Previous step'));
+    click(button('Bước trước'));
     expect(narration()).toContain('a[0] = 9 > a[1] = 0, so a[0..4] is not sorted');
   });
 
@@ -130,7 +130,7 @@ describe('recursion and induction lesson', () => {
     expect(narration()).toBe(
       'Inductive step for P(2): r = sum(a, 1), then add a[1] = −2. Now sum(a, 2) returned 3, and the first 2 values add up to 3. P(2) holds ✓.',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('passed')).toBe('7');
   });
 
@@ -142,13 +142,13 @@ describe('recursion and induction lesson', () => {
     commit(field('input[name="values"]'), '100');
     expect(narration()).toBe(m.valueErrors.range);
     commit(field('input[name="values"]'), '2 −3 4');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('answer')).toContain('3');
   });
 
   it('steps back with the arrow keys', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     const before = narration();
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
     flushSync();
@@ -168,16 +168,16 @@ describe('recursion and induction lesson', () => {
     answer.value = '12';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[2].hints[0]);
     answer.value = '13';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

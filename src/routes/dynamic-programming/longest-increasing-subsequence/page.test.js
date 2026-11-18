@@ -75,16 +75,16 @@ function practice() {
 describe('longest increasing subsequence lesson', () => {
   it('runs the O(n²) DP and rebuilds the LIS', () => {
     render();
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe(
       'Index 0, value 10: on its own it is a run of length 1, so L[0] = 1. Now check every earlier value.',
     );
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe(
       '10 < 22, so 22 can follow the run ending at index 0: L[1] = L[0] + 1 = 2, prev[1] = 0.',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('comparisons')).toBe('45');
     expect(byTest('length')).toBe('6');
     expect(chips()).toEqual(['10', '22', '33', '50', '60', '80']);
@@ -97,15 +97,15 @@ describe('longest increasing subsequence lesson', () => {
     render();
     click(field('input[name="method"][value="patience"]'));
     expect(piles()).toEqual([]);
-    for (let k = 0; k < 3; k++) click(button('Next step'));
+    for (let k = 0; k < 3; k++) click(button('Bước tiếp'));
     expect(narration()).toBe(
       'Take a[1] = 22. Binary search the 1 pile top for the leftmost top ≥ 22.',
     );
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe(
       'Search piles 0 to 0: the top of pile 0 is 10 < 22, so look to the right of it.',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('comparisons')).toBe('17');
     expect(byTest('length')).toBe('6');
     expect(piles()).toHaveLength(6);
@@ -116,7 +116,7 @@ describe('longest increasing subsequence lesson', () => {
   it('runs on typed values and refuses bad ones', () => {
     render();
     commit(field('input[name="values"]'), '3 1 4 1 5 9 2 6');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('length')).toBe('4');
     expect(byTest('comparisons')).toBe('28');
     commit(field('input[name="values"]'), '3, x');
@@ -128,7 +128,7 @@ describe('longest increasing subsequence lesson', () => {
 
   it('steps back with the arrow keys', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     const before = narration();
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
     flushSync();
@@ -148,16 +148,16 @@ describe('longest increasing subsequence lesson', () => {
     answer.value = '5';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '4';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

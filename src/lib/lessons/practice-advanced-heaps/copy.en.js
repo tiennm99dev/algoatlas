@@ -22,8 +22,8 @@ const perOp = (c, k) => ({
 export const en = {
   slug: 'practice-advanced-heaps',
   topic: 'advanced-heaps',
-  level: 'Advanced',
-  title: 'Practice: advanced heaps',
+  level: 'Nâng cao',
+  title: 'Luyện tập: heap nâng cao',
   intro:
     'Which priority queue should an algorithm use? It depends on its mix of operations, on how many keys the queue holds, and on whether the keys are small integers. Race a binary heap, a Fibonacci heap and a van Emde Boas tree on Dijkstra’s real queue operations, or on a mix you set, and see which one does the fewest steps.',
   summary:
@@ -237,6 +237,5 @@ export const en = {
         'There are only 2^16 keys below u = 2^16, so 2^20 distinct keys cannot fit. Fibonacci bounds are amortized: one extract-min can consolidate a long root list. Dijkstra pays O(1) per decrease-key and O(log V) per extract-min, so O(E + V log V). A vEB tree reserves room for all of u.',
     },
   ],
-  nextTeaser:
-    'Next up: multithreaded algorithms, where work and span measure how much a computation can gain from running on many processors.',
+  nextTeaser: 'Bài tiếp theo: Thuật toán đa luồng.',
 };

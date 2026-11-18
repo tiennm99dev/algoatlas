@@ -91,10 +91,10 @@ const vertices = () => document.querySelectorAll('[data-point]').length;
 describe('polygon area and point in polygon lesson', () => {
   it('adds up the rectangle’s terms to its area', () => {
     render();
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Edge 0 → 1: 2 · 1 − 8 · 1 = −6.');
     expect(cell('sum')).toBe('−6');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(cell('area')).toBe('30');
     expect(cell('sum')).toBe('60');
     expect(cell('direction')).toBe('Counter-clockwise');
@@ -104,7 +104,7 @@ describe('polygon area and point in polygon lesson', () => {
   it('reads the clockwise triangle as clockwise', () => {
     render();
     pick('clockwise');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(cell('sum')).toBe('−40');
     expect(cell('area')).toBe('20');
     expect(cell('direction')).toBe('Clockwise');
@@ -115,7 +115,7 @@ describe('polygon area and point in polygon lesson', () => {
     pick('notch');
     method('ray');
     expect(point(QUERY)).toBeTruthy();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(cell('location')).toBe('Outside');
     expect(cell('count')).toBe('2');
     expect(text()).toContain('2 crossings in all, which is even');
@@ -125,7 +125,7 @@ describe('polygon area and point in polygon lesson', () => {
     render();
     pick('throughVertex');
     method('ray');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(cell('count')).toBe('1');
     expect(cell('location')).toBe('Inside');
   });
@@ -135,10 +135,10 @@ describe('polygon area and point in polygon lesson', () => {
     pick('star');
     expect(cell('self-crossing')).toBe(m.selfCrossing);
     method('ray');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(cell('location')).toBe('Outside');
     method('winding');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(cell('location')).toBe('Inside');
     expect(cell('count')).toBe('−2');
   });
@@ -270,15 +270,15 @@ describe('polygon area and point in polygon lesson', () => {
       flushSync();
     };
     answer('24');
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     click(
       /** @type {HTMLButtonElement} */ (
-        [...q.querySelectorAll('button')].find((b) => b.textContent?.trim() === 'Show a hint')
+        [...q.querySelectorAll('button')].find((b) => b.textContent?.trim() === 'Xem gợi ý')
       ),
     );
     expect(q.textContent).toContain(/** @type {any} */ (m.practice[0]).hints[0]);
     answer('12');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

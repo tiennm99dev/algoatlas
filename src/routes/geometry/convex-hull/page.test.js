@@ -91,11 +91,11 @@ describe('convex hull lesson', () => {
   it('walks Graham scan from the pivot to the finished hull', () => {
     render();
     expect(text()).toContain('12 points to wrap.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('The pivot is B');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Sort the rest by angle');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(cell('hull')).toBe('7');
     expect(text()).toContain('counter-clockwise');
   });
@@ -103,7 +103,7 @@ describe('convex hull lesson', () => {
   it('reaches a pop and narrates it', () => {
     render();
     const narration = () => document.querySelector('p[aria-live]')?.textContent ?? '';
-    for (let i = 0; i < 60 && !narration().startsWith('Pop '); i++) click(button('Next step'));
+    for (let i = 0; i < 60 && !narration().startsWith('Pop '); i++) click(button('Bước tiếp'));
     expect(narration()).toMatch(/^Pop [A-L]\. It lies inside or on the hull\.$/);
     expect(Number(cell('pops'))).toBeGreaterThan(0);
   });
@@ -111,11 +111,11 @@ describe('convex hull lesson', () => {
   it('finds the same hull with the monotone chain in two passes', () => {
     render();
     method('monotone');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Sort the points by x');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('First pass, left to right');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(cell('hull')).toBe('7');
   });
 
@@ -125,17 +125,17 @@ describe('convex hull lesson', () => {
       [
         ...(document.querySelector(`[data-testid="compare-${key}"]`)?.querySelectorAll('td') ?? []),
       ].map((td) => td.textContent?.trim());
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(row('graham')[0]).toBe(cell('tests'));
     method('monotone');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(row('monotone')[0]).toBe(cell('tests'));
   });
 
   it('pops nothing when every point is a corner', () => {
     render();
     pick('allOnHull');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(cell('hull')).toBe('10');
     expect(cell('pops')).toBe('0');
   });
@@ -143,14 +143,14 @@ describe('convex hull lesson', () => {
   it('keeps two ends of a line', () => {
     render();
     pick('line');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(cell('hull')).toBe('2');
   });
 
   it('updates the hull live when a corner moves', () => {
     render();
     pick('square');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(cell('hull')).toBe('4');
     // The inner point I at (5, 4) goes out past the left edge to become a fifth corner.
     for (let i = 0; i < 5; i++) press(point(6), 'ArrowLeft', true);
@@ -282,15 +282,15 @@ describe('convex hull lesson', () => {
       flushSync();
     };
     answer('6');
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     click(
       /** @type {HTMLButtonElement} */ (
-        [...q.querySelectorAll('button')].find((b) => b.textContent?.trim() === 'Show a hint')
+        [...q.querySelectorAll('button')].find((b) => b.textContent?.trim() === 'Xem gợi ý')
       ),
     );
     expect(q.textContent).toContain(/** @type {any} */ (m.practice[0]).hints[0]);
     answer('4');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

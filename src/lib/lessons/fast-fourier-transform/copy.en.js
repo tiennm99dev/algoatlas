@@ -63,8 +63,8 @@ const omega = (n, k) => `ω${sub(n)}${sup(k)}`;
 export const en = {
   slug: 'fast-fourier-transform',
   topic: 'algebraic-randomised',
-  level: 'Advanced',
-  title: 'Fast Fourier transform',
+  level: 'Nâng cao',
+  title: 'Biến đổi Fourier nhanh',
   intro:
     'Multiplying two polynomials coefficient by coefficient takes O(n²) steps. A polynomial of degree below n is also fixed by its values at n points, and values multiply pointwise in O(n). The fast Fourier transform picks the n complex n-th roots of unity as those points, which lets it evaluate a polynomial in O(n log n) by splitting it into even and odd halves; the same trick runs backwards to recover the coefficients.',
   summary:
@@ -252,6 +252,5 @@ export const en = {
         'ω₈⁴ is half a turn, −1; ω₈² is a quarter turn, i; and squaring an 8th root gives a 4th root, so ω₈² = ω₄. ω₈⁸ is a full turn, 1, not 0.',
     },
   ],
-  nextTeaser:
-    'Next up: Matrix operations: LUP decomposition, which factors a matrix into triangles to solve linear systems.',
+  nextTeaser: 'Bài tiếp theo: Phép toán ma trận: phân tích LUP.',
 };

@@ -55,7 +55,7 @@ const field = (/** @type {string} */ selector) =>
   /** @type {HTMLInputElement} */ (document.querySelector(selector));
 /** @param {number} n */
 const next = (n) => {
-  for (let i = 0; i < n; i++) click(button('Next step'));
+  for (let i = 0; i < n; i++) click(button('Bước tiếp'));
 };
 
 function practice() {
@@ -76,7 +76,7 @@ describe('designing hash functions lesson', () => {
     expect(narration()).toBe('Key 0: 0 mod 16 = 0; ((389·0 + 120) mod 1009) mod 16 = 8.');
     next(1);
     expect(narration()).toBe('Left bucket 0 now holds 1 key; right bucket 8 holds 1 key.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe(
       '32 keys hashed. Colliding pairs: 496 with the fixed hash, 19 with the universal one.',
     );
@@ -96,7 +96,7 @@ describe('designing hash functions lesson', () => {
     expect(a.value).toBe('389');
     commit(a, '3');
     commit(b, '5');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('right-pairs')).toBe('Colliding pairs: 265');
     expect(document.body.textContent).toContain('Universal: ((3·k + 5) mod 1009) mod 16');
   });
@@ -108,18 +108,18 @@ describe('designing hash functions lesson', () => {
     expect(narration()).toBe(
       'Key 13: ⌊16 · frac(13 · 0.618…)⌋ = 0; ((389·13 + 120) mod 1009) mod 16 = 4.',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('left-pairs')).toBe('Colliding pairs: 496');
   });
 
   it('spreads sequential keys evenly under k mod 16', () => {
     render();
     commit(field('select[name="keys"]'), 'sequential');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('left-pairs')).toBe('Colliding pairs: 16');
     expect(byTest('left-max')).toBe('2');
     commit(field('input[name="count"]'), '4');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('4 keys hashed.');
   });
 
@@ -131,7 +131,7 @@ describe('designing hash functions lesson', () => {
     expect(document.body.textContent).toContain(`Universal: ((${a}·k`);
     commit(field('select[name="keys"]'), 'random');
     click(buttonByText('New keys'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('32 keys hashed.');
   });
 
@@ -155,16 +155,16 @@ describe('designing hash functions lesson', () => {
     answer.value = '5';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[1].hints[0]);
     answer.value = '1';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

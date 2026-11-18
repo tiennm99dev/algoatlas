@@ -73,8 +73,8 @@ const why = {
 export const en = {
   slug: 'practice-arrays-strings',
   topic: 'arrays-strings',
-  level: 'Intermediate',
-  title: 'Practice: array and string problems',
+  level: 'Trung bình',
+  title: 'Luyện tập: bài toán về mảng và xâu',
   intro:
     'Most array and string problems in this chapter fall to one of three tricks: two pointers moving towards each other, a window sliding over a run of consecutive values, or prefix sums that answer any range in one subtraction. The skill is to see which one the problem calls for. Here you pick the technique, run it on the problem’s input, and compare its cost with the others.',
   summary:
@@ -458,6 +458,5 @@ export const en = {
         'With values ≥ 0, adding a value never lowers the sum and dropping one never raises it, so growing until the sum reaches S and then shrinking never skips a shorter answer. A negative value breaks that: dropping it raises the sum, and a longer run can have a smaller sum. Then a different method is needed, such as prefix sums with a monotonic deque.',
     },
   ],
-  nextTeaser:
-    'Next up: Bubble sort and insertion sort, the first sorting algorithms, where these array skills meet swaps and comparisons.',
+  nextTeaser: 'Bài tiếp theo: Sắp xếp nổi bọt và sắp xếp chèn.',
 };

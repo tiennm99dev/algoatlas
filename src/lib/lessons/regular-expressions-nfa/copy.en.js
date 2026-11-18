@@ -9,8 +9,8 @@ const setText = (set) => `{${set.join(', ')}}`;
 export const en = {
   slug: 'regular-expressions-nfa',
   topic: 'string-algorithms',
-  level: 'Advanced',
-  title: 'Regular expressions and NFA simulation',
+  level: 'Nâng cao',
+  title: 'Biểu thức chính quy và mô phỏng NFA',
   intro:
     'A regular expression describes a whole set of strings. Thompson’s construction turns one into a small graph of states, an NFA, where ε edges can be followed without reading anything. Tracking the set of states the machine could be in tests any string in O(n · m), even on patterns that make a backtracking matcher take exponential time.',
   summary:
@@ -188,6 +188,5 @@ export const en = {
         'However many paths reach a state, it enters the set only once, so the work per letter is bounded by the size of the graph.',
     },
   ],
-  nextTeaser:
-    'Next up: Data compression: run-length, Huffman and LZW, three ways of writing the same text in fewer bits.',
+  nextTeaser: 'Bài tiếp theo: Nén dữ liệu: mã loạt dài, Huffman và LZW.',
 };

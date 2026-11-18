@@ -69,21 +69,21 @@ describe('LCS and edit distance lesson', () => {
     expect(narration()).toBe(
       'Find the longest common subsequence of ABCBDAB and BDCABA. The table has 8 × 7 cells, one per pair of prefixes.',
     );
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe(
       'A ≠ B: one of them is not in the LCS. Drop A → 0, drop B → 0. Keep the larger (drop A from a): L[1][1] = 0.',
     );
     expect(arrows()).toBe(2);
     expect(titles()).toContain('ε vs B: 0, read, and kept');
-    click(button('Next step'));
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe(
       'a[1] = b[4] = A: a match. Extend the diagonal: L[1][4] = L[0][3] + 1 = 1.',
     );
     expect(arrows()).toBe(1);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('result')).toBe('4');
     expect(byTest('filled')).toBe('56 / 56');
     expect(chips()).toEqual(['B', 'C', 'B', 'A']);
@@ -95,11 +95,11 @@ describe('LCS and edit distance lesson', () => {
     click(field('input[name="mode"][value="edit"]'));
     commit(field('select[name="preset"]'), 'kitten');
     expect(field('input[name="a"]').value).toBe('KITTEN');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe(
       'Base cases: D[i][0] = i, deleting all i letters, and D[0][j] = j, inserting all j letters.',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('result')).toBe('3');
     const edits = [...document.querySelectorAll('[data-testid="alignment"] ul li')].map(
       (li) => li.textContent,
@@ -114,7 +114,7 @@ describe('LCS and edit distance lesson', () => {
     commit(field('input[name="a"]'), 'horse');
     commit(field('input[name="b"]'), 'ros');
     expect(field('input[name="a"]').value).toBe('HORSE');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('result')).toBe('3');
     commit(field('input[name="b"]'), 'R0S');
     expect(narration()).toBe(m.wordErrors(8).format);
@@ -146,16 +146,16 @@ describe('LCS and edit distance lesson', () => {
     answer.value = '2';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[1].hints[0]);
     answer.value = '3';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

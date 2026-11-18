@@ -11,8 +11,8 @@ const range = (b) => `(${num(b.lo)}, ${num(b.hi)})`;
 export const en = {
   slug: 'practice-trees',
   topic: 'trees',
-  level: 'Intermediate',
-  title: 'Practice: tree problems',
+  level: 'Trung bình',
+  title: 'Luyện tập: bài toán về cây',
   intro:
     'Two classic binary search tree problems. To validate a BST, every key must sit inside the range its ancestors allow, not just beside its parent. To find the lowest common ancestor of two keys, walk down from the root until the keys split to different sides.',
   summary:
@@ -252,6 +252,5 @@ export const en = {
         '20 < 50 < 60, so the walk stops at 50. The true lowest common ancestor is 30, the parent of both. The walk trusts an order the tree does not have.',
     },
   ],
-  nextTeaser:
-    'Next up: binary heaps, complete trees stored in an array where every parent beats its children.',
+  nextTeaser: 'Bài tiếp theo: Heap nhị phân.',
 };

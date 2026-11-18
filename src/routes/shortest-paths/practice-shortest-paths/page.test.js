@@ -99,9 +99,9 @@ describe('shortest-path practice', () => {
     render();
     expect(text()).toContain('BFS: put the source in the queue.');
     expect(text()).toContain(m.verdictPending);
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Dequeue 1, 0 edges from the source.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.answer)).toBe('4');
     expect(text()).toContain(m.verdicts.best);
     expect(text()).toContain('d(10) = 4, after looking at 13 edges. Best fit: BFS.');
@@ -110,7 +110,7 @@ describe('shortest-path practice', () => {
   it('shows BFS going wrong on the road trip, and Dijkstra getting it right', () => {
     render();
     click(buttonByText(m.scenarios.roads.title));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain(m.verdicts.wrong);
     expect(text()).toContain(
       'BFS says d(T) = 12, but the shortest distance is 8. Best fit: Dijkstra.',
@@ -118,7 +118,7 @@ describe('shortest-path practice', () => {
     expect(compareRow('BFS')).toEqual(['12', '8']);
     expect(compareRow('Bellman-Ford')).toEqual(['8', '16']);
     radio('dijkstra');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain(m.verdicts.best);
     expect(statValue(m.stats.answer)).toBe('8');
   });
@@ -127,14 +127,14 @@ describe('shortest-path practice', () => {
     render();
     click(buttonByText(m.scenarios.cashback.title));
     radio('dijkstra');
-    const next = button('Next step');
+    const next = button('Bước tiếp');
     for (let i = 0; i < 40 && !text().includes('Settle B at d = 5'); i++) click(next);
     expect(text()).toContain('Settle B at d = 5');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.answer)).toBe('7');
     expect(text()).toContain('Dijkstra says d(T) = 7, but the shortest distance is 6.');
     radio('bellman-ford');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.answer)).toBe('6');
   });
 
@@ -142,39 +142,39 @@ describe('shortest-path practice', () => {
     render();
     click(buttonByText(m.scenarios.arbitrage.title));
     radio('bellman-ford');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.answer)).toBe(m.cycleAnswer);
-    click(button('Previous step'));
+    click(button('Bước trước'));
     expect(text()).toContain('A negative cycle is reachable: A → B → C → A.');
     radio('bfs');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('yet BFS still printed numbers');
   });
 
   it('reruns on a typed weight, rejects a bad one, and resets', () => {
     render();
     commit(weightField('5 → 10'), '3');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain(
       'BFS says d(10) = 6, but the shortest distance is 5. Best fit: Dijkstra.',
     );
     radio('dijkstra');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain(m.verdicts.best);
     commit(weightField('5 → 10'), '2.5');
     expect(text()).toContain(m.badWeight(99));
     expect(weightField('5 → 10').value).toBe('3');
     click(buttonByText(m.resetScenario));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain(m.verdicts.works);
   });
 
   it('changes the target and steps with the keyboard', () => {
     render();
     commit(/** @type {HTMLSelectElement} */ (document.querySelector('select[name="target"]')), '5');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue(m.stats.answer)).toBe('3');
-    click(button('First step'));
+    click(button('Về bước đầu'));
     press(document.body, 'ArrowRight');
     expect(text()).toContain('Dequeue 1');
   });
@@ -183,11 +183,11 @@ describe('shortest-path practice', () => {
     render();
     const q = /** @type {HTMLElement} */ (practice().querySelectorAll('ol > li')[0]);
     answer(q, '5');
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer(q, '4');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

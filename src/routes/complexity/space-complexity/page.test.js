@@ -58,7 +58,7 @@ function stat(label) {
 
 /** Step until the narration matches. @param {string} part */
 function stepUntil(part) {
-  for (let k = 0; k < 200 && !narration().includes(part); k++) click(button('Next step'));
+  for (let k = 0; k < 200 && !narration().includes(part); k++) click(button('Bước tiếp'));
 }
 
 function practice() {
@@ -73,13 +73,13 @@ describe('space complexity lesson', () => {
   it('grows the stack to 6 frames for sum(5), then empties it', () => {
     render();
     expect(narration()).toBe('Nothing on the stack yet. Run with n = 5.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Call sum(5): push a frame of 2 words. Depth 1, 2 words in use.');
     stepUntil('base case');
     expect(stat('Stack depth')).toBe('6');
     expect(stat('Words in use')).toBe('12');
     expect(memoryLabel()).toContain('12 of 12 words in use');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('Stack depth')).toBe('0');
     expect(stat('Peak words')).toBe('12');
     expect(narration()).toContain('Peak 12 words, deepest stack 6 frames');
@@ -89,11 +89,11 @@ describe('space complexity lesson', () => {
     render();
     commit(nInput(), '12');
     commit(algoSelect(), 'bits-rec');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('Deepest stack')).toBe('4');
     expect(stat('Peak words')).toBe('8');
     commit(algoSelect(), 'sum-loop');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('Peak words')).toBe('4');
     expect(narration()).toContain('Θ(1)');
   });
@@ -104,12 +104,12 @@ describe('space complexity lesson', () => {
     stepUntil('Allocate B');
     expect(stat('Words in use')).toBe('9');
     expect(text()).toContain(m.arrayB);
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('Peak words')).toBe('9');
     commit(algoSelect(), 'reverse-in-place');
     stepUntil('Swap A[0] and A[4]');
     expect(document.querySelector('[aria-label="Heap array B"]')).toBeNull();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('Peak words')).toBe('5');
   });
 
@@ -122,7 +122,7 @@ describe('space complexity lesson', () => {
     nInput().dispatchEvent(new Event('input', { bubbles: true }));
     /** @type {HTMLFormElement} */ (nInput().closest('form')).requestSubmit();
     flushSync();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat('Peak words')).toBe('6');
   });
 
@@ -139,16 +139,16 @@ describe('space complexity lesson', () => {
     answer.value = '9';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[1].hints[0]);
     answer.value = '10';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

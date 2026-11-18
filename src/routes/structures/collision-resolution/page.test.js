@@ -58,7 +58,7 @@ const field = (/** @type {string} */ selector) =>
 const pickMethod = (value) => click(field(`input[name="method"][value="${value}"]`));
 /** @param {number} n */
 const next = (n) => {
-  for (let i = 0; i < n; i++) click(button('Next step'));
+  for (let i = 0; i < n; i++) click(button('Bước tiếp'));
 };
 /** @param {number} s */
 const slotCell = (s) =>
@@ -80,7 +80,7 @@ describe('collision resolution lesson', () => {
     );
     next(1);
     expect(narration()).toBe('Insert 22: h(22) = 22 mod 11 = 0.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe(
       'Done. Chaining made 3 comparisons; linear probing inspected 14 slots.',
     );
@@ -92,10 +92,10 @@ describe('collision resolution lesson', () => {
   it('shows the probe sequence of a key that collides', () => {
     render();
     // 22, 41, 53, 46 go home; 30 collides at 8 and 9, then lands in 10.
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     const frames = 60;
     for (let i = 0; i < frames && !narration().startsWith('Probe i = 2: slot 10'); i++) {
-      click(button('Previous step'));
+      click(button('Bước trước'));
     }
     expect(narration()).toBe('Probe i = 2: slot 10 is empty. 30 goes there after 2 collisions.');
     const chips = [...document.querySelectorAll('ol li')].map((li) => li.textContent?.trim());
@@ -107,7 +107,7 @@ describe('collision resolution lesson', () => {
     render();
     commit(field('select[name="preset"]'), 'same-home');
     pickMethod('quadratic');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('failed')).toBe('1');
     expect(narration()).toContain('could not place 1 key');
     pickMethod('double');
@@ -115,7 +115,7 @@ describe('collision resolution lesson', () => {
     expect(narration()).toBe(
       'Insert 0: h(0) = 0 mod 11 = 0. Its step is h₂(0) = 7 − (0 mod 7) = 7.',
     );
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('failed')).toBe('0');
     expect(byTest('probes')).toBe('13');
   });
@@ -128,8 +128,8 @@ describe('collision resolution lesson', () => {
     expect(narration()).toBe(
       'Chaining: 34 is not in chain 1. The miss cost 2 comparisons, the whole chain.',
     );
-    click(button('Last step'));
-    click(button('Previous step'));
+    click(button('Đến bước cuối'));
+    click(button('Bước trước'));
     expect(narration()).toBe(
       'Probing: slot 5 is empty, so 34 is not in the table. The miss cost 5 probes.',
     );
@@ -142,8 +142,8 @@ describe('collision resolution lesson', () => {
     input.form?.requestSubmit();
     flushSync();
     expect(narration()).toBe('Search for 67: h(67) = 67 mod 11 = 1.');
-    click(button('Last step'));
-    click(button('Previous step'));
+    click(button('Đến bước cuối'));
+    click(button('Bước trước'));
     expect(narration()).toBe('Probing: found 67 in slot 4 after 4 probes.');
   });
 
@@ -161,9 +161,9 @@ describe('collision resolution lesson', () => {
     flushSync();
     expect(search.value).toBe('34');
     expect(narration()).toBe(m.keyErrors.range);
-    expect(document.body.textContent).toMatch(/Step 1 of/);
+    expect(document.body.textContent).toMatch(/Bước 1\//);
     commit(keys, '3, 14');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(slotCell(4)).toBe('14');
   });
 
@@ -181,7 +181,7 @@ describe('collision resolution lesson', () => {
     click(buttonByText('Search'));
     pickMethod('double');
     expect(narration()).toBe(m.searchDropped);
-    expect(document.body.textContent).toMatch(/Step 1 of/);
+    expect(document.body.textContent).toMatch(/Bước 1\//);
   });
 
   it('steps with the arrow keys', () => {
@@ -204,16 +204,16 @@ describe('collision resolution lesson', () => {
     answer.value = '1';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '4';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

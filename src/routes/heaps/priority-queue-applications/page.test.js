@@ -61,21 +61,21 @@ describe('priority queue applications lesson', () => {
   it('seeds the heap with each list head, then pops the smallest', () => {
     render();
     expect(text()).toContain('Merge 3 sorted lists of 9 values.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Push 1, the head of list A.');
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(svgLabel('Min-heap')).toContain('Min-heap as an array: 1, 2, 5');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Pop the smallest head, 1 from list A');
     expect(svgLabel('Output')).toBe('Output: 1.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('List A moves on: push its next value, 4.');
   });
 
   it('ends with the merged output', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(svgLabel('Output')).toBe('Output: 1, 2, 3, 4, 5, 6, 7, 8, 9.');
     expect(text()).toContain('Merged 9 values with 18 heap operations');
     const titles = [...document.querySelectorAll('title')].map((t) => t.textContent);
@@ -86,7 +86,7 @@ describe('priority queue applications lesson', () => {
   it('loads typed lists and refuses unsorted ones', () => {
     render();
     commit(input('lists'), '2, 5 / 1, 3');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(svgLabel('Output')).toBe('Output: 1, 2, 3, 5.');
     commit(input('lists'), '5, 2 / 1');
     expect(text()).toContain(m.listErrors.unsorted);
@@ -97,7 +97,7 @@ describe('priority queue applications lesson', () => {
     render();
     topK();
     expect(text()).toContain('Keep the 3 largest values in a min-heap of size 3.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('its root 7 is the 3rd largest');
     expect(text()).toContain(m.resultTitle);
     expect(svgLabel('Min-heap')).toContain('Min-heap as an array: 7, 8, 9');
@@ -107,7 +107,7 @@ describe('priority queue applications lesson', () => {
     render();
     topK();
     commit(input('k'), '1');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(svgLabel('Min-heap')).toContain('Min-heap as an array: 9.');
     commit(input('k'), '9');
     expect(text()).toContain(m.kError);
@@ -147,13 +147,13 @@ describe('priority queue applications lesson', () => {
     answer.value = '3';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     send();
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '4';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     send();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

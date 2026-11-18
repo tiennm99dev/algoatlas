@@ -149,11 +149,11 @@ describe('segment tree lesson', () => {
     render();
     click(buttonByText(m.replay));
     expect(text()).toContain('Node [0, 7] is only partly inside [1, 6]');
-    for (let i = 0; i < 3; i++) click(button('Next step'));
+    for (let i = 0; i < 3; i++) click(button('Bước tiếp'));
     expect(text()).toContain('Node [0, 0] is outside [1, 6]: return the identity 0');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Node [1, 1] is fully inside [1, 6]: return its value 5');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Node [0, 1] merges what its children returned: 5.');
   });
 
@@ -162,7 +162,7 @@ describe('segment tree lesson', () => {
     click(/** @type {Element} */ (document.querySelector('input[value="min"]')));
     expect(text()).toContain('query[1, 6] = 1,');
     click(buttonByText(m.replay));
-    for (let i = 0; i < 3; i++) click(button('Next step'));
+    for (let i = 0; i < 3; i++) click(button('Bước tiếp'));
     expect(text()).toContain('return the identity +∞');
     click(/** @type {Element} */ (document.querySelector('input[value="max"]')));
     expect(text()).toContain('query[1, 6] = 9,');
@@ -174,18 +174,18 @@ describe('segment tree lesson', () => {
     commit(input('value'), '0');
     click(buttonByText(m.setButton));
     expect(text()).toContain('Index 4 is in [0, 7]');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('The root stores 28.');
   });
 
   it('steps back to the build', () => {
     render();
-    click(button('First step'));
+    click(button('Về bước đầu'));
     expect(text()).toContain('Build bottom-up over 8 values with sum');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Leaf [0, 0] copies the value 2.');
-    click(button('Next step'));
-    click(button('Next step'));
+    click(button('Bước tiếp'));
+    click(button('Bước tiếp'));
     expect(text()).toContain('Node [0, 1] = sum(left child, right child) = 7.');
   });
 
@@ -243,13 +243,13 @@ describe('segment tree lesson', () => {
     answer.value = '16';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     send();
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '15';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     send();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
   });
 
   it('keeps a refusal on Enter and runs no operation', () => {

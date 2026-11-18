@@ -20,8 +20,8 @@ const cross = (a, b) => (b.b - a.b) / (a.m - b.m);
 export const en = {
   slug: 'dp-optimisations',
   topic: 'advanced-dp',
-  level: 'Advanced',
-  title: 'DP optimisations',
+  level: 'Nâng cao',
+  title: 'Tối ưu quy hoạch động',
   intro:
     'Many DP transitions take a minimum over all earlier states, which makes them O(n²) or worse. When the cost has a special shape, a data structure or an order argument skips most candidates. The convex hull trick handles costs of the form dp[j] + b[j]·x[i]: each earlier state is a line, and only the lines of the lower envelope can ever win.',
   summary:
@@ -206,6 +206,5 @@ export const en = {
       solution: 'O(n²): n diagonals, and the split ranges of each diagonal telescope to O(n).',
     },
   ],
-  nextTeaser:
-    'Next up: Practice: advanced DP problems, where you race naive and optimised solutions on the same input.',
+  nextTeaser: 'Bài tiếp theo: Luyện tập: bài toán QHĐ nâng cao.',
 };

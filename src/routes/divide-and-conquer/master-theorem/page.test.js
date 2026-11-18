@@ -71,10 +71,10 @@ describe('master theorem lesson', () => {
 
   it('sums each level and ends in case 2 with every level starred', () => {
     render();
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Level 0: 1 call of size 16');
     expect(text()).toContain('Level 0');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('T(n) = Θ(n log n). Every level is starred');
     expect(text()).toContain('Case 2: T(n) = Θ(n log n)');
     expect(nodeTitles().every((t) => t.endsWith('dominant'))).toBe(true);
@@ -83,7 +83,7 @@ describe('master theorem lesson', () => {
   it('stars only the leaves for Strassen and names the irrational exponent', () => {
     render();
     commit(field('preset'), 'strassen');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Case 1: T(n) = Θ(n^(log₂ 7)) ≈ Θ(n^2.81)');
     const dominant = nodeTitles().filter((t) => t.endsWith('dominant'));
     expect(dominant).toHaveLength(49);
@@ -93,8 +93,8 @@ describe('master theorem lesson', () => {
   it('stars the root in case 3 and checks regularity', () => {
     render();
     commit(field('preset'), 'root');
-    click(button('Last step'));
-    click(button('Previous step'));
+    click(button('Đến bước cuối'));
+    click(button('Bước trước'));
     expect(narration()).toContain('a·f(n/b) ≤ 0.5·f(n), with 0.5 < 1');
     expect(nodeTitles().filter((t) => t.endsWith('dominant'))).toEqual([
       'Call of size 16 at level 0, cost 256, dominant',
@@ -104,7 +104,7 @@ describe('master theorem lesson', () => {
   it('says no case applies to n / log n', () => {
     render();
     commit(field('preset'), 'gap');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('No case applies');
     expect(nodeTitles().some((t) => t.endsWith('dominant'))).toBe(false);
   });
@@ -118,7 +118,7 @@ describe('master theorem lesson', () => {
     commit(field('p'), '1');
     expect(narration()).toContain('T(n) = 4T(n/2) + n log n.');
     commit(field('d'), '2');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).toContain('Case 2: T(n) = Θ(n² log² n)');
   });
 
@@ -129,7 +129,7 @@ describe('master theorem lesson', () => {
     expect(/** @type {HTMLInputElement} */ (field('k')).value).toBe('4');
     commit(field('a'), '0');
     expect(/** @type {HTMLInputElement} */ (field('a')).value).toBe('2');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(text()).not.toContain('keep the drawn tree');
   });
 
@@ -156,16 +156,16 @@ describe('master theorem lesson', () => {
     answer.value = '0.75';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[2].hints[0]);
     answer.value = '0.1875';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

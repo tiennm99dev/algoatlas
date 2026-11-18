@@ -9,8 +9,8 @@ const big = (v) => v.toLocaleString('en-US');
 export const en = {
   slug: 'primality-testing',
   topic: 'number-theory',
-  level: 'Advanced',
-  title: 'Primality testing',
+  level: 'Nâng cao',
+  title: 'Kiểm tra số nguyên tố',
   intro:
     'Is one large number prime? Trial division answers for certain but takes about √n steps. The Fermat test checks a^(n−1) ≡ 1 (mod n) for a few bases, and a failure proves n composite without finding a factor, yet Carmichael numbers slip through. Miller-Rabin also inspects the squarings on the way to a^(n−1), which closes that gap and leads to the test used in practice.',
   summary:
@@ -223,6 +223,5 @@ export const en = {
         'A composite n has a divisor at most √n, so the loop runs at most about √n / 2 times.',
     },
   ],
-  nextTeaser:
-    'Next up: Combinatorics: binomials and Catalan numbers, where Pascal’s triangle counts choices modulo a prime.',
+  nextTeaser: 'Bài tiếp theo: Tổ hợp: hệ số nhị thức và số Catalan.',
 };

@@ -67,7 +67,7 @@ function stat(label) {
 
 /** Step until the narration matches. @param {string} part */
 function stepUntil(part) {
-  for (let k = 0; k < 400 && !narration().includes(part); k++) click(button('Next step'));
+  for (let k = 0; k < 400 && !narration().includes(part); k++) click(button('Bước tiếp'));
 }
 
 /** @param {number} i */
@@ -97,10 +97,10 @@ describe('static and dynamic arrays lesson', () => {
   it('doubles from capacity 2 through 9 pushes', () => {
     render();
     expect(narration()).toContain('An empty dynamic array with capacity 2 at address 1000.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('Push 1: write 10 into A[0]');
     expect(stat(m.stats.size)).toBe('1 / 2');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.size)).toBe('9 / 16');
     expect(stat(m.stats.copies)).toBe('14');
     expect(stat(m.stats.resizes)).toBe('3');
@@ -114,7 +114,7 @@ describe('static and dynamic arrays lesson', () => {
     stepUntil('Allocate block B');
     expect(text()).toContain(m.blockB);
     expect(narration()).toContain('Allocate block B with 4 slots at address 1024');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('Copy A[0] = 10 into B[0]. 1 copy so far in this push.');
     stepUntil('Free the old one');
     expect(narration()).toContain('A now starts at 1024 with capacity 4');
@@ -125,7 +125,7 @@ describe('static and dynamic arrays lesson', () => {
     render();
     pickGrowth('static');
     expect(text()).toContain('error "array is full"');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe(
       'Done: 2 values stored, 7 pushes refused because the static array was full.',
     );
@@ -137,16 +137,16 @@ describe('static and dynamic arrays lesson', () => {
     pickGrowth('plus-one');
     commit(input('capacity'), '1');
     commit(input('pushes'), '8');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.copies)).toBe('28');
     pickGrowth('double');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(stat(m.stats.copies)).toBe('7');
   });
 
   it('reads an index by address with the keyboard', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(readLine()).toBe(m.readHint);
     cellA(0).focus();
     cellA(0).dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
@@ -170,7 +170,7 @@ describe('static and dynamic arrays lesson', () => {
     expect(narration()).toBe(m.pushesError);
     expect(input('pushes').value).toBe('9');
     commit(input('pushes'), '0');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe('Done: nothing was pushed.');
   });
 
@@ -187,16 +187,16 @@ describe('static and dynamic arrays lesson', () => {
     answer.value = '32';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '31';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

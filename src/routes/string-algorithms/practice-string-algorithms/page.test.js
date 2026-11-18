@@ -82,10 +82,10 @@ describe('practice: string problems lesson', () => {
 
   it('rewinds and spends one step of every matcher per tick', () => {
     render();
-    click(button('First step'));
+    click(button('Về bước đầu'));
     expect(narration()).toContain('All five matchers start on 35 letters');
     expect(stat('boyer-steps')).toBe('0');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     for (const id of ['naive', 'rabin', 'kmp', 'boyer', 'z']) {
       expect(stat(`${id}-steps`)).toBe('1');
     }
@@ -94,8 +94,8 @@ describe('practice: string problems lesson', () => {
 
   it('watches the matcher whose row is pressed, without moving the race', () => {
     render();
-    click(button('First step'));
-    click(button('Next step'));
+    click(button('Về bước đầu'));
+    click(button('Bước tiếp'));
     click(button(m.watchLabel('Plain scan')));
     expect(button(m.watchLabel('Plain scan')).getAttribute('aria-pressed')).toBe('true');
     expect(button(m.watchLabel('Boyer-Moore')).getAttribute('aria-pressed')).toBe('false');
@@ -109,8 +109,8 @@ describe('practice: string problems lesson', () => {
 
   it('narrates a finished matcher while the others still run', () => {
     render();
-    click(button('First step'));
-    for (let i = 0; i < 16; i++) click(button('Next step'));
+    click(button('Về bước đầu'));
+    for (let i = 0; i < 16; i++) click(button('Bước tiếp'));
     expect(narration()).toContain('Boyer-Moore finished after 15 steps.');
     expect(document.querySelector('[data-testid="boyer-row"]')?.textContent).toContain(
       m.finishedWord,
@@ -121,11 +121,11 @@ describe('practice: string problems lesson', () => {
   it('narrates a spurious hit and its true match when watching Rabin-Karp', () => {
     render();
     click(button(m.watchLabel('Rabin-Karp')));
-    click(button('First step'));
+    click(button('Về bước đầu'));
     const seen = [];
     for (let i = 0; i < 110; i++) {
       seen.push(narration());
-      click(button('Next step'));
+      click(button('Bước tiếp'));
     }
     expect(seen.some((s) => s.includes('a spurious hit, the hashes collided'))).toBe(true);
     expect(seen.some((s) => s.includes('a true match at 28'))).toBe(true);
@@ -199,10 +199,10 @@ describe('practice: string problems lesson', () => {
     expect(stat('palindromes')).toBe('23');
     expect(stat('best-text')).toBe('geeksskeeg');
     expect(narration()).toContain('Longest palindrome: “geeksskeeg”, length 10');
-    click(button('First step'));
+    click(button('Về bước đầu'));
     expect(narration()).toContain('Read forgeeksskeegfor twice');
     expect(stat('period')).toBe(m.noValue);
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('π[1] = 0: the longest border of S[0..1] is empty.');
   });
 
@@ -210,11 +210,11 @@ describe('practice: string problems lesson', () => {
     render();
     structureMode();
     commit(field('text'), 'ababab');
-    click(button('First step'));
+    click(button('Về bước đầu'));
     const seen = [];
     for (let i = 0; i < structureTrace('ababab').length; i++) {
       seen.push(narration());
-      click(button('Next step'));
+      click(button('Bước tiếp'));
     }
     expect(seen).toContain('π[5] = 4: the longest border of S[0..5] is “abab”.');
     expect(seen).toContain(
@@ -246,11 +246,11 @@ describe('practice: string problems lesson', () => {
     render();
     structureMode();
     commit(field('text'), 'aba');
-    click(button('First step'));
+    click(button('Về bước đầu'));
     const seen = [];
     for (let i = 0; i < structureTrace('aba').length; i++) {
       seen.push(narration());
-      click(button('Next step'));
+      click(button('Bước tiếp'));
     }
     expect(seen).toContain('Centre on the end: 0 comparisons, and no palindrome.');
     expect(seen.some((s) => s.includes('gap before letter 3'))).toBe(false);
@@ -260,10 +260,10 @@ describe('practice: string problems lesson', () => {
     render();
     commit(presetSelect(), 'periodic');
     click(button('Watch Z-function'));
-    click(button('First step'));
+    click(button('Về bước đầu'));
     const seen = [];
     for (let i = 0; i < 80; i++) {
-      click(button('Next step'));
+      click(button('Bước tiếp'));
       seen.push(narration());
     }
     expect(seen).toContain(
@@ -273,8 +273,8 @@ describe('practice: string problems lesson', () => {
 
   it('keeps each mode on its own step when switching back', () => {
     render();
-    click(button('First step'));
-    click(button('Next step'));
+    click(button('Về bước đầu'));
+    click(button('Bước tiếp'));
     structureMode();
     expect(narration()).toContain('Longest palindrome');
     const radio = /** @type {HTMLInputElement} */ (
@@ -304,14 +304,14 @@ describe('practice: string problems lesson', () => {
     answer.value = '35';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toMatch(/not|try/i);
-    const hint = [...q.querySelectorAll('button')].find((b) => /hint/i.test(b.textContent ?? ''));
+    expect(q.textContent).toMatch(/chưa đúng|thử lại/i);
+    const hint = [...q.querySelectorAll('button')].find((b) => /gợi ý/i.test(b.textContent ?? ''));
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain('Boyer-Moore’s row');
     answer.value = '15';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toMatch(/correct/i);
+    expect(q.textContent).toMatch(/đúng rồi/i);
   });
 
   it('stores practice answers that the widget actually shows', () => {

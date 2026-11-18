@@ -24,8 +24,8 @@ const SORT_KEY = {
 export const en = {
   slug: 'interval-scheduling',
   topic: 'greedy',
-  level: 'Beginner',
-  title: 'Interval scheduling',
+  level: 'Cơ bản',
+  title: 'Lập lịch các đoạn',
   intro:
     'Many requests want the same room, each for an interval of time. Activity selection keeps as many non-clashing requests as possible, and the greedy rule that works is to keep, again and again, the compatible request that finishes earliest. Interval partitioning asks the opposite question: how few rooms hold every request?',
   summary:
@@ -232,6 +232,5 @@ export const en = {
         'It keeps 0-10, and the other three all clash with it, so it keeps just 1. Earliest finish keeps 1-3, 4-6 and 7-9.',
     },
   ],
-  nextTeaser:
-    'Next up: Huffman coding, which builds the shortest prefix-free code by merging the two least frequent symbols again and again.',
+  nextTeaser: 'Bài tiếp theo: Mã hoá Huffman.',
 };

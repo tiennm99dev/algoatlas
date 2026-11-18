@@ -50,7 +50,7 @@ const field = (/** @type {string} */ selector) =>
 const stackRows = () => [...document.querySelectorAll('[data-testid="stack"] li')];
 /** @param {number} n */
 const next = (n) => {
-  for (let i = 0; i < n; i++) click(button('Next step'));
+  for (let i = 0; i < n; i++) click(button('Bước tiếp'));
 };
 
 function practice() {
@@ -83,7 +83,7 @@ describe('recursion basics lesson', () => {
     expect(narration()).toBe('fact(1) returned 1. Back in fact(2), which resumes with r = 1.');
     expect(stackRows()).toHaveLength(3);
     expect(stackRows()[0].textContent).toContain('n = 2, r = 1');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe(
       'fact(4) = 24 after 4 calls. The stack was at most 4 frames deep and is empty again.',
     );
@@ -94,11 +94,11 @@ describe('recursion basics lesson', () => {
   it('switches to Fibonacci and grows a branching call tree', () => {
     render();
     click(field('input[name="fn"][value="fib"]'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('result')).toBe('3');
     expect(byTest('calls')).toBe('9');
     expect(document.querySelectorAll('svg[role="img"] circle')).toHaveLength(9);
-    click(button('Previous step'));
+    click(button('Bước trước'));
     expect(narration()).toBe('fib(4) = a + b = 2 + 1 = 3. Return 3 and pop the frame.');
   });
 
@@ -108,7 +108,7 @@ describe('recursion basics lesson', () => {
     expect(narration()).toBe(m.nError('fact', 12));
     expect(field('input[name="n"]').value).toBe('4');
     commit(field('input[name="n"]'), '6');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('result')).toBe('720');
     click(field('input[name="fn"][value="fib"]'));
     expect(field('input[name="n"]').value).toBe('6');
@@ -120,19 +120,19 @@ describe('recursion basics lesson', () => {
     render();
     click(field('input[name="base"]'));
     expect(narration()).toBe(m.baseNotice(false));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('result')).toBe(m.resultOverflow);
     expect(byTest('calls')).toBe('14');
     expect(narration()).toContain('stack overflow after 14 calls');
     expect(text()).toContain(m.legend.lost);
     click(field('input[name="base"]'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('result')).toBe('24');
   });
 
   it('steps back with the arrow keys', () => {
     render();
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     const before = narration();
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
     flushSync();
@@ -152,16 +152,16 @@ describe('recursion basics lesson', () => {
     answer.value = '9';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '15';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

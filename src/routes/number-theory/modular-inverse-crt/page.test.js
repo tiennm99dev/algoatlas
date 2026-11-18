@@ -63,12 +63,12 @@ const radio = (name, value) =>
     document.querySelector(`input[name="${name}"][value="${value}"]`)
   );
 const titles = () => [...document.querySelectorAll('svg title')].map((t) => t.textContent ?? '');
-const toLast = () => click(button('Last step'));
+const toLast = () => click(button('Đến bước cuối'));
 /** @param {string} kindText */
 function stepUntil(kindText) {
   for (let i = 0; i < 400; i++) {
     if (narration().includes(kindText)) return;
-    click(button('Next step'));
+    click(button('Bước tiếp'));
   }
   throw new Error(`never narrated ${kindText}`);
 }
@@ -135,7 +135,7 @@ describe('modular inverse and CRT lesson', () => {
     click(radio('task', 'inverse'));
     expect(narration()).toContain('Find x with 3·x ≡ 1 (mod 7)');
     expect(document.querySelectorAll('[data-testid="clock"]').length).toBe(1);
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('t = -2'.replace('-', '−'));
     toLast();
     expect(stat('inverse')).toBe('5');
@@ -211,16 +211,16 @@ describe('modular inverse and CRT lesson', () => {
     answer.value = '2';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(/** @type {any} */ (m.practice[0]).hints[0]);
     answer.value = '5';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 

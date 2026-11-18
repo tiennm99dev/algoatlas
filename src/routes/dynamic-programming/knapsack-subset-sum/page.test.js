@@ -70,9 +70,9 @@ describe('knapsack and subset sum lesson', () => {
     expect(narration()).toBe(
       'Pack 4 items into capacity 7 for the most value. Each item is taken whole, at most once.',
     );
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('Base case: row 0 has no items, so every capacity holds value 0.');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('9');
     expect(byTest('filled')).toBe('40 / 40');
     expect(narration()).toBe('The best value is 9: item 2, item 3.');
@@ -124,12 +124,12 @@ describe('knapsack and subset sum lesson', () => {
     commit(field('select[name="preset"]'), 'single');
     expect(field('input[name="items"]').value).toBe('2:3');
     click(field('input[name="layout"][value="row-down"]'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('3');
     expect(byTest('memory')).toBe('7');
     expect(document.querySelector('input[name="slider-item"]')).toBeNull();
     click(field('input[name="layout"][value="row-up"]'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('9');
     expect(byTest('correct')).toBe('3');
     expect(byTest('reuses')).toBe('3');
@@ -140,10 +140,10 @@ describe('knapsack and subset sum lesson', () => {
     render();
     click(field('input[name="problem"][value="subset"]'));
     expect(field('input[name="items"]').value).toBe('3, 34, 4, 12, 5, 2');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('Yes');
     commit(field('select[name="preset"]'), 'even');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('No');
     expect(narration()).toBe('No subset weighs exactly 7.');
   });
@@ -153,7 +153,7 @@ describe('knapsack and subset sum lesson', () => {
     commit(field('input[name="items"]'), '2:3, 3:4');
     commit(field('input[name="capacity"]'), '5');
     expect(field('select[name="preset"]').value).toBe('');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('7');
     commit(field('input[name="items"]'), 'oops');
     expect(narration()).toBe('Write each item as weight:value, for example 2:3, 3:4.');
@@ -215,16 +215,16 @@ describe('knapsack and subset sum lesson', () => {
     answer.value = '8';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Not quite');
+    expect(q.textContent).toContain('Chưa đúng');
     const hint = [...q.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === 'Show a hint',
+      (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer.value = '9';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });

@@ -83,7 +83,7 @@ describe('disjoint set union lesson', () => {
     render();
     expect(narration()).toContain('Every element starts alone');
     expect(statValue('Sets')).toBe('10');
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toBe(
       'Done: 5 sets, tallest tree 2 links, 10 parent links followed in total.',
     );
@@ -96,11 +96,11 @@ describe('disjoint set union lesson', () => {
     commit(field('a'), '3');
     click(buttonByText('Find a'));
     expect(narration()).toContain('find(3): start at 3');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('parent[3] = 2, so climb to 2.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toBe('parent[2] = 0, so climb to 0.');
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).toContain('0 is the root');
     expect(statValue('Links followed (this operation)')).toBe('2');
   });
@@ -110,14 +110,14 @@ describe('disjoint set union lesson', () => {
     commit(field('a'), '6');
     commit(field('b'), '9');
     click(buttonByText('Union'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(statValue('Sets')).toBe('4');
     commit(field('a'), '9');
     commit(field('b'), '5');
     click(buttonByText('Same set?'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(text()).not.toContain('{9}');
-    click(button('Previous step'));
+    click(button('Bước trước'));
     expect(narration()).toBe('Both roots are 4: yes, 9 and 5 are in the same set.');
   });
 
@@ -161,14 +161,14 @@ describe('disjoint set union lesson', () => {
   it('undoes, resets and refuses a full log', () => {
     render();
     click(buttonByText('Undo last'));
-    click(button('Last step'));
+    click(button('Đến bước cuối'));
     expect(narration()).toContain('Done: 5 sets');
     click(buttonByText('Reset'));
     expect(text()).toContain('none yet');
     expect(buttonByText('Reset').getAttribute('aria-disabled')).toBe('true');
     for (let i = 0; i < 17; i++) click(buttonByText('Find a'));
     expect(narration()).toBe(m.logFull);
-    click(button('Next step'));
+    click(button('Bước tiếp'));
     expect(narration()).not.toBe(m.logFull);
   });
 
@@ -176,11 +176,11 @@ describe('disjoint set union lesson', () => {
     render();
     const q = /** @type {HTMLElement} */ (practice().querySelectorAll('ol > li')[0]);
     answer(q, '4');
-    expect(q.textContent).toContain('Not quite');
-    click(buttonByText('Show a hint'));
+    expect(q.textContent).toContain('Chưa đúng');
+    click(buttonByText('Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[0].hints[0]);
     answer(q, '5');
-    expect(q.textContent).toContain('Correct!');
+    expect(q.textContent).toContain('Đúng rồi!');
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
   });
 });
