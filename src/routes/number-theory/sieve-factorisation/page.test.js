@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
 import { MAX_N, sieveTrace } from '$lib/algo-engine/sieve-factorisation.js';
-import { en as m } from '$lib/lessons/sieve-factorisation/copy.en.js';
+import { vi as m } from '$lib/lessons/sieve-factorisation/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -69,25 +69,27 @@ function stepUntil(kindText) {
 describe('sieve lesson', () => {
   it('crosses out multiples prime by prime, then factorises', () => {
     render();
-    expect(narration()).toContain('Write the numbers up to 60');
+    expect(narration()).toContain('Viết các số đến 60');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('2 was never crossed out');
+    expect(narration()).toContain('2 chưa từng bị gạch');
     expect(stat('p')).toBe('2');
     expect(stat('primes')).toBe('1');
     click(button('Bước tiếp'));
     expect(narration()).toBe(
-      'Cross out 4 = 2·2. It is the first time, so its smallest prime factor is 2.',
+      'Gạch 4 = 2·2. Đây là lần đầu, nên ước nguyên tố nhỏ nhất của nó là 2.',
     );
     expect(stat('crossings')).toBe('1');
-    expect(cell(4).getAttribute('aria-label')).toBe('4, crossed out for the first time');
-    stepUntil('Cross out 9');
-    stepUntil('12 = 3·4 was already crossed out by 2');
-    expect(cell(12).getAttribute('aria-label')).toBe('12, crossed out again');
-    stepUntil('4 is already crossed out');
-    stepUntil('8·8 = 64 is past 60');
+    expect(cell(4).getAttribute('aria-label')).toBe('4, bị gạch lần đầu');
+    stepUntil('Gạch 9');
+    stepUntil('12 = 3·4 đã bị 2 gạch rồi');
+    expect(cell(12).getAttribute('aria-label')).toBe('12, bị gạch lại');
+    stepUntil('4 đã bị gạch');
+    stepUntil('8·8 = 64 đã vượt quá 60');
     expect(stat('primes')).toBe('17');
-    expect(cell(59).getAttribute('aria-label')).toBe('59, prime');
-    expect(cell(1).getAttribute('aria-label')).toBe('1, neither prime nor composite');
+    expect(cell(59).getAttribute('aria-label')).toBe('59, số nguyên tố');
+    expect(cell(1).getAttribute('aria-label')).toBe(
+      '1, không phải số nguyên tố, cũng không phải hợp số',
+    );
     toLast();
     expect(narration()).toContain('60 = 2 · 2 · 3 · 5');
     expect(stat('crossings')).toBe(stat('total-square'));
@@ -110,14 +112,14 @@ describe('sieve lesson', () => {
   it('factorises the number picked on the grid, by pointer and keyboard', () => {
     render();
     click(cell(42));
-    expect(narration()).toContain('factorise x = 42');
+    expect(narration()).toContain('phân tích x = 42');
     expect(field('x').value).toBe('42');
     toLast();
     expect(narration()).toContain('42 = 2 · 3 · 7');
     cell(35).dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     flushSync();
     expect(field('x').value).toBe('35');
-    expect(narration()).toContain('factorise x = 35');
+    expect(narration()).toContain('phân tích x = 35');
     click(cell(1));
     expect(narration()).toBe(m.pickError(1));
     expect(field('x').value).toBe('35');
@@ -138,7 +140,7 @@ describe('sieve lesson', () => {
     toLast();
     expect(stat('primes')).toBe('8');
     commit(field('x'), '18');
-    expect(narration()).toContain('factorise x = 18');
+    expect(narration()).toContain('phân tích x = 18');
   });
 
   it('refuses bad input with a notice and keeps the last good value', () => {

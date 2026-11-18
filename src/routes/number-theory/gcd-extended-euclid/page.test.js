@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
 import { GCD_PRESETS, MAX_C, MAX_VALUE, gcdTrace } from '$lib/algo-engine/gcd-extended-euclid.js';
-import { en as m } from '$lib/lessons/gcd-extended-euclid/copy.en.js';
+import { vi as m } from '$lib/lessons/gcd-extended-euclid/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -60,18 +60,18 @@ describe('GCD and extended Euclid lesson', () => {
     expect(narration()).toContain('240 = 5·46 + 10');
     expect(stat('divisions')).toBe('1');
     expect(stat('subtractions')).toBe('5');
-    expect(titles()).toContain('Square of side 46, cut by division 1, just cut');
-    expect(titles()).toContain('Part left to cut, 10 by 46');
+    expect(titles()).toContain('Hình vuông cạnh 46, cắt ở phép chia 1, vừa cắt');
+    expect(titles()).toContain('Phần còn phải cắt, 10 × 46');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('New row: r = 10');
+    expect(narration()).toContain('Hàng mới: r = 10');
     toLast();
     expect(stat('divisions')).toBe('5');
     expect(stat('subtractions')).toBe('13');
     expect(stat('g')).toBe('2');
     expect(stat('bezout')).toBe('−9, 47');
     expect(stat('solution')).toContain('x = 1, y = −5');
-    expect(titles()).toContain('Square of side 2, cut by division 5, side equals the gcd');
-    expect(titles().some((t) => t.startsWith('Part left'))).toBe(false);
+    expect(titles()).toContain('Hình vuông cạnh 2, cắt ở phép chia 5, cạnh bằng ƯCLN');
+    expect(titles().some((t) => t.startsWith('Phần còn'))).toBe(false);
   });
 
   it('rebuilds from each field and from a preset', () => {
@@ -86,8 +86,8 @@ describe('GCD and extended Euclid lesson', () => {
     expect(field('a').value).toBe('6');
     toLast();
     expect(stat('g')).toBe('3');
-    expect(stat('solution')).toContain('No solution');
-    expect(narration()).toContain('no solution');
+    expect(stat('solution')).toContain('Vô nghiệm');
+    expect(narration()).toContain('vô nghiệm');
   });
 
   it('keeps a tall thin rectangle readable by scrolling it', () => {

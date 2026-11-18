@@ -8,7 +8,7 @@ import {
   MAX_MODULUS,
   powTrace,
 } from '$lib/algo-engine/modular-exponentiation.js';
-import { en as m } from '$lib/lessons/modular-exponentiation/copy.en.js';
+import { vi as m } from '$lib/lessons/modular-exponentiation/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -59,26 +59,26 @@ const toLast = () => click(button('Đến bước cuối'));
 describe('modular exponentiation lesson', () => {
   it('walks 3 to the 13 mod 7, bit by bit', () => {
     render();
-    expect(narration()).toContain('In binary e is 1101');
+    expect(narration()).toContain('Ở hệ nhị phân, e là 1101');
     expect(stat('result')).toBe('1');
     expect(stat('x')).toBe('3');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('bit 0 is 1');
-    expect(titles()).toContain('Bit with weight 2 to the 0: 1, being read');
+    expect(narration()).toContain('bit 0 bằng 1');
+    expect(titles()).toContain('Bit có trọng số 2 mũ 0: 1, đang đọc');
     click(button('Bước tiếp'));
-    expect(narration()).toBe('result = 1·3 mod 7 = 3, so now result ≡ a^1.');
+    expect(narration()).toBe('result = 1·3 mod 7 = 3, nên giờ result ≡ a^1.');
     expect(stat('invariant')).toBe('result ≡ a^1 (mod 7)');
     click(button('Bước tiếp'));
     expect(narration()).toContain('x = 3·3 mod 7 = 2');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('bit 1 is 0');
+    expect(narration()).toContain('bit 1 bằng 0');
     toLast();
     expect(stat('result')).toBe('3');
     expect(stat('multiplications')).toBe('7');
     expect(stat('naive')).toBe('13');
     expect(stat('invariant')).toBe('result ≡ a^13 (mod 7)');
-    expect(titles()).toContain('Bit with weight 2 to the 1: 0, skipped');
-    expect(titles()).toContain('Bit with weight 2 to the 3: 1, multiplied in');
+    expect(titles()).toContain('Bit có trọng số 2 mũ 1: 0, bỏ qua');
+    expect(titles()).toContain('Bit có trọng số 2 mũ 3: 1, đã nhân vào');
     expect(narration()).toContain('3^13 mod 7 = 3');
   });
 
@@ -100,7 +100,7 @@ describe('modular exponentiation lesson', () => {
   it('explains an exponent of zero and a modulus of one', () => {
     render();
     commit(field('e'), '0');
-    expect(narration()).toContain('no bits to use');
+    expect(narration()).toContain('không có bit nào để dùng');
     toLast();
     expect(stat('result')).toBe('1');
     expect(stat('multiplications')).toBe('0');

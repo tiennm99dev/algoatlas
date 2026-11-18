@@ -12,7 +12,7 @@ import {
   euclidInverseTrace,
   fermatInverseTrace,
 } from '$lib/algo-engine/modular-inverse-crt.js';
-import { en as m } from '$lib/lessons/modular-inverse-crt/copy.en.js';
+import { vi as m } from '$lib/lessons/modular-inverse-crt/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -79,17 +79,15 @@ describe('modular inverse and CRT lesson', () => {
   it('walks Sun Tzu’s system until all the clocks align', () => {
     render();
     expect(document.querySelectorAll('[data-testid="clock"]').length).toBe(3);
-    expect(narration()).toBe('Start with the first congruence: x ≡ 2 (mod 3). The candidate is 2.');
+    expect(narration()).toBe('Bắt đầu với đồng dư thức đầu tiên: x ≡ 2 (mod 3). Ứng viên là 2.');
     expect(stat('candidate')).toBe('2');
     stepUntil('k = 1: x = 5');
     expect(titles()).toContain(
-      'Clock modulo 3: the hand points at 2, and it must point at 2. Merged: it stays aligned',
+      'Đồng hồ modulo 3: kim đang chỉ 2, cần chỉ 2. Đã ghép: luôn giữ khớp',
     );
-    expect(titles()).toContain(
-      'Clock modulo 5: the hand points at 0, and it must point at 3. Being solved',
-    );
+    expect(titles()).toContain('Đồng hồ modulo 5: kim đang chỉ 0, cần chỉ 3. Đang giải');
     stepUntil('k = 2: x = 8');
-    expect(narration()).toContain('lands on 3');
+    expect(narration()).toContain('dừng đúng ở 3');
     toLast();
     expect(stat('candidate')).toBe('23');
     expect(stat('big-m')).toBe('105');
@@ -102,9 +100,9 @@ describe('modular inverse and CRT lesson', () => {
     render();
     commit(field('preset'), 'conflict');
     expect(field('system').value).toBe('1 mod 4, 2 mod 6');
-    stepUntil('no solution');
+    stepUntil('vô nghiệm');
     toLast();
-    expect(stat('solution')).toBe('none');
+    expect(stat('solution')).toBe('không có');
     commit(field('preset'), 'shared');
     toLast();
     expect(stat('solution')).toBe('9 mod 12');
@@ -133,7 +131,7 @@ describe('modular inverse and CRT lesson', () => {
   it('finds an inverse by Euclid, and shows when there is none', () => {
     render();
     click(radio('task', 'inverse'));
-    expect(narration()).toContain('Find x with 3·x ≡ 1 (mod 7)');
+    expect(narration()).toContain('Tìm x sao cho 3·x ≡ 1 (mod 7)');
     expect(document.querySelectorAll('[data-testid="clock"]').length).toBe(1);
     click(button('Bước tiếp'));
     expect(narration()).toContain('t = -2'.replace('-', '−'));
@@ -143,9 +141,9 @@ describe('modular inverse and CRT lesson', () => {
     expect(stat('rounds')).toBe('2');
     commit(field('preset'), 'noInverse');
     toLast();
-    expect(stat('inverse')).toBe('none');
+    expect(stat('inverse')).toBe('không có');
     expect(stat('extra')).toBe('2');
-    expect(narration()).toContain('share the factor 2');
+    expect(narration()).toContain('có chung ước 2');
   });
 
   it('holds back the gcd until Euclid has found it', () => {
@@ -161,16 +159,16 @@ describe('modular inverse and CRT lesson', () => {
     click(radio('task', 'inverse'));
     click(radio('method', 'fermat'));
     commit(field('a'), '14');
-    expect(narration()).toBe('Find the inverse of 14 modulo 7 with Fermat’s theorem.');
+    expect(narration()).toBe('Tìm nghịch đảo của 14 theo modulo 7 bằng định lí Fermat.');
     toLast();
-    expect(stat('inverse')).toBe('none');
+    expect(stat('inverse')).toBe('không có');
   });
 
   it('finds an inverse by Fermat, and refuses a composite modulus', () => {
     render();
     click(radio('task', 'inverse'));
     click(radio('method', 'fermat'));
-    expect(narration()).toContain('7 is prime');
+    expect(narration()).toContain('7 là số nguyên tố');
     toLast();
     expect(stat('inverse')).toBe('5');
     expect(stat('rounds')).toBe('3');

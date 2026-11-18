@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
 import { MAX_BASE, MAX_BASES, MAX_N, primalityTrace } from '$lib/algo-engine/primality-testing.js';
-import { en as m } from '$lib/lessons/primality-testing/copy.en.js';
+import { vi as m } from '$lib/lessons/primality-testing/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -72,32 +72,32 @@ function stepUntil(kindText) {
 describe('primality testing lesson', () => {
   it('walks Miller-Rabin on 561 until base 2 proves it composite', () => {
     render();
-    expect(narration()).toContain('Is 561 prime?');
+    expect(narration()).toContain('561 có phải số nguyên tố không?');
     expect(stat('verdict')).toBe('…');
-    stepUntil('Split off the powers of two');
+    stepUntil('Tách các thừa số 2');
     expect(stat('decomposition')).toBe('n − 1 = 560 = 2^4 · 35');
     click(button('Bước tiếp'));
-    expect(narration()).toBe('Base 2: x = a^35 mod 561 = 263.');
+    expect(narration()).toBe('Cơ số 2: x = a^35 mod 561 = 263.');
     expect(rows()[0]).toBe('2 263 …');
-    stepUntil('a square root of 1');
+    stepUntil('một căn bậc hai của 1');
     toLast();
-    expect(stat('verdict')).toBe('Composite');
-    expect(rows()[0]).toBe('2 263 166 67 1 ✗ witness');
+    expect(stat('verdict')).toBe('Hợp số');
+    expect(rows()[0]).toBe('2 263 166 67 1 ✗ nhân chứng');
     expect(stat('tested')).toBe('1');
-    expect(stat('liars')).toBe('8 of 558');
+    expect(stat('liars')).toBe('8/558');
   });
 
   it('shows Fermat fooled by the Carmichael number', () => {
     render();
     click(method('fermat'));
     toLast();
-    expect(stat('verdict')).toBe('Probably prime');
-    expect(rows()).toEqual(['2 1 ✓ passes', '5 1 ✓ passes', '7 1 ✓ passes']);
-    expect(stat('liars')).toBe('318 of 558');
+    expect(stat('verdict')).toBe('Có lẽ là số nguyên tố');
+    expect(rows()).toEqual(['2 1 ✓ qua', '5 1 ✓ qua', '7 1 ✓ qua']);
+    expect(stat('liars')).toBe('318/558');
     commit(field('bases'), '3');
     toLast();
-    expect(stat('verdict')).toBe('Composite');
-    expect(narration()).toContain('Done: composite');
+    expect(stat('verdict')).toBe('Hợp số');
+    expect(narration()).toContain('Xong: hợp số');
   });
 
   it('reports a divisor by trial division, and a prime when none appears', () => {
@@ -105,13 +105,13 @@ describe('primality testing lesson', () => {
     click(method('trial'));
     commit(field('preset'), 'semiprime');
     toLast();
-    expect(stat('verdict')).toBe('Composite');
+    expect(stat('verdict')).toBe('Hợp số');
     expect(stat('divisor')).toBe('97');
     expect(stat('cost')).toBe('48');
     expect(stat('limit')).toBe('99');
     commit(field('n'), '101');
-    stepUntil('No d up to 10 divides 101');
-    expect(stat('verdict')).toBe('Prime');
+    stepUntil('Không d nào đến 10 chia hết 101');
+    expect(stat('verdict')).toBe('Số nguyên tố');
     expect(stat('divisor')).toBe('—');
   });
 
@@ -119,41 +119,41 @@ describe('primality testing lesson', () => {
     render();
     commit(field('preset'), 'smallPrime');
     toLast();
-    expect(stat('verdict')).toBe('Prime');
-    expect(narration()).toContain('Done: prime');
-    expect(rows()[0]).toBe('2 8 64 22 96 = n − 1 ✓ passes');
+    expect(stat('verdict')).toBe('Số nguyên tố');
+    expect(narration()).toContain('Xong: số nguyên tố');
+    expect(rows()[0]).toBe('2 8 64 22 96 = n − 1 ✓ qua');
     commit(field('bases'), '2');
     toLast();
-    expect(stat('verdict')).toBe('Probably prime');
+    expect(stat('verdict')).toBe('Có lẽ là số nguyên tố');
   });
 
   it('settles small and even numbers, and skips an unusable base', () => {
     render();
     commit(field('n'), '3');
     toLast();
-    expect(stat('verdict')).toBe('Prime');
+    expect(stat('verdict')).toBe('Số nguyên tố');
     commit(field('n'), '100');
     toLast();
-    expect(stat('verdict')).toBe('Composite');
+    expect(stat('verdict')).toBe('Hợp số');
     expect(stat('liars')).toBe(m.liarsNone);
     commit(field('n'), '97');
     expect(stat('liars')).toBe(m.liarsNone);
     commit(field('n'), '5');
     commit(field('bases'), '7');
-    stepUntil('outside 2 to n − 2');
+    stepUntil('nằm ngoài khoảng 2 đến n − 2');
     toLast();
-    expect(stat('verdict')).toBe('Not tested');
-    expect(rows()[0]).toBe('7 – skipped');
+    expect(stat('verdict')).toBe('Chưa kiểm tra');
+    expect(rows()[0]).toBe('7 – bỏ qua');
   });
 
   it('handles the largest n without losing precision', () => {
     render();
     commit(field('preset'), 'mersenne');
     toLast();
-    expect(stat('verdict')).toBe('Prime');
+    expect(stat('verdict')).toBe('Số nguyên tố');
     click(method('trial'));
     toLast();
-    expect(stat('verdict')).toBe('Prime');
+    expect(stat('verdict')).toBe('Số nguyên tố');
     expect(stat('cost')).toBe('23169');
   });
 

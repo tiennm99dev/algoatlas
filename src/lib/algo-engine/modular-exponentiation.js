@@ -13,7 +13,7 @@ export const powPseudocode = [
   'result = 1 mod m',
   'x = a mod m',
   'while e > 0:',
-  '  if e is odd:',
+  '  if e lẻ:',
   '    result = result · x mod m',
   '  x = x · x mod m',
   '  e = ⌊e / 2⌋',

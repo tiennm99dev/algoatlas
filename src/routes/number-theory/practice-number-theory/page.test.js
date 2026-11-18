@@ -15,7 +15,7 @@ import {
   rangeSumTrace,
   subarraysTrace,
 } from '$lib/algo-engine/practice-number-theory.js';
-import { en as m } from '$lib/lessons/practice-number-theory/copy.en.js';
+import { vi as m } from '$lib/lessons/practice-number-theory/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -75,17 +75,17 @@ const titles = () => [...document.querySelectorAll('svg title')].map((t) => t.te
 describe('number theory sandbox', () => {
   it('walks σ and τ of 360 and lists the divisors', () => {
     render();
-    expect(narration()).toContain('divisors of 360');
+    expect(narration()).toContain('các ước của 360');
     expect(stat('feedback')).toBe('');
     next();
-    expect(narration()).toContain('2^3 exactly divides n');
+    expect(narration()).toContain('2^3 là luỹ thừa cao nhất của 2 chia hết n');
     next();
     expect(stat('answer')).toBe('15');
     expect(stat('tau')).toBe('4');
     toLast();
-    expect(stat('answer')).toBe('1,170');
+    expect(stat('answer')).toBe('1170');
     expect(stat('tau')).toBe('24');
-    expect(stat('rows')).toContain('1,170');
+    expect(stat('rows')).toContain('1170');
     expect(stat('brute')).toBe('360');
     expect(document.body.textContent).toContain('180');
     expect(document.body.textContent).toContain(m.askDone);
@@ -97,13 +97,13 @@ describe('number theory sandbox', () => {
     expect(document.body.textContent).toContain(m.askIdle);
     next();
     answer('14');
-    expect(stat('feedback')).toBe('Not quite. Multiply σ = 1 by 15.');
+    expect(stat('feedback')).toBe('Chưa đúng. Nhân σ = 1 với 15.');
     expect(stat('wrong')).toBe('1');
-    expect(narration()).toContain('2^3 exactly divides n');
+    expect(narration()).toContain('2^3 là luỹ thừa cao nhất của 2 chia hết n');
     answer('15');
     expect(stat('feedback')).toBe(m.askRight(15));
     expect(stat('right')).toBe('1');
-    expect(narration()).toBe('σ = 15 and τ = 4.');
+    expect(narration()).toBe('σ = 15 và τ = 4.');
     next();
     expect(stat('feedback')).toBe('');
     field('guess').value = '';
@@ -119,7 +119,7 @@ describe('number theory sandbox', () => {
     commit(field('puzzle'), 'rangeSum');
     expect(narration()).toContain('σ(1) + … + σ(10)');
     next();
-    expect(narration()).toContain('d = 1 divides ⌊10 / 1⌋ = 10');
+    expect(narration()).toContain('d = 1 là ước của ⌊10 / 1⌋ = 10');
     answer('10');
     expect(stat('answer')).toBe('10');
     toLast();
@@ -135,13 +135,13 @@ describe('number theory sandbox', () => {
     expect(field('values').value).toBe('1, 2, 3, 4, 5, 6');
     expect(field('m').value).toBe('3');
     next();
-    expect(narration()).toContain('Value 1 has remainder 1, so it needs remainder 2');
-    expect(titles()).toContain('Remainder 2: seen 0, looked up');
+    expect(narration()).toContain('Giá trị 1 có số dư 1, nên cần số dư 2');
+    expect(titles()).toContain('Số dư 2: đã gặp 0, đang tra');
     answer('0');
-    expect(titles()).toContain('Remainder 1: seen 1, just counted');
+    expect(titles()).toContain('Số dư 1: đã gặp 1, vừa đếm');
     toLast();
     expect(stat('answer')).toBe('5');
-    expect(narration()).toContain('5 pairs sum');
+    expect(narration()).toContain('Có 5 cặp có tổng');
     expect(stat('brute')).toBe('15');
   });
 
@@ -149,7 +149,7 @@ describe('number theory sandbox', () => {
     render();
     commit(field('puzzle'), 'subarrays');
     expect(field('values').value).toBe('4, 5, 0, 2, 3, 1');
-    expect(titles()).toContain('Remainder 0: seen 1');
+    expect(titles()).toContain('Số dư 0: đã gặp 1');
     toLast();
     expect(stat('answer')).toBe('7');
     expect(stat('brute')).toBe('21');
@@ -197,12 +197,12 @@ describe('number theory sandbox', () => {
 });
 
 describe('sum of σ(i) narration', () => {
-  it('uses the singular for one round', () => {
+  it('narrates a single round', () => {
     render();
     commit(field('puzzle'), 'rangeSum');
     commit(field('limit'), '1');
     toLast();
-    expect(narration()).toContain('in 1 round.');
+    expect(narration()).toContain('sau 1 vòng.');
   });
 });
 
@@ -217,12 +217,12 @@ describe('modular calculator', () => {
 
   it('computes each operation and says when there is no inverse', () => {
     render();
-    expect(stat('calc')).toBe('5 ÷ 3 ≡ 4 (mod 7), using 3⁻¹ ≡ 5');
+    expect(stat('calc')).toBe('5 ÷ 3 ≡ 4 (mod 7), dùng 3⁻¹ ≡ 5');
     commit(field('calc-op'), 'pow');
     commit(field('calc-a'), '2');
     commit(field('calc-b'), '1000000000');
     commit(field('calc-m'), '1000000007');
-    expect(stat('calc')).toBe('2 ^ 1,000,000,000 ≡ 140,625,001 (mod 1,000,000,007)');
+    expect(stat('calc')).toBe('2 ^ 1000000000 ≡ 140625001 (mod 1000000007)');
     commit(field('calc-op'), 'div');
     commit(field('calc-b'), '2');
     commit(field('calc-m'), '4');
@@ -238,7 +238,7 @@ describe('modular calculator', () => {
     expect(stat('calc')).toBe(m.calcModulusError(1_000_000_007));
     expect(field('calc-m').value).toBe('7');
     commit(field('calc-a'), '6');
-    expect(stat('calc')).toBe('6 ÷ 3 ≡ 2 (mod 7), using 3⁻¹ ≡ 5');
+    expect(stat('calc')).toBe('6 ÷ 3 ≡ 2 (mod 7), dùng 3⁻¹ ≡ 5');
   });
 });
 

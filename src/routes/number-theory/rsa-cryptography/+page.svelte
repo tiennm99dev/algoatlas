@@ -21,7 +21,7 @@
     trialYearsExponent,
     validExponent,
   } from '$lib/algo-engine/rsa-cryptography.js';
-  import { en as m } from '$lib/lessons/rsa-cryptography/copy.en.js';
+  import { vi as m } from '$lib/lessons/rsa-cryptography/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
   import { isPrime } from '$lib/algo-engine/number-theory.js';
 
@@ -214,7 +214,7 @@
   >
     <dt class="font-mono text-sm text-slate-600">{m.labels[name]}</dt>
     <dd class="text-right font-mono tabular-nums text-slate-900" data-testid={`v-${name}`}>
-      {v === null ? m.unknown : v.toLocaleString('en-US')}
+      {v === null ? m.unknown : String(v)}
       {#if fresh === name}<span class="ml-1 text-xs text-amber-800">{m.justFound}</span>{/if}
     </dd>
   </div>
@@ -224,7 +224,7 @@
   <div class="flex items-baseline justify-between gap-2 px-2 py-1">
     <dt class="font-mono text-sm text-slate-600">{m.recovered[name]}</dt>
     <dd class="text-right font-mono tabular-nums text-slate-900" data-testid={`a-${name}`}>
-      {v === null ? m.unknown : v.toLocaleString('en-US')}
+      {v === null ? m.unknown : String(v)}
     </dd>
   </div>
 {/snippet}
@@ -403,7 +403,7 @@
                         : ''}"
                     >
                       <td class="px-2 py-1">{i < 2 ? '' : row.q}</td>
-                      <td class="px-2 py-1">{row.r.toLocaleString('en-US')}</td>
+                      <td class="px-2 py-1">{String(row.r)}</td>
                       <td class="px-2 py-1">{String(row.t).replace('-', '−')}</td>
                     </tr>
                   {/each}

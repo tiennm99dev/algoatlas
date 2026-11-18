@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
 import { attackTrace, MAX_PRIME, MIN_PRIME, rsaTrace } from '$lib/algo-engine/rsa-cryptography.js';
-import { en as m } from '$lib/lessons/rsa-cryptography/copy.en.js';
+import { vi as m } from '$lib/lessons/rsa-cryptography/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -61,32 +61,32 @@ const toAttacker = () =>
 describe('RSA lesson, owner view', () => {
   it('walks key generation, encryption and decryption', () => {
     render();
-    expect(narration()).toContain('p = 61 and q = 53');
+    expect(narration()).toContain('p = 61 và q = 53');
     expect(stat('v-n')).toBe(m.unknown);
     expect(stat('v-e')).toBe(m.unknown);
     next();
-    expect(stat('v-n')).toContain('3,233');
+    expect(stat('v-n')).toContain('3233');
     expect(stat('v-n')).toContain(m.justFound);
     next();
-    expect(stat('v-phi')).toContain('3,120');
+    expect(stat('v-phi')).toContain('3120');
     next();
     expect(stat('v-e')).toContain('17');
     next();
-    expect(narration()).toContain('first rows');
+    expect(narration()).toContain('Hai hàng đầu');
     expect(document.body.textContent).toContain(m.euclidTitle);
     toLast();
-    expect(stat('v-d')).toBe('2,753');
-    expect(stat('v-c')).toBe('2,790');
+    expect(stat('v-d')).toBe('2753');
+    expect(stat('v-c')).toBe('2790');
     expect(stat('v-recovered')).toBe('65');
     expect(stat('check')).toBe('1');
     expect(stat('match')).toBe(m.matchYes);
-    expect(narration()).toContain('equals M = 65');
+    expect(narration()).toContain('bằng đúng M = 65');
   });
 
   it('writes a negative coefficient with a true minus sign', () => {
     render();
-    while (!narration().startsWith('Quotient')) next();
-    expect(narration()).toBe('Quotient 183 gives r = 9 and t = −183.');
+    while (!narration().startsWith('Thương')) next();
+    expect(narration()).toBe('Thương 183 cho r = 9 và t = −183.');
   });
 
   it('shows the exponent bits while powering', () => {
@@ -95,12 +95,12 @@ describe('RSA lesson, owner view', () => {
     const at = frames.findIndex((f) => f.kind === 'encrypt');
     for (let i = 0; i < at; i++) next();
     expect(document.body.textContent).toContain(m.powerTitle.encrypt);
-    expect(narration()).toContain('Bit 0 of e is 1');
-    expect(titles()).toContain('Bit with weight 2 to the 0: 1, being read');
+    expect(narration()).toContain('Bit 0 của e bằng 1');
+    expect(titles()).toContain('Bit có trọng số 2 mũ 0: 1, đang đọc');
     next();
-    expect(narration()).toContain('Bit 1 of e is 0');
-    expect(titles()).toContain('Bit with weight 2 to the 0: 1, multiplied in');
-    expect(titles()).toContain('Bit with weight 2 to the 1: 0, being read');
+    expect(narration()).toContain('Bit 1 của e bằng 0');
+    expect(titles()).toContain('Bit có trọng số 2 mũ 0: 1, đã nhân vào');
+    expect(titles()).toContain('Bit có trọng số 2 mũ 1: 0, đang đọc');
   });
 
   it('rebuilds from a preset and each field', () => {
@@ -158,15 +158,15 @@ describe('RSA lesson, attacker view', () => {
   it('factors n from the public values alone and reads the message', () => {
     render();
     toAttacker();
-    expect(narration()).toContain('n = 3,233, e = 17, c = 2,790');
+    expect(narration()).toContain('n = 3233, e = 17, c = 2790');
     expect(stat('a-p')).toBe(m.unknown);
     next();
-    expect(stat('attack-line')).toBe('3,233 mod 2 = 1');
+    expect(stat('attack-line')).toBe('3233 mod 2 = 1');
     toLast();
     expect(stat('trials')).toBe('27');
     expect(stat('a-p')).toBe('53');
     expect(stat('a-q')).toBe('61');
-    expect(stat('a-d')).toBe('2,753');
+    expect(stat('a-d')).toBe('2753');
     expect(stat('a-M')).toBe('65');
   });
 
@@ -185,9 +185,9 @@ describe('RSA lesson, attacker view', () => {
     toAttacker();
     const text = stat('scale') ?? '';
     expect(text).toContain('617 (RSA-2048)');
-    expect(text).toContain('≈ 5 seconds');
-    expect(text).toContain('under a second');
-    expect(text).toContain('years');
+    expect(text).toContain('≈ 5 giây');
+    expect(text).toContain('dưới một giây');
+    expect(text).toContain('năm');
   });
 });
 

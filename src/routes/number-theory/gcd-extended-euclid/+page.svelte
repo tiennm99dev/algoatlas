@@ -14,7 +14,7 @@
     gcdPseudocode,
     gcdTrace,
   } from '$lib/algo-engine/gcd-extended-euclid.js';
-  import { en as m } from '$lib/lessons/gcd-extended-euclid/copy.en.js';
+  import { vi as m } from '$lib/lessons/gcd-extended-euclid/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */

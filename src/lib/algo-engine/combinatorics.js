@@ -215,7 +215,7 @@ export function lucasTrace(n0, k0, p) {
 export const bracketPseudocode = [
   'generate(prefix, open, close):',
   '  if open + close = 2n:',
-  '    output prefix; return',
+  '    in ra prefix; return',
   '  if open < n: generate(prefix + "(", open + 1, close)',
   '  if close < open: generate(prefix + ")", open, close + 1)',
   'generate("", 0, 0)',

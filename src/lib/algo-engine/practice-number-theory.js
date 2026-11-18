@@ -25,7 +25,7 @@ export const PSEUDOCODE = {
   divisors: [
     'σ = 1, τ = 1, rest = n, d = 2',
     'while d · d ≤ rest:',
-    '  e = times d divides rest; rest = rest / d^e',
+    '  e = số lần d chia hết rest; rest = rest / d^e',
     '  if e > 0: σ = σ · (1 + d + … + d^e), τ = τ · (e + 1)',
     '  d = d + 1',
     'if rest > 1: σ = σ · (1 + rest), τ = τ · 2',
@@ -40,15 +40,15 @@ export const PSEUDOCODE = {
   ],
   pairs: [
     'seen[0..m−1] = 0, total = 0',
-    'for each a:',
+    'for a in values:',
     '  r = a mod m, need = (m − r) mod m',
     '  total = total + seen[need]',
     '  seen[r] = seen[r] + 1',
     'return total',
   ],
   subarrays: [
-    'seen[0] = 1, others 0, s = 0, total = 0',
-    'for each a:',
+    'seen[0] = 1, các ô khác 0, s = 0, total = 0',
+    'for a in values:',
     '  s = (s + a) mod m',
     '  total = total + seen[s]',
     '  seen[s] = seen[s] + 1',

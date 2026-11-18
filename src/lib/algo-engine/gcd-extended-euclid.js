@@ -12,14 +12,14 @@ export const gcdPseudocode = [
   '(r₀, s₀, t₀) = (a, 1, 0)',
   '(r₁, s₁, t₁) = (b, 0, 1)',
   'while r₁ ≠ 0:',
-  '  q = ⌊r₀ / r₁⌋   // cut q squares of side r₁',
+  '  q = ⌊r₀ / r₁⌋   // cắt q hình vuông cạnh r₁',
   '  (r₀, r₁) = (r₁, r₀ − q·r₁)',
   '  (s₀, s₁) = (s₁, s₀ − q·s₁)',
   '  (t₀, t₁) = (t₁, t₀ − q·t₁)',
   'g = r₀, x = s₀, y = t₀   // g = a·x + b·y',
-  'if g does not divide c: no integer solution',
+  'if c mod g ≠ 0: không có nghiệm nguyên',
   'x₀ = x·c/g, y₀ = y·c/g   // a·x₀ + b·y₀ = c',
-  'all solutions: (x₀ + k·b/g, y₀ − k·a/g)',
+  'mọi nghiệm: (x₀ + k·b/g, y₀ − k·a/g)',
 ];
 
 /**

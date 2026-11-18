@@ -17,7 +17,7 @@
     powTrace,
     powerDigits,
   } from '$lib/algo-engine/modular-exponentiation.js';
-  import { en as m } from '$lib/lessons/modular-exponentiation/copy.en.js';
+  import { vi as m } from '$lib/lessons/modular-exponentiation/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */

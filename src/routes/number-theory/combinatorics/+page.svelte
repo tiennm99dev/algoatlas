@@ -28,7 +28,7 @@
     pascalTrace,
     treeOfSequence,
   } from '$lib/algo-engine/combinatorics.js';
-  import { en as m } from '$lib/lessons/combinatorics/copy.en.js';
+  import { vi as m } from '$lib/lessons/combinatorics/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
   import { isPrime } from '$lib/algo-engine/number-theory.js';
 
@@ -640,7 +640,7 @@
           {@render stat(m.lucasStats.result, lf.result, 'result')}
           {@render stat(m.lucasStats.digits, lf.rows.length, 'digits')}
           {@render stat(m.lucasStats.table, lf.tableSize, 'table')}
-          {@render stat(m.lucasStats.pascal, lucasCells.toLocaleString('en-US'), 'pascal-cells')}
+          {@render stat(m.lucasStats.pascal, String(lucasCells), 'pascal-cells')}
         {:else}
           {@render stat(m.bracketStats.found, bf.found.length, 'found')}
           {@render stat(m.bracketStats.calls, bf.calls, 'calls')}

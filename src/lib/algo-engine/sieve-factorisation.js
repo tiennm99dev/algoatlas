@@ -9,15 +9,15 @@
 export const MAX_N = 200;
 
 export const sievePseudocode = [
-  'spf[v] = v for v = 2 to n   // every v looks prime at first',
+  'spf[v] = v for v = 2 to n   // lúc đầu mọi v đều như số nguyên tố',
   'for p = 2; p·p ≤ n; p = p + 1:',
-  '  if spf[p] == p:   // never crossed out, so p is prime',
-  '    for j = s; j ≤ n; j = j + p:   // s = p·p, or 2p to compare',
+  '  if spf[p] == p:   // chưa bị gạch, nên p là số nguyên tố',
+  '    for j = s; j ≤ n; j = j + p:   // s = p·p, hoặc 2p để so sánh',
   '      if spf[j] == j: spf[j] = p',
-  '      cross out j',
-  'primes = every v with spf[v] == v',
+  '      gạch j',
+  'primes = mọi v có spf[v] == v',
   'while x > 1:',
-  '  record spf[x]; x = x / spf[x]',
+  '  ghi lại spf[x]; x = x / spf[x]',
 ];
 
 /** @typedef {'square'|'double'} SieveStart */

@@ -15,7 +15,7 @@
     sievePseudocode,
     sieveTrace,
   } from '$lib/algo-engine/sieve-factorisation.js';
-  import { en as m } from '$lib/lessons/sieve-factorisation/copy.en.js';
+  import { vi as m } from '$lib/lessons/sieve-factorisation/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */

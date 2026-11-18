@@ -12,9 +12,9 @@ export const MIN_PRIME = 3;
 export const rsaPseudocode = [
   'n = p · q',
   'φ = (p − 1) · (q − 1)',
-  'choose e with 1 < e < φ and gcd(e, φ) = 1',
-  'd = e⁻¹ mod φ, by extended Euclid',
-  'publish (n, e); keep d secret',
+  'chọn e với 1 < e < φ và gcd(e, φ) = 1',
+  'd = e⁻¹ mod φ, bằng Euclid mở rộng',
+  'công bố (n, e); giữ bí mật d',
   'c = M^e mod n',
   'M′ = c^d mod n',
   'return M′',
@@ -23,7 +23,7 @@ export const rsaPseudocode = [
 export const attackPseudocode = [
   'try = 2',
   'while n mod try ≠ 0:',
-  '  try = next candidate',
+  '  try = ứng viên tiếp theo',
   'p = try, q = n / try',
   'φ = (p − 1) · (q − 1), d = e⁻¹ mod φ',
   'M = c^d mod n',

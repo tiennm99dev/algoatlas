@@ -21,15 +21,15 @@ export const euclidPseudocode = [
   '  q = ⌊r₀ / r₁⌋',
   '  (r₀, r₁) = (r₁, r₀ − q·r₁)',
   '  (t₀, t₁) = (t₁, t₀ − q·t₁)',
-  'if r₀ ≠ 1: no inverse',
+  'if r₀ ≠ 1: không có nghịch đảo',
   'return t₀ mod m',
 ];
 
 export const fermatPseudocode = [
-  'if a ≡ 0 (mod p): no inverse',
+  'if a ≡ 0 (mod p): không có nghịch đảo',
   'x = 1, y = a mod p, e = p − 2',
   'while e > 0:',
-  '  if e is odd: x = x · y mod p',
+  '  if e lẻ: x = x · y mod p',
   '  y = y · y mod p',
   '  e = ⌊e / 2⌋',
   'return x   // a · x ≡ 1 (mod p)',
@@ -37,11 +37,11 @@ export const fermatPseudocode = [
 
 export const crtPseudocode = [
   '(R, M) = (r₁ mod m₁, m₁)',
-  'for each next congruence x ≡ r (mod m):',
+  'for x ≡ r (mod m) in các đồng dư thức còn lại:',
   '  g = gcd(M, m)',
-  '  if g does not divide r − R: no solution',
-  '  u = inverse of M/g modulo m/g',
-  '  t = ((r − R)/g) · u mod (m/g)   // walk R + k·M up to k = t',
+  '  if (r − R) mod g ≠ 0: vô nghiệm',
+  '  u = nghịch đảo của M/g theo modulo m/g',
+  '  t = ((r − R)/g) · u mod (m/g)   // đi R + k·M đến k = t',
   '  (R, M) = (R + t·M, M · m/g)',
   'return x ≡ R (mod M)',
 ];

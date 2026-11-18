@@ -17,34 +17,34 @@ const MAX_TRY_FRAMES = 120;
 const SAFE_NUMBER_MOD = 94_906_265;
 const PROVING_BASES = [2, 3, 5, 7];
 
-const SHARED = ['if n < 4: return prime   // 2 and 3', 'if n is even: return composite'];
+const SHARED = ['if n < 4: return "nguyên tố"   // 2 và 3', 'if n chẵn: return "hợp số"'];
 
 export const trialPseudocode = [
   ...SHARED,
   'for d = 3; d·d ≤ n; d = d + 2:',
-  '  if d divides n: return composite',
-  'return prime',
+  '  if n mod d == 0: return "hợp số"',
+  'return "nguyên tố"',
 ];
 
 export const fermatPseudocode = [
   ...SHARED,
-  'for each base a from 2 to n − 2:',
+  'for a in các cơ số từ 2 đến n − 2:',
   '  x = a^(n − 1) mod n',
-  '  if x ≠ 1: a is a witness, return composite',
-  'return probably prime',
+  '  if x ≠ 1: a là nhân chứng, return "hợp số"',
+  'return "có lẽ nguyên tố"',
 ];
 
 export const millerPseudocode = [
   ...SHARED,
-  'write n − 1 = 2^s · d with d odd',
-  'for each base a from 2 to n − 2:',
+  'viết n − 1 = 2^s · d với d lẻ',
+  'for a in các cơ số từ 2 đến n − 2:',
   '  x = a^d mod n',
-  '  if x == 1 or x == n − 1: a passes, next base',
-  '  repeat s − 1 times:',
+  '  if x == 1 or x == n − 1: a qua, sang cơ số tiếp',
+  '  lặp s − 1 lần:',
   '    x = x · x mod n',
-  '    if x == n − 1: a passes, next base',
-  '  a is a witness, return composite',
-  'return probably prime',
+  '    if x == n − 1: a qua, sang cơ số tiếp',
+  '  a là nhân chứng, return "hợp số"',
+  'return "có lẽ nguyên tố"',
 ];
 
 /** @typedef {'trial'|'fermat'|'miller'} PrimalityMethod */

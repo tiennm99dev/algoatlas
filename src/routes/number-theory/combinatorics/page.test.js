@@ -9,7 +9,7 @@ import {
   MAX_PRIME,
   MAX_ROWS,
 } from '$lib/algo-engine/combinatorics.js';
-import { en as m } from '$lib/lessons/combinatorics/copy.en.js';
+import { vi as m } from '$lib/lessons/combinatorics/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -68,7 +68,7 @@ const pickMode = (value) =>
 describe('combinatorics lesson, Pascal view', () => {
   it('fills the triangle by adding the two cells above', () => {
     render();
-    expect(narration()).toContain('Build rows 0 to 6');
+    expect(narration()).toContain('Dựng các hàng 0 đến 6');
     click(button('Bước tiếp'));
     expect(narration()).toContain('C(0, 0) = 1');
     click(button('Bước tiếp'));
@@ -76,13 +76,13 @@ describe('combinatorics lesson, Pascal view', () => {
     click(button('Bước tiếp'));
     expect(narration()).toBe('C(2, 1) = C(1, 0) + C(1, 1) = 1 + 1 = 2.');
     expect(stat('additions')).toBe('1');
-    expect(titles()).toContain('C(2, 1) shows 2, being filled');
-    expect(titles()).toContain('C(1, 0) shows 1, read by this addition');
+    expect(titles()).toContain('C(2, 1) hiện 2, đang điền');
+    expect(titles()).toContain('C(1, 0) hiện 1, dùng cho phép cộng này');
     toLast();
     expect(stat('additions')).toBe('15');
     expect(stat('filled')).toBe('28');
-    expect(stat('row-sum')).toBe('Row 6: 2^6 = 64');
-    expect(titles()).toContain('C(6, 3) shows 20, divisible by p');
+    expect(stat('row-sum')).toBe('Hàng 6: 2^6 = 64');
+    expect(titles()).toContain('C(6, 3) hiện 20, chia hết cho p');
   });
 
   it('marks the multiples of the modulus and shows remainders on request', () => {
@@ -90,13 +90,13 @@ describe('combinatorics lesson, Pascal view', () => {
     toLast();
     expect(stat('multiples')).toBe('9');
     commit(field('modulus'), '3');
-    expect(titles()).toContain('C(6, 3) shows 20');
-    expect(titles()).toContain('C(6, 2) shows 15, divisible by p');
+    expect(titles()).toContain('C(6, 3) hiện 20');
+    expect(titles()).toContain('C(6, 2) hiện 15, chia hết cho p');
     click(
       /** @type {HTMLInputElement} */ (document.querySelector('input[name="view"][value="mod"]')),
     );
-    expect(titles()).toContain('C(6, 3) shows 2');
-    expect(titles()).toContain('C(6, 2) shows 0, divisible by p');
+    expect(titles()).toContain('C(6, 3) hiện 2');
+    expect(titles()).toContain('C(6, 2) hiện 0, chia hết cho p');
   });
 
   it('tells what a selected cell counts, with the pointer and the keyboard', () => {
@@ -108,7 +108,7 @@ describe('combinatorics lesson, Pascal view', () => {
     flushSync();
     expect(stat('selected')).toContain('C(6, 2) = 15');
     expect(stat('selected')).toContain('= 10 + 5');
-    expect(titles()).toContain('C(6, 4) shows 15, the mirror of the selected cell');
+    expect(titles()).toContain('C(6, 4) hiện 15, ô đối xứng với ô đang chọn');
     /** @type {SVGElement} */ (document.querySelector('[data-cell="6-0"]')).dispatchEvent(
       new MouseEvent('click', { bubbles: true }),
     );
@@ -130,19 +130,19 @@ describe('combinatorics lesson, Pascal view', () => {
     commit(field('pascal-preset'), 'sierpinski');
     expect(field('rows').value).toBe('15');
     toLast();
-    expect(stat('row-sum')).toBe('Row 15: 2^15 = 32,768');
+    expect(stat('row-sum')).toBe('Hàng 15: 2^15 = 32768');
   });
 });
 
 describe('combinatorics lesson, narration and mirror', () => {
-  it('uses the singular for one cell and one addition', () => {
+  it('narrates a single cell and a single addition', () => {
     render();
     commit(field('rows'), '0');
     toLast();
-    expect(narration()).toContain('Done: 1 cell with 0 additions');
+    expect(narration()).toContain('Xong: 1 ô với 0 phép cộng');
     commit(field('rows'), '2');
     toLast();
-    expect(narration()).toContain('Done: 6 cells with 1 addition,');
+    expect(narration()).toContain('Xong: 6 ô với 1 phép cộng,');
   });
 
   it('marks no mirror until both cells are filled', () => {
@@ -161,26 +161,26 @@ describe('combinatorics lesson, Lucas view', () => {
   it('walks C(1000, 300) mod 13 digit by digit', () => {
     render();
     pickMode('lucas');
-    expect(narration()).toContain('Since n < p');
+    expect(narration()).toContain('Vì n < p');
     commit(field('lucas-preset'), 'lucas');
     expect(field('n').value).toBe('1000');
-    expect(narration()).toContain('Here n ≥ p');
+    expect(narration()).toContain('Ở đây n ≥ p');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('nᵢ = 1,000 mod 13 = 12 and kᵢ = 300 mod 13 = 1');
+    expect(narration()).toContain('nᵢ = 1000 mod 13 = 12 và kᵢ = 300 mod 13 = 1');
     click(button('Bước tiếp'));
     expect(narration()).toContain('C(12, 1) ≡ 12');
     expect(stat('formula')).toContain('≡ 12');
     toLast();
     expect(stat('result')).toBe('10');
     expect(stat('digits')).toBe('3');
-    expect(stat('pascal-cells')).toBe('501,501');
+    expect(stat('pascal-cells')).toBe('501501');
   });
 
   it('counts the cells of a full triangle exactly past 2⁵³', () => {
     render();
     pickMode('lucas');
     commit(field('lucas-preset'), 'huge');
-    expect(stat('pascal-cells')).toBe('500,000,001,500,000,001');
+    expect(stat('pascal-cells')).toBe('500000001500000001');
   });
 
   it('says there are no digits for C(0, 0)', () => {
@@ -191,7 +191,7 @@ describe('combinatorics lesson, Lucas view', () => {
     expect(document.body.textContent).toContain(m.digitsNone);
     expect(document.body.textContent).not.toContain(m.digitsEmpty);
     toLast();
-    expect(narration()).toContain('with no digits to read');
+    expect(narration()).toContain('không có chữ số nào để đọc');
     expect(stat('result')).toBe('1');
   });
 
@@ -201,7 +201,7 @@ describe('combinatorics lesson, Lucas view', () => {
     commit(field('lucas-preset'), 'zero');
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
-    expect(narration()).toContain('kᵢ = 2 is more than nᵢ = 0');
+    expect(narration()).toContain('kᵢ = 2 lớn hơn nᵢ = 0');
     toLast();
     expect(stat('result')).toBe('0');
     expect(stat('formula')).toContain('≡ 0');
@@ -261,7 +261,7 @@ describe('combinatorics lesson, Catalan view', () => {
     render();
     pickMode('brackets');
     commit(field('pairs'), '0');
-    expect(narration()).toContain('empty sequence');
+    expect(narration()).toContain('dãy rỗng');
     toLast();
     expect(stat('found')).toBe('1');
     commit(field('pairs'), '6');

@@ -27,7 +27,7 @@
     subarraysTrace,
   } from '$lib/algo-engine/practice-number-theory.js';
   import { parseValueList } from '$lib/algo-engine/parse-values.js';
-  import { en as m } from '$lib/lessons/practice-number-theory/copy.en.js';
+  import { vi as m } from '$lib/lessons/practice-number-theory/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/practice-number-theory.js').Puzzle} Puzzle */
@@ -244,7 +244,7 @@
   <div class="rounded-xl border border-slate-200 bg-white p-3 {wide ? 'col-span-2' : ''}">
     <dt class="text-xs text-slate-500">{label}</dt>
     <dd class="text-xl font-bold break-all tabular-nums" data-testid={id}>
-      {typeof v === 'number' ? v.toLocaleString('en-US') : v}
+      {typeof v === 'number' ? String(v) : v}
     </dd>
   </div>
 {/snippet}
@@ -383,7 +383,7 @@
                   {#each shownRows as row, r (hidden + r)}
                     <tr class="border-t border-slate-100">
                       {#each row as cell, c (c)}
-                        <td class="px-2 py-1">{cell.toLocaleString('en-US')}</td>
+                        <td class="px-2 py-1">{String(cell)}</td>
                       {/each}
                     </tr>
                   {/each}
@@ -451,7 +451,7 @@
       {#if puzzle === 'divisors'}
         <ChipList
           title={m.divisorsTitle}
-          items={frame.divisors.map((d) => ({ label: d.toLocaleString('en-US') }))}
+          items={frame.divisors.map((d) => ({ label: String(d) }))}
           emptyText={m.divisorsEmpty}
           limit={100}
         />

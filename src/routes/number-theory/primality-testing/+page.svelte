@@ -20,7 +20,7 @@
     primalityTrace,
     trialPseudocode,
   } from '$lib/algo-engine/primality-testing.js';
-  import { en as m } from '$lib/lessons/primality-testing/copy.en.js';
+  import { vi as m } from '$lib/lessons/primality-testing/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */
