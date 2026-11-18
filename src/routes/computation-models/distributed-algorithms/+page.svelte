@@ -14,7 +14,7 @@
     floodPseudocode,
     randomUids,
   } from '$lib/algo-engine/distributed-algorithms.js';
-  import { en as m } from '$lib/lessons/distributed-algorithms/copy.en.js';
+  import { vi as m } from '$lib/lessons/distributed-algorithms/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/graph-editor.js').GraphNode} GraphNode */

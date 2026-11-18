@@ -40,14 +40,14 @@ export const MAX_UID = 99;
 
 /** @param {FloodVariant} variant */
 export const floodPseudocode = (variant) => [
-  'each node: max = own UID, parent = none',
-  'for round = 1 to D:   ▹ D = diameter, known to all',
+  'mỗi nút: max = UID của nó, parent = null',
+  'for round = 1 to D:   ▹ D = đường kính, mọi nút đều biết',
   variant === 'every'
-    ? '  send max to every neighbour'
-    : '  if round = 1 or max changed: send max to every neighbour',
-  '  m = largest value received this round',
-  '  if m > max: max = m, parent = a neighbour that sent m',
-  'leader = (max = own UID)',
+    ? '  send(max) tới mọi nút kề'
+    : '  if round = 1 or max vừa đổi: send(max) tới mọi nút kề',
+  '  m = giá trị lớn nhất nhận được ở vòng này',
+  '  if m > max: max = m, parent = một nút kề đã gửi m',
+  'leader = (max = UID của nó)',
 ];
 
 /**

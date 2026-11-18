@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/practice-computation-models/copy.en.js';
+import { vi as m } from '$lib/lessons/practice-computation-models/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -76,31 +76,31 @@ function answer(q, value) {
 describe('practice: choosing a model lesson', () => {
   it('costs every algorithm on the first card step by step', () => {
     render();
-    expect(text()).toContain('Sum a big array: Add up n numbers');
+    expect(text()).toContain('Tính tổng một mảng lớn: Cộng n số');
     expect(row('loop')).toContain(m.costPending);
     click(button('Bước tiếp'));
-    expect(text()).toContain('Right model: Parallel (work and span).');
+    expect(text()).toContain('Đúng mô hình: Song song (work và span).');
     click(button('Bước tiếp'));
-    expect(row('loop')).toContain('1,048,575 steps');
+    expect(row('loop')).toContain('1048575 bước');
     click(button('Đến bước cuối'));
-    expect(row('chunks')).toContain('131,074 steps');
+    expect(row('chunks')).toContain('131074 bước');
     expect(row('chunks')).toContain(m.bestMark);
-    expect(text()).toContain('Your algorithm is not the cheapest here.');
+    expect(text()).toContain('Thuật toán bạn chọn không phải rẻ nhất ở đây.');
   });
 
   it('records a right match and a wrong one', () => {
     render();
     commit(field('algorithm'), 'chunks');
     click(buttonByText(m.check));
-    expect(text()).toContain('Your match is right.');
+    expect(text()).toContain('Cách ghép của bạn đúng rồi.');
     expect(text()).toContain(m.score(1, 6));
-    expect(result('sum')).toContain('matched');
+    expect(result('sum')).toContain('đã ghép đúng');
     commit(field('card'), 'webCache');
     commit(field('model'), 'external');
     commit(field('algorithm'), 'lru');
     click(buttonByText(m.check));
-    expect(text()).toContain('Your algorithm is right, but recheck the model.');
-    expect(result('webCache')).toContain('not yet right');
+    expect(text()).toContain('Thuật toán bạn chọn đúng, nhưng hãy xem lại mô hình.');
+    expect(result('webCache')).toContain('chưa đúng');
     expect(text()).toContain(m.score(1, 6));
   });
 
@@ -110,10 +110,10 @@ describe('practice: choosing a model lesson', () => {
     commit(field('p'), '1');
     click(buttonByText(m.check));
     expect(row('serial')).toContain(m.bestMark);
-    expect(row('serial')).toContain('20,971,520 steps');
+    expect(row('serial')).toContain('20971520 bước');
     commit(field('p'), '16');
     click(button('Đến bước cuối'));
-    expect(row('parallelMerge')).toContain('1,318,720 steps');
+    expect(row('parallelMerge')).toContain('1318720 bước');
     expect(row('parallelMerge')).toContain(m.bestMark);
   });
 
@@ -123,8 +123,8 @@ describe('practice: choosing a model lesson', () => {
     commit(field('model'), 'external');
     commit(field('logB'), '8');
     click(buttonByText(m.check));
-    expect(row('rows')).toContain('16,842,752 block transfers');
-    expect(text()).toContain('(a tie)');
+    expect(row('rows')).toContain('16842752 lần chuyển khối');
+    expect(text()).toContain('(hoà nhau)');
   });
 
   it('checks answers in the practice block', () => {

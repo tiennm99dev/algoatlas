@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/nary-trees/copy.en.js';
+import { vi as m } from '$lib/lessons/nary-trees/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -53,7 +53,7 @@ const byTest = (id) => document.querySelector(`[data-testid="${id}"]`)?.textCont
 const node = (label) => {
   const el = [...document.querySelectorAll('g[role="button"]')].find((g) => {
     const name = g.getAttribute('aria-label') ?? '';
-    return name === `Node ${label}` || name.startsWith(`Node ${label},`);
+    return name === `Nút ${label}` || name.startsWith(`Nút ${label},`);
   });
   if (!el) throw new Error(`no node ${label}`);
   return el;
@@ -77,59 +77,55 @@ describe('n-ary trees and tree recursion lesson', () => {
   it('bubbles sizes up and finds the diameter', () => {
     render();
     expect(narration()).toBe(
-      'Call dfs on the root A. Each call returns its subtree’s size and height.',
+      'Gọi dfs trên gốc A. Mỗi lời gọi trả về kích thước và chiều cao của cây con.',
     );
     next(1);
-    expect(narration()).toBe(
-      'Enter A: size starts at 1 (the node itself). A has 3 children to ask.',
-    );
+    expect(narration()).toBe('Vào A: kích thước bắt đầu ở 1 (chính nút đó). A có 3 con cần hỏi.');
     next(2);
-    expect(narration()).toBe(
-      'Enter B: size starts at 1 (the node itself). B has 2 children to ask.',
-    );
+    expect(narration()).toBe('Vào B: kích thước bắt đầu ở 1 (chính nút đó). B có 2 con cần hỏi.');
     next(4);
     expect(narration()).toBe(
-      'C reports size 1 and height 0. B’s size grows to 2; its two tallest children are now a = 0, b = −1.',
+      'C báo về kích thước 1 và chiều cao 0. Kích thước của B tăng lên 2; hai con cao nhất của nó giờ là a = 0, b = −1.',
     );
     click(button('Đến bước cuối'));
     expect(narration()).toBe(
-      'Done: 10 nodes, height 3, diameter 5 edges: H – G – F – A – B – C, bending at A.',
+      'Xong: 10 nút, chiều cao 3, đường kính 5 cạnh: H – G – F – A – B – C, gấp khúc tại A.',
     );
     expect(byTest('size')).toBe('10');
     expect(byTest('diameter')).toBe('5');
     expect(node('F').getAttribute('aria-label')).toBe(
-      'Node F, subtree size 5, height 2, on the diameter path',
+      'Nút F, kích thước cây con 5, chiều cao 2, trên đường kính',
     );
   });
 
   it('finds a diameter that bends away from the root', () => {
     render();
     commit(presetSelect(), 'skewed');
-    expect(narration()).toContain('diameter 5 edges: E – D – C – B – F – G, bending at B.');
+    expect(narration()).toContain('đường kính 5 cạnh: E – D – C – B – F – G, gấp khúc tại B.');
   });
 
   it('adds a child under the selected node and updates the sizes', () => {
     render();
     click(node('E'));
-    expect(byTest('selected')).toBe('Selected: E');
-    click(buttonByText('Add child'));
-    expect(byTest('selected')).toBe('Selected: K');
+    expect(byTest('selected')).toBe('Đang chọn: E');
+    click(buttonByText('Thêm con'));
+    expect(byTest('selected')).toBe('Đang chọn: K');
     expect(byTest('size')).toBe('11');
     expect(byTest('lists')).toContain('E: K');
-    expect(node('E').getAttribute('aria-label')).toContain('subtree size 2, height 1');
+    expect(node('E').getAttribute('aria-label')).toContain('kích thước cây con 2, chiều cao 1');
   });
 
   it('refuses a node too deep, too many children and removing the root', () => {
     render();
     commit(presetSelect(), 'path');
     click(node('E'));
-    click(buttonByText('Add child'));
+    click(buttonByText('Thêm con'));
     expect(narration()).toBe(m.errors.depth(4));
     commit(presetSelect(), 'star');
     click(node('A'));
-    click(buttonByText('Add child'));
+    click(buttonByText('Thêm con'));
     expect(narration()).toBe(m.errors.wide('A', 6));
-    click(buttonByText('Remove subtree'));
+    click(buttonByText('Xoá cây con'));
     expect(narration()).toBe(m.errors.root);
     expect(byTest('size')).toBe('7');
   });
@@ -137,10 +133,10 @@ describe('n-ary trees and tree recursion lesson', () => {
   it('removes a subtree and undoes it', () => {
     render();
     click(node('F'));
-    click(buttonByText('Remove subtree'));
+    click(buttonByText('Xoá cây con'));
     expect(byTest('size')).toBe('5');
-    expect(byTest('selected')).toBe('Selected: A');
-    click(buttonByText('Undo'));
+    expect(byTest('selected')).toBe('Đang chọn: A');
+    click(buttonByText('Hoàn tác'));
     expect(byTest('size')).toBe('10');
   });
 
@@ -157,7 +153,7 @@ describe('n-ary trees and tree recursion lesson', () => {
       new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }),
     );
     flushSync();
-    expect(byTest('selected')).toBe('Selected: E');
+    expect(byTest('selected')).toBe('Đang chọn: E');
   });
 
   it('checks a practice answer, wrong then right, with a hint', () => {

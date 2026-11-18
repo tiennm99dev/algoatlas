@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/multithreaded-algorithms/copy.en.js';
+import { vi as m } from '$lib/lessons/multithreaded-algorithms/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -73,15 +73,17 @@ function answer(q, value) {
 describe('multithreaded algorithms lesson', () => {
   it('schedules P-FIB(5) on two processors', () => {
     render();
-    expect(dag()).toBe('Computation DAG with 22 strands: work 22, span 9.');
-    expect(text()).toContain('no schedule on 2 processors can take fewer than max(T₁/P, T∞) = 11');
+    expect(dag()).toBe('DAG tính toán gồm 22 mạch: work 22, span 9.');
+    expect(text()).toContain(
+      'không lịch nào trên 2 bộ xử lí có thể chạy ít hơn max(T₁/P, T∞) = 11',
+    );
     click(button('Bước tiếp'));
-    expect(text()).toContain('Step 1: P1 runs P-FIB(5) spawns.');
-    expect(text()).toContain('1 processor idles: nothing else is ready.');
+    expect(text()).toContain('Bước 1: P1 chạy P-FIB(5) spawn.');
+    expect(text()).toContain('1 bộ xử lí rảnh: không còn mạch nào sẵn sàng.');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Step 2: P1 runs P-FIB(4) spawns; P2 runs P-FIB(3) spawns.');
+    expect(text()).toContain('Bước 2: P1 chạy P-FIB(4) spawn; P2 chạy P-FIB(3) spawn.');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Done in T_P = 13 steps on 2 processors');
+    expect(text()).toContain('Xong sau T_P = 13 bước trên 2 bộ xử lí');
     expect(row(2)).toContain('13');
   });
 
@@ -89,23 +91,23 @@ describe('multithreaded algorithms lesson', () => {
     render();
     commit(input('processors'), '8');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Done in T_P = 9 steps on 8 processors');
+    expect(text()).toContain('Xong sau T_P = 9 bước trên 8 bộ xử lí');
     commit(input('processors'), '1');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Done in T_P = 22 steps on 1 processor,');
+    expect(text()).toContain('Xong sau T_P = 22 bước trên 1 bộ xử lí,');
   });
 
   it('switches to parallel merge sort and resizes it', () => {
     render();
     click(radio('program', 'mergesort'));
-    expect(dag()).toBe('Computation DAG with 22 strands: work 39, span 18.');
+    expect(dag()).toBe('DAG tính toán gồm 22 mạch: work 39, span 18.');
     commit(input('size'), '16');
-    expect(dag()).toBe('Computation DAG with 46 strands: work 95, span 35.');
+    expect(dag()).toBe('DAG tính toán gồm 46 mạch: work 95, span 35.');
     commit(input('processors'), '4');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Done in T_P = 45 steps on 4 processors');
+    expect(text()).toContain('Xong sau T_P = 45 bước trên 4 bộ xử lí');
     click(button('Bước trước'));
-    expect(text()).toContain('P1 runs merge 0–15');
+    expect(text()).toContain('P1 chạy trộn 0–15');
   });
 
   it('marks the critical path and can hide it', () => {

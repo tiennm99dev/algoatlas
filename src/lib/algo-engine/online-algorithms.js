@@ -53,20 +53,20 @@ export const MAX_K = 5;
 export const POLICIES = /** @type {Policy[]} */ (['lru', 'fifo', 'opt']);
 
 export const skiPseudocode = [
-  'for each day t, until the season ends (unknown in advance):',
-  '  if you own skis: ski for free',
-  '  else if t = k: buy skis, pay b',
-  '  else: rent, pay 1',
-  'ratio = your cost / min(days, b)   ▹ OPT knew the season length',
+  'for t = 1, 2, … tới khi mùa kết thúc (không biết trước):',
+  '  if đã có ván: trượt miễn phí',
+  '  else if t = k: mua ván, trả b',
+  '  else: thuê, trả 1',
+  'ratio = chi phí của bạn / min(số ngày, b)   ▹ OPT biết trước độ dài mùa',
 ];
 
 export const pagingPseudocode = [
-  'for each request p:',
-  '  if p is in the cache: hit',
-  '  else: fault',
-  '    if the cache is full: evict a page',
-  '      LRU: least recently used · FIFO: loaded earliest · OPT: needed furthest ahead',
-  '    load p into the free slot',
+  'for p in requests:',
+  '  if p in cache: trúng',
+  '  else: lỗi trang',
+  '    if cache đầy: đẩy một trang ra',
+  '      LRU: lâu chưa dùng nhất · FIFO: nạp sớm nhất · OPT: lâu nữa mới cần',
+  '    nạp p vào ô trống',
 ];
 
 /**

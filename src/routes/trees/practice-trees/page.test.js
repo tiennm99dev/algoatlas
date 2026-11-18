@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/practice-trees/copy.en.js';
+import { vi as m } from '$lib/lessons/practice-trees/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -52,7 +52,7 @@ const presetSelect = () =>
 const node = (key) => {
   const el = [...document.querySelectorAll('g[role="button"]')].find((g) => {
     const name = g.getAttribute('aria-label') ?? '';
-    return name === `Key ${key}` || name.startsWith(`Key ${key},`);
+    return name === `Khoá ${key}` || name.startsWith(`Khoá ${key},`);
   });
   if (!el) throw new Error(`no node ${key}`);
   return /** @type {SVGGElement} */ (el);
@@ -74,17 +74,17 @@ describe('practice: tree problems lesson', () => {
   it('validates a BST with narrowing key ranges', () => {
     render();
     expect(narration()).toBe(
-      'Check the root with the widest range, (−∞, +∞). Each step down narrows the range.',
+      'Kiểm tra gốc với khoảng rộng nhất, (−∞, +∞). Mỗi lần đi xuống, khoảng lại hẹp đi.',
     );
     next(1);
-    expect(narration()).toBe('−∞ < 50 < +∞: 50 is inside its range.');
+    expect(narration()).toBe('−∞ < 50 < +∞: 50 nằm trong khoảng của nó.');
     next(1);
     expect(narration()).toBe(
-      'Go left: keys there must be smaller than 50, so the range becomes (−∞, 50).',
+      'Sang trái: các khoá ở đó phải nhỏ hơn 50, nên khoảng thành (−∞, 50).',
     );
     click(button('Đến bước cuối'));
-    expect(narration()).toBe('Every key lies inside its range: this is a valid BST.');
-    expect(byTest('result')).toBe('valid');
+    expect(narration()).toBe('Mọi khoá đều nằm trong khoảng của nó: đây là một BST hợp lệ.');
+    expect(byTest('result')).toBe('hợp lệ');
     expect(byTest('comparisons')).toBe('14');
   });
 
@@ -92,15 +92,15 @@ describe('practice: tree problems lesson', () => {
     render();
     commit(presetSelect(), 'trap');
     click(button('Đến bước cuối'));
-    expect(byTest('result')).toBe('not a BST');
+    expect(byTest('result')).toBe('không phải BST');
     click(button('Bước trước'));
     expect(narration()).toBe(
-      '60 breaks the BST property: an ancestor needs every key here to be in (30, 50). Return false.',
+      '60 phá vỡ tính chất BST: một tổ tiên đòi mọi khoá ở đây phải nằm trong (30, 50). Trả về false.',
     );
-    expect(byTest('inorder-verdict')).toBe('Not increasing: not a BST.');
+    expect(byTest('inorder-verdict')).toBe('Không tăng ngặt: không phải BST.');
     click(field('input[name="method"][value="local"]'));
     click(button('Đến bước cuối'));
-    expect(byTest('result')).toBe('valid');
+    expect(byTest('result')).toBe('hợp lệ');
   });
 
   it('finds the lowest common ancestor of two clicked keys', () => {
@@ -108,11 +108,11 @@ describe('practice: tree problems lesson', () => {
     click(field('input[name="problem"][value="lca"]'));
     expect(byTest('picks')).toBe('p = 20, q = 40');
     click(button('Đến bước cuối'));
-    expect(narration()).toBe('Done in 2 steps: LCA(20, 40) = 30.');
+    expect(narration()).toBe('Xong sau 2 bước: LCA(20, 40) = 30.');
     click(node(60));
     expect(byTest('picks')).toBe('p = 40, q = 60');
     click(button('Đến bước cuối'));
-    expect(narration()).toBe('Done in 1 step: LCA(40, 60) = 50.');
+    expect(narration()).toBe('Xong sau 1 bước: LCA(40, 60) = 50.');
     expect(byTest('answer')).toBe('50');
   });
 
@@ -139,7 +139,7 @@ describe('practice: tree problems lesson', () => {
     expect(byTest('picks')).toBe('p = 20, q = 60');
     click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('50');
-    expect(byTest('not-bst')).toContain('Lowest common ancestor by parent links: 30.');
+    expect(byTest('not-bst')).toContain('Tổ tiên chung gần nhất theo liên kết cha: 30.');
   });
 
   it('refuses bad keys and keeps the last valid tree', () => {
@@ -149,7 +149,7 @@ describe('practice: tree problems lesson', () => {
     expect(field('input[name="keys"]').value).toBe('50, 30, 70, 20, 40, 60, 80');
     commit(field('input[name="keys"]'), '8 3 9');
     click(button('Đến bước cuối'));
-    expect(byTest('result')).toBe('valid');
+    expect(byTest('result')).toBe('hợp lệ');
   });
 
   it('checks a practice answer, wrong then right, with a hint', () => {

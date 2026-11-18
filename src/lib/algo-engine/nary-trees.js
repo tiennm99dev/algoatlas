@@ -12,10 +12,10 @@ export const MAX_CHILDREN = 6;
 
 export const naryPseudocode = [
   'dfs(v):',
-  '  size = 1; a = b = −1   (two tallest child heights)',
-  '  for each child c in v.children:',
+  '  size = 1; a = b = −1   // hai chiều cao con lớn nhất',
+  '  for c in v.children:',
   '    dfs(c)',
-  '    size += size(c); keep the two tallest heights in a ≥ b',
+  '    size += size(c); giữ hai chiều cao lớn nhất trong a ≥ b',
   '  height(v) = a + 1',
   '  diameter = max(diameter, a + b + 2)',
 ];

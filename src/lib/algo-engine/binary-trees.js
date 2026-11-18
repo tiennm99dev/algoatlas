@@ -22,12 +22,12 @@ export const SLOTS = 2 ** (MAX_DEPTH + 1) - 1;
 export const binaryTreePseudocode = [
   'measure(node, d):',
   '  node.depth = d',
-  '  if node is a leaf: node.height = 0',
+  '  if node là lá: node.height = 0',
   '  else:',
-  '    measure each child with depth d + 1',
-  '    node.height = 1 + max(child heights)',
-  'full: no node has exactly one child',
-  'complete: slots 0 … n − 1 are all filled',
+  '    for child in children(node): measure(child, d + 1)',
+  '    node.height = 1 + max(chiều cao các con)',
+  'đủ: không nút nào có đúng một con',
+  'đầy đủ: các ô 0 … n − 1 đều có nút',
 ];
 
 /** @typedef {(string | null)[]} Slots  Length SLOTS; null is an empty slot. */

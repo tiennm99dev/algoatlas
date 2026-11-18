@@ -22,7 +22,7 @@
     validatePseudocode,
     validateTrace,
   } from '$lib/algo-engine/practice-trees.js';
-  import { en as m } from '$lib/lessons/practice-trees/copy.en.js';
+  import { vi as m } from '$lib/lessons/practice-trees/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/practice-trees.js').KeySlots} KeySlots */

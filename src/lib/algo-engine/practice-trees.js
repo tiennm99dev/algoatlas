@@ -19,14 +19,14 @@ export const VALIDATE_METHODS = /** @type {const} */ (['range', 'local']);
 export const validatePseudocode = {
   range: [
     'check(node, lo, hi):',
-    '  if node is empty: return true',
+    '  if node rỗng: return true',
     '  if not (lo < node.key < hi): return false',
     '  return check(node.left, lo, node.key)',
     '     and check(node.right, node.key, hi)',
   ],
   local: [
     'check(node):',
-    '  if node is empty: return true',
+    '  if node rỗng: return true',
     '  if left.key ≥ node.key or right.key ≤ node.key: return false',
     '  return check(node.left) and check(node.right)',
   ],
@@ -34,10 +34,10 @@ export const validatePseudocode = {
 
 export const lcaPseudocode = [
   'node = root',
-  'while node is not empty:',
+  'while node khác rỗng:',
   '  if p < node.key and q < node.key: node = node.left',
   '  else if p > node.key and q > node.key: node = node.right',
-  '  else: return node   (p and q split here, or node is one of them)',
+  '  else: return node   // p, q tách ở đây, hoặc node là một trong hai',
 ];
 
 /** @typedef {(number | null)[]} KeySlots  null is an empty slot. */

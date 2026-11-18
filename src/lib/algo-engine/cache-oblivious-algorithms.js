@@ -50,13 +50,13 @@ export const rowsPseudocode = [
 ];
 
 export const recursivePseudocode = [
-  'TRANSPOSE(sub-matrix of A):',
-  '  if it is one cell (i, j):',
+  'TRANSPOSE(ma trận con của A):',
+  '  if chỉ còn một ô (i, j):',
   '    B[j][i] = A[i][j]',
-  '  else if rows ≥ columns:',
-  '    TRANSPOSE(top half); TRANSPOSE(bottom half)',
+  '  else if số hàng ≥ số cột:',
+  '    TRANSPOSE(nửa trên); TRANSPOSE(nửa dưới)',
   '  else:',
-  '    TRANSPOSE(left half); TRANSPOSE(right half)',
+  '    TRANSPOSE(nửa trái); TRANSPOSE(nửa phải)',
 ];
 
 /** @param {Traversal} order */

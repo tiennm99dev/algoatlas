@@ -82,7 +82,7 @@ export const mergeSortPseudocode = [
   '  spawn P-MERGE-SORT(A, p, q)',
   '  P-MERGE-SORT(A, q + 1, r)',
   '  sync',
-  '  MERGE(A, p, q, r)   ▹ serial: r − p + 1 steps',
+  '  MERGE(A, p, q, r)   ▹ tuần tự: r − p + 1 bước',
 ];
 
 /** @param {Program} program */

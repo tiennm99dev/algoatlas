@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/tree-traversals/copy.en.js';
+import { vi as m } from '$lib/lessons/tree-traversals/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -52,7 +52,7 @@ const pick = (order) => click(field(`input[name="order"][value="${order}"]`));
 const nodeTitle = (label) =>
   [...document.querySelectorAll('svg title')]
     .map((t) => t.textContent ?? '')
-    .find((t) => t.startsWith(`Node ${label},`)) ?? '';
+    .find((t) => t.startsWith(`Nút ${label},`)) ?? '';
 
 function practice() {
   const section = [...document.querySelectorAll('section')].find(
@@ -65,15 +65,17 @@ function practice() {
 describe('tree traversals lesson', () => {
   it('runs preorder with an explicit stack and numbers the nodes', () => {
     render();
-    expect(narration()).toBe('Preorder: push “expand A”, the whole tree, on the stack.');
+    expect(narration()).toBe('Duyệt trước: đẩy “expand A”, tức cả cây, vào ngăn xếp.');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Pop “expand A”.');
+    expect(narration()).toContain('Lấy “expand A” ra.');
     click(button('Bước tiếp'));
-    expect(narration()).toBe('Pop “visit A” and output it: visit number 1.');
-    expect(nodeTitle('A')).toBe('Node A, visited 1st, acted on now');
+    expect(narration()).toBe('Lấy “visit A” ra và xuất nó: lượt thăm thứ 1.');
+    expect(nodeTitle('A')).toBe('Nút A, thăm thứ 1, đang xét');
     click(button('Đến bước cuối'));
-    expect(narration()).toBe('Done: preorder is A B D E C F. Every node was visited once.');
-    expect(byTest('visited')).toBe('6 of 6');
+    expect(narration()).toBe(
+      'Xong: thứ tự duyệt trước là A B D E C F. Mỗi nút được thăm đúng một lần.',
+    );
+    expect(byTest('visited')).toBe('6/6');
     expect(byTest('pushes')).toBe('12');
     expect(byTest('all-orders')).toContain('D B E A C F');
   });
@@ -81,12 +83,12 @@ describe('tree traversals lesson', () => {
   it('switches to level order with a queue', () => {
     render();
     pick('level');
-    expect(narration()).toBe('Level order: put the root A in the queue.');
-    expect(document.body.textContent).toContain('Queue (front → back)');
+    expect(narration()).toBe('Duyệt theo tầng: đưa gốc A vào hàng đợi.');
+    expect(document.body.textContent).toContain('Hàng đợi (đầu hàng → cuối hàng)');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('level order is A B C D E F');
+    expect(narration()).toContain('duyệt theo tầng là A B C D E F');
     expect(byTest('pushes')).toBe('6');
-    expect(nodeTitle('F')).toBe('Node F, visited 6th');
+    expect(nodeTitle('F')).toBe('Nút F, thăm thứ 6');
   });
 
   it('reads the expression preset in postorder', () => {
@@ -97,7 +99,7 @@ describe('tree traversals lesson', () => {
     );
     pick('post');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('postorder is a b + c d − ×');
+    expect(narration()).toContain('duyệt sau là a b + c d − ×');
   });
 
   it('accepts an edited tree and refuses an orphan, keeping the last valid one', () => {
@@ -108,7 +110,7 @@ describe('tree traversals lesson', () => {
     commit(field('input[name="tree"]'), 'R L');
     pick('in');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('inorder is L R');
+    expect(narration()).toContain('duyệt giữa là L R');
     expect(field('input[name="tree"]').value).toBe('R, L');
   });
 

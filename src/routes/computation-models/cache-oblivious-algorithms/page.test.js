@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/cache-oblivious-algorithms/copy.en.js';
+import { vi as m } from '$lib/lessons/cache-oblivious-algorithms/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -77,16 +77,18 @@ describe('cache-oblivious algorithms lesson', () => {
   it('transposes row by row and counts the block transfers', () => {
     render();
     expect(cells('A')).toHaveLength(64);
-    expect(text()).toContain('Each matrix is 16 blocks of 4 words, and the cache holds 4 blocks.');
+    expect(text()).toContain(
+      'Mỗi ma trận gồm 16 khối, mỗi khối 4 từ nhớ, còn cache chứa được 4 khối.',
+    );
     click(button('Bước tiếp'));
-    expect(text()).toContain('B[0][0] = A[0][0]: the read misses, so its block is fetched');
-    expect(cells('A')[0].textContent).toBe('A[0][0], block A0, accessed now, a miss');
+    expect(text()).toContain('B[0][0] = A[0][0]: phép đọc trượt cache, nên phải nạp khối của nó');
+    expect(cells('A')[0].textContent).toBe('A[0][0], khối A0, đang truy cập, trượt cache');
     click(button('Bước tiếp'));
-    expect(text()).toContain('B[1][0] = A[0][1]: the read hits; the write misses');
+    expect(text()).toContain('B[1][0] = A[0][1]: phép đọc trúng cache; phép ghi trượt cache');
     click(button('Đến bước cuối'));
     expect(stat(m.stats.transfers)).toBe('80');
     expect(stat(m.stats.split)).toBe('16 / 64');
-    expect(text()).toContain('2.50 times the ideal 32');
+    expect(text()).toContain('gấp 2,50 lần mức lí tưởng 32');
   });
 
   it('reaches the ideal with the recursive order and a Z-order layout', () => {
@@ -101,7 +103,7 @@ describe('cache-oblivious algorithms lesson', () => {
     click(radio('layout', 'z'));
     click(button('Đến bước cuối'));
     expect(stat(m.stats.transfers)).toBe('32');
-    expect(text()).toContain('the ideal: every block was fetched exactly once.');
+    expect(text()).toContain('đúng mức lí tưởng: mỗi khối được nạp đúng một lần.');
   });
 
   it('resizes the matrices and blocks', () => {
@@ -110,7 +112,7 @@ describe('cache-oblivious algorithms lesson', () => {
     expect(cells('B')).toHaveLength(256);
     click(radio('block', '8'));
     expect(stat(m.stats.ideal)).toBe('64');
-    expect(text()).toContain('Each matrix is 32 blocks of 8 words');
+    expect(text()).toContain('Mỗi ma trận gồm 32 khối, mỗi khối 8 từ nhớ');
   });
 
   it('checks answers in the practice block', () => {

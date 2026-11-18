@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/distributed-algorithms/copy.en.js';
+import { vi as m } from '$lib/lessons/distributed-algorithms/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -70,22 +70,20 @@ function answer(q, value) {
 describe('distributed algorithms lesson', () => {
   it('elects the largest ID on the ring, round by round', () => {
     render();
-    expect(text()).toContain('The diameter is D = 3, so every node runs 3 rounds.');
+    expect(text()).toContain('Đường kính là D = 3, nên mọi nút chạy 3 vòng.');
     click(button('Bước tiếp'));
     expect(text()).toContain(
-      'Round 1: 6 nodes send their largest ID to every neighbour: 12 messages.',
+      'Vòng 1: 6 nút gửi ID lớn nhất của mình tới mọi nút kề: 12 thông điệp.',
     );
     expect(text()).toContain('A → B: 3');
     click(button('Bước tiếp'));
-    expect(text()).toContain(
-      'Round 1: A learns 7 from B, C learns 9 from D and E learns 9 from D.',
-    );
+    expect(text()).toContain('Vòng 1: A biết 7 từ B, C biết 9 từ D và E biết 9 từ D.');
     click(button('Bước tiếp'));
     expect(text()).toContain(
-      'Round 2: only the 3 nodes whose maximum changed last round send: 6 messages.',
+      'Vòng 2: chỉ 3 nút có giá trị lớn nhất vừa đổi ở vòng trước mới gửi: 6 thông điệp.',
     );
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Done: D leads after 22 messages in 3 rounds.');
+    expect(text()).toContain('Xong: D làm thủ lĩnh sau 22 thông điệp trong 3 vòng.');
     expect(stat(m.stats.sent)).toBe('22');
     expect(stat(m.stats.leaders)).toBe('1');
   });
@@ -108,9 +106,7 @@ describe('distributed algorithms lesson', () => {
     click(radio('ids', 'equal'));
     click(button('Đến bước cuối'));
     click(button('Bước trước'));
-    expect(text()).toContain(
-      'All 6 nodes have seen only the ID 1, so every one declares itself leader.',
-    );
+    expect(text()).toContain('Cả 6 nút đều chỉ thấy ID 1, nên nút nào cũng tự nhận là thủ lĩnh.');
     click(buttonByText(m.shuffle));
     expect(radio('ids', 'unique').checked).toBe(true);
     click(button('Đến bước cuối'));
@@ -122,7 +118,7 @@ describe('distributed algorithms lesson', () => {
     click(buttonByText('Thêm đỉnh'));
     click(button('Đến bước cuối'));
     expect(stat(m.stats.leaders)).toBe('2');
-    expect(text()).toContain('2 leaders, so the election failed.');
+    expect(text()).toContain('có 2 thủ lĩnh, nên cuộc bầu thất bại.');
   });
 
   it('checks answers in the practice block', () => {

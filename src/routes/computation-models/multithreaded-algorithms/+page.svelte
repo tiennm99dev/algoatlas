@@ -16,7 +16,7 @@
     scheduleTime,
     scheduleTrace,
   } from '$lib/algo-engine/multithreaded-algorithms.js';
-  import { en as m } from '$lib/lessons/multithreaded-algorithms/copy.en.js';
+  import { vi as m } from '$lib/lessons/multithreaded-algorithms/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/multithreaded-algorithms.js').Program} Program */

@@ -9,13 +9,13 @@ export const MAX_OPS = 40;
 
 export const bstPseudocode = [
   'search / insert: node = root',
-  '  while node exists:',
-  '    if key == node.key: found (insert: duplicate, stop)',
+  '  while node != null:',
+  '    if key == node.key: tìm thấy (insert: trùng khoá, dừng)',
   '    node = key < node.key ? node.left : node.right',
-  '  insert: attach a new leaf where the walk fell off; search: not found',
-  'delete: find the node, then:',
-  '  0 or 1 child: replace the node by its child (or nothing)',
-  '  2 children: copy the smallest key of the right subtree here, delete that node',
+  '  insert: gắn lá mới nơi đường đi rơi ra; search: không tìm thấy',
+  'delete: tìm nút, rồi:',
+  '  0 hoặc 1 con: thay nút bằng con của nó (hoặc null)',
+  '  2 con: chép khoá nhỏ nhất của cây con phải vào đây, xoá nút đó',
 ];
 
 /**

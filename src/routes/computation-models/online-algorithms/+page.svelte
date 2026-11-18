@@ -22,7 +22,7 @@
     skiPseudocode,
     skiTrace,
   } from '$lib/algo-engine/online-algorithms.js';
-  import { en as m } from '$lib/lessons/online-algorithms/copy.en.js';
+  import { vi as m } from '$lib/lessons/online-algorithms/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {'ski'|'paging'} Mode */

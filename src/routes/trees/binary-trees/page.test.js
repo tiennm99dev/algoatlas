@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/binary-trees/copy.en.js';
+import { vi as m } from '$lib/lessons/binary-trees/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -75,46 +75,44 @@ function practice() {
 describe('binary trees and terminology lesson', () => {
   it('measures depth on the way down and height on the way up', () => {
     render();
-    expect(narration()).toBe('Call measure on the root A with depth 0.');
+    expect(narration()).toBe('Gọi measure trên gốc A với độ sâu 0.');
     next(1);
-    expect(narration()).toBe('A is the root, so its depth is 0.');
+    expect(narration()).toBe('A là gốc, nên độ sâu của nó là 0.');
     next(2);
-    expect(narration()).toBe('B is one edge below its parent, so its depth is 1.');
+    expect(narration()).toBe('B nằm dưới cha một cạnh, nên độ sâu của nó là 1.');
     next(3);
-    expect(narration()).toBe('D has no children: it is a leaf, with height 0.');
+    expect(narration()).toBe('D không có con: nó là lá, chiều cao 0.');
     expect(byTest('height')).toBe('?');
     click(button('Đến bước cuối'));
     expect(narration()).toBe(
-      'Done: height 2, 3 leaves. A perfect tree of this height would have 7 nodes.',
+      'Xong: chiều cao 2, 3 lá. Một cây hoàn hảo cùng chiều cao sẽ có 7 nút.',
     );
     expect(byTest('height')).toBe('2');
-    expect(byTest('prop-full')).toBe('no');
-    expect(byTest('prop-complete')).toBe('yes');
-    expect(node('Node A').getAttribute('aria-label')).toBe('Node A, depth 0, height 2, measured');
+    expect(byTest('prop-full')).toBe('không');
+    expect(byTest('prop-complete')).toBe('có');
+    expect(node('Nút A').getAttribute('aria-label')).toBe('Nút A, độ sâu 0, chiều cao 2, đã đo');
   });
 
   it('adds a child to the selected node and labels it at once', () => {
     render();
-    click(node('Node C'));
-    expect(byTest('selected')).toBe('Selected: C');
-    expect(byTest('slot-math')).toBe(
-      'Slot 2: parent ⌊(i − 1) / 2⌋ = 0, children 2i + 1 = 5 and 2i + 2 = 6.',
-    );
-    click(buttonByText('Add right child'));
+    click(node('Nút C'));
+    expect(byTest('selected')).toBe('Đang chọn: C');
+    expect(byTest('slot-math')).toBe('Ô 2: cha ⌊(i − 1) / 2⌋ = 0, con 2i + 1 = 5 và 2i + 2 = 6.');
+    click(buttonByText('Thêm con phải'));
     expect(byTest('size')).toBe('7');
-    expect(byTest('prop-full')).toBe('yes');
-    expect(byTest('prop-perfect')).toBe('yes');
-    expect(node('Node G').getAttribute('aria-label')).toContain('depth 2, height 0');
+    expect(byTest('prop-full')).toBe('có');
+    expect(byTest('prop-perfect')).toBe('có');
+    expect(node('Nút G').getAttribute('aria-label')).toContain('độ sâu 2, chiều cao 0');
   });
 
   it('refuses a taken child and a child that would be too deep', () => {
     render();
-    click(node('Node A'));
-    click(buttonByText('Add left child'));
-    expect(narration()).toBe('A already has a left child.');
+    click(node('Nút A'));
+    click(buttonByText('Thêm con trái'));
+    expect(narration()).toBe('A đã có con trái rồi.');
     commit(presetSelect(), 'chain');
-    click(node('Node D'));
-    click(buttonByText('Add left child'));
+    click(node('Nút D'));
+    click(buttonByText('Thêm con trái'));
     expect(narration()).toBe(m.errors.depth(3));
     expect(byTest('size')).toBe('4');
   });
@@ -123,32 +121,32 @@ describe('binary trees and terminology lesson', () => {
     render();
     commit(presetSelect(), 'chain');
     expect(byTest('array')).toBe('15');
-    expect(byTest('prop-complete')).toBe('no');
-    const frames = document.querySelectorAll('[aria-label^="Slot "]');
+    expect(byTest('prop-complete')).toBe('không');
+    const frames = document.querySelectorAll('[aria-label^="Ô "]');
     expect(frames.length).toBe(15);
   });
 
   it('removes a subtree, undoes it, and empties the tree', () => {
     render();
-    click(node('Node B'));
-    click(buttonByText('Remove subtree'));
+    click(node('Nút B'));
+    click(buttonByText('Xoá cây con'));
     expect(byTest('size')).toBe('3');
-    expect(byTest('selected')).toBe('Selected: A');
-    click(buttonByText('Undo'));
+    expect(byTest('selected')).toBe('Đang chọn: A');
+    click(buttonByText('Hoàn tác'));
     expect(byTest('size')).toBe('6');
-    click(node('Node A'));
-    click(buttonByText('Remove subtree'));
+    click(node('Nút A'));
+    click(buttonByText('Xoá cây con'));
     expect(byTest('size')).toBe('0');
-    click(buttonByText('Add root'));
+    click(buttonByText('Thêm gốc'));
     expect(byTest('size')).toBe('1');
-    expect(narration()).toContain('Perfect');
+    expect(narration()).toContain('Cây hoàn hảo');
   });
 
   it('selects a node from the array row and with the keyboard', () => {
     render();
-    click(/** @type {Element} */ (document.querySelector('[aria-label="Slot 4: E"]')));
-    expect(byTest('selected')).toBe('Selected: E');
-    const a = node('Node A');
+    click(/** @type {Element} */ (document.querySelector('[aria-label="Ô 4: E"]')));
+    expect(byTest('selected')).toBe('Đang chọn: E');
+    const a = node('Nút A');
     a.focus();
     a.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
     flushSync();
@@ -156,7 +154,7 @@ describe('binary trees and terminology lesson', () => {
       new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }),
     );
     flushSync();
-    expect(byTest('selected')).toBe('Selected: B');
+    expect(byTest('selected')).toBe('Đang chọn: B');
   });
 
   it('checks a practice answer, wrong then right, with a hint', () => {

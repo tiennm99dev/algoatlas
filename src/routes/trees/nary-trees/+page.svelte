@@ -18,7 +18,7 @@
     naryTrace,
     removeSubtree,
   } from '$lib/algo-engine/nary-trees.js';
-  import { en as m } from '$lib/lessons/nary-trees/copy.en.js';
+  import { vi as m } from '$lib/lessons/nary-trees/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/nary-trees.js').NaryTree} NaryTree */

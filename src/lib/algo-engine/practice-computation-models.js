@@ -36,10 +36,10 @@
 export const MODELS = /** @type {Model[]} */ (['parallel', 'distributed', 'external', 'online']);
 
 export const matchPseudocode = [
-  'read the job and its numbers',
-  'pick the model: what does the job pay for?',
-  'cost each algorithm in that model',
-  'choose the cheapest (ties are all fine)',
+  'đọc bài toán và các con số của nó',
+  'chọn mô hình: bài toán phải trả giá cho điều gì?',
+  'tính chi phí từng thuật toán trong mô hình đó',
+  'chọn thuật toán rẻ nhất (hoà nhau thì đều được)',
 ];
 
 const log2 = (/** @type {number} */ x) => Math.ceil(Math.log2(x));

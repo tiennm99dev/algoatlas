@@ -18,7 +18,7 @@
     traversalPseudocode,
     traversalTrace,
   } from '$lib/algo-engine/tree-traversals.js';
-  import { en as m } from '$lib/lessons/tree-traversals/copy.en.js';
+  import { vi as m } from '$lib/lessons/tree-traversals/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/tree-traversals.js').Slots} Slots */

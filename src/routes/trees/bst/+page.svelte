@@ -13,7 +13,7 @@
     layoutTree,
     makeOps,
   } from '$lib/algo-engine/bst.js';
-  import { en as m } from '$lib/lessons/bst/copy.en.js';
+  import { vi as m } from '$lib/lessons/bst/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/bst.js').BstOp} BstOp */

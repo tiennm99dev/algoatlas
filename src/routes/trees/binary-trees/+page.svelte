@@ -18,7 +18,7 @@
     removeSubtree,
   } from '$lib/algo-engine/binary-trees.js';
   import { filled, leftOf, parentOf, rightOf } from '$lib/components/slot-tree.js';
-  import { en as m } from '$lib/lessons/binary-trees/copy.en.js';
+  import { vi as m } from '$lib/lessons/binary-trees/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/binary-trees.js').Slots} Slots */

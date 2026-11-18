@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
-import { en } from '$lib/lessons/bst/copy.en.js';
+import { vi as m } from '$lib/lessons/bst/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -59,34 +59,34 @@ describe('binary search tree lesson', () => {
   it('ends the balanced preset at 7 keys and height 3', () => {
     render(Page);
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Tree has 7 keys, height 3.');
+    expect(text()).toContain('Cây có 7 khoá, chiều cao 3.');
   });
 
   it('inserts a key and walks from the root', () => {
     render(Page);
     commit(keyInput(), '45');
-    click(buttonByText('Insert'));
-    expect(text()).toContain('Compare 45 with 50.');
+    click(buttonByText('Chèn'));
+    expect(text()).toContain('So sánh 45 với 50.');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Tree has 8 keys, height 4.');
+    expect(text()).toContain('Cây có 8 khoá, chiều cao 4.');
   });
 
   it('ignores a duplicate insert', () => {
     render(Page);
     commit(keyInput(), '30');
-    click(buttonByText('Insert'));
+    click(buttonByText('Chèn'));
     for (let i = 0; i < 3; i++) click(button('Bước tiếp'));
-    expect(text()).toContain('30 is already in the tree');
+    expect(text()).toContain('30 đã có trong cây');
   });
 
   it('deletes the root with its successor', () => {
     render(Page);
     commit(keyInput(), '50');
-    click(buttonByText('Delete'));
+    click(buttonByText('Xoá'));
     for (let i = 0; i < 3; i++) click(button('Bước tiếp'));
-    expect(text()).toContain('smallest key in the right subtree, 60');
+    expect(text()).toContain('khoá nhỏ nhất trong cây con phải, đó là 60');
     click(button('Đến bước cuối'));
-    expect(treeLabel()).toContain('In order: 20, 30, 40, 60, 70, 80.');
+    expect(treeLabel()).toContain('Theo thứ tự: 20, 30, 40, 60, 70, 80.');
   });
 
   it('shows the sorted preset degenerating into a list', () => {
@@ -96,17 +96,17 @@ describe('binary search tree lesson', () => {
       'sorted',
     );
     click(button('Đến bước cuối'));
-    expect(text()).toContain('height 7');
-    expect(text()).toContain('Perfectly balanced height: 3');
+    expect(text()).toContain('chiều cao 7');
+    expect(text()).toContain('Chiều cao nếu cân bằng hoàn hảo: 3');
   });
 
   it('undoes the last operation', () => {
     render(Page);
     commit(keyInput(), '45');
-    click(buttonByText('Insert'));
-    click(buttonByText('Undo last'));
+    click(buttonByText('Chèn'));
+    click(buttonByText('Hoàn tác'));
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Tree has 7 keys, height 3.');
+    expect(text()).toContain('Cây có 7 khoá, chiều cao 3.');
   });
 
   it('refuses an operation asked for right after an out-of-range key', () => {
@@ -114,8 +114,8 @@ describe('binary search tree lesson', () => {
     commit(keyInput(), '45');
     const before = treeLabel();
     commit(keyInput(), '150');
-    click(buttonByText('Search'));
-    expect(text()).toContain(en.keyError);
+    click(buttonByText('Tìm'));
+    expect(text()).toContain(m.keyError);
     expect(treeLabel()).toBe(before);
     expect(keyInput().value).toBe('45');
   });
@@ -134,7 +134,7 @@ describe('binary search tree lesson', () => {
       new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }),
     );
     flushSync();
-    expect(text()).toContain(en.keyError);
+    expect(text()).toContain(m.keyError);
     expect(treeLabel()).toBe(before);
   });
 
@@ -151,11 +151,11 @@ describe('binary search tree lesson', () => {
     render(Page);
     for (const k of [1, 2, 3, 4, 5, 6, 7, 8, 9]) {
       commit(keyInput(), String(k));
-      click(buttonByText('Insert'));
+      click(buttonByText('Chèn'));
     }
-    expect(text()).toContain('The tree is full (15 keys).');
+    expect(text()).toContain('Cây đã đầy (15 khoá).');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Tree has 15 keys');
+    expect(text()).toContain('Cây có 15 khoá');
   });
 
   it('empties the log on reset and labels every drawn node', () => {
@@ -163,35 +163,35 @@ describe('binary search tree lesson', () => {
     expect(document.querySelectorAll('svg[role="img"] title')).toHaveLength(0);
     click(button('Đến bước cuối'));
     expect(document.querySelectorAll('svg[role="img"] title')).toHaveLength(7);
-    click(buttonByText('Reset'));
-    expect(text()).toContain('none yet');
-    expect(text()).toContain('The tree is empty.');
+    click(buttonByText('Đặt lại'));
+    expect(text()).toContain('chưa có');
+    expect(text()).toContain('Cây đang rỗng.');
   });
 
   it('keeps focus on Reset and Undo and marks them aria-disabled when the log is empty', () => {
     render(Page);
-    const reset = buttonByText('Reset');
+    const reset = buttonByText('Đặt lại');
     reset.focus();
     click(reset);
     expect(document.activeElement).toBe(reset);
     expect(reset.getAttribute('aria-disabled')).toBe('true');
     expect(reset.disabled).toBe(false);
-    const undo = buttonByText('Undo last');
+    const undo = buttonByText('Hoàn tác');
     expect(undo.getAttribute('aria-disabled')).toBe('true');
     click(undo);
-    expect(text()).toContain('The tree is empty.');
+    expect(text()).toContain('Cây đang rỗng.');
   });
 
   it('shows a refusal in place of the narration and drops it on the next step', () => {
     render(Page);
     for (const k of [1, 2, 3, 4, 5, 6, 7, 8, 9]) {
       commit(keyInput(), String(k));
-      click(buttonByText('Insert'));
+      click(buttonByText('Chèn'));
     }
     const narration = () => document.querySelector('p[aria-live]')?.textContent ?? '';
-    expect(narration()).toContain('The tree is full (15 keys).');
+    expect(narration()).toContain('Cây đã đầy (15 khoá).');
     click(button('Bước tiếp'));
-    expect(narration()).not.toContain('The tree is full');
+    expect(narration()).not.toContain('Cây đã đầy');
   });
 
   it('lets a preset be applied again after Reset', () => {
@@ -200,12 +200,12 @@ describe('binary search tree lesson', () => {
       document.querySelector('select[name="preset"]')
     );
     commit(select, 'sorted');
-    click(buttonByText('Reset'));
+    click(buttonByText('Đặt lại'));
     expect(select.value).toBe('');
     commit(select, 'sorted');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('height 7');
-    click(buttonByText('Undo last'));
+    expect(text()).toContain('chiều cao 7');
+    click(buttonByText('Hoàn tác'));
     expect(select.value).toBe('');
   });
 
@@ -225,13 +225,13 @@ describe('binary search tree lesson', () => {
     const form = /** @type {HTMLFormElement} */ (keyInput().closest('form'));
     form.requestSubmit();
     flushSync();
-    expect(text()).toContain('Compare 45 with 50.');
+    expect(text()).toContain('So sánh 45 với 50.');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Tree has 8 keys');
-    expect(buttonByText('Search').type).toBe('button');
-    expect(buttonByText('Delete').type).toBe('button');
-    expect(buttonByText('Undo last').type).toBe('button');
-    expect(buttonByText('Reset').type).toBe('button');
+    expect(text()).toContain('Cây có 8 khoá');
+    expect(buttonByText('Tìm').type).toBe('button');
+    expect(buttonByText('Xoá').type).toBe('button');
+    expect(buttonByText('Hoàn tác').type).toBe('button');
+    expect(buttonByText('Đặt lại').type).toBe('button');
   });
 
   it('lets the random preset be chosen twice in a row', () => {
@@ -252,6 +252,6 @@ describe('binary search tree lesson', () => {
   it('describes the root and the balanced height in the tree label', () => {
     render(Page);
     click(button('Đến bước cuối'));
-    expect(treeLabel()).toContain('Root 50. Balanced height would be 3.');
+    expect(treeLabel()).toContain('Gốc 50. Nếu cân bằng, chiều cao sẽ là 3.');
   });
 });

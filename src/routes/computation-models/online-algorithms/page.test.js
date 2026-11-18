@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/online-algorithms/copy.en.js';
+import { vi as m } from '$lib/lessons/online-algorithms/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -82,19 +82,19 @@ function answer(q, value) {
 describe('online algorithms lesson', () => {
   it('plays ski rental day by day until the secret season ends', () => {
     render();
-    expect(text()).toContain('The season ends on a secret day. Rent or buy for day 1.');
+    expect(text()).toContain('Mùa kết thúc vào một ngày bí mật. Hãy thuê hoặc mua cho ngày 1.');
     click(buttonByText(m.rent));
-    expect(text()).toContain('After day 1 you have paid 1. The season goes on');
+    expect(text()).toContain('Sau ngày 1 bạn đã trả 1. Mùa vẫn tiếp tục');
     click(buttonByText(m.rent));
     click(buttonByText(m.buy));
     // The secret season lasts 13 days: 2 rented days and the skis, 12, against min(13, 10).
-    expect(text()).toContain('The season lasted 13 days. You paid 12');
+    expect(text()).toContain('Mùa trượt kéo dài 13 ngày. Bạn đã trả 12');
     expect(stat(m.skiStats.ratio)).toBe('1.2');
     click(buttonByText(m.rent));
     expect(text()).toContain(m.notices.over);
     click(button('Về bước đầu'));
     click(button('Bước tiếp'));
-    expect(text()).toContain('Day 1: You rent: +1.');
+    expect(text()).toContain('Ngày 1: Bạn thuê: +1.');
   });
 
   it('lets the adversary end the season right after buying', () => {
@@ -103,7 +103,7 @@ describe('online algorithms lesson', () => {
     click(radio('rule', 'adversary'));
     for (let i = 0; i < 4; i++) click(buttonByText(m.rent));
     click(buttonByText(m.buy));
-    expect(text()).toContain('The season lasted 5 days. You paid 14');
+    expect(text()).toContain('Mùa trượt kéo dài 5 ngày. Bạn đã trả 14');
     expect(stat(m.skiStats.ratio)).toBe('2.8');
     click(buttonByText(m.newSeason));
     expect(stat(m.skiStats.day)).toBe('0');
@@ -113,20 +113,20 @@ describe('online algorithms lesson', () => {
     render();
     click(radio('plan', 'fixed'));
     expect(input('buy-day').value).toBe('10');
-    expect(text()).toContain('The best plan, k = b, guarantees 2 − 1/b = 1.9.');
+    expect(text()).toContain('Kế hoạch tốt nhất, k = b, đảm bảo 2 − 1/b = 1.9.');
     commit(input('season'), '10');
     click(button('Đến bước cuối'));
     expect(stat(m.skiStats.ratio)).toBe('1.9');
     commit(input('buy-day'), '1');
-    expect(text()).toContain('This plan’s competitive ratio: 10.');
+    expect(text()).toContain('Tỉ số cạnh tranh của kế hoạch này: 10.');
     click(radio('plan', 'never'));
-    expect(text()).toContain('This plan’s competitive ratio: unbounded.');
+    expect(text()).toContain('Tỉ số cạnh tranh của kế hoạch này: không bị chặn.');
   });
 
   it('races LRU, FIFO and OPT on a paging sequence', () => {
     render();
     click(radio('mode', 'paging'));
-    expect(text()).toContain('12 requests and a cache of 3 pages.');
+    expect(text()).toContain('12 yêu cầu và một cache chứa 3 trang.');
     click(button('Đến bước cuối'));
     expect(stat(m.pagingStats.lru)).toBe('10');
     expect(stat(m.pagingStats.fifo)).toBe('9');
@@ -147,7 +147,7 @@ describe('online algorithms lesson', () => {
     click(radio('mode', 'paging'));
     for (let i = 0; i < 4; i++) click(button('Bước tiếp'));
     expect(text()).toContain(
-      'Request 4, page D: LRU faults and evicts A; FIFO faults and evicts A; OPT faults and evicts C.',
+      'Yêu cầu 4, trang D: LRU lỗi trang và đẩy A ra; FIFO lỗi trang và đẩy A ra; OPT lỗi trang và đẩy C ra.',
     );
     commit(input('requests'), 'ab1');
     expect(text()).toContain(m.notices.format);
