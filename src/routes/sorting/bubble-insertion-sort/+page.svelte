@@ -12,7 +12,7 @@
     makeArray,
     toItems,
   } from '$lib/algo-engine/sorting.js';
-  import { en as m } from '$lib/lessons/bubble-insertion-sort/copy.en.js';
+  import { vi as m } from '$lib/lessons/bubble-insertion-sort/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {'bubble'|'insertion'} Algo */

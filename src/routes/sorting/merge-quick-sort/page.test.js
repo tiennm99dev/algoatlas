@@ -71,17 +71,17 @@ describe('merge and quick sort lesson', () => {
   it('splits the whole array on the first step', () => {
     render();
     click(button('Bước tiếp'));
-    expect(text()).toContain('Split [0–11] at 5');
+    expect(text()).toContain('Chia [0–11] tại 5');
   });
 
   it('switches between the two algorithms and their pseudocode', () => {
     render();
     pickAlgo('quick');
     expect(text()).toContain('i = lo - 1');
-    expect(text()).toContain('Ranges still to sort');
+    expect(text()).toContain('Các đoạn còn phải sắp xếp');
     pickAlgo('merge');
-    expect(text()).toContain('aux = copy of a[lo..hi]');
-    expect(text()).toContain('Call stack (outermost first)');
+    expect(text()).toContain('aux = copy(a[lo..hi])');
+    expect(text()).toContain('Ngăn xếp lời gọi (ngoài cùng trước)');
   });
 
   it('keeps the pivot rule in place but enabled only for quicksort', () => {
@@ -94,10 +94,10 @@ describe('merge and quick sort lesson', () => {
 
   it('names the write action per algorithm in the legend', () => {
     render();
-    expect(text()).toContain('Writing to the array');
+    expect(text()).toContain('Đang ghi vào mảng');
     pickAlgo('quick');
-    expect(text()).toContain('Swapping');
-    expect(text()).not.toContain('Writing to the array');
+    expect(text()).toContain('Đang đổi chỗ');
+    expect(text()).not.toContain('Đang ghi vào mảng');
   });
 
   it('caps the size slider where every buffer marker still fits', () => {
@@ -109,53 +109,53 @@ describe('merge and quick sort lesson', () => {
   it('finishes sorted with the totals in the narration', () => {
     render();
     click(button('Đến bước cuối'));
-    expect(text()).toMatch(/Sorted with \d+ comparisons and \d+ writes\./);
+    expect(text()).toMatch(/Đã sắp xếp xong với \d+ lần so sánh và \d+ lần ghi\./);
     expect(document.querySelector('[role="img"]')?.getAttribute('aria-label')).toContain(
-      '12 of 12 sorted',
+      'Đã xếp xong 12/12 phần tử',
     );
   });
 
   it('lists the total cost of both algorithms', () => {
     render();
-    expect(text()).toMatch(/Merge sort\s*\d+ comparisons · \d+ writes/);
-    expect(text()).toMatch(/Quicksort\s*\d+ comparisons · \d+ swaps/);
-    expect(text()).toContain('no equal values on this array');
+    expect(text()).toMatch(/Sắp xếp trộn\s*\d+ lần so sánh · \d+ lần ghi/);
+    expect(text()).toMatch(/Sắp xếp nhanh\s*\d+ lần so sánh · \d+ lần đổi chỗ/);
+    expect(text()).toContain('mảng này không có giá trị bằng nhau');
   });
 
   it('claims stability only when the array has equal values', () => {
     render();
-    expect(text()).not.toContain('equal values kept their order');
-    expect(text()).not.toContain('equal values were reordered');
+    expect(text()).not.toContain('các giá trị bằng nhau giữ nguyên thứ tự');
+    expect(text()).not.toContain('các giá trị bằng nhau bị đảo thứ tự');
     const preset = /** @type {HTMLSelectElement} */ (document.querySelector('select.field'));
     preset.value = 'few-unique';
     preset.dispatchEvent(new Event('change', { bubbles: true }));
     flushSync();
-    expect(text()).toContain('equal values kept their order');
+    expect(text()).toContain('các giá trị bằng nhau giữ nguyên thứ tự');
   });
 
   it('keeps the buffer row mounted from the first frame while merge sort is selected', () => {
     render();
-    const row = document.querySelector('[aria-label^="Buffer:"]');
+    const row = document.querySelector('[aria-label^="Vùng đệm:"]');
     expect(row).not.toBeNull();
-    expect(row?.getAttribute('aria-label')).toBe('Buffer: empty.');
+    expect(row?.getAttribute('aria-label')).toBe('Vùng đệm: rỗng.');
     pickAlgo('quick');
-    expect(document.querySelector('[aria-label^="Buffer:"]')).toBeNull();
+    expect(document.querySelector('[aria-label^="Vùng đệm:"]')).toBeNull();
   });
 
   it('captions the buffer row during a merge', () => {
     render();
     const copy = mergeSortTrace(toItems(INITIAL)).findIndex((f) => f.kind === 'copy');
     seek(copy);
-    expect(text()).toContain('Buffer: a copy of the range being merged.');
+    expect(text()).toContain('Vùng đệm: bản sao của đoạn đang được trộn.');
     pickAlgo('quick');
-    expect(text()).not.toContain('Buffer: a copy of the range being merged.');
+    expect(text()).not.toContain('Vùng đệm: bản sao của đoạn đang được trộn.');
   });
 
   it('shows the merge buffer contents once a merge starts', () => {
     render();
     const copy = mergeSortTrace(toItems(INITIAL)).findIndex((f) => f.kind === 'copy');
     seek(copy);
-    expect(document.querySelector('[aria-label^="Buffer:"]')).not.toBeNull();
+    expect(document.querySelector('[aria-label^="Vùng đệm:"]')).not.toBeNull();
   });
 
   it('marks merged runs and the buffer head and taken slots with text', () => {
@@ -165,18 +165,18 @@ describe('merge and quick sort lesson', () => {
     seek(runFrame);
     const chart = document.querySelector('[role="img"]');
     expect(chart?.textContent).toContain('▬');
-    expect(chart?.getAttribute('aria-label')).toMatch(/Working on \[\d+–\d+\]\./);
-    expect(text()).toContain('▬ Merged run');
+    expect(chart?.getAttribute('aria-label')).toMatch(/Đang xử lí \[\d+–\d+\]\./);
+    expect(text()).toContain('▬ Đoạn đã trộn');
 
     // A take frame after the first slot is written has a head and a taken slot in the buffer.
     const take = trace.findIndex(
       (f) => f.kind === 'take' && f.range && f.range[1] - f.range[0] >= 3 && f.k === f.range[0] + 1,
     );
     seek(take);
-    const buffer = document.querySelector('[aria-label^="Buffer:"]');
+    const buffer = document.querySelector('[aria-label^="Vùng đệm:"]');
     expect(buffer?.textContent).toContain('↑');
     expect(buffer?.textContent).toContain('✕');
-    expect(buffer?.getAttribute('aria-label')).toMatch(/2 taken\. Next from the/);
+    expect(buffer?.getAttribute('aria-label')).toMatch(/Đã lấy 2\. Tiếp theo của đoạn/);
   });
 
   it('shows the pivot pre-swap as a write on the pivot frame', () => {
@@ -196,8 +196,8 @@ describe('merge and quick sort lesson', () => {
     let seen = false;
     for (let i = 0; i < frames && !seen; i++) {
       seek(i);
-      if (text().includes('Move the chosen pivot to the end')) {
-        const chart = document.querySelector('[aria-label^="Array:"]');
+      if (text().includes('Đưa chốt đã chọn về cuối')) {
+        const chart = document.querySelector('[aria-label^="Mảng:"]');
         expect((chart?.textContent?.match(/⇄/g) ?? []).length).toBe(2);
         seen = true;
       }
@@ -209,12 +209,12 @@ describe('merge and quick sort lesson', () => {
     render();
     choose('select.field', 'sorted');
     const expected = makeArray('sorted', 12);
-    expect(document.querySelector('[aria-label^="Array:"]')?.getAttribute('aria-label')).toContain(
-      `Array: ${expected.join(', ')}.`,
+    expect(document.querySelector('[aria-label^="Mảng:"]')?.getAttribute('aria-label')).toContain(
+      `Mảng: ${expected.join(', ')}.`,
     );
     pickAlgo('quick');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('(max 11, balanced ≈ 4)');
+    expect(text()).toContain('(tối đa 11, cân bằng ≈ 4)');
   });
 
   it('draws the quicksort low side with the run marker during a scan', () => {
@@ -225,49 +225,49 @@ describe('merge and quick sort lesson', () => {
     expect(scan).toBeGreaterThan(0);
     const before = trace.findIndex((f) => f.kind === 'scan');
     seek(before);
-    expect(document.querySelector('[aria-label^="Array:"]')?.textContent).not.toContain('▬');
+    expect(document.querySelector('[aria-label^="Mảng:"]')?.textContent).not.toContain('▬');
     seek(scan);
-    expect(document.querySelector('[aria-label^="Array:"]')?.textContent).toContain('▬');
-    expect(text()).toContain('▬ ≤ pivot, low side');
+    expect(document.querySelector('[aria-label^="Mảng:"]')?.textContent).toContain('▬');
+    expect(text()).toContain('▬ ≤ chốt, phía thấp');
   });
 
   it('states the stability verdict in the done narration', () => {
     render();
     click(button('Đến bước cuối'));
-    expect(text()).not.toContain('Equal values');
+    expect(text()).not.toContain('Các giá trị bằng nhau');
     choose('select.field', 'few-unique');
     click(button('Đến bước cuối'));
-    expect(text()).toMatch(/writes\. Equal values kept their order\./);
+    expect(text()).toMatch(/lần ghi\. Các giá trị bằng nhau giữ nguyên thứ tự\./);
     pickAlgo('quick');
     click(button('Đến bước cuối'));
     const narration = text();
     const reordered = narration.match(
-      /Equal values were reordered: \d+ \(originally \d+\w\w\) now follows/,
+      /Các giá trị bằng nhau bị đảo thứ tự: \d+ \(ban đầu đứng thứ \d+\) giờ đứng sau/,
     );
-    const kept = narration.includes('Equal values kept their order.');
+    const kept = narration.includes('Các giá trị bằng nhau giữ nguyên thứ tự.');
     expect(reordered !== null || kept).toBe(true);
   });
 
   it('announces a rebuild caused by the preset, size, or pivot rule', () => {
     render();
     choose('select.field', 'reversed');
-    expect(text()).toContain('New array loaded.');
+    expect(text()).toContain('Đã nạp mảng mới.');
     click(button('Bước tiếp'));
     const range = /** @type {HTMLInputElement} */ (document.querySelector('input[type="range"]'));
     range.value = '8';
     range.dispatchEvent(new Event('change', { bubbles: true }));
     flushSync();
-    expect(text()).toContain('New array loaded.');
+    expect(text()).toContain('Đã nạp mảng mới.');
     pickAlgo('quick');
     choose('select[name="pivot"]', 'median3');
-    expect(text()).toContain('Pivot rule: Median of three. Both traces rebuilt.');
+    expect(text()).toContain('Quy tắc chọn chốt: Trung vị của ba. Đã dựng lại cả hai lần chạy.');
   });
 
   it('confirms a new array in the narration and drops it on the next frame', () => {
     render();
-    click(buttonByText('New array'));
-    expect(text()).toContain('New array loaded.');
+    click(buttonByText('Mảng mới'));
+    expect(text()).toContain('Đã nạp mảng mới.');
     click(button('Bước tiếp'));
-    expect(text()).not.toContain('New array loaded.');
+    expect(text()).not.toContain('Đã nạp mảng mới.');
   });
 });

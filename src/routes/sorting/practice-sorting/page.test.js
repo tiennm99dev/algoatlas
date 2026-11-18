@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/practice-sorting/copy.en.js';
+import { vi as m } from '$lib/lessons/practice-sorting/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -80,29 +80,31 @@ function practice() {
 describe('practice: choosing a sort', () => {
   it('races six sorts on the starting cards', () => {
     render();
-    expect(narration()).toContain('Six sorts each get their own copy of the same 12 cards.');
+    expect(narration()).toContain(
+      'Sáu thuật toán sắp xếp, mỗi thuật toán nhận một bản sao riêng của cùng 12 lá bài.',
+    );
     expect(stat(m.stats.length)).toBe('66');
     expect(row(m.sorts.merge)).toEqual(Array(5).fill(m.pending));
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Step 1: every running sort has made 1 comparison.');
+    expect(narration()).toContain('Bước 1: mọi thuật toán còn đang chạy đã làm 1 phép so sánh.');
     click(button('Đến bước cuối'));
-    expect(stat(m.stats.running)).toBe('0 of 6');
-    expect(narration()).toContain('Merge sort finished first with 30 comparisons');
-    expect(narration()).toContain('Bubble sort and Selection sort needed 66');
-    expect(row(m.sorts.merge)).toEqual(['30', '40', '4', '12', '✓ kept']);
-    expect(row(m.sorts.quick)).toEqual(['36', '24', '6', '0', '✕ reordered']);
+    expect(stat(m.stats.running)).toBe('0/6');
+    expect(narration()).toContain('Sắp xếp trộn về đích đầu tiên với 30 phép so sánh');
+    expect(narration()).toContain('Sắp xếp nổi bọt và sắp xếp chọn cần 66');
+    expect(row(m.sorts.merge)).toEqual(['30', '40', '4', '12', '✓ giữ thứ tự']);
+    expect(row(m.sorts.quick)).toEqual(['36', '24', '6', '0', '✕ bị đảo thứ tự']);
     expect(lane(m.sorts.heap)).toBe(
-      'Heapsort, ✓ finished 4th: 5, 8, 17, 17, 29, 42, 42, 56, 63, 71, 88, 94',
+      'Sắp xếp vun đống, ✓ về đích thứ 4: 5, 8, 17, 17, 29, 42, 42, 56, 63, 71, 88, 94',
     );
   });
 
   it('fills a row when its sort finishes', () => {
     render();
     for (let k = 0; k < 30; k++) click(button('Bước tiếp'));
-    expect(narration()).toContain('Merge sort finishes now. 5 sorts are still running.');
+    expect(narration()).toContain('Sắp xếp trộn về đích lúc này. Còn 5 thuật toán đang chạy.');
     expect(row(m.sorts.merge)[0]).toBe('30');
     expect(row(m.sorts.quick)[0]).toBe(m.pending);
-    expect(lane(m.sorts.merge)).toContain('✓ finished 1st');
+    expect(lane(m.sorts.merge)).toContain('✓ về đích thứ 1');
   });
 
   it('builds a shape at the chosen size', () => {
@@ -114,7 +116,7 @@ describe('practice: choosing a sort', () => {
       '5, 11, 17, 23, 29, 35, 41, 47, 53, 59, 65, 71, 77, 83, 89, 95',
     );
     click(button('Đến bước cuối'));
-    expect(row(m.sorts.quick)).toEqual(['120', '0', '15', '0', '– no repeats']);
+    expect(row(m.sorts.quick)).toEqual(['120', '0', '15', '0', '– không có giá trị lặp']);
     expect(row(m.sorts.insertion)[0]).toBe('15');
     click(buttonByText(m.shapes.reversed));
     click(button('Đến bước cuối'));
@@ -136,7 +138,7 @@ describe('practice: choosing a sort', () => {
     expect(narration()).toBe(m.sizeError);
     expect(field('size').value).toBe('3');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Step 1');
+    expect(narration()).toContain('Bước 1');
     // Enter in the cards field submits the form.
     field('values').value = '9, 8, 7, 6';
     field('values').dispatchEvent(new Event('input', { bubbles: true }));
@@ -162,13 +164,13 @@ describe('practice: choosing a sort', () => {
     };
     click(box(m.constraints.stable));
     click(box(m.constraints.worst));
-    expect(status()).toBe('1 sort fits: Merge sort.');
-    expect(document.querySelector(`li[aria-label="${m.sorts.merge} fits"]`)).not.toBeNull();
+    expect(status()).toBe('1 thuật toán phù hợp: Sắp xếp trộn.');
+    expect(document.querySelector(`li[aria-label="${m.sorts.merge} phù hợp"]`)).not.toBeNull();
     click(box(m.constraints.stable));
     click(box(m.constraints['in-place']));
-    expect(status()).toBe('1 sort fits: Heapsort.');
+    expect(status()).toBe('1 thuật toán phù hợp: Sắp xếp vun đống.');
     click(box(m.constraints.stable));
-    expect(status()).toContain('No sort in the race meets all of these needs.');
+    expect(status()).toContain('Không thuật toán nào trong cuộc đua đáp ứng được mọi yêu cầu này.');
   });
 
   it('checks a question with a hint', () => {

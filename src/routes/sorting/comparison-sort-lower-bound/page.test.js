@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/comparison-sort-lower-bound/copy.en.js';
+import { vi as m } from '$lib/lessons/comparison-sort-lower-bound/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -81,13 +81,13 @@ describe('comparison sort lower bound lesson', () => {
     render();
     expect(stat(m.stats.possible)).toBe('6');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Is B < A? No. 3 of 6 orders still fit.');
+    expect(text()).toContain('Có B < A không? Không. Còn 3/6 thứ tự phù hợp.');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Is C < B? Yes. 2 of 6 orders still fit.');
+    expect(text()).toContain('Có C < B không? Có. Còn 2/6 thứ tự phù hợp.');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Leaf reached after 3 comparisons: the sorted order is C < A < B.');
+    expect(text()).toContain('Đến lá sau 3 phép so sánh: thứ tự đã sắp xếp là C < A < B.');
     expect(stat(m.stats.possible)).toBe('1');
-    expect(node('Leaf: C < A < B').getAttribute('aria-label')).toContain('the answer');
+    expect(node('Lá: C < A < B').getAttribute('aria-label')).toContain('đáp án');
   });
 
   it('reaches a sorted input in two comparisons', () => {
@@ -97,7 +97,7 @@ describe('comparison sort lower bound lesson', () => {
       'ABC',
     );
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Leaf reached after 2 comparisons: the sorted order is A < B < C.');
+    expect(text()).toContain('Đến lá sau 2 phép so sánh: thứ tự đã sắp xếp là A < B < C.');
   });
 
   it('counts the leaves and height of each tree', () => {
@@ -107,21 +107,21 @@ describe('comparison sort lower bound lesson', () => {
     pickAlgo('selection');
     expect(stat(m.stats.leaves)).toBe('6 / 2');
     expect(document.querySelectorAll('g[role="button"]')).toHaveLength(15);
-    expect(node('Impossible leaf')).toBeTruthy();
+    expect(node('Lá không thể xảy ra')).toBeTruthy();
   });
 
   it('sets the hidden order from a clicked leaf and refuses other nodes', () => {
     render();
-    click(node('Leaf: B < C < A'));
-    expect(text()).toContain('Hidden order set to B < C < A.');
+    click(node('Lá: B < C < A'));
+    expect(text()).toContain('Đã đặt thứ tự bí mật là B < C < A.');
     expect(
       /** @type {HTMLSelectElement} */ (document.querySelector('select[name="order"]')).value,
     ).toBe('BCA');
-    click(node('Question: is B < A?'));
-    expect(text()).toContain('Click a leaf to pick its order as the hidden input.');
+    click(node('Câu hỏi: có B < A không?'));
+    expect(text()).toContain('Bấm vào một lá để chọn thứ tự của nó làm đầu vào bí mật.');
     pickAlgo('selection');
-    click(node('Impossible leaf'));
-    expect(text()).toContain('No input order reaches this leaf');
+    click(node('Lá không thể xảy ra'));
+    expect(text()).toContain('Không thứ tự đầu vào nào đến được lá này');
   });
 
   it('picks a leaf with the keyboard', () => {
@@ -131,25 +131,27 @@ describe('comparison sort lower bound lesson', () => {
       document.activeElement?.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true }));
       flushSync();
     };
-    /** @type {SVGElement} */ (node('Question: is B < A?')).focus();
+    /** @type {SVGElement} */ (node('Câu hỏi: có B < A không?')).focus();
     press('ArrowDown');
-    expect(document.activeElement?.getAttribute('aria-label')).toMatch(/^Question: is C < A\?/);
+    expect(document.activeElement?.getAttribute('aria-label')).toMatch(
+      /^Câu hỏi: có C < A không\?/,
+    );
     press('ArrowDown');
     press('ArrowDown');
-    expect(document.activeElement?.getAttribute('aria-label')).toBe('Leaf: C < B < A');
+    expect(document.activeElement?.getAttribute('aria-label')).toBe('Lá: C < B < A');
     press('Enter');
-    expect(text()).toContain('Hidden order set to C < B < A.');
+    expect(text()).toContain('Đã đặt thứ tự bí mật là C < B < A.');
   });
 
   it('computes the bound for any n and refuses bad n', () => {
     render();
-    expect(text()).toContain('3,628,800');
+    expect(text()).toContain('3628800');
     const n = /** @type {HTMLInputElement} */ (document.querySelector('input[name="bound-n"]'));
     commit(n, '5');
-    expect(text()).toMatch(/Worst case at least ⌈log₂ n!⌉\s*7/);
+    expect(text()).toMatch(/Xấu nhất ít nhất ⌈log₂ n!⌉\s*7/);
     expect(text()).toContain('120');
     commit(n, '25');
-    expect(text()).toContain('n must be a whole number from 1 to 20.');
+    expect(text()).toContain('n phải là số nguyên từ 1 đến 20.');
     expect(n.value).toBe('5');
   });
 

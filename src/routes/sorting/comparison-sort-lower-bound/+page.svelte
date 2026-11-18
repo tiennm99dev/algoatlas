@@ -19,7 +19,7 @@
     walkPseudocode,
     walkTrace,
   } from '$lib/algo-engine/comparison-sort-lower-bound.js';
-  import { en as m } from '$lib/lessons/comparison-sort-lower-bound/copy.en.js';
+  import { vi as m } from '$lib/lessons/comparison-sort-lower-bound/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/comparison-sort-lower-bound.js').TreeAlgo} TreeAlgo */

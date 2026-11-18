@@ -4,7 +4,7 @@ import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { heapsortTrace } from '$lib/algo-engine/heapsort.js';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/heapsort/copy.en.js';
+import { vi as m } from '$lib/lessons/heapsort/copy.vi.js';
 
 const INITIAL = [35, 12, 58, 7, 91, 26, 44, 63, 19, 80];
 
@@ -55,7 +55,7 @@ const text = () => document.body.textContent ?? '';
 const valuesInput = () =>
   /** @type {HTMLInputElement} */ (document.querySelector('input[name="values"]'));
 const arrayLabel = () =>
-  document.querySelector('svg[aria-label^="Array:"]')?.getAttribute('aria-label') ?? '';
+  document.querySelector('svg[aria-label^="Mảng:"]')?.getAttribute('aria-label') ?? '';
 
 /** @param {number} index */
 function seek(index) {
@@ -76,26 +76,26 @@ function practice() {
 describe('heapsort lesson', () => {
   it('starts the build at the last internal node', () => {
     render();
-    expect(text()).toContain('sift down each internal node from slot 4 back to slot 0');
+    expect(text()).toContain('ta đẩy xuống từng nút trong, từ ô 4 lùi về ô 0');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Sift down slot 4 (91)');
+    expect(text()).toContain('Đẩy xuống ô 4 (91)');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Slot 4 has one child, 80 at slot 9.');
+    expect(text()).toContain('Ô 4 có một con, 80 ở ô 9.');
   });
 
   it('draws the heap as a tree and an array of the same values', () => {
     render();
-    expect(arrayLabel()).toBe(`Array: ${INITIAL.join(', ')}. Heap is slots 0 to 9.`);
-    expect(document.querySelectorAll('svg[aria-label^="Array:"]')).toHaveLength(2);
+    expect(arrayLabel()).toBe(`Mảng: ${INITIAL.join(', ')}. Heap gồm các ô 0 đến 9.`);
+    expect(document.querySelectorAll('svg[aria-label^="Mảng:"]')).toHaveLength(2);
   });
 
   it('swaps the maximum to the end on the first extract', () => {
     render();
     const at = heapsortTrace(INITIAL).findIndex((f) => f.kind === 'extract');
     seek(at);
-    expect(text()).toContain('The root held the maximum, 91. Swap it to slot 9');
-    expect(text()).toContain('Extract max');
-    expect(arrayLabel()).toContain('Heap is slots 0 to 8; slots 9 to 9 are sorted.');
+    expect(text()).toContain('Gốc đang giữ giá trị lớn nhất, 91. Đổi chỗ nó về ô 9');
+    expect(text()).toContain('Lấy giá trị lớn nhất');
+    expect(arrayLabel()).toContain('Heap gồm các ô 0 đến 8; các ô 9 đến 9 đã xếp xong.');
   });
 
   it('ends sorted with the totals', () => {
@@ -103,17 +103,17 @@ describe('heapsort lesson', () => {
     click(button('Đến bước cuối'));
     const last = heapsortTrace(INITIAL).at(-1);
     expect(text()).toContain(
-      `Sorted with ${last?.comparisons} comparisons and ${last?.swaps} swaps, all inside the array.`,
+      `Đã sắp xếp xong với ${last?.comparisons} lần so sánh và ${last?.swaps} lần đổi chỗ, tất cả ngay trong mảng.`,
     );
-    expect(arrayLabel()).toBe('Array: 7, 12, 19, 26, 35, 44, 58, 63, 80, 91. All sorted.');
+    expect(arrayLabel()).toBe('Mảng: 7, 12, 19, 26, 35, 44, 58, 63, 80, 91. Đã xếp xong toàn bộ.');
   });
 
   it('loads typed values and refuses bad ones', () => {
     render();
     commit(valuesInput(), '4, 10, 3, 5, 1');
-    expect(arrayLabel()).toBe('Array: 4, 10, 3, 5, 1. Heap is slots 0 to 4.');
+    expect(arrayLabel()).toBe('Mảng: 4, 10, 3, 5, 1. Heap gồm các ô 0 đến 4.');
     commit(valuesInput(), '4, 200');
-    expect(text()).toContain('Every value must be from 0 to 99.');
+    expect(text()).toContain('Mọi giá trị phải nằm trong khoảng 0–99.');
     expect(valuesInput().value).toBe('4, 10, 3, 5, 1');
   });
 
@@ -123,7 +123,7 @@ describe('heapsort lesson', () => {
       /** @type {HTMLSelectElement} */ (document.querySelector('select[name="preset"]')),
       'reversed',
     );
-    expect(text()).toContain('New array loaded.');
+    expect(text()).toContain('Đã nạp mảng mới.');
     const build = heapsortTrace(valuesInput().value.split(', ').map(Number)).filter(
       (f) => f.phase === 'build',
     );
@@ -134,7 +134,7 @@ describe('heapsort lesson', () => {
     render();
     const before = valuesInput().value;
     click(buttonByText(m.newArrayButton));
-    expect(text()).toContain('New array loaded.');
+    expect(text()).toContain('Đã nạp mảng mới.');
     expect(valuesInput().value).not.toBe(before);
     expect(valuesInput().value.split(', ')).toHaveLength(before.split(', ').length);
   });
@@ -143,7 +143,7 @@ describe('heapsort lesson', () => {
     render();
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
     flushSync();
-    expect(text()).toContain('Sift down slot 4 (91)');
+    expect(text()).toContain('Đẩy xuống ô 4 (91)');
   });
 
   it('checks the first practice question with a hint', () => {

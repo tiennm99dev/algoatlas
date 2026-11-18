@@ -43,11 +43,11 @@ const head = [
 
 /** @type {Record<SelectionVariant, string[]>} */
 export const selectionPseudocode = {
-  swap: [...head, '  if min != i: swap(a[i], a[min])', 'done: a is sorted'],
+  swap: [...head, '  if min != i: swap(a[i], a[min])', 'xong: a đã được sắp xếp'],
   shift: [
     ...head,
-    '  if min != i: shift a[i..min-1] right; put old a[min] at i',
-    'done: a is sorted',
+    '  if min != i: dời a[i..min-1] sang phải; đặt a[min] cũ vào ô i',
+    'xong: a đã được sắp xếp',
   ],
 };
 

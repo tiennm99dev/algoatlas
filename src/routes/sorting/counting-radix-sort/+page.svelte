@@ -18,7 +18,7 @@
     randomKeys,
   } from '$lib/algo-engine/counting-radix-sort.js';
   import { toItems } from '$lib/algo-engine/sorting.js';
-  import { en as m } from '$lib/lessons/counting-radix-sort/copy.en.js';
+  import { vi as m } from '$lib/lessons/counting-radix-sort/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {'counting'|'radix'} Algo */

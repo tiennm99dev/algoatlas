@@ -38,25 +38,25 @@ export const mergePseudocode = [
   '  if lo >= hi: return',
   '  mid = floor((lo + hi) / 2)',
   '  mergeSort(a, lo, mid); mergeSort(a, mid + 1, hi)',
-  '  aux = copy of a[lo..hi]; i = lo; j = mid + 1',
+  '  aux = copy(a[lo..hi]); i = lo; j = mid + 1',
   '  for k = lo to hi:',
-  '    if i > mid: a[k] = aux[j++]            // left run used up',
-  '    else if j > hi: a[k] = aux[i++]        // right run used up',
-  '    else if aux[j] < aux[i]: a[k] = aux[j++]   // strict: left wins ties',
+  '    if i > mid: a[k] = aux[j++]            // đoạn trái đã hết',
+  '    else if j > hi: a[k] = aux[i++]        // đoạn phải đã hết',
+  '    else if aux[j] < aux[i]: a[k] = aux[j++]   // nhỏ hơn hẳn: bằng nhau thì lấy bên trái',
   '    else: a[k] = aux[i++]',
-  'done: array is sorted',
+  'xong: mảng đã được sắp xếp',
 ];
 
 export const quickPseudocode = [
   'quickSort(a, lo, hi):',
   '  if lo >= hi: return',
-  '  swap chosen pivot into a[hi]; pivot = a[hi]',
+  '  swap(a[p], a[hi]); pivot = a[hi]   // p: chỉ số của chốt đã chọn',
   '  i = lo - 1',
   '  for j = lo to hi - 1:',
   '    if a[j] <= pivot: i = i + 1; swap(a[i], a[j])',
-  '  swap(a[i + 1], a[hi])        // pivot lands in its final slot',
+  '  swap(a[i + 1], a[hi])        // chốt về đúng ô cuối cùng',
   '  quickSort(a, lo, i); quickSort(a, i + 2, hi)',
-  'done: array is sorted',
+  'xong: mảng đã được sắp xếp',
 ];
 
 /** @param {number} n @returns {number[]} */

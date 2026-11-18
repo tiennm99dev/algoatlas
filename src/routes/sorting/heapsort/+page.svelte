@@ -7,7 +7,7 @@
   import { STATE_BG } from '$lib/components/visual-state.js';
   import { heapsortPseudocode, heapsortTrace, parseHeapValues } from '$lib/algo-engine/heapsort.js';
   import { makeArray } from '$lib/algo-engine/sorting.js';
-  import { en as m } from '$lib/lessons/heapsort/copy.en.js';
+  import { vi as m } from '$lib/lessons/heapsort/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */

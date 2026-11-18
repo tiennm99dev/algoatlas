@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/selection-sort-stability/copy.en.js';
+import { vi as m } from '$lib/lessons/selection-sort-stability/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -52,7 +52,7 @@ const text = () => document.body.textContent ?? '';
 const keysInput = () =>
   /** @type {HTMLInputElement} */ (document.querySelector('input[name="keys"]'));
 const cards = () =>
-  document.querySelector('ol[aria-label^="Cards in order"]')?.getAttribute('aria-label');
+  document.querySelector('ol[aria-label^="Các lá bài theo thứ tự"]')?.getAttribute('aria-label');
 
 function practice() {
   const section = [...document.querySelectorAll('section')].find(
@@ -70,65 +70,67 @@ function pickVariant(value) {
 describe('selection sort and stability lesson', () => {
   it('starts on the first pass and scans for the minimum', () => {
     render();
-    expect(cards()).toBe('Cards in order: 3a, 4a, 3b, 1a, 4b, 2a. 0 of 6 in final place.');
+    expect(cards()).toBe(
+      'Các lá bài theo thứ tự: 3a, 4a, 3b, 1a, 4b, 2a. 0/6 lá đã ở vị trí cuối cùng.',
+    );
     click(button('Bước tiếp'));
-    expect(text()).toContain('Pass 1: fill slot 0. Start with min = 0 (3a).');
+    expect(text()).toContain('Lượt 1: lấp ô 0. Bắt đầu với min = 0 (3a).');
     click(button('Bước tiếp'));
-    expect(text()).toContain('4a is not smaller than 3a: min stays at slot 0.');
+    expect(text()).toContain('4a không nhỏ hơn 3a: min vẫn ở ô 0.');
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
-    expect(text()).toContain('1a < the old minimum: min moves to slot 3.');
+    expect(text()).toContain('1a < giá trị nhỏ nhất cũ: min chuyển sang ô 3.');
   });
 
   it('ends unstable with the swap version and stable with the shift version', () => {
     render();
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Sorted with 15 comparisons and 4 slots written.');
-    expect(text()).toContain('Not stable here: key 3 now reads b, a.');
+    expect(text()).toContain('Đã sắp xếp xong với 15 lần so sánh và 4 ô đã ghi.');
+    expect(text()).toContain('Ở đây không ổn định: khoá 3 giờ đọc là b, a.');
     expect(cards()).toContain('1a, 2a, 3b, 3a, 4b, 4a');
     pickVariant('shift');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Sorted with 15 comparisons and 11 slots written.');
-    expect(text()).toContain('Every repeated key kept its input order.');
+    expect(text()).toContain('Đã sắp xếp xong với 15 lần so sánh và 11 ô đã ghi.');
+    expect(text()).toContain('Mọi khoá lặp lại đều giữ đúng thứ tự đầu vào.');
     expect(cards()).toContain('1a, 2a, 3a, 3b, 4a, 4b');
   });
 
   it('compares both versions on the same keys', () => {
     render();
-    expect(text()).toMatch(/Swap \(classic\)\s*15 comparisons · 4 slots written/);
-    expect(text()).toMatch(/Shift \(stable\)\s*15 comparisons · 11 slots written/);
-    expect(text()).toContain('equal keys were reordered');
-    expect(text()).toContain('equal keys kept their order');
+    expect(text()).toMatch(/Đổi chỗ \(kinh điển\)\s*15 lần so sánh · 4 ô đã ghi/);
+    expect(text()).toMatch(/Dời \(ổn định\)\s*15 lần so sánh · 11 ô đã ghi/);
+    expect(text()).toContain('các khoá bằng nhau bị đảo thứ tự');
+    expect(text()).toContain('các khoá bằng nhau giữ nguyên thứ tự');
   });
 
   it('describes the jump of a swap and the shift of a rotation', () => {
     render();
     for (let i = 0; i < 7; i++) click(button('Bước tiếp'));
-    expect(text()).toContain('Swap slots 0 and 3: 1a goes to the front, and 3a jumps to slot 3');
+    expect(text()).toContain('Đổi chỗ ô 0 và ô 3: 1a lên đầu, còn 3a nhảy tới ô 3');
     pickVariant('shift');
     for (let i = 0; i < 7; i++) click(button('Bước tiếp'));
-    expect(text()).toContain('shift the 3 cards in slots 0 to 2 one slot right');
+    expect(text()).toContain('dời 3 lá ở các ô 0 đến 2 sang phải một ô');
   });
 
   it('loads typed keys and tags the repeats', () => {
     render();
     commit(keysInput(), '2, 2, 1');
-    expect(cards()).toBe('Cards in order: 2a, 2b, 1a. 0 of 3 in final place.');
+    expect(cards()).toBe('Các lá bài theo thứ tự: 2a, 2b, 1a. 0/3 lá đã ở vị trí cuối cùng.');
     click(button('Đến bước cuối'));
     expect(cards()).toContain('1a, 2b, 2a');
     expect(text()).toContain('2: b → a');
-    expect(text()).toContain('✕ reordered');
+    expect(text()).toContain('✕ bị đảo thứ tự');
   });
 
   it('refuses bad keys with a notice and keeps the last valid ones', () => {
     render();
     commit(keysInput(), '3, banana');
-    expect(text()).toContain('Type whole numbers separated by commas or spaces');
+    expect(text()).toContain('Hãy gõ các số nguyên, cách nhau bằng dấu phẩy hoặc dấu cách');
     expect(keysInput().value).toBe('3, 4, 3, 1, 4, 2');
     commit(keysInput(), '7');
-    expect(text()).toContain('Type from 2 to 10 keys.');
+    expect(text()).toContain('Hãy gõ từ 2 đến 10 khoá.');
     commit(keysInput(), '7, 120');
-    expect(text()).toContain('Every key must be from 0 to 99.');
+    expect(text()).toContain('Mọi khoá phải nằm trong khoảng 0–99.');
   });
 
   it('submits the keys with Enter', () => {
@@ -138,21 +140,21 @@ describe('selection sort and stability lesson', () => {
     input.dispatchEvent(new Event('input', { bubbles: true }));
     input.form?.requestSubmit();
     flushSync();
-    expect(cards()).toBe('Cards in order: 5a, 1a. 0 of 2 in final place.');
+    expect(cards()).toBe('Các lá bài theo thứ tự: 5a, 1a. 0/2 lá đã ở vị trí cuối cùng.');
   });
 
   it('draws random keys of the same length', () => {
     render();
-    click(buttonByText('Random'));
+    click(buttonByText('Ngẫu nhiên'));
     expect(keysInput().value.split(', ')).toHaveLength(6);
   });
 
   it('says when no key repeats', () => {
     render();
     commit(keysInput(), '4, 1, 3');
-    expect(text()).toContain('No key repeats.');
+    expect(text()).toContain('Không có khoá nào lặp lại.');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('No key repeats, so stability cannot show.');
+    expect(text()).toContain('Không có khoá nào lặp lại, nên chưa thấy được tính ổn định.');
   });
 
   it('checks the first practice question with a hint', () => {

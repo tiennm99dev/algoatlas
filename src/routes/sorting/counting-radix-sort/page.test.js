@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/counting-radix-sort/copy.en.js';
+import { vi as m } from '$lib/lessons/counting-radix-sort/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -84,44 +84,46 @@ function practice() {
 describe('counting sort and radix sort lesson', () => {
   it('tallies keys, then turns the tallies into end positions', () => {
     render();
-    expect(text()).toContain('The largest key is 5, so count has 6 cells, all 0.');
+    expect(text()).toContain('Khoá lớn nhất là 5, nên count có 6 ô, đều bằng 0.');
     click(button('Bước tiếp'));
-    expect(text()).toContain('a[0] = 2: add one to count[2], which is now 1.');
+    expect(text()).toContain('a[0] = 2: tăng count[2] thêm một, giờ nó bằng 1.');
     seek(9);
-    expect(text()).toContain('count[1] += count[0]: 2 keys are ≤ 1');
+    expect(text()).toContain('count[1] += count[0]: có 2 khoá ≤ 1');
     seek(13);
-    expect(text()).toContain('count[5] += count[4]: 8 keys are ≤ 5');
+    expect(text()).toContain('count[5] += count[4]: có 8 khoá ≤ 5');
   });
 
   it('places items right to left and keeps equal keys in order', () => {
     render();
     seek(14);
-    expect(text()).toContain('a[7] = 3c: count[3] drops to 6, so it goes to out[6]');
+    expect(text()).toContain('a[7] = 3c: count[3] giảm còn 6, nên nó vào out[6]');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Sorted in 21 loop steps: n = 8 to count, k = 5 to sum, n to place.');
+    expect(text()).toContain(
+      'Đã sắp xếp xong sau 21 bước lặp: n = 8 bước đếm, k = 5 bước cộng dồn, n bước đặt.',
+    );
     const out = cells(m.outputAria).join(' | ');
-    expect(out).toContain('Slot 4: 3a');
-    expect(out).toContain('Slot 5: 3b');
-    expect(out).toContain('Slot 6: 3c');
+    expect(out).toContain('Ô 4: 3a');
+    expect(out).toContain('Ô 5: 3b');
+    expect(out).toContain('Ô 6: 3c');
   });
 
   it('switches to radix sort and fills the digit buckets', () => {
     render();
     pickAlgo('radix');
     expect(keysInput().value).toBe('170, 45, 75, 90, 802, 24, 2, 66');
-    expect(text()).toContain('The largest key, 802, has 3 digits');
+    expect(text()).toContain('Khoá lớn nhất, 802, có 3 chữ số');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Pass 1: sort by the ones digit.');
+    expect(text()).toContain('Lượt 1: sắp xếp theo chữ số hàng đơn vị.');
     click(button('Bước tiếp'));
-    expect(text()).toContain('170 has ones digit 0: append it to bucket 0.');
-    expect(document.querySelector('li[aria-label="Bucket 0: 170"]')).not.toBeNull();
+    expect(text()).toContain('170 có chữ số hàng đơn vị là 0: thêm nó vào cuối ngăn 0.');
+    expect(document.querySelector('li[aria-label="Ngăn 0: 170"]')).not.toBeNull();
   });
 
   it('collects the buckets in order after each pass', () => {
     render();
     pickAlgo('radix');
     seek(10);
-    expect(text()).toContain('Read the buckets 0 to 9 in order back into a.');
+    expect(text()).toContain('Đọc lần lượt các ngăn 0 đến 9 trở lại vào a.');
     expect(cells(m.arrayAria).map((t) => t?.split(': ')[1].split(',')[0])).toEqual([
       '170',
       '90',
@@ -133,26 +135,28 @@ describe('counting sort and radix sort lesson', () => {
       '66',
     ]);
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Sorted in 3 passes and 48 moves, without comparing two keys.');
+    expect(text()).toContain(
+      'Đã sắp xếp xong sau 3 lượt và 48 lần di chuyển, mà không so sánh hai khoá nào.',
+    );
   });
 
   it('keeps separate keys per algorithm and refuses keys out of range', () => {
     render();
     commit(keysInput(), '4, 12');
-    expect(text()).toContain('Counting sort here takes keys from 0 to 9.');
+    expect(text()).toContain('Ở đây sắp xếp đếm nhận các khoá từ 0 đến 9.');
     expect(keysInput().value).toBe('2, 5, 3, 0, 2, 3, 0, 3');
     pickAlgo('radix');
     commit(keysInput(), '21, 12, 22, 11');
     expect(stepCount()).toBe(1 + 2 * (1 + 4 + 1) + 1);
     commit(keysInput(), '1000, 2');
-    expect(text()).toContain('Every key must be from 0 to 999.');
+    expect(text()).toContain('Mọi khoá phải nằm trong khoảng 0–999.');
     pickAlgo('counting');
     expect(keysInput().value).toBe('2, 5, 3, 0, 2, 3, 0, 3');
   });
 
   it('draws random keys within the limit', () => {
     render();
-    click(buttonByText('Random'));
+    click(buttonByText('Ngẫu nhiên'));
     const values = keysInput().value.split(', ').map(Number);
     expect(values).toHaveLength(8);
     expect(values.every((v) => v >= 0 && v <= 9)).toBe(true);

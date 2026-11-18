@@ -29,14 +29,14 @@ export const MAX_VALUE = 99;
 export const heapsortPseudocode = [
   'for i = n/2 - 1 down to 0: siftDown(a, i, n)',
   'for end = n - 1 down to 1:',
-  '  swap(a[0], a[end])    // max to its final slot',
-  '  siftDown(a, 0, end)   // heap is a[0..end-1]',
+  '  swap(a[0], a[end])    // giá trị lớn nhất về ô cuối cùng của nó',
+  '  siftDown(a, 0, end)   // heap là a[0..end-1]',
   'siftDown(a, i, size):',
-  '  while 2i + 1 < size:  // i has a child',
-  '    c = the larger child of i',
+  '  while 2i + 1 < size:  // i có con',
+  '    c = con lớn hơn của i',
   '    if a[c] <= a[i]: stop',
   '    swap(a[i], a[c]); i = c',
-  'done: a is sorted',
+  'xong: a đã được sắp xếp',
 ];
 
 /**

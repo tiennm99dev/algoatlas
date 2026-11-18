@@ -85,7 +85,7 @@ describe('sorting lesson', () => {
     expect(text()).toMatch(/Bước 1\/\d+/);
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
-    expect(text()).toContain('42 > 17: out of order.');
+    expect(text()).toContain('42 > 17: sai thứ tự.');
   });
 
   it('switching algorithm reloads the pseudocode and trace', () => {
@@ -97,15 +97,15 @@ describe('sorting lesson', () => {
 
   it('shows both algorithms’ totals for the current array', () => {
     render(SortPage);
-    expect(text()).toContain('Total cost on this array');
-    expect(text()).toMatch(/Bubble sort\s*\d+ comparisons · \d+ swaps/);
-    expect(text()).toMatch(/Insertion sort\s*\d+ comparisons · \d+ shifts/);
+    expect(text()).toContain('Tổng chi phí trên mảng này');
+    expect(text()).toMatch(/Sắp xếp nổi bọt\s*\d+ lần so sánh · \d+ lần đổi chỗ/);
+    expect(text()).toMatch(/Sắp xếp chèn\s*\d+ lần so sánh · \d+ lần dời/);
   });
 
   it('describes the values in the chart label', () => {
     render(SortPage);
     const chart = document.querySelector('[role="img"]');
-    expect(chart?.getAttribute('aria-label')).toContain('Array: 42, 17, 88');
+    expect(chart?.getAttribute('aria-label')).toContain('Mảng: 42, 17, 88');
   });
 
   it('keeps arrow shortcuts working after a button was clicked', () => {

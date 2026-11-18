@@ -39,11 +39,11 @@ export const ITEM_NAMES = ['A', 'B', 'C'];
 export const MAX_BOUND_N = 20;
 
 export const walkPseudocode = [
-  'node = root of the decision tree',
-  'while node asks "is x < y?":',
+  'node = gốc của cây quyết định',
+  'while node hỏi "x < y?":',
   '  if x < y: node = node.yes',
   '  else: node = node.no',
-  'output the leaf’s order  // one per input order',
+  'output(thứ tự ở lá)  // mỗi thứ tự đầu vào một lá',
 ];
 
 /** Thrown by the scripted comparison when the algorithm asks past the end of the script. */

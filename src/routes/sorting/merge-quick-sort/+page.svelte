@@ -12,7 +12,7 @@
     quickSortTrace,
   } from '$lib/algo-engine/merge-quick-sort.js';
   import { makeArray, toItems } from '$lib/algo-engine/sorting.js';
-  import { en as m } from '$lib/lessons/merge-quick-sort/copy.en.js';
+  import { vi as m } from '$lib/lessons/merge-quick-sort/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {'merge'|'quick'} Algo */

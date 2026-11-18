@@ -107,13 +107,13 @@ export function matchSorts(chosen) {
 
 export const racePseudocode = [
   'race(A):',
-  '  give every sort its own copy of A',
+  '  cho mỗi thuật toán một bản sao riêng của A',
   '  t = 0',
-  '  while some sort is unfinished:',
+  '  while còn thuật toán chưa xong:',
   '    t = t + 1',
-  '    every unfinished sort makes comparison t',
-  '      and the moves that follow it',
-  '  rank the sorts by comparisons, then writes',
+  '    mọi thuật toán chưa xong làm phép so sánh thứ t',
+  '      cùng các lần di chuyển theo sau nó',
+  '  xếp hạng theo số lần so sánh, rồi theo số lần ghi',
 ];
 
 /**

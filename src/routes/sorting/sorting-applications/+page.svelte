@@ -17,7 +17,7 @@
     parseIntervals,
     parseValues,
   } from '$lib/algo-engine/sorting-applications.js';
-  import { en as m } from '$lib/lessons/sorting-applications/copy.en.js';
+  import { vi as m } from '$lib/lessons/sorting-applications/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {'merge'|'dedup'} Mode */

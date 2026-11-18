@@ -39,20 +39,20 @@ export const MAX_COUNT_KEY = 9;
 export const MAX_RADIX_KEY = 999;
 
 export const countingPseudocode = [
-  'k = largest key; count = k + 1 zeros',
+  'k = max(a); count = [0] * (k + 1)',
   'for i = 0 to n - 1: count[a[i]] += 1',
   'for v = 1 to k: count[v] += count[v - 1]',
-  'for i = n - 1 down to 0:  // keeps ties in order',
+  'for i = n - 1 down to 0:  // giữ thứ tự các khoá bằng nhau',
   '  count[a[i]] -= 1; out[count[a[i]]] = a[i]',
-  'done: out is sorted',
+  'xong: out đã được sắp xếp',
 ];
 
 export const radixPseudocode = [
-  'for each digit place, ones first:',
-  '  buckets 0..9 = empty queues',
-  '  for x in a: append x to buckets[digit of x]',
-  '  a = buckets 0..9 joined   // stable',
-  'done: a is sorted',
+  'for place in 1, 10, 100, …:   // hàng đơn vị trước',
+  '  buckets[0..9] = các hàng đợi rỗng',
+  '  for x in a: buckets[digit(x, place)].push(x)',
+  '  a = nối buckets[0..9]   // ổn định',
+  'xong: a đã được sắp xếp',
 ];
 
 /**

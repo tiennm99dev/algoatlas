@@ -40,19 +40,19 @@ export const MAX_VALUE = 99;
 
 /** @type {Record<Comparator, string>} */
 const SORT_LINE = {
-  start: 'sort intervals by start, ties by end',
-  end: 'sort intervals by end, ties by start',
-  none: 'no sort: keep the input order',
+  start: 'sắp xếp intervals theo start, bằng nhau thì theo end',
+  end: 'sắp xếp intervals theo end, bằng nhau thì theo start',
+  none: 'không sắp xếp: giữ nguyên thứ tự đầu vào',
 };
 
 /** @param {Comparator} by */
 const mergeLines = (by) => [
   SORT_LINE[by],
-  'out = [first interval]; last = its block',
-  'for each next interval x:',
+  'out = [intervals[0]]; last = khối của nó',
+  'for x in intervals[1..]:',
   '  if x.start <= last.end: last.end = max(last.end, x.end)',
-  '  else: append x to out   // a gap: new block',
-  'done: out holds the merged blocks',
+  '  else: out.push(x)   // có khoảng trống: khối mới',
+  'xong: out chứa các khối đã gộp',
 ];
 
 /** The merge scan, with the first line naming the sort key. @type {Record<Comparator, string[]>} */
@@ -63,12 +63,12 @@ export const mergePseudocode = {
 };
 
 export const dedupPseudocode = [
-  'sort a   // repeats become neighbours',
+  'sort(a)   // các giá trị lặp lại đứng cạnh nhau',
   'out = [a[0]]',
   'for i = 1 to n - 1:',
-  '  if a[i] != a[i - 1]: append a[i] to out',
-  '  else: skip a[i]   // same as its left neighbour',
-  'done: out holds each value once',
+  '  if a[i] != a[i - 1]: out.push(a[i])',
+  '  else: bỏ qua a[i]   // bằng phần tử bên trái',
+  'xong: out chứa mỗi giá trị đúng một lần',
 ];
 
 /** @type {Record<Exclude<Comparator, 'none'>, (x: Interval, y: Interval) => number>} */
