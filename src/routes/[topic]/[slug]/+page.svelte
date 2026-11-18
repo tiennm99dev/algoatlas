@@ -24,15 +24,15 @@
 </svelte:head>
 
 {#if data.redirect}
-  <section class="mx-auto max-w-3xl px-4 py-16 text-center">
-    <h1 class="mb-4 text-3xl font-bold text-slate-900">{copy.moved.title}</h1>
+  <section class="decor-column mx-auto max-w-3xl px-4 py-16 text-center">
+    <h1 class="mb-4 text-3xl font-semibold tracking-tight text-slate-900">{copy.moved.title}</h1>
     <p class="mb-8 leading-relaxed text-slate-600">{copy.moved.body}</p>
     <a href={resolve(/** @type {'/'} */ (data.redirect))} class="btn-primary px-6 py-3 text-base"
       >{copy.moved.link} <span aria-hidden="true">→</span></a
     >
   </section>
 {:else if stub && topic}
-  <article class="mx-auto max-w-5xl px-4 py-8">
+  <article class="decor-column mx-auto max-w-5xl px-4 py-8">
     <nav class="mb-4 text-sm">
       <a
         href={resolve(/** @type {'/'} */ (topicPath(stub.topic)))}
@@ -48,7 +48,9 @@
           >{copy.hub.comingSoon}</span
         >
       </div>
-      <h1 class="mt-1 mb-2 text-3xl font-bold text-slate-900">{stub.lesson.title}</h1>
+      <h1 class="mt-1 mb-2 text-3xl font-semibold tracking-tight text-slate-900">
+        {stub.lesson.title}
+      </h1>
       <p class="leading-relaxed text-slate-700">{copy.stub.notice}</p>
     </header>
 
@@ -78,7 +80,7 @@
       {#if stub.prev}
         <a
           href={resolve(/** @type {'/'} */ (stub.prev.path))}
-          class="focus-ring rounded-xl border border-slate-200 bg-white p-4 hover:border-teal-600"
+          class="focus-ring rounded-[var(--card-radius)] border border-slate-200 bg-white p-4 hover:border-teal-600"
         >
           <span class="block text-xs text-slate-500"
             ><span aria-hidden="true">←</span> {copy.lessonChrome.previous}</span
@@ -89,7 +91,7 @@
       {#if stub.next}
         <a
           href={resolve(/** @type {'/'} */ (stub.next.path))}
-          class="focus-ring rounded-xl border border-slate-200 bg-white p-4 hover:border-teal-600 sm:col-start-2 sm:text-right"
+          class="focus-ring rounded-[var(--card-radius)] border border-slate-200 bg-white p-4 hover:border-teal-600 sm:col-start-2 sm:text-right"
         >
           <span class="block text-xs text-slate-500"
             >{copy.lessonChrome.next} <span aria-hidden="true">→</span></span

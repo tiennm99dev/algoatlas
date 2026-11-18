@@ -1,0 +1,8 @@
+/* TinTưởng's decoration data. The theme in app.css maps these per age band; nothing here
+   styles an element directly. */
+:root {
+  --tile-line: url('./decor/tile-line.svg');
+  --spot-line: url('./decor/spot-line.svg');
+  --subject-tint: #ccfbf1;
+  --subject-ink: #115e59;
+}

@@ -24,8 +24,9 @@
   <meta name="description" content={copy.site.description} />
 </svelte:head>
 
-<section class="mx-auto max-w-5xl px-4 py-16 text-center">
-  <h1 class="mb-4 text-4xl font-bold text-slate-900 sm:text-5xl">{copy.site.tagline}</h1>
+<section class="decor-column mx-auto max-w-5xl px-4 py-12 text-center">
+  <div class="decor-spot mx-auto mb-4 size-24" aria-hidden="true"></div>
+  <h1 class="mb-4 text-3xl font-semibold tracking-tight text-slate-900">{copy.site.tagline}</h1>
   <p class="mx-auto max-w-2xl text-lg leading-relaxed text-slate-600">{copy.site.description}</p>
   <a
     href={resolve(/** @type {'/'} */ (lessonPath(first)))}
@@ -34,11 +35,11 @@
   >
 </section>
 
-<section class="mx-auto max-w-5xl px-4 pb-12">
+<section class="decor-column mx-auto max-w-5xl px-4 pb-12">
   <h2 class="mb-6 text-center text-2xl font-bold text-slate-900">{copy.hub.howTitle}</h2>
   <ol class="grid gap-6 md:grid-cols-3">
     {#each copy.hub.how as step, i (i)}
-      <li class="rounded-2xl border border-teal-200 bg-teal-50 p-6 text-teal-900">
+      <li class="rounded-[var(--card-radius)] border border-teal-200 bg-teal-50 p-5 text-teal-900">
         <div class="mb-2 text-sm font-semibold text-teal-800">{i + 1}</div>
         <h3 class="mb-1 text-lg font-bold text-teal-800">{step.title}</h3>
         <p class="text-sm leading-relaxed">{step.body}</p>
@@ -47,7 +48,7 @@
   </ol>
 </section>
 
-<section class="mx-auto max-w-5xl px-4 pb-20" aria-labelledby="topics-title">
+<section class="decor-column mx-auto max-w-5xl px-4 pb-20" aria-labelledby="topics-title">
   <h2 id="topics-title" class="mb-6 text-center text-2xl font-bold text-slate-900">
     {copy.hub.topicsTitle}
   </h2>
@@ -57,11 +58,11 @@
         <span class="text-slate-500">{copy.hub.levelLabel(section.level)} ·</span>
         {section.title}
       </h3>
-      <ul class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <ul class="grid gap-2 md:grid-cols-2 lg:grid-cols-3">
         {#each section.topics as topic (topic.slug)}
           <li
             class={[
-              'flex flex-col rounded-2xl border bg-white p-6 transition hover:border-teal-600 hover:shadow-sm',
+              'flex flex-col rounded-[var(--card-radius)] border bg-white p-3 transition hover:border-teal-600 hover:shadow-sm',
               topic.written.length ? 'border-slate-200' : 'border-dashed border-slate-300',
             ]}
           >

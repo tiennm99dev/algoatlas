@@ -42,7 +42,7 @@
 }
 
 @utility btn {
-  @apply focus-ring inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-40 aria-disabled:cursor-not-allowed aria-disabled:opacity-40;
+  @apply focus-ring inline-flex items-center gap-2 rounded-[var(--btn-radius,0.5rem)] px-4 py-2 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-40 aria-disabled:cursor-not-allowed aria-disabled:opacity-40;
 }
 
 @utility btn-primary {
@@ -58,7 +58,7 @@
 }
 
 @utility btn-icon {
-  @apply focus-ring inline-flex size-11 items-center justify-center rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40 aria-disabled:cursor-not-allowed aria-disabled:opacity-40 sm:size-10;
+  @apply focus-ring inline-flex size-11 items-center justify-center rounded-[var(--btn-radius,0.5rem)] border border-slate-300 bg-white text-slate-700 hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40 aria-disabled:cursor-not-allowed aria-disabled:opacity-40 sm:size-10;
 }
 
 @utility field {
@@ -77,6 +77,87 @@
     transparent 3px 8px
   );
 }
+
+/* theme:start
+ * Age-band theme. The whole site is the THPT band: focused, calm, grid paper. Bands change the
+ * page surface, shape and decoration only; the teal interaction colour never changes. The
+ * subject artwork and tints come from src/lib/site/decor.css. Text never sits on a pattern:
+ * the pattern fills the gutters beside an opaque column, the ribbon and the home spot. */
+[data-band='thpt'] {
+  --page-bg: #f8fafc;
+  --card-radius: 0.5rem;
+  --btn-radius: 0.375rem;
+  --decor-tile: var(--tile-line);
+  --decor-spot: var(--spot-line);
+  --decor-size: 520px;
+  --decor-opacity: 0.16;
+  --ribbon-h: 16px;
+  --decor-grid:
+    linear-gradient(to right, rgb(100 116 139 / 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(100 116 139 / 0.08) 1px, transparent 1px);
+}
+
+.decor-main {
+  position: relative;
+  background-color: var(--page-bg);
+  background-image: var(--decor-grid, none);
+  background-size: 24px 24px;
+}
+
+.decor-layer {
+  position: absolute;
+  inset: 0;
+  background: var(--decor-tile) 0 0 / var(--decor-size) repeat;
+  opacity: var(--decor-opacity);
+}
+
+.decor-column {
+  position: relative;
+  background: var(--page-bg);
+  box-shadow: 0 0 0 1.5rem var(--page-bg);
+}
+
+/* THPT keeps the ribbon flat: the subject tint over a one-pixel ink line, no motifs. */
+.decor-ribbon {
+  height: var(--ribbon-h);
+  background: var(--subject-tint);
+  border-bottom: 1px solid var(--subject-ink);
+}
+
+.decor-spot {
+  background: var(--decor-spot) center / contain no-repeat;
+}
+
+.decor-layer,
+.decor-ribbon,
+.decor-spot {
+  pointer-events: none;
+  user-select: none;
+}
+
+@media print {
+  .decor-layer,
+  .decor-ribbon,
+  .decor-spot {
+    display: none;
+  }
+  body,
+  .decor-main,
+  .decor-column,
+  [data-band] {
+    background: #fff;
+    box-shadow: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .decor-layer,
+  .decor-ribbon,
+  .decor-spot {
+    display: none;
+  }
+}
+/* theme:end */
 
 @media (prefers-reduced-motion: reduce) {
   *,

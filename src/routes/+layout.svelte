@@ -1,5 +1,6 @@
 <script>
   import '../app.css';
+  import '$lib/site/decor.css';
   import { asset, resolve } from '$app/paths';
   import { page } from '$app/state';
   import { t } from '$lib/i18n/index.js';
@@ -26,7 +27,12 @@
   }
 </script>
 
-<div class="flex min-h-screen flex-col bg-slate-50 font-sans text-slate-900">
+<!-- TinTưởng has no grades: its readers are THPT students and older, so the whole site takes
+     the focused THPT band. -->
+<div
+  data-band="thpt"
+  class="flex min-h-screen flex-col bg-[var(--page-bg)] font-sans text-slate-900"
+>
   <a
     href="#main"
     class="btn-primary sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50"
@@ -61,7 +67,10 @@
     </div>
   </header>
 
-  <main id="main" tabindex="-1" class="flex-1 outline-none">
+  <div class="decor-ribbon" aria-hidden="true"></div>
+
+  <main id="main" tabindex="-1" class="decor-main flex-1 outline-none">
+    <div class="decor-layer" aria-hidden="true"></div>
     {@render children()}
   </main>
 
@@ -83,7 +92,7 @@
       <span aria-hidden="true">·</span>
       <a
         href="https://github.com/tiennm99dev/tintuong"
-        class="focus-ring rounded text-teal-700 hover:underline">Source</a
+        class="focus-ring rounded text-teal-700 hover:underline">{copy.lessonChrome.sourceLink}</a
       >
     </div>
   </footer>

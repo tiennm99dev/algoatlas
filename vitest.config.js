@@ -18,6 +18,8 @@ export default defineConfig({
     include: ['src/**/*.test.js'],
     // Component tests opt into jsdom with a `@vitest-environment jsdom` docblock.
     environment: 'node',
+    // CSS stays empty in tests, except the decoration files the budget test reads as text.
+    css: { include: [/src\/lib\/site\/decor\.css/, /src\/app\.css/] },
     setupFiles: ['src/test-support/setup-dom.js'],
     // Page tests step hundreds of frames through jsdom; with every file running in parallel
     // that takes several seconds, past the 5 s default.

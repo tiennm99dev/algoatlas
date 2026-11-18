@@ -29,7 +29,7 @@
 
 <!-- Every scrolling box in the lesson gets a tab stop while it overflows with nothing
      focusable inside, so a keyboard user can scroll it. -->
-<article class="mx-auto max-w-5xl px-4 py-8" use:scrollRegions>
+<article class="decor-column mx-auto max-w-5xl px-4 py-8" use:scrollRegions>
   <nav class="mb-4 text-sm">
     <a
       href={resolve(/** @type {'/'} */ (topicPath(lesson.topic)))}
@@ -42,7 +42,7 @@
     <div class="text-sm font-semibold tracking-wide text-slate-500 uppercase">
       {topic.title} · {lesson.level}
     </div>
-    <h1 class="mt-1 mb-2 text-3xl font-bold text-slate-900">{lesson.title}</h1>
+    <h1 class="mt-1 mb-2 text-3xl font-semibold tracking-tight text-slate-900">{lesson.title}</h1>
     <p class="leading-relaxed text-slate-700">{lesson.intro}</p>
     <p class="mt-4 rounded-lg border border-teal-200 bg-teal-50 px-4 py-3 text-sm text-teal-900">
       <strong class="font-semibold">{copy.lessonChrome.tryIt}</strong>
@@ -103,7 +103,7 @@
     {#if prev}
       <a
         href={resolve(/** @type {'/'} */ (prev.path))}
-        class="focus-ring rounded-xl border border-slate-200 bg-white p-4 hover:border-teal-600"
+        class="focus-ring rounded-[var(--card-radius)] border border-slate-200 bg-white p-4 hover:border-teal-600"
       >
         <span class="block text-xs text-slate-500"
           ><span aria-hidden="true">←</span> {copy.lessonChrome.previous}</span
@@ -114,7 +114,7 @@
     {#if next}
       <a
         href={resolve(/** @type {'/'} */ (next.path))}
-        class="focus-ring rounded-xl border border-teal-200 bg-teal-50 p-4 hover:border-teal-600 sm:col-start-2 sm:text-right"
+        class="focus-ring rounded-[var(--card-radius)] border border-teal-200 bg-teal-50 p-4 hover:border-teal-600 sm:col-start-2 sm:text-right"
       >
         <span class="block text-xs text-teal-800"
           >{copy.lessonChrome.next} <span aria-hidden="true">→</span></span
