@@ -14,6 +14,7 @@
     selectPseudocode,
     selectTrace,
   } from '$lib/algo-engine/quickselect.js';
+  import { lcg } from '$lib/algo-engine/seeded-random.js';
   import { en as m } from '$lib/lessons/quickselect/copy.en.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
@@ -31,12 +32,6 @@
   };
   const PRESET_KEYS = /** @type {PresetKey[]} */ (Object.keys(PRESETS));
   const RULES = /** @type {PivotRule[]} */ (['last', 'random', 'mom']);
-
-  /** Fixed generator for the first random-pivot trace, so prerendering and hydration agree. */
-  function firstRand() {
-    let s = 7;
-    return () => (s = (s * 1664525 + 1013904223) % 4294967296) / 4294967296;
-  }
 
   /** @param {number[]} values @param {number} k @param {() => number} rand */
   function build(values, k, rand) {
@@ -59,7 +54,8 @@
   let preset = $state('example');
   let notice = $state({ text: '', at: -1 });
 
-  const first = build(INITIAL, INITIAL_K, firstRand());
+  // A fixed seed for the first random-pivot trace, so prerendering and hydration agree.
+  const first = build(INITIAL, INITIAL_K, lcg(7));
   let traces = $state.raw(first);
   const player = createPlayer(first.last);
   const frame = $derived(player.frame);
