@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to **AlgorithmAlly** are documented here. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: 4-digit MAJOR.MINOR.PATCH.MICRO.
+All notable changes to **TinTưởng** are documented here. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: 4-digit MAJOR.MINOR.PATCH.MICRO.
 
 ## [Unreleased]
 
@@ -16,6 +16,7 @@ All notable changes to **AlgorithmAlly** are documented here. Format: [Keep a Ch
 
 ### Changed
 
+- The site is renamed from AlgorithmAlly to TinTưởng and now lives at `https://tiennm99dev.github.io/tintuong/`. Practice progress saved under either earlier name (AlgorithmAlly or AlgoAtlas) moves to the new storage key on the first visit.
 - The site is renamed from AlgoAtlas to AlgorithmAlly and now lives at `https://tiennm99dev.github.io/algorithmally/`. Practice progress saved under the old name moves to the new storage key on the first visit.
 - Lessons register themselves: `registry.js` discovers every `copy.en.js` and orders them by the curriculum.
 - The binary search tree moved to `/trees/bst/` and Dijkstra on a grid to `/shortest-paths/dijkstra-grid/`. The "Data structures" topic is now "Hashing".

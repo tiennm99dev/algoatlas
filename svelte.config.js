@@ -1,7 +1,7 @@
 import adapter from '@sveltejs/adapter-static';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
-const base = process.env.SITE_BASE ?? '/algorithmally';
+const base = process.env.SITE_BASE ?? '/tintuong';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {

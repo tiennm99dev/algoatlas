@@ -181,7 +181,7 @@ describe('PracticeBlock', () => {
     const q = question(1);
     click(/** @type {HTMLInputElement} */ (q.querySelectorAll('input[type="radio"]')[1]));
     submit(q);
-    expect(localStorage.getItem('algorithmally:practice:remember')).toBe('[1]');
+    expect(localStorage.getItem('tintuong:practice:remember')).toBe('[1]');
     unmount(/** @type {any} */ (app));
     document.body.innerHTML = '';
     render('remember');
@@ -189,31 +189,46 @@ describe('PracticeBlock', () => {
     expect(question(1).textContent).toContain('Solved');
     click(buttonIn(document.body, 'Reset progress'));
     expect(text()).toContain('0 of 5 solved');
-    expect(localStorage.getItem('algorithmally:practice:remember')).toBeNull();
+    expect(localStorage.getItem('tintuong:practice:remember')).toBeNull();
   });
 
-  it('moves progress saved under the old site name to the new key once', () => {
-    localStorage.setItem('algoatlas:practice:legacy', '[0, 2]');
-    render('legacy');
-    expect(text()).toContain('2 of 5 solved');
-    expect(localStorage.getItem('algorithmally:practice:legacy')).toBe('[0, 2]');
-    expect(localStorage.getItem('algoatlas:practice:legacy')).toBeNull();
-  });
+  it.each(['algorithmally', 'algoatlas'])(
+    'moves progress saved under the old %s key to the new key once',
+    (old) => {
+      localStorage.setItem(`${old}:practice:legacy`, '[0, 2]');
+      render('legacy');
+      expect(text()).toContain('2 of 5 solved');
+      expect(localStorage.getItem('tintuong:practice:legacy')).toBe('[0, 2]');
+      expect(localStorage.getItem(`${old}:practice:legacy`)).toBeNull();
+    },
+  );
 
-  it('keeps new-key progress over a leftover old key', () => {
-    localStorage.setItem('algorithmally:practice:both', '[1]');
-    localStorage.setItem('algoatlas:practice:both', '[0, 2]');
+  it('keeps new-key progress over leftover old keys', () => {
+    localStorage.setItem('tintuong:practice:both', '[1]');
+    localStorage.setItem('algorithmally:practice:both', '[0, 2]');
+    localStorage.setItem('algoatlas:practice:both', '[3]');
     render('both');
     expect(text()).toContain('1 of 5 solved');
-    expect(localStorage.getItem('algorithmally:practice:both')).toBe('[1]');
+    expect(localStorage.getItem('tintuong:practice:both')).toBe('[1]');
+    expect(localStorage.getItem('algorithmally:practice:both')).toBeNull();
     expect(localStorage.getItem('algoatlas:practice:both')).toBeNull();
   });
 
+  it('prefers the newer old key over the oldest one', () => {
+    localStorage.setItem('algorithmally:practice:older', '[1]');
+    localStorage.setItem('algoatlas:practice:older', '[0, 2]');
+    render('older');
+    expect(text()).toContain('1 of 5 solved');
+    expect(localStorage.getItem('tintuong:practice:older')).toBe('[1]');
+    expect(localStorage.getItem('algorithmally:practice:older')).toBeNull();
+    expect(localStorage.getItem('algoatlas:practice:older')).toBeNull();
+  });
+
   it('ignores unreadable stored progress', () => {
-    localStorage.setItem('algorithmally:practice:bad', '{"x":1}');
+    localStorage.setItem('tintuong:practice:bad', '{"x":1}');
     render('bad');
     expect(text()).toContain('0 of 5 solved');
-    localStorage.setItem('algorithmally:practice:range', '[0, 9, -1, 0, "2"]');
+    localStorage.setItem('tintuong:practice:range', '[0, 9, -1, 0, "2"]');
     unmount(/** @type {any} */ (app));
     render('range');
     expect(text()).toContain('1 of 5 solved');

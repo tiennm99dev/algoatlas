@@ -17,9 +17,10 @@
 
   const c = t().practice;
   const headingId = $props.id();
-  const storageKey = $derived(`algorithmally:practice:${id}`);
-  // The site was called AlgoAtlas; progress saved under that name moves to the new key once.
-  const legacyKey = $derived(`algoatlas:practice:${id}`);
+  const storageKey = $derived(`tintuong:practice:${id}`);
+  // The site was called AlgorithmAlly and, before that, AlgoAtlas. Progress saved under either
+  // name moves to the new key once, newest name first, so a fresher save wins.
+  const legacyKeys = $derived([`algorithmally:practice:${id}`, `algoatlas:practice:${id}`]);
 
   /** @type {number[]} */
   let solved = $state([]);
@@ -28,7 +29,7 @@
 
   // Read after hydration so the prerendered HTML never depends on one viewer's storage.
   onMount(() => {
-    migrate(legacyKey, storageKey);
+    for (const key of legacyKeys) migrate(key, storageKey);
     solved = load(storageKey, exercises.length);
   });
 

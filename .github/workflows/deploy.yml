@@ -44,7 +44,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          SITE_BASE: /algorithmally
+          SITE_BASE: /tintuong
 
       - name: Chunk sizes
         run: npm run size-report

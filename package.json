@@ -1,10 +1,10 @@
 {
-  "name": "algorithmally",
+  "name": "tintuong",
   "version": "0.1.0.0",
   "private": true,
   "license": "Apache-2.0",
   "type": "module",
-  "description": "AlgorithmAlly — learn data structures and algorithms by stepping through them. Static site.",
+  "description": "TinTưởng — learn data structures and algorithms by stepping through them. Static site.",
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
