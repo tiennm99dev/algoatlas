@@ -51,7 +51,7 @@ const verdict = (holds) => (holds ? 'đúng ✓' : 'bị phá vỡ ✗');
 const programs = {
   sum: 'Vòng lặp tính tổng',
   max: 'Vòng lặp tìm max',
-  insertion: 'Sắp xếp chèn',
+  insertion: 'Insertion sort',
   recursive: 'Tổng đệ quy',
 };
 
@@ -61,7 +61,7 @@ export const vi = {
   level: 'Trung bình',
   title: 'Đệ quy và quy nạp',
   intro:
-    'Làm sao biết một vòng lặp hay một hàm đệ quy đúng với mọi đầu vào, chứ không chỉ với những đầu vào bạn đã thử? Bất biến vòng lặp (loop invariant) là một mệnh đề đúng trước khi vòng lặp bắt đầu và vẫn đúng sau mỗi lần lặp, nên khi thoát vòng lặp nó cho biết việc đã xong. Hàm đệ quy được chứng minh theo cùng cách, bằng quy nạp: chứng minh trường hợp cơ sở (base case), rồi chứng minh mỗi lời gọi đúng miễn là lời gọi nhỏ hơn mà nó tạo ra đúng.',
+    'Làm sao biết một vòng lặp hay một hàm đệ quy đúng với mọi đầu vào, chứ không chỉ với những đầu vào em đã thử? Bất biến vòng lặp (loop invariant) là một mệnh đề đúng trước khi vòng lặp bắt đầu và vẫn đúng sau mỗi lần lặp, nên khi thoát vòng lặp nó cho biết việc đã xong. Hàm đệ quy được chứng minh theo cùng cách, bằng quy nạp: chứng minh trường hợp cơ sở (base case), rồi chứng minh mỗi lời gọi đúng miễn là lời gọi nhỏ hơn mà nó tạo ra đúng.',
   summary:
     'Kiểm tra một bất biến vòng lặp trước và sau mỗi lần lặp, và chứng minh một hàm đệ quy bằng quy nạp, kèm các phiên bản có lỗi làm hỏng lập luận.',
   instruction:
@@ -128,7 +128,7 @@ export const vi = {
   prefixLabel: (k) => (k === 0 ? 'rỗng' : `${k} giá trị đầu`),
   pointerI: 'i',
   pointerK: 'k',
-  stackTitle: 'Các lời gọi trên ngăn xếp',
+  stackTitle: 'Các lời gọi trên stack',
   stackEmpty: 'rỗng',
   /** @param {number} k */
   callChip: (k) => `sum(a, ${k})`,
@@ -170,7 +170,7 @@ export const vi = {
       case 'call':
         return f.i === 0
           ? 'Gọi sum(a, 0): k = 0, trường hợp cơ sở.'
-          : `Gọi sum(a, ${f.i}). Lời gọi này cần sum(a, ${f.i - 1}) trước, nên thêm một khung được đẩy vào ngăn xếp.`;
+          : `Gọi sum(a, ${f.i}). Lời gọi này cần sum(a, ${f.i - 1}) trước, nên thêm một khung được đẩy vào stack.`;
       case 'base':
         return `Trường hợp cơ sở: ${compare(f)}. P(0) ${verdict(f.holds)}.`;
       case 'step': {
@@ -199,10 +199,10 @@ export const vi = {
   },
   takeaways: [
     'Bất biến vòng lặp là một mệnh đề về các biến của vòng lặp, đúng trước lần lặp đầu tiên (khởi tạo) và vẫn đúng sau mỗi lần lặp (duy trì).',
-    'Khi thoát (kết thúc), bất biến cộng với điều kiện dừng, ở đây là i = n, cho đúng kết quả bạn muốn.',
+    'Khi thoát (kết thúc), bất biến cộng với điều kiện dừng, ở đây là i = n, cho đúng kết quả em muốn.',
     'Quy nạp chứng minh đệ quy theo cùng cách: chứng minh trường hợp cơ sở, rồi giả sử lời gọi nhỏ hơn đúng và chỉ ra lời gọi hiện tại cũng đúng.',
-    'Chạy qua các phép thử không phải là chứng minh. Bản sắp xếp chèn có lỗi vẫn đúng với mọi đầu vào đã sắp xếp, và bản tính tổng có lỗi vẫn đúng mỗi khi a[0] = 0; trên những đầu vào đó, mọi lần kiểm tra cũng đều đúng. Chỉ lập luận, vốn phải đúng với mọi đầu vào, mới loại được các lỗi.',
-    'Chọn “Thêm một lỗi” cho Sắp xếp chèn, rồi thử các mẫu “Đã sắp xếp” và “Đảo ngược”: mẫu nào làm lộ lỗi, và ở lần lặp nào?',
+    'Chạy qua các phép thử không phải là chứng minh. Bản insertion sort (sắp xếp chèn) có lỗi vẫn đúng với mọi đầu vào đã sắp xếp, và bản tính tổng có lỗi vẫn đúng mỗi khi a[0] = 0; trên những đầu vào đó, mọi lần kiểm tra cũng đều đúng. Chỉ lập luận, vốn phải đúng với mọi đầu vào, mới loại được các lỗi.',
+    'Chọn “Thêm một lỗi” cho Insertion sort, rồi thử các mẫu “Đã sắp xếp” và “Đảo ngược”: mẫu nào làm lộ lỗi, và ở lần lặp nào?',
   ],
   complexityHead: ['Chương trình', 'Thời gian / bộ nhớ', 'Vì sao'],
   complexity: [
@@ -211,8 +211,12 @@ export const vi = {
       'O(n) / O(1)',
       'Một lượt duyệt qua a. Bất biến chỉ là lập luận; nó không tốn gì khi chương trình chạy.',
     ],
-    ['Sắp xếp chèn', 'O(n²) / O(1)', 'Chèn a[i] có thể phải dời cả i giá trị đứng trước nó.'],
-    ['Tổng đệ quy', 'O(n) / O(n)', 'n + 1 lời gọi, tất cả cùng nằm trên ngăn xếp ở điểm sâu nhất.'],
+    ['Insertion sort', 'O(n²) / O(1)', 'Chèn a[i] có thể phải dời cả i giá trị đứng trước nó.'],
+    [
+      'Tổng đệ quy',
+      'O(n) / O(n)',
+      'n + 1 lời gọi, tất cả cùng nằm trên stack (ngăn xếp) ở điểm sâu nhất.',
+    ],
     [
       'Kiểm tra bất biến ở mỗi lần lặp',
       'O(n²) / O(1)',
@@ -240,7 +244,7 @@ export const vi = {
     {
       type: 'choice',
       prompt:
-        'Khi bật lỗi, sắp xếp chèn dùng “j > 0” thay cho “j >= 0”. Đầu vào nào qua được mọi lần kiểm tra?',
+        'Khi bật lỗi, insertion sort dùng “j > 0” thay cho “j >= 0”. Đầu vào nào qua được mọi lần kiểm tra?',
       options: ['4, 3, 2, 1', '1, 2, 3, 4', '2, 1', '3, 1, 2'],
       answer: 1,
       hints: [
@@ -273,5 +277,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Bài tiếp theo là Luyện tập: tư duy đệ quy, nơi bạn tự viết và lần theo các hàm đệ quy.',
+    'Bài tiếp theo là Luyện tập: tư duy đệ quy, nơi em tự viết và lần theo các hàm đệ quy.',
 };

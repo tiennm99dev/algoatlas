@@ -119,7 +119,7 @@ describe('recursion and induction lesson', () => {
     commit(field('select[name="program"]'), 'recursive');
     next(1);
     expect(narration()).toBe(
-      'Gọi sum(a, 6). Lời gọi này cần sum(a, 5) trước, nên thêm một khung được đẩy vào ngăn xếp.',
+      'Gọi sum(a, 6). Lời gọi này cần sum(a, 5) trước, nên thêm một khung được đẩy vào stack.',
     );
     next(7);
     expect(narration()).toBe(

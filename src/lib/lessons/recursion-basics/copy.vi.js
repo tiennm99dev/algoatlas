@@ -14,11 +14,11 @@ export const vi = {
   level: 'Cơ bản',
   title: 'Đệ quy cơ bản',
   intro:
-    'Một hàm đệ quy giải bài toán bằng cách tự gọi chính nó trên một bản nhỏ hơn của bài toán. Hàm cần một trường hợp cơ sở (base case), tức đầu vào đủ nhỏ để trả lời ngay, và một trường hợp đệ quy đưa mỗi lời gọi tiến dần về trường hợp cơ sở. Mỗi lời gọi có một khung riêng trên ngăn xếp lời gọi (call stack), và các khung được lấy ra theo thứ tự ngược với lúc đẩy vào.',
+    'Một hàm đệ quy giải bài toán bằng cách tự gọi chính nó trên một bản nhỏ hơn của bài toán. Hàm cần một trường hợp cơ sở (base case), tức đầu vào đủ nhỏ để trả lời ngay, và một trường hợp đệ quy đưa mỗi lời gọi tiến dần về trường hợp cơ sở. Mỗi lời gọi có một khung riêng trên call stack (ngăn xếp lời gọi), và các khung được lấy ra theo thứ tự ngược với lúc đẩy vào.',
   summary:
-    'Chạy từng bước hàm giai thừa và hàm Fibonacci, xem ngăn xếp lời gọi đẩy vào một khung ở mỗi lời gọi và lấy khung ra ở mỗi lần trả về.',
+    'Chạy từng bước hàm giai thừa và hàm Fibonacci, xem call stack đẩy vào một khung ở mỗi lời gọi và lấy khung ra ở mỗi lần trả về.',
   instruction:
-    'Chọn một hàm và một giá trị n, rồi chạy từng bước. Quan sát ngăn xếp lời gọi lớn dần cho tới khi một trường hợp cơ sở trả lời, rồi nhỏ lại khi từng hàm gọi chạy tiếp với giá trị vừa nhận. Bỏ chọn “Trường hợp cơ sở” để xem chuyện gì xảy ra khi thiếu nó.',
+    'Chọn một hàm và một giá trị n, rồi chạy từng bước. Quan sát call stack lớn dần cho tới khi một trường hợp cơ sở trả lời, rồi nhỏ lại khi từng hàm gọi chạy tiếp với giá trị vừa nhận. Bỏ chọn “Trường hợp cơ sở” để xem chuyện gì xảy ra khi thiếu nó.',
   fnLabel: 'Hàm',
   fns: { fact: 'Giai thừa', fib: 'Fibonacci' },
   nLabel: 'n',
@@ -29,18 +29,18 @@ export const vi = {
   baseNotice: (on) =>
     on
       ? 'Đã khôi phục trường hợp cơ sở: đệ quy dừng khi n ≤ 1.'
-      : 'Đã bỏ trường hợp cơ sở: giờ không gì dừng được đệ quy. Bạn chạy tiếp và xem ngăn xếp nhé.',
+      : 'Đã bỏ trường hợp cơ sở: giờ không gì dừng được đệ quy. Em chạy tiếp và xem stack nhé.',
   stats: {
     calls: 'Số lời gọi',
-    depth: 'Độ sâu ngăn xếp',
+    depth: 'Độ sâu stack',
     result: 'Kết quả',
   },
   /** @param {number} d @param {number} max */
   depthValue: (d, max) => `${d} (tối đa ${max})`,
   resultPending: '…',
   resultOverflow: 'sập',
-  stackTitle: 'Ngăn xếp lời gọi (đỉnh ở trên)',
-  stackEmpty: 'Ngăn xếp đang rỗng.',
+  stackTitle: 'Call stack (đỉnh ở trên)',
+  stackEmpty: 'Stack đang rỗng.',
   /** @param {number} limit */
   stackLimit: (limit) => `Chứa được ${limit} khung`,
   treeTitle: 'Cây lời gọi',
@@ -57,7 +57,7 @@ export const vi = {
     `${callName(fn, signed(n))}, ${
       {
         active: 'đang chạy',
-        waiting: 'đang chờ trên ngăn xếp',
+        waiting: 'đang chờ trên stack',
         returned: `đã trả về ${result}`,
         lost: 'mất khi chương trình sập',
       }[status]
@@ -93,16 +93,16 @@ export const vi = {
     switch (f.kind) {
       case 'start':
         return f.withBase
-          ? `Sẵn sàng gọi ${name(f.n)}. Mỗi lời gọi sẽ đẩy một khung riêng vào ngăn xếp.`
+          ? `Sẵn sàng gọi ${name(f.n)}. Mỗi lời gọi sẽ đẩy một khung riêng vào stack.`
           : `Sẵn sàng gọi ${name(f.n)} khi đã bỏ trường hợp cơ sở.`;
       case 'call': {
         const check = f.withBase
           ? ` ${signed(f.value ?? 0)} ≤ 1 không?`
           : ' Không có trường hợp cơ sở nào để kiểm tra.';
-        return `Gọi ${name(f.value ?? 0)}: đẩy vào một khung với n = ${signed(f.value ?? 0)}. Ngăn xếp sâu ${f.depth} khung.${check}`;
+        return `Gọi ${name(f.value ?? 0)}: đẩy vào một khung với n = ${signed(f.value ?? 0)}. Stack sâu ${f.depth} khung.${check}`;
       }
       case 'base':
-        return `${top?.n} ≤ 1, trường hợp cơ sở: ${name(top?.n ?? 0)} trả về ${f.value} mà không tự gọi lại, và khung của nó được lấy ra khỏi ngăn xếp.`;
+        return `${top?.n} ≤ 1, trường hợp cơ sở: ${name(top?.n ?? 0)} trả về ${f.value} mà không tự gọi lại, và khung của nó được lấy ra khỏi stack.`;
       case 'resume': {
         const local = f.fn === 'fib' && top?.line === 4 ? 'b' : f.fn === 'fib' ? 'a' : 'r';
         return `${name(f.from ?? 0)} trả về ${f.value}. Quay lại ${name(top?.n ?? 0)}, hàm này chạy tiếp với ${local} = ${f.value}.`;
@@ -115,11 +115,11 @@ export const vi = {
         return `${name(top?.n ?? 0)} = ${sum}. Trả về ${f.value} và lấy khung ra.`;
       }
       case 'overflow':
-        return `Gọi ${name(f.value ?? 0)} sẽ cần khung thứ ${f.depth + 1}, nhưng ngăn xếp chỉ chứa được ${f.depth}: tràn ngăn xếp (stack overflow). Không có trường hợp cơ sở thì các lời gọi không bao giờ dừng.`;
+        return `Gọi ${name(f.value ?? 0)} sẽ cần khung thứ ${f.depth + 1}, nhưng stack chỉ chứa được ${f.depth}: tràn stack (stack overflow). Không có trường hợp cơ sở thì các lời gọi không bao giờ dừng.`;
       case 'done':
         return f.overflow
-          ? `Chương trình sập vì tràn ngăn xếp sau ${f.callCount} lời gọi. Đệ quy cần một trường hợp cơ sở chắc chắn đạt tới được.`
-          : `${name(f.n)} = ${f.result} sau ${f.callCount} lời gọi. Ngăn xếp sâu nhất ${f.maxDepth} khung và giờ đã rỗng trở lại.`;
+          ? `Chương trình sập vì tràn stack sau ${f.callCount} lời gọi. Đệ quy cần một trường hợp cơ sở chắc chắn đạt tới được.`
+          : `${name(f.n)} = ${f.result} sau ${f.callCount} lời gọi. Stack sâu nhất ${f.maxDepth} khung và giờ đã rỗng trở lại.`;
     }
   },
   takeaways: [
@@ -127,12 +127,12 @@ export const vi = {
     'Mỗi lời gọi đẩy vào một khung chứa n và các biến cục bộ của riêng nó. Hàm gọi phải chờ lời gọi nó tạo ra trả về, nên các khung được lấy ra theo thứ tự ngược lại.',
     'fact(n) tạo n lời gọi và xếp chồng n khung: thời gian O(n) và bộ nhớ O(n), dù trong mã không có mảng nào.',
     'fib(n) tự gọi hai lần, nên tạo ra 2·fib(n + 1) − 1 lời gọi và giải đi giải lại cùng một bài toán con: fib(2) chạy 3 lần bên trong fib(5).',
-    'Bỏ chọn “Trường hợp cơ sở” rồi chạy đến bước cuối: ngăn xếp đầy và chương trình sập. Sau đó so sánh cây lời gọi của fib(6) với fact(6).',
+    'Bỏ chọn “Trường hợp cơ sở” rồi chạy đến bước cuối: stack đầy và chương trình sập. Sau đó so sánh cây lời gọi của fib(6) với fact(6).',
   ],
   complexityHead: ['Đại lượng', 'Chi phí', 'Vì sao'],
   complexity: [
     ['fact(n), thời gian', 'O(n)', 'n lời gọi, mỗi lời gọi làm một phép nhân.'],
-    ['fact(n), bộ nhớ', 'O(n)', 'Ở điểm sâu nhất, cả n khung cùng nằm trên ngăn xếp.'],
+    ['fact(n), bộ nhớ', 'O(n)', 'Ở điểm sâu nhất, cả n khung cùng nằm trên stack.'],
     [
       'fib(n), thời gian',
       'O(φⁿ) ≈ O(1.618ⁿ)',
@@ -141,7 +141,7 @@ export const vi = {
     [
       'fib(n), bộ nhớ',
       'O(n)',
-      'Mỗi lúc chỉ có một đường đi của cây lời gọi, fib(n) → fib(n − 1) → … → fib(1), nằm trên ngăn xếp.',
+      'Mỗi lúc chỉ có một đường đi của cây lời gọi, fib(n) → fib(n − 1) → … → fib(1), nằm trên stack.',
     ],
   ],
   practiceTitle: 'Tự kiểm tra',
@@ -161,7 +161,7 @@ export const vi = {
     },
     {
       type: 'number',
-      prompt: 'Ở điểm sâu nhất của fact(6), trên ngăn xếp có bao nhiêu khung?',
+      prompt: 'Ở điểm sâu nhất của fact(6), trên stack có bao nhiêu khung?',
       answer: 6,
       unit: 'khung',
       hints: ['fact(6) gọi fact(5), fact(5) gọi fact(4), … cho tới trường hợp cơ sở fact(1).'],
@@ -179,7 +179,7 @@ export const vi = {
     },
     {
       type: 'order',
-      prompt: 'Xếp các khung của fact(3) theo thứ tự chúng được lấy ra khỏi ngăn xếp.',
+      prompt: 'Xếp các khung của fact(3) theo thứ tự chúng được lấy ra khỏi stack.',
       items: ['fact(3)', 'fact(1)', 'fact(2)'],
       answer: [1, 2, 0],
       hints: [
@@ -193,16 +193,16 @@ export const vi = {
       prompt: 'Chuyện gì xảy ra nếu bỏ trường hợp cơ sở khỏi fact(n)?',
       options: [
         'Hàm trả về 0, vì các lời gọi đi tới fact(0).',
-        'Hàm gọi fact(n − 1), fact(n − 2), … mãi mãi, cho tới khi tràn ngăn xếp.',
+        'Hàm gọi fact(n − 1), fact(n − 2), … mãi mãi, cho tới khi tràn stack.',
         'Hàm trả về n, vì chỉ lời gọi đầu tiên chạy.',
         'Không có gì thay đổi: phép nhân sẽ làm hàm dừng.',
       ],
       answer: 1,
       hints: ['Bỏ chọn “Trường hợp cơ sở” rồi chạy đến bước cuối.'],
       solution:
-        'Không gì dừng được các lời gọi: fact(0) gọi fact(−1), fact(−1) gọi fact(−2), cứ thế mãi. Mỗi lời gọi đẩy vào một khung, nên chương trình sập khi ngăn xếp đầy.',
+        'Không gì dừng được các lời gọi: fact(0) gọi fact(−1), fact(−1) gọi fact(−2), cứ thế mãi. Mỗi lời gọi đẩy vào một khung, nên chương trình sập khi stack đầy.',
     },
   ],
   nextTeaser:
-    'Bài sau, Đệ quy và quy nạp, cho bạn thấy cách chứng minh một vòng lặp hay một hàm đệ quy luôn đúng.',
+    'Bài sau, Đệ quy và quy nạp, cho em thấy cách chứng minh một vòng lặp hay một hàm đệ quy luôn đúng.',
 };

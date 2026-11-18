@@ -20,11 +20,11 @@ export const vi = {
   level: 'Trung bình',
   title: 'Luyện tập: tư duy đệ quy',
   intro:
-    'Tư duy đệ quy nghĩa là tin vào lời gọi nhỏ hơn. Để chuyển một tháp n đĩa, hãy giả sử bạn đã chuyển được n − 1 đĩa, và cả kế hoạch chỉ gói gọn trong ba dòng. Để liệt kê mọi tập con, ta quyết định một phần tử, bỏ nó hoặc lấy nó, rồi để lời gọi nhỏ hơn liệt kê phần còn lại.',
+    'Tư duy đệ quy nghĩa là tin vào lời gọi nhỏ hơn. Để chuyển một tháp n đĩa, hãy giả sử em đã chuyển được n − 1 đĩa, và cả kế hoạch chỉ gói gọn trong ba dòng. Để liệt kê mọi tập con, ta quyết định một phần tử, bỏ nó hoặc lấy nó, rồi để lời gọi nhỏ hơn liệt kê phần còn lại.',
   summary:
-    'Giải bài toán tháp Hà Nội và sinh mọi tập con bằng đệ quy, kèm cây lời gọi và ngăn xếp lời gọi (call stack) bên cạnh.',
+    'Giải bài toán tháp Hà Nội và sinh mọi tập con bằng đệ quy, kèm cây lời gọi và call stack bên cạnh.',
   instruction:
-    'Chọn một bài toán, đặt số đĩa hoặc các phần tử, rồi chạy từng bước. Cây lời gọi cho thấy mọi lời gọi: lời gọi đang chạy, các lời gọi đang chờ trên ngăn xếp và các lời gọi đã xong. Dùng bàn cọc và cây để trả lời các câu hỏi bên dưới.',
+    'Chọn một bài toán, đặt số đĩa hoặc các phần tử, rồi chạy từng bước. Cây lời gọi cho thấy mọi lời gọi: lời gọi đang chạy, các lời gọi đang chờ trên call stack (ngăn xếp lời gọi) và các lời gọi đã xong. Dùng bàn cọc và cây để trả lời các câu hỏi bên dưới.',
   problemLabel: 'Bài toán',
   problems: { hanoi: 'Tháp Hà Nội', subsets: 'Tập con' },
   disksLabel: 'Số đĩa',
@@ -59,7 +59,7 @@ export const vi = {
     ({
       '': 'chưa được gọi',
       active: 'đang chạy',
-      waiting: 'đang chờ trên ngăn xếp',
+      waiting: 'đang chờ trên stack',
       done: 'đã xong',
     })[s],
   hanoiName,
@@ -68,18 +68,18 @@ export const vi = {
   stats: {
     moves: 'Số bước chuyển',
     calls: 'Số lời gọi',
-    depth: 'Độ sâu ngăn xếp',
+    depth: 'Độ sâu stack',
     outputs: 'Số tập con đã in',
   },
   /** @param {number} done @param {number} total */
   ofTotal: (done, total) => `${done}/${total}`,
-  stackTitle: 'Ngăn xếp lời gọi (ngoài cùng ở trên)',
+  stackTitle: 'Call stack (ngoài cùng ở trên)',
   stackEmpty: 'rỗng',
   outputsTitle: 'Kết quả in ra, theo thứ tự',
   outputsEmpty: 'chưa có gì',
   legend: {
     active: 'Đang chạy',
-    waiting: 'Đang chờ trên ngăn xếp',
+    waiting: 'Đang chờ trên stack',
     done: 'Đã xong',
     output: 'In ra một tập con',
     idle: 'Chưa được gọi',
@@ -148,7 +148,7 @@ export const vi = {
     'Tin vào lời gọi nhỏ hơn: viết bước cho n với giả sử lời gọi cho n − 1 đã chạy đúng, rồi đảm bảo trường hợp cơ sở đúng.',
     'Tháp Hà Nội cần T(n) = 2·T(n − 1) + 1 bước chuyển, tức 2ⁿ − 1. Đĩa k được chuyển 2ⁿ⁻ᵏ lần, nên đĩa nhỏ nhất cứ cách một bước lại chuyển một lần.',
     'Mỗi tập con là một đường đi gồm n lựa chọn lấy hoặc bỏ, nên có 2ⁿ tập con và cây lời gọi có 2ⁿ⁺¹ − 1 lời gọi.',
-    'Cả hai đệ quy chỉ sâu n tầng (n + 1 với tập con), nên ngăn xếp vẫn nhỏ dù khối lượng công việc tăng theo hàm mũ.',
+    'Cả hai đệ quy chỉ sâu n tầng (n + 1 với tập con), nên stack vẫn nhỏ dù khối lượng công việc tăng theo hàm mũ.',
     'Thử tháp Hà Nội với 4 rồi 5 đĩa và xem đĩa 1 đi đâu đầu tiên: câu trả lời phụ thuộc vào n chẵn hay lẻ.',
   ],
   complexityHead: ['Bài toán', 'Chi phí', 'Vì sao'],
@@ -158,7 +158,7 @@ export const vi = {
       'Θ(2ⁿ)',
       'T(n) = 2·T(n − 1) + 1 cho 2ⁿ − 1 bước chuyển; không lời giải nào ít bước hơn.',
     ],
-    ['Tháp Hà Nội, bộ nhớ', 'O(n)', 'Mỗi lúc có nhiều nhất n lời gọi trên ngăn xếp.'],
+    ['Tháp Hà Nội, bộ nhớ', 'O(n)', 'Mỗi lúc có nhiều nhất n lời gọi trên stack.'],
     [
       'Tập con, thời gian',
       'O(n·2ⁿ)',

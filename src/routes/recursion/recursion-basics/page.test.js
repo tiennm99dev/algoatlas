@@ -64,17 +64,15 @@ function practice() {
 describe('recursion basics lesson', () => {
   it('pushes a frame per call down to the base case, then pops them', () => {
     render();
-    expect(narration()).toBe(
-      'Sẵn sàng gọi fact(4). Mỗi lời gọi sẽ đẩy một khung riêng vào ngăn xếp.',
-    );
+    expect(narration()).toBe('Sẵn sàng gọi fact(4). Mỗi lời gọi sẽ đẩy một khung riêng vào stack.');
     expect(stackRows()[0].textContent).toContain(m.stackEmpty);
     next(1);
     expect(narration()).toBe(
-      'Gọi fact(4): đẩy vào một khung với n = 4. Ngăn xếp sâu 1 khung. 4 ≤ 1 không?',
+      'Gọi fact(4): đẩy vào một khung với n = 4. Stack sâu 1 khung. 4 ≤ 1 không?',
     );
     next(4);
     expect(narration()).toBe(
-      '1 ≤ 1, trường hợp cơ sở: fact(1) trả về 1 mà không tự gọi lại, và khung của nó được lấy ra khỏi ngăn xếp.',
+      '1 ≤ 1, trường hợp cơ sở: fact(1) trả về 1 mà không tự gọi lại, và khung của nó được lấy ra khỏi stack.',
     );
     expect(stackRows()).toHaveLength(4);
     expect(stackRows()[0].textContent).toContain('fact(1)');
@@ -85,7 +83,7 @@ describe('recursion basics lesson', () => {
     expect(stackRows()[0].textContent).toContain('n = 2, r = 1');
     click(button('Đến bước cuối'));
     expect(narration()).toBe(
-      'fact(4) = 24 sau 4 lời gọi. Ngăn xếp sâu nhất 4 khung và giờ đã rỗng trở lại.',
+      'fact(4) = 24 sau 4 lời gọi. Stack sâu nhất 4 khung và giờ đã rỗng trở lại.',
     );
     expect(byTest('result')).toBe('24');
     expect(byTest('depth')).toBe('0 (tối đa 4)');
@@ -123,7 +121,7 @@ describe('recursion basics lesson', () => {
     click(button('Đến bước cuối'));
     expect(byTest('result')).toBe(m.resultOverflow);
     expect(byTest('calls')).toBe('14');
-    expect(narration()).toContain('tràn ngăn xếp sau 14 lời gọi');
+    expect(narration()).toContain('tràn stack sau 14 lời gọi');
     expect(text()).toContain(m.legend.lost);
     click(field('input[name="base"]'));
     click(button('Đến bước cuối'));
