@@ -179,7 +179,7 @@ describe.skipIf(!sample)('stub page', () => {
     expect(document.head.querySelector('meta[name="robots"]')?.getAttribute('content')).toBe(
       'noindex',
     );
-    expect(document.title).toBe(`${plan.title} — AlgoAtlas`);
+    expect(document.title).toBe(`${plan.title} — AlgorithmAlly`);
   });
 
   it('links back to its topic and to both neighbors', () => {

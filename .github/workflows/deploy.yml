@@ -44,7 +44,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          SITE_BASE: /algoatlas
+          SITE_BASE: /algorithmally
 
       - name: Chunk sizes
         run: npm run size-report

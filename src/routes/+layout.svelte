@@ -77,12 +77,12 @@
       >
       <span aria-hidden="true">·</span>
       <a
-        href="https://github.com/tiennm99dev/algoatlas/blob/main/LICENSE"
+        href="https://github.com/tiennm99dev/algorithmally/blob/main/LICENSE"
         class="focus-ring rounded text-teal-700 hover:underline">Apache-2.0</a
       >
       <span aria-hidden="true">·</span>
       <a
-        href="https://github.com/tiennm99dev/algoatlas"
+        href="https://github.com/tiennm99dev/algorithmally"
         class="focus-ring rounded text-teal-700 hover:underline">Source</a
       >
     </div>

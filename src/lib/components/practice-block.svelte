@@ -17,7 +17,9 @@
 
   const c = t().practice;
   const headingId = $props.id();
-  const storageKey = $derived(`algoatlas:practice:${id}`);
+  const storageKey = $derived(`algorithmally:practice:${id}`);
+  // The site was called AlgoAtlas; progress saved under that name moves to the new key once.
+  const legacyKey = $derived(`algoatlas:practice:${id}`);
 
   /** @type {number[]} */
   let solved = $state([]);
@@ -26,8 +28,22 @@
 
   // Read after hydration so the prerendered HTML never depends on one viewer's storage.
   onMount(() => {
+    migrate(legacyKey, storageKey);
     solved = load(storageKey, exercises.length);
   });
+
+  /** Copies progress from `from` to `to` when `to` is empty, then drops `from`.
+   * @param {string} from @param {string} to */
+  function migrate(from, to) {
+    try {
+      const old = localStorage.getItem(from);
+      if (old === null) return;
+      if (localStorage.getItem(to) === null) localStorage.setItem(to, old);
+      localStorage.removeItem(from);
+    } catch {
+      // Blocked storage: nothing to move.
+    }
+  }
 
   /** @param {string} key @param {number} n @returns {number[]} */
   function load(key, n) {

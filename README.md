@@ -1,8 +1,8 @@
-# AlgoAtlas
+# AlgorithmAlly
 
 Learn data structures and algorithms by stepping through them. Every lesson runs the real algorithm on input you control — play, pause, rewind, and watch the cost add up. The site is built for desktop screens first.
 
-Live: https://tiennm99dev.github.io/algoatlas/
+Live: https://tiennm99dev.github.io/algorithmally/
 
 ## Lessons
 
@@ -32,7 +32,7 @@ Requires Node 24+ and npm.
 
 ```sh
 npm install
-npm run dev       # http://localhost:5173/algoatlas/
+npm run dev       # http://localhost:5173/algorithmally/
 npm test          # Vitest: engine, player, and page interaction tests
 npm run lint      # ESLint
 npm run format:check  # Prettier (npm run format to fix)
@@ -49,11 +49,11 @@ Size budget: no client JS chunk may pass 60 KB gzip. CI runs `npm run size-repor
 
 `main` deploys to GitHub Pages through `.github/workflows/deploy.yml`, which reruns lint, format, type check, and tests before building. See `RUNBOOK.md` for rollback.
 
-`static/404.html` is a hand-written, script-free page that GitHub Pages serves for unknown URLs; its home link assumes the `/algoatlas/` base path.
+`static/404.html` is a hand-written, script-free page that GitHub Pages serves for unknown URLs; its home link assumes the `/algorithmally/` base path.
 
 ## Architecture
 
-- **Static site**: SvelteKit + `@sveltejs/adapter-static`, every route prerendered, `paths.base = '/algoatlas'` (override with `SITE_BASE`), prerender origin `https://tiennm99dev.github.io` (override with `SITE_ORIGIN`). `/sitemap.xml` lists the home page, every topic hub and every lesson.
+- **Static site**: SvelteKit + `@sveltejs/adapter-static`, every route prerendered, `paths.base = '/algorithmally'` (override with `SITE_BASE`), prerender origin `https://tiennm99dev.github.io` (override with `SITE_ORIGIN`). `/sitemap.xml` lists the home page, every topic hub and every lesson.
 - **Language**: JavaScript only. Types live in JSDoc and are checked by `svelte-check` (`checkJs` + `strict`).
 - **Styling**: Tailwind 4 via `@tailwindcss/vite`. The shared visualizer palette (`state-compare`, `state-sorted`, `state-path`, …) is defined in `@theme` in `src/app.css`.
 - **Algorithm engines** (`src/lib/algo-engine/`): pure, DOM-free modules. Each algorithm runs once and returns a trace — an array of immutable frames carrying the data state, highlighted indices, running counters, and the pseudocode line. Rewinding is just showing an earlier frame.

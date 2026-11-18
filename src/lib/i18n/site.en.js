@@ -1,8 +1,8 @@
 export const site = {
-  title: 'AlgoAtlas',
+  title: 'AlgorithmAlly',
   tagline: 'Learn data structures and algorithms by stepping through them',
   description:
-    'AlgoAtlas is an interactive tour of data structures and algorithms. Every lesson runs the real algorithm on input you control — step forward, rewind, and watch the cost add up.',
+    'AlgorithmAlly is an interactive tour of data structures and algorithms. Every lesson runs the real algorithm on input you control — step forward, rewind, and watch the cost add up.',
 };
 
 export const hub = {
@@ -33,7 +33,7 @@ export const stub = {
   /** @type {Record<import('$lib/curriculum/index.js').LessonKind, string>} */
   kinds: { theory: 'Lesson', practice: 'Practice', review: 'Review' },
   /** @param {string} title */
-  metaDescription: (title) => `${title} is a planned AlgoAtlas lesson that is not written yet.`,
+  metaDescription: (title) => `${title} is a planned AlgorithmAlly lesson that is not written yet.`,
   notice: 'This lesson is planned but not written yet. Here is what it will cover.',
   keyIdeasTitle: 'This lesson will cover',
   interactiveTitle: 'Planned interaction',

@@ -1,10 +1,10 @@
-# Runbook — AlgoAtlas
+# Runbook — AlgorithmAlly
 
 ## Deployment
 
 Production deploys from `main` via `.github/workflows/deploy.yml`.
 
-- Live URL: `https://tiennm99dev.github.io/algoatlas/`
+- Live URL: `https://tiennm99dev.github.io/algorithmally/`
 - Build: `npm run build` (SvelteKit static, output in `build/`)
 - Mechanism: `actions/upload-pages-artifact` + `actions/deploy-pages`; Pages source is set to "GitHub Actions"
 - Concurrency: `pages-deploy` group, cancel-in-progress disabled so a retry never aborts an in-flight rollback
@@ -23,7 +23,7 @@ If the workflow itself is broken, open the last successful **Deploy to GitHub Pa
 
 ## Things to not do
 
-- The base path comes from the `SITE_BASE` env var, defaulting to `/algoatlas` in `svelte.config.js`; the deploy workflow sets the same value explicitly. Change both together.
+- The base path comes from the `SITE_BASE` env var, defaulting to `/algorithmally` in `svelte.config.js`; the deploy workflow sets the same value explicitly. Change both together.
 - Never edit `VERSION` or `package.json` `version` independently — they must agree.
 
 ## Dependencies

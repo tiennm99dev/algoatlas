@@ -1,9 +1,9 @@
 ---
 name: write-lesson
-description: Write AlgoAtlas lessons for one curriculum topic (chapter): engine with a step trace, copy, hand-written page with tests, or a quiz page for review lessons. Use when a batch asks you to fill a topic's stubs, for example "write the stacks-queues lessons" or "npm run stubs -- heaps must reach 0".
+description: Write AlgorithmAlly lessons for one curriculum topic (chapter): engine with a step trace, copy, hand-written page with tests, or a quiz page for review lessons. Use when a batch asks you to fill a topic's stubs, for example "write the stacks-queues lessons" or "npm run stubs -- heaps must reach 0".
 ---
 
-# Write AlgoAtlas lessons for one topic
+# Write AlgorithmAlly lessons for one topic
 
 You fill every stub of **one topic** (a chapter of `src/lib/curriculum/dsa.json`). You work on
 `main` in the shared checkout, one writer or reviewer at a time, so you stay strictly inside the
