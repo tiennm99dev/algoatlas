@@ -38,7 +38,7 @@ export const spacePseudocode = {
   'sum-loop': ['sumLoop(n):', '  s = 0', '  for i = 1 to n:', '    s = s + i', '  return s'],
   'reverse-copy': [
     'reversedCopy(A):',
-    '  B = new array of n words',
+    '  B = mảng mới gồm n từ máy',
     '  for i = 0 to n − 1:',
     '    B[n − 1 − i] = A[i]',
     '  return B',

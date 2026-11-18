@@ -18,7 +18,7 @@
     treeRoots,
     validRecurrence,
   } from '$lib/algo-engine/analysing-loops-recursion.js';
-  import { en as m } from '$lib/lessons/analysing-loops-recursion/copy.en.js';
+  import { vi as m } from '$lib/lessons/analysing-loops-recursion/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/analysing-loops-recursion.js').Recurrence} Recurrence */

@@ -14,7 +14,7 @@
     asymptoticPseudocode,
     asymptoticTrace,
   } from '$lib/algo-engine/asymptotic-notation.js';
-  import { en as m } from '$lib/lessons/asymptotic-notation/copy.en.js';
+  import { vi as m } from '$lib/lessons/asymptotic-notation/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/asymptotic-notation.js').GrowthKey} GrowthKey */

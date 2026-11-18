@@ -47,12 +47,12 @@ export const MAX_NODES = 85;
 
 export const recursionPseudocode = [
   'T(n) = a·T(n/b) + n^d,  T(1) = 1',
-  'start with one node of size n at level 0',
-  'while the deepest nodes have size > 1:',
-  '  cost of the level = (number of nodes) × (size)^d',
-  '  give every deepest node a children of size / b',
-  'leaves: aᵏ nodes of size 1, cost 1 each',
-  'total = sum of all level costs',
+  'bắt đầu với một nút kích thước n ở tầng 0',
+  'while các nút sâu nhất có kích thước > 1:',
+  '  chi phí tầng = (số nút) × (kích thước)^d',
+  '  cho mỗi nút sâu nhất a con kích thước / b',
+  'lá: aᵏ nút kích thước 1, mỗi nút tốn 1',
+  'tổng = tổng chi phí của mọi tầng',
 ];
 
 /** Nodes in a tree of depth k with branching a. @param {number} a @param {number} k */

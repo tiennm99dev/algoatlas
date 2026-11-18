@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/amortized-analysis/copy.en.js';
+import { vi as m } from '$lib/lessons/amortized-analysis/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -80,28 +80,28 @@ describe('amortized analysis lesson', () => {
   it('counts 30 flips for 16 increments of a 4-bit counter', () => {
     render();
     expect(narration()).toBe(
-      'A 4-bit counter at 0000: no 1s, no coins, Φ = 0. We will run 16 increments.',
+      'Bộ đếm 4 bit đang là 0000: không có bit 1, không có xu, Φ = 0. Ta sẽ tăng 16 lần.',
     );
     click(button('Bước tiếp'));
-    expect(narration()).toBe('Increment 1: start at bit 0 of 0000 (value 0).');
+    expect(narration()).toBe('Lần tăng 1: bắt đầu từ bit 0 của 0000 (giá trị 0).');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Bit 0 is 0: set it to 1');
+    expect(narration()).toContain('Bit 0 bằng 0: bật lên 1');
     expect(stat(m.stats.phi)).toBe('1');
-    expect(text()).toContain('Bit 0: 1, holds a coin, just set');
+    expect(text()).toContain('Bit 0: 1, đang giữ một đồng xu, vừa bật');
     click(button('Đến bước cuối'));
     expect(stat(m.stats.total)).toBe('30');
     expect(stat(m.stats.bound)).toBe('32');
     expect(stat(m.stats.worst)).toBe('4');
     expect(stat(m.stats.phi)).toBe('0');
-    expect(narration()).toContain('16 increments cost 30 flips in total');
+    expect(narration()).toContain('16 lần tăng tốn tổng cộng 30 lần lật');
   });
 
   it('spends coins on the overflow and shows the amortized cost 0', () => {
     render();
-    stepUntil('All 4 bits were 1');
-    expect(narration()).toContain('Cost 4, amortized 0');
+    stepUntil('Cả 4 bit đều là 1');
+    expect(narration()).toContain('Chi phí 4, chi phí khấu hao 0');
     pickMethod('potential');
-    expect(text()).toContain('Increment 16: ĉ = c + ΔΦ = 4 + (0 − 4) = 0.');
+    expect(text()).toContain('Lần tăng 16: ĉ = c + ΔΦ = 4 + (0 − 4) = 0.');
   });
 
   it('reads the same run with each method', () => {
@@ -112,7 +112,7 @@ describe('amortized analysis lesson', () => {
     expect(text()).toContain('0011₂ = 3');
     pickMethod('aggregate');
     expect(document.querySelector(`[aria-label="${m.aggregate.tableAria}"]`)).not.toBeNull();
-    expect(text()).toContain('After 3 increments: Σ ⌊3/2ⁱ⌋ = 4 < 2 × 3 = 6 flips');
+    expect(text()).toContain('Sau 3 lần tăng: Σ ⌊3/2ⁱ⌋ = 4 < 2 × 3 = 6 lần lật');
     pickMethod('potential');
     expect(text()).toContain('Σ ĉ = 6 = Σ c + Φ − Φ₀ = 4 + 2 − 0');
   });
@@ -120,9 +120,9 @@ describe('amortized analysis lesson', () => {
   it('keeps the aggregate sum to finished increments while one is running', () => {
     render();
     pickMethod('aggregate');
-    stepUntil('Bit 0 is 1: reset it');
-    expect(text()).toContain('After 1 increment: Σ ⌊1/2ⁱ⌋ = 1 < 2 × 1 = 2 flips');
-    expect(text()).toContain('Increment 2 is running and has made 1 flip so far.');
+    stepUntil('Bit 0 bằng 1: đặt lại về 0');
+    expect(text()).toContain('Sau 1 lần tăng: Σ ⌊1/2ⁱ⌋ = 1 < 2 × 1 = 2 lần lật');
+    expect(text()).toContain('Lần tăng 2 đang chạy và đến giờ đã lật 1 lần.');
   });
 
   it('keeps the last valid values and submits with Enter', () => {

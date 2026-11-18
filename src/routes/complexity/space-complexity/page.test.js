@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/space-complexity/copy.en.js';
+import { vi as m } from '$lib/lessons/space-complexity/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -36,7 +36,7 @@ function click(el) {
 const text = () => document.body.textContent ?? '';
 const narration = () => document.querySelector('p[aria-live]')?.textContent?.trim() ?? '';
 const memoryLabel = () =>
-  document.querySelector('[aria-label^="Memory bar"]')?.getAttribute('aria-label') ?? '';
+  document.querySelector('[aria-label^="Thanh bộ nhớ"]')?.getAttribute('aria-label') ?? '';
 
 /** @param {HTMLInputElement | HTMLSelectElement} el @param {string} value */
 function commit(el, value) {
@@ -72,17 +72,19 @@ function practice() {
 describe('space complexity lesson', () => {
   it('grows the stack to 6 frames for sum(5), then empties it', () => {
     render();
-    expect(narration()).toBe('Nothing on the stack yet. Run with n = 5.');
+    expect(narration()).toBe('Ngăn xếp chưa có gì. Chạy với n = 5.');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Call sum(5): push a frame of 2 words. Depth 1, 2 words in use.');
-    stepUntil('base case');
-    expect(stat('Stack depth')).toBe('6');
-    expect(stat('Words in use')).toBe('12');
-    expect(memoryLabel()).toContain('12 of 12 words in use');
+    expect(narration()).toContain(
+      'Gọi sum(5): đẩy vào một khung 2 từ máy. Độ sâu 1, đang dùng 2 từ máy.',
+    );
+    stepUntil('trường hợp cơ sở');
+    expect(stat(m.stats.depth)).toBe('6');
+    expect(stat(m.stats.words)).toBe('12');
+    expect(memoryLabel()).toContain('đang dùng 12/12 từ máy');
     click(button('Đến bước cuối'));
-    expect(stat('Stack depth')).toBe('0');
-    expect(stat('Peak words')).toBe('12');
-    expect(narration()).toContain('Peak 12 words, deepest stack 6 frames');
+    expect(stat(m.stats.depth)).toBe('0');
+    expect(stat(m.stats.peak)).toBe('12');
+    expect(narration()).toContain('Mức đỉnh 12 từ máy, ngăn xếp sâu nhất 6 khung');
   });
 
   it('keeps bits(n) shallow and the loop constant', () => {
@@ -90,27 +92,27 @@ describe('space complexity lesson', () => {
     commit(nInput(), '12');
     commit(algoSelect(), 'bits-rec');
     click(button('Đến bước cuối'));
-    expect(stat('Deepest stack')).toBe('4');
-    expect(stat('Peak words')).toBe('8');
+    expect(stat(m.stats.maxDepth)).toBe('4');
+    expect(stat(m.stats.peak)).toBe('8');
     commit(algoSelect(), 'sum-loop');
     click(button('Đến bước cuối'));
-    expect(stat('Peak words')).toBe('4');
+    expect(stat(m.stats.peak)).toBe('4');
     expect(narration()).toContain('Θ(1)');
   });
 
   it('puts the copy on the heap and reverses in place without one', () => {
     render();
     commit(algoSelect(), 'reverse-copy');
-    stepUntil('Allocate B');
-    expect(stat('Words in use')).toBe('9');
+    stepUntil('Cấp phát B');
+    expect(stat(m.stats.words)).toBe('9');
     expect(text()).toContain(m.arrayB);
     click(button('Đến bước cuối'));
-    expect(stat('Peak words')).toBe('9');
+    expect(stat(m.stats.peak)).toBe('9');
     commit(algoSelect(), 'reverse-in-place');
-    stepUntil('Swap A[0] and A[4]');
-    expect(document.querySelector('[aria-label="Heap array B"]')).toBeNull();
+    stepUntil('Đổi chỗ A[0] và A[4]');
+    expect(document.querySelector(`[aria-label="${m.arrayB}"]`)).toBeNull();
     click(button('Đến bước cuối'));
-    expect(stat('Peak words')).toBe('5');
+    expect(stat(m.stats.peak)).toBe('5');
   });
 
   it('keeps the last valid n and submits with Enter', () => {
@@ -123,7 +125,7 @@ describe('space complexity lesson', () => {
     /** @type {HTMLFormElement} */ (nInput().closest('form')).requestSubmit();
     flushSync();
     click(button('Đến bước cuối'));
-    expect(stat('Peak words')).toBe('6');
+    expect(stat(m.stats.peak)).toBe('6');
   });
 
   it('checks the bits(1000) question with a hint', () => {

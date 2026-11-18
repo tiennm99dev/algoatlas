@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/asymptotic-notation/copy.en.js';
+import { vi as m } from '$lib/lessons/asymptotic-notation/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -75,35 +75,35 @@ describe('asymptotic notation lesson', () => {
   it('starts empty and evaluates n = 1 on the first step', () => {
     render();
     expect(narration()).toContain('f(n) = 3n² + 20n + 50');
-    expect(plotLabel()).toContain('Empty log-scale plot');
+    expect(plotLabel()).toContain('Đồ thị thang logarit còn trống');
     click(button('Bước tiếp'));
-    expect(narration()).toBe('n = 1: f(n) = 73, n² = 1, ratio 73.');
-    expect(stat('Ratio f(n) / g(n)')).toBe('73');
+    expect(narration()).toBe('n = 1: f(n) = 73, n² = 1, tỉ số 73.');
+    expect(stat(m.stats.ratio)).toBe('73');
   });
 
   it('ends with a Θ verdict and its witness constants', () => {
     render();
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('= Θ(n²): 3·n² ≤ f(n) ≤ 73·n² for every n ≥ 1');
-    expect(document.body.textContent).toContain('Θ (tight)');
+    expect(narration()).toContain('= Θ(n²): 3·n² ≤ f(n) ≤ 73·n² với mọi n ≥ 1');
+    expect(document.body.textContent).toContain('Θ (chặt)');
   });
 
   it('gives O only against 2ⁿ and Ω only against n log n', () => {
     render();
     pickBound('exp');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('O(2ⁿ) but not Ω(2ⁿ): f(n) ≤ 73·2ⁿ for every n ≥ 4');
+    expect(narration()).toContain('O(2ⁿ) nhưng không phải Ω(2ⁿ): f(n) ≤ 73·2ⁿ với mọi n ≥ 4');
     pickBound('nlogn');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('Ω(n log n) but not O(n log n)');
+    expect(narration()).toContain('Ω(n log n) nhưng không phải O(n log n)');
   });
 
   it('shows an undefined ratio where n log n is 0', () => {
     render();
     pickBound('nlogn');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('so the ratio is undefined here');
-    expect(stat('Ratio f(n) / g(n)')).toBe('—');
+    expect(narration()).toContain('nên tại đây tỉ số không xác định');
+    expect(stat(m.stats.ratio)).toBe('—');
   });
 
   it('rebuilds on a coefficient change and refuses bad input', () => {
@@ -127,7 +127,7 @@ describe('asymptotic notation lesson', () => {
     render();
     commit('maxN', '5');
     click(button('Đến bước cuối'));
-    expect(plotLabel()).toContain('up to n = 5');
+    expect(plotLabel()).toContain('đến n = 5');
   });
 
   it('checks a practice answer that needs the widget', () => {

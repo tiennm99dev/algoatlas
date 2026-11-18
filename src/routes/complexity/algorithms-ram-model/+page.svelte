@@ -13,7 +13,7 @@
     ramTrace,
     triangular,
   } from '$lib/algo-engine/algorithms-ram-model.js';
-  import { en as m } from '$lib/lessons/algorithms-ram-model/copy.en.js';
+  import { vi as m } from '$lib/lessons/algorithms-ram-model/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/algorithms-ram-model.js').RamProgram} RamProgram */

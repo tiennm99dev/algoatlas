@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/best-worst-average-case/copy.en.js';
+import { vi as m } from '$lib/lessons/best-worst-average-case/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -73,26 +73,26 @@ function practice() {
 describe('best, worst and average case lesson', () => {
   it('finds 25 at index 4 after 5 comparisons', () => {
     render();
-    expect(narration()).toBe('Search for x = 25 in 8 elements, from left to right.');
+    expect(narration()).toBe('Tìm x = 25 trong 8 phần tử, từ trái sang phải.');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Compare A[0] = 42 with 25: not equal.');
+    expect(narration()).toContain('So sánh A[0] = 42 với 25: không bằng.');
     click(button('Đến bước cuối'));
-    expect(stat('Comparisons (this run)')).toBe('5');
-    expect(narration()).toContain('the average (n + 1)/2 = 4.5');
+    expect(stat(m.stats.comparisons)).toBe('5');
+    expect(narration()).toContain('trung bình là (n + 1)/2 = 4.5');
   });
 
   it('runs the best and worst cases and logs them', () => {
     render();
-    click(buttonByText('Best case'));
+    click(buttonByText(m.caseButtons.best));
     click(button('Đến bước cuối'));
-    expect(stat('Comparisons (this run)')).toBe('1');
-    click(buttonByText('Worst case'));
+    expect(stat(m.stats.comparisons)).toBe('1');
+    click(buttonByText(m.caseButtons.worst));
     click(button('Đến bước cuối'));
-    expect(stat('Comparisons (this run)')).toBe('8');
-    expect(narration()).toContain('This run cost 8 comparisons.');
+    expect(stat(m.stats.comparisons)).toBe('8');
+    expect(narration()).toContain('Lần chạy này tốn 8 phép so sánh.');
     expect(input('target').value).toBe('0');
-    expect(text()).toContain('best 42: 1');
-    expect(text()).toContain('worst 0: 8');
+    expect(text()).toContain('tốt nhất 42: 1');
+    expect(text()).toContain('xấu nhất 0: 8');
   });
 
   it('averages the random runs', () => {
@@ -100,11 +100,11 @@ describe('best, worst and average case lesson', () => {
     let k = 0;
     vi.spyOn(Math, 'random').mockImplementation(() => values[k++ % 2]);
     render();
-    click(buttonByText('Random element'));
-    click(buttonByText('Random element'));
-    expect(text()).toContain('Average of your 2 random runs: 4.5');
-    click(buttonByText('Clear runs'));
-    expect(text()).toContain('No random runs yet.');
+    click(buttonByText(m.caseButtons.random));
+    click(buttonByText(m.caseButtons.random));
+    expect(text()).toContain('Trung bình 2 lần chạy ngẫu nhiên của bạn: 4.5');
+    click(buttonByText(m.clearRuns));
+    expect(text()).toContain(m.randomAverage(0, 0));
   });
 
   it('searches a typed target with Enter and keeps the last valid one', () => {
@@ -113,7 +113,7 @@ describe('best, worst and average case lesson', () => {
     /** @type {HTMLFormElement} */ (input('target').closest('form')).requestSubmit();
     flushSync();
     click(button('Đến bước cuối'));
-    expect(stat('Comparisons (this run)')).toBe('4');
+    expect(stat(m.stats.comparisons)).toBe('4');
     commit(input('target'), '120');
     expect(narration()).toBe(m.targetError);
     expect(input('target').value).toBe('93');
@@ -122,8 +122,8 @@ describe('best, worst and average case lesson', () => {
   it('rebuilds on a new array and refuses a bad one', () => {
     render();
     commit(input('array'), '5 6 7');
-    expect(stat('Worst case')).toBe('3');
-    expect(stat('Average, x in the array')).toBe('2');
+    expect(stat(m.stats.worst)).toBe('3');
+    expect(stat(m.stats.average)).toBe('2');
     commit(input('array'), '1, 2, x');
     expect(narration()).toBe(m.arrayError);
     expect(input('array').value).toBe('5, 6, 7');
@@ -136,7 +136,7 @@ describe('best, worst and average case lesson', () => {
     click(button('Đến bước cuối'));
     const hot = document.querySelector('rect.fill-state-active');
     expect(hot).toBeTruthy();
-    expect(document.querySelectorAll('svg[aria-label^="Bar chart"] rect')).toHaveLength(9);
+    expect(document.querySelectorAll('svg[aria-label^="Biểu đồ cột"] rect')).toHaveLength(9);
   });
 
   it('checks the expected-cost question with a hint', () => {

@@ -15,7 +15,7 @@
     linearSearchPseudocode,
     linearSearchTrace,
   } from '$lib/algo-engine/best-worst-average-case.js';
-  import { en as m } from '$lib/lessons/best-worst-average-case/copy.en.js';
+  import { vi as m } from '$lib/lessons/best-worst-average-case/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/best-worst-average-case.js').CaseKind} CaseKind */

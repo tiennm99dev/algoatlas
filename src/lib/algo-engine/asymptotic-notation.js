@@ -41,13 +41,13 @@ const UPPER_FROM = {
 };
 
 export const asymptoticPseudocode = [
-  'f(n) = a·n² + b·n + c,  g(n) = the chosen bound',
+  'f(n) = a·n² + b·n + c,  g(n) = cận đã chọn',
   'for n = 1 to N:',
-  '  evaluate f(n), n, n log₂ n, n², 2ⁿ',
+  '  tính f(n), n, n log₂ n, n², 2ⁿ',
   '  r = f(n) / g(n)',
-  'r settles at a constant > 0  →  f = Θ(g)',
-  'r shrinks toward 0           →  f = O(g), not Ω(g)',
-  'r grows without bound        →  f = Ω(g), not O(g)',
+  'r ổn định ở hằng số > 0   →  f = Θ(g)',
+  'r giảm dần về 0            →  f = O(g), không Ω(g)',
+  'r tăng không giới hạn      →  f = Ω(g), không O(g)',
 ];
 
 /**

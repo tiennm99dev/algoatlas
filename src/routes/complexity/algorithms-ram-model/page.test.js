@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/algorithms-ram-model/copy.en.js';
+import { vi as m } from '$lib/lessons/algorithms-ram-model/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -72,28 +72,28 @@ function practice() {
 describe('RAM model lesson', () => {
   it('starts the loop on n = 4 and ends after 5n + 4 = 24 steps', () => {
     render();
-    expect(narration()).toContain('Call sumTo(4).');
+    expect(narration()).toContain('Gọi sumTo(4).');
     click(button('Đến bước cuối'));
-    expect(narration()).toBe('Done after 24 primitive steps.');
-    expect(stat('Total primitive steps')).toBe('24');
-    expect(stat('Comparisons')).toBe('5');
-    expect(text()).toContain('Returned 10: correct ✓');
+    expect(narration()).toBe('Xong sau 24 bước cơ bản.');
+    expect(stat(m.stats.total)).toBe('24');
+    expect(stat(m.stats.compare)).toBe('5');
+    expect(text()).toContain('Trả về 10: đúng ✓');
   });
 
   it('marks the variables read and written on a step', () => {
     render();
     for (let k = 0; k < 4; k++) click(button('Bước tiếp'));
-    expect(narration()).toContain('s = s + i makes s = 1');
-    expect(text()).toContain('s = 1, written');
-    expect(text()).toContain('i = 1, read');
+    expect(narration()).toContain('s = s + i cho s = 1');
+    expect(text()).toContain('s = 1, vừa ghi');
+    expect(text()).toContain('i = 1, vừa đọc');
   });
 
   it('switches to the formula and finishes in 5 steps', () => {
     render();
     pickProgram('formula');
     click(button('Đến bước cuối'));
-    expect(stat('Total primitive steps')).toBe('5');
-    expect(text()).toContain('n = 30: 5 steps');
+    expect(stat(m.stats.total)).toBe('5');
+    expect(text()).toContain('n = 30: 5 bước');
   });
 
   it('shows the buggy loop returning the wrong answer', () => {
@@ -101,15 +101,15 @@ describe('RAM model lesson', () => {
     commit(nInput(), '10');
     pickProgram('buggy');
     click(button('Đến bước cuối'));
-    expect(stat('Total primitive steps')).toBe('49');
-    expect(text()).toContain('Returned 45: wrong ✗');
+    expect(stat(m.stats.total)).toBe('49');
+    expect(text()).toContain('Trả về 45: sai ✗');
   });
 
   it('rebuilds the run when n changes and keeps the last valid n', () => {
     render();
     commit(nInput(), '30');
     click(button('Đến bước cuối'));
-    expect(stat('Total primitive steps')).toBe('154');
+    expect(stat(m.stats.total)).toBe('154');
     commit(nInput(), '31');
     expect(nInput().value).toBe('30');
     expect(narration()).toBe(m.nError);
@@ -124,7 +124,7 @@ describe('RAM model lesson', () => {
     /** @type {HTMLFormElement} */ (nInput().closest('form')).requestSubmit();
     flushSync();
     click(button('Đến bước cuối'));
-    expect(stat('Total primitive steps')).toBe('14');
+    expect(stat(m.stats.total)).toBe('14');
   });
 
   it('checks practice answers and reveals hints', () => {

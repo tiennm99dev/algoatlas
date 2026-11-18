@@ -13,7 +13,7 @@
     spacePseudocode,
     spaceTrace,
   } from '$lib/algo-engine/space-complexity.js';
-  import { en as m } from '$lib/lessons/space-complexity/copy.en.js';
+  import { vi as m } from '$lib/lessons/space-complexity/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/space-complexity.js').SpaceAlgo} SpaceAlgo */

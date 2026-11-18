@@ -16,10 +16,10 @@
     counterTrace,
     incrementPseudocode,
   } from '$lib/algo-engine/amortized-analysis.js';
-  import { en as m } from '$lib/lessons/amortized-analysis/copy.en.js';
+  import { vi as m } from '$lib/lessons/amortized-analysis/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
-  /** @typedef {import('$lib/lessons/amortized-analysis/copy.en.js').AmortizedMethod} AmortizedMethod */
+  /** @typedef {import('$lib/lessons/amortized-analysis/copy.vi.js').AmortizedMethod} AmortizedMethod */
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */
 
   // A fixed first input keeps the prerendered HTML and the hydrated page identical.

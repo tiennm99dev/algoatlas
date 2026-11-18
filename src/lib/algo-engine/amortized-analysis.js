@@ -16,13 +16,13 @@ export const MAX_BITS = 8;
 export const MAX_OPS = 64;
 
 export const incrementPseudocode = [
-  'increment(A):          ▹ A[0] is the lowest bit',
+  'increment(A):          ▹ A[0] là bit thấp nhất',
   '  i = 0',
   '  while i < k and A[i] == 1:',
-  '    A[i] = 0           ▹ paid by the coin on this 1',
+  '    A[i] = 0           ▹ trả bằng xu trên bit 1 này',
   '    i = i + 1',
   '  if i < k:',
-  '    A[i] = 1           ▹ costs 1, leaves 1 coin',
+  '    A[i] = 1           ▹ tốn 1, để lại 1 xu',
 ];
 
 /**

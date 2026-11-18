@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/analysing-loops-recursion/copy.en.js';
+import { vi as m } from '$lib/lessons/analysing-loops-recursion/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -57,7 +57,7 @@ function stat(label) {
 }
 
 const nodeTitles = () =>
-  [...document.querySelectorAll('svg [aria-label^="Call of size"]')].map(
+  [...document.querySelectorAll('svg [aria-label^="Lời gọi kích thước"]')].map(
     (t) => t.getAttribute('aria-label') ?? '',
   );
 
@@ -72,26 +72,26 @@ function practice() {
 describe('analysing loops and recursion lesson', () => {
   it('starts merge sort on n = 16 with only the root drawn', () => {
     render();
-    expect(narration()).toContain('T(n) = 2T(n/2) + n with n = 16');
-    expect(stat('Calls drawn')).toBe('1');
+    expect(narration()).toContain('T(n) = 2T(n/2) + n với n = 16');
+    expect(stat(m.stats.calls)).toBe('1');
   });
 
   it('sums level 0, then splits it into two calls', () => {
     render();
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Level 0: 1 call of size 16, each doing 16 work');
+    expect(narration()).toContain('Tầng 0: 1 lời gọi kích thước 16, mỗi lời gọi làm 16 phần việc');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('level 1 has 2');
-    expect(stat('Calls drawn')).toBe('3');
+    expect(narration()).toContain('tầng 1 có 2 lời gọi');
+    expect(stat(m.stats.calls)).toBe('3');
   });
 
   it('ends merge sort at T(16) = 80 with every level costing 16', () => {
     render();
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('T(16) = 80, so T(n) = Θ(n log n).');
-    expect(stat('Running total')).toBe('80');
-    expect(stat('Calls drawn')).toBe('31');
-    expect(nodeTitles().filter((t) => t.includes('size 1 at level 4'))).toHaveLength(16);
+    expect(narration()).toContain('T(16) = 80, nên T(n) = Θ(n log n).');
+    expect(stat(m.stats.total)).toBe('80');
+    expect(stat(m.stats.calls)).toBe('31');
+    expect(nodeTitles().filter((t) => t.includes('kích thước 1 ở tầng 4'))).toHaveLength(16);
   });
 
   it('loads Karatsuba and finds that the leaves dominate', () => {
@@ -100,7 +100,7 @@ describe('analysing loops and recursion lesson', () => {
     expect(input('a').value).toBe('3');
     click(button('Đến bước cuối'));
     expect(narration()).toContain('T(8) = 65');
-    expect(narration()).toContain('the aᵏ = 27 leaves dominate');
+    expect(narration()).toContain('aᵏ = 27 lá chiếm phần lớn');
   });
 
   it('rebuilds when a field changes and refuses a tree that is too big', () => {
@@ -108,7 +108,7 @@ describe('analysing loops and recursion lesson', () => {
     commit(input('d'), '2');
     expect(presetSelect().value).toBe('');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('the root’s n² dominates');
+    expect(narration()).toContain('phần n² ở gốc chiếm phần lớn');
     commit(input('a'), '4');
     expect(narration()).toBe(m.fieldError(85));
     expect(input('a').value).toBe('2');
@@ -126,7 +126,7 @@ describe('analysing loops and recursion lesson', () => {
     const child = /** @type {SVGElement} */ (document.activeElement);
     child.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     flushSync();
-    expect(text()).toContain('T(8) at level 1 = 2 × T(4) + 8 = 32');
+    expect(text()).toContain('T(8) ở tầng 1 = 2 × T(4) + 8 = 32');
   });
 
   it('checks the T(16) question and its hints', () => {

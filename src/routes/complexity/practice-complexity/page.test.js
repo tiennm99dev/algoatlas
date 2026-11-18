@@ -4,7 +4,7 @@ import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
 import { SNIPPETS } from '$lib/algo-engine/practice-complexity.js';
-import { en as m } from '$lib/lessons/practice-complexity/copy.en.js';
+import { vi as m } from '$lib/lessons/practice-complexity/copy.vi.js';
 
 /** @typedef {import('$lib/algo-engine/practice-complexity.js').SnippetId} SnippetId */
 
@@ -80,16 +80,16 @@ function practice() {
 describe('practice: estimating running time', () => {
   it('measures the first card as n doubles', () => {
     render();
-    expect(narration()).toContain('Two full loops: we will run it for n = 1, 2, 4, …');
+    expect(narration()).toContain('Hai vòng lặp đầy đủ: ta sẽ chạy nó với n = 1, 2, 4, …');
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
     expect(narration()).toBe(
-      'n = 2: the highlighted line ran 4 times. Doubling n multiplied the count by 4 (+3).',
+      'n = 2: dòng được tô sáng đã chạy 4 lần. Nhân đôi n làm số lần nhân lên 4 (+3).',
     );
     click(button('Đến bước cuối'));
-    expect(stat(m.stats.count)).toBe('1,048,576');
+    expect(stat(m.stats.count)).toBe('1048576');
     expect(stat(m.stats.ratio)).toBe('× 4');
-    expect(narration()).toContain('Done at n = 1,024 with 1,048,576 operations.');
+    expect(narration()).toContain('Xong ở n = 1024 với 1048576 thao tác.');
   });
 
   it('picking a card loads its experiment and the bucket button places it', () => {
@@ -99,7 +99,7 @@ describe('practice: estimating running time', () => {
     expect(status()).toBe(m.picked(m.cards.triangle));
     expect(document.body.textContent).toContain(m.measuring(m.cards.triangle));
     click(button('Đến bước cuối'));
-    expect(stat(m.stats.count)).toBe('524,800');
+    expect(stat(m.stats.count)).toBe('524800');
     click(button(m.putHereLabel('O(n²)')));
     expect(bucket('O(n²)').textContent).toContain(m.cards.triangle);
     expect(bucket(m.trayTitle).textContent).not.toContain(m.cards.triangle);
@@ -122,13 +122,13 @@ describe('practice: estimating running time', () => {
     move('halving', 'n');
     click(buttonByText(m.check));
     expect(status()).toBe(m.score(1, 10, 8));
-    expect(card('nested').getAttribute('aria-label')).toContain('✓ right');
-    expect(card('halving').getAttribute('aria-label')).toContain('✗ wrong');
+    expect(card('nested').getAttribute('aria-label')).toContain(m.verdicts.right);
+    expect(card('halving').getAttribute('aria-label')).toContain(m.verdicts.wrong);
     expect(document.body.textContent).toContain(m.why.nested);
     click(buttonByText(m.reveal));
     for (const s of SNIPPETS)
       expect(bucket(m.buckets[s.bucket]).textContent).toContain(m.cards[s.id]);
-    expect(card('halving').getAttribute('aria-label')).toContain('✓ right');
+    expect(card('halving').getAttribute('aria-label')).toContain(m.verdicts.right);
     click(buttonByText(m.check));
     expect(status()).toBe(m.allRight);
     click(buttonByText(m.reset));
@@ -144,7 +144,7 @@ describe('practice: estimating running time', () => {
     expect(bucket('O(2ⁿ)').textContent).toContain(m.cards.fib);
     expect(document.body.textContent).toContain(m.measuring(m.cards.fib));
     click(button('Đến bước cuối'));
-    expect(stat(m.stats.count)).toBe('3,193');
+    expect(stat(m.stats.count)).toBe('3193');
     const target = card('single');
     target.focus();
     target.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
