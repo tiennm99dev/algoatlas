@@ -57,7 +57,7 @@ const radio = (name, value) =>
     document.querySelector(`input[name="${name}"][value="${value}"]`)
   );
 const race = () =>
-  document.querySelector('ul[aria-label^="Steps so far"]')?.getAttribute('aria-label');
+  document.querySelector('ul[aria-label^="Số bước đến giờ"]')?.getAttribute('aria-label');
 /** @param {string} q */
 const row = (q) => document.querySelector(`li[data-queue="${q}"]`)?.textContent ?? '';
 
@@ -81,15 +81,15 @@ function answer(q, value) {
 describe('practice: advanced heaps lesson', () => {
   it('races the three queues on the default Dijkstra run', () => {
     render();
-    expect(text()).toContain('Dijkstra from vertex 0 on 12 vertices and 40 edges.');
+    expect(text()).toContain('Thuật toán Dijkstra xuất phát từ đỉnh 0 trên 12 đỉnh và 40 cạnh.');
     click(button('Bước tiếp'));
-    expect(text()).toContain('insert(0, 0): the source enters the queue.');
+    expect(text()).toContain('insert(0, 0): đỉnh nguồn vào hàng đợi.');
     click(button('Bước tiếp'));
-    expect(text()).toContain('extractMin() returns vertex 0');
+    expect(text()).toContain('extractMin() trả về đỉnh 0');
     click(button('Đến bước cuối'));
-    expect(race()).toBe('Steps so far: binary 80, Fibonacci 60, vEB 145.');
+    expect(race()).toBe('Số bước đến giờ: nhị phân 80, Fibonacci 60, vEB 145.');
     expect(row('fibonacci')).toContain(m.leader);
-    expect(text()).toContain('Fewest steps: the Fibonacci heap.');
+    expect(text()).toContain('Ít bước nhất: heap Fibonacci.');
   });
 
   it('rebuilds the run when the graph changes', () => {
@@ -97,12 +97,12 @@ describe('practice: advanced heaps lesson', () => {
     commit(input('vertices'), '4');
     expect(input('edges').value).toBe('12');
     click(button('Đến bước cuối'));
-    expect(text()).toMatch(/Inserts\s*4/);
+    expect(text()).toMatch(/Số lần chèn\s*4/);
     click(buttonByText(m.newGraph));
-    expect(text()).toContain('Dijkstra from vertex 0 on 4 vertices and 12 edges.');
+    expect(text()).toContain('Thuật toán Dijkstra xuất phát từ đỉnh 0 trên 4 đỉnh và 12 cạnh.');
     click(buttonByText(m.resetSettings));
     click(button('Đến bước cuối'));
-    expect(race()).toBe('Steps so far: binary 80, Fibonacci 60, vEB 145.');
+    expect(race()).toBe('Số bước đến giờ: nhị phân 80, Fibonacci 60, vEB 145.');
   });
 
   it('drops the vEB tree when the keys do not fit in u', () => {
@@ -110,18 +110,18 @@ describe('practice: advanced heaps lesson', () => {
     click(radio('universe', '4'));
     click(button('Đến bước cuối'));
     expect(row('veb')).toContain(m.noFit);
-    expect(text()).toContain('key 27 is not below u = 2^4');
+    expect(text()).toContain('khoá 27 không nhỏ hơn u = 2^4');
   });
 
   it('runs an operation mix set with sliders', () => {
     render();
     click(radio('mode', 'mix'));
-    expect(text()).toContain('A queue of n = 1,024 keys runs 10 rounds of the mix.');
+    expect(text()).toContain('Một hàng đợi gồm n = 1024 khoá chạy 10 vòng theo tỉ lệ đã đặt.');
     commit(input('decreases'), '0');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Round 1: 4 inserts. Each costs binary 11, Fibonacci 1, vEB 5.');
+    expect(text()).toContain('Vòng 1: 4 lần chèn. Mỗi lần tốn nhị phân 11, Fibonacci 1, vEB 5.');
     click(button('Đến bước cuối'));
-    expect(race()).toBe('Steps so far: binary 880, Fibonacci 640, vEB 400.');
+    expect(race()).toBe('Số bước đến giờ: nhị phân 880, Fibonacci 640, vEB 400.');
     expect(row('veb')).toContain(m.leader);
     commit(input('size'), '20');
     click(radio('universe', '16'));

@@ -52,7 +52,7 @@ const text = () => document.body.textContent ?? '';
 const input = (name) =>
   /** @type {HTMLInputElement} */ (document.querySelector(`input[name="${name}"]`));
 const forestLabel = () =>
-  document.querySelector('svg[aria-label*="key"]')?.getAttribute('aria-label') ?? '';
+  document.querySelector('svg[aria-label*="khoá"]')?.getAttribute('aria-label') ?? '';
 /** @param {string} start */
 const node = (start) =>
   /** @type {HTMLElement} */ (
@@ -70,12 +70,12 @@ function submit() {
 describe('binomial and Fibonacci heaps lesson', () => {
   it('starts lazily and consolidates on extract-min', () => {
     render();
-    expect(text()).toContain('An empty Fibonacci heap');
+    expect(text()).toContain('Một heap Fibonacci rỗng');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Insert 41: add it to the root list as a one-node tree');
+    expect(text()).toContain('Chèn 41: thêm nó vào danh sách gốc như một cây một nút');
     click(button('Đến bước cuối'));
-    expect(forestLabel()).toContain('1 tree holding 8 keys.');
-    expect(text()).toContain('All operations done: 7 links, 0 cuts.');
+    expect(forestLabel()).toContain('1 cây chứa 8 khoá.');
+    expect(text()).toContain('Đã làm xong mọi thao tác: 7 lần nối, 0 lần cắt.');
   });
 
   it('shows the degree table while consolidating', () => {
@@ -83,50 +83,50 @@ describe('binomial and Fibonacci heaps lesson', () => {
     expect(text()).toContain(m.tableIdle);
     // Step past nine inserts, the extract and the promotion to the first scan.
     for (let i = 0; i < 12; i++) click(button('Bước tiếp'));
-    expect(text()).toContain('Consolidate: take the root');
-    expect(document.querySelector('svg[aria-label^="Degree table"]')).not.toBeNull();
+    expect(text()).toContain('Hợp nhất: lấy gốc');
+    expect(document.querySelector('svg[aria-label^="Bảng bậc"]')).not.toBeNull();
   });
 
   it('inserts a typed key and extracts the minimum', () => {
     render();
     commit(input('value'), '1');
     submit();
-    expect(text()).toContain('Insert 1: add it to the root list');
+    expect(text()).toContain('Chèn 1: thêm nó vào danh sách gốc');
     click(buttonByText(m.extract));
-    expect(text()).toContain('Extract min: the min pointer names 1.');
+    expect(text()).toContain('Lấy min: con trỏ min chỉ vào 1.');
     click(button('Đến bước cuối'));
-    expect(forestLabel()).toContain('holding 8 keys.');
+    expect(forestLabel()).toContain('chứa 8 khoá.');
   });
 
   it('switches to a binomial heap on the same log', () => {
     render();
     click(/** @type {HTMLInputElement} */ (document.querySelector('input[value="binomial"]')));
-    expect(text()).toContain('Sift-up swaps');
+    expect(text()).toContain('Số lần đổi chỗ khi vun lên');
     commit(/** @type {HTMLSelectElement} */ (document.querySelector('select')), 'counter');
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
-    expect(text()).toContain('Insert 9: it starts as a carry');
+    expect(text()).toContain('Chèn 9: nó bắt đầu là một số nhớ');
     click(button('Bước tiếp'));
-    expect(text()).toContain('also has degree 0, so the two trees must link');
+    expect(text()).toContain('cũng có bậc 0, nên hai cây phải được nối');
     click(button('Đến bước cuối'));
-    expect(forestLabel()).toContain('1 tree holding 8 keys.');
+    expect(forestLabel()).toContain('1 cây chứa 8 khoá.');
   });
 
   it('decreases a chosen key from the keyboard and cuts it out', () => {
     render();
     click(button('Đến bước cuối'));
-    const leaf = node('Key 46,');
+    const leaf = node('Khoá 46,');
     leaf.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     flushSync();
     expect(text()).toContain(m.selectedInfo(46));
     commit(input('key'), '2');
     click(buttonByText(m.decrease));
-    expect(text()).toContain('Decrease 46 to 2. Its parent holds 39.');
+    expect(text()).toContain('Giảm 46 xuống 2. Cha của nó chứa 39.');
     click(button('Bước tiếp'));
-    expect(text()).toContain('cut 2 out with its subtree');
+    expect(text()).toContain('cắt 2 ra cùng cây con của nó');
     click(button('Đến bước cuối'));
-    expect(forestLabel()).toContain('2 trees holding 8 keys.');
+    expect(forestLabel()).toContain('2 cây chứa 8 khoá.');
     expect(text()).toContain('46↓2');
   });
 
@@ -135,7 +135,7 @@ describe('binomial and Fibonacci heaps lesson', () => {
     click(buttonByText(m.decrease));
     expect(text()).toContain(m.pickFirst);
     click(button('Đến bước cuối'));
-    node('Key 18,').dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    node('Khoá 18,').dispatchEvent(new MouseEvent('click', { bubbles: true }));
     flushSync();
     commit(input('key'), '30');
     click(buttonByText(m.decrease));
@@ -148,9 +148,9 @@ describe('binomial and Fibonacci heaps lesson', () => {
   it('undoes, resets and refuses to extract from an empty heap', () => {
     render();
     click(buttonByText(m.undo));
-    expect(forestLabel()).toContain('9 trees holding 9 keys.');
+    expect(forestLabel()).toContain('9 cây chứa 9 khoá.');
     click(buttonByText(m.reset));
-    expect(text()).toContain('An empty Fibonacci heap');
+    expect(text()).toContain('Một heap Fibonacci rỗng');
     click(buttonByText(m.extract));
     expect(text()).toContain(m.emptyError);
   });

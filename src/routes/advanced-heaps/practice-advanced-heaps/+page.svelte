@@ -318,7 +318,7 @@
         <div class="rounded-xl border border-slate-200 bg-white p-3">
           <dt class="text-xs text-slate-500">{m.stats.size}</dt>
           <dd class="text-2xl font-bold tabular-nums">
-            {frame.size.toLocaleString('en-US')} ({frame.maxSize.toLocaleString('en-US')})
+            {frame.size} ({frame.maxSize})
           </dd>
         </div>
         <div class="rounded-xl border border-slate-200 bg-white p-3">

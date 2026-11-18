@@ -57,10 +57,10 @@ export const MAX_OPS = 16;
 
 export const vebPseudocode = [
   'insert(V, x):',
-  '  if V.min = nil: V.min = V.max = x; return    // empty: O(1)',
+  '  if V.min = nil: V.min = V.max = x; return    // rỗng: O(1)',
   '  if x < V.min: swap(x, V.min)',
   '  if V.u > 2:',
-  '    if cluster[high(x)] is empty:',
+  '    if cluster[high(x)] rỗng:',
   '      insert(summary, high(x)); cluster[high(x)].min = .max = low(x)',
   '    else insert(cluster[high(x)], low(x))',
   '  if x > V.max: V.max = x',
@@ -78,7 +78,7 @@ export const vebPseudocode = [
   '  if x = V.min:',
   '    c = min(summary); x = index(c, min(cluster[c])); V.min = x',
   '  delete(cluster[high(x)], low(x))',
-  '  if cluster[high(x)] is empty:',
+  '  if cluster[high(x)] rỗng:',
   '    delete(summary, high(x))',
   '    if x = V.max:',
   '      s = max(summary)',
