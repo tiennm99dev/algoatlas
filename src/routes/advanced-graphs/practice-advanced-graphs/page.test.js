@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/practice-advanced-graphs/copy.en.js';
+import { vi as m } from '$lib/lessons/practice-advanced-graphs/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -101,16 +101,16 @@ function failNode(value) {
 describe('advanced graph practice', () => {
   it('failing D splits the network into three parts', () => {
     render();
-    expect(text()).toContain('The whole network is 1 connected piece. Pick a node to fail.');
+    expect(text()).toContain('Toàn bộ mạng gồm 1 mảnh liên thông. Hãy chọn một nút để làm hỏng.');
     failNode('3');
-    expect(text()).toContain('Now fail D.');
+    expect(text()).toContain('Giờ làm hỏng D.');
     click(button('Bước tiếp'));
-    expect(text()).toContain('D fails: remove it and every link it has.');
+    expect(text()).toContain('D bị hỏng: bỏ nó cùng mọi liên kết của nó.');
     click(button('Đến bước cuối'));
     expect(text()).toContain(
-      '3 parts still work together. That is more than the 1 before, so D is critical: an articulation point.',
+      '3 phần vẫn hoạt động cùng nhau. Nhiều hơn 1 lúc đầu, nên D là nút quan trọng: một đỉnh khớp.',
     );
-    expect(statValue(m.stats.critical)).toBe('yes');
+    expect(statValue(m.stats.critical)).toBe(m.yes);
     expect(statValue(m.stats.largest)).toBe('3');
     expect(chips(m.partsLabel)).toEqual(['P1: A B C', 'P2: E', 'P3: F G H']);
   });
@@ -120,17 +120,19 @@ describe('advanced graph practice', () => {
     click(vertex(5));
     click(button('Đến bước cuối'));
     expect(statValue(m.stats.largest)).toBe('5');
-    expect(vertex(5).getAttribute('aria-label')).toBe('Router F, failed');
+    expect(vertex(5).getAttribute('aria-label')).toBe('Bộ định tuyến F, bị hỏng');
     click(vertex(5));
     click(button('Đến bước cuối'));
-    expect(text()).toContain('1 part still works together. Pick a node to fail and compare.');
+    expect(text()).toContain(
+      '1 phần vẫn hoạt động cùng nhau. Hãy chọn một nút để làm hỏng rồi so sánh.',
+    );
   });
 
   it('a non-critical failure keeps the network whole', () => {
     render();
     failNode('4');
     click(button('Đến bước cuối'));
-    expect(statValue(m.stats.critical)).toBe('no');
+    expect(statValue(m.stats.critical)).toBe(m.no);
   });
 
   it('adding E — F turns three parts into two', () => {
@@ -150,26 +152,26 @@ describe('advanced graph practice', () => {
   it('finds the dependency cycles and a build order once they are broken', () => {
     render();
     radio('deps');
-    expect(text()).toContain('Run Tarjan’s SCC search');
+    expect(text()).toContain('Chạy phép tìm SCC của thuật toán Tarjan');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Done: 2 dependency cycles on 5 modules.');
+    expect(text()).toContain('Xong: 2 vòng phụ thuộc trên 5 mô-đun.');
     expect(chips(m.cyclesLabel)).toEqual(['F G', 'C D E']);
-    expect(statValue(m.stats.buildable)).toBe('no');
+    expect(statValue(m.stats.buildable)).toBe(m.no);
     radio('remove');
     click(edgeButton('Xoá cạnh từ E đến C'));
     click(edgeButton('Xoá cạnh từ G đến F'));
     click(button('Đến bước cuối'));
     expect(text()).toContain(
-      'Done: no cycle. Build in the order the components finished: E, G, D, C, B, F, A.',
+      'Xong: không có vòng. Dựng theo thứ tự các thành phần hoàn tất: E, G, D, C, B, F, A.',
     );
     expect(chips(m.orderLabel)).toEqual(['E', 'G', 'D', 'C', 'B', 'F', 'A']);
-    expect(statValue(m.stats.buildable)).toBe('yes');
+    expect(statValue(m.stats.buildable)).toBe(m.yes);
   });
 
   it('steps with the keyboard shortcut', () => {
     render();
     press(document.body, 'ArrowRight');
-    expect(text()).toContain('A works and has no part yet');
+    expect(text()).toContain('A còn hoạt động và chưa thuộc phần nào');
   });
 
   it('checks practice answers with a hint', () => {

@@ -17,7 +17,7 @@
     cycleTrace,
     minimumSpanningForest,
   } from '$lib/algo-engine/mst-cut-property.js';
-  import { en as m } from '$lib/lessons/mst-cut-property/copy.en.js';
+  import { vi as m } from '$lib/lessons/mst-cut-property/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/graph-editor.js').GraphNode} GraphNode */

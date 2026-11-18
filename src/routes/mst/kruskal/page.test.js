@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/kruskal/copy.en.js';
+import { vi as m } from '$lib/lessons/kruskal/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -94,31 +94,31 @@ function answer(q, value) {
 describe('Kruskal’s algorithm lesson', () => {
   it('sorts the edges, accepts and rejects them, and stops at V − 1 edges', () => {
     render();
-    expect(text()).toContain('Sort the 9 edges by weight: E — F 1, B — C 2, A — B 3, A — C 4');
-    expect(sortedRows()[0]).toBe('E — F, weight 1, waiting');
+    expect(text()).toContain('Sắp xếp 9 cạnh theo trọng số: E — F 1, B — C 2, A — B 3, A — C 4');
+    expect(sortedRows()[0]).toBe('E — F, trọng số 1, đang chờ');
     click(button('Bước tiếp'));
     expect(text()).toContain(
-      'Edge E — F (weight 1): find(E) = E and find(F) = F are different roots',
+      'Cạnh E — F (trọng số 1): find(E) = E và find(F) = F là hai gốc khác nhau',
     );
-    expect(sortedRows()[0]).toBe('E — F, weight 1, now');
+    expect(sortedRows()[0]).toBe('E — F, trọng số 1, đang xét');
     for (let i = 0; i < 3; i++) click(button('Bước tiếp'));
     expect(text()).toContain(
-      'Edge A — C (weight 4): find(A) = find(C) = B, so both ends are already in one tree.',
+      'Cạnh A — C (trọng số 4): find(A) = find(C) = B, nên hai đầu đã nằm trong cùng một cây.',
     );
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Done: the minimum spanning tree has 5 edges and weight 18');
+    expect(text()).toContain('Xong: cây khung nhỏ nhất có 5 cạnh và trọng số 18');
     expect(statValue(m.stats.considered)).toBe('7');
     expect(statValue(m.stats.rejected)).toBe('2');
     expect(statValue(m.stats.components)).toBe('1');
-    expect(sortedRows()[3]).toBe('A — C, weight 4, rejected');
-    expect(sortedRows()[8]).toBe('D — F, weight 9, waiting');
+    expect(sortedRows()[3]).toBe('A — C, trọng số 4, bị loại');
+    expect(sortedRows()[8]).toBe('D — F, trọng số 9, đang chờ');
   });
 
   it('shows the stop before the last edges are read', () => {
     render();
     click(button('Đến bước cuối'));
     click(button('Bước trước'));
-    expect(text()).toContain('Stop: the 2 remaining edges are never looked at.');
+    expect(text()).toContain('Dừng: 2 cạnh còn lại không bao giờ được xét.');
   });
 
   it('reruns when a weight changes, and rejects a bad weight', () => {
@@ -142,7 +142,7 @@ describe('Kruskal’s algorithm lesson', () => {
     click(vertex(4));
     click(vertex(5));
     click(button('Đến bước cuối'));
-    expect(text()).toContain('The edges ran out with 2 trees left');
+    expect(text()).toContain('Đã hết cạnh mà vẫn còn 2 cây');
     click(buttonByText(m.resetGraph));
     click(buttonByText(m.randomWeights));
     click(button('Đến bước cuối'));
@@ -153,10 +153,10 @@ describe('Kruskal’s algorithm lesson', () => {
     render();
     press(document.body, 'ArrowRight');
     expect(vertex(4).getAttribute('aria-label')).toBe(
-      'Vertex E, in the tree of E, end of the edge considered',
+      'Đỉnh E, thuộc cây của E, đầu của cạnh đang xét',
     );
     press(document.body, 'ArrowRight');
-    expect(vertex(5).getAttribute('aria-label')).toBe('Vertex F, in the tree of E');
+    expect(vertex(5).getAttribute('aria-label')).toBe('Đỉnh F, thuộc cây của E');
   });
 
   it('checks practice answers with a hint', () => {

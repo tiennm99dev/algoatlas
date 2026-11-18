@@ -46,15 +46,15 @@ export const MAX_NODES = 8;
  */
 
 export const eulerPseudocode = [
-  'count the vertices of odd degree',
-  'if odd ∉ {0, 2}, or the edges are not all connected: no Euler path',
-  'start = the odd vertex if odd = 2, else any vertex with an edge',
+  'đếm số đỉnh bậc lẻ: odd',
+  'if odd ∉ {0, 2} or các cạnh không liên thông: không có đường đi Euler',
+  'start = một đỉnh bậc lẻ if odd = 2, else một đỉnh bất kì có cạnh',
   'stack = [start]; route = []',
-  'while stack is not empty:',
-  '  u = top of the stack',
-  '  if u has an unused edge u — v: mark it used; push v',
-  '  else: pop u; route.append(u)',
-  'route reversed uses every edge once (a circuit when odd = 0)',
+  'while stack khác rỗng:',
+  '  u = đỉnh của stack',
+  '  if u còn cạnh chưa dùng u — v: đánh dấu đã dùng; push(v)',
+  '  else: pop(u); route.append(u)',
+  'route đảo ngược dùng mỗi cạnh một lần (là chu trình khi odd = 0)',
 ];
 
 /**

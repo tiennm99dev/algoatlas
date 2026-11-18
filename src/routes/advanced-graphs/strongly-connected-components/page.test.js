@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/strongly-connected-components/copy.en.js';
+import { vi as m } from '$lib/lessons/strongly-connected-components/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -86,32 +86,32 @@ function answer(q, value) {
 describe('strongly connected components lesson', () => {
   it('runs Tarjan, labels tin/low and condenses the graph', () => {
     render();
-    expect(text()).toContain('Every vertex starts unvisited.');
+    expect(text()).toContain('Ban đầu chưa đỉnh nào được thăm.');
     expect(text()).toContain(m.condensedWait);
     click(button('Bước tiếp'));
-    expect(text()).toContain('Visit A: tin = low = 0. Push A on the stack.');
-    expect(vertex(0).getAttribute('aria-label')).toBe('Vertex A, current, tin 0, low 0');
+    expect(text()).toContain('Thăm A: tin = low = 0. Đẩy A vào ngăn xếp.');
+    expect(vertex(0).getAttribute('aria-label')).toBe('Đỉnh A, đang xét, tin 0, low 0');
     for (let i = 0; i < 5; i++) click(button('Bước tiếp'));
-    expect(text()).toContain('Edge C → A: A is still on the stack');
+    expect(text()).toContain('Cạnh C → A: A vẫn còn trong ngăn xếp');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Done: 3 components.');
+    expect(text()).toContain('Xong: 3 thành phần.');
     expect(statValue(m.stats.comps)).toBe('3');
     expect(statValue(m.stats.edges)).toBe('10');
     expect(chips(m.compsLabel)).toEqual(['C1: D E F', 'C2: A B C', 'C3: G H']);
-    expect(text()).toContain('3 components and 2 edges between them.');
-    expect(document.querySelector('[aria-label^="Condensation"]')).toBeTruthy();
+    expect(text()).toContain('3 thành phần và 2 cạnh giữa chúng.');
+    expect(document.querySelector('[aria-label^="DAG rút gọn"]')).toBeTruthy();
   });
 
   it('runs Kosaraju in two passes', () => {
     render();
     radio('kosaraju');
-    expect(text()).toContain('Pass 1: run a DFS');
+    expect(text()).toContain('Lượt 1: chạy DFS');
     click(button('Đến bước cuối'));
     expect(statValue(m.stats.edges)).toBe('20');
     expect(statValue(m.stats.pass)).toBe('2 / 2');
     expect(chips(m.compsLabel)).toEqual(['C1: G H', 'C2: A B C', 'C3: D E F']);
     expect(chips(m.finishTitle)).toEqual(['C', 'F', 'E', 'D', 'B', 'A', 'H', 'G']);
-    expect(text()).toContain('Kosaraju found them sources first');
+    expect(text()).toContain('Kosaraju tìm thấy các thành phần nguồn trước');
   });
 
   it('adding F → A merges two components, and reset restores them', () => {
@@ -121,7 +121,7 @@ describe('strongly connected components lesson', () => {
     click(vertex(0));
     click(button('Đến bước cuối'));
     expect(statValue(m.stats.comps)).toBe('2');
-    expect(text()).toContain('2 components and 1 edge between them.');
+    expect(text()).toContain('2 thành phần và 1 cạnh giữa chúng.');
     click(buttonByText(m.resetGraph));
     click(button('Đến bước cuối'));
     expect(statValue(m.stats.comps)).toBe('3');
@@ -130,7 +130,7 @@ describe('strongly connected components lesson', () => {
   it('steps with the keyboard shortcut', () => {
     render();
     press(document.body, 'ArrowRight');
-    expect(text()).toContain('Visit A');
+    expect(text()).toContain('Thăm A');
   });
 
   it('checks practice answers with a hint', () => {

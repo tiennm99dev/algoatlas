@@ -79,21 +79,21 @@ export const MAX_WEIGHT = 99;
  */
 
 export const bottleneckPseudocode = [
-  'sort the edges by weight; every vertex is its own set',
-  'for each edge u — v in sorted order:',
-  '  if find(u) = find(v): skip it',
+  'sắp xếp các cạnh theo trọng số; mỗi đỉnh là một tập riêng',
+  'for u — v in sortedEdges:  // theo thứ tự đã sắp xếp',
+  '  if find(u) = find(v): bỏ qua',
   '  union(u, v)',
   '  if find(s) = find(t): bottleneck = w(u — v); stop',
-  'path s → t in the forest: no edge on it is heavier than the bottleneck',
+  'đường s → t trong rừng: không cạnh nào trên đó nặng hơn nút cổ chai',
 ];
 
 export const secondBestPseudocode = [
-  'T = a minimum spanning tree, of weight W',
+  'T = một cây khung nhỏ nhất, trọng số W',
   'best = ∞',
-  'for each edge e = u — v not in T:',
-  '  f = the heaviest edge on the path u → v in T',
-  '  if W − w(f) + w(e) < best: best = W − w(f) + w(e); swap = (add e, drop f)',
-  'return best    // the second-best spanning tree',
+  'for e = u — v in edges if e not in T:',
+  '  f = cạnh nặng nhất trên đường u → v trong T',
+  '  if W − w(f) + w(e) < best: best = W − w(f) + w(e); swap = (thêm e, bỏ f)',
+  'return best    // cây khung tốt nhì',
 ];
 
 /**

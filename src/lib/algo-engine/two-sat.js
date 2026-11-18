@@ -43,12 +43,12 @@ export const MAX_CLAUSES = 8;
  */
 
 export const twoSatPseudocode = [
-  'for each clause (a ∨ b): add the edges ¬a → b and ¬b → a',
-  'find the SCCs of the implication graph (Tarjan finds sinks first)',
-  'for each variable x:',
-  '  if x and ¬x are in the same SCC: unsatisfiable, stop',
-  '  x = true if comp[x] was found before comp[¬x], else false',
-  'every clause is satisfied',
+  'for (a ∨ b) in clauses: thêm các cạnh ¬a → b và ¬b → a',
+  'tìm các SCC của đồ thị kéo theo (Tarjan tìm thành phần không có cạnh ra trước)',
+  'for x in variables:',
+  '  if x và ¬x cùng một SCC: vô nghiệm, stop',
+  '  x = true if comp[x] được tìm thấy trước comp[¬x], else false',
+  'mọi mệnh đề đều được thoả',
 ];
 
 /** @param {number} l */

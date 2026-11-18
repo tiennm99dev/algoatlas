@@ -52,26 +52,26 @@ export const MAX_NODES = 8;
  */
 
 export const tarjanPseudocode = [
-  'time = 0; stack = []; for each vertex s: if s is unvisited: connect(s)',
+  'time = 0; stack = []; for s in vertices: if s chưa thăm: connect(s)',
   'connect(u):',
-  '  tin[u] = low[u] = time; time += 1; push u on the stack',
-  '  for each edge u → v:',
-  '    if v is unvisited: connect(v); low[u] = min(low[u], low[v])',
-  '    else if v is on the stack: low[u] = min(low[u], tin[v])',
+  '  tin[u] = low[u] = time; time += 1; push(u) vào stack',
+  '  for v in adj[u]:  // mỗi cạnh u → v',
+  '    if v chưa thăm: connect(v); low[u] = min(low[u], low[v])',
+  '    else if v in stack: low[u] = min(low[u], tin[v])',
   '  if low[u] == tin[u]:',
-  '    pop the stack down to u: those vertices form one SCC',
-  'every vertex is in exactly one SCC',
+  '    pop stack cho tới u: các đỉnh đó tạo thành một SCC',
+  'mỗi đỉnh thuộc đúng một SCC',
 ];
 
 export const kosarajuPseudocode = [
-  'pass 1: for each vertex s: if s is unvisited: dfs1(s)',
-  'dfs1(u): mark u visited; for each edge u → v: if v is unvisited: dfs1(v)',
+  'lượt 1: for s in vertices: if s chưa thăm: dfs1(s)',
+  'dfs1(u): đánh dấu u đã thăm; for v in adj[u]: if v chưa thăm: dfs1(v)',
   '  finished.append(u)',
-  'reverse every edge',
-  'pass 2: for each u in finished, from last to first:',
-  '  if u has no component: c += 1; dfs2(u, c)',
-  'dfs2(u, c): comp[u] = c; for each reversed edge u → v: if v has no component: dfs2(v, c)',
-  'every vertex is in exactly one SCC',
+  'đảo chiều mọi cạnh',
+  'lượt 2: for u in reversed(finished):  // từ cuối về đầu',
+  '  if u chưa có thành phần: c += 1; dfs2(u, c)',
+  'dfs2(u, c): comp[u] = c; for v in radj[u]: if v chưa có thành phần: dfs2(v, c)',
+  'mỗi đỉnh thuộc đúng một SCC',
 ];
 
 /** @param {number} n */

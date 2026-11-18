@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/mst-cut-property/copy.en.js';
+import { vi as m } from '$lib/lessons/mst-cut-property/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -92,45 +92,45 @@ function answer(q, value) {
 describe('Cut property and MST basics lesson', () => {
   it('scans the starting cut and names the lightest crossing edge', () => {
     render();
-    expect(text()).toContain('S = {A, B, C}. Scan every edge');
+    expect(text()).toContain('S = {A, B, C}. Ta duyệt mọi cạnh');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Edge A — B (weight 3): both ends are in S');
+    expect(text()).toContain('Cạnh A — B (trọng số 3): cả hai đầu đều trong S');
     for (let i = 0; i < 3; i++) click(button('Bước tiếp'));
     expect(text()).toContain(
-      'Edge B — D (weight 5) crosses the cut. It is the first crossing edge',
+      'Cạnh B — D (trọng số 5) đi qua lát cắt. Đây là cạnh đầu tiên đi qua lát cắt',
     );
     click(button('Đến bước cuối'));
-    expect(text()).toContain('The lightest crossing edge is B — D (weight 5).');
+    expect(text()).toContain('Cạnh nhẹ nhất đi qua lát cắt là B — D (trọng số 5).');
     expect(statValue(m.stats.crossing)).toBe('3');
     expect(statValue(m.stats.mst)).toBe('18');
-    expect(vertex(0).getAttribute('aria-label')).toBe('Vertex A, side S');
+    expect(vertex(0).getAttribute('aria-label')).toBe('Đỉnh A, phía S');
   });
 
   it('moves a vertex across the cut by click and by keyboard', () => {
     render();
     click(vertex(3));
-    expect(vertex(3).getAttribute('aria-label')).toBe('Vertex D, side S');
+    expect(vertex(3).getAttribute('aria-label')).toBe('Đỉnh D, phía S');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('The lightest crossing edge is D — E (weight 7).');
+    expect(text()).toContain('Cạnh nhẹ nhất đi qua lát cắt là D — E (trọng số 7).');
     press(vertex(1), 'Enter');
-    expect(vertex(1).getAttribute('aria-label')).toBe('Vertex B, other side');
+    expect(vertex(1).getAttribute('aria-label')).toBe('Đỉnh B, phía còn lại');
     expect(text()).toContain('S = {A, C, D}.');
   });
 
   it('tests an edge against the cycle property', () => {
     render();
     radio('cycle');
-    expect(text()).toContain('Test edge C — D (weight 6). Search from C');
+    expect(text()).toContain('Kiểm tra cạnh C — D (trọng số 6). Ta tìm từ C');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('is strictly the heaviest edge on the cycle C → B → D → C');
+    expect(text()).toContain('nặng hơn hẳn mọi cạnh khác, trên chu trình C → B → D → C');
     commit(testSelect(), '6');
     click(button('Đến bước cuối'));
     expect(text()).toContain(
-      'The search ran out without reaching E. The reached vertices {A, B, C, D} form a cut',
+      'Phép tìm kiếm dừng mà không tới được E. Các đỉnh đã tới {A, B, C, D} tạo thành một lát cắt',
     );
     commit(weightField('C — E'), '6');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('no MST contains D — E');
+    expect(text()).toContain('không cây khung nhỏ nhất nào chứa D — E');
   });
 
   it('rejects a bad weight and resets the graph', () => {
@@ -155,7 +155,7 @@ describe('Cut property and MST basics lesson', () => {
   it('steps with the keyboard shortcut', () => {
     render();
     press(document.body, 'ArrowRight');
-    expect(text()).toContain('Edge A — B (weight 3)');
+    expect(text()).toContain('Cạnh A — B (trọng số 3)');
   });
 
   it('checks practice answers with a hint', () => {

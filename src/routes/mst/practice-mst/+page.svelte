@@ -18,7 +18,7 @@
     secondBestPseudocode,
     secondBestTrace,
   } from '$lib/algo-engine/practice-mst.js';
-  import { en as m } from '$lib/lessons/practice-mst/copy.en.js';
+  import { vi as m } from '$lib/lessons/practice-mst/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/graph-editor.js').GraphNode} GraphNode */

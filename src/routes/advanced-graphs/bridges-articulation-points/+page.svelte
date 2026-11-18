@@ -11,7 +11,7 @@
     cutPseudocode,
     cutTrace,
   } from '$lib/algo-engine/bridges-articulation-points.js';
-  import { en as m } from '$lib/lessons/bridges-articulation-points/copy.en.js';
+  import { vi as m } from '$lib/lessons/bridges-articulation-points/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/graph-editor.js').GraphNode} GraphNode */

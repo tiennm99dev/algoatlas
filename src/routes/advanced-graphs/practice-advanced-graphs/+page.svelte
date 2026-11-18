@@ -14,7 +14,7 @@
     failurePseudocode,
     failureTrace,
   } from '$lib/algo-engine/practice-advanced-graphs.js';
-  import { en as m } from '$lib/lessons/practice-advanced-graphs/copy.en.js';
+  import { vi as m } from '$lib/lessons/practice-advanced-graphs/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/graph-editor.js').GraphNode} GraphNode */

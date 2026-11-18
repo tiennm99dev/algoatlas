@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/bridges-articulation-points/copy.en.js';
+import { vi as m } from '$lib/lessons/bridges-articulation-points/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -86,29 +86,29 @@ function answer(q, value) {
 describe('bridges and articulation points lesson', () => {
   it('labels tin/low and finds the bridge and the cut vertices', () => {
     render();
-    expect(text()).toContain('Every vertex starts unvisited.');
+    expect(text()).toContain('Ban đầu chưa đỉnh nào được thăm.');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Start a DFS tree at A: tin = low = 0. A is its root.');
+    expect(text()).toContain('Bắt đầu một cây DFS ở A: tin = low = 0. A là gốc của cây.');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Done: 1 bridge and 3 articulation points, after 20 edge checks.');
+    expect(text()).toContain('Xong: 1 cầu và 3 đỉnh khớp, sau 20 lần xét cạnh.');
     expect(statValue(m.stats.bridges)).toBe('1');
     expect(chips(m.bridgesLabel)).toEqual(['E — F']);
     expect(chips(m.cutsLabel)).toEqual(['C', 'E', 'F']);
-    expect(vertex(3).getAttribute('aria-label')).toBe('Vertex D, finished, tin 3, low 2');
+    expect(vertex(3).getAttribute('aria-label')).toBe('Đỉnh D, đã hoàn tất, tin 3, low 2');
     expect(vertex(2).getAttribute('aria-label')).toBe(
-      'Vertex C, articulation point, finished, tin 2, low 0',
+      'Đỉnh C, đỉnh khớp, đã hoàn tất, tin 2, low 0',
     );
   });
 
   it('explains the bridge test on the return from F to E', () => {
     render();
     const frames = 40;
-    for (let i = 0; i < frames && !text().includes('Back from F to E'); i++)
+    for (let i = 0; i < frames && !text().includes('Quay về từ F đến E'); i++)
       click(button('Bước tiếp'));
     expect(text()).toContain(
-      'Back from F to E: low[E] = 2. low[F] = 5 > tin[E] = 4: nothing under F climbs back to E, so E — F is a bridge and E is an articulation point.',
+      'Quay về từ F đến E: low[E] = 2. low[F] = 5 > tin[E] = 4: không đỉnh nào dưới F quay ngược lên được E, nên E — F là cầu và E là đỉnh khớp.',
     );
-    expect(chips(m.bridgesLabel)).toEqual(['E — F (just found)']);
+    expect(chips(m.bridgesLabel)).toEqual(['E — F (vừa tìm thấy)']);
   });
 
   it('adding D — F removes the bridge, and reset brings it back', () => {
@@ -134,13 +134,13 @@ describe('bridges and articulation points lesson', () => {
     expect(chips(m.bridgesLabel)).toEqual(['A — B', 'E — F', 'C — A']);
     expect(chips(m.cutsLabel)).toEqual(['A', 'C', 'E', 'F']);
     click(button('Bước trước'));
-    expect(text()).toContain('A is a root with 2 tree children.');
+    expect(text()).toContain('A là gốc có 2 con trên cây DFS.');
   });
 
   it('steps with the keyboard shortcut', () => {
     render();
     press(document.body, 'ArrowRight');
-    expect(text()).toContain('Start a DFS tree at A');
+    expect(text()).toContain('Bắt đầu một cây DFS ở A');
   });
 
   it('checks practice answers with a hint', () => {

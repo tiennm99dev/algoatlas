@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/prim/copy.en.js';
+import { vi as m } from '$lib/lessons/prim/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -93,38 +93,34 @@ const select = (name) =>
 describe('Prim’s algorithm lesson', () => {
   it('grows the tree from A with a heap and skips stale edges', () => {
     render();
-    expect(text()).toContain(
-      'Start the tree at A and push its 2 edges into the heap: A — B 3, A — C 4.',
-    );
+    expect(text()).toContain('Bắt đầu cây ở A và đẩy 2 cạnh của nó vào heap: A — B 3, A — C 4.');
     click(button('Bước tiếp'));
-    expect(text()).toContain(
-      'Pop A — B (weight 3), the lightest edge in the heap. B is outside the tree',
-    );
+    expect(text()).toContain('Lấy ra A — B (trọng số 3), cạnh nhẹ nhất trong heap. B ở ngoài cây');
     expect(vertex(1).getAttribute('aria-label')).toBe(
-      'Vertex B, just added or expanded, in the tree, joined 2',
+      'Đỉnh B, vừa thêm hoặc đang mở rộng, trong cây, vào cây thứ 2',
     );
     let guard = 0;
-    while (!text().includes('it is stale') && guard++ < 40) click(button('Bước tiếp'));
-    expect(text()).toContain('Pop A — C (weight 4), but C is already in the tree.');
+    while (!text().includes('đó là cạnh cũ') && guard++ < 40) click(button('Bước tiếp'));
+    expect(text()).toContain('Lấy ra A — C (trọng số 4), nhưng C đã ở trong cây.');
     click(button('Đến bước cuối'));
     expect(text()).toContain(
-      'All 6 vertices are in the tree, weight 18. 2 entries left in the heap are never popped.',
+      'Cả 6 đỉnh đều đã ở trong cây, trọng số 18. 2 mục còn lại trong heap không bao giờ được lấy ra.',
     );
     expect(statValue(m.stats.stale)).toBe('2');
     expect(statValue(m.stats.pushes)).toBe('9');
-    expect(vertex(5).getAttribute('aria-label')).toBe('Vertex F, in the tree, joined 6');
+    expect(vertex(5).getAttribute('aria-label')).toBe('Đỉnh F, trong cây, vào cây thứ 6');
   });
 
   it('switches to the array of keys and counts the scans', () => {
     render();
     radio('array');
-    expect(text()).toContain('Set key[A] = 0 and every other key to ∞.');
+    expect(text()).toContain('Đặt key[A] = 0 và mọi khoá khác bằng ∞.');
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
-    expect(text()).toContain('Edge A — B (weight 3) is lighter than key[B] = ∞.');
-    expect(text()).toContain('B 3 via A');
+    expect(text()).toContain('Cạnh A — B (trọng số 3) nhẹ hơn key[B] = ∞.');
+    expect(text()).toContain('B 3 qua A');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('weight 18, after 15 key comparisons.');
+    expect(text()).toContain('trọng số 18, sau 15 phép so sánh khoá.');
     expect(statValue(m.stats.comparisons)).toBe('15');
   });
 
@@ -132,7 +128,7 @@ describe('Prim’s algorithm lesson', () => {
     render();
     commit(select('start'), '5');
     click(button('Đến bước cuối'));
-    expect(vertex(0).getAttribute('aria-label')).toBe('Vertex A, in the tree, joined 6');
+    expect(vertex(0).getAttribute('aria-label')).toBe('Đỉnh A, trong cây, vào cây thứ 6');
     commit(select('preset'), 'dense');
     click(button('Đến bước cuối'));
     expect(statValue(m.stats.weight)).toBe('17');
@@ -154,13 +150,13 @@ describe('Prim’s algorithm lesson', () => {
     click(vertex(4));
     click(vertex(5));
     click(button('Đến bước cuối'));
-    expect(text()).toContain('1 vertex cannot be reached from A');
+    expect(text()).toContain('1 đỉnh không tới được từ A');
   });
 
   it('steps with the keyboard shortcut', () => {
     render();
     press(document.body, 'ArrowRight');
-    expect(text()).toContain('Pop A — B (weight 3)');
+    expect(text()).toContain('Lấy ra A — B (trọng số 3)');
   });
 
   it('checks practice answers with a hint', () => {

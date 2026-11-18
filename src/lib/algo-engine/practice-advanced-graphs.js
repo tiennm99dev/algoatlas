@@ -39,13 +39,13 @@ export const MAX_NODES = 8;
  */
 
 export const failurePseudocode = [
-  'before = number of connected pieces of the whole network',
-  'remove the failed node and every link it has',
-  'for each working node v: if v has no part yet:',
-  '  parts += 1; give v that part; queue = [v]',
-  '  while queue is not empty: u = queue.dequeue()',
-  '    for each working neighbour w of u without a part: give w the part; enqueue w',
-  'the failed node is critical exactly when parts > before',
+  'before = số mảnh liên thông của toàn bộ mạng',
+  'bỏ nút bị hỏng cùng mọi liên kết của nó',
+  'for v in workingNodes: if v chưa thuộc phần nào:',
+  '  parts += 1; gán v vào phần đó; queue = [v]',
+  '  while queue khác rỗng: u = queue.dequeue()',
+  '    for w in neighbors(u) if w còn hoạt động và chưa có phần: gán w vào phần; enqueue(w)',
+  'nút bị hỏng là nút quan trọng khi và chỉ khi parts > before',
 ];
 
 /**
@@ -67,12 +67,12 @@ export const failurePseudocode = [
  */
 
 export const cyclePseudocode = [
-  'run Tarjan’s SCC search over the modules (A → B: A needs B)',
-  'connect(u): tin[u] = low[u] = time; time += 1; push u',
-  '  for each dependency u → v: connect(v) if unvisited, then lower low[u] by low[v] or tin[v]',
-  '  if low[u] == tin[u]: pop the stack down to u as one component',
-  '    a component of 2 or more modules is a dependency cycle',
-  'no cycle: the order the components were completed in is a build order',
+  'chạy phép tìm SCC của Tarjan trên các mô-đun (A → B: A cần B)',
+  'connect(u): tin[u] = low[u] = time; time += 1; push(u)',
+  '  for v in deps[u]: connect(v) nếu chưa thăm, rồi hạ low[u] theo low[v] hoặc tin[v]',
+  '  if low[u] == tin[u]: pop stack cho tới u thành một thành phần',
+  '    thành phần có từ 2 mô-đun trở lên là một vòng phụ thuộc',
+  'không có vòng: thứ tự các thành phần hoàn tất là một thứ tự dựng',
 ];
 
 /**

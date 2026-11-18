@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/eulerian-paths/copy.en.js';
+import { vi as m } from '$lib/lessons/eulerian-paths/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -93,20 +93,22 @@ function edgeButton(label) {
 describe('eulerian paths lesson', () => {
   it('checks degrees, then traces the circuit with two detours', () => {
     render();
-    expect(text()).toContain('Count degrees: every degree is even.');
-    expect(vertex(2).getAttribute('aria-label')).toBe('Vertex C, deg 4');
+    expect(text()).toContain('Đếm bậc: mọi bậc đều chẵn.');
+    expect(vertex(2).getAttribute('aria-label')).toBe('Đỉnh C, bậc 4');
     click(button('Bước tiếp'));
-    expect(text()).toContain('so an Euler circuit exists. Start at A.');
+    expect(text()).toContain('nên có chu trình Euler. Bắt đầu ở A.');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Walk A — B and push B. 1 unused edge is left at A.');
-    expect(vertex(1).getAttribute('aria-label')).toBe('Vertex B, pen is here, 1 left');
+    expect(text()).toContain('Đi theo A — B và đẩy B vào ngăn xếp. A còn 1 cạnh chưa dùng.');
+    expect(vertex(1).getAttribute('aria-label')).toBe('Đỉnh B, bút ở đây, còn 1');
     for (let i = 0; i < 3; i++) click(button('Bước tiếp'));
-    expect(text()).toContain('A has no unused edge: pop it onto the route. Back up to C.');
+    expect(text()).toContain('A không còn cạnh chưa dùng: lấy nó ra, ghi vào lộ trình. Lùi về C.');
     click(button('Bước tiếp'));
-    expect(text()).toContain('C still has unused edges: start a detour cycle here along C — D.');
+    expect(text()).toContain(
+      'C vẫn còn cạnh chưa dùng: bắt đầu một chu trình rẽ nhánh ở đây theo C — D.',
+    );
     click(button('Đến bước cuối'));
     expect(text()).toContain(
-      'Euler circuit A → B → C → D → E → F → G → E → C → A, using all 9 edges once.',
+      'chu trình Euler A → B → C → D → E → F → G → E → C → A, dùng cả 9 cạnh, mỗi cạnh một lần.',
     );
     expect(statValue(m.stats.detours)).toBe('2');
     expect(statValue(m.stats.used)).toBe('9 / 9');
@@ -117,14 +119,14 @@ describe('eulerian paths lesson', () => {
     render();
     radio('remove');
     click(edgeButton('Xoá cạnh giữa G và E'));
-    expect(text()).toContain('Count degrees: 2 odd (E, G).');
+    expect(text()).toContain('Đếm bậc: 2 đỉnh bậc lẻ (E, G).');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Exactly two odd vertices, E, G');
+    expect(text()).toContain('Có đúng hai đỉnh bậc lẻ, E, G');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Euler path E → ');
-    expect(text()).toMatch(/→ G, using all 8 edges once/);
+    expect(text()).toContain('đường đi Euler E → ');
+    expect(text()).toMatch(/→ G, dùng cả 8 cạnh, mỗi cạnh một lần/);
     click(buttonByText(m.resetGraph));
-    expect(text()).toContain('every degree is even');
+    expect(text()).toContain('mọi bậc đều chẵn');
   });
 
   it('refuses a graph with four odd vertices', () => {
@@ -135,14 +137,14 @@ describe('eulerian paths lesson', () => {
     click(vertex(1));
     click(vertex(6));
     click(button('Đến bước cuối'));
-    expect(text()).toContain('4 vertices have odd degree (A, B, D, G)');
-    expect(text()).toContain('no Euler path exists');
+    expect(text()).toContain('4 đỉnh có bậc lẻ (A, B, D, G)');
+    expect(text()).toContain('không có đường đi Euler');
   });
 
   it('steps with the keyboard shortcut', () => {
     render();
     press(document.body, 'ArrowRight');
-    expect(text()).toContain('Start at A');
+    expect(text()).toContain('Bắt đầu ở A');
   });
 
   it('checks practice answers with a hint', () => {

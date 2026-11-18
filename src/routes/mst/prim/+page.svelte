@@ -8,7 +8,7 @@
   import SegmentedControl from '$lib/components/segmented-control.svelte';
   import StepControls from '$lib/components/step-controls.svelte';
   import { MAX_NODES, MAX_WEIGHT, primPseudocode, primTrace } from '$lib/algo-engine/prim.js';
-  import { en as m } from '$lib/lessons/prim/copy.en.js';
+  import { vi as m } from '$lib/lessons/prim/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/graph-editor.js').GraphNode} GraphNode */

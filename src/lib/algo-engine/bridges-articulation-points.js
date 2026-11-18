@@ -49,16 +49,16 @@ export const MAX_NODES = 8;
  */
 
 export const cutPseudocode = [
-  'timer = 0; for each vertex s: if s is unvisited: dfs(s, none)',
+  'timer = 0; for s in vertices: if s chưa thăm: dfs(s, null)',
   'dfs(u, parentEdge):',
   '  tin[u] = low[u] = timer; timer += 1',
-  '  for each edge e = u — v except parentEdge:',
-  '    if v is visited: low[u] = min(low[u], tin[v])',
+  '  for e = u — v in adj[u] if e != parentEdge:',
+  '    if v đã thăm: low[u] = min(low[u], tin[v])',
   '    else: dfs(v, e); low[u] = min(low[u], low[v])',
-  '      if low[v] > tin[u]: e is a bridge',
-  '      if low[v] ≥ tin[u] and u is not a root: u is an articulation point',
-  '  if u is a root with 2 or more tree children: u is an articulation point',
-  'report the bridges and the articulation points',
+  '      if low[v] > tin[u]: e là cầu',
+  '      if low[v] ≥ tin[u] and u không phải gốc: u là đỉnh khớp',
+  '  if u là gốc có từ 2 con trên cây trở lên: u là đỉnh khớp',
+  'báo các cầu và các đỉnh khớp',
 ];
 
 /**

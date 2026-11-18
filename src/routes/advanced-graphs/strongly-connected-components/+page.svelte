@@ -15,7 +15,7 @@
     tarjanPseudocode,
     tarjanTrace,
   } from '$lib/algo-engine/strongly-connected-components.js';
-  import { en as m } from '$lib/lessons/strongly-connected-components/copy.en.js';
+  import { vi as m } from '$lib/lessons/strongly-connected-components/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/graph-editor.js').GraphNode} GraphNode */

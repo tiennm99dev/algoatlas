@@ -61,24 +61,24 @@ export const MAX_WEIGHT = 99;
  */
 
 export const cutPseudocode = [
-  'S = the vertices on one side of the cut',
-  'best = none',
-  'for each edge u — v of weight w:',
-  '  if u and v are on the same side: skip it',
-  '  if best is none or w < best.w:',
+  'S = các đỉnh ở một phía của lát cắt',
+  'best = null',
+  'for (u — v, w) in edges:  // mỗi cạnh u — v trọng số w',
+  '  if u và v cùng một phía: bỏ qua',
+  '  if best == null or w < best.w:',
   '    best = u — v',
-  'return best    // a light edge: some MST contains it',
+  'return best    // cạnh nhẹ: có một MST chứa nó',
 ];
 
 export const cyclePseudocode = [
-  'test edge e = a — b of weight w',
+  'kiểm tra cạnh e = a — b trọng số w',
   'reached = {a}; queue = [a]',
-  'while queue is not empty:',
+  'while queue khác rỗng:',
   '  x = queue.popFront()',
-  '  for each edge x — y lighter than w:',
-  '    if y is not reached: reach y; queue.push(y)',
-  '    if y = b: cycle with e as its heaviest edge → no MST has e',
-  'no lighter route: e is lightest across (reached, rest) → some MST has e',
+  '  for y in adj[x] if w(x — y) < w:  // cạnh nhẹ hơn w',
+  '    if y not in reached: thêm y vào reached; queue.push(y)',
+  '    if y = b: chu trình có e là cạnh nặng nhất → không MST nào có e',
+  'không có đường nhẹ hơn: e nhẹ nhất qua lát cắt (reached, phần còn lại) → có MST chứa e',
 ];
 
 /**

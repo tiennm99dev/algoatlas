@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/practice-mst/copy.en.js';
+import { vi as m } from '$lib/lessons/practice-mst/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -106,25 +106,25 @@ describe('MST problems lesson', () => {
     expect(text()).toContain(m.predictHelp);
     for (const e of ['A — B', 'A — C', 'B — C']) tick(e);
     click(buttonByText(m.check));
-    expect(text()).toContain('Not a tree: B — C (2) closes a cycle');
+    expect(text()).toContain('Chưa phải cây: B — C (2) khép một chu trình');
     tick('A — C');
     click(buttonByText(m.check));
-    expect(text()).toContain('A spanning tree on 6 vertices has exactly 5 edges. You picked 2');
+    expect(text()).toContain('Cây khung trên 6 đỉnh có đúng 5 cạnh. Bạn đã chọn 2');
     for (const e of ['B — D', 'C — E', 'E — F']) tick(e);
-    expect(text()).toContain('5 of 5 edges picked, total weight 19.');
+    expect(text()).toContain('Đã chọn 5/5 cạnh, tổng trọng số 19.');
     expect(statValue(m.stats.picked)).toBe('5 / 5');
     expect(statValue(m.stats.yourWeight)).toBe('19');
     expect(statValue(m.stats.mst)).toBeUndefined();
     click(buttonByText(m.check));
     expect(text()).toContain(
-      'A spanning tree of weight 19, but the minimum is 18. Hint: D — E (7) closes a cycle with your tree on which C — E (8) is heavier. Swap them to save 1.',
+      'Đây là một cây khung có trọng số 19, nhưng nhỏ nhất là 18. Gợi ý: D — E (7) khép một chu trình với cây của bạn, trên đó C — E (8) nặng hơn. Đổi hai cạnh này để bớt 1.',
     );
     tick('C — E');
     tick('D — E');
     click(buttonByText(m.check));
-    expect(text()).toContain('Correct: a minimum spanning tree, weight 18.');
+    expect(text()).toContain('Đúng rồi: đây là một cây khung nhỏ nhất, trọng số 18.');
     click(buttonByText(m.clear));
-    expect(text()).toContain('0 of 5 edges picked');
+    expect(text()).toContain('Đã chọn 0/5 cạnh');
   });
 
   it('keeps the ticks when a weight changes and rejects a bad weight', () => {
@@ -132,7 +132,7 @@ describe('MST problems lesson', () => {
     for (const e of ['A — B', 'B — C', 'C — D', 'D — E', 'E — F']) tick(e);
     commit(weightField('B — D'), '9');
     click(buttonByText(m.check));
-    expect(text()).toContain('Correct: a minimum spanning tree, weight 19.');
+    expect(text()).toContain('Đúng rồi: đây là một cây khung nhỏ nhất, trọng số 19.');
     commit(weightField('B — D'), 'abc');
     expect(text()).toContain(m.badWeight(99));
     expect(weightField('B — D').value).toBe('9');
@@ -141,35 +141,33 @@ describe('MST problems lesson', () => {
   it('steps through the minimum bottleneck path and reruns for new endpoints', () => {
     render();
     radio('bottleneck');
-    expect(text()).toContain(
-      'Find a path from A to F whose heaviest edge is as light as possible.',
-    );
+    expect(text()).toContain('Tìm một đường đi từ A đến F có cạnh nặng nhất nhẹ nhất có thể.');
     click(button('Đến bước cuối'));
     expect(text()).toContain(
-      'Minimum bottleneck path: A → B → D → E → F. Its heaviest edge weighs 7.',
+      'Đường đi nút cổ chai nhỏ nhất: A → B → D → E → F. Cạnh nặng nhất của nó nặng 7.',
     );
     expect(statValue(m.stats.bottleneck)).toBe('7');
-    expect(vertex(0).getAttribute('aria-label')).toBe('Vertex A, from');
-    expect(vertex(3).getAttribute('aria-label')).toBe('Vertex D, on the path');
+    expect(vertex(0).getAttribute('aria-label')).toBe('Đỉnh A, điểm đầu');
+    expect(vertex(3).getAttribute('aria-label')).toBe('Đỉnh D, trên đường đi');
     click(button('Bước trước'));
-    expect(text()).toContain('Edge D — E (7) joins the tree of A to the tree of F.');
+    expect(text()).toContain('Cạnh D — E (7) nối cây của A với cây của F.');
     commit(select('target'), '2');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Minimum bottleneck path: A → B → C. Its heaviest edge weighs 3.');
+    expect(text()).toContain(
+      'Đường đi nút cổ chai nhỏ nhất: A → B → C. Cạnh nặng nhất của nó nặng 3.',
+    );
   });
 
   it('finds the second-best spanning tree', () => {
     render();
     radio('second');
-    expect(text()).toContain('The minimum spanning tree T weighs 18.');
+    expect(text()).toContain('Cây khung nhỏ nhất T nặng 18.');
     click(button('Bước tiếp'));
     expect(text()).toContain(
-      'Add A — C (4): the T-path between its ends has heaviest edge A — B (3). 18 − 3 + 4 = 19',
+      'Thêm A — C (4): đường đi trên T giữa hai đầu của nó có cạnh nặng nhất là A — B (3). 18 − 3 + 4 = 19',
     );
     click(button('Đến bước cuối'));
-    expect(text()).toContain(
-      'Second-best spanning tree: add A — C (4), drop A — B (3), weight 19.',
-    );
+    expect(text()).toContain('Cây khung tốt nhì: thêm A — C (4), bỏ A — B (3), trọng số 19.');
     expect(statValue(m.stats.best)).toBe('19');
     expect(text()).toContain('+D — F −D — E → 20');
   });
@@ -180,11 +178,11 @@ describe('MST problems lesson', () => {
     radio('connect');
     click(vertex(3));
     click(vertex(5));
-    expect(text()).toContain('0 of 5 edges picked');
+    expect(text()).toContain('Đã chọn 0/5 cạnh');
     click(vertex(4));
     click(vertex(5));
     click(buttonByText(m.check));
-    expect(text()).toContain('This graph is not connected');
+    expect(text()).toContain('Đồ thị này không liên thông');
     click(buttonByText(m.resetGraph));
     expect(weightField('D — F').value).toBe('9');
   });
@@ -193,7 +191,7 @@ describe('MST problems lesson', () => {
     render();
     radio('second');
     press(document.body, 'ArrowRight');
-    expect(text()).toContain('Add A — C (4)');
+    expect(text()).toContain('Thêm A — C (4)');
   });
 
   it('checks practice answers with a hint', () => {

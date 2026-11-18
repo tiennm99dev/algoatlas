@@ -52,12 +52,12 @@ export const MAX_WEIGHT = 99;
  */
 
 export const kruskalPseudocode = [
-  'sort the edges by weight',
-  'make every vertex its own set; tree = []',
-  'for each edge u — v in sorted order:',
-  '  if tree has V − 1 edges: stop',
-  '  if find(u) = find(v): skip it   // it would close a cycle',
-  '  union(u, v); add u — v to tree',
+  'sắp xếp các cạnh theo trọng số',
+  'mỗi đỉnh là một tập riêng; tree = []',
+  'for u — v in sortedEdges:  // theo thứ tự đã sắp xếp',
+  '  if tree có V − 1 cạnh: stop',
+  '  if find(u) = find(v): bỏ qua   // sẽ khép một chu trình',
+  '  union(u, v); thêm u — v vào tree',
   'return tree',
 ];
 

@@ -12,7 +12,7 @@
     twoSatPseudocode,
     twoSatTrace,
   } from '$lib/algo-engine/two-sat.js';
-  import { en as m } from '$lib/lessons/two-sat/copy.en.js';
+  import { vi as m } from '$lib/lessons/two-sat/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/two-sat.js').Clause} Clause */

@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/two-sat/copy.en.js';
+import { vi as m } from '$lib/lessons/two-sat/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -96,22 +96,22 @@ const literalTitle = (l) =>
 describe('2-SAT lesson', () => {
   it('builds the implication graph and reports an assignment', () => {
     render();
-    expect(text()).toContain('One vertex per literal, no edges yet.');
+    expect(text()).toContain('Mỗi literal là một đỉnh, chưa có cạnh nào.');
     click(button('Bước tiếp'));
-    expect(text()).toContain('(¬x₁ ∨ x₂): if x₁ then x₂, and if ¬x₂ then ¬x₁. Add both edges.');
+    expect(text()).toContain('(¬x₁ ∨ x₂): nếu x₁ thì x₂, và nếu ¬x₂ thì ¬x₁. Thêm cả hai cạnh.');
     expect(statValue(m.stats.edges)).toBe('2');
     for (let i = 0; i < 5; i++) click(button('Bước tiếp'));
-    expect(text()).toContain('Tarjan finishes component C1: ¬x₄, x₃, x₂.');
+    expect(text()).toContain('Tarjan hoàn tất thành phần C1: ¬x₄, x₃, x₂.');
     click(button('Đến bước cuối'));
     expect(text()).toContain(
-      'Satisfiable: x₁ = true, x₂ = true, x₃ = true, x₄ = false. Every clause has a true literal.',
+      'Có nghiệm: x₁ = true, x₂ = true, x₃ = true, x₄ = false. Mệnh đề nào cũng có một literal đúng.',
     );
     expect(statValue(m.stats.comps)).toBe('4');
-    expect(statValue(m.stats.result)).toBe('SAT');
+    expect(statValue(m.stats.result)).toBe(m.results.sat);
     expect(chips(m.assignLabel)).toEqual(['x₁ = true', 'x₂ = true', 'x₃ = true', 'x₄ = false']);
-    expect(document.querySelectorAll('li[aria-label^="Clause"]')).toHaveLength(5);
-    expect(text().match(/✓ satisfied/g)).toHaveLength(5);
-    expect(literalTitle(7)).toBe('Literal ¬x₄, true, component C1');
+    expect(document.querySelectorAll('li[aria-label^="Mệnh đề"]')).toHaveLength(5);
+    expect(text().match(/✓ đã thoả/g)).toHaveLength(5);
+    expect(literalTitle(7)).toBe('Literal ¬x₄, đúng, thành phần C1');
   });
 
   it('explains each choice from the component order', () => {
@@ -119,7 +119,7 @@ describe('2-SAT lesson', () => {
     click(button('Đến bước cuối'));
     click(button('Bước trước'));
     expect(text()).toContain(
-      'C1 (¬x₄) was found before C4 (x₄), so ¬x₄ is later in topological order: set x₄ = false.',
+      'C1 (¬x₄) được tìm thấy trước C4 (x₄), nên ¬x₄ đứng sau trong thứ tự tô-pô: gán x₄ = false.',
     );
   });
 
@@ -127,28 +127,30 @@ describe('2-SAT lesson', () => {
     render();
     click(buttonByText(m.unsatExample));
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Unsatisfiable: the implications force x₁ to equal its own negation.');
-    expect(statValue(m.stats.result)).toBe('UNSAT');
+    expect(text()).toContain(
+      'Vô nghiệm: các phép kéo theo buộc x₁ phải bằng chính phủ định của nó.',
+    );
+    expect(statValue(m.stats.result)).toBe(m.results.unsat);
     click(button('Bước trước'));
-    expect(text()).toContain('x₁ and ¬x₁ are both in C1');
+    expect(text()).toContain('x₁ và ¬x₁ cùng nằm trong C1');
   });
 
   it('adding a clause and editing a literal rebuild the trace', () => {
     render();
     click(buttonByText(m.addClause));
-    expect(document.querySelectorAll('li[aria-label^="Clause"]')).toHaveLength(6);
+    expect(document.querySelectorAll('li[aria-label^="Mệnh đề"]')).toHaveLength(6);
     // Turn the new (x₁ ∨ x₂) into (¬x₁ ∨ ¬x₃).
-    choose('Clause 6, first literal', 1);
-    choose('Clause 6, second literal', 5);
+    choose('Mệnh đề 6, literal thứ nhất', 1);
+    choose('Mệnh đề 6, literal thứ hai', 5);
     click(button('Đến bước cuối'));
     expect(chips(m.assignLabel)).toEqual(['x₁ = false', 'x₂ = true', 'x₃ = true', 'x₄ = false']);
     // (¬x₂ ∨ ¬x₃) instead makes it unsatisfiable.
-    choose('Clause 6, first literal', 3);
+    choose('Mệnh đề 6, literal thứ nhất', 3);
     click(button('Đến bước cuối'));
-    expect(statValue(m.stats.result)).toBe('UNSAT');
-    click(button('Delete clause 6'));
+    expect(statValue(m.stats.result)).toBe(m.results.unsat);
+    click(button('Xoá mệnh đề 6'));
     click(button('Đến bước cuối'));
-    expect(statValue(m.stats.result)).toBe('SAT');
+    expect(statValue(m.stats.result)).toBe(m.results.sat);
   });
 
   it('refuses a ninth clause with a notice', () => {
@@ -165,7 +167,7 @@ describe('2-SAT lesson', () => {
   it('steps with the keyboard shortcut', () => {
     render();
     press(document.body, 'ArrowRight');
-    expect(text()).toContain('Add both edges.');
+    expect(text()).toContain('Thêm cả hai cạnh.');
   });
 
   it('checks practice answers with a hint', () => {

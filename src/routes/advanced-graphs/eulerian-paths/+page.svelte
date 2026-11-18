@@ -7,7 +7,7 @@
   import PracticeBlock from '$lib/components/practice-block.svelte';
   import StepControls from '$lib/components/step-controls.svelte';
   import { MAX_NODES, eulerPseudocode, eulerTrace } from '$lib/algo-engine/eulerian-paths.js';
-  import { en as m } from '$lib/lessons/eulerian-paths/copy.en.js';
+  import { vi as m } from '$lib/lessons/eulerian-paths/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/graph-editor.js').GraphNode} GraphNode */
