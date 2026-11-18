@@ -11,11 +11,11 @@ export const vi = {
   level: 'Trung bình',
   title: 'Kiểm tra đồ thị hai phía và phát hiện chu trình',
   intro:
-    'Một đồ thị là đồ thị hai phía khi tập đỉnh chia được thành hai phía sao cho mọi cạnh đều nối hai phía với nhau, giống như học sinh và các câu lạc bộ các bạn tham gia. Một lần BFS có thể thử tô đồ thị bằng hai màu, và việc tô thất bại đúng khi đồ thị có một chu trình độ dài lẻ. Cũng những ý tưởng tìm kiếm ấy giúp phát hiện chu trình, nhưng thế nào là một chu trình còn tuỳ cạnh có hướng hay không.',
+    'Một đồ thị là đồ thị hai phía khi tập đỉnh chia được thành hai phía sao cho mọi cạnh đều nối hai phía với nhau, giống như học sinh và các câu lạc bộ mà học sinh tham gia. Một lần BFS (duyệt theo chiều rộng) có thể thử tô đồ thị bằng hai màu, và việc tô thất bại đúng khi đồ thị có một chu trình độ dài lẻ. Cũng những ý tưởng tìm kiếm ấy giúp phát hiện chu trình, nhưng thế nào là một chu trình còn tuỳ cạnh có hướng hay không.',
   summary:
     'Tô hai màu cho đồ thị bằng BFS cho đến khi một chu trình lẻ chặn lại, và phát hiện chu trình bằng DFS trên đồ thị vô hướng lẫn có hướng.',
   instruction:
-    'Chọn một phép kiểm tra và một đồ thị có sẵn, hoặc tự sửa đồ thị bằng các công cụ bên dưới. Chạy từng bước: phép tô hai màu cho mỗi đỉnh kề màu còn lại cho đến khi một cạnh nối hai đỉnh cùng màu, rồi chỉ ra chu trình lẻ. Các phép kiểm tra chu trình đi bằng DFS và dừng ở cạnh đầu tiên khép kín một chu trình.',
+    'Chọn một phép kiểm tra và một đồ thị có sẵn, hoặc tự sửa đồ thị bằng các công cụ bên dưới. Chạy từng bước: phép tô hai màu cho mỗi đỉnh kề màu còn lại cho đến khi một cạnh nối hai đỉnh cùng màu, rồi chỉ ra chu trình lẻ. Các phép kiểm tra chu trình đi bằng DFS (duyệt theo chiều sâu) và dừng ở cạnh đầu tiên khép kín một chu trình.',
   modeLabel: 'Phép kiểm tra',
   modes: {
     bipartite: 'Tô hai màu (BFS)',
@@ -30,8 +30,8 @@ export const vi = {
     tree: 'Cây',
   },
   graphAria: 'Đồ thị đầu vào.',
-  queueLabel: 'Hàng đợi (đầu hàng trước)',
-  stackLabel: 'Ngăn xếp lời gọi (đỉnh trước)',
+  queueLabel: 'Queue (từ đầu đến cuối)',
+  stackLabel: 'Call stack (đỉnh trước)',
   emptyText: 'rỗng',
   stats: {
     checks: 'Số lần xét cạnh',
@@ -52,7 +52,7 @@ export const vi = {
     current: 'Đang xử lí',
     side1: 'Phía 1',
     side2: 'Phía 2',
-    inProgress: 'Đang thăm (trên ngăn xếp)',
+    inProgress: 'Đang thăm (trên stack)',
     finished: 'Đã hoàn tất',
     cycle: 'Chu trình tìm được',
     treeEdge: 'Cạnh dẫn tới một đỉnh mới',
@@ -82,7 +82,7 @@ export const vi = {
       case 'seed':
         return `${u} chưa có màu: tô màu 1 và bắt đầu một lần BFS từ đỉnh này.`;
       case 'dequeue':
-        return `Lấy ${u} (màu ${f.colour[f.current]}) ra khỏi hàng đợi và xét các đỉnh kề của nó.`;
+        return `Lấy ${u} (màu ${f.colour[f.current]}) ra khỏi queue và xét các đỉnh kề của nó.`;
       case 'colour':
         return `${v} chưa có màu, nên nhận màu còn lại, màu ${f.colour[f.other]}.`;
       case 'agree':
@@ -130,7 +130,7 @@ export const vi = {
     [
       'Tô hai màu (BFS)',
       'O(V + E)',
-      'Mỗi đỉnh vào hàng đợi một lần và mỗi cạnh được xét từ cả hai đầu.',
+      'Mỗi đỉnh vào queue (hàng đợi) một lần và mỗi cạnh được xét từ cả hai đầu.',
     ],
     [
       'Kiểm tra chu trình, vô hướng',
@@ -145,7 +145,7 @@ export const vi = {
     [
       'Bộ nhớ',
       'O(V)',
-      'Mỗi đỉnh một màu hoặc một trạng thái, cộng với một hàng đợi hoặc ngăn xếp lời gọi.',
+      'Mỗi đỉnh một màu hoặc một trạng thái, cộng với một queue hoặc call stack (ngăn xếp lời gọi).',
     ],
   ],
   practiceTitle: 'Tự kiểm tra',
@@ -204,5 +204,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Bài sau là Luyện tập: bài toán duyệt đồ thị, nơi bạn tự chọn giữa BFS và DFS cho từng câu hỏi.',
+    'Bài sau là Luyện tập: bài toán duyệt đồ thị, nơi em tự chọn giữa BFS và DFS cho từng câu hỏi.',
 };

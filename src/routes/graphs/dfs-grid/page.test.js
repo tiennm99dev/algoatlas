@@ -80,7 +80,7 @@ describe('dfs lesson', () => {
     render(Page);
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
-    expect(text()).toContain('Đẩy (4,1) vào ngăn xếp: ô trống và chưa được thăm.');
+    expect(text()).toContain('Đẩy (4,1) vào stack: ô trống và chưa được thăm.');
     const stack = [...document.querySelectorAll('ol li')].map((li) => li.textContent?.trim());
     expect(stack).toContain('(4,1) (vừa đẩy vào)');
   });

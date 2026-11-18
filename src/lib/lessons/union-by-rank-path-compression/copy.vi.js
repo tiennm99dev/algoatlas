@@ -10,7 +10,7 @@ export const vi = {
   level: 'Trung bình',
   title: 'Hợp theo hạng và nén đường đi',
   intro:
-    'Một rừng union-find thông thường có thể mọc thành một chuỗi dài, và khi đó mỗi lần find phải leo hết chuỗi ấy. Hai thay đổi nhỏ sửa được điều này: hợp theo hạng (union by rank) treo cây thấp hơn dưới cây cao hơn, còn nén đường đi (path compression) cho mọi phần tử mà một lần find đi ngang qua trỏ thẳng vào gốc. Kết hợp lại, mỗi thao tác chỉ tốn α(n), hàm Ackermann ngược, một hàm không vượt quá 4 với mọi đầu vào vừa với vũ trụ của chúng ta.',
+    'Một rừng DSU (cấu trúc các tập rời nhau) thông thường có thể mọc thành một chuỗi dài, và khi đó mỗi lần find phải leo hết chuỗi ấy. Hai thay đổi nhỏ sửa được điều này: hợp theo hạng (union by rank) treo cây thấp hơn dưới cây cao hơn, còn nén đường đi (path compression) cho mọi phần tử mà một lần find đi ngang qua trỏ thẳng vào gốc. Kết hợp lại, mỗi thao tác chỉ tốn α(n), hàm Ackermann ngược, một hàm không vượt quá 4 với mọi đầu vào vừa với vũ trụ của ta.',
   summary:
     'Bật, tắt hợp theo hạng và nén đường đi, xem một chuỗi cao bị dẹt xuống, và so sánh chi phí find của cả bốn cách thiết lập trên cùng các thao tác.',
   instruction:
@@ -151,7 +151,7 @@ export const vi = {
     {
       type: 'number',
       prompt:
-        'Với hợp theo hạng, trên 10 phần tử của chúng ta, một gốc có thể đạt hạng lớn nhất là bao nhiêu?',
+        'Với hợp theo hạng, trên 10 phần tử ở đây, một gốc có thể đạt hạng lớn nhất là bao nhiêu?',
       answer: 3,
       hints: [
         'Một gốc hạng r có ít nhất 2^r phần tử trong cây của nó.',
@@ -181,5 +181,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Bài sau là Luyện tập: bài toán hợp và tìm, nơi bạn dùng cấu trúc vừa tối ưu để đếm thành phần và phát hiện chu trình.',
+    'Bài sau là Luyện tập: bài toán DSU, nơi em dùng cấu trúc vừa tối ưu để đếm thành phần và phát hiện chu trình.',
 };

@@ -8,9 +8,9 @@ export const vi = {
   slug: 'disjoint-set-union',
   topic: 'union-find',
   level: 'Cơ bản',
-  title: 'Tập hợp rời nhau',
+  title: 'Cấu trúc DSU',
   intro:
-    'Cấu trúc tập hợp rời nhau (disjoint set union), còn gọi là union-find, giữ các phần tử trong những nhóm không bao giờ chồng lên nhau. Mỗi nhóm là một cây lưu trong một mảng parent duy nhất, và gốc của cây là tên của nhóm. Hai thao tác làm hết mọi việc: find leo lên tới gốc, còn union treo gốc này dưới gốc kia.',
+    'DSU (cấu trúc các tập rời nhau), còn gọi là union-find, giữ các phần tử trong những nhóm không bao giờ chồng lên nhau. Mỗi nhóm là một cây lưu trong một mảng parent duy nhất, và gốc của cây là tên của nhóm. Hai thao tác làm hết mọi việc: find leo lên tới gốc, còn union treo gốc này dưới gốc kia.',
   summary:
     'Gộp các tập bằng union, leo lên gốc đại diện bằng find, và hỏi xem hai phần tử có cùng một tập không.',
   instruction:
@@ -24,7 +24,7 @@ export const vi = {
   reset: 'Đặt lại',
   presetLabel: 'Mẫu có sẵn',
   presetPlaceholder: 'Mở một mẫu…',
-  presets: { friends: 'Nhóm bạn', chain: 'Chuỗi', random: 'Ngẫu nhiên' },
+  presets: { friends: 'Nhóm bạn bè', chain: 'Chuỗi', random: 'Ngẫu nhiên' },
   opsTitle: 'Các thao tác',
   opsEmpty: 'chưa có',
   opsHotLabel: 'đang chạy',
@@ -87,7 +87,7 @@ export const vi = {
   takeaways: [
     'Mỗi tập là một cây trong một mảng parent duy nhất. Gốc là cha của chính nó, và là phần tử đại diện của tập: hai phần tử cùng tập đúng khi find cho ra cùng một gốc.',
     'find(x) leo theo liên kết parent tới gốc. union(a, b) tìm hai gốc và, nếu chúng khác nhau, cho gốc này làm cha của gốc kia; số tập giảm đi một.',
-    'Cấu trúc này trả lời các câu hỏi liên thông động theo kiểu trực tuyến: sau mỗi kết nối mới, bạn hỏi được hai phần tử có nối với nhau không mà không cần tìm kiếm lại trên đồ thị. Nó chỉ thêm liên kết; nó không tách được một tập.',
+    'Cấu trúc này trả lời các câu hỏi liên thông động theo kiểu trực tuyến: sau mỗi kết nối mới, em hỏi được hai phần tử có nối với nhau không mà không cần tìm kiếm lại trên đồ thị. Nó chỉ thêm liên kết; nó không tách được một tập.',
     'Cả hai thao tác tốn một bước cho mỗi liên kết phải leo, nên chi phí của chúng bằng chiều cao của cây. Nếu không cẩn thận, cây có thể thành một chuỗi cao n − 1.',
     'Thử “Chuỗi”: sáu phép hợp dựng nên một đường dài, và lần find(0) cuối cùng phải leo qua mọi liên kết. Bài sau sẽ sửa điều này.',
   ],
@@ -107,7 +107,7 @@ export const vi = {
   practice: [
     {
       type: 'number',
-      prompt: 'Mở Nhóm bạn và chạy đến bước cuối. Có bao nhiêu tập?',
+      prompt: 'Mở Nhóm bạn bè và chạy đến bước cuối. Có bao nhiêu tập?',
       answer: 5,
       unit: 'tập',
       hints: ['Đọc ô Số tập, hoặc đếm số cây trong rừng. Phần tử đứng một mình cũng được tính.'],
@@ -138,8 +138,7 @@ export const vi = {
     },
     {
       type: 'choice',
-      prompt:
-        'Câu hỏi nào cấu trúc tập hợp rời nhau trả lời được nhanh khi các kết nối lần lượt xuất hiện?',
+      prompt: 'Câu hỏi nào DSU trả lời được nhanh khi các kết nối lần lượt xuất hiện?',
       options: [
         'Sau khi thêm liên kết c–d, a và b có liên thông không?',
         'Sau khi bỏ liên kết c–d, a và b còn liên thông không?',

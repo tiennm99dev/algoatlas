@@ -88,9 +88,9 @@ const compareRow = (label) =>
 describe('practice traversal lesson', () => {
   it('runs BFS on the maze and compares it with DFS', () => {
     render();
-    expect(text()).toContain('Đưa nguồn vào hàng đợi với khoảng cách 0.');
+    expect(text()).toContain('Đưa nguồn vào queue với khoảng cách 0.');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Lấy (0,0) ra khỏi hàng đợi, khoảng cách 0.');
+    expect(text()).toContain('Lấy (0,0) ra khỏi queue, khoảng cách 0.');
     click(button('Đến bước cuối'));
     expect(text()).toContain('Đã tới đích sau 52 lần thăm. Đường đi ngược về dài 24 bước.');
     const visits = compareRow(m.compareRows.visits);
@@ -103,7 +103,7 @@ describe('practice traversal lesson', () => {
     click(buttonByText(m.puzzles.field));
     radio('dfs');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Lấy (0,0) ra khỏi ngăn xếp và thăm nó ở độ sâu 0.');
+    expect(text()).toContain('Lấy (0,0) ra khỏi stack và thăm nó ở độ sâu 0.');
     click(button('Đến bước cuối'));
     expect(text()).toContain('Đã tới đích sau 90 lần thăm. Đường đi ngược về dài 89 bước.');
     const steps = compareRow(m.compareRows.steps);
@@ -113,7 +113,7 @@ describe('practice traversal lesson', () => {
   it('floods from three fires with one multi-source BFS', () => {
     render();
     click(buttonByText(m.puzzles.fire));
-    expect(text()).toContain('Đưa cả 3 nguồn vào hàng đợi với khoảng cách 0');
+    expect(text()).toContain('Đưa cả 3 nguồn vào queue với khoảng cách 0');
     click(button('Đến bước cuối'));
     expect(text()).toContain('mọi ô đi tới được đều có khoảng cách tới nguồn gần nhất');
     expect(statValue(m.stats.reach)).toBe('6');
@@ -127,7 +127,7 @@ describe('practice traversal lesson', () => {
     keyActivate(button('Hàng 0, cột 2'));
     expect(text()).toContain('Đã thêm nguồn ở (0,2).');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Lấy (0,0) ra khỏi hàng đợi, khoảng cách 0.');
+    expect(text()).toContain('Lấy (0,0) ra khỏi queue, khoảng cách 0.');
     expect(statValue(m.stats.adds)).toBe('2');
     keyActivate(button('Hàng 0, cột 4, Tường'));
     expect(text()).toContain(m.edits.blocked);

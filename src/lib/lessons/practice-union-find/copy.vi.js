@@ -12,11 +12,11 @@ export const vi = {
   slug: 'practice-union-find',
   topic: 'union-find',
   level: 'Trung bình',
-  title: 'Luyện tập: bài toán hợp và tìm',
+  title: 'Luyện tập: bài toán DSU',
   intro:
-    'Union-find phát huy sức mạnh khi đồ thị đến dần từng cạnh một. Mỗi cạnh mới tốn hai lần find: nếu hai đầu đã có chung gốc, cạnh đó khép kín một chu trình; ngược lại, một phép union gộp hai thành phần. Sau mỗi cạnh, ta đã biết số thành phần và chu trình đầu tiên, mà không phải tìm kiếm trên cả đồ thị.',
+    'DSU (cấu trúc các tập rời nhau) phát huy sức mạnh khi đồ thị đến dần từng cạnh một. Mỗi cạnh mới tốn hai lần find: nếu hai đầu đã có chung gốc, cạnh đó khép kín một chu trình; ngược lại, một phép union gộp hai thành phần. Sau mỗi cạnh, ta đã biết số thành phần và chu trình đầu tiên, mà không phải tìm kiếm trên cả đồ thị.',
   summary:
-    'Đưa một dòng cạnh vào union-find, đếm số thành phần liên thông theo kiểu trực tuyến và đánh dấu mọi cạnh khép kín một chu trình.',
+    'Đưa một dòng cạnh vào DSU, đếm số thành phần liên thông theo kiểu trực tuyến và đánh dấu mọi cạnh khép kín một chu trình.',
   instruction:
     'Mở một dòng cạnh có sẵn hoặc tự thêm cạnh bằng Từ, Đến và Thêm cạnh, rồi chạy từng bước. Các đỉnh được tô màu và gọi tên theo thành phần; cạnh nét đứt màu xám là cạnh chưa đến, cạnh đậm đã nối hai thành phần, còn cạnh đỏ có dấu ✕ đã khép kín một chu trình. Hoàn tác sẽ bỏ cạnh cuối cùng.',
   fromLabel: 'Từ',
@@ -110,7 +110,7 @@ export const vi = {
     [
       'Cùng bài toán, mỗi cạnh một lần tìm kiếm',
       'O(m (n + m))',
-      'BFS hoặc DFS trên các cạnh đã có, với mỗi cạnh mới.',
+      'BFS (duyệt theo chiều rộng) hoặc DFS (duyệt theo chiều sâu) trên các cạnh đã có, với mỗi cạnh mới.',
     ],
     ['Số thành phần sau mỗi cạnh', 'O(1) mỗi lần', 'Một bộ đếm giảm đi sau mỗi lần gộp.'],
     ['Bộ nhớ', 'O(n)', 'Mỗi đỉnh một ô parent và một ô size; không cần lưu các cạnh.'],
@@ -175,17 +175,17 @@ export const vi = {
     {
       type: 'choice',
       prompt:
-        'Vì sao nên dùng union-find thay vì chạy BFS trước mỗi cạnh mới để kiểm tra hai đầu của nó có liên thông không?',
+        'Vì sao nên dùng DSU thay vì chạy BFS trước mỗi cạnh mới để kiểm tra hai đầu của nó có liên thông không?',
       options: [
         'BFS cho kết quả sai trên đồ thị vô hướng.',
-        'Union-find tốn khoảng O(α(n)) cho mỗi cạnh, còn mỗi lần BFS có thể phải quét lại cả đồ thị.',
-        'Union-find còn tìm được chu trình ngắn nhất.',
-        'Union-find có thể xoá cạnh về sau, còn BFS thì không.',
+        'DSU tốn khoảng O(α(n)) cho mỗi cạnh, còn mỗi lần BFS có thể phải quét lại cả đồ thị.',
+        'DSU còn tìm được chu trình ngắn nhất.',
+        'DSU có thể xoá cạnh về sau, còn BFS thì không.',
       ],
       answer: 1,
       hints: ['So sánh chi phí cho mỗi cạnh của hai cách.'],
       solution:
-        'Cả hai đều đúng, nhưng mỗi lần BFS cho một cạnh tốn O(V + E), còn union-find giữ các thành phần luôn cập nhật với thời gian gần như hằng số cho mỗi cạnh. Nó không xoá được cạnh và không cho biết gì về độ dài chu trình.',
+        'Cả hai đều đúng, nhưng mỗi lần BFS cho một cạnh tốn O(V + E), còn DSU giữ các thành phần luôn cập nhật với thời gian gần như hằng số cho mỗi cạnh. Nó không xoá được cạnh và không cho biết gì về độ dài chu trình.',
     },
   ],
   nextTeaser:

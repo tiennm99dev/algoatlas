@@ -88,7 +88,7 @@ describe('connected components lesson', () => {
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
     expect(text()).toContain(
-      '(0,1) là đất chưa có nhãn, kề với (0,0): gán nhãn 1 và đưa vào hàng đợi.',
+      '(0,1) là đất chưa có nhãn, kề với (0,0): gán nhãn 1 và đưa vào queue.',
     );
     const queue = [...document.querySelectorAll('ol li')].map((li) => li.textContent?.trim());
     expect(queue).toContain('(0,1) (vừa gán nhãn)');

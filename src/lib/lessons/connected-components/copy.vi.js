@@ -9,7 +9,7 @@ export const vi = {
   level: 'Trung bình',
   title: 'Thành phần liên thông và loang',
   intro:
-    'Một thành phần liên thông là một nhóm đỉnh lớn nhất mà trong đó đỉnh nào cũng đi được tới mọi đỉnh còn lại. Để tìm hết các thành phần, ta quét lần lượt các đỉnh và bắt đầu một lần BFS hay DFS từ mỗi đỉnh chưa có nhãn: lần tìm kiếm ấy, gọi là loang, gán nhãn cho đúng một thành phần. Trên một bản đồ đất và nước, mỗi thành phần là một hòn đảo.',
+    'Một thành phần liên thông là một nhóm đỉnh lớn nhất mà trong đó đỉnh nào cũng đi được tới mọi đỉnh còn lại. Để tìm hết các thành phần, ta quét lần lượt các đỉnh và bắt đầu một lần BFS (duyệt theo chiều rộng) hay DFS (duyệt theo chiều sâu) từ mỗi đỉnh chưa có nhãn: lần tìm kiếm ấy, gọi là loang, gán nhãn cho đúng một thành phần. Trên một bản đồ đất và nước, mỗi thành phần là một hòn đảo.',
   summary:
     'Tô các hòn đảo trên bản đồ và xem phép loang gán nhãn cho từng thành phần liên thông, với 4 hoặc 8 hướng kề.',
   instruction:
@@ -20,7 +20,7 @@ export const vi = {
   clearMap: 'Toàn nước',
   resetMap: 'Đặt lại bản đồ',
   gridLabel: 'Bản đồ. Dùng phím mũi tên để di chuyển, Enter để đổi ô đang chọn giữa đất và nước.',
-  queueLabel: 'Hàng đợi loang (đầu hàng trước)',
+  queueLabel: 'Queue loang (từ đầu đến cuối)',
   queueEmpty: 'rỗng',
   hotLabel: 'vừa gán nhãn',
   stats: {
@@ -33,14 +33,14 @@ export const vi = {
     water: 'Nước',
     land: 'Đất, chưa có nhãn',
     current: 'Đang xét',
-    queued: 'Đã gán nhãn, đang trong hàng đợi',
+    queued: 'Đã gán nhãn, đang trong queue',
     island: 'Đảo (ghi số của nó)',
   },
   states: {
     water: 'Nước',
     land: 'Đất, chưa có nhãn',
     current: 'đang xét',
-    queued: 'trong hàng đợi',
+    queued: 'trong queue',
   },
   /** @param {number} k */
   islandNote: (k) => `đảo ${k}`,
@@ -65,9 +65,9 @@ export const vi = {
       case 'new-island':
         return `${at(f.current)} là đất chưa có nhãn: một hòn đảo mới. Gán nhãn ${f.count} và bắt đầu loang từ ô này.`;
       case 'expand':
-        return `Lấy ${at(f.current)} ra khỏi hàng đợi và xét các ô kề của nó.`;
+        return `Lấy ${at(f.current)} ra khỏi queue và xét các ô kề của nó.`;
       case 'label':
-        return `${at(f.touched)} là đất chưa có nhãn, kề với ${at(f.current)}: gán nhãn ${f.count} và đưa vào hàng đợi.`;
+        return `${at(f.touched)} là đất chưa có nhãn, kề với ${at(f.current)}: gán nhãn ${f.count} và đưa vào queue.`;
       case 'done':
         return `Quét xong: ${f.count} đảo, sau ${f.checks} lần xét ô kề.`;
     }
@@ -94,7 +94,7 @@ export const vi = {
     [
       'Bộ nhớ',
       'O(V)',
-      'Mỗi đỉnh một nhãn, cộng với hàng đợi loang, nơi không đỉnh nào xuất hiện hai lần.',
+      'Mỗi đỉnh một nhãn, cộng với queue (hàng đợi) của phép loang, nơi không đỉnh nào xuất hiện hai lần.',
     ],
   ],
   practiceTitle: 'Tự kiểm tra',

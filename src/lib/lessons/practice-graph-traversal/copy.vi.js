@@ -9,19 +9,19 @@ export const vi = {
   level: 'Trung bình',
   title: 'Luyện tập: bài toán duyệt đồ thị',
   intro:
-    'Phần lớn các câu đố trên lưới và đồ thị thực chất là một lần BFS hay DFS trá hình; kĩ năng nằm ở chỗ chọn đúng cách. BFS tìm đường đi ngắn nhất và khoảng cách khi mọi bước có cùng chi phí, và nó có thể xuất phát cùng lúc từ nhiều nguồn. DFS cũng chắc chắn đến được mọi ô, nhưng đường đầu tiên nó tìm được có thể dài hơn đường ngắn nhất rất nhiều.',
+    'Phần lớn các câu đố trên lưới và đồ thị thực chất là một lần BFS (duyệt theo chiều rộng) hay DFS (duyệt theo chiều sâu) trá hình; kĩ năng nằm ở chỗ chọn đúng cách. BFS tìm đường đi ngắn nhất và khoảng cách khi mọi bước có cùng chi phí, và nó có thể xuất phát cùng lúc từ nhiều nguồn. DFS cũng chắc chắn đến được mọi ô, nhưng đường đầu tiên nó tìm được có thể dài hơn đường ngắn nhất rất nhiều.',
   summary:
     'Giải các câu đố trên lưới bằng BFS hoặc DFS, so sánh số ô mỗi cách thăm và độ dài đường đi của nó, và cho một lần BFS đa nguồn lan ra từ nhiều đám cháy cùng lúc.',
   instruction:
-    'Mở một câu đố, chọn BFS hoặc DFS rồi chạy từng bước. Bảng so sánh chạy cả hai phép tìm kiếm trên cùng một lưới, để bạn thấy cách nào thăm ít ô hơn và cách nào tìm được đường ngắn hơn. Sửa lưới bằng các công cụ: tường, nguồn (tối đa 4) và đích; bấm lại vào đích để bỏ nó đi, khi đó phép tìm kiếm sẽ loang khắp bản đồ.',
+    'Mở một câu đố, chọn BFS hoặc DFS rồi chạy từng bước. Bảng so sánh chạy cả hai phép tìm kiếm trên cùng một lưới, để em thấy cách nào thăm ít ô hơn và cách nào tìm được đường ngắn hơn. Sửa lưới bằng các công cụ: tường, nguồn (tối đa 4) và đích; bấm lại vào đích để bỏ nó đi, khi đó phép tìm kiếm sẽ loang khắp bản đồ.',
   puzzleLabel: 'Câu đố',
   puzzles: { maze: 'Mê cung', field: 'Bãi trống', fire: 'Ba đám cháy' },
   algoLabel: 'Phép tìm kiếm',
-  algos: { bfs: 'BFS (hàng đợi)', dfs: 'DFS (ngăn xếp)' },
+  algos: { bfs: 'BFS (queue)', dfs: 'DFS (stack)' },
   toolLabel: 'Sửa',
   tools: { wall: 'Tường', source: 'Nguồn', goal: 'Đích' },
   gridLabel: 'Lưới câu đố. Dùng phím mũi tên để di chuyển, Enter để sửa ô đang chọn.',
-  frontierLabel: { bfs: 'Hàng đợi (đầu hàng trước)', dfs: 'Ngăn xếp (đỉnh trước)' },
+  frontierLabel: { bfs: 'Queue (từ đầu đến cuối)', dfs: 'Stack (đỉnh trước)' },
   frontierEmpty: 'rỗng',
   hotLabel: 'vừa thêm',
   compareTitle: 'Cả hai phép tìm kiếm trên lưới này',
@@ -95,34 +95,34 @@ export const vi = {
       case 'start':
         return algo === 'bfs'
           ? many
-            ? `Đưa cả ${sources} nguồn vào hàng đợi với khoảng cách 0: một lần BFS lan ra từ tất cả các nguồn cùng lúc.`
-            : 'Đưa nguồn vào hàng đợi với khoảng cách 0.'
+            ? `Đưa cả ${sources} nguồn vào queue với khoảng cách 0: một lần BFS lan ra từ tất cả các nguồn cùng lúc.`
+            : 'Đưa nguồn vào queue với khoảng cách 0.'
           : many
-            ? `Đẩy cả ${sources} nguồn vào ngăn xếp với độ sâu 0.`
-            : 'Đẩy nguồn vào ngăn xếp với độ sâu 0.';
+            ? `Đẩy cả ${sources} nguồn vào stack với độ sâu 0.`
+            : 'Đẩy nguồn vào stack với độ sâu 0.';
       case 'take':
         return algo === 'bfs'
-          ? `Lấy ${at(f.current)} ra khỏi hàng đợi, khoảng cách ${f.label[f.current]}.`
-          : `Lấy ${at(f.current)} ra khỏi ngăn xếp và thăm nó ở độ sâu ${f.label[f.current]}.`;
+          ? `Lấy ${at(f.current)} ra khỏi queue, khoảng cách ${f.label[f.current]}.`
+          : `Lấy ${at(f.current)} ra khỏi stack và thăm nó ở độ sâu ${f.label[f.current]}.`;
       case 'skip':
         return `${at(f.current)} đã được thăm rồi: đây là một bản cũ, nên ta bỏ qua.`;
       case 'add':
         return algo === 'bfs'
-          ? `Đưa ${at(f.touched)} vào hàng đợi với khoảng cách ${f.label[f.touched]}.`
-          : `Đẩy ${at(f.touched)} vào ngăn xếp: ô trống và chưa được thăm.`;
+          ? `Đưa ${at(f.touched)} vào queue với khoảng cách ${f.label[f.touched]}.`
+          : `Đẩy ${at(f.touched)} vào stack: ô trống và chưa được thăm.`;
       case 'found':
         return `Đã tới đích sau ${f.visits} lần thăm. Đường đi ngược về dài ${f.path.length - 1} bước.`;
       case 'done':
         if (hasGoal) return 'Biên đã rỗng mà vẫn chưa tới đích: tường đã chặn kín đường.';
         return algo === 'bfs'
-          ? 'Hàng đợi đã rỗng: mọi ô đi tới được đều có khoảng cách tới nguồn gần nhất.'
-          : 'Ngăn xếp đã rỗng: mọi ô đi tới được đều đã thăm, nhưng nhãn của nó chỉ là độ dài con đường DFS tình cờ đi qua.';
+          ? 'Queue đã rỗng: mọi ô đi tới được đều có khoảng cách tới nguồn gần nhất.'
+          : 'Stack đã rỗng: mọi ô đi tới được đều đã thăm, nhưng nhãn của nó chỉ là độ dài con đường DFS tình cờ đi qua.';
     }
   },
   takeaways: [
     'Đường đi ngắn nhất trên lưới hay đồ thị không có trọng số: dùng BFS. BFS xét các ô theo thứ tự khoảng cách, nên lần đầu tới đích, đường đi đã là ngắn nhất.',
     'Kiểm tra đi tới được, đếm vùng, hay khám phá mọi đường đi: cách nào cũng được, và DFS thường cho mã đơn giản hơn. Đường đầu tiên nó tìm tới đích có thể dài hơn đường ngắn nhất rất nhiều.',
-    'BFS đa nguồn đưa mọi nguồn vào hàng đợi với khoảng cách 0. Khi đó chỉ một lần chạy O(rows × cols) đã cho mỗi ô khoảng cách tới nguồn gần nhất, thay vì chạy một lần BFS cho mỗi nguồn.',
+    'BFS đa nguồn đưa mọi nguồn vào queue (hàng đợi) với khoảng cách 0. Khi đó chỉ một lần chạy O(rows × cols) đã cho mỗi ô khoảng cách tới nguồn gần nhất, thay vì chạy một lần BFS cho mỗi nguồn.',
     'Số ô phải thăm tuỳ vào lưới: DFS có thể may mắn chạm đích sớm, hoặc lang thang khắp bản đồ trước, còn BFS thăm mọi ô gần hơn đích.',
     'Thử xem: mở Bãi trống và so sánh hai độ dài đường đi, rồi mở Ba đám cháy và chuyển sang DFS để xem bao nhiêu nhãn bị sai.',
   ],
@@ -136,13 +136,13 @@ export const vi = {
     [
       'BFS đa nguồn, k nguồn',
       'O(rows × cols)',
-      'Mọi nguồn dùng chung một hàng đợi, nên chi phí không tăng theo k.',
+      'Mọi nguồn dùng chung một queue, nên chi phí không tăng theo k.',
     ],
     ['Mỗi nguồn một lần BFS', 'O(k × rows × cols)', 'Mỗi lần chạy có thể quét lại toàn bộ lưới.'],
     [
       'Bộ nhớ',
       'O(rows × cols)',
-      'Nhãn và ô cha cho mỗi ô, cộng với hàng đợi hoặc ngăn xếp (DFS có thể giữ các bản cũ).',
+      'Nhãn và ô cha cho mỗi ô, cộng với queue hoặc stack (ngăn xếp); DFS có thể giữ các bản cũ.',
     ],
   ],
   practiceTitle: 'Luyện tập',
@@ -185,7 +185,7 @@ export const vi = {
       answer: 6,
       unit: 'phút',
       hints: [
-        'Mỗi phút là một tầng của BFS, và cả ba đám cháy cùng bắt đầu trong hàng đợi với khoảng cách 0.',
+        'Mỗi phút là một tầng của BFS, và cả ba đám cháy cùng bắt đầu trong queue với khoảng cách 0.',
         'Chạy BFS đến bước cuối và tìm nhãn khoảng cách lớn nhất.',
       ],
       solution:
@@ -218,5 +218,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Bài sau là Ôn tập: nền tảng, gom lại mảng, danh sách, ngăn xếp, cây và đồ thị bạn đã học trong phần đầu.',
+    'Bài sau là Ôn tập: nền tảng, gom lại mảng, danh sách, stack, cây và đồ thị em đã học trong phần đầu.',
 };

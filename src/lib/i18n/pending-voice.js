@@ -25,13 +25,9 @@ export const pendingTopics = new Set([
 
   'heaps',
 
-  'graphs',
-
   'review-foundations',
 
   'shortest-paths',
-
-  'union-find',
 
   'mst',
 

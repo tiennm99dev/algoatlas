@@ -11,7 +11,7 @@ export const vi = {
   level: 'Trung bình',
   title: 'Sắp xếp tô-pô',
   intro:
-    'Một đồ thị có hướng không chu trình (DAG) có thể mô tả các công việc và thứ tự phụ thuộc giữa chúng: cạnh u → v nói rằng u phải làm trước v. Một thứ tự tô-pô liệt kê mọi đỉnh sao cho mọi cạnh đều chỉ về phía sau. Thứ tự ấy tồn tại đúng khi đồ thị không có chu trình có hướng, và hai thuật toán kinh điển tìm ra nó trong O(V + E): thuật toán Kahn và thứ tự hoàn tất của DFS đảo ngược.',
+    'Một đồ thị có hướng không chu trình (DAG) có thể mô tả các công việc và thứ tự phụ thuộc giữa chúng: cạnh u → v nói rằng u phải làm trước v. Một thứ tự tô-pô liệt kê mọi đỉnh sao cho mọi cạnh đều chỉ về phía sau. Thứ tự ấy tồn tại đúng khi đồ thị không có chu trình có hướng, và hai thuật toán kinh điển tìm ra nó trong O(V + E): thuật toán Kahn và thứ tự hoàn tất đảo ngược của DFS (duyệt theo chiều sâu).',
   summary:
     'Sắp thứ tự các công việc trong một đồ thị phụ thuộc bằng thuật toán Kahn hoặc bằng thứ tự hoàn tất của DFS đảo ngược, và xem cả hai cách phát hiện chu trình ra sao.',
   instruction:
@@ -31,8 +31,8 @@ export const vi = {
     'làm nước sốt',
     'dọn bữa tối',
   ],
-  queueLabel: 'Hàng đợi (đầu hàng trước)',
-  stackLabel: 'Ngăn xếp lời gọi (đỉnh trước)',
+  queueLabel: 'Queue (từ đầu đến cuối)',
+  stackLabel: 'Call stack (đỉnh trước)',
   orderLabel: 'Thứ tự đến lúc này',
   finishLabel: 'Đã hoàn tất (trước đến sau)',
   resultLabel: 'Thứ tự tô-pô',
@@ -45,7 +45,7 @@ export const vi = {
   },
   legend: {
     current: 'Đang xử lí',
-    pending: 'Trong hàng đợi hoặc đang thăm',
+    pending: 'Trong queue hoặc đang thăm',
     done: 'Đã xếp hoặc đã hoàn tất',
     cycle: 'Chu trình',
     stuck: 'Không bao giờ được xếp',
@@ -53,7 +53,7 @@ export const vi = {
   },
   states: {
     current: 'đang xét',
-    queued: 'trong hàng đợi',
+    queued: 'trong queue',
     inProgress: 'đang thăm',
     placed: 'đã xếp',
     finished: 'đã hoàn tất',
@@ -82,13 +82,13 @@ export const vi = {
           : 'Ban đầu chưa việc nào được thăm. Ta thăm chúng theo thứ tự chữ cái.';
       case 'seed':
         return f.pending.length
-          ? `Những việc có bậc vào 0 không phải chờ việc nào: đưa ${join(names, f.pending)} vào hàng đợi.`
+          ? `Những việc có bậc vào 0 không phải chờ việc nào: đưa ${join(names, f.pending)} vào queue.`
           : 'Không việc nào có bậc vào 0, nên việc nào cũng chờ một việc khác: chắc chắn có chu trình.';
       case 'take':
-        return `Lấy ${u} ra khỏi hàng đợi và xếp vào vị trí ${f.order.length}.`;
+        return `Lấy ${u} ra khỏi queue và xếp vào vị trí ${f.order.length}.`;
       case 'relax':
         return f.ready
-          ? `Gỡ cạnh ${u} → ${v}: bậc vào của ${v} giờ bằng 0, nên đưa ${v} vào hàng đợi.`
+          ? `Gỡ cạnh ${u} → ${v}: bậc vào của ${v} giờ bằng 0, nên đưa ${v} vào queue.`
           : `Gỡ cạnh ${u} → ${v}: ${v} vẫn còn chờ ${edge ? f.indeg[edge.to] : 0} việc nữa.`;
       case 'enter':
         return `Thăm ${u}: đánh dấu đang thăm.`;
@@ -106,7 +106,7 @@ export const vi = {
           : `Xong. Đảo ngược thứ tự hoàn tất: ${join(names, f.result)}. Mọi cạnh đều chỉ về phía sau.`;
       case 'cycle':
         return algo === 'kahn'
-          ? `Hàng đợi đã rỗng nhưng ${join(names, f.cycle)} chưa bao giờ được xếp: mỗi việc vẫn chờ một việc khác, nên chúng nằm trên hoặc sau một chu trình. Không có thứ tự tô-pô nào.`
+          ? `Queue đã rỗng nhưng ${join(names, f.cycle)} chưa bao giờ được xếp: mỗi việc vẫn chờ một việc khác, nên chúng nằm trên hoặc sau một chu trình. Không có thứ tự tô-pô nào.`
           : `Chu trình ${join(names, f.cycle)} → ${nm(names, f.cycle[0])}: không có thứ tự tô-pô nào.`;
     }
   },
@@ -122,7 +122,7 @@ export const vi = {
     [
       'Thời gian, Kahn',
       'O(V + E)',
-      'Mỗi đỉnh vào hàng đợi và được xếp một lần; mỗi cạnh làm giảm một bậc vào đúng một lần.',
+      'Mỗi đỉnh vào queue (hàng đợi) và được xếp một lần; mỗi cạnh làm giảm một bậc vào đúng một lần.',
     ],
     [
       'Thời gian, DFS',
@@ -132,7 +132,7 @@ export const vi = {
     [
       'Bộ nhớ',
       'O(V)',
-      'Bậc vào hoặc dấu đã thăm, cộng với một hàng đợi hoặc ngăn xếp lời gọi có nhiều nhất V phần tử.',
+      'Bậc vào hoặc dấu đã thăm, cộng với một queue hoặc call stack (ngăn xếp lời gọi) có nhiều nhất V phần tử.',
     ],
   ],
   practiceTitle: 'Tự kiểm tra',
@@ -144,11 +144,11 @@ export const vi = {
         'Chạy Kahn trên đồ thị ban đầu. Gõ thứ tự tô-pô nhận được, các chữ cái cách nhau bằng dấu phẩy.',
       accept: ['A, D, B, E, C, F, G', 'ADBECFG', 'A D B E C F G'],
       hints: [
-        'Hàng đợi bắt đầu với A và D, hai việc không có cạnh nào chỉ tới.',
+        'Queue bắt đầu với A và D, hai việc không có cạnh nào chỉ tới.',
         'Sau khi xếp A và D, bậc vào của B rồi E lần lượt giảm về 0.',
       ],
       solution:
-        'Hàng đợi A, D. Xếp A: B giảm về 0 (vào hàng đợi), E còn 1. Xếp D: E giảm về 0. Xếp B: C vào hàng đợi. Xếp E: G còn 1. Xếp C: F vào hàng đợi. Xếp F: G giảm về 0. Xếp G. Thứ tự: A, D, B, E, C, F, G.',
+        'Queue A, D. Xếp A: B giảm về 0 (vào queue), E còn 1. Xếp D: E giảm về 0. Xếp B: C vào queue. Xếp E: G còn 1. Xếp C: F vào queue. Xếp F: G giảm về 0. Xếp G. Thứ tự: A, D, B, E, C, F, G.',
     },
     {
       type: 'text',
@@ -182,12 +182,12 @@ export const vi = {
     {
       type: 'choice',
       prompt:
-        'Thuật toán Kahn dừng lại khi 3 trong 7 đỉnh chưa bao giờ được xếp. Điều đó cho bạn biết gì?',
+        'Thuật toán Kahn dừng lại khi 3 trong 7 đỉnh chưa bao giờ được xếp. Điều đó cho em biết gì?',
       options: [
         'Đồ thị không liên thông.',
         'Đồ thị có một chu trình có hướng.',
         '3 đỉnh đó không có cạnh nào.',
-        'Hàng đợi quá nhỏ.',
+        'Queue quá nhỏ.',
       ],
       answer: 1,
       hints: ['Một đỉnh chỉ không được xếp khi bậc vào của nó vẫn còn lớn hơn 0.'],

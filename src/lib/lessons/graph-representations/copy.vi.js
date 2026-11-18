@@ -9,7 +9,7 @@ export const vi = {
   level: 'Cơ bản',
   title: 'Biểu diễn đồ thị',
   intro:
-    'Đồ thị là một tập đỉnh nối với nhau bằng các cạnh: thành phố và đường đi, người và tình bạn, công việc và thứ tự phụ thuộc. Trước khi một thuật toán đi trên đồ thị, chương trình phải lưu nó lại, và hai cách kinh điển là ma trận kề và danh sách kề. Hai cách giữ cùng những cạnh ấy nhưng trả lời câu hỏi với chi phí rất khác nhau.',
+    'Đồ thị là một tập đỉnh nối với nhau bằng các cạnh: thành phố và đường đi, người và tình bạn bè, công việc và thứ tự phụ thuộc. Trước khi một thuật toán đi trên đồ thị, chương trình phải lưu nó lại, và hai cách kinh điển là ma trận kề và danh sách kề. Hai cách giữ cùng những cạnh ấy nhưng trả lời câu hỏi với chi phí rất khác nhau.',
   summary:
     'Vẽ một đồ thị và xem từng cạnh được ghi vào ma trận kề và danh sách kề, với đồ thị có hướng, vô hướng và có trọng số.',
   instruction:
@@ -78,7 +78,7 @@ export const vi = {
     'Đồ thị G = (V, E) gồm tập đỉnh V và tập cạnh E. Trong đồ thị có hướng mỗi cạnh có chiều u → v; trong đồ thị vô hướng cạnh u – v đi được cả hai chiều; đồ thị có trọng số gắn một con số (chi phí, khoảng cách) lên mỗi cạnh.',
     'Ma trận kề là một bảng n × n: ô [u][v] chứa 1 (hoặc trọng số) khi có cạnh, ngược lại chứa 0. Đồ thị vô hướng cho ma trận đối xứng.',
     'Danh sách kề chỉ giữ, với mỗi đỉnh, các đỉnh kề của nó. Danh sách có E mục với đồ thị có hướng và 2E mục với đồ thị vô hướng, cộng thêm n đầu danh sách.',
-    'Chọn theo câu hỏi cần trả lời: ma trận kiểm tra một cạnh trong O(1) nhưng luôn tốn n² bộ nhớ; danh sách tốn O(n + E) bộ nhớ và liệt kê các đỉnh kề của một đỉnh trong O(bậc), hợp với đồ thị thưa và với BFS, DFS ở các bài sau.',
+    'Chọn theo câu hỏi cần trả lời: ma trận kiểm tra một cạnh trong O(1) nhưng luôn tốn n² bộ nhớ; danh sách tốn O(n + E) bộ nhớ và liệt kê các đỉnh kề của một đỉnh trong O(bậc), hợp với đồ thị thưa và với BFS (duyệt theo chiều rộng), DFS (duyệt theo chiều sâu) ở các bài sau.',
     'Thử xem: chuyển sang Có hướng và xem ma trận mất tính đối xứng, rồi bấm vào một đỉnh có ít cạnh để so sánh ma trận và danh sách mỗi bên phải đọc bao nhiêu.',
   ],
   complexityHead: ['Thao tác', 'Ma trận | Danh sách', 'Vì sao'],
@@ -136,7 +136,7 @@ export const vi = {
     {
       type: 'choice',
       prompt:
-        'Một mạng xã hội có một triệu người dùng, mỗi người khoảng 200 bạn. Cách biểu diễn nào phù hợp?',
+        'Một mạng xã hội có một triệu người dùng, mỗi người khoảng 200 người bạn. Cách biểu diễn nào phù hợp?',
       options: [
         'Ma trận kề, vì kiểm tra cạnh mất O(1).',
         'Danh sách kề, vì đồ thị thưa.',
@@ -149,5 +149,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Bài sau, ta dùng danh sách đỉnh kề để loang từng lớp: duyệt theo chiều rộng trên lưới tìm đường ngắn nhất qua mê cung.',
+    'Bài sau, ta dùng danh sách đỉnh kề để loang từng lớp: BFS trên lưới tìm đường ngắn nhất qua mê cung.',
 };

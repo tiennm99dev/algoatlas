@@ -16,7 +16,7 @@ export const dsuPseudocode = [
   '  return x          // gốc là tên của tập',
   'union(a, b):',
   '  ra = find(a); rb = find(b)',
-  '  if ra == rb: đã cùng tập, dá»«ng',
+  '  if ra == rb: đã cùng tập, dừng',
   '  parent[rb] = ra   // cây của b treo dưới gốc của a',
   'same(a, b): return find(a) == find(b)',
 ];

@@ -82,12 +82,12 @@ describe('topological sort lesson', () => {
     expect(text()).toContain('Đếm số cạnh đi vào mỗi việc: A 0, B 1, C 1, D 0, E 2, F 1, G 2.');
     click(button('Bước tiếp'));
     expect(text()).toContain(
-      'Những việc có bậc vào 0 không phải chờ việc nào: đưa A, D vào hàng đợi.',
+      'Những việc có bậc vào 0 không phải chờ việc nào: đưa A, D vào queue.',
     );
     click(button('Bước tiếp'));
-    expect(text()).toContain('Lấy A ra khỏi hàng đợi và xếp vào vị trí 1.');
+    expect(text()).toContain('Lấy A ra khỏi queue và xếp vào vị trí 1.');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Gỡ cạnh A → B: bậc vào của B giờ bằng 0, nên đưa B vào hàng đợi.');
+    expect(text()).toContain('Gỡ cạnh A → B: bậc vào của B giờ bằng 0, nên đưa B vào queue.');
     click(button('Bước tiếp'));
     expect(text()).toContain('Gỡ cạnh A → E: E vẫn còn chờ 1 việc nữa.');
     click(button('Đến bước cuối'));
@@ -117,7 +117,7 @@ describe('topological sort lesson', () => {
     click(vertex(6));
     click(vertex(0));
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Hàng đợi đã rỗng nhưng A, B, C, E, F, G chưa bao giờ được xếp');
+    expect(text()).toContain('Queue đã rỗng nhưng A, B, C, E, F, G chưa bao giờ được xếp');
     expect(statValue(m.stats.backward)).toBe('—');
     radio('dfs');
     click(button('Đến bước cuối'));
@@ -131,13 +131,13 @@ describe('topological sort lesson', () => {
   it('steps with the keyboard shortcut', () => {
     render();
     press(document.body, 'ArrowRight');
-    expect(text()).toContain('đưa A, D vào hàng đợi');
+    expect(text()).toContain('đưa A, D vào queue');
   });
 
   it('labels each task with its state and in-degree', () => {
     render();
     click(button('Bước tiếp'));
-    expect(vertex(0).getAttribute('aria-label')).toBe('Việc A, trong hàng đợi, bậc vào 0');
+    expect(vertex(0).getAttribute('aria-label')).toBe('Việc A, trong queue, bậc vào 0');
     expect(vertex(4).getAttribute('aria-label')).toBe('Việc E, bậc vào 2');
   });
 

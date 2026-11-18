@@ -272,7 +272,7 @@ describe('bfs lesson', () => {
     expect(text()).toContain('Hãy chọn một ô trống');
     click(button('Bước tiếp'));
     expect(text()).not.toContain('Hãy chọn một ô trống');
-    expect(text()).toContain('Lấy (4,2) ra khỏi đầu hàng');
+    expect(text()).toContain('Lấy (4,2) ra khỏi đầu queue');
   });
 
   it('confirms keyboard edits in the narration', () => {
