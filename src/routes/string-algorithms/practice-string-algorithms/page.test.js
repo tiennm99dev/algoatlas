@@ -104,7 +104,7 @@ describe('practice: string problems lesson', () => {
     expect(narration()).toBe('So P[0] = l với T[0] = t: khác nhau.');
     expect(stat('naive-steps')).toBe('1');
     click(button(m.watchLabel('Rabin-Karp')));
-    expect(narration()).toBe('P[0] = l được đưa vào giá trị băm của mẫu, giờ là 12.');
+    expect(narration()).toBe('P[0] = l được đưa vào giá trị hash của mẫu, giờ là 12.');
     click(button(m.watchLabel('KMP')));
     expect(narration()).toBe('Chuẩn bị: so P[0] = l với vị trí 1, a: khác nhau.');
   });
@@ -129,7 +129,7 @@ describe('practice: string problems lesson', () => {
       seen.push(narration());
       click(button('Bước tiếp'));
     }
-    expect(seen.some((s) => s.includes('một lần khớp giả, hai giá trị băm va chạm'))).toBe(true);
+    expect(seen.some((s) => s.includes('một lần khớp giả, hai giá trị hash va chạm'))).toBe(true);
     expect(seen.some((s) => s.includes('khớp thật ở vị trí 28'))).toBe(true);
     expect(seen.some((s) => s.includes('rời khỏi cửa sổ'))).toBe(true);
     expect(seen.some((s) => s.includes('đi vào: cửa sổ ở vị trí'))).toBe(true);

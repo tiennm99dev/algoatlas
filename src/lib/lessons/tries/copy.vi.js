@@ -7,9 +7,9 @@ export const vi = {
   level: 'Cơ bản',
   title: 'Trie',
   intro:
-    'Trie, hay cây tiền tố, lưu một tập từ dưới dạng cây các chữ cái: mọi từ có cùng phần đầu thì đi chung một đường từ gốc. Tìm một từ chỉ đi qua một nút cho mỗi chữ cái, nên chi phí phụ thuộc vào độ dài của từ chứ không phụ thuộc vào số từ đang lưu.',
+    'Trie (cây tiền tố) lưu một tập từ dưới dạng cây các chữ cái: mọi từ có cùng phần đầu thì đi chung một đường từ gốc. Tìm một từ chỉ đi qua một nút cho mỗi chữ cái, nên chi phí phụ thuộc vào độ dài của từ chứ không phụ thuộc vào số từ đang lưu.',
   summary:
-    'Dựng cây tiền tố qua từng từ, tìm kiếm trong cây và tự động hoàn thành một tiền tố bằng cách đi theo các đường chung.',
+    'Dựng trie qua từng từ, tìm kiếm trong cây và tự động hoàn thành một tiền tố bằng cách đi theo các đường chung.',
   instruction:
     'Gõ một từ và xem đường khớp với nó sáng lên trong cây. Chèn từ, tìm từ hoặc tự động hoàn thành, rồi xem từng bước của lượt đi. Bấm vào một nút bất kì để chép tiền tố của nút đó vào ô nhập. Nút Hoàn tác bỏ thao tác cuối cùng.',
   wordLabel: 'Từ hoặc tiền tố',
@@ -54,7 +54,7 @@ export const vi = {
   /** @param {number} max */
   logFull: (max) =>
     `Danh sách thao tác đã đầy (${max} thao tác). Hãy hoàn tác hoặc xoá hết để làm tiếp.`,
-  liveTitle: 'Theo những gì bạn gõ',
+  liveTitle: 'Theo những gì em gõ',
   /** @param {string} prefix @param {number} matched @param {string[]} words */
   live(prefix, matched, words) {
     if (prefix === '') return 'Gõ chữ cái để đi theo một đường từ gốc.';
@@ -83,7 +83,7 @@ export const vi = {
     missing: 'dừng ở đây',
     path: 'trên đường đi',
     subtree: 'nằm dưới tiền tố',
-    typed: 'khớp với chữ bạn gõ',
+    typed: 'khớp với chữ em gõ',
   },
   markers: {
     current: '?',
@@ -101,7 +101,7 @@ export const vi = {
     missing: 'Dừng ở đây',
     path: 'Trên đường đi',
     subtree: 'Nằm dưới tiền tố',
-    typed: 'Khớp với chữ bạn gõ',
+    typed: 'Khớp với chữ em gõ',
   },
   wordLegend: 'Chú thích “từ” đánh dấu nơi một từ đã lưu kết thúc.',
   /** @param {TrieFrame} f */
@@ -146,7 +146,7 @@ export const vi = {
     'Mỗi nút ứng với một tiền tố, và hai từ dùng chung nút đúng bằng đoạn mà chúng bắt đầu giống nhau.',
     'Chèn và tìm đi qua một nút cho mỗi chữ cái, nên tốn O(L) với một từ dài L, kể cả khi đang lưu một triệu từ.',
     'Dấu kết thúc từ rất quan trọng: một đường có thể tồn tại mà không có từ nào kết thúc ở đó, như “ca” trong trie chỉ chứa “car”.',
-    'Tự động hoàn thành đi đến cuối tiền tố, rồi đọc các từ bên dưới theo thứ tự từ điển. Một bảng băm chứa các từ không có lối tắt như vậy.',
+    'Tự động hoàn thành đi đến cuối tiền tố, rồi đọc các từ bên dưới theo thứ tự từ điển. Một hash table (bảng băm) chứa các từ không có lối tắt như vậy.',
     'Thử mẫu “Không chung gì” rồi đến “Chung tiền tố”: so số chữ cái được lưu với số nút đã dùng, và xem dùng chung tiết kiệm được bao nhiêu.',
   ],
   complexityHead: ['Thao tác', 'Chi phí', 'Vì sao'],
@@ -199,7 +199,7 @@ export const vi = {
     {
       type: 'order',
       prompt:
-        'Một trie chứa cat, car, care và card. Xếp kết quả của complete(ca) theo thứ tự một lượt duyệt theo chiều sâu báo ra, với các chữ cái theo thứ tự từ điển và một từ đứng trước những từ bắt đầu bằng nó.',
+        'Một trie chứa cat, car, care và card. Xếp kết quả của complete(ca) theo thứ tự một lượt DFS (duyệt theo chiều sâu) báo ra, với các chữ cái theo thứ tự từ điển và một từ đứng trước những từ bắt đầu bằng nó.',
       items: ['cat', 'car', 'care', 'card'],
       answer: [1, 3, 2, 0],
       hints: ['Dưới nút của ca, r đứng trước t. Dưới nút của car, d đứng trước e.'],
@@ -218,5 +218,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Bài tiếp theo, Băm xâu và thuật toán Rabin-Karp, tìm một mẫu trong văn bản bằng cách so giá trị băm của từng cửa sổ thay vì so từng kí tự.',
+    'Bài tiếp theo, Hash xâu và thuật toán Rabin-Karp, tìm một mẫu trong văn bản bằng cách so giá trị hash của từng cửa sổ thay vì so từng kí tự.',
 };

@@ -80,7 +80,7 @@ describe('tries lesson', () => {
   it('opens on the finished preset with the typed word lit, and rewinds to the empty root', () => {
     render();
     expect(stat('nodes')).toBe('10');
-    expect(node('Tiền tố car,').getAttribute('aria-label')).toContain('khớp với chữ bạn gõ');
+    expect(node('Tiền tố car,').getAttribute('aria-label')).toContain('khớp với chữ em gõ');
     expect(chipsOf(m.resultsTitle)).toEqual(['car', 'card', 'care']);
     click(button('Về bước đầu'));
     expect(narration()).toBe('Ban đầu trie chỉ có một gốc rỗng.');
@@ -154,7 +154,7 @@ describe('tries lesson', () => {
     toLast();
     type(wordField(), 'do');
     expect(stat('live')).toBe('Có 2 từ bắt đầu bằng “do”: dog, dot.');
-    expect(node('Tiền tố do,').getAttribute('aria-label')).toContain('khớp với chữ bạn gõ');
+    expect(node('Tiền tố do,').getAttribute('aria-label')).toContain('khớp với chữ em gõ');
     type(wordField(), 'dx');
     expect(stat('live')).toBe('“d” có trong trie, nhưng không từ nào đi tiếp bằng x.');
     type(wordField(), 'q');

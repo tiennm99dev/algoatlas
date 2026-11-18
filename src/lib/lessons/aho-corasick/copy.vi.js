@@ -14,7 +14,7 @@ export const vi = {
   summary:
     'Dựng một trie có liên kết thất bại và liên kết đầu ra, rồi tìm nhiều mẫu trong một lượt qua văn bản, không phải quay lui.',
   instruction:
-    'Gõ vài mẫu và một văn bản, rồi chạy từng bước. Đầu tiên trie lớn dần, sau đó thứ tự duyệt theo chiều rộng thêm các liên kết thất bại nét đứt, rồi trạng thái hiện tại đi trên trie khi văn bản được đọc. Khi không khớp, hãy xem nó đi theo một liên kết nét đứt thay vì lùi lại trên văn bản.',
+    'Gõ vài mẫu và một văn bản, rồi chạy từng bước. Đầu tiên trie lớn dần, sau đó các liên kết thất bại nét đứt được thêm theo thứ tự BFS (duyệt theo chiều rộng) nhờ một queue (hàng đợi), rồi trạng thái hiện tại đi trên trie khi văn bản được đọc. Khi không khớp, hãy xem nó đi theo một liên kết nét đứt thay vì lùi lại trên văn bản.',
   patternsLabel: 'Các mẫu (cách nhau bằng dấu phẩy hoặc dấu cách)',
   textLabel: 'Văn bản',
   presetLabel: 'Ví dụ',
@@ -57,7 +57,7 @@ export const vi = {
     parent: 'nút u',
     child: 'nút con v',
     chain: 'nút f trên chuỗi thất bại',
-    queued: 'trong hàng đợi',
+    queued: 'trong queue',
     found: 'đã báo',
   },
   markers: { active: '▶', parent: 'u', child: 'v', chain: 'f', queued: 'q', found: '★' },
@@ -66,7 +66,7 @@ export const vi = {
     parent: 'Nút u',
     child: 'Nút con v',
     chain: 'Nút f trên chuỗi',
-    queued: 'Trong hàng đợi',
+    queued: 'Trong queue',
     found: 'Mẫu đã báo',
   },
   wordEnd: '◎ Vòng kép: một mẫu kết thúc ở đây',
@@ -88,7 +88,7 @@ export const vi = {
   matchesEmpty: 'chưa có',
   /** @param {{word: string, start: number}} x */
   matchLabel: (x) => `${x.word} @ ${x.start}`,
-  queueTitle: 'Hàng đợi duyệt theo chiều rộng',
+  queueTitle: 'Queue của BFS',
   queueEmpty: 'rỗng',
   /** @param {AcFrame} f @param {number} id */
   queueLabel: (f, id) => prefixOf(f.nodes, id),
@@ -102,9 +102,9 @@ export const vi = {
       case 'mark':
         return `Đánh dấu ${name(f, f.v)}: mẫu ${f.word} kết thúc ở đây.`;
       case 'seed':
-        return 'Mọi nút con của gốc đều thất bại về gốc, vì tiền tố một chữ cái không có hậu tố nào ngắn hơn. Chúng được đưa vào hàng đợi đầu tiên.';
+        return 'Mọi nút con của gốc đều thất bại về gốc, vì tiền tố một chữ cái không có hậu tố nào ngắn hơn. Chúng được đưa vào queue đầu tiên.';
       case 'visit':
-        return `Lấy ${name(f, f.u)} ra khỏi hàng đợi. Liên kết thất bại của nó đã biết, nên các nút con của nó có thể dùng.`;
+        return `Lấy ${name(f, f.u)} ra khỏi queue. Liên kết thất bại của nó đã biết, nên các nút con của nó có thể dùng.`;
       case 'child':
         return `Nút con ${name(f, f.v)} theo chữ ${f.letter}: bắt đầu tìm ở f = ${name(f, f.f)}, liên kết thất bại của nút cha.`;
       case 'hop':
@@ -138,9 +138,9 @@ export const vi = {
   takeaways: [
     'Một trie chứa tất cả các mẫu, nên các mẫu có chung tiền tố đi chung một đường và một lượt đi kiểm tra chúng cùng lúc.',
     'Liên kết thất bại của một nút trỏ đến hậu tố thực sự dài nhất của tiền tố ứng với nút đó mà cũng có trong trie: phần lớn nhất còn dùng được sau một lần không khớp.',
-    'Các liên kết được đặt theo thứ tự duyệt theo chiều rộng, vì liên kết thất bại luôn trỏ đến một nút nông hơn, mà liên kết của nút đó đã được biết.',
+    'Các liên kết được đặt theo thứ tự BFS, vì liên kết thất bại luôn trỏ đến một nút nông hơn, mà liên kết của nút đó đã được biết.',
     'Liên kết đầu ra trỏ đến mẫu kế tiếp trên chuỗi thất bại, nên một mẫu nằm ẩn trong mẫu khác, như he trong she, cũng được báo.',
-    'Thử “Mẫu nằm trong mẫu”, rồi so số lần nhảy thất bại với số lần so sánh của cách tìm trực tiếp trên một văn bản dài hơn do bạn tự gõ.',
+    'Thử “Mẫu nằm trong mẫu”, rồi so số lần nhảy thất bại với số lần so sánh của cách tìm trực tiếp trên một văn bản dài hơn do em tự gõ.',
   ],
   complexityHead: ['Phần', 'Chi phí', 'Vì sao'],
   complexity: [

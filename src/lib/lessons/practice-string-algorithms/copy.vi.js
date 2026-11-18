@@ -35,21 +35,21 @@ function stepText(f, id) {
       return `Chuẩn bị: so P[${j}] = ${inP(j)} với vị trí ${r.selfAt}, ${inP(r.selfAt)}: ${verdict}.`;
     case 'hash-letter':
       return j >= 0
-        ? `P[${j}] = ${P[j]} được đưa vào giá trị băm của mẫu, giờ là ${r.hash}.`
-        : `T[${i}] = ${T[i]} được đưa vào giá trị băm của cửa sổ đầu tiên, giờ là ${r.hash}.`;
+        ? `P[${j}] = ${P[j]} được đưa vào giá trị hash của mẫu, giờ là ${r.hash}.`
+        : `T[${i}] = ${T[i]} được đưa vào giá trị hash của cửa sổ đầu tiên, giờ là ${r.hash}.`;
     case 'hash-check':
       return r.equal
-        ? `Cửa sổ ở vị trí ${r.shift} có giá trị băm ${r.hash}, bằng với P. Kiểm tra các kí tự của nó.`
-        : `Cửa sổ ở vị trí ${r.shift} có giá trị băm ${r.hash}, còn P là ${r.target}. Không cần đọc kí tự nào.`;
+        ? `Cửa sổ ở vị trí ${r.shift} có giá trị hash ${r.hash}, bằng với P. Kiểm tra các kí tự của nó.`
+        : `Cửa sổ ở vị trí ${r.shift} có giá trị hash ${r.hash}, còn P là ${r.target}. Không cần đọc kí tự nào.`;
     case 'verify':
       if (r.found >= 0) return `P[${j}] = ${P[j]} bằng T[${i}]: khớp thật ở vị trí ${r.found}.`;
       return r.spurious
-        ? `P[${j}] = ${P[j]} khác T[${i}] = ${T[i]}: một lần khớp giả, hai giá trị băm va chạm.`
+        ? `P[${j}] = ${P[j]} khác T[${i}] = ${T[i]}: một lần khớp giả, hai giá trị hash va chạm.`
         : `P[${j}] = ${P[j]} bằng T[${i}]. Kiểm tra tiếp.`;
     case 'roll-out':
       return `T[${i}] = ${T[i]} rời khỏi cửa sổ.`;
     case 'roll-in':
-      return `T[${i}] = ${T[i]} đi vào: cửa sổ ở vị trí ${r.shift} giờ có giá trị băm ${r.hash}.`;
+      return `T[${i}] = ${T[i]} đi vào: cửa sổ ở vị trí ${r.shift} giờ có giá trị hash ${r.hash}.`;
     case 'compare':
       if (j === P.length) {
         return r.found >= 0
@@ -80,9 +80,9 @@ export const vi = {
   level: 'Nâng cao',
   title: 'Luyện tập: bài toán xâu',
   intro:
-    'Với bài toán xâu, chọn đúng công cụ là được thưởng. Thuật toán so khớp nào thắng còn tuỳ vào văn bản và mẫu, còn các câu hỏi về đoạn lặp và hình ảnh soi gương có những lời giải tuyến tính riêng. Ở đây bạn cho năm thuật toán so khớp chạy đua trên văn bản của mình, rồi đọc chính văn bản đó để tìm chu kì và các xâu đối xứng.',
+    'Với bài toán xâu, chọn đúng công cụ là được thưởng. Thuật toán so khớp nào thắng còn tuỳ vào văn bản và mẫu, còn các câu hỏi về đoạn lặp và hình ảnh soi gương có những lời giải tuyến tính riêng. Ở đây năm thuật toán so khớp chạy đua trên văn bản của em, rồi ta đọc chính văn bản đó để tìm chu kì và các xâu đối xứng.',
   summary:
-    'Cho năm thuật toán so khớp xâu chạy đua trên văn bản của bạn và đếm số bước, rồi đọc chính văn bản đó để tìm chu kì và các xâu đối xứng.',
+    'Cho năm thuật toán so khớp xâu chạy đua trên văn bản của em và đếm số bước, rồi đọc chính văn bản đó để tìm chu kì và các xâu đối xứng.',
   instruction:
     'Chọn một mẫu có sẵn hoặc gõ văn bản và mẫu, kết quả đếm cuối cùng hiện ra ngay. Quay về đầu và chạy từng bước để xem mỗi nhịp của mọi thuật toán, và bấm vào một hàng để theo dõi thuật toán đó. Chuyển sang Chu kì và xâu đối xứng để đọc văn bản theo cách khác. Dùng phần tương tác để trả lời các câu hỏi bên dưới.',
   modeLabel: 'Chế độ',
@@ -110,7 +110,7 @@ export const vi = {
   matchers: NAMES,
   raceTitle: 'Số bước đến giờ',
   raceHelp:
-    'Một bước là một lần so kí tự, một lần đưa kí tự vào hàm băm, một lần so giá trị băm hoặc một lần ghi kí tự vào bảng bước nhảy. Mỗi nhịp tiêu một bước của mọi thuật toán chưa xong.',
+    'Một bước là một lần so kí tự, một lần đưa kí tự vào hàm hash (hàm băm), một lần so giá trị hash hoặc một lần ghi kí tự vào bảng bước nhảy. Mỗi nhịp tiêu một bước của mọi thuật toán chưa xong.',
   /** @param {string} name */
   watchLabel: (name) => `Theo dõi ${name}`,
   barPrep: 'chuẩn bị',
@@ -148,7 +148,7 @@ export const vi = {
   searchRoles: {
     equal: 'Bằng nhau',
     miss: 'Khác nhau',
-    read: 'Đọc để băm hoặc để điền bảng bước nhảy',
+    read: 'Đọc để hash hoặc để điền bảng bước nhảy',
     found: 'Nằm trong một lần khớp',
   },
   searchMarkers: { equal: '✓', miss: '✗', read: '#', found: '★' },
@@ -236,9 +236,9 @@ export const vi = {
   takeaways: [
     'Với văn bản thường ngày có nhiều chữ cái khác nhau, các bước nhảy của Boyer-Moore thắng: nó có thể đọc ít kí tự hơn độ dài văn bản, và mẫu càng dài thì nhảy càng xa.',
     'Với văn bản lặp nhiều, KMP và hàm Z là lựa chọn an toàn. Cả hai không bao giờ đi lùi trên văn bản, nên chỉ quanh 2n bước, trong khi quét trực tiếp hoặc Boyer-Moore chỉ dùng kí tự xấu có thể tới n · m.',
-    'Rabin-Karp thua trong cuộc đua với một mẫu, vì nó phải trả giá cho giá trị băm của mọi cửa sổ. Nó có chỗ đứng khi giá trị băm làm được việc khác: nhiều mẫu cùng độ dài, hoặc so hai xâu con trong O(1).',
+    'Rabin-Karp thua trong cuộc đua với một mẫu, vì nó phải trả giá cho giá trị hash của mọi cửa sổ. Nó có chỗ đứng khi giá trị hash làm được việc khác: nhiều mẫu cùng độ dài, hoặc so hai xâu con trong O(1).',
     'Hàm tiền tố trả lời các câu hỏi về chu kì: chu kì nhỏ nhất là n − π[n − 1], và văn bản là một khối lặp lại đúng khi chu kì đó chia hết n và nhỏ hơn n. Thuật toán Manacher cho tâm của mọi xâu đối xứng trong O(n).',
-    'Chọn “Chỉ khác chữ cái cuối”, rồi “Chỉ khác chữ cái đầu”. Cùng những chữ cái đó mà Boyer-Moore và quét trực tiếp đổi chỗ cho nhau. Sau đó gõ một cặp của riêng bạn và đoán người thắng trước khi đọc kết quả.',
+    'Chọn “Chỉ khác chữ cái cuối”, rồi “Chỉ khác chữ cái đầu”. Cùng những chữ cái đó mà Boyer-Moore và quét trực tiếp đổi chỗ cho nhau. Sau đó gõ một cặp của riêng em và đoán người thắng trước khi đọc kết quả.',
   ],
   complexityHead: ['Công cụ', 'Chi phí', 'Khi nào nên dùng'],
   complexity: [
@@ -250,7 +250,7 @@ export const vi = {
     [
       'Rabin-Karp',
       'O(n + m) kì vọng, O(n · m) xấu nhất',
-      'Nhiều mẫu cùng độ dài, hoặc kiểm tra hai xâu con bằng nhau, nhờ các giá trị băm giữ trong một tập hoặc bảng.',
+      'Nhiều mẫu cùng độ dài, hoặc kiểm tra hai xâu con bằng nhau, nhờ các giá trị hash giữ trong một tập hoặc bảng.',
     ],
     [
       'KMP',
@@ -297,15 +297,15 @@ export const vi = {
     {
       type: 'number',
       prompt:
-        'Vẫn với “Văn bản thường ngày”, Rabin-Karp chậm nhất. Nó gặp bao nhiêu lần khớp giả? Hàm băm ở đây dùng cơ số 31, modulo 101.',
+        'Vẫn với “Văn bản thường ngày”, Rabin-Karp chậm nhất. Nó gặp bao nhiêu lần khớp giả? Hàm hash ở đây dùng cơ số 31, modulo 101.',
       answer: 1,
       unit: 'lần',
       hints: [
         'Đọc ô “Số lần khớp giả”, rồi quay về đầu và theo dõi Rabin-Karp để tìm lần đó.',
-        'Khớp giả là một cửa sổ có giá trị băm bằng giá trị băm của mẫu dù các kí tự khác nhau.',
+        'Khớp giả là một cửa sổ có giá trị hash bằng giá trị hash của mẫu dù các kí tự khác nhau.',
       ],
       solution:
-        'Một lần: cửa sổ kbro ở vị trí 7 có giá trị băm 27, bằng với lazy. So chữ cái đầu tiên là lộ ra ngay. Modulo nhỏ như 101 khiến chuyện này dễ xảy ra, còn trong thực tế modulo lớn hơn nhiều.',
+        'Một lần: cửa sổ kbro ở vị trí 7 có giá trị hash 27, bằng với lazy. So chữ cái đầu tiên là lộ ra ngay. Modulo nhỏ như 101 khiến chuyện này dễ xảy ra, còn trong thực tế modulo lớn hơn nhiều.',
     },
     {
       type: 'choice',
@@ -315,7 +315,7 @@ export const vi = {
         'Quét trực tiếp, vì nó không cần chuẩn bị',
         'Boyer-Moore, vì ở mỗi vị trí, lần so sánh đầu tiên của nó rơi đúng vào chữ cái khác biệt',
         'KMP, vì nó không bao giờ lùi lại trên văn bản',
-        'Rabin-Karp, vì các giá trị băm không bao giờ bằng nhau',
+        'Rabin-Karp, vì các giá trị hash không bao giờ bằng nhau',
       ],
       answer: 1,
       hints: ['So các hàng, rồi theo dõi Boyer-Moore vài nhịp.'],
@@ -339,7 +339,7 @@ export const vi = {
       answers: [0, 1, 3],
       hints: ['Đọc các tổng. Thuật toán nào phải đọc lại cùng những chữ cái ở mọi vị trí?'],
       solution:
-        'Quét trực tiếp tốn 148 và Boyer-Moore 152, vì đọc đủ 4 chữ cái ở mỗi vị trí trong 37 vị trí. Rabin-Karp tốn 265, vì mỗi cửa sổ còn phải đi qua hàm băm. KMP (43) và hàm Z (83) dùng lại những gì đã biết, nên các lần khớp không làm chúng tốn thêm.',
+        'Quét trực tiếp tốn 148 và Boyer-Moore 152, vì đọc đủ 4 chữ cái ở mỗi vị trí trong 37 vị trí. Rabin-Karp tốn 265, vì mỗi cửa sổ còn phải đi qua hàm hash. KMP (43) và hàm Z (83) dùng lại những gì đã biết, nên các lần khớp không làm chúng tốn thêm.',
     },
     {
       type: 'text',
@@ -398,7 +398,7 @@ export const vi = {
     {
       type: 'choice',
       prompt:
-        'Bạn phải quét một tệp nhật kí dài để tìm 500 cụm từ bị cấm có độ dài khác nhau, tất cả trong một lượt. Công cụ nào phù hợp nhất?',
+        'Em phải quét một tệp nhật kí dài để tìm 500 cụm từ bị cấm có độ dài khác nhau, tất cả trong một lượt. Công cụ nào phù hợp nhất?',
       options: [
         'Boyer-Moore, chạy một lần cho mỗi cụm từ',
         'Rabin-Karp',

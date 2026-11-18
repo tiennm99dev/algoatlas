@@ -21,7 +21,7 @@ export const triePseudocode = [
   '  chỉ tìm thấy khi nút cuối có isWord',
   'complete(prefix):',
   '  đi theo prefix từ gốc; thiếu nút con: không có kết quả',
-  '  duyệt theo chiều sâu dưới nút đó, chữ cái theo thứ tự',
+  '  DFS dưới nút đó, chữ cái theo thứ tự',
   '  ở mỗi nút có isWord: báo từ của nút',
 ];
 

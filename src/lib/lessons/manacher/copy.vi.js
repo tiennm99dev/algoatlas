@@ -188,5 +188,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Bài tiếp theo, Biểu thức chính quy và mô phỏng NFA, dựng một ô-tô-mát từ biểu thức bạn gõ và theo dõi tập trạng thái khi đọc từng kí tự.',
+    'Bài tiếp theo, Biểu thức chính quy và mô phỏng NFA, dựng một ô-tô-mát từ biểu thức em gõ và theo dõi tập trạng thái khi đọc từng kí tự.',
 };

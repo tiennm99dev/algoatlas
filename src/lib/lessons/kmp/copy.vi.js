@@ -165,13 +165,13 @@ export const vi = {
       type: 'choice',
       prompt: 'Vì sao phần tìm kiếm không cần đọc lại các kí tự vừa khớp?',
       options: [
-        'Chúng được lưu trong một bảng băm',
+        'Chúng được lưu trong một hash table',
         'Các kí tự đó trùng với một phần đã biết của mẫu, nên π đã cho biết chúng chồng lên nhau thế nào',
         'Văn bản được sắp xếp trước',
         'Một lần không khớp nghĩa là không lần khớp nào sau đó có thể chồng lên chúng',
       ],
       answer: 1,
-      hints: ['Bạn biết gì về các kí tự của văn bản vừa khớp?'],
+      hints: ['Em biết gì về các kí tự của văn bản vừa khớp?'],
       solution:
         'Các kí tự văn bản vừa khớp chính là P[0..q), nên mọi điều về cách chúng chồng lên nhau đều là tính chất của mẫu, đã được tính trước trong π.',
     },

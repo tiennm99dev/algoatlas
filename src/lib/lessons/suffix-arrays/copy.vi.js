@@ -116,7 +116,7 @@ export const vi = {
     [
       'Nhân đôi tiền tố',
       'O(n log² n)',
-      'Tối đa khoảng log₂ n vòng, mỗi vòng là một lần sắp xếp so sánh n khoá. Sắp xếp theo cơ số các cặp hạng đưa chi phí xuống O(n log n).',
+      'Tối đa khoảng log₂ n vòng, mỗi vòng là một lần sắp xếp so sánh n khoá. Radix sort (sắp xếp theo cơ số) các cặp hạng đưa chi phí xuống O(n log n).',
     ],
     [
       'LCP bằng Kasai',

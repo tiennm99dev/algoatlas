@@ -133,7 +133,7 @@ export const vi = {
     [
       'LZW',
       'O(n)',
-      'Mỗi chữ cái tra từ điển một lần, trong thời gian hằng số kì vọng khi từ điển là bảng băm hoặc trie.',
+      'Mỗi chữ cái tra từ điển một lần, trong thời gian hằng số kì vọng khi từ điển là hash table (bảng băm) hoặc trie.',
     ],
     ['Bộ nhớ', 'O(k) hoặc O(n)', 'Một bảng k chữ cái cho Huffman; tối đa n mục cho LZW.'],
   ],
@@ -199,5 +199,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Bài tiếp theo, Luyện tập: bài toán xâu, cho bạn chọn đúng thuật toán so khớp cho từng tình huống.',
+    'Bài tiếp theo, Luyện tập: bài toán xâu, cho em chọn đúng thuật toán so khớp cho từng tình huống.',
 };
