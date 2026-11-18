@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { checkAnswer, exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/review-foundations-lesson/copy.en.js';
+import { vi as m } from '$lib/lessons/review-foundations-lesson/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -75,7 +75,7 @@ describe('review: foundations', () => {
     expect(q.textContent).toContain('Chưa đúng');
     click(buttonByText(q, 'Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[i].hints[0]);
-    type(q, '31 copies');
+    type(q, '31 lần sao chép');
     submit(q);
     expect(q.textContent).toContain('Đúng rồi!');
     click(buttonByText(q, 'Xem lời giải'));
@@ -84,7 +84,7 @@ describe('review: foundations', () => {
 
   it('checks a scenario choice', () => {
     render();
-    const i = indexOf((ex) => ex.type === 'choice' && ex.prompt.includes('grid maze'));
+    const i = indexOf((ex) => ex.type === 'choice' && ex.prompt.includes('mê cung dạng lưới'));
     const q = questions()[i];
     const radios = /** @type {HTMLInputElement[]} */ ([
       ...q.querySelectorAll('input[type="radio"]'),
@@ -101,7 +101,7 @@ describe('review: foundations', () => {
 
   it('accepts the stack output written in several ways', () => {
     render();
-    const i = indexOf((ex) => ex.type === 'text' && ex.prompt.startsWith('Stacks.'));
+    const i = indexOf((ex) => ex.type === 'text' && ex.prompt.startsWith('Ngăn xếp.'));
     const q = questions()[i];
     type(q, '3, 4, 2');
     submit(q);
@@ -113,7 +113,7 @@ describe('review: foundations', () => {
 
   it('orders the BST keys in preorder with the move buttons', () => {
     render();
-    const i = indexOf((ex) => ex.type === 'order' && ex.prompt.startsWith('Trees.'));
+    const i = indexOf((ex) => ex.type === 'order' && ex.prompt.startsWith('Cây.'));
     const q = questions()[i];
     const up = (/** @type {string} */ key) => {
       const b = q.querySelector(`button[aria-label*="${key}"][data-dir="up"]`);
@@ -132,10 +132,17 @@ describe('review: foundations', () => {
   it('covers every foundations chapter with well-formed, correct questions', () => {
     for (const ex of m.practice) expect(exerciseProblems(ex)).toEqual([]);
     const chapters = new Set(m.practice.map((ex) => ex.prompt.split('.')[0]));
-    for (const c of ['Complexity', 'Arrays', 'Sorting', 'Searching', 'Linked lists', 'Stacks']) {
+    for (const c of [
+      'Độ phức tạp',
+      'Mảng',
+      'Sắp xếp',
+      'Tìm kiếm',
+      'Danh sách liên kết',
+      'Ngăn xếp',
+    ]) {
       expect(chapters).toContain(c);
     }
-    for (const c of ['Hashing', 'Recursion', 'Trees', 'Heaps', 'Graphs']) {
+    for (const c of ['Băm', 'Đệ quy', 'Cây', 'Heap', 'Đồ thị']) {
       expect(chapters).toContain(c);
     }
     expect(new Set(m.practice.map((ex) => ex.type)).size).toBe(5);
@@ -240,12 +247,12 @@ describe('stored answers', () => {
     if (q.type !== 'order') throw new Error('expected the topological order question');
     /** @type {[string, string][]} */
     const edges = [
-      ['Intro', 'Discrete maths'],
-      ['Intro', 'Data structures'],
-      ['Discrete maths', 'Data structures'],
-      ['Data structures', 'Algorithms'],
-      ['Discrete maths', 'Algorithms'],
-      ['Algorithms', 'Compilers'],
+      ['Nhập môn', 'Toán rời rạc'],
+      ['Nhập môn', 'Cấu trúc dữ liệu'],
+      ['Toán rời rạc', 'Cấu trúc dữ liệu'],
+      ['Cấu trúc dữ liệu', 'Thuật toán'],
+      ['Toán rời rạc', 'Thuật toán'],
+      ['Thuật toán', 'Chương trình dịch'],
     ];
     const indeg = new Map(q.items.map((c) => [c, 0]));
     for (const [, to] of edges) indeg.set(to, (indeg.get(to) ?? 0) + 1);

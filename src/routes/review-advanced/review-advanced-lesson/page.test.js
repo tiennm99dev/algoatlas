@@ -4,7 +4,7 @@ import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { checkAnswer, exerciseProblems } from '$lib/components/answer-check.js';
 import { hullOf } from '$lib/algo-engine/plane-geometry.js';
-import { en as m } from '$lib/lessons/review-advanced-lesson/copy.en.js';
+import { vi as m } from '$lib/lessons/review-advanced-lesson/copy.vi.js';
 
 /** @typedef {import('$lib/components/answer-check.js').Exercise} Exercise */
 
@@ -99,7 +99,7 @@ describe('review: advanced algorithms', () => {
 
   it('checks a typed number, wrong then right after a hint', () => {
     render();
-    const i = indexOf('inverse of 7 modulo 26');
+    const i = indexOf('nghịch đảo của 7 modulo 26');
     const q = questions()[i];
     type(q, '11');
     submit(q);
@@ -115,7 +115,7 @@ describe('review: advanced algorithms', () => {
 
   it('checks a job mapped to a string matcher', () => {
     render();
-    const q = questions()[indexOf('banned words')];
+    const q = questions()[indexOf('từ cấm')];
     const radios = /** @type {HTMLInputElement[]} */ ([
       ...q.querySelectorAll('input[type="radio"]'),
     ]);
@@ -131,7 +131,7 @@ describe('review: advanced algorithms', () => {
 
   it('checks the ticked boxes of a several-answer question', () => {
     render();
-    const q = questions()[indexOf('NP-complete')];
+    const q = questions()[indexOf('NP-đầy đủ')];
     const boxes = /** @type {HTMLInputElement[]} */ ([
       ...q.querySelectorAll('input[type="checkbox"]'),
     ]);
@@ -161,7 +161,7 @@ describe('review: advanced algorithms', () => {
 
   it('arranges the growth rates with the move buttons', () => {
     render();
-    const i = indexOf('slowest-growing');
+    const i = indexOf('tăng chậm nhất');
     const ex = m.practice[i];
     if (ex.type !== 'order') throw new Error('expected the growth order question');
     const q = questions()[i];
@@ -186,18 +186,18 @@ describe('review: advanced algorithms', () => {
     const chapters = new Set(m.practice.map((ex) => ex.prompt.split('.')[0]));
     expect(chapters).toEqual(
       new Set([
-        'Range queries',
-        'Strings',
-        'Number theory',
-        'Geometry',
-        'Flows',
-        'Advanced DP',
-        'Tree techniques',
-        'Algebra and randomness',
-        'Intractability',
-        'Advanced heaps',
-        'Models of computation',
-        'Choosing',
+        'Truy vấn đoạn',
+        'Xâu',
+        'Số học',
+        'Hình học',
+        'Luồng',
+        'QHĐ nâng cao',
+        'Kĩ thuật trên cây',
+        'Đại số và ngẫu nhiên',
+        'Bài toán khó',
+        'Heap nâng cao',
+        'Mô hình tính toán',
+        'Lựa chọn',
       ]),
     );
     expect(new Set(m.practice.map((ex) => ex.type)).size).toBe(5);
@@ -214,7 +214,7 @@ describe('stored answers', () => {
   it('match the Fenwick prefix walk', () => {
     let cells = 0;
     for (let i = 13; i > 0; i -= i & -i) cells++;
-    expectAnswer('first 13 elements', cells);
+    expectAnswer('13 phần tử đầu tiên', cells);
   });
 
   it('match the prefix function of abacaba', () => {
@@ -233,7 +233,7 @@ describe('stored answers', () => {
   it('match the suffix array and the distinct substrings of banana', () => {
     const s = 'banana';
     const sa = [...s].map((_, i) => i).sort((a, b) => (s.slice(a) < s.slice(b) ? -1 : 1));
-    const q = question('suffix array lists');
+    const q = question('thứ tự mảng hậu tố liệt kê');
     if (q.type !== 'order') throw new Error('expected the suffix order question');
     expect(q.answer.map((i) => q.items[i])).toEqual(sa.map((i) => s.slice(i)));
 
@@ -248,12 +248,12 @@ describe('stored answers', () => {
     const all = new Set();
     for (let i = 0; i < s.length; i++)
       for (let j = i + 1; j <= s.length; j++) all.add(s.slice(i, j));
-    expectAnswer('distinct non-empty substrings', all.size);
+    expectAnswer('xâu con khác rỗng phân biệt', all.size);
   });
 
   it('match the number theory answers, by search', () => {
     const inv = Array.from({ length: 26 }, (_, x) => x).find((x) => (7 * x) % 26 === 1);
-    expectAnswer('inverse of 7 modulo 26', /** @type {number} */ (inv));
+    expectAnswer('nghịch đảo của 7 modulo 26', /** @type {number} */ (inv));
 
     let x = 1;
     while (!(x % 3 === 2 && x % 5 === 3 && x % 7 === 2)) x++;
@@ -262,7 +262,7 @@ describe('stored answers', () => {
     const phi = (5 - 1) * (11 - 1);
     let d = 1;
     while ((3 * d) % phi !== 1) d++;
-    expectAnswer('RSA key', d);
+    expectAnswer('khoá RSA', d);
     // The key really decrypts: (m³)^d ≡ m (mod 55) for every message.
     for (let msg = 0; msg < 55; msg++) {
       let c = 1;
@@ -288,9 +288,9 @@ describe('stored answers', () => {
 
     const cross = (4 - 0) * (3 - 0) - (0 - 0) * (2 - 0);
     expect(cross).toBeGreaterThan(0);
-    const turn = question('which way do you turn');
+    const turn = question('bạn rẽ theo hướng nào');
     if (turn.type !== 'choice') throw new Error('expected the orientation question');
-    expect(turn.options[turn.answer]).toContain('Counter-clockwise');
+    expect(turn.options[turn.answer]).toContain('Ngược chiều kim đồng hồ');
 
     const pts = [
       [0, 0],
@@ -303,7 +303,7 @@ describe('stored answers', () => {
       [0, 4],
       [3, 2],
     ].map(([px, py], id) => ({ id, x: px, y: py }));
-    expectAnswer('convex hull', hullOf(pts).length);
+    expectAnswer('Bao lồi của các điểm', hullOf(pts).length);
   });
 
   it('match the maximum flow, from the smallest cut', () => {
@@ -323,7 +323,7 @@ describe('stored answers', () => {
         .reduce((sum, [, , c]) => sum + c, 0);
       best = Math.min(best, cut);
     }
-    expectAnswer('maximum flow from s to t', best);
+    expectAnswer('Luồng cực đại từ s đến t', best);
   });
 
   it('match the advanced DP answers', () => {
@@ -344,13 +344,13 @@ describe('stored answers', () => {
       for (let v = 1; v <= 6; v++) if (mask & (1 << v)) sum += weight[v];
       best = Math.max(best, sum);
     }
-    expectAnswer('no two adjacent', best);
+    expectAnswer('không có hai đỉnh nào kề nhau', best);
   });
 
   it('match the binary lifting table height', () => {
     let log = 0;
     while (2 ** log < 100000) log++;
-    expectAnswer('Binary lifting stores', log);
+    expectAnswer('Nhảy nhị phân lưu', log);
   });
 
   it('match the winning Nim move, by trying every move', () => {
@@ -385,7 +385,7 @@ describe('stored answers', () => {
   });
 
   it('match the counting answers of the heaps and hardness chapters', () => {
-    expectAnswer('parameter k = 10', 2 ** 10);
+    expectAnswer('tham số k = 10', 2 ** 10);
     let bits = 16;
     let halvings = 0;
     while (bits > 1) {
@@ -393,7 +393,7 @@ describe('stored answers', () => {
       halvings++;
     }
     expectAnswer('van Emde Boas', halvings);
-    expectAnswer('greedy scheduler', 100 / 5 + 10);
+    expectAnswer('bộ lập lịch tham lam', 100 / 5 + 10);
   });
 
   it('match the ski-rental worst case, over every season length', () => {
@@ -403,22 +403,22 @@ describe('stored answers', () => {
       ratio = Math.max(ratio, paid / Math.min(days, 10));
     }
     expect(ratio).toBeCloseTo(1.9);
-    const q = question('Renting skis');
+    const q = question('Thuê ván trượt');
     if (q.type !== 'choice') throw new Error('expected the ski-rental question');
-    expect(q.options[q.answer]).toContain('1.9');
+    expect(q.options[q.answer]).toContain('1,9');
   });
 
   it('match the running times that fit in a second', () => {
     const n = 1e5;
     const costs = [n * Math.log2(n), n * Math.sqrt(n), n * n, 2 ** n, n * Math.log2(n) ** 2];
     expectAnswer(
-      'within about one second',
+      'trong khoảng một giây',
       costs.flatMap((c, i) => (c <= 1e8 ? [i] : [])),
     );
   });
 
   it('match the growth order, at a large n', () => {
-    const q = question('slowest-growing');
+    const q = question('tăng chậm nhất');
     if (q.type !== 'order') throw new Error('expected the growth order question');
     const n = 64;
     /** @type {Record<string, number>} */

@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { checkAnswer, exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/review-core-lesson/copy.en.js';
+import { vi as m } from '$lib/lessons/review-core-lesson/copy.vi.js';
 
 /** @typedef {import('$lib/components/answer-check.js').Exercise} Exercise */
 
@@ -85,14 +85,14 @@ describe('review: core algorithms', () => {
 
   it('checks a typed number, wrong then right after a hint', () => {
     render();
-    const i = indexOf('Huffman code');
+    const i = indexOf('Mã Huffman dùng');
     const q = questions()[i];
     type(q, '300');
     submit(q);
     expect(q.textContent).toContain('Chưa đúng');
     click(buttonByText(q, 'Xem gợi ý'));
     expect(q.textContent).toContain(m.practice[i].hints[0]);
-    type(q, '224 bits');
+    type(q, '224 bit');
     submit(q);
     expect(q.textContent).toContain('Đúng rồi!');
     click(buttonByText(q, 'Xem lời giải'));
@@ -101,7 +101,7 @@ describe('review: core algorithms', () => {
 
   it('checks a problem statement mapped to a paradigm', () => {
     render();
-    const q = questions()[indexOf('dictionary words')];
+    const q = questions()[indexOf('từ trong từ điển')];
     const radios = /** @type {HTMLInputElement[]} */ ([
       ...q.querySelectorAll('input[type="radio"]'),
     ]);
@@ -128,7 +128,7 @@ describe('review: core algorithms', () => {
 
   it('orders the settled vertices with the move buttons', () => {
     render();
-    const q = questions()[indexOf('Dijkstra settles')];
+    const q = questions()[indexOf('thứ tự Dijkstra chốt')];
     click(
       /** @type {HTMLButtonElement} */ (
         q.querySelector('button[aria-label*="“C”"][data-dir="up"]')
@@ -145,16 +145,16 @@ describe('review: core algorithms', () => {
     const chapters = new Set(m.practice.map((ex) => ex.prompt.split('.')[0]));
     expect(chapters).toEqual(
       new Set([
-        'Shortest paths',
-        'Union-find',
-        'Spanning trees',
-        'Advanced graphs',
-        'Divide and conquer',
-        'Greedy',
-        'Dynamic programming',
-        'Backtracking',
-        'Balanced trees',
-        'Paradigms',
+        'Đường đi ngắn nhất',
+        'Tập hợp rời nhau',
+        'Cây khung',
+        'Đồ thị nâng cao',
+        'Chia để trị',
+        'Tham lam',
+        'Quy hoạch động',
+        'Quay lui',
+        'Cây cân bằng',
+        'Mô hình giải',
       ]),
     );
     expect(new Set(m.practice.map((ex) => ex.type)).size).toBe(5);
@@ -183,7 +183,7 @@ describe('stored answers', () => {
     const dist = { A: 0, B: Infinity, C: Infinity, D: Infinity, E: Infinity };
     for (let round = 0; round < 4; round++)
       for (const [u, v, w] of edges) dist[v] = Math.min(dist[v], dist[u] + w);
-    const q = question('Dijkstra settles');
+    const q = question('thứ tự Dijkstra chốt');
     if (q.type !== 'order') throw new Error('expected the settle order question');
     expect(q.answer.map((i) => q.items[i])).toEqual(
       Object.keys(dist).sort((a, b) => dist[a] - dist[b]),
@@ -205,7 +205,7 @@ describe('stored answers', () => {
     };
     /** @param {string} u @returns {number} */
     const longest = (u) => (u === 'E' ? 0 : Math.max(...out[u].map(([v, w]) => w + longest(v))));
-    expectAnswer('longest path from A to E', longest('A'));
+    expectAnswer('Đường đi dài nhất từ A đến E', longest('A'));
   });
 
   it('match union-find counts', () => {
@@ -223,7 +223,7 @@ describe('stored answers', () => {
       if (find(a) !== find(b)) components--;
       parent[find(a)] = find(b);
     }
-    expectAnswer('Vertices 1 to 8', components);
+    expectAnswer('Các đỉnh từ 1 đến 8', components);
 
     let ranks = Array(16).fill(0);
     while (ranks.length > 1) {
@@ -232,7 +232,7 @@ describe('stored answers', () => {
       for (let i = 0; i < ranks.length; i += 2) next.push(ranks[i] + 1);
       ranks = next;
     }
-    expectAnswer('union by rank', ranks[0]);
+    expectAnswer('hợp theo hạng', ranks[0]);
   });
 
   it('match the minimum spanning tree, by trying every edge subset', () => {
@@ -263,7 +263,7 @@ describe('stored answers', () => {
           picked.reduce((sum, e) => sum + e[2], 0),
         );
     }
-    expectAnswer('minimum spanning tree?', best);
+    expectAnswer('Tổng trọng số cây khung nhỏ nhất', best);
   });
 
   it('match the strongly connected components, from reachability', () => {
@@ -277,7 +277,7 @@ describe('stored answers', () => {
     const groups = new Set(
       names.map((u) => names.filter((v) => reach.has(u + v) && reach.has(v + u)).join('')),
     );
-    expectAnswer('strongly connected components', groups.size);
+    expectAnswer('bao nhiêu thành phần liên thông mạnh', groups.size);
     expect(groups).toEqual(new Set(['ABC', 'DE', 'F']));
   });
 
@@ -295,7 +295,7 @@ describe('stored answers', () => {
     let count = 0;
     for (let i = 0; i < a.length; i++)
       for (let j = i + 1; j < a.length; j++) if (a[i] > a[j]) count++;
-    expectAnswer('How many inversions', count);
+    expectAnswer('bao nhiêu nghịch thế', count);
   });
 
   it('match the largest set of compatible activities, by trying every subset', () => {
@@ -318,7 +318,7 @@ describe('stored answers', () => {
       if (picked.every((x, i) => i === 0 || picked[i - 1][1] <= x[0]))
         best = Math.max(best, picked.length);
     }
-    expectAnswer('one room hold', best);
+    expectAnswer('Một phòng chứa được', best);
   });
 
   it('match the Huffman total, from code lengths', () => {
@@ -326,7 +326,7 @@ describe('stored answers', () => {
     const lengths = [1, 3, 3, 3, 4, 4];
     expect(lengths.reduce((sum, l) => sum + 2 ** -l, 0)).toBe(1);
     const total = freq.reduce((sum, f, i) => sum + f * lengths[i], 0);
-    expectAnswer('Huffman code', total);
+    expectAnswer('Mã Huffman dùng', total);
 
     const heap = [...freq];
     let merged = 0;
@@ -355,7 +355,7 @@ describe('stored answers', () => {
           picked.reduce((sum, it) => sum + it[1], 0),
         );
     }
-    expectAnswer('0/1 knapsack has capacity', best);
+    expectAnswer('có sức chứa 50', best);
 
     const [s, t] = ['kitten', 'sitting'];
     const d = Array.from({ length: s.length + 1 }, (_, i) =>
@@ -368,12 +368,12 @@ describe('stored answers', () => {
           d[i][j - 1] + 1,
           d[i - 1][j - 1] + (s[i - 1] === t[j - 1] ? 0 : 1),
         );
-    expectAnswer('edit distance', d[s.length][t.length]);
+    expectAnswer('Khoảng cách sửa', d[s.length][t.length]);
 
     const dims = [10, 30, 5, 60];
     const left = dims[0] * dims[1] * dims[2] + dims[0] * dims[2] * dims[3];
     const right = dims[1] * dims[2] * dims[3] + dims[0] * dims[1] * dims[3];
-    expectAnswer('scalar multiplications', Math.min(left, right));
+    expectAnswer('phép nhân số', Math.min(left, right));
   });
 
   it('match the SRTBOT initials', () => {
@@ -398,17 +398,17 @@ describe('stored answers', () => {
       }
       return total;
     };
-    expectAnswer('6 queens', place([]));
+    expectAnswer('6 quân hậu', place([]));
     expect(safe([2, 4, 6, 1, 3, 5])).toBe(true);
   });
 
   it('match the balanced tree counts', () => {
     const fewest = [0, 1, 2];
     for (let h = 3; h <= 5; h++) fewest[h] = fewest[h - 1] + fewest[h - 2] + 1;
-    expectAnswer('AVL tree of height 5', fewest[5]);
+    expectAnswer('cây AVL chiều cao 5', fewest[5]);
 
-    expectAnswer('B-tree has order 100', (1 + 100 + 100 * 100) * 99);
-    expectAnswer('order-statistic tree', 7 - 5 - 1);
+    expectAnswer('cây B bậc 100', (1 + 100 + 100 * 100) * 99);
+    expectAnswer('cây thống kê thứ tự', 7 - 5 - 1);
   });
 
   it('match the AVL repair of the left-right case', () => {
@@ -425,8 +425,8 @@ describe('stored answers', () => {
     top.left = pivot.right;
     pivot.right = top;
     expect([pivot.key, pivot.left?.key, pivot.right?.key]).toEqual([20, 10, 30]);
-    const q = question('Insert 30, 10, 20');
+    const q = question('Thêm 30, 10, 20');
     if (q.type !== 'choice') throw new Error('expected the rotation question');
-    expect(q.options[q.answer]).toContain('left rotation at 10, then a right rotation at 30');
+    expect(q.options[q.answer]).toContain('Quay trái tại 10, rồi quay phải tại 30');
   });
 });

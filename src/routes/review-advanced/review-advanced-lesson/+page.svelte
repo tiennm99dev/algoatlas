@@ -1,7 +1,7 @@
 <script>
   import LessonLayout from '$lib/components/lesson-layout.svelte';
   import PracticeBlock from '$lib/components/practice-block.svelte';
-  import { en as m } from '$lib/lessons/review-advanced-lesson/copy.en.js';
+  import { vi as m } from '$lib/lessons/review-advanced-lesson/copy.vi.js';
 </script>
 
 <LessonLayout lesson={m}>
