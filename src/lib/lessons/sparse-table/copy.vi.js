@@ -8,9 +8,9 @@ export const vi = {
   slug: 'sparse-table',
   topic: 'range-queries',
   level: 'Trung bình',
-  title: 'Bảng thưa',
+  title: 'Sparse table',
   intro:
-    'Bảng thưa (sparse table) trả lời câu hỏi “giá trị nhỏ nhất trên một đoạn” của một mảng không bao giờ thay đổi. Nó lưu sẵn đáp án cho mọi khối có độ dài là luỹ thừa của 2, rồi phủ một đoạn bất kì bằng hai khối như vậy. Hai khối có thể chồng lên nhau, nhưng với min thì điều đó vô hại, nên mỗi truy vấn chỉ tốn O(1).',
+    'Sparse table (bảng thưa) trả lời câu hỏi “giá trị nhỏ nhất trên một đoạn” của một mảng không bao giờ thay đổi. Nó lưu sẵn đáp án cho mọi khối có độ dài là luỹ thừa của 2, rồi phủ một đoạn bất kì bằng hai khối như vậy. Hai khối có thể chồng lên nhau, nhưng với min thì điều đó vô hại, nên mỗi truy vấn chỉ tốn O(1).',
   summary:
     'Dựng bảng các khối độ dài luỹ thừa của 2 trong O(n log n), rồi trả lời truy vấn min, max hoặc ƯCLN trên đoạn trong O(1) bằng hai khối chồng nhau.',
   instruction:
@@ -38,7 +38,7 @@ export const vi = {
   arrayTitle: 'Mảng a',
   arrayAria: 'Mảng a, chỉ số 0 đứng đầu',
   tableTitle: 'Bảng st[k][i]: khối độ dài 2^k bắt đầu tại i',
-  tableAria: 'Bảng thưa, mỗi hàng ứng với một k, mỗi cột ứng với một chỉ số bắt đầu i',
+  tableAria: 'Sparse table, mỗi hàng ứng với một k, mỗi cột ứng với một chỉ số bắt đầu i',
   tableHint: 'Bấm vào một ô để xem khối mà nó lưu. Dấu gạch nghĩa là khối đó không vừa trong mảng.',
   noBlock: '–',
   /** @param {number} k @param {number} i @param {number} n */
@@ -125,7 +125,7 @@ export const vi = {
           return `Xong: 2 lần đọc và ra đáp án đúng ${f.result}, nhưng là do may: các ô chung cộng lại bằng 0 nên che mất việc tính hai lần. Với giá trị chung khác, kết quả sẽ sai.`;
         }
         return f.op === 'sum'
-          ? `Xong: 2 lần đọc, đáp án sai ${f.result} thay vì ${f.truth}. Phép cộng cần cấu trúc khác, như tổng tiền tố hoặc cây Fenwick.`
+          ? `Xong: 2 lần đọc, đáp án sai ${f.result} thay vì ${f.truth}. Phép cộng cần cấu trúc khác, như prefix sum (tổng tiền tố) hoặc Fenwick tree (cây chỉ số nhị phân).`
           : `Xong: đáp án ${f.result} chỉ tốn 2 lần đọc thay vì ${f.r - f.l + 1} lần, và mọi đoạn khác cũng chỉ tốn 2 lần.`;
     }
   },
@@ -133,7 +133,7 @@ export const vi = {
     'st[k][i] lưu đáp án cho 2^k ô bắt đầu tại i. Mỗi khối là hai khối nửa độ dài gộp lại: st[k][i] = op(st[k − 1][i], st[k − 1][i + 2^(k − 1)]).',
     'Một đoạn độ dài len luôn chứa vừa hai khối độ dài 2^k với k = ⌊log₂ len⌋: một khối bắt đầu tại l, một khối kết thúc tại r. Vì 2·2^k > len nên hai khối phủ kín đoạn, và chúng luôn chung nhau ít nhất một ô.',
     'Phần chồng nhau chỉ an toàn với phép toán luỹ đẳng (idempotent), tức op(x, x) = x: min, max, ƯCLN, AND và OR theo bit. Phép cộng và phép nhân tính các ô chung hai lần.',
-    'Bảng là tĩnh. Đổi một giá trị có thể làm hỏng O(n) ô của bảng, và cách sửa đơn giản là dựng lại toàn bộ trong O(n log n), nên mảng hay thay đổi cần cây Fenwick hoặc cây phân đoạn.',
+    'Bảng là tĩnh. Đổi một giá trị có thể làm hỏng O(n) ô của bảng, và cách sửa đơn giản là dựng lại toàn bộ trong O(n log n), nên mảng hay thay đổi cần Fenwick tree hoặc segment tree (cây phân đoạn).',
     'Thử phép Tổng trên đoạn l = 1, r = 6: hai khối a[1..4] và a[3..6] chung nhau a[3] và a[4]. Kết quả lớn hơn đúng bằng tổng hai giá trị đó. Sau đó chuyển lại về Min.',
   ],
   complexityHead: ['Thao tác', 'Chi phí', 'Vì sao'],
@@ -163,7 +163,7 @@ export const vi = {
     {
       type: 'number',
       prompt:
-        'Cùng mảng đó, đoạn a[1..6], dùng phép Tổng thay cho Min. Tổng đúng là 23. Truy vấn trên bảng thưa trả về bao nhiêu?',
+        'Cùng mảng đó, đoạn a[1..6], dùng phép Tổng thay cho Min. Tổng đúng là 23. Truy vấn trên sparse table trả về bao nhiêu?',
       answer: 31,
       hints: [
         'k = 2, nên hai khối là a[1..4] và a[3..6].',
@@ -174,7 +174,7 @@ export const vi = {
     },
     {
       type: 'number',
-      prompt: 'Với n = 16, bảng thưa điền tất cả bao nhiêu ô?',
+      prompt: 'Với n = 16, sparse table điền tất cả bao nhiêu ô?',
       unit: 'ô',
       answer: 54,
       hints: [
@@ -196,19 +196,19 @@ export const vi = {
     {
       type: 'choice',
       prompt:
-        'Một mảng nhận một lần cập nhật điểm xen giữa mỗi hai truy vấn min trên đoạn. Bảng thưa có phù hợp không?',
+        'Một mảng nhận một lần cập nhật điểm xen giữa mỗi hai truy vấn min trên đoạn. Sparse table có phù hợp không?',
       options: [
         'Có: truy vấn là O(1), nên cập nhật không quan trọng',
-        'Không: mỗi lần cập nhật có thể buộc dựng lại trong O(n log n), nên hãy dùng cây phân đoạn',
+        'Không: mỗi lần cập nhật có thể buộc dựng lại trong O(n log n), nên hãy dùng segment tree',
         'Có: một lần cập nhật chỉ đổi một ô của bảng',
-        'Không: bảng thưa không trả lời được truy vấn min trên đoạn',
+        'Không: sparse table không trả lời được truy vấn min trên đoạn',
       ],
       answer: 1,
       hints: ['Một ô thuộc bao nhiêu khối?'],
       solution:
-        'Ở tầng k, một ô thuộc tới 2^k khối, nên một lần cập nhật có thể làm hỏng nhiều ô của bảng. Bảng thưa hợp với dữ liệu tĩnh; cây phân đoạn xử lý cả cập nhật lẫn truy vấn trong O(log n).',
+        'Ở tầng k, một ô thuộc tới 2^k khối, nên một lần cập nhật có thể làm hỏng nhiều ô của bảng. Sparse table hợp với dữ liệu tĩnh; segment tree xử lý cả cập nhật lẫn truy vấn trong O(log n).',
     },
   ],
   nextTeaser:
-    'Bài tiếp theo: Cây Fenwick, cấu trúc vừa trả lời tổng trên đoạn vừa cho phép cập nhật, mỗi việc chỉ tốn O(log n).',
+    'Bài tiếp theo: Fenwick tree, cấu trúc vừa trả lời tổng trên đoạn vừa cho phép cập nhật, mỗi việc chỉ tốn O(log n).',
 };

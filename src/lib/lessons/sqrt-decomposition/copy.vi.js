@@ -173,7 +173,7 @@ export const vi = {
   },
   takeaways: [
     'Một truy vấn đọc tối đa 2(s − 1) ô lẻ và ⌈n / s⌉ khối nguyên. Cân bằng hai phần này cho s ≈ √n và O(√n) mỗi truy vấn. Cập nhật điểm đổi một ô và một tổng khối.',
-    'Cấu trúc này dễ biến đổi: mỗi khối có thể lưu tổng, giá trị nhỏ nhất, hoặc một bản sao đã sắp xếp. Nó chậm hơn O(log n) của cây phân đoạn, nhưng xử lý được những câu hỏi không có phép gộp đơn giản.',
+    'Cấu trúc này dễ biến đổi: mỗi khối có thể lưu tổng, giá trị nhỏ nhất, hoặc một bản sao đã sắp xếp. Nó chậm hơn O(log n) của segment tree (cây phân đoạn), nhưng xử lý được những câu hỏi không có phép gộp đơn giản.',
     'Thuật toán Mo là ngoại tuyến: nó cần có mọi truy vấn trước, rồi sắp xếp theo (⌊l / s⌋, r). Trong một khối, đầu phải chỉ dịch sang phải, còn đầu trái dịch tối đa s ô mỗi truy vấn.',
     'Với thao tác thêm và bỏ O(1) và s ≈ √n, tổng công việc của cửa sổ là O((n + q)·√n). Đáp án được trả về đúng vị trí ban đầu của từng truy vấn, nên người dùng không thấy việc sắp xếp lại.',
     'Thử kích thước khối bằng 1 rồi bằng n với 16 giá trị: trường hợp xấu nhất là 16 rồi 15 lần đọc, so với 8 khi s = 4. (s = 3 chỉ cần 7: các hằng số nhỏ làm lệch giá trị tốt nhất chính xác, nhưng không đổi dạng O(√n).) Ở thuật toán Mo, so hai số bước dịch với bộ “Nhảy qua lại trái phải” và bộ “Các đoạn lồng nhau”.',
@@ -288,5 +288,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Bài tiếp theo: Luyện tập: bài toán truy vấn đoạn, nơi bạn chọn cấu trúc phù hợp cho từng bài.',
+    'Bài tiếp theo: Luyện tập: bài toán truy vấn đoạn, nơi em chọn cấu trúc phù hợp cho từng bài.',
 };

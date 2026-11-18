@@ -17,11 +17,11 @@ export const vi = {
   slug: 'segment-tree',
   topic: 'range-queries',
   level: 'Trung bình',
-  title: 'Cây phân đoạn',
+  title: 'Segment tree',
   intro:
-    'Cây phân đoạn (segment tree) là một cây nhị phân của các đoạn: gốc phủ cả mảng, mỗi nút chia đôi đoạn của nó, và mỗi lá là một giá trị. Mỗi nút lưu kết quả gộp trên đoạn của nó. Đoạn truy vấn nào cũng tách được thành tối đa hai nút ở mỗi tầng, nên cả truy vấn đoạn lẫn cập nhật điểm đều tốn O(log n).',
+    'Segment tree (cây phân đoạn) là một cây nhị phân của các đoạn: gốc phủ cả mảng, mỗi nút chia đôi đoạn của nó, và mỗi lá là một giá trị. Mỗi nút lưu kết quả gộp trên đoạn của nó. Đoạn truy vấn nào cũng tách được thành tối đa hai nút ở mỗi tầng, nên cả truy vấn đoạn lẫn cập nhật điểm đều tốn O(log n).',
   summary:
-    'Kéo chọn một đoạn và xem cây phân đoạn trả lời nó từ vài nút đã lưu, với hàm gộp bất kì, rồi cập nhật một giá trị dọc theo một đường đi.',
+    'Kéo chọn một đoạn và xem segment tree trả lời nó từ vài nút đã lưu, với hàm gộp bất kì, rồi cập nhật một giá trị dọc theo một đường đi.',
   instruction:
     'Kéo qua mảng để chọn một đoạn: các nút trả lời đoạn đó sáng lên kèm dấu tích. Dùng Chạy lại truy vấn để đi từng bước qua phép đệ quy. Đổi phép gộp sang Min hoặc Max, hoặc gán lại một giá trị và xem chỉ một đường đi được tính lại.',
   mergeLegend: 'Phép gộp',
@@ -49,10 +49,10 @@ export const vi = {
   dragHint:
     'Bàn phím: phím mũi tên để di chuyển, Enter trên một ô để bắt đầu đoạn và trên ô khác để kết thúc.',
   treeScroller: 'Hình vẽ cây, cuộn ngang được',
-  treeTitle: 'Cây phân đoạn: mỗi nút ghi giá trị và đoạn của nó',
+  treeTitle: 'Segment tree: mỗi nút ghi giá trị và đoạn của nó',
   /** @param {SegFrame} f */
   treeAria: (f) =>
-    `Cây phân đoạn trên ${f.items.length} giá trị với phép ${f.merge}. Gốc ${f.tree[1] === null ? 'chưa lưu gì' : `lưu ${show(f.tree[1])}`}.`,
+    `Segment tree trên ${f.items.length} giá trị với phép ${f.merge}. Gốc ${f.tree[1] === null ? 'chưa lưu gì' : `lưu ${show(f.tree[1])}`}.`,
   unbuilt: '·',
   show,
   /** @param {number} i @param {number} v */
@@ -146,7 +146,7 @@ export const vi = {
   practice: [
     {
       type: 'number',
-      prompt: 'Cây phân đoạn trên 8 giá trị có bao nhiêu nút?',
+      prompt: 'Segment tree trên 8 giá trị có bao nhiêu nút?',
       unit: 'nút',
       answer: 15,
       hints: ['Có 8 lá. Mỗi nút trong gộp hai con.'],
@@ -209,7 +209,7 @@ export const vi = {
     },
     {
       type: 'multi',
-      prompt: 'Hàm nào sau đây dùng được làm phép gộp của cây phân đoạn?',
+      prompt: 'Hàm nào sau đây dùng được làm phép gộp của segment tree?',
       options: [
         'Ước chung lớn nhất',
         'Trung bình cộng của hai con',
@@ -226,5 +226,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Bài tiếp theo: Cập nhật lười, cách cộng một lượng vào cả một đoạn mà chỉ tốn O(log n).',
+    'Bài tiếp theo: Lazy propagation, cách cộng một lượng vào cả một đoạn mà chỉ tốn O(log n).',
 };

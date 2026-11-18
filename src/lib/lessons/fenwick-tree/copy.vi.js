@@ -14,18 +14,18 @@ export const vi = {
   slug: 'fenwick-tree',
   topic: 'range-queries',
   level: 'Trung bình',
-  title: 'Cây Fenwick',
+  title: 'Fenwick tree',
   intro:
-    'Cây Fenwick, còn gọi là cây chỉ số nhị phân (BIT), giữ được tổng tiền tố (prefix sum) ngay cả khi các giá trị thay đổi. Nó chỉ là một mảng, trong đó mỗi ô lưu tổng của một khối giá trị, và độ dài khối bằng bit 1 thấp nhất của chỉ số ô. Mỗi lần đọc hay cập nhật chỉ nhảy qua tối đa khoảng log₂ n ô.',
+    'Fenwick tree (cây chỉ số nhị phân), còn gọi là BIT, giữ được prefix sum (tổng tiền tố) ngay cả khi các giá trị thay đổi. Nó chỉ là một mảng, trong đó mỗi ô lưu tổng của một khối giá trị, và độ dài khối bằng bit 1 thấp nhất của chỉ số ô. Mỗi lần đọc hay cập nhật chỉ nhảy qua tối đa khoảng log₂ n ô.',
   summary:
-    'Cập nhật giá trị và đọc tổng tiền tố trong O(log n) chỉ với một mảng, nhảy giữa các ô theo bit 1 thấp nhất của chỉ số.',
+    'Cập nhật giá trị và đọc prefix sum trong O(log n) chỉ với một mảng, nhảy giữa các ô theo bit 1 thấp nhất của chỉ số.',
   instruction:
-    'Chọn chỉ số bằng cách gõ vào hoặc bấm một ô của t, rồi bấm Tổng tiền tố, Cộng hoặc Tổng đoạn và chạy từng bước. Quan sát các cung: truy vấn xoá bit thấp nhất và nhảy sang trái, cập nhật cộng bit đó và nhảy sang phải. Các thanh cho biết mỗi ô cộng những giá trị nào.',
+    'Chọn chỉ số bằng cách gõ vào hoặc bấm một ô của t, rồi bấm Prefix sum, Cộng hoặc Tổng đoạn và chạy từng bước. Quan sát các cung: truy vấn xoá bit thấp nhất và nhảy sang trái, cập nhật cộng bit đó và nhảy sang phải. Các thanh cho biết mỗi ô cộng những giá trị nào.',
   valuesLabel: 'Giá trị',
   indexLabel: 'Chỉ số i',
   deltaLabel: 'Lượng thay đổi (delta)',
   fromLabel: 'Từ l',
-  prefixButton: 'Tổng tiền tố đến i',
+  prefixButton: 'Prefix sum đến i',
   addButton: 'Cộng delta vào i',
   rangeButton: 'Tổng đoạn l..i',
   undo: 'Hoàn tác',
@@ -95,7 +95,7 @@ export const vi = {
   plainCost(op, n) {
     if (op === null) return { label: 'Nếu không có cây', cost: '—' };
     if (op.type === 'add') {
-      return { label: 'Mảng tổng tiền tố phải ghi lại', cost: String(n - op.i + 1) };
+      return { label: 'Mảng prefix sum phải ghi lại', cost: String(n - op.i + 1) };
     }
     if (op.type === 'prefix') return { label: 'Mảng thường phải đọc', cost: String(op.i) };
     return { label: 'Mảng thường phải đọc', cost: String(op.r - op.l + 1) };
@@ -145,7 +145,7 @@ export const vi = {
     'prefix(i) cộng t[i] rồi xoá bit thấp nhất, tức là lùi về khối ngay trước khối vừa đọc. Số bước bằng số bit 1 của i.',
     'add(i, delta) cộng delta vào t[i] rồi cộng thêm bit thấp nhất, tức là tiến tới khối tiếp theo có chứa i. Bit thấp nhất lớn dần sau mỗi lần, nên có tối đa ⌊log₂ n⌋ + 1 bước.',
     'Tổng đoạn bằng prefix(r) − prefix(l − 1). Chính phép trừ này khiến cách làm đúng với tổng nhưng không dùng trực tiếp được cho min hay max, vì chúng không có phép ngược.',
-    'Thử tổng tiền tố và cập nhật tại chỉ số 8 với 8 giá trị: prefix(8) chỉ đọc t[8], vì 8 = 1000₂ chỉ có một bit 1. Rồi thử chỉ số 7 = 0111₂, đọc 3 ô, và so với add tại 1, ghi 4 ô.',
+    'Thử prefix sum và cập nhật tại chỉ số 8 với 8 giá trị: prefix(8) chỉ đọc t[8], vì 8 = 1000₂ chỉ có một bit 1. Rồi thử chỉ số 7 = 0111₂, đọc 3 ô, và so với add tại 1, ghi 4 ô.',
   ],
   complexityHead: ['Thao tác', 'Chi phí', 'Vì sao'],
   complexity: [
@@ -203,7 +203,7 @@ export const vi = {
     {
       type: 'choice',
       prompt:
-        'Vì sao cây Fenwick thông thường không trả lời được min trên một đoạn a[l..r] bất kì?',
+        'Vì sao Fenwick tree thông thường không trả lời được min trên một đoạn a[l..r] bất kì?',
       options: [
         'Phép min không có phép ngược, nên không thể lấy prefix(r) trừ prefix(l − 1)',
         'lowbit không dùng được với số âm',
@@ -217,5 +217,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Bài tiếp theo: Cây phân đoạn, cấu trúc trả lời được cả min, max lẫn tổng trên đoạn và vẫn cho phép cập nhật.',
+    'Bài tiếp theo: Segment tree, cấu trúc trả lời được cả min, max lẫn tổng trên đoạn và vẫn cho phép cập nhật.',
 };

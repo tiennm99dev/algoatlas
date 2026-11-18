@@ -51,8 +51,6 @@ export const pendingTopics = new Set([
 
   'review-core',
 
-  'range-queries',
-
   'geometry',
 
   'flows',

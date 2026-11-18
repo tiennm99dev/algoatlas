@@ -14,11 +14,11 @@ export const vi = {
   slug: 'lazy-propagation',
   topic: 'range-queries',
   level: 'Nâng cao',
-  title: 'Cập nhật lười',
+  title: 'Lazy propagation',
   intro:
-    'Cây phân đoạn (segment tree) thông thường chỉ đổi từng giá trị một, nên cộng vào cả một đoạn có thể chạm tới 2n − 1 nút. Cập nhật lười (lazy propagation) dừng lại ở các nút nằm trọn trong đoạn và để lại một nhãn ghi “các con của nút này vẫn còn nợ lượng này”. Nhãn chỉ đi xuống khi một thao tác sau cần đi sâu hơn nút đó, nên cả cập nhật đoạn lẫn truy vấn đoạn đều tốn O(log n).',
+    'Segment tree (cây phân đoạn) thông thường chỉ đổi từng giá trị một, nên cộng vào cả một đoạn có thể chạm tới 2n − 1 nút. Lazy propagation (cập nhật lười) dừng lại ở các nút nằm trọn trong đoạn và để lại một nhãn ghi “các con của nút này vẫn còn nợ lượng này”. Nhãn chỉ đi xuống khi một thao tác sau cần đi sâu hơn nút đó, nên cả cập nhật đoạn lẫn truy vấn đoạn đều tốn O(log n).',
   summary:
-    'Cộng vào cả một đoạn trong O(log n) bằng cách để lại nhãn chờ trên cây phân đoạn, và xem nhãn chỉ được đẩy xuống khi một truy vấn cần đi sâu hơn.',
+    'Cộng vào cả một đoạn trong O(log n) bằng cách để lại nhãn chờ trên segment tree, và xem nhãn chỉ được đẩy xuống khi một truy vấn cần đi sâu hơn.',
   instruction:
     'Chọn một đoạn bằng cách bấm hai ô hoặc gõ l và r, rồi bấm Cộng x vào đoạn hoặc Truy vấn tổng và chạy từng bước. Con số ở góc một nút là nhãn chờ của nó. So mảng thật với các lá: chúng lệch nhau dần cho tới khi một truy vấn đẩy nhãn xuống.',
   valuesLabel: 'Giá trị',
@@ -44,9 +44,9 @@ export const vi = {
   /** @param {number} l @param {number} r */
   picked: (l, r) => `Đã chọn đoạn ${range(l, r)}. Giờ hãy bấm Truy vấn tổng hoặc Cộng x vào đoạn.`,
   treeScroller: 'Hình vẽ cây, cuộn ngang được',
-  treeTitle: 'Cây phân đoạn: tổng ở trong nút, đoạn ở dưới, nhãn chờ ở góc',
+  treeTitle: 'Segment tree: tổng ở trong nút, đoạn ở dưới, nhãn chờ ở góc',
   /** @param {number} n @param {number} waiting */
-  treeAria: (n, waiting) => `Cây phân đoạn trên ${n} giá trị, có ${waiting} nhãn chờ.`,
+  treeAria: (n, waiting) => `Segment tree trên ${n} giá trị, có ${waiting} nhãn chờ.`,
   arrayTitle: 'Mảng thật sự lúc này',
   arrayAria: 'Mảng thật, chỉ số 0 đứng đầu',
   leavesTitle: 'Giá trị các lá đang lưu',
@@ -147,7 +147,7 @@ export const vi = {
   },
   takeaways: [
     'Một nút nằm trọn trong đoạn cập nhật sẽ đổi tổng của chính nó thêm x · (hi − lo + 1) và cộng x vào nhãn. Nó dừng ở đó, nên chỉ khoảng 2 log₂ n nút nhận thay đổi.',
-    'Nhãn có nghĩa là “tổng của tôi đã đúng, nhưng các con của tôi chưa nhận lượng này”. Tổng của một nút đã tính cả nhãn của chính nó, nên truy vấn dừng ở nút đó đọc được giá trị đúng mà không cần đẩy xuống.',
+    'Nhãn có nghĩa là “tổng của nút này đã đúng, nhưng các con của nó chưa nhận lượng này”. Tổng của một nút đã tính cả nhãn của chính nó, nên truy vấn dừng ở nút đó đọc được giá trị đúng mà không cần đẩy xuống.',
     'Luôn đẩy nhãn xuống trước khi đi xuống dưới một nút, cả khi cập nhật lẫn khi truy vấn. Nếu không, một nút con sẽ trả về tổng cũ, hoặc bước cộng ngược lên sẽ ghi đè thay đổi bằng giá trị cũ.',
     'Sau khi đệ quy, phép cập nhật tính lại sum[v] từ hai con. Ở đây các nhãn cộng dồn được, nhưng loại nhãn khác cần cẩn thận: nhãn “gán cả đoạn bằng x” ghi đè nhãn đang chờ chứ không cộng vào.',
     'Thử add(0, 7, 5) trên 8 giá trị: chỉ 1 nút thay đổi thay vì 15, và mọi lá đều chậm hơn mảng thật. Rồi chạy query(5, 5) và xem nhãn đi xuống theo một đường đi trong khi nửa trái vẫn giữ nhãn.',
@@ -236,7 +236,7 @@ export const vi = {
     },
     {
       type: 'text',
-      prompt: 'Một lần cộng vào đoạn với cập nhật lười tốn bao nhiêu, viết bằng kí hiệu O?',
+      prompt: 'Một lần cộng vào đoạn với lazy propagation tốn bao nhiêu, viết bằng kí hiệu O?',
       accept: ['O(log n)', 'log n', 'Θ(log n)', 'O(logn)', 'logn'],
       hints: ['Mỗi tầng, đường đi thăm bao nhiêu nút?'],
       solution: 'Tối đa bốn nút mỗi tầng, qua khoảng log₂ n tầng: O(log n).',

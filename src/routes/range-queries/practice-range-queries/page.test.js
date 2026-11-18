@@ -69,8 +69,8 @@ describe('practice: range query problems lesson', () => {
     expect(stat('ops')).toBe('300');
     expect(stat('fenwick-total')).toBe('4435');
     expect(stat('segment-total')).toBe('8589');
-    expect(stat('cheapest')).toBe('Cây Fenwick');
-    expect(narration()).toBe('Rẻ nhất: Cây Fenwick với 4435 lần chạm. Bị loại: Bảng thưa.');
+    expect(stat('cheapest')).toBe('Fenwick tree');
+    expect(narration()).toBe('Rẻ nhất: Fenwick tree với 4435 lần chạm. Bị loại: Sparse table.');
     expect(document.querySelector('[data-testid="fenwick-card"]')?.textContent).toContain(
       m.cheapestWord,
     );
@@ -85,15 +85,13 @@ describe('practice: range query problems lesson', () => {
     expect(stat('cheapest')).toBe(m.noValue);
 
     click(button('Bước tiếp'));
-    expect(narration()).toContain(
-      'Đã dựng, tính bằng số lần chạm: Mảng thường 0, Tổng tiền tố 1025',
-    );
+    expect(narration()).toContain('Đã dựng, tính bằng số lần chạm: Mảng thường 0, Prefix sum 1025');
     expect(stat('prefix-build')).toBe('1025');
 
     click(button('Bước tiếp'));
     expect(narration()).toContain('Tổng của a[0..3] bằng');
-    expect(narration()).toContain('Mảng thường 4, Tổng tiền tố 2');
-    expect(narration()).toContain('Bảng thưa không trả lời được nên bị loại.');
+    expect(narration()).toContain('Mảng thường 4, Prefix sum 2');
+    expect(narration()).toContain('Sparse table không trả lời được nên bị loại.');
     expect(stat('plain-cost')).toBe('4');
     expect(stat('answer')).toBe(String(11 + 48 + 85 + 22));
     expect(document.querySelector('[data-testid="range-track"]')?.getAttribute('aria-label')).toBe(
@@ -117,7 +115,7 @@ describe('practice: range query problems lesson', () => {
     const card = document.querySelector('[data-testid="prefix-card"]')?.textContent ?? '';
     expect(card).toContain(m.outWord);
     expect(card).toContain(m.outWhy.prefix);
-    expect(narration()).toContain('Bị loại: Tổng tiền tố, Bảng thưa và Cây Fenwick');
+    expect(narration()).toContain('Bị loại: Prefix sum, Sparse table và Fenwick tree');
   });
 
   it('marks a total past the bar scale with the cut-off sign', () => {
@@ -142,11 +140,11 @@ describe('practice: range query problems lesson', () => {
     expect(stat('cheapest')).toBe('Mảng thường');
     expect(stat('plain-total')).toBe('863');
     for (const [name, winner] of [
-      ['staticSums', 'Tổng tiền tố'],
-      ['staticMins', 'Bảng thưa'],
-      ['minsAndSets', 'Cây phân đoạn'],
-      ['everything', 'Cây phân đoạn'],
-      ['sumsAndSets', 'Cây Fenwick'],
+      ['staticSums', 'Prefix sum'],
+      ['staticMins', 'Sparse table'],
+      ['minsAndSets', 'Segment tree'],
+      ['everything', 'Segment tree'],
+      ['sumsAndSets', 'Fenwick tree'],
     ]) {
       commit(presetSelect(), name);
       expect(stat('cheapest')).toBe(winner);
@@ -328,10 +326,10 @@ describe('practice: range query problems lesson', () => {
 
   it('the suggested experiment shows sqrt blocks passing the Fenwick tree as sums become sets', () => {
     render();
-    expect(stat('cheapest')).toBe('Cây Fenwick');
+    expect(stat('cheapest')).toBe('Fenwick tree');
     commit(field('sums'), '75');
     commit(field('sets'), '225');
-    expect(stat('cheapest')).toBe('Cây Fenwick');
+    expect(stat('cheapest')).toBe('Fenwick tree');
     commit(field('sums'), '50');
     commit(field('sets'), '250');
     expect(stat('cheapest')).toBe('Chia căn');
@@ -348,9 +346,9 @@ describe('practice: range query problems lesson', () => {
     expect(stat('segment-total')).toBe('8589');
 
     commit(presetSelect(), 'minsAndSets');
-    expect(stat('cheapest')).toBe('Cây phân đoạn');
+    expect(stat('cheapest')).toBe('Segment tree');
     expect(/** @type {any} */ (minsWinner).options[/** @type {any} */ (minsWinner).answer]).toBe(
-      'Cây phân đoạn',
+      'Segment tree',
     );
     expect(stat('segment-total')).toBe('8589');
     expect(stat('sqrt-total')).toBe('12404');
@@ -371,7 +369,7 @@ describe('practice: range query problems lesson', () => {
       .filter((c) => !c.out?.textContent?.includes(`${m.outMark} ${m.outWord}`))
       .map((c) => c.i);
     expect(left).toEqual(/** @type {any} */ (standing).answers);
-    expect(stat('cheapest')).toBe('Cây phân đoạn');
+    expect(stat('cheapest')).toBe('Segment tree');
 
     commit(field('ops'), 'u0=5');
     expect(stat('fenwick-total')).toBe('2058');
