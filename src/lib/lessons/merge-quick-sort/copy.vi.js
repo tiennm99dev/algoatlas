@@ -18,15 +18,15 @@ export const vi = {
   slug: 'merge-quick-sort',
   topic: 'sorting',
   level: 'Trung bình',
-  title: 'Sắp xếp trộn và sắp xếp nhanh',
+  title: 'Merge sort và quicksort',
   intro:
-    'Cả hai đều vượt qua giới hạn O(n²) nhờ chia để trị (divide and conquer). Sắp xếp trộn chia đôi mảng, sắp xếp từng nửa rồi trộn hai đoạn đã sắp xếp. Sắp xếp nhanh (quicksort) chọn một chốt (pivot), đưa các giá trị nhỏ hơn sang bên trái nó rồi sắp xếp từng bên. Khi bạn đi từng bước, các cột nằm ngoài đoạn mà lời gọi hiện tại đang xử lí sẽ mờ đi.',
+    'Cả hai đều vượt qua giới hạn O(n²) nhờ chia để trị (divide and conquer). Merge sort (sắp xếp trộn) chia đôi mảng, sắp xếp từng nửa rồi trộn hai đoạn đã sắp xếp. Quicksort (sắp xếp nhanh) chọn một chốt (pivot), đưa các giá trị nhỏ hơn sang bên trái nó rồi sắp xếp từng bên. Khi em đi từng bước, các cột nằm ngoài đoạn mà lời gọi hiện tại đang xử lí sẽ mờ đi.',
   summary:
-    'Xem sắp xếp trộn và sắp xếp nhanh chia mảng theo kiểu chia để trị, và xem khi nào sắp xếp nhanh tụt xuống O(n²).',
+    'Xem merge sort và quicksort chia mảng theo kiểu chia để trị, và xem khi nào quicksort tụt xuống O(n²).',
   instruction:
-    'Chọn một thuật toán và một mảng ban đầu, rồi đi từng bước. Khung ngăn xếp cho biết mỗi lời gọi đang xử lí phần nào của mảng. Với sắp xếp nhanh, thử từng quy tắc chọn chốt trên mảng đã sắp xếp và mảng đảo ngược nhé.',
+    'Chọn một thuật toán và một mảng ban đầu, rồi đi từng bước. Khung call stack (ngăn xếp lời gọi) cho biết mỗi lời gọi đang xử lí phần nào của mảng. Với quicksort, thử từng quy tắc chọn chốt trên mảng đã sắp xếp và mảng đảo ngược nhé.',
   algorithmLabel: 'Thuật toán',
-  algorithms: { merge: 'Sắp xếp trộn', quick: 'Sắp xếp nhanh' },
+  algorithms: { merge: 'Merge sort', quick: 'Quicksort' },
   presetLabel: 'Mảng ban đầu',
   presets: {
     random: 'Ngẫu nhiên',
@@ -46,7 +46,7 @@ export const vi = {
   depthLabel: 'Độ sâu đệ quy',
   /** @param {number} d @param {number} max @param {number} n  array size, for the balanced-tree reference */
   depthValue: (d, max, n) => `${d} (tối đa ${max}, cân bằng ≈ ${Math.ceil(Math.log2(n))})`,
-  stackTitle: { merge: 'Ngăn xếp lời gọi (ngoài cùng trước)', quick: 'Các đoạn còn phải sắp xếp' },
+  stackTitle: { merge: 'Call stack (ngoài cùng trước)', quick: 'Các đoạn còn phải sắp xếp' },
   stackEmpty: 'rỗng',
   rangeChip: /** @param {number} lo @param {number} hi */ (lo, hi) => `[${lo}–${hi}]`,
   compareTitle: 'Tổng chi phí trên mảng này',
@@ -113,8 +113,8 @@ export const vi = {
     switch (f.kind) {
       case 'start':
         return algo === 'merge'
-          ? 'Sắp xếp trộn chia đôi mọi đoạn cho đến khi chỉ còn từng phần tử. Đoạn một phần tử đã được sắp xếp, nên không tốn bước nào.'
-          : 'Sắp xếp nhanh phân hoạch mỗi đoạn quanh một chốt. Đoạn một phần tử đã đứng đúng chỗ, nên không tốn bước nào.';
+          ? 'Merge sort chia đôi mọi đoạn cho đến khi chỉ còn từng phần tử. Đoạn một phần tử đã được sắp xếp, nên không tốn bước nào.'
+          : 'Quicksort phân hoạch mỗi đoạn quanh một chốt. Đoạn một phần tử đã đứng đúng chỗ, nên không tốn bước nào.';
       case 'split':
         return `Chia [${lo}–${hi}] tại ${mid}: sắp xếp nửa trái, rồi đến nửa phải.`;
       case 'copy':
@@ -156,31 +156,31 @@ export const vi = {
     }
   },
   takeaways: [
-    'Sắp xếp trộn luôn tốn khoảng n·log₂ n phép so sánh: có log₂ n tầng chia đôi, và mỗi tầng trộn n phần tử.',
-    'Sắp xếp trộn ổn định (stable) vì khi bằng nhau nó lấy từ đoạn trái. Sắp xếp nhanh thì không: một lần đổi chỗ khi phân hoạch có thể nhảy qua một giá trị bằng nó.',
-    'Nếu lấy phần tử cuối làm chốt, sắp xếp nhanh tốn thời gian bậc hai trên đầu vào đã sắp xếp, đảo ngược hoặc toàn giá trị bằng nhau: đệ quy sâu tới n tầng. Trung vị của ba chữa được đầu vào đã sắp xếp nhưng không chữa được đầu vào toàn giá trị bằng nhau; trường hợp đó cần phân hoạch ba nhánh.',
-    'Sắp xếp trộn trả giá cho sự bảo đảm của nó bằng một vùng đệm O(n). Sắp xếp nhanh phân hoạch tại chỗ (in-place) và chỉ cần ngăn xếp lời gọi (call stack), giữ ở mức O(log n) nếu nó đệ quy vào phía nhỏ hơn trước.',
-    'Thử sắp xếp nhanh với chốt “Phần tử cuối” trên mảng “Đảo ngược”, rồi đổi chốt sang “Trung vị của ba”: độ sâu đệ quy giảm mạnh.',
+    'Merge sort luôn tốn khoảng n·log₂ n phép so sánh: có log₂ n tầng chia đôi, và mỗi tầng trộn n phần tử.',
+    'Merge sort ổn định (stable) vì khi bằng nhau nó lấy từ đoạn trái. Quicksort thì không: một lần đổi chỗ khi phân hoạch có thể nhảy qua một giá trị bằng nó.',
+    'Nếu lấy phần tử cuối làm chốt, quicksort tốn thời gian bậc hai trên đầu vào đã sắp xếp, đảo ngược hoặc toàn giá trị bằng nhau: đệ quy sâu tới n tầng. Trung vị của ba chữa được đầu vào đã sắp xếp nhưng không chữa được đầu vào toàn giá trị bằng nhau; trường hợp đó cần phân hoạch ba nhánh.',
+    'Merge sort trả giá cho sự bảo đảm của nó bằng một vùng đệm O(n). Quicksort phân hoạch tại chỗ (in-place) và chỉ cần call stack, giữ ở mức O(log n) nếu nó đệ quy vào phía nhỏ hơn trước.',
+    'Thử quicksort với chốt “Phần tử cuối” trên mảng “Đảo ngược”, rồi đổi chốt sang “Trung vị của ba”: độ sâu đệ quy giảm mạnh.',
   ],
   complexityHead: ['Tài nguyên', 'Chi phí', 'Vì sao'],
   complexity: [
-    ['Thời gian, sắp xếp trộn', 'O(n log n)', 'log₂ n tầng, mỗi tầng n lần ghi.'],
+    ['Thời gian, merge sort', 'O(n log n)', 'log₂ n tầng, mỗi tầng n lần ghi.'],
     [
-      'Thời gian, sắp xếp nhanh thường gặp',
+      'Thời gian, quicksort thường gặp',
       'O(n log n)',
       'Một chốt tốt chia đoạn thành hai nửa gần bằng nhau.',
     ],
     [
-      'Thời gian, sắp xếp nhanh xấu nhất',
+      'Thời gian, quicksort xấu nhất',
       'O(n²)',
       'Chốt luôn là giá trị nhỏ nhất hoặc lớn nhất thì một bên luôn rỗng.',
     ],
     [
       'Bộ nhớ thêm',
       'O(n) / O(log n)',
-      'Sắp xếp trộn cần vùng đệm; sắp xếp nhanh chỉ cần ngăn xếp lời gọi.',
+      'Merge sort cần vùng đệm; quicksort chỉ cần call stack.',
     ],
   ],
   nextTeaser:
-    'Bài tiếp theo là sắp xếp vun đống: một cách đạt O(n log n) tại chỗ nhờ heap lớn nhất.',
+    'Bài tiếp theo là heapsort: một cách đạt O(n log n) tại chỗ nhờ max-heap (heap lớn nhất).',
 };

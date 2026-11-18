@@ -7,8 +7,6 @@
  */
 export const pendingTopics = new Set([
   // One topic per line, a blank line between, so parallel removals merge cleanly.
-  'sorting',
-
   'linked-lists',
 
   'recursion',

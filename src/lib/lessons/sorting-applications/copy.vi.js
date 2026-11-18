@@ -146,7 +146,7 @@ export const vi = {
   ],
   complexityHead: ['Bước', 'Chi phí', 'Vì sao'],
   complexity: [
-    ['Sắp xếp', 'O(n log n)', 'Một thuật toán sắp xếp bằng so sánh tốt bất kì, như sắp xếp trộn.'],
+    ['Sắp xếp', 'O(n log n)', 'Một thuật toán sắp xếp bằng so sánh tốt bất kì, như merge sort (sắp xếp trộn).'],
     ['Quét để gộp', 'O(n)', 'Một lần kiểm tra chồng nhau cho mỗi đoạn sau đoạn đầu.'],
     ['Quét để loại trùng', 'O(n)', 'Một lần so sánh với phần tử bên trái cho mỗi giá trị.'],
     ['Loại trùng không sắp xếp', 'O(n²)', 'Có thể phải so sánh mọi cặp giá trị.'],

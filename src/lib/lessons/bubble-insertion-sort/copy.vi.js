@@ -4,15 +4,15 @@ export const vi = {
   slug: 'bubble-insertion-sort',
   topic: 'sorting',
   level: 'Cơ bản',
-  title: 'Sắp xếp nổi bọt và sắp xếp chèn',
+  title: 'Bubble sort và insertion sort',
   intro:
-    'Đây là hai cách sắp xếp đơn giản nhất: sắp xếp nổi bọt liên tục đổi chỗ hai phần tử kề nhau đang sai thứ tự, còn sắp xếp chèn nới dần một đoạn đầu đã sắp xếp, mỗi lần thêm một lá bài. Cả hai đều tốn O(n²) trong trường hợp xấu nhất, nhưng chạy rất khác nhau trên dữ liệu gần như đã sắp xếp.',
+    'Đây là hai cách sắp xếp đơn giản nhất: bubble sort (sắp xếp nổi bọt) liên tục đổi chỗ hai phần tử kề nhau đang sai thứ tự, còn insertion sort (sắp xếp chèn) nới dần một đoạn đầu đã sắp xếp, mỗi lần thêm một lá bài. Cả hai đều tốn O(n²) trong trường hợp xấu nhất, nhưng chạy rất khác nhau trên dữ liệu gần như đã sắp xếp.',
   summary:
-    'So sánh từng bước sắp xếp nổi bọt và sắp xếp chèn, và xem vì sao cả hai đều tốn O(n²) nhưng chạy khác nhau trên dữ liệu gần như đã sắp xếp.',
+    'So sánh từng bước bubble sort và insertion sort, và xem vì sao cả hai đều tốn O(n²) nhưng chạy khác nhau trên dữ liệu gần như đã sắp xếp.',
   instruction:
     'Chọn một thuật toán và một mảng ban đầu, rồi bấm phát hoặc đi từng bước. Đổi thuật toán trên cùng mảng đó và so sánh tổng chi phí nhé.',
   algorithmLabel: 'Thuật toán',
-  algorithms: { bubble: 'Sắp xếp nổi bọt', insertion: 'Sắp xếp chèn' },
+  algorithms: { bubble: 'Bubble sort', insertion: 'Insertion sort' },
   presetLabel: 'Mảng ban đầu',
   presets: {
     random: 'Ngẫu nhiên',
@@ -75,7 +75,7 @@ export const vi = {
   takeaways: [
     'Cả hai thuật toán chỉ so sánh và đổi chỗ hai phần tử kề nhau, nên cả hai đều ổn định (stable): các giá trị bằng nhau giữ nguyên thứ tự ban đầu.',
     'Thử “Đảo ngược”: mọi cặp đều sai thứ tự, nên cả hai phải đổi chỗ n(n−1)/2 lần, đó là trường hợp xấu nhất.',
-    'Thử “Gần như đã sắp xếp”: sắp xếp chèn gần như không phải dời gì, còn sắp xếp nổi bọt dừng sớm ngay khi một lượt không đổi chỗ lần nào. Vì thế các thư viện sắp xếp thực tế dùng sắp xếp chèn cho đầu vào nhỏ hoặc gần như đã sắp xếp.',
+    'Thử “Gần như đã sắp xếp”: insertion sort gần như không phải dời gì, còn bubble sort dừng sớm ngay khi một lượt không đổi chỗ lần nào. Vì thế các thư viện sắp xếp thực tế dùng insertion sort cho đầu vào nhỏ hoặc gần như đã sắp xếp.',
     'Cả hai đều sắp xếp tại chỗ (in-place), chỉ tốn thêm O(1) bộ nhớ.',
   ],
   complexity: [
@@ -84,5 +84,5 @@ export const vi = {
     ['Xấu nhất', 'O(n²)', 'Mảng đảo ngược: mọi cặp phần tử đều phải đổi chỗ một lần.'],
   ],
   nextTeaser:
-    'Bài tiếp theo là sắp xếp chọn và tính ổn định: một thuật toán ghi rất ít, và câu hỏi khi nào các khoá bằng nhau giữ được thứ tự.',
+    'Bài tiếp theo là selection sort và tính ổn định: một thuật toán ghi rất ít, và câu hỏi khi nào các khoá bằng nhau giữ được thứ tự.',
 };

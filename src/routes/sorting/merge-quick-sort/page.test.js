@@ -81,7 +81,7 @@ describe('merge and quick sort lesson', () => {
     expect(text()).toContain('Các đoạn còn phải sắp xếp');
     pickAlgo('merge');
     expect(text()).toContain('aux = copy(a[lo..hi])');
-    expect(text()).toContain('Ngăn xếp lời gọi (ngoài cùng trước)');
+    expect(text()).toContain('Call stack (ngoài cùng trước)');
   });
 
   it('keeps the pivot rule in place but enabled only for quicksort', () => {
@@ -117,8 +117,8 @@ describe('merge and quick sort lesson', () => {
 
   it('lists the total cost of both algorithms', () => {
     render();
-    expect(text()).toMatch(/Sắp xếp trộn\s*\d+ lần so sánh · \d+ lần ghi/);
-    expect(text()).toMatch(/Sắp xếp nhanh\s*\d+ lần so sánh · \d+ lần đổi chỗ/);
+    expect(text()).toMatch(/Merge sort\s*\d+ lần so sánh · \d+ lần ghi/);
+    expect(text()).toMatch(/Quicksort\s*\d+ lần so sánh · \d+ lần đổi chỗ/);
     expect(text()).toContain('mảng này không có giá trị bằng nhau');
   });
 

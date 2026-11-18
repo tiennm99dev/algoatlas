@@ -21,7 +21,7 @@ export const vi = {
   instruction:
     'Chọn một thuật toán và một thứ tự đầu vào bí mật, rồi đi xuống cây: mỗi bước hỏi một câu. Bấm vào một lá bất kì để lấy thứ tự của lá đó làm thứ tự bí mật. Bên dưới cây, đổi n để xem n! và cận dưới tăng nhanh thế nào.',
   algorithmLabel: 'Thuật toán',
-  algorithms: { insertion: 'Sắp xếp chèn', selection: 'Sắp xếp chọn' },
+  algorithms: { insertion: 'Insertion sort', selection: 'Selection sort' },
   orderLabel: 'Thứ tự đầu vào bí mật',
   chain,
   treeTitle: 'Cây quyết định cho ba phần tử A, B, C',
@@ -98,8 +98,8 @@ export const vi = {
     'Một thuật toán sắp xếp bằng so sánh là một cây quyết định: thứ tự đầu vào quyết định nó nhận được những câu trả lời nào, và vì thế dừng ở lá nào.',
     'Một thuật toán sắp xếp đúng phải đến một lá khác nhau cho mỗi thứ tự trong n! thứ tự đầu vào, nên cây của nó có ít nhất n! lá.',
     'Một cây nhị phân có chiều cao h có nhiều nhất 2ʰ lá, nên h ≥ log₂ n!. Vì log₂ n! ≈ n log₂ n − 1,44n, mọi thuật toán sắp xếp bằng so sánh đều cần Ω(n log n) phép so sánh trong trường hợp xấu nhất.',
-    'Cận dưới này chỉ đếm phép so sánh. Sắp xếp đếm (counting sort) và sắp xếp theo cơ số (radix sort) nhìn vào các chữ số của khoá, nên chúng không bị cận này ràng buộc.',
-    'Chuyển sang sắp xếp chọn: nó luôn hỏi 3 câu, đôi khi hỏi cả câu mà nó đã biết đáp án, và phí hai lá cho những câu trả lời không thể xảy ra.',
+    'Cận dưới này chỉ đếm phép so sánh. Counting sort (sắp xếp đếm) và radix sort (sắp xếp theo cơ số) nhìn vào các chữ số của khoá, nên chúng không bị cận này ràng buộc.',
+    'Chuyển sang selection sort (sắp xếp chọn): nó luôn hỏi 3 câu, đôi khi hỏi cả câu mà nó đã biết đáp án, và phí hai lá cho những câu trả lời không thể xảy ra.',
   ],
   complexityHead: ['Sự kiện', 'Giá trị', 'Vì sao'],
   complexity: [
@@ -111,7 +111,7 @@ export const vi = {
       'h ≥ log₂ n! ≈ n log₂ n − 1,44n.',
     ],
     [
-      'Sắp xếp trộn và sắp xếp vun đống',
+      'Merge sort và heapsort',
       'O(n log n)',
       'Chúng đạt đúng cận dưới, nên là tối ưu nếu bỏ qua hằng số.',
     ],
@@ -142,7 +142,7 @@ export const vi = {
       prompt: 'Vì sao cây phải có chiều cao ít nhất log₂ n!?',
       options: [
         'Cây nhị phân chiều cao h có nhiều nhất 2ʰ lá, mà cây cần n! lá',
-        'Mọi thuật toán sắp xếp bằng so sánh đều chạy sắp xếp trộn bên trong',
+        'Mọi thuật toán sắp xếp bằng so sánh đều chạy merge sort bên trong',
         'Mỗi phép so sánh loại được nhiều nhất một thứ tự',
         'Cây phải cân bằng hoàn hảo',
       ],
@@ -154,7 +154,7 @@ export const vi = {
     {
       type: 'number',
       prompt:
-        'Cây của sắp xếp chèn cho ba phần tử có các lá ở độ sâu 2, 3, 3, 3, 3 và 2. Tính trung bình trên 6 thứ tự đầu vào, nó làm bao nhiêu phép so sánh? Làm tròn đến hai chữ số thập phân.',
+        'Cây của insertion sort (sắp xếp chèn) cho ba phần tử có các lá ở độ sâu 2, 3, 3, 3, 3 và 2. Tính trung bình trên 6 thứ tự đầu vào, nó làm bao nhiêu phép so sánh? Làm tròn đến hai chữ số thập phân.',
       answer: 2.67,
       tolerance: 0.01,
       unit: 'phép so sánh',
@@ -166,17 +166,17 @@ export const vi = {
       type: 'choice',
       prompt: 'Thuật toán sắp xếp nào dưới đây không bị cận Ω(n log n) giới hạn?',
       options: [
-        'Sắp xếp vun đống',
-        'Sắp xếp trộn',
-        'Sắp xếp đếm trên các khoá nguyên nhỏ',
-        'Sắp xếp nhanh',
+        'Heapsort',
+        'Merge sort',
+        'Counting sort trên các khoá nguyên nhỏ',
+        'Quicksort',
       ],
       answer: 2,
       hints: ['Cận dưới chỉ áp dụng cho các thuật toán biết về khoá bằng cách so sánh chúng.'],
       solution:
-        'Sắp xếp đếm không bao giờ so sánh hai khoá: nó dùng mỗi khoá làm chỉ số mảng. Các thuật toán còn lại đều sắp xếp bằng so sánh, nên cần Ω(n log n) phép so sánh trong trường hợp xấu nhất.',
+        'Counting sort không bao giờ so sánh hai khoá: nó dùng mỗi khoá làm chỉ số mảng. Các thuật toán còn lại đều sắp xếp bằng so sánh, nên cần Ω(n log n) phép so sánh trong trường hợp xấu nhất.',
     },
   ],
   nextTeaser:
-    'Bài tiếp theo là sắp xếp đếm và sắp xếp theo cơ số: hai cách vượt qua cận n log n bằng cách không so sánh khoá.',
+    'Bài tiếp theo là counting sort và radix sort: hai cách vượt qua cận n log n bằng cách không so sánh khoá.',
 };

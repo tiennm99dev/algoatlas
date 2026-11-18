@@ -143,7 +143,7 @@ describe('counting sort and radix sort lesson', () => {
   it('keeps separate keys per algorithm and refuses keys out of range', () => {
     render();
     commit(keysInput(), '4, 12');
-    expect(text()).toContain('Ở đây sắp xếp đếm nhận các khoá từ 0 đến 9.');
+    expect(text()).toContain('Ở đây counting sort nhận các khoá từ 0 đến 9.');
     expect(keysInput().value).toBe('2, 5, 3, 0, 2, 3, 0, 3');
     pickAlgo('radix');
     commit(keysInput(), '21, 12, 22, 11');

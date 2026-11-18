@@ -15,11 +15,11 @@ export const vi = {
   slug: 'selection-sort-stability',
   topic: 'sorting',
   level: 'Cơ bản',
-  title: 'Sắp xếp chọn và tính ổn định',
+  title: 'Selection sort và tính ổn định',
   intro:
-    'Sắp xếp chọn quét phần chưa sắp xếp để tìm lá bài nhỏ nhất rồi đưa nó lên đầu phần đó, mỗi lượt lấp một ô. Thuật toán sắp xếp tại chỗ (in-place) và ghi rất ít, nhưng những lần đổi chỗ xa có thể đưa một lá bài nhảy qua một lá có khoá bằng nó. Một thuật toán sắp xếp giữ các khoá bằng nhau theo đúng thứ tự ban đầu được gọi là ổn định (stable).',
+    'Selection sort (sắp xếp chọn) quét phần chưa sắp xếp để tìm lá bài nhỏ nhất rồi đưa nó lên đầu phần đó, mỗi lượt lấp một ô. Thuật toán sắp xếp tại chỗ (in-place) và ghi rất ít, nhưng những lần đổi chỗ xa có thể đưa một lá bài nhảy qua một lá có khoá bằng nó. Một thuật toán sắp xếp giữ các khoá bằng nhau theo đúng thứ tự ban đầu được gọi là ổn định (stable).',
   summary:
-    'Đi từng bước sắp xếp chọn trên các lá bài có khoá lặp lại, và xem vì sao bản đổi chỗ kinh điển không ổn định, còn bản dời thì ổn định.',
+    'Đi từng bước selection sort trên các lá bài có khoá lặp lại, và xem vì sao bản đổi chỗ kinh điển không ổn định, còn bản dời thì ổn định.',
   instruction:
     'Gõ vài khoá có lặp lại, hoặc bấm Ngẫu nhiên, rồi đi từng bước. Các lá bài cùng khoá được gắn chữ a, b, c theo thứ tự trong đầu vào. Để ý các chữ ở cuối, rồi chuyển sang bản dời và so sánh nhé.',
   variantLabel: 'Phiên bản',
@@ -115,7 +115,7 @@ export const vi = {
     }
   },
   takeaways: [
-    'Sắp xếp chọn luôn làm n(n − 1)/2 phép so sánh, kể cả khi đầu vào đã sắp xếp: mỗi lượt phải xem mọi lá chưa sắp xếp mới chắc đã tìm được giá trị nhỏ nhất.',
+    'Selection sort luôn làm n(n − 1)/2 phép so sánh, kể cả khi đầu vào đã sắp xếp: mỗi lượt phải xem mọi lá chưa sắp xếp mới chắc đã tìm được giá trị nhỏ nhất.',
     'Thuật toán ghi rất ít: nhiều nhất n − 1 lần đổi chỗ. Điều này có lợi khi ghi tốn kém hơn đọc nhiều.',
     'Thuật toán sắp xếp tại chỗ: ngoài vài biến, nó không cần thêm bộ nhớ nào ngoài chính mảng.',
     'Một thuật toán sắp xếp là ổn định khi các khoá bằng nhau giữ thứ tự đầu vào. Bản đổi chỗ kinh điển không ổn định, vì một lần đổi chỗ xa có thể đưa một lá vượt qua lá bằng nó. Dời thay vì đổi chỗ sẽ làm thuật toán ổn định, đổi lại phải ghi nhiều hơn.',
@@ -133,11 +133,11 @@ export const vi = {
   practice: [
     {
       type: 'number',
-      prompt: 'Sắp xếp chọn làm bao nhiêu phép so sánh khoá trên 8 lá bài đã được sắp xếp sẵn?',
+      prompt: 'Selection sort làm bao nhiêu phép so sánh khoá trên 8 lá bài đã được sắp xếp sẵn?',
       answer: 28,
       unit: 'lần so sánh',
       hints: [
-        'Sắp xếp chọn không thể dừng sớm: lượt nào cũng quét hết phần còn lại của mảng.',
+        'Selection sort không thể dừng sớm: lượt nào cũng quét hết phần còn lại của mảng.',
         'Các lượt so sánh lần lượt 7, 6, 5, … , 1 lần.',
       ],
       solution:
@@ -169,21 +169,21 @@ export const vi = {
       prompt:
         'Trong các thuật toán sắp xếp dưới đây, theo cách trình bày trong khoá học này, những thuật toán nào ổn định?',
       options: [
-        'Sắp xếp nổi bọt',
-        'Sắp xếp chèn',
-        'Sắp xếp chọn bằng đổi chỗ',
-        'Sắp xếp trộn',
-        'Sắp xếp nhanh (phân hoạch Lomuto)',
+        'Bubble sort',
+        'Insertion sort',
+        'Selection sort bằng đổi chỗ',
+        'Merge sort',
+        'Quicksort (phân hoạch Lomuto)',
       ],
       answers: [0, 1, 3],
       hints: [
         'Một thuật toán sắp xếp ổn định khi nó chỉ đưa một lá vượt qua những lá có khoá khác.',
-        'Sắp xếp nổi bọt và sắp xếp chèn chỉ đổi chỗ hai phần tử kề nhau khi chúng sai thứ tự hẳn.',
+        'Bubble sort (sắp xếp nổi bọt) và insertion sort (sắp xếp chèn) chỉ đổi chỗ hai phần tử kề nhau khi chúng sai thứ tự hẳn.',
       ],
       solution:
-        'Sắp xếp nổi bọt và sắp xếp chèn chỉ đổi chỗ hai phần tử kề nhau khi phần tử bên trái lớn hơn hẳn, còn sắp xếp trộn lấy từ đoạn bên trái khi hai giá trị bằng nhau, nên cả ba đều ổn định. Sắp xếp chọn bằng đổi chỗ và sắp xếp nhanh Lomuto có những lần đổi chỗ xa, có thể nhảy qua một khoá bằng nhau.',
+        'Bubble sort và insertion sort chỉ đổi chỗ hai phần tử kề nhau khi phần tử bên trái lớn hơn hẳn, còn merge sort (sắp xếp trộn) lấy từ đoạn bên trái khi hai giá trị bằng nhau, nên cả ba đều ổn định. Selection sort bằng đổi chỗ và quicksort (sắp xếp nhanh) Lomuto có những lần đổi chỗ xa, có thể nhảy qua một khoá bằng nhau.',
     },
   ],
   nextTeaser:
-    'Bài tiếp theo là sắp xếp trộn và sắp xếp nhanh: hai cách chia để trị vượt qua giới hạn O(n²).',
+    'Bài tiếp theo là merge sort và quicksort: hai cách chia để trị vượt qua giới hạn O(n²).',
 };

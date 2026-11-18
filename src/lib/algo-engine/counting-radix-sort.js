@@ -49,7 +49,7 @@ export const countingPseudocode = [
 
 export const radixPseudocode = [
   'for place in 1, 10, 100, …:   // hàng đơn vị trước',
-  '  buckets[0..9] = các hàng đợi rỗng',
+  '  buckets[0..9] = các queue rỗng',
   '  for x in a: buckets[digit(x, place)].push(x)',
   '  a = nối buckets[0..9]   // ổn định',
   'xong: a đã được sắp xếp',

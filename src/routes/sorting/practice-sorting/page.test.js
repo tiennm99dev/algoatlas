@@ -89,19 +89,19 @@ describe('practice: choosing a sort', () => {
     expect(narration()).toContain('Bước 1: mọi thuật toán còn đang chạy đã làm 1 phép so sánh.');
     click(button('Đến bước cuối'));
     expect(stat(m.stats.running)).toBe('0/6');
-    expect(narration()).toContain('Sắp xếp trộn về đích đầu tiên với 30 phép so sánh');
-    expect(narration()).toContain('Sắp xếp nổi bọt và sắp xếp chọn cần 66');
+    expect(narration()).toContain('Merge sort về đích đầu tiên với 30 phép so sánh');
+    expect(narration()).toContain('Bubble sort và selection sort cần 66');
     expect(row(m.sorts.merge)).toEqual(['30', '40', '4', '12', '✓ giữ thứ tự']);
     expect(row(m.sorts.quick)).toEqual(['36', '24', '6', '0', '✕ bị đảo thứ tự']);
     expect(lane(m.sorts.heap)).toBe(
-      'Sắp xếp vun đống, ✓ về đích thứ 4: 5, 8, 17, 17, 29, 42, 42, 56, 63, 71, 88, 94',
+      'Heapsort, ✓ về đích thứ 4: 5, 8, 17, 17, 29, 42, 42, 56, 63, 71, 88, 94',
     );
   });
 
   it('fills a row when its sort finishes', () => {
     render();
     for (let k = 0; k < 30; k++) click(button('Bước tiếp'));
-    expect(narration()).toContain('Sắp xếp trộn về đích lúc này. Còn 5 thuật toán đang chạy.');
+    expect(narration()).toContain('Merge sort về đích lúc này. Còn 5 thuật toán đang chạy.');
     expect(row(m.sorts.merge)[0]).toBe('30');
     expect(row(m.sorts.quick)[0]).toBe(m.pending);
     expect(lane(m.sorts.merge)).toContain('✓ về đích thứ 1');
@@ -164,11 +164,11 @@ describe('practice: choosing a sort', () => {
     };
     click(box(m.constraints.stable));
     click(box(m.constraints.worst));
-    expect(status()).toBe('1 thuật toán phù hợp: Sắp xếp trộn.');
+    expect(status()).toBe('1 thuật toán phù hợp: Merge sort.');
     expect(document.querySelector(`li[aria-label="${m.sorts.merge} phù hợp"]`)).not.toBeNull();
     click(box(m.constraints.stable));
     click(box(m.constraints['in-place']));
-    expect(status()).toBe('1 thuật toán phù hợp: Sắp xếp vun đống.');
+    expect(status()).toBe('1 thuật toán phù hợp: Heapsort.');
     click(box(m.constraints.stable));
     expect(status()).toContain('Không thuật toán nào trong cuộc đua đáp ứng được mọi yêu cầu này.');
   });

@@ -10,12 +10,12 @@ const tagName = (tag) => TAGS[tag] ?? String(tag + 1);
 
 /** @type {Record<SortId, string>} */
 const SORT_NAMES = {
-  bubble: 'Sắp xếp nổi bọt',
-  insertion: 'Sắp xếp chèn',
-  selection: 'Sắp xếp chọn',
-  merge: 'Sắp xếp trộn',
-  quick: 'Sắp xếp nhanh',
-  heap: 'Sắp xếp vun đống',
+  bubble: 'Bubble sort',
+  insertion: 'Insertion sort',
+  selection: 'Selection sort',
+  merge: 'Merge sort',
+  quick: 'Quicksort',
+  heap: 'Heapsort',
 };
 
 /** A list of sort names for a sentence: only the first keeps its capital letter. @param {string[]} names */
@@ -37,7 +37,7 @@ export const vi = {
   intro:
     'Không có thuật toán sắp xếp nào thắng ở mọi nơi. Lựa chọn tốt nhất phụ thuộc vào dạng của đầu vào (ngẫu nhiên, gần như đã sắp xếp, đảo ngược, nhiều giá trị lặp) và vào yêu cầu của công việc: ổn định (stable), ít bộ nhớ thêm, bảo đảm trong trường hợp xấu nhất hay ít lần ghi. Ở đây, sáu thuật toán sắp xếp đua trên cùng một bộ lá bài, mỗi bước một phép so sánh, và phần chọn theo yêu cầu cho biết thuật toán nào hợp với một tập yêu cầu.',
   summary:
-    'Cho sắp xếp nổi bọt, chèn, chọn, trộn, nhanh và vun đống đua trên cùng một đầu vào, rồi ghép từng thuật toán với các yêu cầu về tính ổn định, bộ nhớ và trường hợp xấu nhất.',
+    'Cho bubble sort, insertion sort, selection sort, merge sort, quicksort và heapsort đua trên cùng một đầu vào, rồi ghép từng thuật toán với các yêu cầu về tính ổn định, bộ nhớ và trường hợp xấu nhất.',
   instruction:
     'Chọn một dạng đầu vào hoặc tự gõ các lá bài, rồi đi từng bước hoặc phát cuộc đua: mỗi bước, mọi thuật toán còn đang chạy làm thêm một phép so sánh. Khi tất cả xong, đọc bảng tổng kết, rồi đánh dấu các yêu cầu ở phần chọn theo yêu cầu để xem thuật toán nào phù hợp.',
   shapeLabel: 'Dạng đầu vào',
@@ -60,7 +60,7 @@ export const vi = {
   tagName,
   raceTitle: 'Cuộc đua',
   tagNote:
-    'Một khoá lặp lại được gắn các chữ a, b, c ở phía trên theo thứ tự đầu vào, để bạn thấy thuật toán có giữ đúng thứ tự các khoá bằng nhau hay không.',
+    'Một khoá lặp lại được gắn các chữ a, b, c ở phía trên theo thứ tự đầu vào, để em thấy thuật toán có giữ đúng thứ tự các khoá bằng nhau hay không.',
   /** @param {number} comparisons @param {number} writes */
   laneStats: (comparisons, writes) =>
     `${plural(comparisons, 'lần so sánh')} · ${plural(writes, 'lần ghi')}`,
@@ -151,28 +151,28 @@ export const vi = {
   },
   practiceTitle: 'Câu hỏi về cuộc đua',
   takeaways: [
-    'Dạng đầu vào quyết định cuộc đua. Trên đầu vào đã sắp xếp hoặc gần như đã sắp xếp, sắp xếp chèn và sắp xếp nổi bọt chỉ cần khoảng n phép so sánh, còn sắp xếp nhanh lấy lá cuối làm chốt (pivot) thì tụt xuống n(n − 1)/2 phép so sánh và đệ quy sâu n − 1 tầng.',
-    'Sắp xếp trộn ổn định và tốn O(n log n) trên mọi đầu vào, nhưng cần thêm một vùng đệm n lá bài. Sắp xếp vun đống tốn O(n log n) với O(1) bộ nhớ thêm, nhưng không ổn định.',
-    'Tính ổn định quan trọng khi bạn sắp xếp lần lượt theo từng khoá: một thuật toán ổn định giữ lại thứ tự cũ giữa các khoá bằng nhau. Một đầu vào có thể chứng minh thuật toán không ổn định, nhưng không bao giờ chứng minh được nó ổn định.',
-    'Sắp xếp chọn làm n(n − 1)/2 phép so sánh trên mọi đầu vào nhưng chỉ đổi chỗ nhiều nhất n − 1 lần, điều này có lợi khi việc ghi tốn kém.',
-    'Thử xem: chạy dạng Đã sắp xếp với n = 16, rồi Đảo ngược. Để ý độ sâu của sắp xếp nhanh và thứ hạng của sắp xếp chèn đổi chỗ cho nhau giữa hai lần.',
+    'Dạng đầu vào quyết định cuộc đua. Trên đầu vào đã sắp xếp hoặc gần như đã sắp xếp, insertion sort (sắp xếp chèn) và bubble sort (sắp xếp nổi bọt) chỉ cần khoảng n phép so sánh, còn quicksort (sắp xếp nhanh) lấy lá cuối làm chốt (pivot) thì tụt xuống n(n − 1)/2 phép so sánh và đệ quy sâu n − 1 tầng.',
+    'Merge sort (sắp xếp trộn) ổn định và tốn O(n log n) trên mọi đầu vào, nhưng cần thêm một vùng đệm n lá bài. Heapsort (sắp xếp vun đống) tốn O(n log n) với O(1) bộ nhớ thêm, nhưng không ổn định.',
+    'Tính ổn định quan trọng khi em sắp xếp lần lượt theo từng khoá: một thuật toán ổn định giữ lại thứ tự cũ giữa các khoá bằng nhau. Một đầu vào có thể chứng minh thuật toán không ổn định, nhưng không bao giờ chứng minh được nó ổn định.',
+    'Selection sort (sắp xếp chọn) làm n(n − 1)/2 phép so sánh trên mọi đầu vào nhưng chỉ đổi chỗ nhiều nhất n − 1 lần, điều này có lợi khi việc ghi tốn kém.',
+    'Thử xem: chạy dạng Đã sắp xếp với n = 16, rồi Đảo ngược. Để ý độ sâu của quicksort và thứ hạng của insertion sort đổi chỗ cho nhau giữa hai lần.',
   ],
   complexityHead: ['Thuật toán', 'Thời gian xấu nhất', 'Tốt nhất, bộ nhớ và tính ổn định'],
   complexity: [
-    ['Sắp xếp nổi bọt (dừng sớm)', 'O(n²)', 'O(n) trên đầu vào đã sắp xếp; thêm O(1); ổn định.'],
-    ['Sắp xếp chèn', 'O(n²)', 'O(n) trên đầu vào đã sắp xếp; thêm O(1); ổn định.'],
+    ['Bubble sort (dừng sớm)', 'O(n²)', 'O(n) trên đầu vào đã sắp xếp; thêm O(1); ổn định.'],
+    ['Insertion sort', 'O(n²)', 'O(n) trên đầu vào đã sắp xếp; thêm O(1); ổn định.'],
     [
-      'Sắp xếp chọn',
+      'Selection sort',
       'O(n²)',
       'Luôn n(n − 1)/2 phép so sánh nhưng nhiều nhất n − 1 lần đổi chỗ; thêm O(1); không ổn định.',
     ],
-    ['Sắp xếp trộn', 'O(n log n)', 'Như nhau trên mọi đầu vào; vùng đệm O(n); ổn định.'],
+    ['Merge sort', 'O(n log n)', 'Như nhau trên mọi đầu vào; vùng đệm O(n); ổn định.'],
     [
-      'Sắp xếp nhanh (chốt cuối)',
+      'Quicksort (chốt cuối)',
       'O(n²)',
-      'Trung bình O(n log n); ngăn xếp trung bình O(log n), xấu nhất O(n); không ổn định.',
+      'Trung bình O(n log n); stack (ngăn xếp) trung bình O(log n), xấu nhất O(n); không ổn định.',
     ],
-    ['Sắp xếp vun đống', 'O(n log n)', 'Trung bình cũng O(n log n); thêm O(1); không ổn định.'],
+    ['Heapsort', 'O(n log n)', 'Trung bình cũng O(n log n); thêm O(1); không ổn định.'],
   ],
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
   practice: [
@@ -187,22 +187,22 @@ export const vi = {
         'Các chữ phía trên mỗi khoá lặp lại cho biết thứ tự: a đứng trước b nghĩa là giữ đúng.',
       ],
       solution:
-        'Sắp xếp chọn, sắp xếp nhanh và sắp xếp vun đống đảo thứ tự một cặp bằng nhau ở đây: những lần đổi chỗ xa của chúng đưa một lá vượt qua lá bằng nó. Sắp xếp nổi bọt, chèn và trộn chỉ đưa một lá vượt qua lá lớn hơn hẳn hoặc nhỏ hơn hẳn, nên chúng ổn định.',
+        'Selection sort, quicksort và heapsort đảo thứ tự một cặp bằng nhau ở đây: những lần đổi chỗ xa của chúng đưa một lá vượt qua lá bằng nó. Bubble sort, insertion sort và merge sort chỉ đưa một lá vượt qua lá lớn hơn hẳn hoặc nhỏ hơn hẳn, nên chúng ổn định.',
     },
     {
       type: 'order',
       prompt:
         'Trên các lá bài ban đầu, xếp các thuật toán sau theo số phép so sánh, ít nhất trước.',
-      items: ['Sắp xếp vun đống', 'Sắp xếp trộn', 'Sắp xếp chèn', 'Sắp xếp nhanh'],
+      items: ['Heapsort', 'Merge sort', 'Insertion sort', 'Quicksort'],
       answer: [1, 3, 2, 0],
       hints: ['Phát cuộc đua đến cuối và đọc cột So sánh.', 'Các con số là 30, 36, 41 và 50.'],
       solution:
-        'Sắp xếp trộn 30, sắp xếp nhanh 36, sắp xếp chèn 41, sắp xếp vun đống 50. Sắp xếp nổi bọt và sắp xếp chọn cùng về cuối với 66 = 12 × 11 / 2.',
+        'Merge sort 30, quicksort 36, insertion sort 41, heapsort 50. Bubble sort và selection sort cùng về cuối với 66 = 12 × 11 / 2.',
     },
     {
       type: 'number',
       prompt:
-        'Chọn dạng Đã sắp xếp với n = 16. Đệ quy của sắp xếp nhanh sâu bao nhiêu tầng (cột Độ sâu)?',
+        'Chọn dạng Đã sắp xếp với n = 16. Đệ quy của quicksort sâu bao nhiêu tầng (cột Độ sâu)?',
       answer: 15,
       unit: 'tầng',
       hints: [
@@ -210,16 +210,16 @@ export const vi = {
         'Mỗi lời gọi sắp xếp một đoạn ngắn hơn đoạn của lời gọi cha một lá.',
       ],
       solution:
-        'Độ sâu 15 = n − 1, với 120 = 16 × 15 / 2 phép so sánh. Mỗi chốt là lá lớn nhất trong đoạn của nó, nên đoạn chỉ ngắn đi một lá sau mỗi lời gọi. Đây là trường hợp xấu nhất của sắp xếp nhanh cả về thời gian lẫn bộ nhớ ngăn xếp.',
+        'Độ sâu 15 = n − 1, với 120 = 16 × 15 / 2 phép so sánh. Mỗi chốt là lá lớn nhất trong đoạn của nó, nên đoạn chỉ ngắn đi một lá sau mỗi lời gọi. Đây là trường hợp xấu nhất của quicksort cả về thời gian lẫn bộ nhớ stack.',
     },
     {
       type: 'choice',
       prompt: 'Vẫn với Đã sắp xếp và n = 16: những thuật toán nào về đích đầu tiên?',
       options: [
-        'Sắp xếp nổi bọt và sắp xếp chèn, cùng lúc',
-        'Sắp xếp trộn',
-        'Sắp xếp vun đống',
-        'Sắp xếp nhanh và sắp xếp chọn, cùng lúc',
+        'Bubble sort và insertion sort, cùng lúc',
+        'Merge sort',
+        'Heapsort',
+        'Quicksort và selection sort, cùng lúc',
       ],
       answer: 0,
       hints: [
@@ -227,11 +227,11 @@ export const vi = {
         'Một thuật toán kiểm tra mỗi cặp kề nhau một lần mà không thấy cặp nào sai thứ tự sẽ dừng sau n − 1 phép so sánh.',
       ],
       solution:
-        'Sắp xếp nổi bọt và sắp xếp chèn đều dừng sau n − 1 = 15 phép so sánh: lượt đầu của sắp xếp nổi bọt không đổi chỗ lần nào, còn sắp xếp chèn dừng mỗi khoá sau một phép so sánh. Sắp xếp trộn cần 32, sắp xếp vun đống 85, còn sắp xếp nhanh và sắp xếp chọn cần 120.',
+        'Bubble sort và insertion sort đều dừng sau n − 1 = 15 phép so sánh: lượt đầu của bubble sort không đổi chỗ lần nào, còn insertion sort dừng mỗi khoá sau một phép so sánh. Merge sort cần 32, heapsort 85, còn quicksort và selection sort cần 120.',
     },
     {
       type: 'number',
-      prompt: 'Chọn dạng Đảo ngược với n = 16. Sắp xếp nổi bọt ghi bao nhiêu lần?',
+      prompt: 'Chọn dạng Đảo ngược với n = 16. Bubble sort ghi bao nhiêu lần?',
       answer: 240,
       unit: 'lần ghi',
       hints: [
@@ -239,11 +239,11 @@ export const vi = {
         'Có 16 × 15 / 2 = 120 phép so sánh, và mỗi lần đổi chỗ ghi hai ô.',
       ],
       solution:
-        'Cả 120 phép so sánh đều dẫn tới một lần đổi chỗ hai ô: 240 lần ghi. Sắp xếp chọn trên cùng đầu vào cũng làm 120 phép so sánh nhưng chỉ 16 lần ghi.',
+        'Cả 120 phép so sánh đều dẫn tới một lần đổi chỗ hai ô: 240 lần ghi. Selection sort trên cùng đầu vào cũng làm 120 phép so sánh nhưng chỉ 16 lần ghi.',
     },
     {
       type: 'number',
-      prompt: 'Vẫn với Đảo ngược và n = 16: sắp xếp trộn làm bao nhiêu phép so sánh?',
+      prompt: 'Vẫn với Đảo ngược và n = 16: merge sort làm bao nhiêu phép so sánh?',
       answer: 32,
       unit: 'phép so sánh',
       hints: [
@@ -251,46 +251,46 @@ export const vi = {
         'Nên mỗi lần trộn dừng sau số phép so sánh bằng số lá của nửa phải: 8 × 1 + 4 × 2 + 2 × 4 + 1 × 8.',
       ],
       solution:
-        '8 × 1 + 4 × 2 + 2 × 4 + 1 × 8 = 32 phép so sánh qua log₂ 16 = 4 tầng. Trường hợp xấu nhất của sắp xếp trộn là khoảng n log₂ n = 64, nên đầu vào đảo ngược là dễ với nó.',
+        '8 × 1 + 4 × 2 + 2 × 4 + 1 × 8 = 32 phép so sánh qua log₂ 16 = 4 tầng. Trường hợp xấu nhất của merge sort là khoảng n log₂ n = 64, nên đầu vào đảo ngược là dễ với nó.',
     },
     {
       type: 'choice',
       prompt:
-        'Bạn sắp xếp một triệu đơn hàng theo ngày. Các đơn đã được sắp xếp sẵn theo khách hàng, và thứ tự đó phải được giữ trong mỗi ngày. Thuật toán không bao giờ được tốn thời gian bậc hai. Dùng phần chọn theo yêu cầu: thuật toán nào phù hợp?',
-      options: ['Sắp xếp nhanh', 'Sắp xếp vun đống', 'Sắp xếp trộn', 'Sắp xếp chèn'],
+        'Em sắp xếp một triệu đơn hàng theo ngày. Các đơn đã được sắp xếp sẵn theo khách hàng, và thứ tự đó phải được giữ trong mỗi ngày. Thuật toán không bao giờ được tốn thời gian bậc hai. Dùng phần chọn theo yêu cầu: thuật toán nào phù hợp?',
+      options: ['Quicksort', 'Heapsort', 'Merge sort', 'Insertion sort'],
       answer: 2,
       hints: [
         'Giữ thứ tự khách hàng giữa các ngày bằng nhau nghĩa là thuật toán phải ổn định.',
         'Đánh dấu Ổn định và Thời gian O(n log n) kể cả trường hợp xấu nhất.',
       ],
       solution:
-        'Sắp xếp trộn là thuật toán ổn định duy nhất ở đây có trường hợp xấu nhất O(n log n). Sắp xếp nhanh và sắp xếp vun đống không ổn định, còn sắp xếp chèn tốn thời gian bậc hai trên hầu hết các đầu vào.',
+        'Merge sort là thuật toán ổn định duy nhất ở đây có trường hợp xấu nhất O(n log n). Quicksort và heapsort không ổn định, còn insertion sort tốn thời gian bậc hai trên hầu hết các đầu vào.',
     },
     {
       type: 'choice',
       prompt:
         'Một thiết bị nhỏ gần như không còn bộ nhớ trống, và mọi lần sắp xếp phải xong trong thời gian O(n log n) dù đầu vào thế nào. Thuật toán nào phù hợp?',
-      options: ['Sắp xếp trộn', 'Sắp xếp vun đống', 'Sắp xếp nhanh', 'Sắp xếp chọn'],
+      options: ['Merge sort', 'Heapsort', 'Quicksort', 'Selection sort'],
       answer: 1,
       hints: [
         'Đánh dấu Bộ nhớ thêm O(1) và Thời gian O(n log n) kể cả trường hợp xấu nhất.',
-        'Vùng đệm của sắp xếp trộn và ngăn xếp của sắp xếp nhanh đều lớn dần theo n.',
+        'Vùng đệm của merge sort và stack của quicksort đều lớn dần theo n.',
       ],
       solution:
-        'Sắp xếp vun đống sắp xếp ngay trong mảng với O(1) bộ nhớ thêm và tốn O(n log n) trên mọi đầu vào. Sắp xếp trộn cần vùng đệm n lá, sắp xếp nhanh có thể tốn thời gian bậc hai và đệ quy sâu n tầng, còn sắp xếp chọn luôn tốn thời gian bậc hai.',
+        'Heapsort sắp xếp ngay trong mảng với O(1) bộ nhớ thêm và tốn O(n log n) trên mọi đầu vào. Merge sort cần vùng đệm n lá, quicksort có thể tốn thời gian bậc hai và đệ quy sâu n tầng, còn selection sort luôn tốn thời gian bậc hai.',
     },
     {
       type: 'choice',
       prompt:
-        'Một bảng xếp hạng gần như đã được sắp xếp sau mỗi vòng: chỉ vài người chơi đổi chỗ cho nhau. Bạn cần một thuật toán ổn định và sắp xếp tại chỗ (in-place). Thuật toán nào phù hợp nhất?',
-      options: ['Sắp xếp chèn', 'Sắp xếp chọn', 'Sắp xếp vun đống', 'Sắp xếp trộn'],
+        'Một bảng xếp hạng gần như đã được sắp xếp sau mỗi vòng: chỉ vài người chơi đổi chỗ cho nhau. Em cần một thuật toán ổn định và sắp xếp tại chỗ (in-place). Thuật toán nào phù hợp nhất?',
+      options: ['Insertion sort', 'Selection sort', 'Heapsort', 'Merge sort'],
       answer: 0,
       hints: [
         'Thử dạng Gần như đã sắp xếp và xem thuật toán nào về đích đầu tiên.',
         'Đánh dấu Ổn định, Bộ nhớ thêm O(1) và Thời gian O(n) trên đầu vào đã sắp xếp.',
       ],
       solution:
-        'Sắp xếp chèn ổn định, tại chỗ, và chỉ tốn khoảng n phép so sánh khi chỉ vài phần tử kề nhau sai thứ tự. Sắp xếp chọn và sắp xếp vun đống không ổn định, còn sắp xếp trộn cần vùng đệm.',
+        'Insertion sort ổn định, tại chỗ, và chỉ tốn khoảng n phép so sánh khi chỉ vài phần tử kề nhau sai thứ tự. Selection sort và heapsort không ổn định, còn merge sort cần vùng đệm.',
     },
   ],
   nextTeaser:

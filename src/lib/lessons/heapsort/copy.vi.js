@@ -4,11 +4,11 @@ export const vi = {
   slug: 'heapsort',
   topic: 'sorting',
   level: 'Trung bình',
-  title: 'Sắp xếp vun đống',
+  title: 'Heapsort',
   intro:
-    'Sắp xếp vun đống (heapsort) trước hết sắp lại mảng thành một heap lớn nhất: một cây nhị phân lưu ngay trong mảng, trong đó mọi nút cha đều lớn hơn hoặc bằng các nút con. Khi đó giá trị lớn nhất nằm ở gốc, nên ta đổi chỗ gốc về cuối mảng, thu heap lại một phần tử rồi sửa lại heap. Thuật toán tốn O(n log n) kể cả trong trường hợp xấu nhất và không cần mảng phụ.',
+    'Heapsort (sắp xếp vun đống) trước hết sắp lại mảng thành một max-heap (heap lớn nhất): một cây nhị phân lưu ngay trong mảng, trong đó mọi nút cha đều lớn hơn hoặc bằng các nút con. Khi đó giá trị lớn nhất nằm ở gốc, nên ta đổi chỗ gốc về cuối mảng, thu heap (đống) lại một phần tử rồi sửa lại heap. Thuật toán tốn O(n log n) kể cả trong trường hợp xấu nhất và không cần mảng phụ.',
   summary:
-    'Đi từng bước sắp xếp vun đống trên hình cây và hình mảng gắn với nhau: dựng heap lớn nhất, rồi đưa giá trị lớn nhất về cuối và đẩy xuống cho đến khi mảng được sắp xếp.',
+    'Đi từng bước heapsort trên hình cây và hình mảng gắn với nhau: dựng max-heap, rồi đưa giá trị lớn nhất về cuối và đẩy xuống cho đến khi mảng được sắp xếp.',
   instruction:
     'Gõ tối đa 15 giá trị, hoặc chọn một mảng ban đầu rồi bấm Mảng mới để lấy mảng khác, sau đó đi từng bước. Cây và mảng bên dưới là cùng một dữ liệu: ô i có các con là 2i + 1 và 2i + 2. Để ý phần đuôi đã sắp xếp (màu nhạt) lớn dần từ bên phải.',
   valuesLabel: 'Các giá trị',
@@ -57,7 +57,7 @@ export const vi = {
       case 'start':
         return n < 2
           ? 'Chỉ có một giá trị thì đã được sắp xếp.'
-          : `Trước hết, ta biến mảng thành một heap lớn nhất, nơi mọi nút cha ≥ các nút con. Mỗi lá tự nó đã là một heap, nên ta đẩy xuống từng nút trong, từ ô ${Math.floor(n / 2) - 1} lùi về ô 0.`;
+          : `Trước hết, ta biến mảng thành một max-heap, nơi mọi nút cha ≥ các nút con. Mỗi lá tự nó đã là một heap, nên ta đẩy xuống từng nút trong, từ ô ${Math.floor(n / 2) - 1} lùi về ô 0.`;
       case 'sift':
         return f.phase === 'build'
           ? `Đẩy xuống ô ${f.node} (${v(f.node)}): các cây con của nó đã là heap.`
@@ -83,11 +83,11 @@ export const vi = {
     }
   },
   takeaways: [
-    'Một heap lớn nhất lưu trong mảng không cần con trỏ: các con của ô i là 2i + 1 và 2i + 2, còn cha của nó là ⌊(i − 1)/2⌋.',
+    'Một max-heap lưu trong mảng không cần con trỏ: các con của ô i là 2i + 1 và 2i + 2, còn cha của nó là ⌊(i − 1)/2⌋.',
     'Dựng heap từ dưới lên chỉ tốn O(n): phần lớn các nút nằm gần đáy và chỉ đẩy xuống một hai tầng.',
-    'Mỗi lần trong n − 1 lần lấy giá trị lớn nhất, ta đổi chỗ gốc về cuối và đẩy xuống nhiều nhất log₂ n tầng, nên sắp xếp vun đống tốn O(n log n) kể cả trong trường hợp xấu nhất. Khác với sắp xếp nhanh, không đầu vào nào làm nó tốn thời gian bậc hai.',
-    'Thuật toán sắp xếp tại chỗ (in-place) với O(1) bộ nhớ thêm, khác với sắp xếp trộn, nhưng nó không ổn định (stable), và việc nhảy qua lại trong mảng khiến nó chậm hơn sắp xếp nhanh trong thực tế.',
-    'Thử mảng “Đã sắp xếp”: giai đoạn dựng heap phải dời gần như mọi giá trị, còn mảng “Đảo ngược” vốn đã là heap lớn nhất nên dựng xong mà không đổi chỗ lần nào.',
+    'Mỗi lần trong n − 1 lần lấy giá trị lớn nhất, ta đổi chỗ gốc về cuối và đẩy xuống nhiều nhất log₂ n tầng, nên heapsort tốn O(n log n) kể cả trong trường hợp xấu nhất. Khác với quicksort (sắp xếp nhanh), không đầu vào nào làm nó tốn thời gian bậc hai.',
+    'Thuật toán sắp xếp tại chỗ (in-place) với O(1) bộ nhớ thêm, khác với merge sort (sắp xếp trộn), nhưng nó không ổn định (stable), và việc nhảy qua lại trong mảng khiến nó chậm hơn quicksort trong thực tế.',
+    'Thử mảng “Đã sắp xếp”: giai đoạn dựng heap phải dời gần như mọi giá trị, còn mảng “Đảo ngược” vốn đã là max-heap nên dựng xong mà không đổi chỗ lần nào.',
   ],
   complexityHead: ['Bước', 'Chi phí', 'Vì sao'],
   complexity: [
@@ -114,7 +114,7 @@ export const vi = {
     {
       type: 'text',
       prompt:
-        'Dựng heap lớn nhất từ 4, 10, 3, 5, 1 theo cách từ dưới lên. Gõ mảng sau khi dựng xong, các số cách nhau bằng dấu phẩy.',
+        'Dựng max-heap từ 4, 10, 3, 5, 1 theo cách từ dưới lên. Gõ mảng sau khi dựng xong, các số cách nhau bằng dấu phẩy.',
       accept: ['10, 5, 3, 4, 1', '10 5 3 4 1', '[10, 5, 3, 4, 1]', '10,5,3,4,1'],
       hints: [
         'n = 5, nên ta đẩy xuống ô 1 rồi đến ô 0.',
@@ -144,15 +144,15 @@ export const vi = {
     {
       type: 'choice',
       prompt:
-        'Sắp xếp vun đống các lá bài 2a, 2b, 1, trong đó chữ cái chỉ đánh dấu thứ tự đầu vào. Thứ tự cuối cùng là gì?',
+        'Heapsort các lá bài 2a, 2b, 1, trong đó chữ cái chỉ đánh dấu thứ tự đầu vào. Thứ tự cuối cùng là gì?',
       options: ['1, 2a, 2b', '1, 2b, 2a', '2a, 2b, 1', '2b, 2a, 1'],
       answer: 1,
       hints: [
-        'Đầu vào đã là một heap lớn nhất: 2a ở gốc, các con là 2b và 1.',
+        'Đầu vào đã là một max-heap: 2a ở gốc, các con là 2b và 1.',
         'Lần lấy ra đầu tiên đổi chỗ gốc 2a với ô 2.',
       ],
       solution:
-        'Lần lấy ra thứ nhất đưa 2a về ô 2: 1, 2b, 2a. Đẩy 1 xuống thì nó đổi chỗ với 2b: 2b, 1, 2a. Lần lấy ra thứ hai đưa 2b về ô 1: 1, 2b, 2a. Hai lá 2 kết thúc sai thứ tự, nên sắp xếp vun đống không ổn định.',
+        'Lần lấy ra thứ nhất đưa 2a về ô 2: 1, 2b, 2a. Đẩy 1 xuống thì nó đổi chỗ với 2b: 2b, 1, 2a. Lần lấy ra thứ hai đưa 2b về ô 1: 1, 2b, 2a. Hai lá 2 kết thúc sai thứ tự, nên heapsort không ổn định.',
     },
   ],
   nextTeaser:
