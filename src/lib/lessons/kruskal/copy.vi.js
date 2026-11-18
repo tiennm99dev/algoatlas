@@ -12,9 +12,9 @@ export const vi = {
   level: 'Trung bình',
   title: 'Thuật toán Kruskal',
   intro:
-    'Thuật toán Kruskal dựng cây khung nhỏ nhất (MST) bằng cách sắp xếp các cạnh từ nhẹ đến nặng rồi lấy mỗi cạnh nối hai cây khác nhau. Một cạnh có hai đầu đã nằm trong cùng một cây sẽ khép một chu trình, nên ta bỏ qua nó. Cấu trúc tập hợp rời nhau (DSU) trả lời câu hỏi “cùng một cây không?” trong thời gian gần như hằng số, nên phần tốn kém nhất là sắp xếp: O(E log E).',
+    'Thuật toán Kruskal dựng cây khung nhỏ nhất (MST) bằng cách sắp xếp các cạnh từ nhẹ đến nặng rồi lấy mỗi cạnh nối hai cây khác nhau. Một cạnh có hai đầu đã nằm trong cùng một cây sẽ khép một chu trình, nên ta bỏ qua nó. DSU (cấu trúc các tập rời nhau) trả lời câu hỏi “cùng một cây không?” trong thời gian gần như hằng số, nên phần tốn kém nhất là sắp xếp: O(E log E).',
   summary:
-    'Đưa danh sách cạnh đã sắp xếp vào một đồ thị do bạn vẽ và xem DSU nhận các cạnh nối hai cây, loại các cạnh sẽ khép chu trình.',
+    'Đưa danh sách cạnh đã sắp xếp vào một đồ thị do em vẽ và xem DSU nhận các cạnh nối hai cây, loại các cạnh sẽ khép chu trình.',
   instruction:
     'Đi từng bước qua danh sách cạnh đã sắp xếp ở bên phải. Mỗi cạnh được nhận sẽ hợp hai cây trong rừng DSU; mỗi cạnh bị loại có hai đầu chung một gốc. Đổi một trọng số trong bảng, hoặc vẽ cạnh mới bằng công cụ Nối, để thay đổi thứ tự.',
   resetGraph: 'Khôi phục đồ thị',

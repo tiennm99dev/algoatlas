@@ -17,7 +17,7 @@ export const vi = {
   intro:
     'Cây khung của một đồ thị liên thông giữ lại mọi đỉnh và vừa đủ cạnh, đúng V − 1 cạnh, để nối tất cả các đỉnh mà không tạo chu trình. Cây khung nhỏ nhất (MST) là cây khung có tổng trọng số các cạnh nhỏ nhất. Hai quy tắc đơn giản quyết định cạnh nào thuộc cây đó: tính chất lát cắt (cut property) và tính chất chu trình (cycle property).',
   summary:
-    'Chia đồ thị bằng một lát cắt do bạn chọn, tìm cạnh nhẹ nhất đi qua lát cắt, rồi kiểm tra một cạnh bất kì bằng tính chất chu trình.',
+    'Chia đồ thị bằng một lát cắt do em chọn, tìm cạnh nhẹ nhất đi qua lát cắt, rồi kiểm tra một cạnh bất kì bằng tính chất chu trình.',
   instruction:
     'Ở chế độ Lát cắt, bấm vào một đỉnh (hoặc đưa tiêu điểm tới đỉnh rồi nhấn Enter) để chuyển nó sang phía bên kia lát cắt, rồi đi từng bước để tìm cạnh nhẹ nhất đi qua lát cắt. Ở chế độ Chu trình, chọn một cạnh cần kiểm tra và xem phép tìm kiếm trên các cạnh nhẹ hơn quyết định xem có cây khung nhỏ nhất nào dùng được cạnh đó không.',
   modeLabel: 'Tính chất',
@@ -35,7 +35,7 @@ export const vi = {
   /** @param {number} max */
   badWeight: (max) => `Trọng số phải là số nguyên từ 1 đến ${max}. Trọng số cũ được giữ nguyên.`,
   crossingTitle: 'Các cạnh đi qua lát cắt đã tìm thấy',
-  queueTitle: 'Hàng đợi tìm kiếm',
+  queueTitle: 'Queue tìm kiếm',
   emptyText: 'không có',
   hotLabel: 'nhẹ nhất đến giờ',
   /** @param {EdgeInfo} e @param {string[]} names */
@@ -59,7 +59,7 @@ export const vi = {
     sideS: 'Phía S của lát cắt',
     other: 'Phía còn lại',
     current: 'Đỉnh đang mở rộng',
-    queued: 'Đã tới, đang trong hàng đợi',
+    queued: 'Đã tới, đang trong queue',
     reached: 'Đã tới, đã xét xong',
     path: 'Đường nhẹ hơn từ a đến b',
     edgeNow: 'Cạnh đang xét',
@@ -74,7 +74,7 @@ export const vi = {
     sideS: 'phía S',
     other: 'phía còn lại',
     current: 'đang mở rộng',
-    queued: 'trong hàng đợi',
+    queued: 'trong queue',
     reached: 'đã tới',
     path: 'trên đường nhẹ hơn',
     a: 'điểm bắt đầu tìm a',
@@ -136,7 +136,7 @@ export const vi = {
           ? `Kiểm tra cạnh ${tn} (trọng số ${f.w}). Ta tìm từ ${a} và chỉ dùng các cạnh nhẹ hơn ${f.w}. Nếu tới được ${b}, đường đó cộng với ${tn} là một chu trình mà ${tn} là cạnh nặng nhất.`
           : 'Không có cạnh nào để kiểm tra. Hãy vẽ một cạnh bằng công cụ Nối.';
       case 'pop':
-        return `Lấy ${x} ra khỏi đầu hàng đợi và xét các cạnh của nó.`;
+        return `Lấy ${x} ra khỏi đầu queue và xét các cạnh của nó.`;
       case 'heavy':
         return f.edge === f.target
           ? `Cạnh ${tn} là cạnh đang kiểm tra, nên phép tìm kiếm không được dùng nó.`
@@ -144,7 +144,7 @@ export const vi = {
       case 'seen':
         return `Cạnh ${edgeWithWeight(e, names)} nhẹ hơn, nhưng ${y} đã được tới rồi.`;
       case 'follow':
-        return `Cạnh ${edgeWithWeight(e, names)} nhẹ hơn ${f.w}: tới ${y} và đưa nó vào hàng đợi.`;
+        return `Cạnh ${edgeWithWeight(e, names)} nhẹ hơn ${f.w}: tới ${y} và đưa nó vào queue.`;
       case 'found':
         return `Cạnh ${edgeWithWeight(e, names)} tới được ${b}. Đường ${route} chỉ dùng các cạnh nhẹ hơn ${f.w}.`;
       case 'done':
@@ -171,14 +171,14 @@ export const vi = {
     [
       'Cạnh a — b có thuộc một MST nào không?',
       'O(V + E)',
-      'Một lần duyệt theo chiều rộng (BFS) từ a trên các cạnh nhẹ hơn w(a — b), thăm mỗi đỉnh và mỗi cạnh nhiều nhất một lần.',
+      'Một lần BFS (duyệt theo chiều rộng) từ a trên các cạnh nhẹ hơn w(a — b), thăm mỗi đỉnh và mỗi cạnh nhiều nhất một lần.',
     ],
     [
       'Kích thước cây khung',
       'V − 1 cạnh',
       'Một cây có V đỉnh luôn có V − 1 cạnh, dù trọng số thế nào.',
     ],
-    ['Bộ nhớ', 'O(V + E)', 'Các danh sách kề, cùng các mảng phía, đã tới và hàng đợi.'],
+    ['Bộ nhớ', 'O(V + E)', 'Các danh sách kề, cùng các mảng phía, đã tới và queue (hàng đợi).'],
   ],
   practiceTitle: 'Tự kiểm tra',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */

@@ -21,7 +21,7 @@ export const vi = {
   intro:
     'Bài toán 2-SAT hỏi xem có cách gán giá trị đúng/sai cho các biến để thoả một công thức gồm các mệnh đề, mỗi mệnh đề có hai literal, ví dụ (x₁ ∨ ¬x₂); một literal là một biến hoặc phủ định của nó. Khi mỗi mệnh đề có ba literal, bài toán là NP-đầy đủ, nhưng với hai literal thì giải được trong thời gian tuyến tính: mỗi mệnh đề thành hai phép kéo theo, và các thành phần liên thông mạnh của đồ thị kéo theo (implication graph) thu được quyết định mọi thứ.',
   summary:
-    'Dựng đồ thị kéo theo của một công thức 2-SAT do bạn sửa, tìm các thành phần liên thông mạnh của nó và đọc ra một phép gán thoả công thức từ thứ tự tô-pô của chúng.',
+    'Dựng đồ thị kéo theo của một công thức 2-SAT do em sửa, tìm các thành phần liên thông mạnh của nó và đọc ra một phép gán thoả công thức từ thứ tự tô-pô của chúng.',
   instruction:
     'Sửa các mệnh đề: chọn từng literal trong danh sách của nó, thêm hoặc xoá mệnh đề, hoặc nạp một ví dụ. Đi từng bước: mỗi mệnh đề thêm hai cạnh kéo theo, thuật toán Tarjan tìm các thành phần (đánh số ở góc mỗi đỉnh), và mỗi biến được gán tuỳ theo thành phần của literal nào trong hai literal của nó được tìm thấy trước.',
   varsNote: 'Các biến từ x₁ đến x₄. Một literal là một biến hoặc phủ định ¬ của nó.',
@@ -135,7 +135,7 @@ export const vi = {
     [
       'Bộ nhớ',
       'O(n + m)',
-      'Đồ thị, cùng các nhãn và ngăn xếp của thuật toán Tarjan cho mỗi literal.',
+      'Đồ thị, cùng các nhãn và stack (ngăn xếp) của thuật toán Tarjan cho mỗi literal.',
     ],
   ],
   practiceTitle: 'Tự kiểm tra',
@@ -205,5 +205,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Bài tiếp theo là Luyện tập: bài toán đồ thị nâng cao, nơi bạn tìm nút mạng quan trọng và vòng phụ thuộc giữa các mô-đun.',
+    'Bài tiếp theo là Luyện tập: bài toán đồ thị nâng cao, nơi em tìm nút mạng quan trọng và vòng phụ thuộc giữa các mô-đun.',
 };

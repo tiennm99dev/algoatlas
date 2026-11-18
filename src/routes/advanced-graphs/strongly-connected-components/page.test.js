@@ -89,10 +89,10 @@ describe('strongly connected components lesson', () => {
     expect(text()).toContain('Ban đầu chưa đỉnh nào được thăm.');
     expect(text()).toContain(m.condensedWait);
     click(button('Bước tiếp'));
-    expect(text()).toContain('Thăm A: tin = low = 0. Đẩy A vào ngăn xếp.');
+    expect(text()).toContain('Thăm A: tin = low = 0. Đẩy A vào stack.');
     expect(vertex(0).getAttribute('aria-label')).toBe('Đỉnh A, đang xét, tin 0, low 0');
     for (let i = 0; i < 5; i++) click(button('Bước tiếp'));
-    expect(text()).toContain('Cạnh C → A: A vẫn còn trong ngăn xếp');
+    expect(text()).toContain('Cạnh C → A: A vẫn còn trong stack');
     click(button('Đến bước cuối'));
     expect(text()).toContain('Xong: 3 thành phần.');
     expect(statValue(m.stats.comps)).toBe('3');

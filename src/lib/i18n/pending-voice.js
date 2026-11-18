@@ -25,10 +25,6 @@ export const pendingTopics = new Set([
 
   'shortest-paths',
 
-  'mst',
-
-  'advanced-graphs',
-
   'greedy',
 
   'dynamic-programming',

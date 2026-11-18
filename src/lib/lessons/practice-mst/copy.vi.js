@@ -14,29 +14,29 @@ export const vi = {
   level: 'Nâng cao',
   title: 'Luyện tập: bài toán cây khung nhỏ nhất',
   intro:
-    'Cây khung nhỏ nhất (MST) không chỉ trả lời câu hỏi “mạng rẻ nhất”. Đường đi giữa hai đỉnh trên cây là một đường đi nút cổ chai nhỏ nhất (minimum bottleneck path): đường có cạnh nặng nhất nhẹ nhất có thể. Và chỉ một lần đổi một cạnh của cây lấy một cạnh ngoài cây là ra cây khung tốt nhì (second-best spanning tree). Hãy đoán cây trên đồ thị bạn tự sửa, rồi kiểm tra.',
+    'Cây khung nhỏ nhất (MST) không chỉ trả lời câu hỏi “mạng rẻ nhất”. Đường đi giữa hai đỉnh trên cây là một đường đi nút cổ chai nhỏ nhất (minimum bottleneck path): đường có cạnh nặng nhất nhẹ nhất có thể. Và chỉ một lần đổi một cạnh của cây lấy một cạnh ngoài cây là ra cây khung tốt nhì (second-best spanning tree). Hãy đoán cây trên đồ thị em tự sửa, rồi kiểm tra.',
   summary:
-    'Đoán một cây khung nhỏ nhất rồi kiểm tra, sau đó tìm đường đi nút cổ chai nhỏ nhất và cây khung tốt nhì trên đồ thị do bạn sửa.',
+    'Đoán một cây khung nhỏ nhất rồi kiểm tra, sau đó tìm đường đi nút cổ chai nhỏ nhất và cây khung tốt nhì trên đồ thị do em sửa.',
   instruction:
-    'Ở chế độ Đoán, đánh dấu các cạnh bạn nghĩ tạo thành cây khung nhỏ nhất rồi bấm “Kiểm tra cây của tôi”: nếu cây chưa đúng, bạn sẽ được gợi ý một phép đổi làm cây nhẹ hơn. Chế độ Nút cổ chai và Tốt nhì đi từng bước qua thuật toán; đổi trọng số hoặc hai đầu mút rồi chạy lại từng bước.',
+    'Ở chế độ Đoán, đánh dấu các cạnh em nghĩ tạo thành cây khung nhỏ nhất rồi bấm “Kiểm tra cây của em”. Nếu cây chưa đúng, trang sẽ gợi ý một phép đổi làm cây nhẹ hơn. Chế độ Nút cổ chai và Tốt nhì đi từng bước qua thuật toán; đổi trọng số hoặc hai đầu mút rồi chạy lại từng bước.',
   modeLabel: 'Bài toán',
   modes: { predict: 'Đoán MST', bottleneck: 'Đường nút cổ chai', second: 'Cây tốt nhì' },
   sourceLabel: 'Từ',
   targetLabel: 'Đến',
-  check: 'Kiểm tra cây của tôi',
-  clear: 'Xoá cây của tôi',
+  check: 'Kiểm tra cây của em',
+  clear: 'Xoá cây của em',
   resetGraph: 'Khôi phục đồ thị',
   graphAria: 'Đồ thị vô hướng có trọng số cho các bài toán cây khung nhỏ nhất.',
-  edgesTitle: 'Các cạnh: trọng số, và cạnh có trong cây của bạn không',
+  edgesTitle: 'Các cạnh: trọng số, và cạnh có trong cây của em không',
   /** @param {string} name */
   weightAria: (name) => `Trọng số cạnh ${name}`,
   /** @param {string} name */
-  pickAria: (name) => `Cạnh ${name} trong cây của tôi`,
+  pickAria: (name) => `Cạnh ${name} trong cây của em`,
   noEdges: 'Chưa có cạnh nào. Dùng công cụ Nối để vẽ một cạnh.',
   /** @param {number} max */
   badWeight: (max) => `Trọng số phải là số nguyên từ 1 đến ${max}. Trọng số cũ được giữ nguyên.`,
   predictHelp:
-    'Đánh dấu các cạnh bên dưới để dựng cây của bạn. Cạnh được đánh dấu có màu vàng. Phép kiểm tra cho biết đó có phải cây khung không, và có phải cây khung nhỏ nhất không.',
+    'Đánh dấu các cạnh bên dưới để dựng cây của em. Cạnh được đánh dấu có màu vàng. Phép kiểm tra cho biết đó có phải cây khung không, và có phải cây khung nhỏ nhất không.',
   /** @param {number} count @param {number} need @param {number} weight */
   pickedSummary: (count, need, weight) => `Đã chọn ${count}/${need} cạnh, tổng trọng số ${weight}.`,
   /**
@@ -49,20 +49,20 @@ export const vi = {
       case 'disconnected':
         return 'Đồ thị này không liên thông, nên không có cây khung. Hãy nối mọi đỉnh trước đã.';
       case 'cycle':
-        return `Chưa phải cây: ${withWeight(info[v.closing], names)} khép một chu trình với các cạnh khác của bạn. Cây thì không có chu trình.`;
+        return `Chưa phải cây: ${withWeight(info[v.closing], names)} khép một chu trình với các cạnh khác của em. Cây thì không có chu trình.`;
       case 'size':
-        return `Cây khung trên ${v.need + 1} đỉnh có đúng ${v.need} cạnh. Bạn đã chọn ${v.count} cạnh, không tạo chu trình, nên ${v.count < v.need ? 'vẫn còn đỉnh chưa được nối' : 'không thể có thêm một cạnh'}.`;
+        return `Cây khung trên ${v.need + 1} đỉnh có đúng ${v.need} cạnh. Em đã chọn ${v.count} cạnh, không tạo chu trình, nên ${v.count < v.need ? 'vẫn còn đỉnh chưa được nối' : 'không thể có thêm một cạnh'}.`;
       case 'heavier': {
         const add = info[v.add];
         const drop = info[v.drop];
-        return `Đây là một cây khung có trọng số ${v.weight}, nhưng nhỏ nhất là ${v.best}. Gợi ý: ${withWeight(add, names)} khép một chu trình với cây của bạn, trên đó ${withWeight(drop, names)} nặng hơn. Đổi hai cạnh này để bớt ${drop.w - add.w}.`;
+        return `Đây là một cây khung có trọng số ${v.weight}, nhưng nhỏ nhất là ${v.best}. Gợi ý: ${withWeight(add, names)} khép một chu trình với cây của em, trên đó ${withWeight(drop, names)} nặng hơn. Đổi hai cạnh này để bớt ${drop.w - add.w}.`;
       }
       case 'minimum':
         return `Đúng rồi: đây là một cây khung nhỏ nhất, trọng số ${v.weight}. Không cạnh nào ngoài cây nhẹ hơn cạnh nặng nhất của cây trên chu trình mà nó sẽ khép.`;
     }
   },
   legend: {
-    picked: 'Cạnh trong cây của bạn',
+    picked: 'Cạnh trong cây của em',
     swapIn: 'Cạnh gợi ý thêm vào',
     flagged: 'Cạnh gợi ý bỏ đi, hoặc cạnh khép chu trình',
     skipNow: 'Cạnh đang bị bỏ qua',
@@ -86,7 +86,7 @@ export const vi = {
   swapChip: (add, drop, w, names) => `+${edgeName(add, names)} −${edgeName(drop, names)} → ${w}`,
   stats: {
     picked: 'Số cạnh đã chọn',
-    yourWeight: 'Trọng số cây của bạn',
+    yourWeight: 'Trọng số cây của em',
     considered: 'Số cạnh đã xét',
     bottleneck: 'Nút cổ chai',
     pathEdges: 'Số cạnh trên đường đi',
@@ -187,7 +187,7 @@ export const vi = {
       tolerance: 0,
       hints: [
         'Chọn “Đường nút cổ chai”, Từ A, Đến F, rồi đi từng bước cho tới khi hai cây nối với nhau.',
-        'Mọi đường đi tới F đều phải dùng E — F hoặc D — F; để tới E hoặc F từ bên trái, bạn cần D — E, C — E hoặc D — F.',
+        'Mọi đường đi tới F đều phải dùng E — F hoặc D — F; để tới E hoặc F từ bên trái, em cần D — E, C — E hoặc D — F.',
       ],
       solution:
         'Thuật toán Kruskal nhận E — F 1, B — C 2, A — B 3, B — D 5 rồi D — E 7, cạnh nối cây của A với cây của F. Đường A → B → D → E → F có cạnh nặng nhất là 7, và mọi cạnh nhẹ hơn đều đã được nhận, nên không đường nào tốt hơn.',
@@ -228,7 +228,7 @@ export const vi = {
     {
       type: 'number',
       prompt:
-        'Tăng B — D từ 5 lên 9 rồi đoán cây khung nhỏ nhất mới. Cây đó nặng bao nhiêu? Kiểm tra bằng nút “Kiểm tra cây của tôi”.',
+        'Tăng B — D từ 5 lên 9 rồi đoán cây khung nhỏ nhất mới. Cây đó nặng bao nhiêu? Kiểm tra bằng nút “Kiểm tra cây của em”.',
       answer: 19,
       tolerance: 0,
       hints: ['Chỉ cách nối tới D thay đổi. Giờ cạnh nào là cách rẻ nhất để tới D từ {A, B, C}?'],

@@ -98,7 +98,7 @@ describe('eulerian paths lesson', () => {
     click(button('Bước tiếp'));
     expect(text()).toContain('nên có chu trình Euler. Bắt đầu ở A.');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Đi theo A — B và đẩy B vào ngăn xếp. A còn 1 cạnh chưa dùng.');
+    expect(text()).toContain('Đi theo A — B và đẩy B vào stack. A còn 1 cạnh chưa dùng.');
     expect(vertex(1).getAttribute('aria-label')).toBe('Đỉnh B, bút ở đây, còn 1');
     for (let i = 0; i < 3; i++) click(button('Bước tiếp'));
     expect(text()).toContain('A không còn cạnh chưa dùng: lấy nó ra, ghi vào lộ trình. Lùi về C.');

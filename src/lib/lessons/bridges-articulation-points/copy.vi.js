@@ -9,9 +9,9 @@ export const vi = {
   level: 'Trung bình',
   title: 'Cầu và đỉnh khớp',
   intro:
-    'Cầu (bridge) là cạnh mà bỏ đi sẽ làm đồ thị vô hướng mất liên thông; đỉnh khớp (articulation point) là đỉnh mà bỏ đi cũng làm vậy. Chúng là những điểm hỏng duy nhất của một mạng lưới: hỏng một chỗ là đứt. Chỉ một lần DFS là tìm được tất cả trong O(V + E): mỗi đỉnh được đánh số bằng thời điểm phát hiện tin, và ta tính low, điểm cao nhất mà cây con của đỉnh đó có thể quay ngược lên.',
+    'Cầu (bridge) là cạnh mà bỏ đi sẽ làm đồ thị vô hướng mất liên thông; đỉnh khớp (articulation point) là đỉnh mà bỏ đi cũng làm vậy. Chúng là những điểm hỏng duy nhất của một mạng lưới: hỏng một chỗ là đứt. Chỉ một lần DFS (duyệt theo chiều sâu) là tìm được tất cả trong O(V + E): mỗi đỉnh được đánh số bằng thời điểm phát hiện tin, và ta tính low, điểm cao nhất mà cây con của đỉnh đó có thể quay ngược lên.',
   summary:
-    'Chạy một lần DFS với nhãn tin và low để tìm mọi cầu và đỉnh khớp của một đồ thị vô hướng do bạn sửa.',
+    'Chạy một lần DFS với nhãn tin và low để tìm mọi cầu và đỉnh khớp của một đồ thị vô hướng do em sửa.',
   instruction:
     'Đi từng bước qua phép DFS. Dưới mỗi đỉnh có tin/low; cạnh của cây DFS chuyển màu tím nhạt, cạnh ngược chuyển màu xanh dương. Khi DFS quay về từ v đến u, ta so low[v] với tin[u]: cầu chuyển màu đỏ, còn đỉnh khớp chuyển màu đỏ kèm dấu ĐK. Dùng công cụ Nối để thêm một cạnh như D — F và xem cầu biến mất.',
   resetGraph: 'Khôi phục đồ thị',
@@ -122,7 +122,11 @@ export const vi = {
       'O(E · (V + E))',
       'Bỏ từng cạnh (hoặc từng đỉnh) rồi kiểm tra lại tính liên thông, mỗi phần tử lại tốn cả một lần tìm kiếm.',
     ],
-    ['Bộ nhớ', 'O(V)', 'tin, low và cha cho mỗi đỉnh, cùng ngăn xếp lời gọi của DFS sâu tối đa V.'],
+    [
+      'Bộ nhớ',
+      'O(V)',
+      'tin, low và cha cho mỗi đỉnh, cùng call stack (ngăn xếp lời gọi) của DFS sâu tối đa V.',
+    ],
   ],
   practiceTitle: 'Tự kiểm tra',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */

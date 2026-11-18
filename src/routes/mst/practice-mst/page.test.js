@@ -109,7 +109,7 @@ describe('MST problems lesson', () => {
     expect(text()).toContain('Chưa phải cây: B — C (2) khép một chu trình');
     tick('A — C');
     click(buttonByText(m.check));
-    expect(text()).toContain('Cây khung trên 6 đỉnh có đúng 5 cạnh. Bạn đã chọn 2');
+    expect(text()).toContain('Cây khung trên 6 đỉnh có đúng 5 cạnh. Em đã chọn 2');
     for (const e of ['B — D', 'C — E', 'E — F']) tick(e);
     expect(text()).toContain('Đã chọn 5/5 cạnh, tổng trọng số 19.');
     expect(statValue(m.stats.picked)).toBe('5 / 5');
@@ -117,7 +117,7 @@ describe('MST problems lesson', () => {
     expect(statValue(m.stats.mst)).toBeUndefined();
     click(buttonByText(m.check));
     expect(text()).toContain(
-      'Đây là một cây khung có trọng số 19, nhưng nhỏ nhất là 18. Gợi ý: D — E (7) khép một chu trình với cây của bạn, trên đó C — E (8) nặng hơn. Đổi hai cạnh này để bớt 1.',
+      'Đây là một cây khung có trọng số 19, nhưng nhỏ nhất là 18. Gợi ý: D — E (7) khép một chu trình với cây của em, trên đó C — E (8) nặng hơn. Đổi hai cạnh này để bớt 1.',
     );
     tick('C — E');
     tick('D — E');

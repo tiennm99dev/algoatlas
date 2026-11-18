@@ -31,8 +31,8 @@ export const vi = {
   compName: (c) => `C${c}`,
   /** @param {number} c @param {string} members */
   compLabel: (c, members) => `Thành phần C${c}: ${members}`,
-  stackLabel: 'Ngăn xếp SCC (đỉnh ngăn xếp trước)',
-  callLabel: 'Ngăn xếp lời gọi (đỉnh ngăn xếp trước)',
+  stackLabel: 'Stack SCC (đỉnh stack trước)',
+  callLabel: 'Call stack (đỉnh stack trước)',
   finishTitle: 'Thứ tự hoàn tất của lượt 1 (từ đầu đến cuối)',
   compsLabel: 'Các thành phần đã tìm thấy',
   emptyText: 'rỗng',
@@ -47,8 +47,8 @@ export const vi = {
   },
   legend: {
     current: 'Đang xử lí',
-    open: 'Trên đường DFS hoặc trong ngăn xếp',
-    waiting: 'Đã hoàn tất, chờ gốc của nó trong ngăn xếp',
+    open: 'Trên đường DFS hoặc trong stack',
+    waiting: 'Đã hoàn tất, chờ gốc của nó trong stack',
     finished: 'Đã hoàn tất ở lượt 1',
     popped: 'Thành phần vừa hoàn chỉnh',
     done: 'Thuộc một thành phần (số ở góc)',
@@ -57,9 +57,9 @@ export const vi = {
   },
   states: {
     current: 'đang xét',
-    open: 'trong ngăn xếp',
+    open: 'trong stack',
     path: 'trên đường DFS',
-    waiting: 'đã hoàn tất, vẫn trong ngăn xếp',
+    waiting: 'đã hoàn tất, vẫn trong stack',
     finished: 'đã hoàn tất',
     popped: 'vừa hoàn chỉnh',
   },
@@ -92,7 +92,7 @@ export const vi = {
       case 'enter':
         if (algo === 'kosaraju' && f.pass === 2) return `${u} vào thành phần C${f.count}.`;
         return algo === 'tarjan'
-          ? `Thăm ${u}: tin = low = ${f.tin[f.current]}. Đẩy ${u} vào ngăn xếp.`
+          ? `Thăm ${u}: tin = low = ${f.tin[f.current]}. Đẩy ${u} vào stack.`
           : `Thăm ${u}, đỉnh thứ ${f.tin[f.current] + 1} được phát hiện.`;
       case 'edge':
         if (algo === 'kosaraju' && f.pass === 2)
@@ -101,14 +101,14 @@ export const vi = {
             : `Cạnh ${v} → ${u} đảo chiều tới ${v}, đỉnh đã có thành phần. Bỏ qua.`;
         if (f.edgeKind === 'tree') return `Cạnh ${u} → ${v}: ${v} chưa được thăm, nên ta thăm nó.`;
         if (f.edgeKind === 'stack')
-          return `Cạnh ${u} → ${v}: ${v} vẫn còn trong ngăn xếp, nên ${u} quay ngược lên được tới nó. low[${u}] = min(low, tin[${v}]) = ${f.low[f.current]}.`;
+          return `Cạnh ${u} → ${v}: ${v} vẫn còn trong stack, nên ${u} quay ngược lên được tới nó. low[${u}] = min(low, tin[${v}]) = ${f.low[f.current]}.`;
         return algo === 'tarjan'
           ? `Cạnh ${u} → ${v}: ${v} đã thuộc một thành phần hoàn chỉnh, nên cạnh này rời khỏi thành phần của ${u}. Bỏ qua.`
           : `Cạnh ${u} → ${v}: ${v} đã được thăm. Không cần làm gì.`;
       case 'return':
         return `Quay về từ ${v} đến ${u}: low[${u}] = min(low[${u}], low[${v}]) = ${f.low[f.current]}.`;
       case 'keep':
-        return `${u} đã xét xong nhưng low[${u}] = ${f.low[f.current]} < tin[${u}] = ${f.tin[f.current]}: nó tới được một đỉnh cũ hơn trong ngăn xếp, nên ${u} ở lại đó và sau này vào thành phần của đỉnh ấy.`;
+        return `${u} đã xét xong nhưng low[${u}] = ${f.low[f.current]} < tin[${u}] = ${f.tin[f.current]}: nó tới được một đỉnh cũ hơn trong stack, nên ${u} ở lại đó và sau này vào thành phần của đỉnh ấy.`;
       case 'root':
         return algo === 'tarjan'
           ? `low[${u}] = tin[${u}] = ${f.tin[f.current]}: ${u} là gốc của một thành phần. Lấy ${join(names, f.popped)} ra làm C${f.count}.`
@@ -131,7 +131,7 @@ export const vi = {
   },
   takeaways: [
     'Một SCC là tập đỉnh lớn nhất mà mọi đỉnh trong đó đều tới được nhau. Mỗi đỉnh thuộc đúng một SCC, và mọi chu trình có hướng đều nằm gọn trong một SCC.',
-    'Thuật toán Tarjan chạy một lần DFS. low[u] là tin nhỏ nhất mà cây con của u tới được qua một cạnh đi vào một đỉnh còn trong ngăn xếp. Khi low[u] = tin[u], u là gốc và phần ngăn xếp phía trên nó là một SCC.',
+    'Thuật toán Tarjan chạy một lần DFS (duyệt theo chiều sâu). low[u] là tin nhỏ nhất mà cây con của u tới được qua một cạnh đi vào một đỉnh còn trong stack (ngăn xếp). Khi low[u] = tin[u], u là gốc và phần stack phía trên nó là một SCC.',
     'Thuật toán Kosaraju chạy hai lượt DFS: một lượt trên đồ thị để lấy thời điểm hoàn tất, một lượt trên đồ thị đảo chiều, mỗi lần bắt đầu từ đỉnh hoàn tất muộn nhất còn lại. Mỗi lần bắt đầu ở lượt 2 gom đúng một SCC.',
     'Thu mỗi SCC lại thành một đỉnh, ta được DAG rút gọn, luôn là một DAG. Thuật toán Tarjan tìm các đỉnh của nó theo thứ tự tô-pô ngược, thuật toán Kosaraju theo thứ tự tô-pô.',
     'Thử xem: thêm cạnh F → A. Lúc này A, B, C, D, E và F tới được nhau, nên hai thành phần nhập làm một và DAG rút gọn chỉ còn hai đỉnh.',
@@ -156,7 +156,7 @@ export const vi = {
     [
       'Bộ nhớ',
       'O(V + E)',
-      'tin, low và thành phần cho mỗi đỉnh, ngăn xếp, và đồ thị đảo chiều cho thuật toán Kosaraju.',
+      'tin, low và thành phần cho mỗi đỉnh, stack, và đồ thị đảo chiều cho thuật toán Kosaraju.',
     ],
   ],
   practiceTitle: 'Tự kiểm tra',
@@ -175,9 +175,9 @@ export const vi = {
       type: 'number',
       prompt: 'Chạy thuật toán Tarjan trên đồ thị ban đầu. Khi C xét xong, low[C] bằng bao nhiêu?',
       answer: 0,
-      hints: ['C được thăm thứ ba (tin 2) và có cạnh C → A.', 'Lúc đó A vẫn còn trong ngăn xếp.'],
+      hints: ['C được thăm thứ ba (tin 2) và có cạnh C → A.', 'Lúc đó A vẫn còn trong stack.'],
       solution:
-        'A ở trong ngăn xếp với tin 0, nên cạnh C → A đặt low[C] = min(2, 0) = 0. Giá trị đó truyền lên B và A, và A lấy A, B, C ra làm một thành phần.',
+        'A ở trong stack với tin 0, nên cạnh C → A đặt low[C] = min(2, 0) = 0. Giá trị đó truyền lên B và A, và A lấy A, B, C ra làm một thành phần.',
     },
     {
       type: 'choice',

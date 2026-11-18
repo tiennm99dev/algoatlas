@@ -18,7 +18,7 @@ export const vi = {
     'Đi từng bước: cây bút đi dọc các cạnh chưa dùng cho tới khi bị kẹt, rồi lùi lại, ghi các đỉnh vào lộ trình, và bắt đầu một nhánh rẽ ở bất kì chỗ nào còn cạnh chưa dùng. Dưới mỗi đỉnh là số cạnh chưa dùng của nó. Dùng công cụ Xoá hoặc Nối để đổi đồ thị, ví dụ bỏ G — E để có một đường đi Euler không phải chu trình.',
   resetGraph: 'Khôi phục đồ thị',
   graphAria: 'Đồ thị vô hướng đang được vẽ đường đi Euler.',
-  stackLabel: 'Ngăn xếp (đỉnh ngăn xếp ở cuối)',
+  stackLabel: 'Stack (đỉnh stack ở cuối)',
   routeLabel: 'Lộ trình, theo thứ tự lấy ra',
   pathLabel: 'Đường đi Euler',
   emptyText: 'rỗng',
@@ -27,21 +27,21 @@ export const vi = {
   stats: {
     used: 'Số cạnh đã dùng',
     odd: 'Số đỉnh bậc lẻ',
-    depth: 'Độ sâu ngăn xếp',
+    depth: 'Độ sâu stack',
     detours: 'Số nhánh rẽ đã ghép',
   },
   legend: {
-    pen: 'Bút (đỉnh ngăn xếp)',
-    stack: 'Trong ngăn xếp',
+    pen: 'Bút (đỉnh stack)',
+    stack: 'Trong stack',
     done: 'Trên lộ trình đã xong',
     odd: 'Bậc lẻ',
-    trail: 'Cạnh đã đi, vẫn còn trong ngăn xếp',
+    trail: 'Cạnh đã đi, vẫn còn trong stack',
     route: 'Cạnh trên lộ trình đã xong',
     edge: 'Cạnh vừa đi hoặc vừa lấy ra',
   },
   states: {
     pen: 'bút ở đây',
-    stack: 'trong ngăn xếp',
+    stack: 'trong stack',
     done: 'trên lộ trình',
     odd: 'bậc lẻ',
     start: 'xuất phát',
@@ -71,10 +71,10 @@ export const vi = {
       case 'walk':
         return f.detour
           ? `${u} vẫn còn cạnh chưa dùng: bắt đầu một chu trình rẽ nhánh ở đây theo ${u} — ${v}. Nó sẽ được ghép vào lộ trình tại ${u}.`
-          : `Đi theo ${u} — ${v} và đẩy ${v} vào ngăn xếp. ${u} còn ${f.left[f.current]} cạnh chưa dùng.`;
+          : `Đi theo ${u} — ${v} và đẩy ${v} vào stack. ${u} còn ${f.left[f.current]} cạnh chưa dùng.`;
       case 'pop':
         return f.stack.length === 0
-          ? `${u} không còn cạnh chưa dùng: lấy nó ra. Ngăn xếp đã rỗng và mọi cạnh đều nằm trên lộ trình.`
+          ? `${u} không còn cạnh chưa dùng: lấy nó ra. Stack đã rỗng và mọi cạnh đều nằm trên lộ trình.`
           : `${u} không còn cạnh chưa dùng: lấy nó ra, ghi vào lộ trình. Lùi về ${nm(names, f.stack[f.stack.length - 1])}.`;
       case 'done':
         if (f.reason === 'empty')
@@ -105,7 +105,11 @@ export const vi = {
       'O(V + E)',
       'Mỗi cạnh được đi một lần, và mỗi đỉnh có một con trỏ bỏ qua các cạnh đã dùng, không bao giờ lùi lại.',
     ],
-    ['Bộ nhớ', 'O(V + E)', 'Danh sách kề, một dấu “đã dùng” cho mỗi cạnh, ngăn xếp và lộ trình.'],
+    [
+      'Bộ nhớ',
+      'O(V + E)',
+      'Danh sách kề, một dấu “đã dùng” cho mỗi cạnh, stack (ngăn xếp) và lộ trình.',
+    ],
   ],
   practiceTitle: 'Tự kiểm tra',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */

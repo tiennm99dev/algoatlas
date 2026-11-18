@@ -11,7 +11,7 @@ export const vi = {
   level: 'Trung bình',
   title: 'Thuật toán Prim',
   intro:
-    'Thuật toán Prim nuôi một cây duy nhất từ một đỉnh xuất phát. Ở mỗi bước, ta thêm cạnh rẻ nhất có một đầu trong cây và đầu kia ở ngoài; theo tính chất lát cắt (cut property), cạnh đó luôn an toàn. Dùng một heap chứa các cạnh đi qua lát cắt thì chi phí là O(E log V), hợp với đồ thị thưa; dùng một mảng khoá thì chi phí là O(V²), hợp với đồ thị dày.',
+    'Thuật toán Prim nuôi một cây duy nhất từ một đỉnh xuất phát. Ở mỗi bước, ta thêm cạnh rẻ nhất có một đầu trong cây và đầu kia ở ngoài; theo tính chất lát cắt (cut property), cạnh đó luôn an toàn. Dùng một heap (đống) chứa các cạnh đi qua lát cắt thì chi phí là O(E log V), hợp với đồ thị thưa; dùng một mảng khoá thì chi phí là O(V²), hợp với đồ thị dày.',
   summary:
     'Nuôi cây khung nhỏ nhất (MST) từ một đỉnh xuất phát, bằng heap các cạnh đi qua lát cắt hoặc bằng mảng khoá, rồi so chi phí hai cách trên đồ thị thưa và đồ thị dày.',
   instruction:
@@ -186,7 +186,7 @@ export const vi = {
     {
       type: 'choice',
       prompt:
-        'Một đồ thị có 1000 đỉnh và gần như mọi cặp đỉnh đều có cạnh nối. Bạn nên dùng bản nào của thuật toán Prim?',
+        'Một đồ thị có 1000 đỉnh và gần như mọi cặp đỉnh đều có cạnh nối. Em nên dùng bản nào của thuật toán Prim?',
       options: [
         'Bản dùng heap: O(E log V) luôn tốt hơn.',
         'Bản dùng mảng: O(V²) = 10⁶ bước, ít hơn E log V ≈ 5 × 10⁵ × 10.',
@@ -200,5 +200,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Bài tiếp theo là Luyện tập: bài toán cây khung nhỏ nhất, nơi bạn tự đoán cây, tìm cạnh nút cổ chai và cây khung tốt nhì.',
+    'Bài tiếp theo là Luyện tập: bài toán cây khung nhỏ nhất, nơi em tự đoán cây, tìm cạnh nút cổ chai và cây khung tốt nhì.',
 };
