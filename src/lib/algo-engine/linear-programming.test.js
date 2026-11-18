@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { fadd, fcmp, fmul, frac, fvalue } from './lup-decomposition.js';
+import { fadd, fcmp, fmul, frac, fvalue } from './rational.js';
 import {
   LP_PRESETS,
   MAX_COEF,
@@ -125,7 +125,7 @@ describe('simplex trace', () => {
       }
       expect(f.status).toBe('optimal');
       expect(f.z).toEqual(bestCorner(c, cons));
-      const dual = /** @type {import('./lup-decomposition.js').Frac[]} */ (f.dual);
+      const dual = /** @type {import('./rational.js').Frac[]} */ (f.dual);
       dual.forEach((y) => expect(fcmp(y, frac(0))).toBeGreaterThanOrEqual(0));
       const dualZ = dual.reduce((s, y, i) => fadd(s, fmul(y, frac(cons[i].b))), frac(0));
       expect(dualZ).toEqual(f.z);

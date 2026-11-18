@@ -1,15 +1,10 @@
 import { describe, expect, it } from 'vitest';
+import { fadd, fcmp, fdiv, frac, fmul, fsub } from './rational.js';
 import {
   LUP_PRESETS,
   MAX_ENTRY,
   MAX_SIZE,
   MIN_SIZE,
-  fadd,
-  fcmp,
-  fdiv,
-  frac,
-  fmul,
-  fsub,
   luPseudocode,
   lupPseudocode,
   lupTrace,
@@ -22,7 +17,7 @@ function seeded(seed = 1) {
   return () => (s = (s * 1664525 + 1013904223) % 4294967296) / 4294967296;
 }
 
-/** @typedef {import('./lup-decomposition.js').Frac} Frac */
+/** @typedef {import('./rational.js').Frac} Frac */
 /** @typedef {import('./lup-decomposition.js').LupFrame} LupFrame */
 
 /** @param {LupFrame[]} frames */

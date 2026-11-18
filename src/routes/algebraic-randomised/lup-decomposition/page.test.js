@@ -2,7 +2,8 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { LUP_PRESETS, MAX_ENTRY, fvalue, lupTrace } from '$lib/algo-engine/lup-decomposition.js';
+import { fvalue } from '$lib/algo-engine/rational.js';
+import { LUP_PRESETS, MAX_ENTRY, lupTrace } from '$lib/algo-engine/lup-decomposition.js';
 import { en as m } from '$lib/lessons/lup-decomposition/copy.en.js';
 import Page from './+page.svelte';
 
@@ -180,9 +181,7 @@ describe('LUP decomposition lesson', () => {
       /** @type {import('$lib/algo-engine/lup-decomposition.js').LupFrame} */ (
         lupTrace(LUP_PRESETS[p].a, LUP_PRESETS[p].b, true).at(-1)
       );
-    const x0 = /** @type {import('$lib/algo-engine/lup-decomposition.js').Frac} */ (
-      end('clrs').x[0]
-    );
+    const x0 = /** @type {import('$lib/algo-engine/rational.js').Frac} */ (end('clrs').x[0]);
     expect(fvalue(x0)).toBeCloseTo(/** @type {any} */ (m.practice[0]).answer, 9);
     expect(/** @type {any} */ (m.practice[1]).answer).toBe(end('zeroPivot').swaps);
   });

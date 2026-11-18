@@ -7,7 +7,7 @@
   import ScrollFrame from '$lib/components/scroll-frame.svelte';
   import StepControls from '$lib/components/step-controls.svelte';
   import { STATE_BG } from '$lib/components/visual-state.js';
-  import { fcmp, fvalue } from '$lib/algo-engine/lup-decomposition.js';
+  import { fcmp, fvalue } from '$lib/algo-engine/rational.js';
   import {
     LP_PRESETS,
     MAX_COEF,
@@ -144,7 +144,7 @@
       .sort((p, q) => p.angle - q.angle);
   });
 
-  /** @param {{ x: import('$lib/algo-engine/lup-decomposition.js').Frac, y: import('$lib/algo-engine/lup-decomposition.js').Frac }} p @returns {CornerRole} */
+  /** @param {{ x: import('$lib/algo-engine/rational.js').Frac, y: import('$lib/algo-engine/rational.js').Frac }} p @returns {CornerRole} */
   function roleOf(p) {
     const here = fcmp(p.x, frame.x) === 0 && fcmp(p.y, frame.y) === 0;
     if (here) return frame.status === 'optimal' ? 'best' : 'now';

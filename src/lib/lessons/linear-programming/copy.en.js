@@ -1,6 +1,6 @@
 /** @typedef {import('$lib/algo-engine/linear-programming.js').LpFrame} LpFrame */
 /** @typedef {import('$lib/algo-engine/linear-programming.js').Constraint} Constraint */
-/** @typedef {import('$lib/algo-engine/lup-decomposition.js').Frac} Frac */
+/** @typedef {import('$lib/algo-engine/rational.js').Frac} Frac */
 
 const SUB = ['₀', '₁', '₂', '₃', '₄', '₅', '₆', '₇', '₈', '₉'];
 

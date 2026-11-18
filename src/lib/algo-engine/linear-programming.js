@@ -13,7 +13,7 @@
  * prices; when the entering column has no positive entry the objective is unbounded.
  */
 
-import { fadd, fcmp, fdiv, fmul, frac, fsub, fvalue, isZero } from './lup-decomposition.js';
+import { fadd, fcmp, fdiv, fmul, frac, fsub, fvalue, isZero } from './rational.js';
 
 export const MIN_CONSTRAINTS = 1;
 export const MAX_CONSTRAINTS = 4;
@@ -21,7 +21,7 @@ export const MAX_COEF = 9;
 export const MAX_RHS = 30;
 export const MAX_PIVOTS = 20;
 
-/** @typedef {import('./lup-decomposition.js').Frac} Frac */
+/** @typedef {import('./rational.js').Frac} Frac */
 
 /**
  * @typedef {object} Constraint

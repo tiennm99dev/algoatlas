@@ -21,7 +21,7 @@
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */
-  /** @typedef {import('$lib/algo-engine/lup-decomposition.js').Frac} Frac */
+  /** @typedef {import('$lib/algo-engine/rational.js').Frac} Frac */
   /** @typedef {keyof typeof LUP_PRESETS} Preset */
   /** @typedef {keyof typeof m.roles} Role */
 

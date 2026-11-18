@@ -1,5 +1,5 @@
 /** @typedef {import('$lib/algo-engine/lup-decomposition.js').LupFrame} LupFrame */
-/** @typedef {import('$lib/algo-engine/lup-decomposition.js').Frac} Frac */
+/** @typedef {import('$lib/algo-engine/rational.js').Frac} Frac */
 
 /** A fraction as text: 3, −7/5. @param {Frac} f */
 const fracText = (f) => {

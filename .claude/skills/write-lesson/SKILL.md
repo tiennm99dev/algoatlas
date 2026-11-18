@@ -229,7 +229,8 @@ instead of writing your own copy in an engine or page.
 String lessons read a typed word with `parseLetters(text, max)` and measure the plain matcher
 with `naiveComparisons(text, pattern)`, both from `src/lib/algo-engine/text-match.js`. Number
 theory engines take `gcd`, `isPrime` and `powMod` from `src/lib/algo-engine/number-theory.js`;
-never redefine them in an engine, copy or page.
+never redefine them in an engine, copy or page. Exact fractions (`Frac`, `frac`, `fadd`, `fsub`,
+`fmul`, `fdiv`, `isZero`, `fcmp`, `fabs`, `fvalue`) come from `src/lib/algo-engine/rational.js`.
 Geometry engines take `sub`, `dot`, `cross`, `orient`, `turnOf`, `inBox`, `samePoint`, `dist2`
 and `hullOf` (Andrew's monotone chain) from `src/lib/algo-engine/plane-geometry.js`.
 

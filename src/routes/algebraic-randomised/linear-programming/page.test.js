@@ -9,7 +9,7 @@ import {
   MAX_RHS,
   simplexTrace,
 } from '$lib/algo-engine/linear-programming.js';
-import { fvalue } from '$lib/algo-engine/lup-decomposition.js';
+import { fvalue } from '$lib/algo-engine/rational.js';
 import { en as m } from '$lib/lessons/linear-programming/copy.en.js';
 import Page from './+page.svelte';
 

@@ -5,47 +5,15 @@
  * L unit lower triangular. Partial pivoting picks the row with the largest |a[i][k]| at or
  * below row k; the plain LU variant always pivots on a[k][k] and fails on a zero there even when
  * A is invertible. Arithmetic is exact with fractions, so the steps can be checked by hand.
- *
- * The fraction helpers are exported for other engines that need exact rational arithmetic.
  */
 
-import { gcd } from './number-theory.js';
+import { fabs, fcmp, fdiv, fmul, frac, fsub, isZero } from './rational.js';
+
+/** @typedef {import('./rational.js').Frac} Frac */
 
 export const MIN_SIZE = 2;
 export const MAX_SIZE = 4;
 export const MAX_ENTRY = 9;
-
-/**
- * A fraction num/den in lowest terms with den > 0.
- * @typedef {object} Frac
- * @property {number} num
- * @property {number} den
- */
-
-/** @param {number} num @param {number} [den] @returns {Frac} */
-export function frac(num, den = 1) {
-  if (den === 0) throw new Error('zero denominator');
-  const g = gcd(num, den) || 1;
-  const sign = den < 0 ? -1 : 1;
-  return { num: (sign * num) / g + 0, den: (sign * den) / g };
-}
-
-/** @param {Frac} p @param {Frac} q */
-export const fadd = (p, q) => frac(p.num * q.den + q.num * p.den, p.den * q.den);
-/** @param {Frac} p @param {Frac} q */
-export const fsub = (p, q) => frac(p.num * q.den - q.num * p.den, p.den * q.den);
-/** @param {Frac} p @param {Frac} q */
-export const fmul = (p, q) => frac(p.num * q.num, p.den * q.den);
-/** @param {Frac} p @param {Frac} q */
-export const fdiv = (p, q) => frac(p.num * q.den, p.den * q.num);
-/** @param {Frac} p */
-export const isZero = (p) => p.num === 0;
-/** Compares p and q: negative, zero or positive. @param {Frac} p @param {Frac} q */
-export const fcmp = (p, q) => p.num * q.den - q.num * p.den;
-/** @param {Frac} p */
-export const fabs = (p) => frac(Math.abs(p.num), p.den);
-/** @param {Frac} p */
-export const fvalue = (p) => p.num / p.den;
 
 /** Line names, mapped to indices per variant so each pseudocode is covered line by line. */
 const LINES = {
