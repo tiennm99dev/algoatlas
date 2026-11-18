@@ -133,7 +133,7 @@
   </div>
 
   <div class="grid gap-4 lg:grid-cols-[1fr_22rem]">
-    <div class="flex flex-col gap-4 lg:col-start-1 lg:row-start-1">
+    <div class="flex min-w-0 flex-col gap-4 lg:col-start-1 lg:row-start-1">
       <div class="rounded-xl border border-slate-200 bg-white p-4">
         <!-- One-row view of the live window over n + 1 slots, so hi = n is representable even when cells wrap. -->
         <div

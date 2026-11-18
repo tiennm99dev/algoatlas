@@ -188,7 +188,7 @@
   </div>
 
   <div class="grid gap-4 lg:grid-cols-[1fr_22rem]">
-    <div class="flex flex-col gap-4 lg:col-start-1 lg:row-start-1">
+    <div class="flex min-w-0 flex-col gap-4 lg:col-start-1 lg:row-start-1">
       <div class="rounded-xl border border-slate-200 bg-white p-4">
         <!-- One-row view of the live window, so the halving is visible even when cells wrap onto several rows. -->
         <div class="relative mb-3 h-2 rounded bg-slate-200" aria-hidden="true">
