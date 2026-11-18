@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { SCROLL_BOXES } from './scroll-regions.js';
 import { OWN_KEYS, playerKey } from './step-keys.js';
 
 /**
@@ -25,6 +26,14 @@ describe('playerKey', () => {
     expect(playerKey(press('ArrowRight'), at())).toBe('step');
     expect(playerKey(press('ArrowLeft'), at())).toBe('back');
     expect(playerKey(press('ArrowUp'), at())).toBeNull();
+  });
+
+  it('leaves arrows to a focused scroll box but not to a cell inside one', () => {
+    /** @type {{ closest: (sel: string) => unknown }} */
+    const box = { closest: (sel) => (sel === SCROLL_BOXES ? box : null) };
+    expect(playerKey(press('ArrowRight'), box)).toBeNull();
+    const inside = { closest: (/** @type {string} */ sel) => (sel === SCROLL_BOXES ? box : null) };
+    expect(playerKey(press('ArrowRight'), inside)).toBe('step');
   });
 
   it('leaves arrows a widget already handled', () => {

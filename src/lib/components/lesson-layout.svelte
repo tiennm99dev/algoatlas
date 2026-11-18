@@ -2,6 +2,7 @@
   import { t } from '$lib/i18n/index.js';
   import { resolve } from '$app/paths';
   import { lessonNeighbors, topicPath } from '$lib/lessons/paths.js';
+  import { scrollRegions } from './scroll-regions.js';
 
   /**
    * @type {{
@@ -26,7 +27,9 @@
   <meta name="description" content={lesson.summary ?? lesson.intro} />
 </svelte:head>
 
-<article class="mx-auto max-w-5xl px-4 py-8">
+<!-- Every scrolling box in the lesson gets a tab stop while it overflows with nothing
+     focusable inside, so a keyboard user can scroll it. -->
+<article class="mx-auto max-w-5xl px-4 py-8" use:scrollRegions>
   <nav class="mb-4 text-sm">
     <a
       href={resolve(/** @type {'/'} */ (topicPath(lesson.topic)))}

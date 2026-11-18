@@ -166,6 +166,10 @@ House rules:
 - Keyboard: everything the pointer can do, the keyboard can do. Buttons use `aria-disabled`
   instead of `disabled` when focus would otherwise be lost.
 - Desktop first, but nothing may overflow at 390 px: wide drawings scroll inside their card.
+  `lesson-layout` gives every `overflow-x-auto` or `overflow-auto` box a tab stop and a focus
+  ring while it overflows with nothing focusable inside (`scroll-regions.js`), and arrow keys
+  pressed on it scroll it instead of stepping the player, so a plain scrolling `div` needs no `tabindex` of its own; wrap an
+  SVG drawing in `ScrollFrame` instead when it should keep a readable minimum width.
 
 ## 7. Shared components
 
@@ -218,8 +222,9 @@ the editable parent-list model (`RootedTree`, `MAX_NODES`, `isRootedTree`, `chil
 its card, so a wide tree never shrinks its labels.
 Edge-list shortest-path engines share `src/lib/algo-engine/weighted-edges.js`: `indexEdges(ids,
 edges)` numbers the vertices and lists the edges by index, and `cycleFrom(parent, start, n)`
-reads a negative cycle out of the parent links. Unweighted vertex-cover style engines take
-`indexPairs(ids, edges)` (`{ n, pairs }`, no loops or repeats) from `plain-edges.js`. Graph engines build adjacency with
+reads a negative cycle out of the parent links. Unweighted engines that only need which vertices
+are joined take `indexPairs(ids, edges)` (`{ n, pairs }`, no loops, unknown ids or repeats) from
+`src/lib/algo-engine/plain-edges.js`. Graph engines build adjacency with
 `src/lib/algo-engine/graph-adjacency.js`: `arcLists(ids, edges, directed)` gives
 `{ n, out, inn }`, each list of `{ to, edge }` sorted by the other end, and
 `neighbourLists(lists)` keeps only the ends. Strongly connected components go through

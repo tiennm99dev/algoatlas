@@ -28,6 +28,7 @@
 <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 <div
   bind:this={el}
+  data-scroll-frame
   class="focus-ring overflow-x-auto rounded"
   tabindex={overflowing ? 0 : undefined}
   role="group"
