@@ -26,7 +26,7 @@ export const bubblePseudocode = [
   '  for i = 0 to end-1:',
   '    if a[i] > a[i+1]:',
   '      swap(a[i], a[i+1]); swapped = true',
-  '  if not swapped: dá»«ng',
+  '  if not swapped: break',
   'xong — mảng đã được sắp xếp',
 ];
 

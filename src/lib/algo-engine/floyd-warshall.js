@@ -39,8 +39,8 @@ export const MAX_WEIGHT = 99;
  */
 
 export const floydPseudocode = [
-  'dist[i][j] = w(i, j) nếu có cạnh, 0 khi i = j, ∞ nếu không',
-  'next[i][j] = j với mỗi cạnh i → j',
+  'dist[i][j] = w(i, j) if có cạnh, 0 if i = j, else ∞',
+  'next[i][j] = j với mọi cạnh i → j',
   'for k in V:    // giờ k được làm điểm dừng trung gian',
   '  for i in V:',
   '    for j in V:',

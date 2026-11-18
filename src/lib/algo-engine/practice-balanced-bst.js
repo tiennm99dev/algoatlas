@@ -33,7 +33,7 @@ export const OP_LETTERS = /** @type {const} */ ({
 export const runnerPseudocode = [
   'for op in ops:',
   '  BST thường: đi xuống từ gốc, không sửa gì',
-  '  cây AVL: đi xuống từ gốc, rồi quay nếu một hệ số đạt ±2',
+  '  cây AVL: đi xuống từ gốc, rồi quay khi một hệ số đạt ±2',
   '  skip list: sang phải và tụt xuống; chèn thì tung đồng xu để chọn chiều cao',
   '  rank, không lưu số đếm: so sánh các khoá theo thứ tự tăng dần đến khi gặp khoá ≥ k',
   '  rank, có lưu số đếm: đi một đường, cộng dồn những gì bỏ qua',

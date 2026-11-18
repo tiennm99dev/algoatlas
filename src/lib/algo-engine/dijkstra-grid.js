@@ -30,7 +30,7 @@ export const dijkstraPseudocode = [
   'while pq khác rỗng:',
   '  (d, cell) = pq.popMin()',
   '  if d > dist[cell]: continue                 // mục cũ',
-  '  if cell == goal: lần theo parent để dựng đường đi; dá»«ng',
+  '  if cell == goal: lần theo parent để dựng đường đi; return',
   '  for neighbor in openNeighbors(cell):',
   '    nd = d + step(cell, neighbor)     // trung bình chi phí của hai ô',
   '    if nd < dist[neighbor]:',

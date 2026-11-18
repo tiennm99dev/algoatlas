@@ -42,7 +42,7 @@ export const MAX_POINTS = 24;
 
 export const grahamPseudocode = [
   'function grahamScan(points):',
-  '  pivot = điểm thấp nhất, nếu hoà lấy điểm bên trái nhất',
+  '  pivot = điểm thấp nhất; if hoà: điểm bên trái nhất',
   '  sắp xếp các điểm còn lại theo góc quanh pivot, hoà thì điểm gần trước',
   '  for p in thứ tự đó, sau pivot:',
   '    while size ≥ 2 and orient(second, top, p) ≤ 0:',

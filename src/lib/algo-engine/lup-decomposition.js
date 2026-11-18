@@ -24,7 +24,7 @@ const LINES = {
 export const lupPseudocode = [
   'for k = 0 to n − 1:',
   '  p = hàng i ≥ k có |a[i][k]| lớn nhất',
-  '  if a[p][k] = 0: dừng, A suy biến',
+  '  if a[p][k] = 0: return   // A suy biến',
   '  swap hàng k và hàng p của a, và π[k] với π[p]',
   '  for i = k + 1 to n − 1:',
   '    a[i][k] = a[i][k] / a[k][k]      (ghi vào L)',
@@ -37,7 +37,7 @@ export const lupPseudocode = [
 export const luPseudocode = [
   'for k = 0 to n − 1:',
   '  p = k   (không chọn chốt)',
-  '  if a[k][k] = 0: dừng, chốt bằng 0',
+  '  if a[k][k] = 0: return   // chốt bằng 0',
   '  for i = k + 1 to n − 1:',
   '    a[i][k] = a[i][k] / a[k][k]      (ghi vào L)',
   '    a[i][j] −= a[i][k] · a[k][j] với j > k   (U)',

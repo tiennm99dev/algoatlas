@@ -71,7 +71,7 @@ export const fibonacciPseudocode = [
   '  if y tồn tại and k < key(y):',
   '    cut(x): đưa x lên danh sách gốc, bỏ đánh dấu',
   '    while y có cha:',
-  '      if y chưa được đánh dấu: đánh dấu y; dá»«ng',
+  '      if y chưa được đánh dấu: đánh dấu y; break',
   '      cut(y); y = cha cũ của y    // cắt dây chuyền',
   '  if k < key(min): min = x',
 ];

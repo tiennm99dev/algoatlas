@@ -48,7 +48,7 @@ export const bellmanFordPseudocode = [
   '  for (u, v, w) in edges:',
   '    if dist[u] + w < dist[v]:',
   '      dist[v] = dist[u] + w; parent[v] = u',
-  '  if not changed: dá»«ng    // dừng sớm, không có chu trình âm',
+  '  if not changed: break    // dừng sớm, không có chu trình âm',
   'for (u, v, w) in edges:    // vòng thứ V',
   '  if dist[u] + w < dist[v]:',
   '    return "có chu trình âm"',

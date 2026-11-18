@@ -42,7 +42,7 @@ export const minHeapPseudocode = [
   '  top = a[0]; a[0] = last; n = n − 1; i = 0',
   '  while 2i + 1 < n:            // i còn con',
   '    c = con nhỏ hơn của i',
-  '    if a[c] ≥ a[i]: dá»«ng',
+  '    if a[c] ≥ a[i]: break',
   '    swap(a[i], a[c]); i = c',
   '  return top',
 ];
@@ -56,7 +56,7 @@ export const maxHeapPseudocode = [
   '  top = a[0]; a[0] = last; n = n − 1; i = 0',
   '  while 2i + 1 < n:            // i còn con',
   '    c = con lớn hơn của i',
-  '    if a[c] ≤ a[i]: dá»«ng',
+  '    if a[c] ≤ a[i]: break',
   '    swap(a[i], a[c]); i = c',
   '  return top',
 ];

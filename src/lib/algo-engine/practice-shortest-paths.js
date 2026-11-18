@@ -79,7 +79,7 @@ export const pseudocode = {
     'dist[s] = 0, mọi dist khác = ∞',
     'for i = 1 to V − 1:',
     '  for (u, v, w) in edges: if dist[u] + w < dist[v]: dist[v] = dist[u] + w',
-    '  if not changed: dá»«ng    // dừng sớm',
+    '  if not changed: break    // dừng sớm',
     'if còn cạnh nới lỏng được: báo có chu trình âm',
     'return dist',
   ],

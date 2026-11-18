@@ -56,10 +56,10 @@ const pseudocodeFor = (method) => [
   '    nối k vào cuối chuỗi b',
   '  dò: for i = 0, 1, …, 10:',
   PROBE_LINE[method],
-  '    if ô s trống: đặt k vào đó rồi dừng',
+  '    if ô s trống: đặt k vào đó; return',
   '    else ô s đã có khoá: va chạm, thử i + 1',
   '  mọi lần dò đều gặp ô đã có khoá: chèn thất bại',
-  'search(k): cùng thứ tự; dừng ở k (tìm thấy) hoặc ở ô trống (không thấy)',
+  'search(k): cùng thứ tự; return khi gặp k (tìm thấy) hoặc ô trống (không thấy)',
 ];
 
 /** @type {Record<ProbeMethod, string[]>} */

@@ -25,7 +25,7 @@ export const PROBLEMS = /** @type {Problem[]} */ (['recurrence', 'bignum']);
 /** @type {Record<Problem, string[]>} */
 export const PSEUDOCODE = {
   recurrence: [
-    'dựng M cỡ k (k + 1 nếu có hằng số d):',
+    'dựng M cỡ k (k + 1 if có hằng số d):',
     '  hàng 0 = c₁ … cₖ (rồi d)',
     '  hàng i = 1 ở cột i − 1, với i = 1 … k − 1',
     '  hàng cuối = 0 … 0 1   // giữ hằng số 1',

@@ -46,11 +46,11 @@ export const MAX_COST = 99;
 export const hungarianPseudocode = [
   'u[i] = 0, v[j] = 0; chi phí rút gọn r(i, j) = c(i, j) − u[i] − v[j] ≥ 0',
   'for i in rows: phát triển một cây xen kẽ từ hàng i',
-  '  lặp lại: for j in cột ngoài cây,',
+  '  loop: for j in cột ngoài cây,',
   '    slack[j] = min(slack[j], r(hàng mới nhất của cây, j))',
   '    δ = slack nhỏ nhất; j = cột của nó',
   '    u += δ trên các hàng của cây, v −= δ trên các cột của cây (r vẫn ≥ 0, r(·, j) thành 0)',
-  '    thêm cột j vào cây; if j đã có hàng: thêm hàng đó và lặp lại',
+  '    thêm cột j vào cây; if j đã có hàng: thêm hàng đó; continue',
   '  j còn trống: lật đường xen kẽ từ j về hàng i',
   'return phép phân công; chi phí của nó bằng Σ u + Σ v',
 ];

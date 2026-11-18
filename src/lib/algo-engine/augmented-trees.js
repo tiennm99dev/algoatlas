@@ -19,7 +19,7 @@ export const orderPseudocode = [
   'trên đường đi ngược lên, tại mỗi nút tổ tiên:',
   '  size = 1 + size(left) + size(right)',
   '  hệ số cân bằng ±2: quay và tính lại size của hai nút bị dời',
-  'select(k): x = root (1 ≤ k ≤ size(root), nếu không thì không có khoá đó)',
+  'select(k): x = root (1 ≤ k ≤ size(root), else không có khoá đó)',
   '  s = size(x.left) + 1',
   '  k = s: return x',
   '  k < s: x = x.left',

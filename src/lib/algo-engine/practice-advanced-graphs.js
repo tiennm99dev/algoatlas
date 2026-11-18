@@ -69,7 +69,7 @@ export const failurePseudocode = [
 export const cyclePseudocode = [
   'chạy phép tìm SCC của Tarjan trên các mô-đun (A → B: A cần B)',
   'connect(u): tin[u] = low[u] = time; time += 1; push(u)',
-  '  for v in deps[u]: connect(v) nếu chưa thăm, rồi hạ low[u] theo low[v] hoặc tin[v]',
+  '  for v in deps[u]: connect(v) if chưa thăm, rồi hạ low[u] theo low[v] hoặc tin[v]',
   '  if low[u] == tin[u]: pop stack cho tới u thành một thành phần',
   '    thành phần có từ 2 mô-đun trở lên là một vòng phụ thuộc',
   'không có vòng: thứ tự các thành phần hoàn tất là một thứ tự dựng',

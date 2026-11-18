@@ -40,7 +40,7 @@ export const millerPseudocode = [
   'for a in các cơ số từ 2 đến n − 2:',
   '  x = a^d mod n',
   '  if x == 1 or x == n − 1: a qua, sang cơ số tiếp',
-  '  lặp s − 1 lần:',
+  '  repeat s − 1 times:',
   '    x = x · x mod n',
   '    if x == n − 1: a qua, sang cơ số tiếp',
   '  a là nhân chứng, return "hợp số"',

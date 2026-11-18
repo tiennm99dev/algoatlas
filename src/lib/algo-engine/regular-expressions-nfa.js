@@ -19,8 +19,8 @@ export const nfaPseudocode = [
   'for c in input:',
   '  next = các trạng thái tới được từ set qua cạnh c',
   '  set = ε-closure(next)',
-  '  if set rỗng: dá»«ng, từ chối',
-  'chấp nhận nếu set chứa trạng thái chấp nhận',
+  '  if set rỗng: return từ chối',
+  'chấp nhận if set chứa trạng thái chấp nhận',
 ];
 
 /**

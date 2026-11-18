@@ -10,7 +10,7 @@ export const MAX_TEXT = 20;
 export const MAX_PATTERN = 8;
 
 export const boyerMoorePseudocode = [
-  'last[c] = chỉ số xa nhất bên phải của c trong P, −1 nếu không có',
+  'last[c] = chỉ số xa nhất bên phải của c trong P, −1 if không có',
   's = 0',
   'while s ≤ n − m:',
   '  j = m − 1',

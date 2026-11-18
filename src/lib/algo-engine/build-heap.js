@@ -45,7 +45,7 @@ export const bottomUpPseudocode = [
   'siftDown(a, i):',
   '  while 2i + 1 < n:          // i còn con',
   '    c = con nhỏ hơn của i',
-  '    if a[c] ≥ a[i]: dá»«ng',
+  '    if a[c] ≥ a[i]: break',
   '    swap(a[i], a[c]); i = c',
 ];
 

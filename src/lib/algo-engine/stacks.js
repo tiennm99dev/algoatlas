@@ -23,10 +23,10 @@ export const MAX_VALUE = 99;
 export const stackPseudocode = {
   array: [
     'push(v):',
-    '  if top = capacity − 1: tràn, dừng',
+    '  if top = capacity − 1: return   // tràn',
     '  top = top + 1; a[top] = v',
     'pop():',
-    '  if top = −1: rỗng, dừng',
+    '  if top = −1: return   // rỗng',
     '  v = a[top]; top = top − 1',
     '  return v',
     'peek(): return a[top]     ▹ cần top ≠ −1',
@@ -36,7 +36,7 @@ export const stackPseudocode = {
     '  node = new Node(v); node.next = top',
     '  top = node',
     'pop():',
-    '  if top = null: rỗng, dừng',
+    '  if top = null: return   // rỗng',
     '  v = top.value; top = top.next',
     '  return v',
     'peek(): return top.value  ▹ cần top ≠ null',

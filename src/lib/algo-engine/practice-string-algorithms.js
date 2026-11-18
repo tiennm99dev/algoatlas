@@ -49,7 +49,7 @@ export const searchPseudocode = {
     '  if q == m: báo khớp ở i − m + 1, q = π[q − 1]',
   ],
   boyer: [
-    'last[c] = chỉ số xa nhất bên phải của c trong P, −1 nếu không có',
+    'last[c] = chỉ số xa nhất bên phải của c trong P, −1 if không có',
     's = 0',
     'while s ≤ n − m:',
     '  j = m − 1',

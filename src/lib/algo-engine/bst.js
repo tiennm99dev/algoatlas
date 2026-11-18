@@ -10,7 +10,7 @@ export const MAX_OPS = 40;
 export const bstPseudocode = [
   'search / insert: node = root',
   '  while node != null:',
-  '    if key == node.key: tìm thấy (insert: trùng khoá, dừng)',
+  '    if key == node.key: tìm thấy (insert: trùng khoá, return)',
   '    node = key < node.key ? node.left : node.right',
   '  insert: gắn lá mới nơi đường đi rơi ra; search: không tìm thấy',
   'delete: tìm nút, rồi:',

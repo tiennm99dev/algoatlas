@@ -76,7 +76,7 @@ export const treeDpPseudocode = {
     '    inc[v] += exc[c]             // chọn v: bỏ c',
     '    exc[v] += max(inc[c], exc[c]) // bỏ v: c tự do',
     'answer = max(inc[root], exc[root])',
-    'từ trên xuống: chọn v tự do nếu inc[v] ≥ exc[v]',
+    'từ trên xuống: chọn v tự do if inc[v] ≥ exc[v]',
   ],
   reroot: [
     'down(v):                        // duyệt sau',

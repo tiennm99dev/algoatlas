@@ -55,7 +55,7 @@ export const hopcroftKarpPseudocode = [
   'match = none với mọi đỉnh',
   'loop (một pha): BFS cùng lúc từ mọi đỉnh bên trái chưa ghép,',
   '  trái → phải theo cạnh bất kì, phải → trái theo cạnh đã ghép; layer = độ sâu',
-  '  if không đến được đỉnh bên phải nào chưa ghép: dá»«ng, cách ghép đã lớn nhất',
+  '  if không đến được đỉnh bên phải nào chưa ghép: break, cách ghép đã lớn nhất',
   '  for u in left chưa ghép: DFS chỉ đi xuống đúng một tầng',
   '    if DFS kết thúc ở đỉnh bên phải chưa ghép: lật đường đó; size += 1',
   '  các đường đã lật không chung đỉnh và đều có độ dài ngắn nhất',

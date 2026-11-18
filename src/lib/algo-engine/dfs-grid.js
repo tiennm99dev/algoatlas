@@ -25,7 +25,7 @@ export const dfsPseudocode = [
   '  (cell, from) = stack.pop()',
   '  if cell in visited: continue      // bản trùng cũ',
   '  visited.add(cell); parent[cell] = from',
-  '  if cell == goal: lần theo parent để dựng đường đi; dừng',
+  '  if cell == goal: lần theo parent để dựng đường đi; return',
   '  for neighbor in neighbors(cell):  // trái, xuống, phải, lên',
   '    if open(neighbor) and neighbor not in visited: stack.push((neighbor, cell))',
   'không có đường đi — đích bị tường vây kín',

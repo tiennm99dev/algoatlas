@@ -59,8 +59,8 @@ export const medianPseudocode = [
   '  else: high.push(x)',
   '  if low.size > high.size + 1: high.push(low.popMax())',
   '  else if high.size > low.size: low.push(high.popMin())',
-  '  median = low.max nếu hai kích thước khác nhau,',
-  '           ngược lại (low.max + high.min) / 2',
+  '  median = low.max if hai kích thước khác nhau,',
+  '           else (low.max + high.min) / 2',
 ];
 
 export const closestPseudocode = [

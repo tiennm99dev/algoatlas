@@ -27,7 +27,7 @@ export const bfsPseudocode = [
   'queue = [start]; visited = {start}',
   'while queue khác rỗng:',
   '  cell = queue.dequeue()',
-  '  if cell == goal: lần theo parent để dựng đường đi; dá»«ng',
+  '  if cell == goal: lần theo parent để dựng đường đi; return',
   '  for neighbor in neighbors(cell):  // lên, phải, xuống, trái',
   '    if open(neighbor) and neighbor not in visited:',
   '      visited.add(neighbor); parent[neighbor] = cell; queue.enqueue(neighbor)',
