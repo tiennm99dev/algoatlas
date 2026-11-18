@@ -70,17 +70,17 @@ export const practiceRecursionPseudocode = {
   hanoi: [
     'hanoi(n, from, to, via):',
     '  if n == 1:',
-    '    move disk 1 from → to; return',
-    '  hanoi(n − 1, from, via, to)   // park the n − 1 smaller disks on via',
-    '  move disk n from → to',
-    '  hanoi(n − 1, via, to, from)   // stack them back on top of disk n',
+    '    move(1, from, to); return',
+    '  hanoi(n − 1, from, via, to)   // cất n − 1 đĩa nhỏ hơn ở via',
+    '  move(n, from, to)',
+    '  hanoi(n − 1, via, to, from)   // xếp chúng trở lại lên trên đĩa n',
   ],
   subsets: [
     'subsets(i, chosen):',
     '  if i == n:',
     '    output chosen; return',
-    '  subsets(i + 1, chosen)            // leave x[i] out',
-    '  subsets(i + 1, chosen + [x[i]])   // take x[i]',
+    '  subsets(i + 1, chosen)            // bỏ x[i]',
+    '  subsets(i + 1, chosen + [x[i]])   // lấy x[i]',
   ],
 };
 

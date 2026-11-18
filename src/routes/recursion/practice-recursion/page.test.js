@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/practice-recursion/copy.en.js';
+import { vi as m } from '$lib/lessons/practice-recursion/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -67,26 +67,30 @@ describe('practice: recursive thinking lesson', () => {
   it('solves three disks by trusting the smaller call', () => {
     render();
     expect(narration()).toBe(
-      'Move all 3 disks from peg A to peg C, one disk at a time, never putting a bigger disk on a smaller one.',
+      'Chuyển cả 3 đĩa từ cọc A sang cọc C, mỗi lần một đĩa, không bao giờ đặt đĩa lớn lên trên đĩa nhỏ.',
     );
     next(1);
     expect(narration()).toBe(
-      'Call hanoi(3, A, C, B). Trust the smaller call: first park the top 2 disks on B.',
+      'Gọi hanoi(3, A, C, B). Tin vào lời gọi nhỏ hơn: trước hết cất 2 đĩa trên cùng sang B.',
     );
     next(3);
-    expect(narration()).toBe('Move disk 1 from A to C (move 1). hanoi(1, A, C, B) is done.');
+    expect(narration()).toBe(
+      'Chuyển đĩa 1 từ A sang C (bước chuyển 1). hanoi(1, A, C, B) đã xong.',
+    );
     next(1);
     expect(narration()).toBe(
-      'The smaller disk is parked on C, so move disk 2 from A to B (move 2). Now bring it back on top.',
+      'Đĩa nhỏ hơn đã được cất ở C, nên chuyển đĩa 2 từ A sang B (bước chuyển 2). Giờ đưa nó trở lại lên trên.',
     );
     expect(boardLabel()).toBe(
-      'Peg A: disks 3, bottom first. Peg B: disks 2, bottom first. Peg C: disks 1, bottom first.',
+      'Cọc A: các đĩa 3, từ dưới lên. Cọc B: các đĩa 2, từ dưới lên. Cọc C: các đĩa 1, từ dưới lên.',
     );
     expect(byTest('depth')).toBe('2');
     click(button('Đến bước cuối'));
-    expect(narration()).toBe('Solved: 3 disks in 7 moves, which is 2³ − 1, the fewest possible.');
-    expect(byTest('moves')).toBe('7 of 7');
-    expect(boardLabel()).toBe('Peg A: empty. Peg B: empty. Peg C: disks 3, 2, 1, bottom first.');
+    expect(narration()).toBe(
+      'Đã giải: 3 đĩa trong 7 bước chuyển, đúng bằng 2³ − 1, ít nhất có thể.',
+    );
+    expect(byTest('moves')).toBe('7/7');
+    expect(boardLabel()).toBe('Cọc A: trống. Cọc B: trống. Cọc C: các đĩa 3, 2, 1, từ dưới lên.');
   });
 
   it('refuses a bad disk count and keeps the last valid one', () => {
@@ -96,7 +100,7 @@ describe('practice: recursive thinking lesson', () => {
     expect(field('input[name="disks"]').value).toBe('3');
     commit(field('input[name="disks"]'), '4');
     click(button('Đến bước cuối'));
-    expect(byTest('moves')).toBe('15 of 15');
+    expect(byTest('moves')).toBe('15/15');
     expect(byTest('calls')).toBe('15');
   });
 
@@ -104,13 +108,13 @@ describe('practice: recursive thinking lesson', () => {
     render();
     click(field('input[name="problem"][value="subsets"]'));
     next(4);
-    expect(narration()).toBe('i = n, every item is decided: output {}, subset 1 of 8.');
+    expect(narration()).toBe('i = n, mọi phần tử đã được quyết định: in ra {}, tập con thứ 1/8.');
     next(1);
     expect(narration()).toBe(
-      'Back in subsets(2, {}): every subset without c is listed. Now take c.',
+      'Quay lại subsets(2, {}): đã liệt kê xong mọi tập con không có c. Giờ lấy c.',
     );
     click(button('Đến bước cuối'));
-    expect(byTest('outputs')).toBe('8 of 8');
+    expect(byTest('outputs')).toBe('8/8');
     expect(byTest('calls')).toBe('15');
     expect(document.querySelectorAll('svg[role="img"] circle')).toHaveLength(15);
     expect(text()).toContain('{b, c}');
@@ -124,7 +128,7 @@ describe('practice: recursive thinking lesson', () => {
     expect(field('input[name="items"]').value).toBe('a, b, c');
     commit(field('input[name="items"]'), 'xy');
     click(button('Đến bước cuối'));
-    expect(byTest('outputs')).toBe('4 of 4');
+    expect(byTest('outputs')).toBe('4/4');
   });
 
   it('steps back with the arrow keys', () => {

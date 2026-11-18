@@ -58,15 +58,15 @@ export const recursionPseudocode = {
   fact: [
     'fact(n):',
     '  if n <= 1:',
-    '    return 1              // base case',
-    '  r = fact(n - 1)         // recursive case',
+    '    return 1              // trường hợp cơ sở',
+    '  r = fact(n - 1)         // trường hợp đệ quy',
     '  return n * r',
   ],
   fib: [
     'fib(n):',
     '  if n <= 1:',
-    '    return n              // base cases: fib(0) = 0, fib(1) = 1',
-    '  a = fib(n - 1)          // recursive case',
+    '    return n              // trường hợp cơ sở: fib(0) = 0, fib(1) = 1',
+    '  a = fib(n - 1)          // trường hợp đệ quy',
     '  b = fib(n - 2)',
     '  return a + b',
   ],
@@ -77,7 +77,9 @@ export const recursionPseudocode = {
  * @param {string[]} lines
  */
 export function withoutBaseCase(lines) {
-  return lines.map((line, i) => (i === 1 ? '  // base case removed' : i === 2 ? '  //' : line));
+  return lines.map((line, i) =>
+    i === 1 ? '  // đã bỏ trường hợp cơ sở' : i === 2 ? '  //' : line,
+  );
 }
 
 /**

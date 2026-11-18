@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/recursion-basics/copy.en.js';
+import { vi as m } from '$lib/lessons/recursion-basics/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -65,30 +65,30 @@ describe('recursion basics lesson', () => {
   it('pushes a frame per call down to the base case, then pops them', () => {
     render();
     expect(narration()).toBe(
-      'Ready to call fact(4). Each call will push its own frame onto the stack.',
+      'Sẵn sàng gọi fact(4). Mỗi lời gọi sẽ đẩy một khung riêng vào ngăn xếp.',
     );
     expect(stackRows()[0].textContent).toContain(m.stackEmpty);
     next(1);
     expect(narration()).toBe(
-      'Call fact(4): push a frame with n = 4. The stack is 1 deep. Is 4 ≤ 1?',
+      'Gọi fact(4): đẩy vào một khung với n = 4. Ngăn xếp sâu 1 khung. 4 ≤ 1 không?',
     );
     next(4);
     expect(narration()).toBe(
-      '1 ≤ 1, the base case: fact(1) returns 1 without calling itself, and its frame pops off the stack.',
+      '1 ≤ 1, trường hợp cơ sở: fact(1) trả về 1 mà không tự gọi lại, và khung của nó được lấy ra khỏi ngăn xếp.',
     );
     expect(stackRows()).toHaveLength(4);
     expect(stackRows()[0].textContent).toContain('fact(1)');
     expect(stackRows()[1].textContent).toContain('n = 2, r = ?');
     next(1);
-    expect(narration()).toBe('fact(1) returned 1. Back in fact(2), which resumes with r = 1.');
+    expect(narration()).toBe('fact(1) trả về 1. Quay lại fact(2), hàm này chạy tiếp với r = 1.');
     expect(stackRows()).toHaveLength(3);
     expect(stackRows()[0].textContent).toContain('n = 2, r = 1');
     click(button('Đến bước cuối'));
     expect(narration()).toBe(
-      'fact(4) = 24 after 4 calls. The stack was at most 4 frames deep and is empty again.',
+      'fact(4) = 24 sau 4 lời gọi. Ngăn xếp sâu nhất 4 khung và giờ đã rỗng trở lại.',
     );
     expect(byTest('result')).toBe('24');
-    expect(byTest('depth')).toBe('0 (max 4)');
+    expect(byTest('depth')).toBe('0 (tối đa 4)');
   });
 
   it('switches to Fibonacci and grows a branching call tree', () => {
@@ -99,7 +99,7 @@ describe('recursion basics lesson', () => {
     expect(byTest('calls')).toBe('9');
     expect(document.querySelectorAll('svg[role="img"] circle')).toHaveLength(9);
     click(button('Bước trước'));
-    expect(narration()).toBe('fib(4) = a + b = 2 + 1 = 3. Return 3 and pop the frame.');
+    expect(narration()).toBe('fib(4) = a + b = 2 + 1 = 3. Trả về 3 và lấy khung ra.');
   });
 
   it('refuses an n out of range and keeps the last valid one', () => {
@@ -123,7 +123,7 @@ describe('recursion basics lesson', () => {
     click(button('Đến bước cuối'));
     expect(byTest('result')).toBe(m.resultOverflow);
     expect(byTest('calls')).toBe('14');
-    expect(narration()).toContain('stack overflow after 14 calls');
+    expect(narration()).toContain('tràn ngăn xếp sau 14 lời gọi');
     expect(text()).toContain(m.legend.lost);
     click(field('input[name="base"]'));
     click(button('Đến bước cuối'));

@@ -13,7 +13,7 @@
     inductionTrace,
     parseValues,
   } from '$lib/algo-engine/recursion-induction.js';
-  import { en as m } from '$lib/lessons/recursion-induction/copy.en.js';
+  import { vi as m } from '$lib/lessons/recursion-induction/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/recursion-induction.js').InductionProgram} InductionProgram */

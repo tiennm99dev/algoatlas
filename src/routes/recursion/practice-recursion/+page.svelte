@@ -17,7 +17,7 @@
     subsetCalls,
     subsetsTrace,
   } from '$lib/algo-engine/practice-recursion.js';
-  import { en as m } from '$lib/lessons/practice-recursion/copy.en.js';
+  import { vi as m } from '$lib/lessons/practice-recursion/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/practice-recursion.js').RecursionProblem} RecursionProblem */

@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/recursion-induction/copy.en.js';
+import { vi as m } from '$lib/lessons/recursion-induction/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -65,36 +65,34 @@ describe('recursion and induction lesson', () => {
     render();
     next(1);
     expect(narration()).toBe(
-      'Initialization, before the first pass (i = 0): s = 0, and the sum of no values is 0. The invariant holds ✓.',
+      'Khởi tạo, trước lần lặp đầu tiên (i = 0): s = 0, và tổng của không giá trị nào là 0. Bất biến đúng ✓.',
     );
     next(1);
-    expect(narration()).toContain('In the middle of a pass the invariant may be broken');
+    expect(narration()).toContain('Giữa một lần lặp, bất biến có thể tạm bị phá vỡ');
     expect(byTest('verdict')).toBe(m.notChecked);
     next(1);
-    expect(narration()).toBe(
-      'Maintenance, after the pass (i = 1): s = 5, and a[0] = 5. The invariant holds ✓.',
-    );
-    expect(byTest('verdict')).toBe('✓ holds');
+    expect(narration()).toBe('Duy trì, sau lần lặp (i = 1): s = 5, và a[0] = 5. Bất biến đúng ✓.');
+    expect(byTest('verdict')).toBe('✓ đúng');
     click(button('Đến bước cuối'));
     expect(narration()).toBe(
-      'Done: the answer is 10. All 8 checks held, so the argument goes through for this input and, by the same reasoning, for every input.',
+      'Xong: đáp số là 10. Cả 8 lần kiểm tra đều đúng, nên lập luận đứng vững với đầu vào này và, theo đúng cách suy luận ấy, với mọi đầu vào.',
     );
-    expect(byTest('answer')).toContain('(right)');
+    expect(byTest('answer')).toContain('(đúng)');
     expect(byTest('passed')).toBe('8');
   });
 
   it('shows where a bug breaks the argument', () => {
     render();
     click(field('input[name="buggy"]'));
-    expect(narration()).toBe(m.bugNotice(true, 'Sum loop'));
+    expect(narration()).toBe(m.bugNotice(true, 'Vòng lặp tính tổng'));
     next(1);
     expect(narration()).toBe(
-      'Initialization, before the first pass (i = 1): s = 0, and a[0] = 5. The invariant is broken ✗.',
+      'Khởi tạo, trước lần lặp đầu tiên (i = 1): s = 0, và a[0] = 5. Bất biến bị phá vỡ ✗.',
     );
     click(button('Đến bước cuối'));
     expect(byTest('failed')).toBe('7');
     expect(byTest('passed')).toBe('0');
-    expect(byTest('answer')).toContain('(wrong)');
+    expect(byTest('answer')).toContain('(sai)');
   });
 
   it('catches the insertion sort bug on reversed input but not on sorted input', () => {
@@ -104,14 +102,16 @@ describe('recursion and induction lesson', () => {
     commit(field('select[name="preset"]'), 'sorted');
     click(button('Đến bước cuối'));
     expect(byTest('failed')).toBe('0');
-    expect(narration()).toContain('All 6 checks held on this input, yet the bug is still there');
-    expect(narration()).not.toContain('by the same reasoning');
+    expect(narration()).toContain(
+      'Cả 6 lần kiểm tra đều đúng trên đầu vào này, nhưng lỗi vẫn còn đó',
+    );
+    expect(narration()).not.toContain('theo đúng cách suy luận ấy');
     commit(field('select[name="preset"]'), 'reversed');
     click(button('Đến bước cuối'));
     expect(byTest('answer')).toContain('9, 0, 2, 4, 7');
     expect(byTest('failed')).toBe('5');
     click(button('Bước trước'));
-    expect(narration()).toContain('a[0] = 9 > a[1] = 0, so a[0..4] is not sorted');
+    expect(narration()).toContain('a[0] = 9 > a[1] = 0, nên a[0..4] chưa được sắp xếp');
   });
 
   it('proves the recursive sum by induction', () => {
@@ -119,16 +119,16 @@ describe('recursion and induction lesson', () => {
     commit(field('select[name="program"]'), 'recursive');
     next(1);
     expect(narration()).toBe(
-      'Call sum(a, 6). It needs sum(a, 5) first, so another frame goes on the stack.',
+      'Gọi sum(a, 6). Lời gọi này cần sum(a, 5) trước, nên thêm một khung được đẩy vào ngăn xếp.',
     );
     next(7);
     expect(narration()).toBe(
-      'Base case: sum(a, 0) returned 0, and the sum of no values is 0. P(0) holds ✓.',
+      'Trường hợp cơ sở: sum(a, 0) trả về 0, và tổng của không giá trị nào là 0. P(0) đúng ✓.',
     );
     expect(text()).toContain('sum(a, 0)');
     next(2);
     expect(narration()).toBe(
-      'Inductive step for P(2): r = sum(a, 1), then add a[1] = −2. Now sum(a, 2) returned 3, and the first 2 values add up to 3. P(2) holds ✓.',
+      'Bước quy nạp cho P(2): r = sum(a, 1), rồi cộng a[1] = −2. Giờ sum(a, 2) trả về 3, và tổng 2 giá trị đầu là 3. P(2) đúng ✓.',
     );
     click(button('Đến bước cuối'));
     expect(byTest('passed')).toBe('7');
