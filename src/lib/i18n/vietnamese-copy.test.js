@@ -4,7 +4,6 @@ import curriculum from '$lib/curriculum/dsa.json';
 import * as gridCopy from '$lib/lessons/grid-copy.vi.js';
 import { allTerms } from '$lib/glossary/index.js';
 import { english, glosses, names } from './glossary.js';
-import { pendingTopics } from './pending-voice.js';
 import * as siteCopy from './site.vi.js';
 
 // Every lesson copy module; each one joins these checks by its name.
@@ -141,22 +140,16 @@ const BAN_RE = wordsRe(['bạn']);
 const withoutParentheses = (text) => text.replace(/\([^()]*\)/g, ' ');
 
 /**
- * Every source the checks read: its name, its strings, and whether it still waits for the new
- * voice and terms (a lesson in a topic of `pendingTopics`).
- * @type {[string, [string, string][], boolean][]}
+ * Every source the checks read: its name and its strings.
+ * @type {[string, [string, string][]][]}
  */
 const sources = [
-  ['site.vi.js', collect(siteCopy, ''), false],
-  ['grid-copy.vi.js', collect(gridCopy, ''), false],
-  ['dsa.json', collect(curriculum, ''), false],
-  ['glossary', collect(allTerms(), ''), false],
+  ['site.vi.js', collect(siteCopy, '')],
+  ['grid-copy.vi.js', collect(gridCopy, '')],
+  ['dsa.json', collect(curriculum, '')],
+  ['glossary', collect(allTerms(), '')],
   ...Object.entries(lessonCopies).map(
-    ([file, mod]) =>
-      /** @type {[string, [string, string][], boolean]} */ ([
-        file,
-        collect(mod, ''),
-        pendingTopics.has(mod.vi.topic),
-      ]),
+    ([file, mod]) => /** @type {[string, [string, string][]]} */ ([file, collect(mod, '')]),
   ),
 ];
 
@@ -186,7 +179,7 @@ describe('the English-term and voice patterns', () => {
   });
 });
 
-describe.each(sources)('Vietnamese copy in %s', (_, strings, pending) => {
+describe.each(sources)('Vietnamese copy in %s', (_, strings) => {
   it('is NFC', () => {
     for (const [path, s] of strings) expect(s.normalize('NFC'), path).toBe(s);
   });
@@ -202,14 +195,14 @@ describe.each(sources)('Vietnamese copy in %s', (_, strings, pending) => {
     }
   });
 
-  it.skipIf(pending)('addresses the reader as "em", never "bạn"', () => {
+  it('addresses the reader as "em", never "bạn"', () => {
     for (const [path, s] of strings) {
       const hit = BAN_RE.exec(s.replace(FRIEND_RE, ' '));
       expect(hit?.[0], `${path}: ${s}`).toBeUndefined();
     }
   });
 
-  it.skipIf(pending)('writes the English terms in English outside parentheses', () => {
+  it('writes the English terms in English outside parentheses', () => {
     for (const [path, s] of strings) {
       // The glossary's own `vi` field is the Vietnamese meaning, so it is the one place they stay.
       if (path.endsWith('.vi')) continue;

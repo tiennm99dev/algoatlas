@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { exerciseProblems } from '$lib/components/answer-check.js';
 import { findLesson, lessonOrder } from '$lib/curriculum/index.js';
-import { pendingTopics, previousTitles } from '$lib/i18n/pending-voice.js';
 import { lessonPath, lessons } from './registry.js';
 
 // Page sources, read as text, show which shared building blocks a lesson page uses.
@@ -62,10 +61,6 @@ describe('next-lesson teasers', () => {
       const next = findLesson(lessonOrder[lessonOrder.indexOf(lesson.slug) + 1] ?? '');
       if (!next) return;
       const teaser = words(lesson.nextTeaser);
-      const old = pendingTopics.has(lesson.topic) ? previousTitles[next.lesson.slug] : undefined;
-      const names = (/** @type {string} */ title) =>
-        titleWords(title).every((part) => teaser.includes(part));
-      if (old && names(old)) return;
       for (const part of titleWords(next.lesson.title)) {
         expect(teaser, `${lesson.slug} → ${next.lesson.title}`).toContain(part);
       }
@@ -79,8 +74,7 @@ describe.each(lessons.map((l) => [l.slug, l]))('lesson %s', (_, lesson) => {
   const source = sourceOf(lesson);
 
   it('keeps the curriculum title and fills the copy the layout renders', () => {
-    const old = pendingTopics.has(lesson.topic) ? previousTitles[lesson.slug] : undefined;
-    if (lesson.title !== old) expect(lesson.title).toBe(plan.lesson.title);
+    expect(lesson.title).toBe(plan.lesson.title);
     for (const field of ['intro', 'instruction', 'nextTeaser']) {
       expect(lesson[/** @type {'intro'} */ (field)].trim().length, field).toBeGreaterThan(0);
     }
