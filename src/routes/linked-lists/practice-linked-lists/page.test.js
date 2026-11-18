@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
 import { mergeTrace, middleTrace, nthTrace } from '$lib/algo-engine/practice-linked-lists.js';
-import { en as m } from '$lib/lessons/practice-linked-lists/copy.en.js';
+import { vi as m } from '$lib/lessons/practice-linked-lists/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -76,12 +76,14 @@ function pickProblem(value) {
 describe('practice: linked list problems', () => {
   it('merges the two starting lists by relinking nodes', () => {
     render();
-    expect(narration()).toContain('a starts at 2, b at 1.');
+    expect(narration()).toContain('a bắt đầu ở 2, b ở 1.');
     next(1);
-    expect(narration()).toBe('1 < 2: link tail → 1 and move b on to 6.');
+    expect(narration()).toBe('1 < 2: nối tail → 1 và cho b đi tiếp tới 6.');
     expect(link('-2-next')?.getAttribute('class')).toContain('stroke-teal-700');
     click(button('Đến bước cuối'));
-    expect(narration()).toBe('Merged: 1 → 2 → 5 → 6 → 7 → 9 → 12. 6 comparisons and no new nodes.');
+    expect(narration()).toBe(
+      'Đã trộn: 1 → 2 → 5 → 6 → 7 → 9 → 12. 6 lần so sánh và không tạo nút mới nào.',
+    );
     expect(byTest('answer')).toBe('1 → 2 → 5 → 6 → 7 → 9 → 12');
     expect(byTest('comparisons')).toBe('6');
   });
@@ -117,7 +119,7 @@ describe('practice: linked list problems', () => {
     commit(input('list-a'), '10, 20, 30, 40, 50, 60');
     click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('40');
-    expect(narration()).toContain('the second of the two middle nodes of 6');
+    expect(narration()).toContain('nút thứ hai trong hai nút giữa của 6 nút');
     expect(document.querySelector('input[name="list-b"]')).toBeNull();
   });
 
@@ -127,10 +129,12 @@ describe('practice: linked list problems', () => {
     commit(input('list-a'), '5, 8, 13, 21, 34');
     commit(input('n'), '2');
     next(2);
-    expect(narration()).toBe('fast moves to 8: now 2 of 2 steps ahead of slow.');
+    expect(narration()).toBe('fast dời tới 8: giờ đã đi trước slow 2/2 bước.');
     click(button('Đến bước cuối'));
-    expect(byTest('answer')).toBe('removed 21');
-    expect(narration()).toBe('Return dummy.next: 5 → 8 → 13 → 34. One pass, 8 pointer moves.');
+    expect(byTest('answer')).toBe('đã xoá 21');
+    expect(narration()).toBe(
+      'Trả về dummy.next: 5 → 8 → 13 → 34. Một lượt duyệt, 8 lần dời con trỏ.',
+    );
   });
 
   it('removes the head through the dummy and refuses an n past the length', () => {
@@ -139,7 +143,7 @@ describe('practice: linked list problems', () => {
     commit(input('list-a'), '5, 8, 13');
     commit(input('n'), '3');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('Return dummy.next: 8 → 13.');
+    expect(narration()).toContain('Trả về dummy.next: 8 → 13.');
     commit(input('n'), '4');
     expect(narration()).toBe(m.nError(3));
     expect(input('n').value).toBe('3');

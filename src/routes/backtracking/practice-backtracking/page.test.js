@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/practice-backtracking/copy.en.js';
+import { vi as m } from '$lib/lessons/practice-backtracking/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -52,13 +52,13 @@ const toSum = () => click(field('input[name="problem"][value="sum"]'));
 describe('practice: backtracking problems lesson', () => {
   it('walks a word search to the end', () => {
     render();
-    expect(narration()).toContain('Look for ABCCED');
+    expect(narration()).toContain('Tìm ABCCED');
     click(button('Bước tiếp'));
     expect(narration()).toBe(
-      'Cell (0, 0) holds A, letter 1 of 6. Mark it as used and try its neighbours for B.',
+      'Ô (0, 0) chứa A, chữ cái thứ 1/6. Đánh dấu ô đã dùng và thử các ô kề nó để tìm B.',
     );
     click(button('Đến bước cuối'));
-    expect(byTest('result')).toBe('Found');
+    expect(byTest('result')).toBe('Đã tìm thấy');
     expect(byTest('matched')).toBe('6 / 6');
     expect(byTest('checked')).toBe('9');
     expect(byTest('retreats')).toBe('0');
@@ -68,22 +68,22 @@ describe('practice: backtracking problems lesson', () => {
     render();
     commit(field('select[name="word-preset"]'), 'absent');
     click(button('Đến bước cuối'));
-    expect(byTest('result')).toBe('Not found');
+    expect(byTest('result')).toBe('Không tìm thấy');
     expect(byTest('retreats')).toBe('4');
     expect(byTest('matched')).toBe('0 / 4');
-    expect(narration()).toContain('ABCB is not in the grid');
+    expect(narration()).toContain('ABCB không có trong lưới');
     click(button('Về bước đầu'));
     let guard = 0;
-    while (!narration().includes('retreat.') && guard++ < 40) click(button('Bước tiếp'));
-    expect(narration()).toContain('Clear its mark');
+    while (!narration().includes('rồi lùi lại.') && guard++ < 40) click(button('Bước tiếp'));
+    expect(narration()).toContain('Xoá dấu của nó');
   });
 
   it('says when a run is too long to show', () => {
     render();
     commit(field('select[name="word-preset"]'), 'trap');
     click(button('Đến bước cuối'));
-    expect(byTest('result')).toBe('Too long');
-    expect(narration()).toContain('too many paths');
+    expect(byTest('result')).toBe('Quá dài');
+    expect(narration()).toContain('quá nhiều đường đi');
   });
 
   it('edits the grid and the word', () => {
@@ -93,7 +93,7 @@ describe('practice: backtracking problems lesson', () => {
     commit(field('input[name="word"]'), 'acdb');
     expect(field('input[name="word"]').value).toBe('ACDB');
     click(button('Đến bước cuối'));
-    expect(byTest('result')).toBe('Found');
+    expect(byTest('result')).toBe('Đã tìm thấy');
     expect(field('select[name="word-preset"]').value).toBe('');
   });
 
@@ -101,30 +101,30 @@ describe('practice: backtracking problems lesson', () => {
     render();
     commit(field('input[name="grid"]'), 'AB C');
     expect(narration()).toBe(
-      'Enter 1 to 5 rows of equal length, up to 5 letters each, separated by spaces.',
+      'Hãy nhập từ 1 đến 5 hàng dài bằng nhau, mỗi hàng tối đa 5 chữ cái, cách nhau bởi dấu cách.',
     );
     expect(field('input[name="grid"]').value).toBe('ABCE SFCS ADEE');
     commit(field('input[name="word"]'), 'A1');
-    expect(narration()).toBe('The word must be 1 to 12 letters from A to Z.');
+    expect(narration()).toBe('Từ phải gồm từ 1 đến 12 chữ cái từ A đến Z.');
     expect(field('input[name="word"]').value).toBe('ABCCED');
     toSum();
     commit(field('input[name="candidates"]'), '0');
-    expect(narration()).toBe('Enter 1 to 6 different whole numbers from 1 to 20.');
+    expect(narration()).toBe('Hãy nhập từ 1 đến 6 số nguyên khác nhau, mỗi số từ 1 đến 20.');
     expect(field('input[name="candidates"]').value).toBe('2 3 6 7');
     commit(field('input[name="total"]'), '31');
-    expect(narration()).toBe('The total must be a whole number from 1 to 30.');
+    expect(narration()).toBe('Tổng phải là số nguyên từ 1 đến 30.');
     expect(field('input[name="total"]').value).toBe('7');
   });
 
   it('jumps to the first check of a cell, by pointer and by keyboard', () => {
     render();
     click(cell(0, 2));
-    expect(narration()).toContain('Cell (0, 2)');
+    expect(narration()).toContain('Ô (0, 2)');
     cell(1, 2).dispatchEvent(
       new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }),
     );
     flushSync();
-    expect(narration()).toContain('Cell (1, 2)');
+    expect(narration()).toContain('Ô (1, 2)');
   });
 
   it('says so when a cell the search never reached is picked', () => {
@@ -136,10 +136,10 @@ describe('practice: backtracking problems lesson', () => {
   it('solves combination sum and shows the results', () => {
     render();
     toSum();
-    expect(narration()).toContain('adds up to 7');
+    expect(narration()).toContain('có tổng bằng 7');
     click(button('Bước tiếp'));
     expect(narration()).toBe(
-      'Pick 2, leaving 5 to reach. The next call may pick 2 again, but nothing before it.',
+      'Chọn 2, còn thiếu 5. Lời gọi tiếp theo được chọn lại 2, nhưng không được chọn số nào đứng trước nó.',
     );
     click(button('Đến bước cuối'));
     expect(byTest('solutions')).toBe('2');
@@ -169,7 +169,7 @@ describe('practice: backtracking problems lesson', () => {
     toSum();
     expect(byTest('calls')).toBe('1');
     click(field('input[name="problem"][value="word"]'));
-    expect(byTest('result')).toBe('Found');
+    expect(byTest('result')).toBe('Đã tìm thấy');
   });
 
   it('checks a practice answer, wrong then right, with a hint', () => {
@@ -193,7 +193,7 @@ describe('practice: backtracking problems lesson', () => {
       (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {Element} */ (hint));
-    expect(q.textContent).toContain('read Retreats');
+    expect(q.textContent).toContain('Số lần lùi');
     answer.value = '4';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();

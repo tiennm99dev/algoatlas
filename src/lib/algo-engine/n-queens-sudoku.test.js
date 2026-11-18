@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { en as m } from '$lib/lessons/n-queens-sudoku/copy.en.js';
+import { vi as m } from '$lib/lessons/n-queens-sudoku/copy.vi.js';
 import {
   MAX_FRAMES,
   MAX_QUEENS,

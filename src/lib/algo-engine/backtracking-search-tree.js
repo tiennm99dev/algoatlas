@@ -52,15 +52,15 @@ export const SEARCH_PRESETS = [
 
 const LINES = /** @type {const} */ ([
   ['call', 'search(i, sum):'],
-  ['over', '  if sum > target: return   // prune: too big'],
-  ['short', '  if sum + rest[i] < target: return   // prune: too small'],
+  ['over', '  if sum > target: return   // cắt tỉa: quá lớn'],
+  ['short', '  if sum + rest[i] < target: return   // cắt tỉa: quá nhỏ'],
   ['leaf', '  if i == n:'],
   ['record', '    if sum == target: record chosen'],
   ['back', '    return'],
-  ['choose', '  chosen.push(a[i])   // choose'],
-  ['exploreTake', '  search(i + 1, sum + a[i])   // explore'],
-  ['undo', '  chosen.pop()   // unchoose'],
-  ['exploreSkip', '  search(i + 1, sum)   // explore without a[i]'],
+  ['choose', '  chosen.push(a[i])   // chọn'],
+  ['exploreTake', '  search(i + 1, sum + a[i])   // khám phá'],
+  ['undo', '  chosen.pop()   // bỏ chọn'],
+  ['exploreSkip', '  search(i + 1, sum)   // khám phá khi bỏ a[i]'],
 ]);
 
 /** @typedef {typeof LINES[number][0]} LineKey */

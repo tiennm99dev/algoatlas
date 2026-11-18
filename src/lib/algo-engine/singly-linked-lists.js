@@ -17,7 +17,7 @@ export const singlyPseudocode = [
   '  head = node',
   'deleteHead(): if head: head = head.next',
   'get(i): cur = head',
-  '  repeat i times: cur = cur.next',
+  '  for k = 1 to i: cur = cur.next',
   'delete(v): prev = null; cur = head',
   '  while cur and cur.value ≠ v:',
   '    prev = cur; cur = cur.next',

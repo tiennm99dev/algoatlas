@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { en as m } from '$lib/lessons/branch-and-bound/copy.en.js';
+import { vi as m } from '$lib/lessons/branch-and-bound/copy.vi.js';
 import {
   BNB_PRESETS,
   MAX_ITEMS,

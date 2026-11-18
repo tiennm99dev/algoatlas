@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/doubly-circular-lists/copy.en.js';
+import { vi as m } from '$lib/lessons/doubly-circular-lists/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -77,19 +77,19 @@ const link = (key) => document.querySelector(`path[data-link="${key}"]`);
 describe('doubly and circular linked lists lesson', () => {
   it('opens on a removal and shows both pointer updates', () => {
     render();
-    expect(narration()).toContain('Remove 20. We already hold the node');
+    expect(narration()).toContain('Gỡ 20. Ta đang cầm sẵn nút này');
     next(1);
-    expect(narration()).toBe('10.next = 30: walking forward now skips 20.');
+    expect(narration()).toBe('10.next = 30: đi xuôi giờ bỏ qua 20.');
     expect(byTest('writes')).toBe('1');
     expect(link('0-next')?.getAttribute('class')).toContain('stroke-teal-700');
     next(1);
-    expect(narration()).toBe('30.prev = 10: walking backward skips 20 too.');
+    expect(narration()).toBe('30.prev = 10: đi ngược cũng bỏ qua 20.');
     expect(link('2-prev')?.getAttribute('class')).toContain('stroke-teal-700');
     next(1);
-    expect(narration()).toBe('20 is freed after 2 pointer writes. The list holds 3 nodes.');
+    expect(narration()).toBe('20 được giải phóng sau 2 lần ghi con trỏ. Danh sách có 3 nút.');
     click(button('Đến bước cuối'));
     expect(listLabel()).toBe(
-      'Circular doubly linked list: S ⇄ 10 ⇄ 30 ⇄ 40 ⇄ back to S. Backwards: 40, 30, 10.',
+      'Danh sách liên kết đôi, vòng: S ⇄ 10 ⇄ 30 ⇄ 40 ⇄ quay về S. Đi ngược: 40, 30, 10.',
     );
   });
 
@@ -97,11 +97,11 @@ describe('doubly and circular linked lists lesson', () => {
     render();
     click(node(2));
     expect(byTest('selected')).toBe('30');
-    click(buttonByText('Remove selected'));
-    expect(narration()).toContain('Remove 30.');
+    click(buttonByText('Gỡ nút đã chọn'));
+    expect(narration()).toContain('Gỡ 30.');
     click(button('Đến bước cuối'));
-    expect(listLabel()).toContain('S ⇄ 10 ⇄ 40 ⇄ back to S');
-    expect(byTest('selected')).toBe('none');
+    expect(listLabel()).toContain('S ⇄ 10 ⇄ 40 ⇄ quay về S');
+    expect(byTest('selected')).toBe('chưa chọn');
   });
 
   it('picks a node with the arrow keys and Enter', () => {
@@ -119,7 +119,7 @@ describe('doubly and circular linked lists lesson', () => {
 
   it('refuses to remove the sentinel or nothing at all', () => {
     render();
-    click(buttonByText('Remove selected'));
+    click(buttonByText('Gỡ nút đã chọn'));
     expect(narration()).toBe(m.pickFirst);
     click(node(-2));
     expect(narration()).toBe(m.sentinelPick);
@@ -136,24 +136,24 @@ describe('doubly and circular linked lists lesson', () => {
     click(button('Đến bước cuối'));
     expect(byTest('special')).toBe('1');
     expect(listLabel()).toBe(
-      'Doubly linked list: null ← 10 ⇄ 30 ⇄ 40 → null. Backwards: 40, 30, 10.',
+      'Danh sách liên kết đôi: null ← 10 ⇄ 30 ⇄ 40 → null. Đi ngược: 40, 30, 10.',
     );
     click(node(0));
-    click(buttonByText('Remove selected'));
+    click(buttonByText('Gỡ nút đã chọn'));
     next(1);
-    expect(narration()).toBe('10 has no node before it, so head moves to 30. A special case.');
+    expect(narration()).toBe(
+      '10 không có nút nào đứng trước, nên head dời sang 30. Một trường hợp đặc biệt.',
+    );
     expect(byTest('special')).toBe('2');
   });
 
   it('inserts at the front after the sentinel', () => {
     render();
     commit(input('value'), '5');
-    click(buttonByText('Insert at front'));
-    expect(narration()).toBe(
-      'Make a node for 5 with prev = S and next = 10. Nothing points at it yet.',
-    );
+    click(buttonByText('Thêm vào đầu'));
+    expect(narration()).toBe('Tạo một nút cho 5 với prev = S và next = 10. Chưa có gì trỏ tới nó.');
     click(button('Đến bước cuối'));
-    expect(listLabel()).toContain('S ⇄ 5 ⇄ 10 ⇄ 30 ⇄ 40 ⇄ back to S');
+    expect(listLabel()).toContain('S ⇄ 5 ⇄ 10 ⇄ 30 ⇄ 40 ⇄ quay về S');
   });
 
   it('inserts at the back when Enter submits the form', () => {
@@ -163,8 +163,8 @@ describe('doubly and circular linked lists lesson', () => {
     form.requestSubmit();
     flushSync();
     click(button('Đến bước cuối'));
-    expect(listLabel()).toContain('40 ⇄ 50 ⇄ back to S');
-    expect(buttonByText('Insert at front').type).toBe('button');
+    expect(listLabel()).toContain('40 ⇄ 50 ⇄ quay về S');
+    expect(buttonByText('Thêm vào đầu').type).toBe('button');
   });
 
   it('keeps the last valid value when the field is emptied or out of range', () => {
@@ -177,12 +177,12 @@ describe('doubly and circular linked lists lesson', () => {
 
   it('empties down to the sentinel on reset and refills from a preset', () => {
     render();
-    click(buttonByText('Reset'));
-    expect(listLabel()).toContain('only the sentinel S');
+    click(buttonByText('Xoá hết'));
+    expect(listLabel()).toContain('chỉ có nút cầm canh S');
     commit(/** @type {HTMLSelectElement} */ (document.querySelector('select')), 'front');
-    expect(listLabel()).toContain('S ⇄ 40 ⇄ 30 ⇄ 20 ⇄ 10 ⇄ back to S');
-    click(buttonByText('Undo last'));
-    expect(listLabel()).toContain('S ⇄ 30 ⇄ 20 ⇄ 10 ⇄ back to S');
+    expect(listLabel()).toContain('S ⇄ 40 ⇄ 30 ⇄ 20 ⇄ 10 ⇄ quay về S');
+    click(buttonByText('Hoàn tác'));
+    expect(listLabel()).toContain('S ⇄ 30 ⇄ 20 ⇄ 10 ⇄ quay về S');
   });
 
   it('checks a practice answer, wrong then right, with a hint', () => {

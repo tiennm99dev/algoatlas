@@ -14,7 +14,7 @@
     techniqueTrace,
     walkValues,
   } from '$lib/algo-engine/linked-list-techniques.js';
-  import { en as m } from '$lib/lessons/linked-list-techniques/copy.en.js';
+  import { vi as m } from '$lib/lessons/linked-list-techniques/copy.vi.js';
   import PointerDiagram from '$lib/lessons/singly-linked-lists/pointer-diagram.svelte';
   import { createPlayer } from '$lib/player/player.svelte.js';
 

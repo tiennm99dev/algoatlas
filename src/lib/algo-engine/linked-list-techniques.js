@@ -14,9 +14,9 @@ export const NIL = -1;
 
 export const reversePseudocode = [
   'prev = null; curr = head',
-  'while curr is not null:',
-  '  next = curr.next        // save the rest',
-  '  curr.next = prev        // flip one arrow',
+  'while curr != null:',
+  '  next = curr.next        // lưu phần còn lại',
+  '  curr.next = prev        // lật một mũi tên',
   '  prev = curr; curr = next',
   'head = prev',
 ];
@@ -25,11 +25,11 @@ export const floydPseudocode = [
   'slow = head; fast = head',
   'while fast and fast.next:',
   '  slow = slow.next; fast = fast.next.next',
-  '  if slow == fast: go to phase 2',
-  'return no cycle',
-  'phase 2: slow = head',
-  'while slow ≠ fast: slow, fast = one step each',
-  'return slow  // where the cycle starts',
+  '  if slow == fast: sang pha 2',
+  'return "không có chu trình"',
+  'pha 2: slow = head',
+  'while slow ≠ fast: slow = slow.next; fast = fast.next',
+  'return slow  // nơi chu trình bắt đầu',
 ];
 
 /** @type {Record<Technique, string[]>} */

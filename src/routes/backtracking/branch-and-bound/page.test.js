@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/branch-and-bound/copy.en.js';
+import { vi as m } from '$lib/lessons/branch-and-bound/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -49,19 +49,19 @@ const field = (/** @type {string} */ selector) =>
 describe('branch and bound lesson', () => {
   it('steps from the root bound to the optimum', () => {
     render();
-    expect(narration()).toContain('the bound is 175');
+    expect(narration()).toContain('cận là 175');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('highest bound is 175');
+    expect(narration()).toContain('Cận lớn nhất trong biên là 175');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Take D: value 95 is a new best');
+    expect(narration()).toContain('Lấy D: giá trị 95 là giá trị tốt nhất mới');
     expect(byTest('best')).toBe('95');
     click(button('Đến bước cuối'));
     expect(byTest('best')).toBe('150');
     expect(byTest('made')).toBe('21');
     expect(byTest('expanded')).toBe('10');
     expect(byTest('pruned')).toBe('7');
-    expect(byTest('plain')).toBe('With no bound: 27.');
-    expect(narration()).toContain('so 150 is the optimum');
+    expect(byTest('plain')).toBe('Nếu không có cận: 27.');
+    expect(narration()).toContain('nên 150 là giá trị tối ưu');
   });
 
   it('shows the items in value-per-weight order', () => {
@@ -96,11 +96,11 @@ describe('branch and bound lesson', () => {
     render();
     commit(field('input[name="items"]'), '2-40');
     expect(narration()).toBe(
-      'Enter 1 to 6 items as weight:value, each a whole number from 1 to 99.',
+      'Hãy nhập từ 1 đến 6 vật dạng khối lượng:giá trị, mỗi số là số nguyên từ 1 đến 99.',
     );
     expect(field('input[name="items"]').value).toBe('2:40 3:50 5:100 4:95');
     commit(field('input[name="capacity"]'), '0');
-    expect(narration()).toBe('The capacity must be a whole number from 1 to 99.');
+    expect(narration()).toBe('Sức chứa phải là số nguyên từ 1 đến 99.');
     expect(field('input[name="capacity"]').value).toBe('8');
   });
 
@@ -138,7 +138,7 @@ describe('branch and bound lesson', () => {
       (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {Element} */ (hint));
-    expect(q.textContent).toContain('Sort by value per weight');
+    expect(q.textContent).toContain('Sắp xếp theo giá trị trên khối lượng');
     answer.value = '175';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();

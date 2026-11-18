@@ -17,11 +17,11 @@ export const SENTINEL = -2;
 /** @typedef {'sentinel'|'plain'} ListMode */
 
 export const sentinelPseudocode = [
-  'insertAfter(x, v):  // front: x = S; back: x = S.prev',
+  'insertAfter(x, v):  // thêm vào đầu: x = S; vào cuối: x = S.prev',
   '  n = new Node(v); n.prev = x; n.next = x.next',
   '  x.next.prev = n',
   '  x.next = n',
-  'remove(n):  // n is any node but S',
+  'remove(n):  // n là nút bất kì, trừ S',
   '  n.prev.next = n.next',
   '  n.next.prev = n.prev',
   '  free n',
@@ -29,14 +29,14 @@ export const sentinelPseudocode = [
 
 export const plainPseudocode = [
   'pushFront(v): n = new Node(v); n.next = head',
-  '  if head is null: tail = n else: head.prev = n',
+  '  if head == null: tail = n else: head.prev = n',
   '  head = n',
   'pushBack(v): n = new Node(v); n.prev = tail',
-  '  if tail is null: head = n else: tail.next = n',
+  '  if tail == null: head = n else: tail.next = n',
   '  tail = n',
   'remove(n):',
-  '  if n.prev is null: head = n.next else: n.prev.next = n.next',
-  '  if n.next is null: tail = n.prev else: n.next.prev = n.prev',
+  '  if n.prev == null: head = n.next else: n.prev.next = n.next',
+  '  if n.next == null: tail = n.prev else: n.next.prev = n.prev',
   '  free n',
 ];
 

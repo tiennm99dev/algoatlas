@@ -15,7 +15,7 @@
     practiceTrace,
     randomSorted,
   } from '$lib/algo-engine/practice-linked-lists.js';
-  import { en as m } from '$lib/lessons/practice-linked-lists/copy.en.js';
+  import { vi as m } from '$lib/lessons/practice-linked-lists/copy.vi.js';
   import PointerDiagram from '$lib/lessons/singly-linked-lists/pointer-diagram.svelte';
   import { createPlayer } from '$lib/player/player.svelte.js';
 

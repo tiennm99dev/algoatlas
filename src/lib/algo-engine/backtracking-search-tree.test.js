@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { en as m } from '$lib/lessons/backtracking-search-tree/copy.en.js';
+import { vi as m } from '$lib/lessons/backtracking-search-tree/copy.vi.js';
 import {
   MAX_N,
   SEARCH_PRESETS,

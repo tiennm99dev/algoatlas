@@ -60,23 +60,23 @@ export const MAX_FRAMES = 400;
 
 export const queensPseudocode = [
   'place(row):',
-  '  if row == n: record the board; return',
+  '  if row == n: record(board); return',
   '  for col = 0 to n-1:',
-  '    if a queen attacks (row, col): continue',
-  '    put a queen at (row, col)',
+  '    if attacked(row, col): continue',
+  '    mark(row, col)   // đặt quân hậu',
   '    place(row + 1)',
-  '    take the queen back   // undo',
+  '    unmark(row, col)   // rút lại quân hậu',
 ];
 
 export const sudokuPseudocode = [
   'solve():',
-  '  find the first empty cell; if none: return true',
+  '  (r, c) = ô trống đầu tiên; if không còn: return true',
   '  for d = 1 to size:',
-  '    if d is in the row, column or box: continue',
+  '    if d đã có trong hàng, cột hoặc khối: continue',
   '    grid[r][c] = d',
   '    if solve(): return true',
-  '    grid[r][c] = empty   // undo',
-  '  return false   // no digit fits: back up',
+  '    grid[r][c] = empty   // huỷ',
+  '  return false   // không chữ số nào hợp lệ: lùi lại',
 ];
 
 /**

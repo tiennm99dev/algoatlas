@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/linked-list-techniques/copy.en.js';
+import { vi as m } from '$lib/lessons/linked-list-techniques/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -70,12 +70,12 @@ const link = (key) => document.querySelector(`path[data-link="${key}"]`);
 describe('linked list techniques lesson', () => {
   it('races slow and fast until they meet, then finds the cycle start', () => {
     render();
-    expect(narration()).toContain('slow and fast both start at the head, 3.');
+    expect(narration()).toContain('slow và fast cùng bắt đầu ở nút đầu, 3.');
     next(6);
-    expect(narration()).toContain('slow and fast meet at 6 after 5 rounds');
+    expect(narration()).toContain('slow và fast gặp nhau ở 6 sau 5 lượt');
     click(button('Đến bước cuối'));
     expect(narration()).toBe(
-      'The cycle starts at #2 (5), found with 19 pointer moves and two extra pointers.',
+      'Chu trình bắt đầu ở #2 (5), tìm được sau 19 lần dời con trỏ, chỉ dùng thêm hai con trỏ.',
     );
     expect(byTest('steps')).toBe('7');
     expect(byTest('mu')).toBe('2');
@@ -86,16 +86,18 @@ describe('linked list techniques lesson', () => {
     render();
     commit(/** @type {HTMLSelectElement} */ (document.querySelector('select[name="cycle"]')), '-1');
     click(button('Đến bước cuối'));
-    expect(narration()).toBe('No cycle, found with 9 pointer moves and two extra pointers.');
+    expect(narration()).toBe(
+      'Không có chu trình, biết được sau 9 lần dời con trỏ, chỉ dùng thêm hai con trỏ.',
+    );
     click(button('Bước trước'));
-    expect(narration()).toContain('fast reached the end of the list after 3 rounds');
+    expect(narration()).toContain('fast tới cuối danh sách sau 3 lượt');
   });
 
   it('points the tail at a node clicked in the drawing', () => {
     render();
     click(node(0));
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('The cycle starts at #0 (3)');
+    expect(narration()).toContain('Chu trình bắt đầu ở #0 (3)');
     expect(byTest('mu')).toBe('0');
   });
 
@@ -106,7 +108,7 @@ describe('linked list techniques lesson', () => {
     g.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     flushSync();
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('The cycle starts at #6 (2)');
+    expect(narration()).toContain('Chu trình bắt đầu ở #6 (2)');
     expect(byTest('lambda')).toBe('1');
   });
 
@@ -117,19 +119,19 @@ describe('linked list techniques lesson', () => {
       'reverse',
     );
     next(1);
-    expect(narration()).toBe('Save next = curr.next (8) before the arrow out of 3 is overwritten.');
+    expect(narration()).toBe('Lưu next = curr.next (8) trước khi mũi tên đi ra từ 3 bị ghi đè.');
     next(1);
-    expect(narration()).toBe('Flip the arrow: 3.next = prev (null). One write, no new nodes.');
+    expect(narration()).toBe('Lật mũi tên: 3.next = prev (null). Một lần ghi, không tạo nút mới.');
     expect(link('0-next')).toBeNull();
     next(2);
     next(1);
     expect(link('1-next')?.getAttribute('class')).toContain('stroke-teal-700');
     click(button('Đến bước cuối'));
     expect(narration()).toBe(
-      'head = prev = 2. The list is reversed with 7 arrow flips and three extra pointers.',
+      'head = prev = 2. Danh sách đã được đảo ngược sau 7 lần lật mũi tên, chỉ dùng thêm ba con trỏ.',
     );
     expect(listLabel()).toBe(
-      'Reversed part from prev: 2 → 6 → 9 → 1 → 5 → 8 → 3 → null. Rest from curr: null.',
+      'Phần đã đảo, tính từ prev: 2 → 6 → 9 → 1 → 5 → 8 → 3 → null. Phần còn lại, tính từ curr: null.',
     );
   });
 
@@ -155,7 +157,7 @@ describe('linked list techniques lesson', () => {
     render();
     commit(input('values'), '4, 7');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('The cycle starts at #1 (7)');
+    expect(narration()).toContain('Chu trình bắt đầu ở #1 (7)');
   });
 
   it('checks a practice answer, wrong then right, with a hint', () => {

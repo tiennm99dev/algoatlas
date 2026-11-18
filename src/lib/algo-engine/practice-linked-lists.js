@@ -29,15 +29,15 @@ export const middlePseudocode = [
   'slow = head; fast = head',
   'while fast and fast.next:',
   '  slow = slow.next; fast = fast.next.next',
-  'return slow  // the second middle when n is even',
+  'return slow  // nút giữa thứ hai khi n chẵn',
 ];
 
 export const nthPseudocode = [
   'dummy.next = head; fast = dummy; slow = dummy',
-  'repeat n times: fast = fast.next',
-  'while fast.next is not null:',
+  'for k = 1 to n: fast = fast.next',
+  'while fast.next != null:',
   '  fast = fast.next; slow = slow.next',
-  'slow.next = slow.next.next  // unlink it',
+  'slow.next = slow.next.next  // gỡ nút đó',
   'return dummy.next',
 ];
 

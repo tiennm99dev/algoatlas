@@ -83,25 +83,25 @@ export const SUM_PRESETS = [
 
 export const wordPseudocode = [
   'exists(grid, word):',
-  '  for each cell (r, c): if dfs(r, c, 0): return true',
+  '  for (r, c) in cells(grid): if dfs(r, c, 0): return true',
   '  return false',
   'dfs(r, c, k):',
-  '  if (r, c) is used or grid[r][c] != word[k]: return false',
-  '  mark (r, c) as used',
+  '  if used[r][c] or grid[r][c] != word[k]: return false',
+  '  used[r][c] = true',
   '  if k == len(word) - 1: return true',
-  '  for each neighbour (x, y) on the grid:',
+  '  for (x, y) in neighbours(r, c):  // các ô kề trong lưới',
   '    if dfs(x, y, k + 1): return true',
-  '  unmark (r, c)   // retreat',
+  '  used[r][c] = false   // lùi lại',
   '  return false',
 ];
 
 export const sumPseudocode = [
   'combine(start, remaining, path):',
-  '  if remaining == 0: record a copy of path; return',
+  '  if remaining == 0: record(copy(path)); return',
   '  for i = start to n-1:',
-  '    if a[i] > remaining: break   // sorted, so nothing later fits',
+  '    if a[i] > remaining: break   // đã sắp xếp, nên không số nào phía sau vừa',
   '    path.push(a[i])',
-  '    combine(i, remaining - a[i], path)   // i again: it may repeat',
+  '    combine(i, remaining - a[i], path)   // lại là i: số được dùng lặp lại',
   '    path.pop()',
 ];
 

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { en as m } from '$lib/lessons/permutations-subsets/copy.en.js';
+import { vi as m } from '$lib/lessons/permutations-subsets/copy.vi.js';
 import {
   GEN_PRESETS,
   MAX_ITEMS,

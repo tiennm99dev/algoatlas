@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/n-queens-sudoku/copy.en.js';
+import { vi as m } from '$lib/lessons/n-queens-sudoku/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -53,20 +53,20 @@ const toSudoku = () => click(field('input[name="puzzle"][value="sudoku"]'));
 describe('N-queens and Sudoku lesson', () => {
   it('places and takes back queens as it steps', () => {
     render();
-    expect(narration()).toContain('Put 4 queens on this 4 × 4 board');
+    expect(narration()).toContain('Đặt 4 quân hậu lên bàn cờ 4 × 4 này');
     click(button('Bước tiếp'));
-    expect(narration()).toBe('Row 0: column 0 is safe. Put a queen there.');
+    expect(narration()).toBe('Hàng 0: cột 0 an toàn. Đặt một quân hậu ở đó.');
     expect(square(0, 0).textContent).toContain('♛');
     click(button('Bước tiếp'));
     expect(narration()).toBe(
-      'Row 1: columns 0 and 1 attacked, so skip. Column 2 is safe. Put a queen there.',
+      'Hàng 1: cột 0 và 1 bị khống chế nên bỏ qua. Cột 2 an toàn. Đặt một quân hậu ở đó.',
     );
     click(button('Bước tiếp'));
     expect(narration()).toBe(
-      'Row 2: every column is attacked. This board cannot be finished, so back up to row 1.',
+      'Hàng 2: cột nào cũng bị khống chế. Bàn cờ này không thể hoàn thành, nên lùi về hàng 1.',
     );
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Take it back');
+    expect(narration()).toContain('Rút nó lại');
     expect(square(1, 2).textContent).toContain('♕');
     click(button('Đến bước cuối'));
     expect(byTest('solutions')).toBe('1');
@@ -85,29 +85,29 @@ describe('N-queens and Sudoku lesson', () => {
     commit(field('input[name="n"]'), '3');
     click(button('Đến bước cuối'));
     expect(byTest('solutions')).toBe('0');
-    expect(narration()).toContain('No solution for n = 3');
+    expect(narration()).toContain('Không có lời giải cho n = 3');
   });
 
   it('refuses a bad size and a size too large for all solutions', () => {
     render();
     commit(field('input[name="n"]'), '9');
-    expect(narration()).toBe('The board size must be a whole number from 1 to 8.');
+    expect(narration()).toBe('Kích thước bàn cờ phải là số nguyên từ 1 đến 8.');
     expect(field('input[name="n"]').value).toBe('4');
     click(field('input[name="goal"][value="all"]'));
     commit(field('input[name="n"]'), '8');
-    expect(narration()).toContain('up to n = 6');
+    expect(narration()).toContain('tới n = 6');
     expect(field('input[name="n"]').value).toBe('4');
     click(field('input[name="goal"][value="first"]'));
     commit(field('input[name="n"]'), '8');
     click(field('input[name="goal"][value="all"]'));
-    expect(narration()).toContain('up to n = 6');
+    expect(narration()).toContain('tới n = 6');
     expect(field('input[name="goal"][value="first"]').checked).toBe(true);
   });
 
   it('holds the first queen with a click, and keys work too', () => {
     render();
     click(square(0, 1));
-    expect(narration()).toContain('held in column 1');
+    expect(narration()).toContain('giữ ở cột 1');
     click(button('Đến bước cuối'));
     expect(byTest('removed')).toBe('0');
     click(square(2, 2));
@@ -117,7 +117,7 @@ describe('N-queens and Sudoku lesson', () => {
       new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }),
     );
     flushSync();
-    expect(narration()).toContain('held in column 2');
+    expect(narration()).toContain('giữ ở cột 2');
     square(0, 0).focus();
     square(0, 0).dispatchEvent(
       new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true, cancelable: true }),
@@ -129,11 +129,11 @@ describe('N-queens and Sudoku lesson', () => {
   it('solves a Sudoku step by step and backs up', () => {
     render();
     toSudoku();
-    expect(narration()).toContain('every digit from 1 to 4');
+    expect(narration()).toContain('mỗi chữ số từ 1 đến 4');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('fits, so write it and move on');
+    expect(narration()).toContain('hợp lệ, nên ghi vào rồi đi tiếp');
     click(button('Đến bước cuối'));
-    expect(byTest('result')).toBe('Solved');
+    expect(byTest('result')).toBe('Đã giải xong');
     expect(byTest('removed')).toBe('3');
   });
 
@@ -147,7 +147,7 @@ describe('N-queens and Sudoku lesson', () => {
     click(square(0, 1));
     click(button('Bước tiếp'));
     click(button('Đến bước cuối'));
-    expect(byTest('result')).toBe('No solution');
+    expect(byTest('result')).toBe('Không có lời giải');
     const reset = [...document.querySelectorAll('button')].find(
       (b) => b.textContent?.trim() === m.resetGrid,
     );
@@ -161,14 +161,16 @@ describe('N-queens and Sudoku lesson', () => {
     toSudoku();
     commit(field('select[name="grid"]'), 'nine');
     click(button('Đến bước cuối'));
-    expect(byTest('result')).toBe('Solved');
+    expect(byTest('result')).toBe('Đã giải xong');
     expect(document.querySelectorAll('[data-square]')).toHaveLength(81);
     commit(field('select[name="grid"]'), 'clash');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('already break a rule');
+    expect(narration()).toContain('đã phạm luật sẵn');
     click(button('Đến bước cuối'));
-    expect(byTest('result')).toBe('No solution');
-    expect(narration()).toBe('No solution: the clues clash, so the search never starts.');
+    expect(byTest('result')).toBe('Không có lời giải');
+    expect(narration()).toBe(
+      'Không có lời giải: các gợi ý mâu thuẫn nhau, nên phép tìm kiếm không bao giờ bắt đầu.',
+    );
   });
 
   it('keeps each puzzle where it was when switching', () => {
@@ -201,7 +203,7 @@ describe('N-queens and Sudoku lesson', () => {
       (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {Element} */ (hint));
-    expect(q.textContent).toContain('All solutions');
+    expect(q.textContent).toContain('Mọi lời giải');
     answer.value = '2';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();

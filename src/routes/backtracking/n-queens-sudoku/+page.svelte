@@ -18,7 +18,7 @@
     sudokuPseudocode,
     sudokuTrace,
   } from '$lib/algo-engine/n-queens-sudoku.js';
-  import { en as m } from '$lib/lessons/n-queens-sudoku/copy.en.js';
+  import { vi as m } from '$lib/lessons/n-queens-sudoku/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
   import PuzzleBoard from '$lib/components/puzzle-board.svelte';
 
@@ -363,7 +363,7 @@
           <div class="col-span-2 rounded-xl border border-slate-200 bg-white p-3">
             <dt class="text-xs text-slate-500">{m.stats.naive}</dt>
             <dd class="text-2xl font-bold tabular-nums" data-testid="naive">
-              {(qf.n ** qf.n).toLocaleString('en-US')}
+              {String(qf.n ** qf.n)}
             </dd>
           </div>
         {/if}

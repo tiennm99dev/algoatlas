@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/backtracking-search-tree/copy.en.js';
+import { vi as m } from '$lib/lessons/backtracking-search-tree/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -50,16 +50,16 @@ const nodes = () => [...document.querySelectorAll('[data-node]')];
 describe('backtracking and the search tree lesson', () => {
   it('grows the tree as it steps and reports the answers', () => {
     render();
-    expect(narration()).toContain('Start at the root');
+    expect(narration()).toContain('Bắt đầu ở gốc');
     expect(nodes()).toHaveLength(1);
     click(button('Bước tiếp'));
-    expect(narration()).toBe('Choose 3 and explore that branch. The sum is now 3.');
+    expect(narration()).toBe('Chọn 3 và khám phá nhánh đó. Tổng giờ là 3.');
     expect(nodes()).toHaveLength(2);
     click(button('Đến bước cuối'));
     expect(byTest('visited')).toBe('19 / 31');
     expect(byTest('pruned')).toBe('8');
     expect(byTest('solutions')).toBe('2');
-    expect(narration()).toBe('Found 2 answers, after visiting 19 nodes and pruning 8.');
+    expect(narration()).toBe('Tìm được 2 đáp án, sau khi thăm 19 nút và cắt tỉa 8 nút.');
     expect(document.body.textContent).toContain('{3, 4}');
     expect(document.body.textContent).toContain('{5, 2}');
   });
@@ -90,10 +90,10 @@ describe('backtracking and the search tree lesson', () => {
   it('refuses bad input and keeps the last valid values', () => {
     render();
     commit(field('input[name="numbers"]'), '1 2 3 4 5 6');
-    expect(narration()).toBe('Enter 1 to 5 whole numbers from 1 to 20.');
+    expect(narration()).toBe('Hãy nhập từ 1 đến 5 số nguyên, mỗi số từ 1 đến 20.');
     expect(field('input[name="numbers"]').value).toBe('3, 5, 2, 4');
     commit(field('input[name="target"]'), '0');
-    expect(narration()).toBe('The target must be a whole number from 1 to 100.');
+    expect(narration()).toBe('Tổng cần đạt phải là số nguyên từ 1 đến 100.');
     expect(field('input[name="target"]').value).toBe('7');
   });
 
@@ -114,7 +114,7 @@ describe('backtracking and the search tree lesson', () => {
     render();
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
     flushSync();
-    expect(narration()).toContain('Choose 3');
+    expect(narration()).toContain('Chọn 3');
   });
 
   it('checks a practice answer, wrong then right, with a hint', () => {
@@ -138,7 +138,7 @@ describe('backtracking and the search tree lesson', () => {
       (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {Element} */ (hint));
-    expect(q.textContent).toContain('full binary tree');
+    expect(q.textContent).toContain('cây nhị phân đầy đủ');
     answer.value = '31';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();

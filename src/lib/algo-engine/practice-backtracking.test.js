@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { en as m } from '$lib/lessons/practice-backtracking/copy.en.js';
+import { vi as m } from '$lib/lessons/practice-backtracking/copy.vi.js';
 import {
   MAX_FRAMES,
   SUM_PRESETS,

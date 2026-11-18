@@ -90,16 +90,16 @@ export const BNB_PRESETS = [
 ];
 
 export const bnbPseudocode = [
-  'knapsack(items sorted by value / weight, capacity):',
+  'knapsack(items, capacity):  // items xếp theo giá trị / khối lượng giảm dần',
   '  best = 0; frontier = {root}',
-  '  while the frontier is not empty:',
-  '    node = take the next node   // highest bound, or the latest',
-  '    if bound(node) ≤ best: prune it; continue',
-  '    for child in (take the next item, leave it out):',
-  '      if child is over capacity: discard it; continue',
+  '  while frontier khác rỗng:',
+  '    node = pop(frontier)   // cận lớn nhất, hoặc nút mới nhất',
+  '    if bound(node) ≤ best: continue   // cắt tỉa',
+  '    for child in children(node):  // lấy vật tiếp theo, hoặc bỏ nó',
+  '      if weight(child) > capacity: continue   // loại',
   '      if value(child) > best: best = value(child)',
-  '      if bound(child) > best: add child to the frontier',
-  '      else: prune child',
+  '      if bound(child) > best: push(frontier, child)',
+  '      else: cắt tỉa child',
   '  return best',
 ];
 

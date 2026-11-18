@@ -19,7 +19,7 @@
     searchPseudocode,
     searchTrace,
   } from '$lib/algo-engine/backtracking-search-tree.js';
-  import { en as m } from '$lib/lessons/backtracking-search-tree/copy.en.js';
+  import { vi as m } from '$lib/lessons/backtracking-search-tree/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/backtracking-search-tree.js').PruneMode} PruneMode */

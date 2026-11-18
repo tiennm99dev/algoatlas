@@ -17,7 +17,7 @@
     parseK,
     plainCount,
   } from '$lib/algo-engine/permutations-subsets.js';
-  import { en as m } from '$lib/lessons/permutations-subsets/copy.en.js';
+  import { vi as m } from '$lib/lessons/permutations-subsets/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/permutations-subsets.js').GenMode} GenMode */

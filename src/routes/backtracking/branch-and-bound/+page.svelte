@@ -18,7 +18,7 @@
     parseItems,
     plainNodeCount,
   } from '$lib/algo-engine/branch-and-bound.js';
-  import { en as m } from '$lib/lessons/branch-and-bound/copy.en.js';
+  import { vi as m } from '$lib/lessons/branch-and-bound/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/branch-and-bound.js').SearchOrder} SearchOrder */

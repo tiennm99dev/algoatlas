@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/singly-linked-lists/copy.en.js';
+import { vi as m } from '$lib/lessons/singly-linked-lists/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -72,21 +72,23 @@ function practice() {
 describe('singly linked lists lesson', () => {
   it('builds the four-node preset by inserting at the head', () => {
     render();
-    expect(narration()).toBe('The list is empty: head is null.');
+    expect(narration()).toBe('Danh sách rỗng: head là null.');
     click(button('Đến bước cuối'));
-    expect(listLabel()).toBe('Singly linked list, head first: 12 → 7 → 30 → 4 → null.');
+    expect(listLabel()).toBe('Danh sách liên kết đơn, từ đầu: 12 → 7 → 30 → 4 → null.');
     expect(byTest('length')).toBe('4');
   });
 
   it('inserts at the head in two pointer writes', () => {
     render();
     commit(input('value'), '15');
-    click(buttonByText('Insert at head'));
-    expect(narration()).toContain('Make a node for 15 and point its next at the current head, 12.');
+    click(buttonByText('Thêm vào đầu'));
+    expect(narration()).toContain(
+      'Tạo một nút cho 15 và cho next của nó trỏ vào nút đầu hiện tại, 12.',
+    );
     expect(document.querySelector('[data-link]')).not.toBeNull();
     expect(document.querySelector('[data-pointer="node"]')).not.toBeNull();
     next(1);
-    expect(narration()).toContain('Move head to the new node');
+    expect(narration()).toContain('Dời head sang nút mới');
     expect(byTest('writes')).toBe('2');
     expect(byTest('steps')).toBe('0');
     click(button('Đến bước cuối'));
@@ -96,28 +98,28 @@ describe('singly linked lists lesson', () => {
   it('walks index by index to read a value', () => {
     render();
     commit(input('index'), '2');
-    click(buttonByText('Get index'));
-    expect(narration()).toContain('cur starts at head, 12');
+    click(buttonByText('Đọc chỉ số'));
+    expect(narration()).toContain('cur bắt đầu ở head, 12');
     next(2);
     expect(byTest('steps')).toBe('2');
     next(1);
-    expect(narration()).toContain('Index 2 holds 30, reached after 2 hops');
+    expect(narration()).toContain('Chỉ số 2 chứa 30, tới được sau 2 bước nhảy');
   });
 
   it('reports an index past the end', () => {
     render();
     commit(input('index'), '6');
-    click(buttonByText('Get index'));
+    click(buttonByText('Đọc chỉ số'));
     next(5);
-    expect(narration()).toContain('Index 6 is past the end');
+    expect(narration()).toContain('Chỉ số 6 vượt quá cuối danh sách');
   });
 
   it('deletes a middle value by rewiring prev.next', () => {
     render();
     commit(input('value'), '30');
-    click(buttonByText('Delete value'));
-    for (let i = 0; i < 6 && !narration().includes('skips'); i++) next(1);
-    expect(narration()).toContain('prev.next skips over 30: node 7 now points where 30 pointed.');
+    click(buttonByText('Xoá giá trị'));
+    for (let i = 0; i < 6 && !narration().includes('bỏ qua'); i++) next(1);
+    expect(narration()).toContain('prev.next bỏ qua 30: nút 7 giờ trỏ tới chỗ 30 từng trỏ.');
     expect(byTest('writes')).toBe('1');
     click(button('Đến bước cuối'));
     expect(listLabel()).toContain('12 → 7 → 4 → null');
@@ -125,12 +127,12 @@ describe('singly linked lists lesson', () => {
 
   it('deletes the head, and refuses nothing on an empty list', () => {
     render();
-    click(buttonByText('Delete head'));
+    click(buttonByText('Xoá nút đầu'));
     click(button('Đến bước cuối'));
     expect(listLabel()).toContain('7 → 30 → 4 → null');
-    click(buttonByText('Reset'));
-    click(buttonByText('Delete head'));
-    expect(narration()).toBe('Head is null: there is nothing to delete.');
+    click(buttonByText('Xoá hết'));
+    click(buttonByText('Xoá nút đầu'));
+    expect(narration()).toBe('head là null: không có gì để xoá.');
   });
 
   it('keeps the last valid value and index when a field is emptied or out of range', () => {
@@ -148,17 +150,17 @@ describe('singly linked lists lesson', () => {
     render();
     for (const v of [1, 2, 3, 4, 5, 6, 7]) {
       commit(input('value'), String(v));
-      click(buttonByText('Insert at head'));
+      click(buttonByText('Thêm vào đầu'));
     }
-    expect(narration()).toBe('The list is full (10 nodes). Delete a node first.');
+    expect(narration()).toBe('Danh sách đã đầy (10 nút). Hãy xoá bớt một nút trước.');
     next(1);
-    expect(narration()).not.toContain('full');
+    expect(narration()).not.toContain('đầy');
   });
 
   it('undoes the last operation and loads a preset', () => {
     render();
-    click(buttonByText('Delete head'));
-    click(buttonByText('Undo last'));
+    click(buttonByText('Xoá nút đầu'));
+    click(buttonByText('Hoàn tác'));
     expect(listLabel()).toContain('12 → 7 → 30 → 4 → null');
     commit(/** @type {HTMLSelectElement} */ (document.querySelector('select')), 'long');
     expect(listLabel()).toContain('5 → 18 → 23 → 41 → 9 → 64 → 37 → 50 → null');
@@ -170,9 +172,9 @@ describe('singly linked lists lesson', () => {
     const form = /** @type {HTMLFormElement} */ (input('value').closest('form'));
     form.requestSubmit();
     flushSync();
-    expect(narration()).toContain('Make a node for 8');
-    expect(buttonByText('Delete head').type).toBe('button');
-    expect(buttonByText('Get index').type).toBe('button');
+    expect(narration()).toContain('Tạo một nút cho 8');
+    expect(buttonByText('Xoá nút đầu').type).toBe('button');
+    expect(buttonByText('Đọc chỉ số').type).toBe('button');
   });
 
   it('steps back with the arrow keys from the step controls', () => {

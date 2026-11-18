@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/permutations-subsets/copy.en.js';
+import { vi as m } from '$lib/lessons/permutations-subsets/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -49,15 +49,15 @@ const field = (/** @type {string} */ selector) =>
 describe('permutations, combinations and subsets lesson', () => {
   it('lists the permutations as the recursion picks and unpicks', () => {
     render();
-    expect(narration()).toContain('Generate every permutation of 3 items');
+    expect(narration()).toContain('Sinh mọi hoán vị của 3 phần tử');
     click(button('Bước tiếp'));
-    expect(narration()).toBe('Pick A. The path is now A.');
+    expect(narration()).toBe('Chọn A. Đường đi giờ là A.');
     click(button('Đến bước cuối'));
     expect(byTest('results')).toBe('6');
     expect(byTest('calls')).toBe('16');
     expect(byTest('copied')).toBe('18');
-    expect(byTest('count')).toBe('n! = 6 if every item is different.');
-    expect(narration()).toBe('Done: 6 results from 16 calls, with 18 items copied.');
+    expect(byTest('count')).toBe('n! = 6 nếu mọi phần tử đều khác nhau.');
+    expect(narration()).toBe('Xong: 6 kết quả từ 16 lời gọi, đã chép 18 phần tử.');
   });
 
   it('skips duplicates only when asked to', () => {
@@ -109,12 +109,12 @@ describe('permutations, combinations and subsets lesson', () => {
     render();
     commit(field('input[name="items"]'), 'A B C D E');
     expect(narration()).toBe(
-      'Enter 1 to 4 items, separated by spaces, each one or two letters or digits.',
+      'Hãy nhập từ 1 đến 4 phần tử, cách nhau bởi dấu cách, mỗi phần tử gồm một hoặc hai chữ cái hay chữ số.',
     );
     expect(field('input[name="items"]').value).toBe('A B C');
     click(field('input[name="mode"][value="comb"]'));
     commit(field('input[name="k"]'), '9');
-    expect(narration()).toBe('k must be a whole number from 0 to 3.');
+    expect(narration()).toBe('k phải là số nguyên từ 0 đến 3.');
     expect(field('input[name="k"]').value).toBe('2');
   });
 
@@ -152,7 +152,7 @@ describe('permutations, combinations and subsets lesson', () => {
       (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {Element} */ (hint));
-    expect(q.textContent).toContain('Four ways');
+    expect(q.textContent).toContain('Có bốn cách');
     answer.value = '24';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
