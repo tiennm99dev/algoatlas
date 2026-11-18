@@ -89,7 +89,7 @@ describe('doubly and circular linked lists lesson', () => {
     expect(narration()).toBe('20 được giải phóng sau 2 lần ghi con trỏ. Danh sách có 3 nút.');
     click(button('Đến bước cuối'));
     expect(listLabel()).toBe(
-      'Danh sách liên kết đôi, vòng: S ⇄ 10 ⇄ 30 ⇄ 40 ⇄ quay về S. Đi ngược: 40, 30, 10.',
+      'Linked list đôi, vòng: S ⇄ 10 ⇄ 30 ⇄ 40 ⇄ quay về S. Đi ngược: 40, 30, 10.',
     );
   });
 
@@ -135,9 +135,7 @@ describe('doubly and circular linked lists lesson', () => {
     );
     click(button('Đến bước cuối'));
     expect(byTest('special')).toBe('1');
-    expect(listLabel()).toBe(
-      'Danh sách liên kết đôi: null ← 10 ⇄ 30 ⇄ 40 → null. Đi ngược: 40, 30, 10.',
-    );
+    expect(listLabel()).toBe('Linked list đôi: null ← 10 ⇄ 30 ⇄ 40 → null. Đi ngược: 40, 30, 10.');
     click(node(0));
     click(buttonByText('Gỡ nút đã chọn'));
     next(1);

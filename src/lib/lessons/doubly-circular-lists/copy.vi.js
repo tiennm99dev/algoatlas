@@ -12,11 +12,11 @@ export const vi = {
   slug: 'doubly-circular-lists',
   topic: 'linked-lists',
   level: 'Cơ bản',
-  title: 'Danh sách liên kết đôi và danh sách liên kết vòng',
+  title: 'Linked list đôi và linked list vòng',
   intro:
-    'Danh sách liên kết đôi cho mỗi nút thêm một con trỏ ngược (prev) bên cạnh con trỏ xuôi, nên bạn đi được cả hai chiều và gỡ được một nút đang cầm trong tay mà không phải tìm nút đứng trước nó. Khép danh sách thành một vòng quanh một nút giả gọi là nút cầm canh (sentinel), thì danh sách rỗng, nút đầu và nút cuối trông như nhau: không cần kiểm tra null nào cả.',
+    'Linked list đôi (danh sách liên kết đôi) cho mỗi nút thêm một con trỏ ngược (prev) bên cạnh con trỏ xuôi, nên em đi được cả hai chiều và gỡ được một nút đang cầm trong tay mà không phải tìm nút đứng trước nó. Khép danh sách thành một vòng quanh một nút giả gọi là nút cầm canh (sentinel), thì danh sách rỗng, nút đầu và nút cuối trông như nhau: không cần kiểm tra null nào cả.',
   summary:
-    'Thêm và gỡ nút trong danh sách liên kết đôi, có và không có nút cầm canh vòng, và xem cả hai lần cập nhật con trỏ của mỗi lần gỡ.',
+    'Thêm và gỡ nút trong linked list đôi, có và không có nút cầm canh vòng, và xem cả hai lần cập nhật con trỏ của mỗi lần gỡ.',
   instruction:
     'Chọn một nút trong hình (bấm vào nó, hoặc dùng phím mũi tên và Enter), rồi bấm “Gỡ nút đã chọn” và chạy từng bước qua hai lần ghi con trỏ. Thêm vào đầu hoặc cuối, và đổi cách thiết kế để so sánh những trường hợp đặc biệt mà mỗi cách cần.',
   modeLabel: 'Thiết kế',
@@ -61,11 +61,11 @@ export const vi = {
   listLabel: (values, back, mode) =>
     mode === 'sentinel'
       ? values.length === 0
-        ? 'Danh sách liên kết đôi, vòng, chỉ có nút cầm canh S, trỏ vào chính nó theo cả hai chiều.'
-        : `Danh sách liên kết đôi, vòng: S ⇄ ${values.join(' ⇄ ')} ⇄ quay về S. Đi ngược: ${back.join(', ')}.`
+        ? 'Linked list đôi, vòng, chỉ có nút cầm canh S, trỏ vào chính nó theo cả hai chiều.'
+        : `Linked list đôi, vòng: S ⇄ ${values.join(' ⇄ ')} ⇄ quay về S. Đi ngược: ${back.join(', ')}.`
       : values.length === 0
-        ? 'Danh sách liên kết đôi rỗng: head và tail là null.'
-        : `Danh sách liên kết đôi: null ← ${values.join(' ⇄ ')} → null. Đi ngược: ${back.join(', ')}.`,
+        ? 'Linked list đôi rỗng: head và tail là null.'
+        : `Linked list đôi: null ← ${values.join(' ⇄ ')} → null. Đi ngược: ${back.join(', ')}.`,
   /** @param {string} label @param {string} state @param {boolean} inList */
   nodeTitle: (label, state, inList) =>
     [label === 'S' ? 'Nút cầm canh S' : `Nút ${label}`, inList ? '' : 'nằm ngoài danh sách', state]
@@ -139,7 +139,7 @@ export const vi = {
   },
   takeaways: [
     'Mỗi nút có con trỏ ngược và con trỏ xuôi. Mỗi lần thêm ghi bốn con trỏ, mỗi lần gỡ ghi hai, dù nút nằm ở đâu: O(1).',
-    'Gỡ một nút đang cầm trong tay không cần tìm, vì con trỏ ngược của nó chỉ ra nút cần sửa con trỏ xuôi. Danh sách liên kết đơn thì phải đi từ đầu để tìm nút đó.',
+    'Gỡ một nút đang cầm trong tay không cần tìm, vì con trỏ ngược của nó chỉ ra nút cần sửa con trỏ xuôi. Linked list đơn thì phải đi từ đầu để tìm nút đó.',
     'Khi hai đầu là null, thêm vào danh sách rỗng hay gỡ nút đầu, nút cuối sẽ rẽ sang một nhánh khác để dời head hoặc tail. Lỗi thường nấp ở chính những nhánh này.',
     'Nút cầm canh S khép danh sách thành một vòng: nút sau S là nút đầu, nút trước S là nút cuối, và S trỏ vào chính nó khi danh sách rỗng. Khi đó nút nào cũng có hàng xóm thật ở hai bên, nên mã không cần lệnh if nào.',
     'Thử gỡ nút đầu và nút cuối trong cả hai cách thiết kế: số trường hợp đặc biệt chỉ tăng khi không có nút cầm canh.',
@@ -215,5 +215,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Bài sau dùng con trỏ nhanh, con trỏ chậm và nút giả để giải các bài khó hơn: kĩ thuật trên danh sách liên kết.',
+    'Bài sau dùng con trỏ nhanh, con trỏ chậm và nút giả để giải các bài khó hơn: kĩ thuật trên linked list.',
 };

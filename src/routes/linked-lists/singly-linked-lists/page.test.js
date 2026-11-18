@@ -74,7 +74,7 @@ describe('singly linked lists lesson', () => {
     render();
     expect(narration()).toBe('Danh sách rỗng: head là null.');
     click(button('Đến bước cuối'));
-    expect(listLabel()).toBe('Danh sách liên kết đơn, từ đầu: 12 → 7 → 30 → 4 → null.');
+    expect(listLabel()).toBe('Linked list đơn, từ đầu: 12 → 7 → 30 → 4 → null.');
     expect(byTest('length')).toBe('4');
   });
 

@@ -8,11 +8,11 @@ export const vi = {
   slug: 'singly-linked-lists',
   topic: 'linked-lists',
   level: 'Cơ bản',
-  title: 'Danh sách liên kết đơn',
+  title: 'Linked list đơn',
   intro:
-    'Danh sách liên kết (linked list) đơn cất mỗi giá trị trong một nút riêng, và mỗi nút giữ một con trỏ tới nút kế tiếp. Danh sách chỉ nhớ nút đầu, nên thêm hay xoá ở đầu chỉ cần nối lại một hai con trỏ, còn muốn tới giá trị thứ i thì phải đi qua i mối nối.',
+    'Linked list đơn (danh sách liên kết đơn) cất mỗi giá trị trong một nút riêng, và mỗi nút giữ một con trỏ tới nút kế tiếp. Danh sách chỉ nhớ nút đầu, nên thêm hay xoá ở đầu chỉ cần nối lại một hai con trỏ, còn muốn tới giá trị thứ i thì phải đi qua i mối nối.',
   summary:
-    'Thêm và xoá ở đầu danh sách liên kết đơn, đọc theo chỉ số, và xem các con trỏ tới nút sau được nối lại từng bước.',
+    'Thêm và xoá ở đầu linked list đơn, đọc theo chỉ số, và xem các con trỏ tới nút sau được nối lại từng bước.',
   instruction:
     'Nhập một giá trị rồi thêm vào đầu, xoá nút đầu, đọc một chỉ số hoặc xoá một giá trị, sau đó chạy từng bước. Để ý mũi tên nào đổi ở mỗi bước: mũi tên màu xanh ngọc là con trỏ vừa được ghi.',
   valueLabel: 'Giá trị',
@@ -53,7 +53,7 @@ export const vi = {
   listLabel: (values) =>
     values.length === 0
       ? 'Danh sách rỗng: head là null.'
-      : `Danh sách liên kết đơn, từ đầu: ${values.join(' → ')} → null.`,
+      : `Linked list đơn, từ đầu: ${values.join(' → ')} → null.`,
   /** @param {number | null} value @param {string} state @param {boolean} inList */
   nodeTitle: (value, state, inList) =>
     [`Nút ${value}`, inList ? '' : 'nằm ngoài danh sách', state].filter(Boolean).join(', '),
@@ -176,7 +176,7 @@ export const vi = {
     },
     {
       type: 'choice',
-      prompt: 'Một danh sách liên kết đơn có một triệu nút. Xoá nút đầu của nó tốn bao nhiêu?',
+      prompt: 'Một linked list đơn có một triệu nút. Xoá nút đầu của nó tốn bao nhiêu?',
       options: ['O(1)', 'O(log n)', 'O(n)'],
       answer: 0,
       hints: ['Đếm số lần ghi con trỏ trong deleteHead.'],
@@ -194,6 +194,5 @@ export const vi = {
         'cur đi 5 → 18 → 23: hai bước nhảy. Sau đó con trỏ của prev (18) được gán bằng con trỏ của cur, nên 18 trỏ tới 41.',
     },
   ],
-  nextTeaser:
-    'Bài sau thêm con trỏ ngược và nối đuôi về đầu: danh sách liên kết đôi và danh sách liên kết vòng.',
+  nextTeaser: 'Bài sau thêm con trỏ ngược và nối đuôi về đầu: linked list đôi và linked list vòng.',
 };

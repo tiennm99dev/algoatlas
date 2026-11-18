@@ -8,11 +8,11 @@ export const vi = {
   slug: 'linked-list-techniques',
   topic: 'linked-lists',
   level: 'Trung bình',
-  title: 'Kĩ thuật trên danh sách liên kết',
+  title: 'Kĩ thuật trên linked list',
   intro:
-    'Phần lớn bài toán trên danh sách liên kết được giải bằng cách dời vài con trỏ thật cẩn thận chứ không phải chép lại các nút. Phép đảo ngược đưa ba con trỏ đi dọc danh sách (prev, curr và một con trỏ giữ phần còn lại) và lật từng mũi tên một; còn “rùa và thỏ” đi một bước và hai bước mỗi lượt để tìm nút giữa hoặc bắt được chu trình, tất cả chỉ tốn O(1) bộ nhớ thêm.',
+    'Phần lớn bài toán trên linked list (danh sách liên kết) được giải bằng cách dời vài con trỏ thật cẩn thận chứ không phải chép lại các nút. Phép đảo ngược đưa ba con trỏ đi dọc danh sách (prev, curr và một con trỏ giữ phần còn lại) và lật từng mũi tên một; còn “rùa và thỏ” đi một bước và hai bước mỗi lượt để tìm nút giữa hoặc bắt được chu trình, tất cả chỉ tốn O(1) bộ nhớ thêm.',
   summary:
-    'Đảo ngược danh sách liên kết tại chỗ và phát hiện chu trình bằng “rùa và thỏ” của Floyd, từng bước một.',
+    'Đảo ngược linked list tại chỗ và phát hiện chu trình bằng “rùa và thỏ” của Floyd, từng bước một.',
   instruction:
     'Chọn một kĩ thuật, nhập các giá trị của danh sách, và với bài phát hiện chu trình thì chọn nút mà đuôi trỏ ngược về (hoặc bấm vào một nút). Chạy từng bước và để ý nhãn con trỏ: slow và fast chạy đua cho tới khi cùng dừng ở một nút.',
   algoLabel: 'Kĩ thuật',
@@ -36,8 +36,8 @@ export const vi = {
     values.length === 0
       ? 'Danh sách rỗng.'
       : cyclic
-        ? `Danh sách liên kết ${values.join(' → ')}, và đuôi trỏ ngược về #${cycleTo} (${values[cycleTo]}), tạo thành một chu trình.`
-        : `Danh sách liên kết ${values.join(' → ')} → null.`,
+        ? `Linked list ${values.join(' → ')}, và đuôi trỏ ngược về #${cycleTo} (${values[cycleTo]}), tạo thành một chu trình.`
+        : `Linked list ${values.join(' → ')} → null.`,
   /** @param {number[]} done @param {number[]} rest */
   reverseLabel: (done, rest) =>
     `Phần đã đảo, tính từ prev: ${done.length ? done.join(' → ') + ' → null' : 'null'}. Phần còn lại, tính từ curr: ${rest.length ? rest.join(' → ') + ' → null' : 'null'}.`,
@@ -121,7 +121,7 @@ export const vi = {
     ],
     ['Floyd: tìm điểm bắt đầu chu trình', 'O(n)', 'Thêm μ bước cho cả hai con trỏ.'],
     ['Bộ nhớ thêm', 'O(1)', 'Phép đảo giữ ba con trỏ, Floyd giữ hai.'],
-    ['Bảng băm lưu các nút đã thăm', 'Bộ nhớ O(n)', 'Cách đơn giản thay cho Floyd.'],
+    ['Hash table lưu các nút đã thăm', 'Bộ nhớ O(n)', 'Cách đơn giản thay cho Floyd.'],
   ],
   practiceTitle: 'Tự kiểm tra',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
@@ -168,18 +168,18 @@ export const vi = {
     {
       type: 'choice',
       prompt:
-        'Vì sao thuật toán Floyd hơn cách kiểm tra dễ nghĩ ra là “ghi nhớ mọi nút vào một bảng băm”?',
+        'Vì sao thuật toán Floyd hơn cách kiểm tra dễ nghĩ ra là “ghi nhớ mọi nút vào một hash table (bảng băm)”?',
       options: [
         'Nó nhanh hơn về mặt tiệm cận',
         'Nó chỉ cần hai con trỏ thay vì O(n) bộ nhớ thêm',
-        'Nó chạy được trên danh sách không có chu trình, còn bảng băm thì không',
+        'Nó chạy được trên danh sách không có chu trình, còn hash table thì không',
       ],
       answer: 1,
       hints: ['Cả hai đều tốn thời gian O(n). So sánh xem mỗi cách còn phải lưu gì.'],
       solution:
-        'Cả hai đều chạy trong thời gian O(n), nhưng bảng băm lưu tới n nút, còn Floyd chỉ giữ slow và fast.',
+        'Cả hai đều chạy trong thời gian O(n), nhưng hash table lưu tới n nút, còn Floyd chỉ giữ slow và fast.',
     },
   ],
   nextTeaser:
-    'Bài sau là phần luyện tập: bài toán danh sách liên kết, gom cả chủ đề vào các câu hỏi ngắn.',
+    'Bài sau là phần luyện tập: bài toán linked list, gom cả chủ đề vào các câu hỏi ngắn.',
 };

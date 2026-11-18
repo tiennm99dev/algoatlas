@@ -23,13 +23,13 @@ export const vi = {
   slug: 'practice-linked-lists',
   topic: 'linked-lists',
   level: 'Trung bình',
-  title: 'Luyện tập: bài toán danh sách liên kết',
+  title: 'Luyện tập: bài toán linked list',
   intro:
     'Ba bài toán kinh điển, bài nào cũng giải bằng cách dời vài con trỏ dọc danh sách chứ không chép lại danh sách. Trộn hai danh sách đã sắp xếp bằng cách nối lại các nút của chúng phía sau một nút giả, tìm nút giữa bằng con trỏ chậm và con trỏ nhanh, và xoá nút thứ n tính từ cuối chỉ trong một lượt duyệt bằng cách giữ fast đi trước slow n nút.',
   summary:
-    'Chạy từng bước phép trộn hai danh sách đã sắp xếp, phép tìm nút giữa và phép xoá nút thứ n tính từ cuối, trên các danh sách bạn tự nhập.',
+    'Chạy từng bước phép trộn hai danh sách đã sắp xếp, phép tìm nút giữa và phép xoá nút thứ n tính từ cuối, trên các danh sách em tự nhập.',
   instruction:
-    'Chọn một bài toán, nhập danh sách của bạn (và n), rồi chạy từng bước lời giải. Để ý nhãn con trỏ và mũi tên xanh ngọc, là con trỏ tới nút sau vừa được ghi ở bước đó. Dùng phần thử nghiệm này để trả lời các câu hỏi bên dưới.',
+    'Chọn một bài toán, nhập danh sách của em (và n), rồi chạy từng bước lời giải. Để ý nhãn con trỏ và mũi tên xanh ngọc, là con trỏ tới nút sau vừa được ghi ở bước đó. Dùng phần thử nghiệm này để trả lời các câu hỏi bên dưới.',
   problemLabel: 'Bài toán',
   problems: {
     merge: 'Trộn hai danh sách đã sắp xếp',
@@ -73,7 +73,7 @@ export const vi = {
     const result = listOf(f);
     if (f.problem === 'merge')
       return `Đang trộn. Kết quả tới giờ, tính từ nút giả: ${result.length ? result.join(' → ') : 'rỗng'}.`;
-    return `Danh sách liên kết ${result.join(' → ')} → null.`;
+    return `Linked list ${result.join(' → ')} → null.`;
   },
   /** @param {string} label @param {string} state */
   nodeTitle: (label, state) =>
@@ -235,5 +235,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Chủ đề sau dùng mảng và danh sách liên kết để dựng một cấu trúc dữ liệu rất quen thuộc: ngăn xếp.',
+    'Chủ đề sau dùng mảng và linked list (danh sách liên kết) để dựng một cấu trúc dữ liệu rất quen thuộc: stack (ngăn xếp).',
 };
