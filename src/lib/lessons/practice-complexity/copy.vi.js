@@ -39,11 +39,11 @@ export const vi = {
   level: 'Trung bình',
   title: 'Luyện tập: ước lượng thời gian chạy',
   intro:
-    'Ước lượng thời gian chạy là đếm xem thao tác cơ bản chạy bao nhiêu lần rồi chỉ giữ lại lớp tốc độ tăng. Ở đây bạn xếp mười đoạn mã vào các ngăn O lớn (big-O), rồi kiểm tra dự đoán bằng một thí nghiệm nhân đôi: chạy đoạn mã với n = 1, 2, 4, … và xem số lần đếm thay đổi thế nào mỗi khi n tăng gấp đôi.',
+    'Ước lượng thời gian chạy là đếm xem thao tác cơ bản chạy bao nhiêu lần rồi chỉ giữ lại lớp tốc độ tăng. Ở đây em xếp mười đoạn mã vào các ngăn O lớn (big-O), rồi kiểm tra dự đoán bằng một thí nghiệm nhân đôi: chạy đoạn mã với n = 1, 2, 4, … và xem số lần đếm thay đổi thế nào mỗi khi n tăng gấp đôi.',
   summary:
     'Xếp các đoạn mã vào các ngăn O(1), O(log n), O(n), O(n log n), O(n²) và O(2ⁿ), rồi kiểm tra từng dự đoán bằng cách đếm số thao tác khi n tăng gấp đôi.',
   instruction:
-    'Chọn một thẻ (bấm, chạm hoặc nhấn Enter), rồi bấm nút “Đặt vào đây” của một ngăn, hoặc kéo thẻ thả vào ngăn. Thẻ đang chọn cũng được đo: chạy từng bước thí nghiệm nhân đôi của nó và quan sát cột tỉ số. Khi đã đặt hết các thẻ, hãy kiểm tra cách xếp của bạn.',
+    'Chọn một thẻ (bấm, chạm hoặc nhấn Enter), rồi bấm nút “Đặt vào đây” của một ngăn, hoặc kéo thẻ thả vào ngăn. Thẻ đang chọn cũng được đo: chạy từng bước thí nghiệm nhân đôi của nó và quan sát cột tỉ số. Khi đã đặt hết các thẻ, hãy kiểm tra cách xếp của em.',
   trayTitle: 'Thẻ chưa xếp',
   trayEmpty: 'Đã xếp hết các thẻ.',
   toTray: 'Trả về khay',
@@ -67,7 +67,7 @@ export const vi = {
   /** @param {number} right @param {number} total @param {number} unplaced */
   score: (right, total, unplaced) =>
     `${right}/${total} thẻ nằm đúng ngăn${unplaced ? `, ${unplaced} thẻ vẫn còn trong khay` : ''}.`,
-  allRight: 'Đúng cả mười thẻ: bạn ước lượng rất tốt!',
+  allRight: 'Đúng cả mười thẻ: em ước lượng rất tốt!',
   /** @param {string} name */
   picked: (name) => `Đã chọn: ${name}. Giờ hãy chọn một ngăn.`,
   /** @param {string} name @param {string} bucket */

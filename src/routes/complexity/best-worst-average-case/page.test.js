@@ -102,7 +102,7 @@ describe('best, worst and average case lesson', () => {
     render();
     click(buttonByText(m.caseButtons.random));
     click(buttonByText(m.caseButtons.random));
-    expect(text()).toContain('Trung bình 2 lần chạy ngẫu nhiên của bạn: 4.5');
+    expect(text()).toContain('Trung bình 2 lần chạy ngẫu nhiên của em: 4.5');
     click(buttonByText(m.clearRuns));
     expect(text()).toContain(m.randomAverage(0, 0));
   });

@@ -40,7 +40,7 @@ export const vi = {
     binary: 'Tìm kiếm nhị phân: T(n/2) + 1',
     halving: 'Quét chia đôi: T(n/2) + n',
     traversal: 'Duyệt cây: 2T(n/2) + 1',
-    merge: 'Sắp xếp trộn: 2T(n/2) + n',
+    merge: 'Merge sort: 2T(n/2) + n',
     karatsuba: 'Karatsuba: 3T(n/2) + n',
     quad: 'Bốn nửa: 4T(n/2) + n',
   },
@@ -114,7 +114,7 @@ export const vi = {
     'Một vòng lặp chia đôi i sau mỗi lượt chạy khoảng log₂ n lần, nên nếu bên trong nó có một vòng lặp chạy n lần thì tổng là Θ(n log n).',
     'Một thuật toán chia để trị (divide and conquer) có hệ thức truy hồi T(n) = a·T(n/b) + n^d: a lời gọi trên các phần kích thước n/b, cộng n^d phần việc để chia và gộp.',
     'Trong cây đệ quy, tầng i có aⁱ lời gọi kích thước n/bⁱ. Nếu a < b^d thì gốc chiếm phần lớn, Θ(n^d); nếu a = b^d thì mọi tầng bằng nhau, Θ(n^d log n); nếu a > b^d thì các lá chiếm phần lớn, Θ(n^(log_b a)).',
-    'Thử Sắp xếp trộn, rồi Bốn nửa: chi phí các tầng chuyển từ bằng nhau (16, 16, 16…) sang gấp đôi sau mỗi tầng, và tổng nhảy từ n log n lên n².',
+    'Thử Merge sort (sắp xếp trộn), rồi Bốn nửa: chi phí các tầng chuyển từ bằng nhau (16, 16, 16…) sang gấp đôi sau mỗi tầng, và tổng nhảy từ n log n lên n².',
   ],
   complexityHead: ['Dạng', 'Chi phí', 'Vì sao'],
   complexity: [
@@ -125,8 +125,8 @@ export const vi = {
     ['T(n) = T(n/2) + 1', 'Θ(log n)', 'Mỗi tầng một lời gọi, có log₂ n + 1 tầng.'],
     [
       'Độ sâu đệ quy',
-      'O(log_b n) ngăn xếp',
-      'Mỗi tầng của cây thêm một khung vào ngăn xếp lời gọi (call stack).',
+      'O(log_b n) stack',
+      'Mỗi tầng của cây thêm một khung vào call stack (ngăn xếp lời gọi).',
     ],
   ],
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
@@ -154,7 +154,7 @@ export const vi = {
     {
       type: 'number',
       prompt:
-        'Chọn Sắp xếp trộn (T(n) = 2T(n/2) + n, T(1) = 1) với độ sâu 4, tức n = 16. T(16) bằng bao nhiêu?',
+        'Chọn Merge sort (T(n) = 2T(n/2) + n, T(1) = 1) với độ sâu 4, tức n = 16. T(16) bằng bao nhiêu?',
       answer: 80,
       hints: [
         'Mọi tầng của cây tốn như nhau. Mỗi tầng tốn bao nhiêu, và có bao nhiêu tầng?',

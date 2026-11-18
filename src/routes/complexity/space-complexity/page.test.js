@@ -72,7 +72,7 @@ function practice() {
 describe('space complexity lesson', () => {
   it('grows the stack to 6 frames for sum(5), then empties it', () => {
     render();
-    expect(narration()).toBe('Ngăn xếp chưa có gì. Chạy với n = 5.');
+    expect(narration()).toBe('Call stack chưa có gì. Chạy với n = 5.');
     click(button('Bước tiếp'));
     expect(narration()).toContain(
       'Gọi sum(5): đẩy vào một khung 2 từ máy. Độ sâu 1, đang dùng 2 từ máy.',
@@ -84,7 +84,7 @@ describe('space complexity lesson', () => {
     click(button('Đến bước cuối'));
     expect(stat(m.stats.depth)).toBe('0');
     expect(stat(m.stats.peak)).toBe('12');
-    expect(narration()).toContain('Mức đỉnh 12 từ máy, ngăn xếp sâu nhất 6 khung');
+    expect(narration()).toContain('Mức đỉnh 12 từ máy, call stack sâu nhất 6 khung');
   });
 
   it('keeps bits(n) shallow and the loop constant', () => {

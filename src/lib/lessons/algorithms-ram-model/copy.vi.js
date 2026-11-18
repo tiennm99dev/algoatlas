@@ -122,7 +122,7 @@ export const vi = {
     {
       type: 'choice',
       prompt:
-        'Với n = 10, vòng lặp lỗi tốn 49 bước còn vòng lặp đúng tốn 54 bước. Bạn nên dùng chương trình nào?',
+        'Với n = 10, vòng lặp lỗi tốn 49 bước còn vòng lặp đúng tốn 54 bước. Em nên dùng chương trình nào?',
       options: [
         'Vòng lặp lỗi, vì nó nhanh hơn',
         'Vòng lặp đúng, vì một đáp án sai dù nhanh cũng vô ích',

@@ -48,7 +48,7 @@ export const vi = {
     worst: 'Trường hợp xấu nhất',
     average: 'Trung bình, x có trong mảng',
   },
-  runsTitle: 'Các lần chạy của bạn',
+  runsTitle: 'Các lần chạy của em',
   runsEmpty: 'chưa có',
   runsHot: 'lần chạy mới nhất',
   /** @type {Record<CaseKind, string>} */
@@ -59,7 +59,7 @@ export const vi = {
   randomAverage: (count, avg) =>
     count === 0
       ? 'Chưa có lần chạy ngẫu nhiên nào.'
-      : `Trung bình ${count} lần chạy ngẫu nhiên của bạn: ${num(avg)}`,
+      : `Trung bình ${count} lần chạy ngẫu nhiên của em: ${num(avg)}`,
   num,
   practiceTitle: 'Tự kiểm tra',
   /** @param {LinearFrame} f */
@@ -80,7 +80,7 @@ export const vi = {
   },
   takeaways: [
     'Chi phí phụ thuộc vào đầu vào, không chỉ vào kích thước của nó: tìm kiếm tuần tự trên n phần tử tốn từ 1 đến n phép so sánh.',
-    'Trường hợp tốt nhất: giá trị cần tìm là phần tử đầu tiên, 1 phép so sánh, Θ(1). Trường hợp này ít khi hữu ích, vì bạn không thể trông chờ vào nó.',
+    'Trường hợp tốt nhất: giá trị cần tìm là phần tử đầu tiên, 1 phép so sánh, Θ(1). Trường hợp này ít khi hữu ích, vì em không thể trông chờ vào nó.',
     'Trường hợp xấu nhất: giá trị cần tìm ở cuối hoặc không có, n phép so sánh, Θ(n). Đây là một sự bảo đảm: không đầu vào nào kích thước n tốn hơn thế, nên người ta mặc định dùng nó.',
     'Trường hợp trung bình (kì vọng) cần một giả định về đầu vào. Nếu giá trị cần tìm có khả năng nằm ở mọi vị trí như nhau, chi phí kì vọng là (1 + 2 + … + n)/n = (n + 1)/2, vẫn là Θ(n).',
     'Thử bấm Phần tử ngẫu nhiên mười lần: trung bình các lần chạy dao động quanh (n + 1)/2 và ổn định dần khi số lần chạy tăng lên.',
@@ -146,9 +146,9 @@ export const vi = {
         'Nó luôn bằng trường hợp trung bình',
       ],
       answer: 0,
-      hints: ['Hãy nghĩ đến một hạn chót: con số nào bạn có thể hứa với người dùng?'],
+      hints: ['Hãy nghĩ đến một hạn chót: con số nào em có thể hứa với người dùng?'],
       solution:
-        'Không đầu vào nào kích thước n tốn hơn trường hợp xấu nhất, nên đó là lời hứa đúng với mọi đầu vào. Nó không nhất thiết hay gặp, và có thể khác xa trường hợp trung bình (sắp xếp nhanh: n² so với n log n).',
+        'Không đầu vào nào kích thước n tốn hơn trường hợp xấu nhất, nên đó là lời hứa đúng với mọi đầu vào. Nó không nhất thiết hay gặp, và có thể khác xa trường hợp trung bình, như quicksort (sắp xếp nhanh): n² so với n log n.',
     },
   ],
   nextTeaser:
