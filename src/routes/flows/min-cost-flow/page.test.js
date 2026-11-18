@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/min-cost-flow/copy.en.js';
+import { vi as m } from '$lib/lessons/min-cost-flow/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -92,30 +92,32 @@ function answer(q, value) {
 describe('Min-cost flow and the assignment problem lesson', () => {
   it('shifts potentials and flips paths to the cheapest assignment', () => {
     render();
-    expect(text()).toContain('All potentials start at 0');
+    expect(text()).toContain('Mọi thế năng bắt đầu bằng 0');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Add worker A.');
+    expect(text()).toContain('Thêm người A.');
     click(button('Bước tiếp'));
-    expect(text()).toContain('The smallest slack is δ = 2, at column 2 (from row A).');
-    expect(cellTitle('worker A, job 2:')).toBe('worker A, job 2: 2, smallest slack');
+    expect(text()).toContain('Độ dư nhỏ nhất là δ = 2, ở cột 2 (từ hàng A).');
+    expect(cellTitle('người A, việc 2:')).toBe('người A, việc 2: 2, độ dư nhỏ nhất');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Add δ = 2 to u of row A. Tree edges stay at 0');
-    expect(cellTitle('worker A, u:')).toBe('worker A, u: 2, potential shifted now');
+    expect(text()).toContain('Cộng δ = 2 vào u của hàng A. Các cạnh của cây vẫn bằng 0');
+    expect(cellTitle('người A, u:')).toBe('người A, u: 2, thế năng vừa dịch');
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
-    expect(text()).toContain('Flip the path: A → 2. 1 of 4 rows assigned, cost 2; Σ u + Σ v = 2.');
-    expect(cellTitle('worker A, job 2:')).toBe(
-      'worker A, job 2: 0, flipped into the assignment now',
+    expect(text()).toContain(
+      'Lật đường đi: A → 2. Đã phân công 1/4 hàng, chi phí 2; Σ u + Σ v = 2.',
+    );
+    expect(cellTitle('người A, việc 2:')).toBe(
+      'người A, việc 2: 0, vừa được lật vào phép phân công',
     );
     click(button('Đến bước cuối'));
     expect(text()).toContain(
-      'Done: A → 2, B → 1, C → 3 and D → 4 costs 13, and Σ u + Σ v = 13 as well, which proves no assignment is cheaper. Brute force would compare 24 assignments.',
+      'Xong: A → 2, B → 1, C → 3 và D → 4 có chi phí 13, và Σ u + Σ v cũng bằng 13, điều này chứng tỏ không phép phân công nào rẻ hơn. Vét cạn sẽ phải so sánh 24 phép phân công.',
     );
     expect(statValue(m.stats.cost)).toBe('13');
     expect(statValue(m.stats.bound)).toBe('13');
     expect(statValue(m.stats.rows)).toBe('4 / 4');
-    expect(cellTitle('v, job 3:')).toBe('v, job 3: −3');
-    expect(cellTitle('worker C, job 3:')).toBe('worker C, job 3: 0, assigned');
+    expect(cellTitle('v, việc 3:')).toBe('v, việc 3: −3');
+    expect(cellTitle('người C, việc 3:')).toBe('người C, việc 3: 0, đã phân công');
   });
 
   it('solves the greedy trap and the five by five matrix', () => {
@@ -125,7 +127,7 @@ describe('Min-cost flow and the assignment problem lesson', () => {
     expect(statValue(m.stats.cost)).toBe('8');
     commit(select('preset'), 'five');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Brute force would compare 120 assignments.');
+    expect(text()).toContain('Vét cạn sẽ phải so sánh 120 phép phân công.');
   });
 
   it('reruns on a new cost, refuses a bad one, resizes and resets', () => {
@@ -146,7 +148,7 @@ describe('Min-cost flow and the assignment problem lesson', () => {
     expect(statValue(m.stats.cost)).toBe('13');
     click(button('Về bước đầu'));
     press(document.body, 'ArrowRight');
-    expect(text()).toContain('Add worker A.');
+    expect(text()).toContain('Thêm người A.');
   });
 
   it('checks practice answers with a hint', () => {

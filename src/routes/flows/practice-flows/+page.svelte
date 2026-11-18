@@ -14,7 +14,7 @@
     modelPseudocode,
     modelTrace,
   } from '$lib/algo-engine/practice-flows.js';
-  import { en as m } from '$lib/lessons/practice-flows/copy.en.js';
+  import { vi as m } from '$lib/lessons/practice-flows/copy.vi.js';
   import FlowBoard from '$lib/components/flow-board.svelte';
   import NetworkEditor from '$lib/components/network-editor.svelte';
   import { createPlayer } from '$lib/player/player.svelte.js';

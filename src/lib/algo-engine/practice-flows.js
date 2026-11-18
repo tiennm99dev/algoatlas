@@ -260,13 +260,13 @@ export function checkModel(model, drawn) {
  */
 
 export const modelPseudocode = [
-  'model: vertices, edges with capacities, a source s and a sink t',
+  'mô hình: các đỉnh, các cạnh kèm sức chứa, đỉnh phát s và đỉnh thu t',
   'f = 0',
-  'while BFS finds a shortest s → t path with room:',
-  '  b = smallest room on the path',
-  '  push b along the path; f = f + b',
-  'no path left: the vertices s still reaches form S of a minimum cut',
-  'the answer to the story is f = c(S, T)',
+  'while BFS tìm được đường s → t ngắn nhất còn trống:',
+  '  b = phần trống nhỏ nhất trên đường',
+  '  push b dọc đường đi; f = f + b',
+  'hết đường: các đỉnh s còn đến được tạo thành phía S của lát cắt nhỏ nhất',
+  'đáp số của câu chuyện là f = c(S, T)',
 ];
 
 /**

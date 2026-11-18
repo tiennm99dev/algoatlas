@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/max-flow-min-cut/copy.en.js';
+import { vi as m } from '$lib/lessons/max-flow-min-cut/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -97,30 +97,30 @@ const vertexTitle = (i) => document.querySelector(`[data-vertex="${i}"] > title`
 describe('Max-flow min-cut lesson', () => {
   it('finds the flow, shades the reachable set and reads off the cut', () => {
     render();
-    expect(text()).toContain('First find a maximum flow from S to T');
+    expect(text()).toContain('Trước hết ta tìm một luồng cực đại từ S đến T');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Pushed 12 along S → A → C → T. Flow value: 12.');
+    expect(text()).toContain('Đã đẩy 12 theo S → A → C → T. Giá trị luồng: 12.');
     for (let i = 0; i < 3; i++) click(button('Bước tiếp'));
-    expect(text()).toContain('the flow of value 23 is maximum.');
+    expect(text()).toContain('luồng có giá trị 23 là cực đại.');
     click(button('Bước tiếp'));
     expect(text()).toContain(
-      'Take S from the queue. Its arcs with room reach A and B, which join the S side.',
+      'Lấy S ra khỏi hàng đợi. Các cung còn trống của nó đến được A và B, các đỉnh này vào phía S.',
     );
-    expect(vertexTitle(0)).toBe('Vertex S, source, taken from the queue now, reachable from s');
-    expect(vertexTitle(1)).toBe('Vertex A, just reached, reachable from s');
+    expect(vertexTitle(0)).toBe('Đỉnh S, đỉnh phát, vừa lấy ra khỏi hàng đợi, s đến được');
+    expect(vertexTitle(1)).toBe('Đỉnh A, vừa đến được, s đến được');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Take A from the queue. It reaches no new vertex');
+    expect(text()).toContain('Lấy A ra khỏi hàng đợi. Nó không đến được đỉnh mới nào');
     click(button('Đến bước cuối'));
     click(button('Bước trước'));
     expect(text()).toContain(
-      'S = {S, A, B, D}, and T holds the rest. The cut edges A → C, D → C and D → T are all saturated, and edges from T back to S carry nothing, so c(S, T) = 12 + 7 + 4 = 23 = |f|.',
+      'S = {S, A, B, D}, còn T gồm các đỉnh còn lại. Các cạnh cắt A → C, D → C và D → T đều bão hoà, và các cạnh từ T về S không mang luồng, nên c(S, T) = 12 + 7 + 4 = 23 = |f|.',
     );
     expect(statValue(m.stats.cut)).toBe('23');
     expect(statValue(m.stats.edges)).toBe('3');
-    expect(arcTitles()).toContain('Edge A → C: flow 12 of 12, cut edge');
+    expect(arcTitles()).toContain('Cạnh A → C: luồng 12/12, cạnh cắt');
     radio('residual');
-    expect(arcTitles()).toContain('Arc S → A: room 4');
-    expect(arcTitles()).toContain('Backward arc C → A: can cancel 12');
+    expect(arcTitles()).toContain('Cung S → A: còn trống 4');
+    expect(arcTitles()).toContain('Cung ngược C → A: huỷ được 12');
   });
 
   it('lets the learner try their own cut', () => {
@@ -133,8 +133,8 @@ describe('Max-flow min-cut lesson', () => {
     click(button(m.mine.aria('B')));
     click(button(m.mine.aria('D')));
     expect(text()).toContain(m.mine.verdict(23, 23));
-    expect(arcTitles()).toContain('Edge D → T: capacity 4, crosses from S to T');
-    expect(vertexTitle(4)).toBe('Vertex D, S side');
+    expect(arcTitles()).toContain('Cạnh D → T: sức chứa 4, đi từ S sang T');
+    expect(vertexTitle(4)).toBe('Đỉnh D, phía S');
     click(button(m.mine.aria('T')));
     expect(text()).toContain(m.mine.verdict(23, 23));
     click(button(m.mine.aria('D')));
@@ -145,22 +145,22 @@ describe('Max-flow min-cut lesson', () => {
     render();
     commit(select('preset'), 'ties');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('A minimum cut of capacity 7, equal to the maximum flow.');
-    expect(vertexTitle(1)).toBe('Vertex A');
+    expect(text()).toContain('Một lát cắt nhỏ nhất có sức chứa 7, bằng luồng cực đại.');
+    expect(vertexTitle(1)).toBe('Đỉnh A');
     commit(capacityField('S → A'), '9');
     click(button('Đến bước cuối'));
     expect(statValue(m.stats.cut)).toBe('7');
-    expect(vertexTitle(1)).toBe('Vertex A, S side');
+    expect(vertexTitle(1)).toBe('Đỉnh A, phía S');
     commit(capacityField('S → A'), 'x');
     expect(text()).toContain(m.badCapacity(20));
     commit(select('source'), '3');
     expect(text()).toContain(m.sameEnds);
     click(buttonByText(m.resetGraph));
     click(button('Đến bước cuối'));
-    expect(vertexTitle(1)).toBe('Vertex A');
+    expect(vertexTitle(1)).toBe('Đỉnh A');
     click(button('Về bước đầu'));
     press(document.body, 'ArrowRight');
-    expect(text()).toContain('Pushed 2 along S → A → T.');
+    expect(text()).toContain('Đã đẩy 2 theo S → A → T.');
   });
 
   it('checks practice answers with a hint', () => {

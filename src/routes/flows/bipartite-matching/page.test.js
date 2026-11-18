@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/bipartite-matching/copy.en.js';
+import { vi as m } from '$lib/lessons/bipartite-matching/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -71,7 +71,7 @@ const cell = (r, c) => /** @type {Element} */ (document.querySelector(`[data-cel
 const vertex = (id) =>
   [...document.querySelectorAll('svg title')]
     .map((el) => el.textContent ?? '')
-    .find((l) => l.startsWith(`Vertex ${id < 10 ? m.leftName(id) : m.rightName(id - 10)},`));
+    .find((l) => l.startsWith(`Đỉnh ${id < 10 ? m.leftName(id) : m.rightName(id - 10)},`));
 
 function practice() {
   const section = [...document.querySelectorAll('section')].find(
@@ -93,27 +93,27 @@ function answer(q, value) {
 describe('Bipartite matching lesson', () => {
   it('flips an augmenting path with Kuhn', () => {
     render();
-    expect(text()).toContain('Kuhn’s algorithm takes the left vertices A, B, … in turn');
+    expect(text()).toContain('Thuật toán Kuhn lần lượt lấy các đỉnh bên trái A, B, …');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Start from A: clear the visited marks and run try(A).');
+    expect(text()).toContain('Bắt đầu từ A: xoá các dấu đã thăm và chạy try(A).');
     click(button('Bước tiếp'));
-    expect(text()).toContain('A looks at 1: 1 is free.');
+    expect(text()).toContain('A xét 1: 1 chưa ghép.');
     click(button('Bước tiếp'));
     expect(statValue(m.stats.size)).toBe('1');
     click(button('Bước tiếp'));
-    expect(vertex(0)).toBe('Vertex A, matched');
-    expect(vertex(1)).toBe('Vertex B, free, searching now');
+    expect(vertex(0)).toBe('Đỉnh A, đã ghép');
+    expect(vertex(1)).toBe('Đỉnh B, chưa ghép, đang tìm kiếm');
     click(button('Bước tiếp'));
     expect(text()).toContain(
-      'B looks at 1: 1 is taken by A. Can A move to another partner? Run try(A).',
+      'B xét 1: 1 đã ghép với A. Liệu A có chuyển sang bạn ghép khác được không? Chạy try(A).',
     );
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
-    expect(text()).toContain('Flip the path B – 1 – A – 2');
+    expect(text()).toContain('Lật đường B – 1 – A – 2');
     expect(statValue(m.stats.size)).toBe('2');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Done: 4 pairs after 16 edge checks.');
+    expect(text()).toContain('Xong: 4 cặp sau 16 lần xét cạnh.');
     expect(statValue(m.stats.searches.kuhn)).toBe('4');
   });
 
@@ -122,12 +122,12 @@ describe('Bipartite matching lesson', () => {
     radio('hk');
     click(button('Bước tiếp'));
     expect(text()).toContain(
-      'Phase 1: BFS from the free left vertices A, B, C and D finds that the shortest augmenting paths have 1 edge.',
+      'Pha 1: BFS từ các đỉnh bên trái chưa ghép A, B, C và D cho thấy đường tăng ngắn nhất có 1 cạnh.',
     );
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Done: 4 pairs in 2 phases');
+    expect(text()).toContain('Xong: 4 cặp sau 2 pha');
     for (let i = 0; i < 3; i++) click(button('Bước trước'));
-    expect(text()).toContain('DFS from B found B – 1 – A – 2 – C – 3 – D – 4');
+    expect(text()).toContain('DFS từ B tìm được B – 1 – A – 2 – C – 3 – D – 4');
   });
 
   it('edits edges in the table, resizes the sides and resets', () => {
@@ -135,13 +135,13 @@ describe('Bipartite matching lesson', () => {
     commit(select('preset'), 'hall');
     click(button('Đến bước cuối'));
     expect(statValue(m.stats.size)).toBe('3');
-    expect(vertex(1)).toBe('Vertex B, free');
+    expect(vertex(1)).toBe('Đỉnh B, chưa ghép');
     commit(select('right'), '4');
     click(cell(1, 3));
-    expect(cell(1, 3).getAttribute('aria-label')).toBe('B – 4: edge');
+    expect(cell(1, 3).getAttribute('aria-label')).toBe('B – 4: có cạnh');
     click(button('Đến bước cuối'));
     expect(statValue(m.stats.size)).toBe('4');
-    expect(cell(1, 3).getAttribute('aria-label')).toBe('B – 4: edge, matched');
+    expect(cell(1, 3).getAttribute('aria-label')).toBe('B – 4: có cạnh, đã ghép');
     press(cell(1, 3), 'Enter');
     click(button('Đến bước cuối'));
     expect(statValue(m.stats.size)).toBe('3');
@@ -153,7 +153,7 @@ describe('Bipartite matching lesson', () => {
     expect(statValue(m.stats.size)).toBe('3');
     click(button('Về bước đầu'));
     press(document.body, 'ArrowRight');
-    expect(text()).toContain('Start from A');
+    expect(text()).toContain('Bắt đầu từ A');
   });
 
   it('checks practice answers with a hint', () => {

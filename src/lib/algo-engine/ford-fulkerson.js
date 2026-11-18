@@ -154,13 +154,13 @@ export function flowValue(list, flow, s) {
  */
 
 export const fordFulkersonPseudocode = [
-  'f(u, v) = 0 for every edge',
-  'while the residual graph has a path P from s to t (depth-first search):',
-  '  b = smallest residual capacity on P',
-  '  for each arc (u, v) on P:',
-  '    if (u, v) is an edge: f(u, v) += b',
-  '    else: f(v, u) −= b   (cancel flow on the reverse edge)',
-  'return f; its value is the net flow out of s',
+  'f(u, v) = 0 với mọi cạnh (u, v)',
+  'while đồ thị thặng dư còn đường đi P từ s đến t (tìm bằng DFS):',
+  '  b = sức chứa thặng dư nhỏ nhất trên P',
+  '  for (u, v) in P:',
+  '    if (u, v) là một cạnh: f(u, v) += b',
+  '    else: f(v, u) −= b   (huỷ luồng trên cạnh ngược chiều)',
+  'return f; giá trị của f là luồng ròng ra khỏi s',
 ];
 
 /**

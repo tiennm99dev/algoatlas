@@ -41,24 +41,24 @@ export const MAX_SIDE = 6;
  */
 
 export const kuhnPseudocode = [
-  'match = none for every vertex',
-  'for each left vertex u: clear the visited marks; if try(u): size += 1',
+  'match = none với mọi đỉnh',
+  'for u in left: xoá các dấu visited; if try(u): size += 1',
   'try(x):',
-  '  for each right neighbour r of x that is not visited:',
-  '    mark r visited',
-  '    if r is free, or try(match[r]) re-routes its partner:',
-  '      match x with r (flips the path); return true',
+  '  for r in neighbours(x) and r not in visited:',
+  '    đánh dấu r vào visited',
+  '    if r chưa ghép, or try(match[r]) đổi được bạn ghép của r:',
+  '      ghép x với r (lật đường đi); return true',
   '  return false',
 ];
 
 export const hopcroftKarpPseudocode = [
-  'match = none for every vertex',
-  'loop (one phase): BFS from all free left vertices at once,',
-  '  left → right on any edge, right → left on its matched edge; layer = depth',
-  '  if no free right vertex is reached: stop, the matching is maximum',
-  '  for each free left vertex u: DFS that only steps down one layer',
-  '    if it ends at a free right vertex: flip that path; size += 1',
-  '  the paths flipped are vertex-disjoint and all of the shortest length',
+  'match = none với mọi đỉnh',
+  'loop (một pha): BFS cùng lúc từ mọi đỉnh bên trái chưa ghép,',
+  '  trái → phải theo cạnh bất kì, phải → trái theo cạnh đã ghép; layer = độ sâu',
+  '  if không đến được đỉnh bên phải nào chưa ghép: stop, cách ghép đã lớn nhất',
+  '  for u in left chưa ghép: DFS chỉ đi xuống đúng một tầng',
+  '    if DFS kết thúc ở đỉnh bên phải chưa ghép: lật đường đó; size += 1',
+  '  các đường đã lật không chung đỉnh và đều có độ dài ngắn nhất',
   'return match',
 ];
 

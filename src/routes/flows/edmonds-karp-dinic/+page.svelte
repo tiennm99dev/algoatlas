@@ -13,7 +13,7 @@
     edmondsKarpPseudocode,
     phaseFlowTrace,
   } from '$lib/algo-engine/edmonds-karp-dinic.js';
-  import { en as m } from '$lib/lessons/edmonds-karp-dinic/copy.en.js';
+  import { vi as m } from '$lib/lessons/edmonds-karp-dinic/copy.vi.js';
   import FlowBoard from '$lib/components/flow-board.svelte';
   import NetworkEditor from '$lib/components/network-editor.svelte';
   import { createPlayer } from '$lib/player/player.svelte.js';

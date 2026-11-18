@@ -51,22 +51,22 @@ export { MAX_CAPACITY, MAX_NODES } from './ford-fulkerson.js';
  */
 
 export const edmondsKarpPseudocode = [
-  'f(u, v) = 0 for every edge',
-  'loop: BFS from s over the arcs with room; dist[v] = fewest arcs from s',
-  '  if t was not reached: return f (it is maximum)',
-  '  P = the path BFS found to t, a shortest one; b = smallest room on P',
-  '  push b along P (add on forward arcs, cancel on backward ones)',
+  'f(u, v) = 0 với mọi cạnh (u, v)',
+  'loop: BFS từ s qua các cung còn trống; dist[v] = số cung ít nhất từ s',
+  '  if chưa đến được t: return f (f đã cực đại)',
+  '  P = đường BFS tìm được đến t, một đường ngắn nhất; b = phần trống nhỏ nhất trên P',
+  '  push b dọc P (cộng trên cung thuận, huỷ trên cung ngược)',
 ];
 
 export const dinicPseudocode = [
-  'f(u, v) = 0 for every edge',
-  'loop (one phase): BFS from s over the arcs with room; level[v] = fewest arcs',
-  '  if t was not reached: return f (it is maximum)',
-  '  level graph: the arcs u → v with room and level[v] = level[u] + 1',
-  '  while DFS from s finds a path P to t in the level graph:',
-  '    push the bottleneck b of P along it',
-  '    (DFS backs out of a dead end and skips it for the rest of the phase)',
-  '  no level-graph path is left: the phase’s flow is blocking',
+  'f(u, v) = 0 với mọi cạnh (u, v)',
+  'loop (một pha): BFS từ s qua các cung còn trống; level[v] = số cung ít nhất',
+  '  if chưa đến được t: return f (f đã cực đại)',
+  '  đồ thị phân tầng: các cung u → v còn trống và level[v] = level[u] + 1',
+  '  while DFS từ s tìm được đường P đến t trong đồ thị phân tầng:',
+  '    push cổ chai b của P dọc theo P',
+  '    (DFS lùi khỏi ngõ cụt và bỏ qua nó trong phần còn lại của pha)',
+  '  hết đường trong đồ thị phân tầng: luồng của pha là luồng chặn',
 ];
 
 /**

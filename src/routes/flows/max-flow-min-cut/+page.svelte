@@ -13,7 +13,7 @@
     minCutPseudocode,
     minCutTrace,
   } from '$lib/algo-engine/max-flow-min-cut.js';
-  import { en as m } from '$lib/lessons/max-flow-min-cut/copy.en.js';
+  import { vi as m } from '$lib/lessons/max-flow-min-cut/copy.vi.js';
   import FlowBoard from '$lib/components/flow-board.svelte';
   import NetworkEditor from '$lib/components/network-editor.svelte';
   import { createPlayer } from '$lib/player/player.svelte.js';

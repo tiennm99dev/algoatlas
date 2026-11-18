@@ -10,7 +10,7 @@
     hungarianPseudocode,
     hungarianTrace,
   } from '$lib/algo-engine/min-cost-flow.js';
-  import { en as m } from '$lib/lessons/min-cost-flow/copy.en.js';
+  import { vi as m } from '$lib/lessons/min-cost-flow/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */

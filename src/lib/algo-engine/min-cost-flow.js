@@ -44,15 +44,15 @@ export const MAX_COST = 99;
  */
 
 export const hungarianPseudocode = [
-  'u[i] = 0, v[j] = 0; reduced cost r(i, j) = c(i, j) − u[i] − v[j] ≥ 0',
-  'for each row i: grow an alternating tree from row i',
-  '  repeat: for each column j outside the tree,',
-  '    slack[j] = min(slack[j], r(newest tree row, j))',
-  '    δ = the smallest slack; j = its column',
-  '    u += δ on tree rows, v −= δ on tree columns (r stays ≥ 0, r(·, j) becomes 0)',
-  '    add column j to the tree; if j has a row, add that row and repeat',
-  '  j is free: flip the alternating path from j back to row i',
-  'return the assignment; its cost equals Σ u + Σ v',
+  'u[i] = 0, v[j] = 0; chi phí rút gọn r(i, j) = c(i, j) − u[i] − v[j] ≥ 0',
+  'for i in rows: phát triển một cây xen kẽ từ hàng i',
+  '  lặp lại: for j in cột ngoài cây,',
+  '    slack[j] = min(slack[j], r(hàng mới nhất của cây, j))',
+  '    δ = slack nhỏ nhất; j = cột của nó',
+  '    u += δ trên các hàng của cây, v −= δ trên các cột của cây (r vẫn ≥ 0, r(·, j) thành 0)',
+  '    thêm cột j vào cây; if j đã có hàng: thêm hàng đó và lặp lại',
+  '  j còn trống: lật đường xen kẽ từ j về hàng i',
+  'return phép phân công; chi phí của nó bằng Σ u + Σ v',
 ];
 
 /**

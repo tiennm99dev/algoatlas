@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/edmonds-karp-dinic/copy.en.js';
+import { vi as m } from '$lib/lessons/edmonds-karp-dinic/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -94,17 +94,17 @@ function answer(q, value) {
 describe('Edmonds-Karp and Dinic lesson', () => {
   it('runs Edmonds-Karp with one BFS per augmenting path', () => {
     render();
-    expect(text()).toContain('Each round runs BFS from S');
+    expect(text()).toContain('Mỗi vòng chạy BFS từ S');
     click(button('Bước tiếp'));
     expect(text()).toContain(
-      'BFS reached T in 3 arcs along S → A → C → T. Its bottleneck is b = 12.',
+      'BFS đến được T sau 3 cung, theo S → A → C → T. Cổ chai của đường là b = 12.',
     );
-    expect(arcTitles()).toContain('Arc S → A: room 16, path adds flow here');
+    expect(arcTitles()).toContain('Cung S → A: còn trống 16, đường đi thêm luồng ở đây');
     click(button('Bước tiếp'));
     expect(statValue(m.stats.value)).toBe('12');
     click(button('Đến bước cuối'));
     expect(text()).toContain(
-      'Done: 3 augmenting paths and 4 BFS runs found the maximum flow 23 from S to T.',
+      'Xong: 3 đường tăng luồng và 4 lần BFS cho luồng cực đại 23 từ S đến T.',
     );
     expect(statValue(m.stats.searches.ek)).toBe('4');
     expect(statValue(m.stats.checks)).toBe('66');
@@ -113,20 +113,22 @@ describe('Edmonds-Karp and Dinic lesson', () => {
   it('switches to Dinic: levels, dead ends and blocking flows', () => {
     render();
     radio('dinic');
-    expect(text()).toContain('Each phase runs BFS once');
+    expect(text()).toContain('Mỗi pha chạy BFS một lần');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Phase 1: BFS puts T at level 3.');
-    expect(arcTitles()).toContain('Arc B → A: room 4, outside the level graph');
+    expect(text()).toContain('Pha 1: BFS đặt T ở tầng 3.');
+    expect(arcTitles()).toContain('Cung B → A: còn trống 4, ngoài đồ thị phân tầng');
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
-    expect(text()).toContain('DFS reached A, but no level-graph arc out of A has room');
+    expect(text()).toContain(
+      'DFS đến được A, nhưng không cung nào của đồ thị phân tầng đi ra từ A còn trống',
+    );
     expect(document.querySelector('[data-vertex="1"] > title')?.textContent).toBe(
-      'Vertex A, level 1, dead end this phase',
+      'Đỉnh A, tầng 1, ngõ cụt trong pha này',
     );
     click(button('Đến bước cuối'));
     expect(text()).toContain(
-      'Done: 3 augmenting paths and 3 BFS runs found the maximum flow 23 from S to T.',
+      'Xong: 3 đường tăng luồng và 3 lần BFS cho luồng cực đại 23 từ S đến T.',
     );
     expect(statValue(m.stats.searches.dinic)).toBe('3');
   });
@@ -139,7 +141,7 @@ describe('Edmonds-Karp and Dinic lesson', () => {
     expect(statValue(m.stats.searches.dinic)).toBe('2');
     expect(statValue(m.stats.paths)).toBe('4');
     radio('flow');
-    expect(arcTitles()).toContain('Edge C → E: flow 3 of 4, carries flow');
+    expect(arcTitles()).toContain('Cạnh C → E: luồng 3/4, đang có luồng');
     radio('ek');
     click(button('Đến bước cuối'));
     expect(statValue(m.stats.searches.ek)).toBe('5');
@@ -161,7 +163,7 @@ describe('Edmonds-Karp and Dinic lesson', () => {
     expect(statValue(m.stats.value)).toBe('40');
     click(button('Về bước đầu'));
     press(document.body, 'ArrowRight');
-    expect(text()).toContain('along S → A → T');
+    expect(text()).toContain('theo S → A → T');
   });
 
   it('checks practice answers with a hint', () => {

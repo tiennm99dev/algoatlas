@@ -13,7 +13,7 @@
     kuhnPseudocode,
     matchingTrace,
   } from '$lib/algo-engine/bipartite-matching.js';
-  import { en as m } from '$lib/lessons/bipartite-matching/copy.en.js';
+  import { vi as m } from '$lib/lessons/bipartite-matching/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/graph-editor.js').GraphNode} GraphNode */

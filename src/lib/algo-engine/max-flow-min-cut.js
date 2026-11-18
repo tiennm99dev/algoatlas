@@ -44,14 +44,14 @@ export { MAX_CAPACITY, MAX_NODES } from './ford-fulkerson.js';
  */
 
 export const minCutPseudocode = [
-  'find a maximum flow f (here with Edmonds-Karp)',
-  '  push along shortest augmenting paths while one exists',
-  'no s → t path with room is left in the residual graph',
-  'S = {s}; BFS from s over residual arcs with room:',
-  '  for each arc u → v with room and v not in S: add v to S',
-  'T = all other vertices; cut edges = edges from S to T',
-  'c(S, T) = sum of their capacities = |f|',
-  'return the minimum cut (S, T)',
+  'tìm một luồng cực đại f (ở đây bằng Edmonds-Karp)',
+  '  push dọc các đường tăng luồng ngắn nhất while vẫn còn đường',
+  'đồ thị thặng dư không còn đường s → t nào còn trống',
+  'S = {s}; BFS từ s qua các cung thặng dư còn trống:',
+  '  for u → v còn trống and v not in S: thêm v vào S',
+  'T = các đỉnh còn lại; cạnh cắt = các cạnh từ S sang T',
+  'c(S, T) = tổng sức chứa của chúng = |f|',
+  'return lát cắt nhỏ nhất (S, T)',
 ];
 
 /**

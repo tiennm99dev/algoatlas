@@ -12,7 +12,7 @@
     fordFulkersonPseudocode,
     fordFulkersonTrace,
   } from '$lib/algo-engine/ford-fulkerson.js';
-  import { en as m } from '$lib/lessons/ford-fulkerson/copy.en.js';
+  import { vi as m } from '$lib/lessons/ford-fulkerson/copy.vi.js';
   import FlowBoard from '$lib/components/flow-board.svelte';
   import NetworkEditor from '$lib/components/network-editor.svelte';
   import { createPlayer } from '$lib/player/player.svelte.js';

@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/ford-fulkerson/copy.en.js';
+import { vi as m } from '$lib/lessons/ford-fulkerson/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -94,23 +94,23 @@ function answer(q, value) {
 describe('Ford-Fulkerson lesson', () => {
   it('pushes augmenting paths until the flow is maximum', () => {
     render();
-    expect(text()).toContain('Every edge starts with flow 0.');
+    expect(text()).toContain('Mọi cạnh bắt đầu với luồng 0.');
     click(button('Bước tiếp'));
     expect(text()).toContain(
-      'Depth-first search found S → A → C → B → D → T. Its smallest room is the bottleneck b = 4.',
+      'DFS tìm được S → A → C → B → D → T. Phần trống nhỏ nhất trên đường là cổ chai b = 4.',
     );
     expect(statValue(m.stats.bottleneck)).toBe('4');
     click(button('Bước tiếp'));
     expect(statValue(m.stats.value)).toBe('4');
-    expect(arcTitles()).toContain('Edge C → B: flow 4 of 9, path adds flow here');
+    expect(arcTitles()).toContain('Cạnh C → B: luồng 4/9, đường đi thêm luồng ở đây');
     click(button('Đến bước cuối'));
     expect(text()).toContain(
-      'Done after 4 augmenting paths and 67 arc checks: the maximum flow from S to T is 23.',
+      'Xong sau 4 đường tăng luồng và 67 lần xét cung: luồng cực đại từ S đến T là 23.',
     );
     expect(statValue(m.stats.value)).toBe('23');
     expect(statValue(m.stats.paths)).toBe('4');
     click(button('Bước trước'));
-    expect(text()).toContain('the search reached only S, A, B and D.');
+    expect(text()).toContain('phép tìm kiếm chỉ đến được S, A, B và D.');
   });
 
   it('shows the backward step and the residual view', () => {
@@ -119,14 +119,14 @@ describe('Ford-Fulkerson lesson', () => {
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
-    expect(text()).toContain('Depth-first search found S → B ⇠ A → T.');
-    expect(text()).toContain('uses A → B backwards');
+    expect(text()).toContain('DFS tìm được S → B ⇠ A → T.');
+    expect(text()).toContain('dùng A → B theo chiều ngược');
     radio('residual');
-    expect(arcTitles()).toContain('Backward arc B → A: can cancel 1, on the augmenting path');
+    expect(arcTitles()).toContain('Cung ngược B → A: huỷ được 1, trên đường tăng luồng');
     click(button('Bước tiếp'));
-    expect(text()).toContain('and take it off A → B');
+    expect(text()).toContain('và trừ bớt ở A → B');
     radio('flow');
-    expect(arcTitles()).toContain('Edge A → B: flow 0 of 1, path cancels flow here');
+    expect(arcTitles()).toContain('Cạnh A → B: luồng 0/1, đường đi huỷ luồng ở đây');
   });
 
   it('reruns on a new capacity, refuses a bad one, and resets', () => {
@@ -151,10 +151,10 @@ describe('Ford-Fulkerson lesson', () => {
     expect(select('sink').value).toBe('5');
     commit(select('sink'), '3');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('the maximum flow from S to C is 19');
+    expect(text()).toContain('luồng cực đại từ S đến C là 19');
     click(button('Về bước đầu'));
     press(document.body, 'ArrowRight');
-    expect(text()).toContain('Depth-first search found S → A → C.');
+    expect(text()).toContain('DFS tìm được S → A → C.');
   });
 
   it('checks practice answers with a hint', () => {
