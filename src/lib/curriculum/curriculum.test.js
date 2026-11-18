@@ -47,6 +47,7 @@ describe('curriculum', () => {
 
   it('never lets a topic slug shadow a static route or a lesson slug', () => {
     for (const slug of topicOrder) expect(lessonOrder).not.toContain(slug);
+    expect(topicOrder).not.toContain('thuat-ngu');
   });
 
   it('derives the site topics from the chapters, in learning order', () => {

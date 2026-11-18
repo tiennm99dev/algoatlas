@@ -385,9 +385,14 @@ describe('site chrome', () => {
       ['Phần 1: Nền tảng', 'true'],
       ['Phần 2: Thuật toán cốt lõi', null],
       ['Phần 3: Chủ đề nâng cao', null],
+      ['Thuật ngữ', null],
     ]);
     const hrefs = [...document.querySelectorAll('nav a')].map((a) => a.getAttribute('href'));
-    expect(hrefs).toEqual(['/#level-1', '/#level-2', '/#level-3']);
+    expect(hrefs).toEqual(['/#level-1', '/#level-2', '/#level-3', '/thuat-ngu/']);
+  });
+
+  it('marks the glossary link while the glossary is open', () => {
+    expect(currentTopics('/thuat-ngu/').at(-1)).toEqual(['Thuật ngữ', 'page']);
   });
 
   it('marks the level of an open lesson and nothing on the home page', () => {

@@ -35,14 +35,14 @@ describe('LinkedListView', () => {
         { name: 'curr', index: 3 },
       ],
     });
-    expect(label()).toBe('Danh sách liên kết đơn: 3 → 8 → 5. head ở 0. curr ở 3');
+    expect(label()).toBe('Linked list đơn: 3 → 8 → 5. head ở 0. curr ở 3');
     expect(document.body.textContent).toContain('null');
     expect(document.querySelectorAll('line')).toHaveLength(3);
   });
 
   it('draws back links when doubly linked and drops null when circular', () => {
     render(LinkedListView, { nodes, doubly: true, circular: true });
-    expect(label()).toBe('Danh sách liên kết đôi, vòng: 3 → 8 → 5');
+    expect(label()).toBe('Linked list đôi, vòng: 3 → 8 → 5');
     expect(document.body.textContent).not.toContain('null');
     expect(document.querySelectorAll('line')).toHaveLength(4);
     expect(document.querySelectorAll('path[marker-end]')).toHaveLength(1);
@@ -71,7 +71,7 @@ describe('StackQueueView', () => {
 
   it('describes a stack bottom to top and marks its ends', () => {
     render(StackQueueView, { kind: 'stack', items });
-    expect(label()).toBe('Ngăn xếp, từ đáy lên đỉnh: a, b, c.');
+    expect(label()).toBe('Stack, từ đáy lên đỉnh: a, b, c.');
     expect(document.body.textContent).toContain('đỉnh');
     expect(document.body.textContent).toContain('đáy');
     expect([...document.querySelectorAll('title')].map((t) => t.textContent)).toEqual([
@@ -83,12 +83,12 @@ describe('StackQueueView', () => {
 
   it('describes a queue front to back and draws spare capacity', () => {
     render(StackQueueView, { kind: 'queue', items, capacity: 5 });
-    expect(label()).toBe('Hàng đợi, từ đầu đến cuối: a, b, c.');
+    expect(label()).toBe('Queue, từ đầu đến cuối: a, b, c.');
     expect(document.querySelectorAll('rect[stroke-dasharray]')).toHaveLength(2);
   });
 
   it('says when it is empty', () => {
     render(StackQueueView, { kind: 'deque', items: [] });
-    expect(label()).toBe('Hàng đợi hai đầu đang rỗng.');
+    expect(label()).toBe('Deque đang rỗng.');
   });
 });

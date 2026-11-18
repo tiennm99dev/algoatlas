@@ -3,6 +3,7 @@
   import { resolve } from '$app/paths';
   import { lessonNeighbors, topicPath } from '$lib/lessons/paths.js';
   import { scrollRegions } from './scroll-regions.js';
+  import GlossaryTerms from './glossary-terms.svelte';
 
   /**
    * @type {{
@@ -95,6 +96,8 @@
       </div>
     </section>
   </div>
+
+  <GlossaryTerms topic={lesson.topic} slug={lesson.slug} />
 
   <nav
     aria-label={copy.lessonChrome.lessonNavLabel}

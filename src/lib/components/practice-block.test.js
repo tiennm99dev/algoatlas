@@ -90,13 +90,13 @@ describe('PracticeBlock', () => {
     const q = question(0);
     type(q, '');
     submit(q);
-    expect(status(q)).toBe('Hãy trả lời câu hỏi trước đã.');
+    expect(status(q)).toBe('Em hãy trả lời trước khi kiểm tra.');
     type(q, '3 5');
     submit(q);
     expect(status(q)).toMatch(/Hãy nhập một số/);
     type(q, '8');
     submit(q);
-    expect(status(q)).toBe('Chưa đúng, thử lại nhé. Bạn có thể mở gợi ý.');
+    expect(status(q)).toBe('Chưa đúng, thử lại nhé. Em có thể mở gợi ý.');
     type(q, '7 comparisons');
     submit(q);
     expect(status(q)).toBe('Đúng rồi!');

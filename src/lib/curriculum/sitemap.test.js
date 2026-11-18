@@ -6,15 +6,16 @@ import { sitemapPaths, sitemapXml } from './sitemap.js';
 describe('sitemap', () => {
   const paths = sitemapPaths();
 
-  it('lists the home page, every topic hub and every curriculum lesson once', () => {
+  it('lists the home page, the glossary, every topic hub and every curriculum lesson once', () => {
     expect(paths[0]).toBe('/');
+    expect(paths).toContain('/thuat-ngu/');
     for (const c of chapters) {
       expect(paths).toContain(topicPath(c.slug));
       for (const l of c.lessons)
         expect(paths).toContain(lessonPath({ topic: c.slug, slug: l.slug }));
     }
     const lessons = chapters.reduce((n, c) => n + c.lessons.length, 0);
-    expect(paths).toHaveLength(1 + chapters.length + lessons);
+    expect(paths).toHaveLength(2 + chapters.length + lessons);
     expect(new Set(paths).size).toBe(paths.length);
   });
 

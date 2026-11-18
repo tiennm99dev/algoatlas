@@ -57,8 +57,8 @@
               "title": "Độ phức tạp bộ nhớ",
               "slug": "space-complexity",
               "kind": "theory",
-              "keyIdeas": ["bộ nhớ phụ", "độ sâu ngăn xếp lời gọi", "thuật toán tại chỗ"],
-              "interactiveIdea": "Thanh bộ nhớ dài ra theo ngăn xếp lời gọi khi một hàm đệ quy chạy."
+              "keyIdeas": ["bộ nhớ phụ", "độ sâu call stack", "thuật toán tại chỗ"],
+              "interactiveIdea": "Thanh bộ nhớ dài ra theo call stack khi một hàm đệ quy chạy."
             },
             {
               "no": 6,
@@ -83,7 +83,7 @@
           "title": "Mảng và xâu",
           "slug": "arrays-strings",
           "strand": "linear-structures",
-          "blurb": "Làm việc với dữ liệu nằm liền nhau: mảng động, hai con trỏ, cửa sổ trượt và tổng tiền tố.",
+          "blurb": "Làm việc với dữ liệu nằm liền nhau: mảng động, hai con trỏ, cửa sổ trượt và prefix sum.",
           "lessons": [
             {
               "no": 1,
@@ -131,11 +131,11 @@
             },
             {
               "no": 5,
-              "title": "Tổng tiền tố và mảng hiệu",
+              "title": "Prefix sum và mảng hiệu",
               "slug": "prefix-sums",
               "kind": "theory",
               "keyIdeas": ["tổng cộng dồn", "tổng đoạn trong O(1)", "cập nhật đoạn bằng mảng hiệu"],
-              "interactiveIdea": "Mảng kèm hàng tổng tiền tố; chọn một đoạn để thấy phép trừ chỉ cần hai lần tra."
+              "interactiveIdea": "Mảng kèm hàng prefix sum; chọn một đoạn để thấy phép trừ chỉ cần hai lần tra."
             },
             {
               "no": 6,
@@ -154,7 +154,7 @@
               "title": "Luyện tập: bài toán về mảng và xâu",
               "slug": "practice-arrays-strings",
               "kind": "practice",
-              "keyIdeas": ["chọn hai con trỏ hay cửa sổ", "mẹo dùng tổng tiền tố"],
+              "keyIdeas": ["chọn hai con trỏ hay cửa sổ", "mẹo dùng prefix sum"],
               "interactiveIdea": "Bộ chạy bài toán: người học chọn một kĩ thuật và xem nó giải các đầu vào mẫu."
             }
           ]
@@ -168,7 +168,7 @@
           "lessons": [
             {
               "no": 1,
-              "title": "Sắp xếp nổi bọt và sắp xếp chèn",
+              "title": "Bubble sort và insertion sort",
               "slug": "bubble-insertion-sort",
               "kind": "theory",
               "keyIdeas": [
@@ -176,11 +176,11 @@
                 "dời phần tử vào tiền tố đã sắp xếp",
                 "O(n^2) phép so sánh"
               ],
-              "interactiveIdea": "Biểu đồ cột chạy từng bước sắp xếp nổi bọt và sắp xếp chèn, tô sáng các phép so sánh và đổi chỗ."
+              "interactiveIdea": "Biểu đồ cột chạy từng bước bubble sort và insertion sort, tô sáng các phép so sánh và đổi chỗ."
             },
             {
               "no": 2,
-              "title": "Sắp xếp chọn và tính ổn định",
+              "title": "Selection sort và tính ổn định",
               "slug": "selection-sort-stability",
               "kind": "theory",
               "keyIdeas": [
@@ -192,7 +192,7 @@
             },
             {
               "no": 3,
-              "title": "Sắp xếp trộn và sắp xếp nhanh",
+              "title": "Merge sort và quicksort",
               "slug": "merge-quick-sort",
               "kind": "theory",
               "keyIdeas": ["chia để trị", "trộn hai nửa đã sắp xếp", "phân hoạch quanh chốt"],
@@ -200,11 +200,11 @@
             },
             {
               "no": 4,
-              "title": "Sắp xếp vun đống",
+              "title": "Heapsort",
               "slug": "heapsort",
               "kind": "theory",
               "keyIdeas": [
-                "dựng heap lớn nhất",
+                "dựng max-heap",
                 "lặp lại việc lấy phần tử lớn nhất",
                 "O(n log n) tại chỗ"
               ],
@@ -220,7 +220,7 @@
             },
             {
               "no": 6,
-              "title": "Sắp xếp đếm và sắp xếp theo cơ số",
+              "title": "Counting sort và radix sort",
               "slug": "counting-radix-sort",
               "kind": "theory",
               "keyIdeas": [
@@ -228,7 +228,7 @@
                 "các lượt ổn định theo từng chữ số",
                 "sắp xếp trong thời gian tuyến tính"
               ],
-              "interactiveIdea": "Các ngăn đầy dần theo từng chữ số khi sắp xếp theo cơ số đi qua dãy số."
+              "interactiveIdea": "Các bucket đầy dần theo từng chữ số khi radix sort đi qua dãy số."
             },
             {
               "no": 7,
@@ -314,14 +314,14 @@
         },
         {
           "no": 5,
-          "title": "Danh sách liên kết",
+          "title": "Linked list",
           "slug": "linked-lists",
           "strand": "linear-structures",
           "blurb": "Nối các nút bằng con trỏ để việc chèn và xoá ở giữa danh sách vẫn rẻ.",
           "lessons": [
             {
               "no": 1,
-              "title": "Danh sách liên kết đơn",
+              "title": "Linked list đơn",
               "slug": "singly-linked-lists",
               "kind": "theory",
               "keyIdeas": ["nút và con trỏ", "chèn và xoá ở đầu", "truy cập O(n)"],
@@ -329,7 +329,7 @@
             },
             {
               "no": 2,
-              "title": "Danh sách liên kết đôi và danh sách liên kết vòng",
+              "title": "Linked list đôi và linked list vòng",
               "slug": "doubly-circular-lists",
               "kind": "theory",
               "keyIdeas": [
@@ -341,7 +341,7 @@
             },
             {
               "no": 3,
-              "title": "Kĩ thuật trên danh sách liên kết",
+              "title": "Kĩ thuật trên linked list",
               "slug": "linked-list-techniques",
               "kind": "theory",
               "keyIdeas": [
@@ -353,7 +353,7 @@
             },
             {
               "no": 4,
-              "title": "Luyện tập: bài toán danh sách liên kết",
+              "title": "Luyện tập: bài toán linked list",
               "slug": "practice-linked-lists",
               "kind": "practice",
               "keyIdeas": ["trộn hai danh sách", "tìm nút ở giữa", "xoá nút thứ n tính từ cuối"],
@@ -363,46 +363,42 @@
         },
         {
           "no": 6,
-          "title": "Ngăn xếp và hàng đợi",
+          "title": "Stack và queue",
           "slug": "stacks-queues",
           "strand": "linear-structures",
           "blurb": "Thêm và lấy ra ở hai đầu: vào sau ra trước, hoặc vào trước ra trước.",
           "lessons": [
             {
               "no": 1,
-              "title": "Ngăn xếp",
+              "title": "Stack",
               "slug": "stacks",
               "kind": "theory",
               "keyIdeas": [
                 "vào sau ra trước (LIFO)",
                 "push và pop",
-                "cài đặt bằng mảng hoặc danh sách"
+                "cài đặt bằng mảng hoặc linked list"
               ],
               "interactiveIdea": "Chồng đĩa có hoạt cảnh push và pop cùng con trỏ đỉnh."
             },
             {
               "no": 2,
-              "title": "Hàng đợi và hàng đợi hai đầu",
+              "title": "Queue và deque",
               "slug": "queues-deques",
               "kind": "theory",
-              "keyIdeas": ["vào trước ra trước (FIFO)", "bộ đệm vòng", "hàng đợi hai đầu"],
+              "keyIdeas": ["vào trước ra trước (FIFO)", "bộ đệm vòng", "deque"],
               "interactiveIdea": "Vòng bộ đệm với chỉ số đầu và cuối quay vòng."
             },
             {
               "no": 3,
-              "title": "Ứng dụng của ngăn xếp",
+              "title": "Ứng dụng của stack",
               "slug": "stack-applications",
               "kind": "theory",
-              "keyIdeas": [
-                "kiểm tra dấu ngoặc cân đối",
-                "tính giá trị biểu thức",
-                "ngăn xếp lời gọi"
-              ],
+              "keyIdeas": ["kiểm tra dấu ngoặc cân đối", "tính giá trị biểu thức", "call stack"],
               "interactiveIdea": "Bộ kiểm tra dấu ngoặc push và pop khi đọc từng kí tự."
             },
             {
               "no": 4,
-              "title": "Ngăn xếp đơn điệu và hàng đợi đơn điệu",
+              "title": "Stack đơn điệu và queue đơn điệu",
               "slug": "monotonic-stack-queue",
               "kind": "theory",
               "keyIdeas": [
@@ -410,72 +406,76 @@
                 "giá trị lớn nhất trên cửa sổ trượt",
                 "O(n) khấu hao"
               ],
-              "interactiveIdea": "Các cột kèm một ngăn xếp đơn điệu bên cạnh, lấy ra các cột thấp hơn khi mỗi cột mới đến."
+              "interactiveIdea": "Các cột kèm một stack đơn điệu bên cạnh, lấy ra các cột thấp hơn khi mỗi cột mới đến."
             },
             {
               "no": 5,
-              "title": "Luyện tập: ngăn xếp và hàng đợi",
+              "title": "Luyện tập: stack và queue",
               "slug": "practice-stacks-queues",
               "kind": "practice",
-              "keyIdeas": ["hàng đợi từ hai ngăn xếp", "ngăn xếp giữ giá trị nhỏ nhất"],
-              "interactiveIdea": "Minh hoạ hàng đợi từ hai ngăn xếp, cho thấy lúc nào phần tử được chuyển giữa hai ngăn xếp."
+              "keyIdeas": ["queue từ hai stack", "stack giữ giá trị nhỏ nhất"],
+              "interactiveIdea": "Minh hoạ queue từ hai stack, cho thấy lúc nào phần tử được chuyển giữa hai stack."
             }
           ]
         },
         {
           "no": 7,
-          "title": "Băm",
+          "title": "Hash",
           "slug": "structures",
           "strand": "linear-structures",
-          "blurb": "Biến một khoá thành số thứ tự của ngăn, để việc thêm, tìm và xoá chỉ tốn khoảng một bước.",
+          "blurb": "Biến một khoá thành số thứ tự của bucket, để việc thêm, tìm và xoá chỉ tốn khoảng một bước.",
           "lessons": [
             {
               "no": 1,
-              "title": "Bảng băm",
+              "title": "Hash table",
               "slug": "hash-table",
               "kind": "theory",
-              "keyIdeas": ["hàm băm chọn ngăn", "va chạm", "tra cứu O(1) trung bình"],
-              "interactiveIdea": "Các ngăn đầy dần khi thêm khoá, kèm giá trị băm của mỗi khoá."
+              "keyIdeas": ["hàm hash chọn bucket", "va chạm", "tra cứu O(1) trung bình"],
+              "interactiveIdea": "Các bucket đầy dần khi thêm khoá, kèm giá trị hash của mỗi khoá."
             },
             {
               "no": 2,
               "title": "Xử lí va chạm: móc nối và địa chỉ mở",
               "slug": "collision-resolution",
               "kind": "theory",
-              "keyIdeas": ["móc nối riêng", "dò tuyến tính và dò bậc hai", "băm kép"],
+              "keyIdeas": ["móc nối riêng", "dò tuyến tính và dò bậc hai", "double hashing"],
               "interactiveIdea": "Hai bảng đặt cạnh nhau, một dùng móc nối và một dùng phép dò, trên cùng một dãy khoá."
             },
             {
               "no": 3,
-              "title": "Hệ số tải và băm lại",
+              "title": "Hệ số tải và rehash",
               "slug": "load-factor-rehashing",
               "kind": "theory",
-              "keyIdeas": ["hệ số tải alpha", "ngưỡng đổi kích thước", "chi phí băm lại khấu hao"],
-              "interactiveIdea": "Đồng hồ hệ số tải kích hoạt hoạt cảnh băm lại khi vượt ngưỡng."
+              "keyIdeas": ["hệ số tải alpha", "ngưỡng đổi kích thước", "chi phí rehash khấu hao"],
+              "interactiveIdea": "Đồng hồ hệ số tải kích hoạt hoạt cảnh rehash khi vượt ngưỡng."
             },
             {
               "no": 4,
-              "title": "Thiết kế hàm băm",
+              "title": "Thiết kế hàm hash",
               "slug": "hash-functions",
               "kind": "theory",
-              "keyIdeas": ["phân bố đều", "băm phổ quát", "đầu vào do đối thủ chọn"],
-              "interactiveIdea": "Biểu đồ số khoá trong mỗi ngăn của một hàm băm kém so với một hàm băm tốt trên cùng các khoá."
+              "keyIdeas": ["phân bố đều", "universal hashing", "đầu vào do đối thủ chọn"],
+              "interactiveIdea": "Biểu đồ số khoá trong mỗi bucket của một hàm hash kém so với một hàm hash tốt trên cùng các khoá."
             },
             {
               "no": 5,
               "title": "Tập hợp, ánh xạ và đếm tần suất",
               "slug": "sets-maps-counting",
               "kind": "theory",
-              "keyIdeas": ["kiểm tra thuộc tập hợp", "ánh xạ khoá – giá trị", "đếm bằng hàm băm"],
+              "keyIdeas": [
+                "kiểm tra thuộc tập hợp",
+                "ánh xạ khoá – giá trị",
+                "đếm bằng hash table"
+              ],
               "interactiveIdea": "Dòng từ đưa vào một bảng tần suất cập nhật liên tục, sắp theo số lần xuất hiện."
             },
             {
               "no": 6,
-              "title": "Luyện tập: bài toán về băm",
+              "title": "Luyện tập: bài toán về hash",
               "slug": "practice-hashing",
               "kind": "practice",
               "keyIdeas": ["tìm cặp có tổng cho trước bằng ánh xạ", "nhóm theo khoá"],
-              "interactiveIdea": "Bộ chạy bài toán hiện nội dung bảng băm sau mỗi bước."
+              "interactiveIdea": "Bộ chạy bài toán hiện nội dung hash table sau mỗi bước."
             }
           ]
         },
@@ -491,12 +491,8 @@
               "title": "Đệ quy cơ bản",
               "slug": "recursion-basics",
               "kind": "theory",
-              "keyIdeas": [
-                "trường hợp cơ sở",
-                "trường hợp đệ quy",
-                "các khung trên ngăn xếp lời gọi"
-              ],
-              "interactiveIdea": "Khung ngăn xếp lời gọi đẩy vào và lấy ra các khung khi tính giai thừa và số Fibonacci."
+              "keyIdeas": ["trường hợp cơ sở", "trường hợp đệ quy", "các khung trên call stack"],
+              "interactiveIdea": "Khung call stack đẩy vào và lấy ra các khung khi tính giai thừa và số Fibonacci."
             },
             {
               "no": 2,
@@ -579,10 +575,10 @@
         },
         {
           "no": 10,
-          "title": "Heap và hàng đợi ưu tiên",
+          "title": "Heap và priority queue",
           "slug": "heaps",
           "strand": "trees",
-          "blurb": "Giữ phần tử nhỏ nhất ở trên cùng để hàng đợi ưu tiên lấy được nó trong thời gian lôgarit.",
+          "blurb": "Giữ phần tử nhỏ nhất ở trên cùng để priority queue lấy được nó trong thời gian lôgarit.",
           "lessons": [
             {
               "no": 1,
@@ -598,19 +594,19 @@
               "slug": "build-heap",
               "kind": "theory",
               "keyIdeas": [
-                "vun heap từ dưới lên",
+                "heapify từ dưới lên",
                 "dựng trong O(n)",
                 "vì sao không phải O(n log n)"
               ],
-              "interactiveIdea": "Hoạt cảnh vun heap từ dưới lên, kèm bộ đếm chi phí ở mỗi tầng."
+              "interactiveIdea": "Hoạt cảnh heapify từ dưới lên, kèm bộ đếm chi phí ở mỗi tầng."
             },
             {
               "no": 3,
-              "title": "Ứng dụng của hàng đợi ưu tiên",
+              "title": "Ứng dụng của priority queue",
               "slug": "priority-queue-applications",
               "kind": "theory",
               "keyIdeas": ["k phần tử lớn nhất", "trộn k danh sách đã sắp xếp", "lập lịch sự kiện"],
-              "interactiveIdea": "Hoạt cảnh trộn k danh sách, mỗi lần lấy phần tử đầu nhỏ nhất ra khỏi heap nhỏ nhất."
+              "interactiveIdea": "Hoạt cảnh trộn k danh sách, mỗi lần lấy phần tử đầu nhỏ nhất ra khỏi min-heap."
             },
             {
               "no": 4,
@@ -643,11 +639,11 @@
             },
             {
               "no": 2,
-              "title": "Duyệt theo chiều rộng trên lưới",
+              "title": "BFS trên lưới",
               "slug": "bfs-grid",
               "kind": "theory",
               "keyIdeas": [
-                "biên là một hàng đợi",
+                "biên là một queue",
                 "các lớp theo khoảng cách",
                 "đường đi ngắn nhất trên đồ thị không trọng số"
               ],
@@ -655,11 +651,11 @@
             },
             {
               "no": 3,
-              "title": "Duyệt theo chiều sâu trên lưới",
+              "title": "DFS trên lưới",
               "slug": "dfs-grid",
               "kind": "theory",
               "keyIdeas": [
-                "ngăn xếp hoặc đệ quy",
+                "stack hoặc đệ quy",
                 "quay lui dọc đường đi",
                 "thứ tự phát hiện và thứ tự kết thúc"
               ],
@@ -704,7 +700,7 @@
           "title": "Ôn tập: nền tảng",
           "slug": "review-foundations",
           "strand": "review",
-          "blurb": "Kiểm tra những gì bạn đã học trong phần nền tảng trước khi sang các thuật toán cốt lõi.",
+          "blurb": "Kiểm tra những gì em đã học trong phần nền tảng trước khi sang các thuật toán cốt lõi.",
           "lessons": [
             {
               "no": 1,
@@ -746,7 +742,7 @@
               "title": "Thuật toán Dijkstra trên lưới",
               "slug": "dijkstra-grid",
               "kind": "theory",
-              "keyIdeas": ["hàng đợi ưu tiên nhỏ nhất", "trọng số không âm", "các ô đã chốt"],
+              "keyIdeas": ["min-heap làm priority queue", "trọng số không âm", "các ô đã chốt"],
               "interactiveIdea": "Lưới có trọng số, nơi thuật toán Dijkstra chốt các ô theo thứ tự khoảng cách."
             },
             {
@@ -755,7 +751,7 @@
               "slug": "dijkstra-general",
               "kind": "theory",
               "keyIdeas": ["cài đặt bằng heap nhị phân", "O((V+E) log V)", "xoá lười"],
-              "interactiveIdea": "Khung đồ thị kèm nội dung hàng đợi ưu tiên ở mỗi bước."
+              "interactiveIdea": "Khung đồ thị kèm nội dung priority queue ở mỗi bước."
             },
             {
               "no": 4,
@@ -763,11 +759,11 @@
               "slug": "zero-one-bfs-dag",
               "kind": "theory",
               "keyIdeas": [
-                "hàng đợi hai đầu cho trọng số 0/1",
+                "deque cho trọng số 0/1",
                 "nới lỏng theo thứ tự tô-pô",
                 "đường đi dài nhất trên DAG"
               ],
-              "interactiveIdea": "Khung hàng đợi hai đầu, đẩy cạnh 0 vào đầu hàng và cạnh 1 vào cuối hàng."
+              "interactiveIdea": "Khung deque, đẩy cạnh 0 vào đầu deque và cạnh 1 vào cuối deque."
             },
             {
               "no": 5,
@@ -817,14 +813,14 @@
         },
         {
           "no": 2,
-          "title": "Hợp và tìm",
+          "title": "DSU",
           "slug": "union-find",
           "strand": "structures",
           "blurb": "Gộp các nhóm và hỏi hai phần tử có chung nhóm không, trong thời gian gần như hằng số.",
           "lessons": [
             {
               "no": 1,
-              "title": "Tập hợp rời nhau",
+              "title": "Cấu trúc DSU",
               "slug": "disjoint-set-union",
               "kind": "theory",
               "keyIdeas": ["find và union", "gốc đại diện", "liên thông động"],
@@ -840,7 +836,7 @@
             },
             {
               "no": 3,
-              "title": "Luyện tập: bài toán hợp và tìm",
+              "title": "Luyện tập: bài toán DSU",
               "slug": "practice-union-find",
               "kind": "practice",
               "keyIdeas": ["đếm thành phần trực tuyến", "phát hiện chu trình khi thêm cạnh"],
@@ -882,7 +878,7 @@
               "kind": "theory",
               "keyIdeas": [
                 "mở rộng một cây",
-                "hàng đợi ưu tiên các cạnh cắt",
+                "priority queue các cạnh cắt",
                 "đồ thị dày và đồ thị thưa"
               ],
               "interactiveIdea": "Cây mọc ra từ một đỉnh xuất phát, mỗi bước thêm cạnh biên rẻ nhất."
@@ -974,7 +970,7 @@
               "title": "Đếm nghịch thế",
               "slug": "counting-inversions",
               "kind": "theory",
-              "keyIdeas": ["mở rộng sắp xếp trộn", "nghịch thế chéo", "O(n log n)"],
+              "keyIdeas": ["mở rộng merge sort", "nghịch thế chéo", "O(n log n)"],
               "interactiveIdea": "Bước trộn đếm nghịch thế khi phần tử đi từ nửa phải sang trái."
             },
             {
@@ -1304,7 +1300,7 @@
           "title": "Ôn tập: thuật toán cốt lõi",
           "slug": "review-core",
           "strand": "review",
-          "blurb": "Kiểm tra những gì bạn đã học về các thuật toán cốt lõi trước khi sang các chủ đề nâng cao.",
+          "blurb": "Kiểm tra những gì em đã học về các thuật toán cốt lõi trước khi sang các chủ đề nâng cao.",
           "lessons": [
             {
               "no": 1,
@@ -1331,7 +1327,7 @@
           "lessons": [
             {
               "no": 1,
-              "title": "Bảng thưa",
+              "title": "Sparse table",
               "slug": "sparse-table",
               "kind": "theory",
               "keyIdeas": [
@@ -1343,31 +1339,31 @@
             },
             {
               "no": 2,
-              "title": "Cây Fenwick",
+              "title": "Fenwick tree",
               "slug": "fenwick-tree",
               "kind": "theory",
               "keyIdeas": [
                 "đánh chỉ số bằng bit thấp nhất",
-                "tổng tiền tố có cập nhật",
+                "prefix sum có cập nhật",
                 "thao tác O(log n)"
               ],
-              "interactiveIdea": "Mảng Fenwick với các bước nhảy chỉ số của cập nhật và truy vấn vẽ thành cung."
+              "interactiveIdea": "Mảng của Fenwick tree với các bước nhảy chỉ số của cập nhật và truy vấn vẽ thành cung."
             },
             {
               "no": 3,
-              "title": "Cây phân đoạn",
+              "title": "Segment tree",
               "slug": "segment-tree",
               "kind": "theory",
               "keyIdeas": ["chia đoạn đệ quy", "cập nhật điểm, truy vấn đoạn", "hàm gộp"],
-              "interactiveIdea": "Cây phân đoạn sáng lên các nút phủ một đoạn truy vấn được kéo chọn."
+              "interactiveIdea": "Segment tree sáng lên các nút phủ một đoạn truy vấn được kéo chọn."
             },
             {
               "no": 4,
-              "title": "Cập nhật lười",
+              "title": "Lazy propagation",
               "slug": "lazy-propagation",
               "kind": "theory",
               "keyIdeas": ["cập nhật đoạn", "nhãn chờ", "đẩy xuống"],
-              "interactiveIdea": "Cây phân đoạn có nhãn lười, chỉ đẩy xuống khi một truy vấn cần đến."
+              "interactiveIdea": "Segment tree có nhãn lười, chỉ đẩy xuống khi một truy vấn cần đến."
             },
             {
               "no": 5,
@@ -1387,7 +1383,7 @@
               "slug": "practice-range-queries",
               "kind": "practice",
               "keyIdeas": [
-                "chọn cây Fenwick hay cây phân đoạn",
+                "chọn Fenwick tree hay segment tree",
                 "giá trị nhỏ nhất và tổng trên đoạn"
               ],
               "interactiveIdea": "Công cụ dựng tập truy vấn, so sánh chi phí của từng cấu trúc."
@@ -1399,23 +1395,23 @@
           "title": "Trie và thuật toán xử lí xâu",
           "slug": "string-algorithms",
           "strand": "strings",
-          "blurb": "Tìm kiếm, đánh chỉ mục và nén văn bản bằng trie, KMP, hàm băm và mảng hậu tố.",
+          "blurb": "Tìm kiếm, đánh chỉ mục và nén văn bản bằng trie, KMP, hàm hash và mảng hậu tố.",
           "lessons": [
             {
               "no": 1,
               "title": "Trie",
               "slug": "tries",
               "kind": "theory",
-              "keyIdeas": ["cây tiền tố", "chèn và tìm", "tự động hoàn thành"],
+              "keyIdeas": ["trie", "chèn và tìm", "tự động hoàn thành"],
               "interactiveIdea": "Trie lớn dần khi gõ từ và tô sáng các tiền tố khớp."
             },
             {
               "no": 2,
-              "title": "Băm xâu và thuật toán Rabin-Karp",
+              "title": "Hash xâu và thuật toán Rabin-Karp",
               "slug": "rabin-karp",
               "kind": "theory",
-              "keyIdeas": ["hàm băm đa thức cuộn", "xác suất va chạm", "tìm xâu con"],
-              "interactiveIdea": "Cửa sổ băm cuộn trượt trên văn bản, giá trị băm cập nhật ở mỗi bước."
+              "keyIdeas": ["rolling hash đa thức", "xác suất va chạm", "tìm xâu con"],
+              "interactiveIdea": "Cửa sổ rolling hash trượt trên văn bản, giá trị hash cập nhật ở mỗi bước."
             },
             {
               "no": 3,
@@ -1743,11 +1739,11 @@
           "lessons": [
             {
               "no": 1,
-              "title": "QHĐ trên mặt nạ bit và bài toán người du lịch",
+              "title": "QHĐ bitmask và bài toán người du lịch",
               "slug": "bitmask-dp",
               "kind": "theory",
-              "keyIdeas": ["tập con dưới dạng mặt nạ bit", "thuật toán Held-Karp", "O(2^n n^2)"],
-              "interactiveIdea": "Bảng mặt nạ bit, mỗi trạng thái hiện các thành phố đã thăm dưới dạng bit sáng."
+              "keyIdeas": ["tập con dưới dạng bitmask", "thuật toán Held-Karp", "O(2^n n^2)"],
+              "interactiveIdea": "Bảng bitmask, mỗi trạng thái hiện các thành phố đã thăm dưới dạng bit sáng."
             },
             {
               "no": 2,
@@ -1770,11 +1766,7 @@
               "title": "Tối ưu quy hoạch động",
               "slug": "dp-optimisations",
               "kind": "theory",
-              "keyIdeas": [
-                "hàng đợi đơn điệu",
-                "bao lồi các đường thẳng",
-                "QHĐ chia để trị, Knuth"
-              ],
+              "keyIdeas": ["queue đơn điệu", "bao lồi các đường thẳng", "QHĐ chia để trị, Knuth"],
               "interactiveIdea": "Các đường thẳng trên đồ thị, nơi mẹo bao lồi chỉ giữ lại đường bao dưới."
             },
             {
@@ -1810,7 +1802,7 @@
               "keyIdeas": [
                 "cạnh nặng",
                 "đường đi thành O(log n) chuỗi",
-                "cây phân đoạn trên các chuỗi"
+                "segment tree trên các chuỗi"
               ],
               "interactiveIdea": "Cây tô màu thành các chuỗi nặng, với một truy vấn đường đi được chia qua các chuỗi."
             },
@@ -1885,20 +1877,20 @@
               "title": "Thuật toán ngẫu nhiên",
               "slug": "randomised-algorithms",
               "kind": "theory",
-              "keyIdeas": [
-                "Las Vegas và Monte Carlo",
-                "sắp xếp nhanh ngẫu nhiên",
-                "phân tích kì vọng"
-              ],
-              "interactiveIdea": "Chạy nhiều lần sắp xếp nhanh ngẫu nhiên và vẽ phân bố số phép so sánh."
+              "keyIdeas": ["Las Vegas và Monte Carlo", "quicksort ngẫu nhiên", "phân tích kì vọng"],
+              "interactiveIdea": "Chạy nhiều lần quicksort ngẫu nhiên và vẽ phân bố số phép so sánh."
             },
             {
               "no": 6,
-              "title": "Băm phổ quát và băm hoàn hảo",
+              "title": "Universal hashing và perfect hashing",
               "slug": "universal-perfect-hashing",
               "kind": "theory",
-              "keyIdeas": ["họ hàm băm phổ quát", "số va chạm kì vọng", "băm hoàn hảo hai tầng"],
-              "interactiveIdea": "Các khoá được băm bằng những hàm chọn ngẫu nhiên, số va chạm lấy trung bình qua nhiều lần chọn."
+              "keyIdeas": [
+                "họ hàm hash phổ quát",
+                "số va chạm kì vọng",
+                "perfect hashing hai tầng"
+              ],
+              "interactiveIdea": "Các khoá được hash bằng những hàm chọn ngẫu nhiên, số va chạm lấy trung bình qua nhiều lần chọn."
             },
             {
               "no": 7,
@@ -2008,7 +2000,7 @@
               "slug": "practice-advanced-heaps",
               "kind": "practice",
               "keyIdeas": [
-                "chọn hàng đợi ưu tiên",
+                "chọn priority queue",
                 "thuật toán Dijkstra với heap Fibonacci",
                 "khoá số nguyên"
               ],
@@ -2028,7 +2020,7 @@
               "title": "Thuật toán đa luồng",
               "slug": "multithreaded-algorithms",
               "kind": "theory",
-              "keyIdeas": ["song song fork-join", "work và span", "sắp xếp trộn song song"],
+              "keyIdeas": ["song song fork-join", "work và span", "merge sort song song"],
               "interactiveIdea": "DAG tính toán kèm bộ đếm work và span khi số luồng thay đổi."
             },
             {
@@ -2078,7 +2070,7 @@
           "title": "Ôn tập: chủ đề nâng cao",
           "slug": "review-advanced",
           "strand": "review",
-          "blurb": "Kiểm tra những gì bạn đã học trong các chủ đề nâng cao.",
+          "blurb": "Kiểm tra những gì em đã học trong các chủ đề nâng cao.",
           "lessons": [
             {
               "no": 1,

@@ -2,11 +2,13 @@ import { describe, expect, it } from 'vitest';
 import { oldToneMarks } from '$lib/components/tone-marks.js';
 import curriculum from '$lib/curriculum/dsa.json';
 import * as gridCopy from '$lib/lessons/grid-copy.vi.js';
-import { glosses, names } from './glossary.js';
+import { allTerms } from '$lib/glossary/index.js';
+import { english, glosses, names } from './glossary.js';
+import { pendingTopics } from './pending-voice.js';
 import * as siteCopy from './site.vi.js';
 
-// Every lesson copy module that has moved to Vietnamese; each one joins this check by its name.
-const lessonCopies = /** @type {Record<string, Record<string, unknown>>} */ (
+// Every lesson copy module; each one joins these checks by its name.
+const lessonCopies = /** @type {Record<string, { vi: { topic: string } }>} */ (
   import.meta.glob('/src/lib/lessons/*/copy.vi.js', { eager: true })
 );
 
@@ -49,8 +51,19 @@ const STOPWORD_RE = new RegExp(
   `(?<![\\p{L}\\p{M}\\d_-])(${STOPWORDS.join('|')})(?![\\p{L}\\p{M}\\d_-])`,
   'u',
 );
-// Keys that hold identifiers, not prose.
-const CODE_KEYS = new Set(['slug', 'topic', 'strand', 'subject', 'kind']);
+// Keys that hold identifiers or English names, not Vietnamese prose.
+const CODE_KEYS = new Set([
+  'slug',
+  'topic',
+  'strand',
+  'subject',
+  'kind',
+  'id',
+  'lesson',
+  'see',
+  'en',
+  'aka',
+]);
 // Sample arguments for copy functions; a function that cannot take one set is tried with the next.
 const SAMPLES = [
   [2, 5, 3, 1],
@@ -108,20 +121,49 @@ function withoutAllowedEnglish(text) {
     .replace(NAME_RE, ' ');
 }
 
-/** @type {[string, [string, string][]][]} */
+/**
+ * Whole-word search for any of `forms`, ignoring case; Vietnamese letters and tone marks count
+ * as word characters, so "băm" does not match inside a longer word.
+ * @param {string[]} forms
+ */
+const wordsRe = (forms) =>
+  new RegExp(
+    `(?<![\\p{L}\\p{M}\\d_-])(${forms.map(escape).join('|')})(?![\\p{L}\\p{M}\\d_-])`,
+    'iu',
+  );
+// The Vietnamese forms of the terms written in English, which may appear only in parentheses.
+const BANNED_RE = wordsRe(english.filter((t) => t.ban !== false).flatMap((t) => t.vi));
+// "bạn" addresses the reader, who is "em"; it may only mean a friend inside a problem story.
+const FRIEND_RE = /người bạn|bạn bè|bạn học|kết bạn/giu;
+const BAN_RE = wordsRe(['bạn']);
+
+/** @param {string} text */
+const withoutParentheses = (text) => text.replace(/\([^()]*\)/g, ' ');
+
+/**
+ * Every source the checks read: its name, its strings, and whether it still waits for the new
+ * voice and terms (a lesson in a topic of `pendingTopics`).
+ * @type {[string, [string, string][], boolean][]}
+ */
 const sources = [
-  ['site.vi.js', collect(siteCopy, '')],
-  ['grid-copy.vi.js', collect(gridCopy, '')],
-  ['dsa.json', collect(curriculum, '')],
+  ['site.vi.js', collect(siteCopy, ''), false],
+  ['grid-copy.vi.js', collect(gridCopy, ''), false],
+  ['dsa.json', collect(curriculum, ''), false],
+  ['glossary', collect(allTerms(), ''), false],
   ...Object.entries(lessonCopies).map(
-    ([file, mod]) => /** @type {[string, [string, string][]]} */ ([file, collect(mod, '')]),
+    ([file, mod]) =>
+      /** @type {[string, [string, string][], boolean]} */ ([
+        file,
+        collect(mod, ''),
+        pendingTopics.has(mod.vi.topic),
+      ]),
   ),
 ];
 
 describe('withoutAllowedEnglish', () => {
   it('drops glosses, names and code but keeps other English', () => {
-    expect(withoutAllowedEnglish('ngăn xếp (stack) và chia để trị (divide and conquer)')).toBe(
-      'ngăn xếp   và chia để trị  ',
+    expect(withoutAllowedEnglish('chốt (pivot) và chia để trị (divide and conquer)')).toBe(
+      'chốt   và chia để trị  ',
     );
     expect(withoutAllowedEnglish('thuật toán Dijkstra')).toBe('thuật toán  ');
     expect(withoutAllowedEnglish('dòng `if a and b`')).toBe('dòng  ');
@@ -129,7 +171,22 @@ describe('withoutAllowedEnglish', () => {
   });
 });
 
-describe.each(sources)('Vietnamese copy in %s', (_, strings) => {
+describe('the English-term and voice patterns', () => {
+  it('find the Vietnamese forms outside parentheses only', () => {
+    expect(BANNED_RE.test(withoutParentheses('Đỉnh của ngăn xếp'))).toBe(true);
+    expect(BANNED_RE.test(withoutParentheses('Đỉnh của stack (ngăn xếp)'))).toBe(false);
+    expect(BANNED_RE.test('Hàm băm rải đều khoá')).toBe(true);
+    expect(BANNED_RE.test('Mỗi bucket là một ngăn')).toBe(false);
+  });
+
+  it('find "bạn" as the address but not as a friend', () => {
+    expect(BAN_RE.test('Câu trả lời của bạn'.replace(FRIEND_RE, ' '))).toBe(true);
+    expect(BAN_RE.test('Bạn có thể mở gợi ý.'.replace(FRIEND_RE, ' '))).toBe(true);
+    expect(BAN_RE.test('Hai người bạn và bạn bè'.replace(FRIEND_RE, ' '))).toBe(false);
+  });
+});
+
+describe.each(sources)('Vietnamese copy in %s', (_, strings, pending) => {
   it('is NFC', () => {
     for (const [path, s] of strings) expect(s.normalize('NFC'), path).toBe(s);
   });
@@ -141,6 +198,22 @@ describe.each(sources)('Vietnamese copy in %s', (_, strings) => {
   it('has no English left over', () => {
     for (const [path, s] of strings) {
       const hit = STOPWORD_RE.exec(withoutAllowedEnglish(s));
+      expect(hit?.[0], `${path}: ${s}`).toBeUndefined();
+    }
+  });
+
+  it.skipIf(pending)('addresses the reader as "em", never "bạn"', () => {
+    for (const [path, s] of strings) {
+      const hit = BAN_RE.exec(s.replace(FRIEND_RE, ' '));
+      expect(hit?.[0], `${path}: ${s}`).toBeUndefined();
+    }
+  });
+
+  it.skipIf(pending)('writes the English terms in English outside parentheses', () => {
+    for (const [path, s] of strings) {
+      // The glossary's own `vi` field is the Vietnamese meaning, so it is the one place they stay.
+      if (path.endsWith('.vi')) continue;
+      const hit = BANNED_RE.exec(withoutParentheses(s));
       expect(hit?.[0], `${path}: ${s}`).toBeUndefined();
     }
   });

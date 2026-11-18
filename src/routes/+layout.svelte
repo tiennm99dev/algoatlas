@@ -62,6 +62,14 @@
               >
             </li>
           {/each}
+          <li>
+            <a
+              href={resolve(/** @type {'/'} */ ('/thuat-ngu/'))}
+              class="focus-ring rounded hover:text-teal-700 aria-[current]:font-semibold aria-[current]:text-teal-700 aria-[current]:underline aria-[current]:decoration-2 aria-[current]:underline-offset-4"
+              aria-current={page.url.pathname.endsWith('/thuat-ngu/') ? 'page' : undefined}
+              >{copy.glossary.title}</a
+            >
+          </li>
         </ul>
       </nav>
     </div>

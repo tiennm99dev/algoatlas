@@ -127,12 +127,18 @@ with every `LessonCopy` field from `src/lib/lessons/registry.js`:
 
 Plus every label the page shows (buttons, fields, legend, stat names, notices, aria labels)
 and `describe(frame, ...)` returning the narration for every frame `kind`. No user-facing
-string lives in the page or the engine. Vietnamese, addressing the reader as "bạn" and
-narrating the algorithm with "ta", short sentences, Unicode symbols (`≤`, `→`, `log₂ n`) and
-Vietnamese quotes “…”. Keep one Vietnamese term per concept across lessons, with the English in parentheses on its
-first use on a page ("ngăn xếp (stack)"); `src/lib/i18n/glossary.js` lists the English the copy
-may keep; `vietnamese-copy.test.js` checks
-every `copy.vi.js`. Vietnamese text uses the new tone-mark style: in an open syllable ending in `oa`, `oe` or `uy` the mark sits on the last vowel (hoá,
+string lives in the page or the engine. Vietnamese, addressing the reader as "em" (never
+"bạn", "các em", "tôi" or "mình") and narrating the algorithm with "ta", short sentences,
+Unicode symbols (`≤`, `→`, `log₂ n`) and Vietnamese quotes “…”. The data-structure and
+algorithm names in `english` of `src/lib/i18n/glossary.js` are written in English, lower case
+mid-sentence, with no plural "s" ("hai stack", "hash table rỗng"); the first use in a lesson's
+running text adds the Vietnamese meaning once in parentheses ("stack (ngăn xếp)"), never in
+titles, labels or `summary`. Every other term stays Vietnamese, with the English in parentheses
+on its first use ("chốt (pivot)"); `glosses` there lists the English the copy may keep.
+`vietnamese-copy.test.js` checks every `copy.vi.js`, and flags "bạn" and the Vietnamese form
+of an English term outside parentheses once the topic leaves `pendingTopics` in
+`src/lib/i18n/pending-voice.js`. A lesson's terms appear on the `/thuat-ngu/` glossary from
+`src/lib/glossary/`; its "Thuật ngữ trong bài" block needs no page change. Vietnamese text uses the new tone-mark style: in an open syllable ending in `oa`, `oe` or `uy` the mark sits on the last vowel (hoá,
 khoẻ, thuỷ, never hóa, khỏe, thủy); `src/lib/components/tone-marks.test.js` rejects the old
 style.
 

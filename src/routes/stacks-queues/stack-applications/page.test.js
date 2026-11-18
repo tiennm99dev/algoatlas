@@ -50,7 +50,7 @@ const byTest = (id) => document.querySelector(`[data-testid="${id}"]`)?.textCont
 const stackLabel = () =>
   [...document.querySelectorAll('svg[role="img"]')]
     .map((s) => s.getAttribute('aria-label') ?? '')
-    .find((l) => l.startsWith('Ngăn xếp')) ?? '';
+    .find((l) => l.startsWith('Stack')) ?? '';
 /** @param {string} value */
 const pickMode = (value) =>
   click(
@@ -79,7 +79,7 @@ describe('stack applications lesson', () => {
     expect(narration()).toBe(
       'Kí tự thứ 3 là (, một dấu ngoặc mở: push nó. Nó chờ dấu đóng tương ứng.',
     );
-    expect(stackLabel()).toBe('Ngăn xếp, từ đáy lên đỉnh: {, [, (.');
+    expect(stackLabel()).toBe('Stack, từ đáy lên đỉnh: {, [, (.');
     next(1);
     expect(narration()).toContain('còn đỉnh là (: hai dấu khớp nhau, nên pop');
     click(button('Đến bước cuối'));
@@ -146,7 +146,7 @@ describe('stack applications lesson', () => {
     pickMode('calls');
     commit(input('n'), '3');
     next(3);
-    expect(stackLabel()).toBe('Ngăn xếp, từ đáy lên đỉnh: fact(3), fact(2), fact(1).');
+    expect(stackLabel()).toBe('Stack, từ đáy lên đỉnh: fact(3), fact(2), fact(1).');
     next(2);
     expect(narration()).toBe('fact(2) chạy tiếp: 2 × 1 = 2. Trả về giá trị đó và pop khung.');
     click(button('Đến bước cuối'));

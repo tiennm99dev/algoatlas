@@ -6,6 +6,7 @@ All notable changes to **TinTưởng** are documented here. Format: [Keep a Chan
 
 ### Added
 
+- A "Thuật ngữ" glossary at `/thuat-ngu/`, linked from the header, the home page and each lesson's "Thuật ngữ trong bài" block: about 190 terms A–Z with their Vietnamese meaning or English name, a short definition and the lesson that teaches them, searchable without tone marks. Data lives in `src/lib/glossary/`.
 - A curriculum of three levels and 34 topics (`src/lib/curriculum/dsa.json`), imported from a syllabus manifest by `scripts/import-curriculum.js`. Topics, their order, and the lesson order now come from it.
 - The home page groups topics by level and shows how many of each topic's lessons are ready; topic hubs list the planned lessons as coming soon. The header links to the three levels.
 - Every unwritten lesson has a `noindex` stub page listing what it will cover and its planned interaction; topic hub cards link to it. The old `/structures/bst/` and `/graphs/dijkstra-grid/` URLs redirect to the lessons' new paths without script.
@@ -16,6 +17,7 @@ All notable changes to **TinTưởng** are documented here. Format: [Keep a Chan
 
 ### Changed
 
+- The site addresses the reader as "em". Common data-structure and algorithm names (stack, queue, hash table, heap, segment tree, BFS, the sort names and the rest of `english` in `src/lib/i18n/glossary.js`) are written in English, and the curriculum titles that held them changed to match ("Stack và queue", "Merge sort và quicksort"); URLs and saved practice progress are unchanged.
 - The site is renamed from AlgorithmAlly to TinTưởng and now lives at `https://tiennm99dev.github.io/tintuong/`. Practice progress saved under either earlier name (AlgorithmAlly or AlgoAtlas) moves to the new storage key on the first visit.
 - The site is renamed from AlgoAtlas to AlgorithmAlly and now lives at `https://tiennm99dev.github.io/algorithmally/`. Practice progress saved under the old name moves to the new storage key on the first visit.
 - Lessons register themselves: `registry.js` discovers every `copy.en.js` and orders them by the curriculum.

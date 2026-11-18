@@ -1,31 +1,72 @@
 /**
- * English that Vietnamese copy may keep. The site writes Vietnamese everywhere; the exceptions
- * are the English term in parentheses after a term's first use ("ngăn xếp (stack)"), the names
- * of people and algorithms, and the few terms Vietnamese classrooms use untranslated. The
- * Vietnamese-copy test drops these before it looks for English leftovers, so a new gloss goes
- * here and in the glossary the lesson authors share.
+ * English that Vietnamese copy may keep. The site writes Vietnamese everywhere except for three
+ * kinds of English: the common data-structure and algorithm names in `english`, which are always
+ * written in English ("stack", "hash table"); the English term in parentheses after the first
+ * use of a Vietnamese term ("chốt (pivot)"); and the names of people and algorithms. The
+ * Vietnamese-copy test drops the last two before it looks for English leftovers, and flags any
+ * Vietnamese form of an `english` term outside parentheses.
  */
 
-/** English glosses written in parentheses after the Vietnamese term, lower case. */
+/**
+ * Terms written in English, with every Vietnamese form the site used for them. The first use in
+ * a lesson's running text glosses the term once, "stack (ngăn xếp)"; the parenthesised form is
+ * the only place a `vi` form may appear outside the glossary page. `ban: false` marks forms too
+ * ambiguous for the test to search for ("ngăn" is also a drawer, "đống" also a pile in Nim).
+ * Operation names (push, pop, find, union) and the names of `names` below need no entry.
+ * @type {{ en: string, vi: string[], ban?: false }[]}
+ */
+export const english = [
+  { en: 'stack', vi: ['ngăn xếp'] },
+  { en: 'call stack', vi: ['ngăn xếp lời gọi'] },
+  { en: 'queue', vi: ['hàng đợi'] },
+  { en: 'deque', vi: ['hàng đợi hai đầu'] },
+  { en: 'priority queue', vi: ['hàng đợi ưu tiên'] },
+  { en: 'linked list', vi: ['danh sách liên kết'] },
+  { en: 'hash table', vi: ['bảng băm'] },
+  { en: 'hash', vi: ['băm', 'hàm băm', 'giá trị băm'] },
+  { en: 'rehash', vi: ['băm lại'] },
+  { en: 'rolling hash', vi: ['băm cuộn', 'hàm băm cuộn'] },
+  { en: 'double hashing', vi: ['băm kép'] },
+  { en: 'universal hashing', vi: ['băm phổ quát'] },
+  { en: 'perfect hashing', vi: ['băm hoàn hảo'] },
+  { en: 'bucket', vi: ['ngăn'], ban: false },
+  { en: 'heap', vi: ['đống'], ban: false },
+  { en: 'min-heap', vi: ['heap nhỏ nhất'] },
+  { en: 'max-heap', vi: ['heap lớn nhất'] },
+  { en: 'heapify', vi: ['vun đống', 'vun heap'] },
+  { en: 'trie', vi: ['cây tiền tố'] },
+  { en: 'treap', vi: ['cây treap'] },
+  { en: 'skip list', vi: ['danh sách nhảy'] },
+  { en: 'segment tree', vi: ['cây phân đoạn'] },
+  { en: 'Fenwick tree', vi: ['cây chỉ số nhị phân', 'cây Fenwick'] },
+  { en: 'sparse table', vi: ['bảng thưa'] },
+  { en: 'lazy propagation', vi: ['cập nhật lười'] },
+  { en: 'DSU', vi: ['cấu trúc các tập rời nhau', 'tập hợp rời nhau', 'các tập rời nhau'] },
+  { en: 'prefix sum', vi: ['tổng tiền tố', 'mảng cộng dồn'] },
+  { en: 'bitmask', vi: ['mặt nạ bit'] },
+  { en: 'BFS', vi: ['duyệt theo chiều rộng', 'tìm kiếm theo chiều rộng'] },
+  { en: 'DFS', vi: ['duyệt theo chiều sâu', 'tìm kiếm theo chiều sâu'] },
+  { en: 'bubble sort', vi: ['sắp xếp nổi bọt'] },
+  { en: 'insertion sort', vi: ['sắp xếp chèn'] },
+  { en: 'selection sort', vi: ['sắp xếp chọn'] },
+  { en: 'merge sort', vi: ['sắp xếp trộn'] },
+  { en: 'quicksort', vi: ['sắp xếp nhanh'] },
+  { en: 'heapsort', vi: ['sắp xếp vun đống'] },
+  { en: 'counting sort', vi: ['sắp xếp đếm'] },
+  { en: 'radix sort', vi: ['sắp xếp theo cơ số'] },
+  { en: 'bucket sort', vi: ['sắp xếp theo thùng'] },
+];
+
+/** English glosses written in parentheses after a Vietnamese term, lower case. */
 export const glosses = [
   'algorithm',
   'data structure',
   'dynamic array',
-  'prefix sum',
-  'linked list',
-  'stack',
-  'queue',
-  'priority queue',
-  'deque',
-  'hash',
-  'hash table',
-  'hash function',
   'chaining',
   'separate chaining',
   'open addressing',
   'linear probing',
   'quadratic probing',
-  'double hashing',
   'load factor',
   'binary search tree',
   'bst',
@@ -33,14 +74,6 @@ export const glosses = [
   'inorder',
   'postorder',
   'level order',
-  'heapify',
-  'segment tree',
-  'sparse table',
-  'fenwick tree',
-  'bit',
-  'lazy propagation',
-  'disjoint set union',
-  'dsu',
   'union-find',
   'path compression',
   'union by rank',
@@ -48,10 +81,6 @@ export const glosses = [
   'scc',
   'dag',
   'topological sort',
-  'bfs',
-  'dfs',
-  'breadth-first search',
-  'depth-first search',
   'relax',
   'relaxation',
   'minimum spanning tree',
@@ -62,16 +91,11 @@ export const glosses = [
   'lowest common ancestor',
   'lca',
   'binary lifting',
-  'quicksort',
-  'heapsort',
-  'counting sort',
-  'radix sort',
   'pivot',
   'stable',
   'in-place',
   'amortized analysis',
   'potential function',
-  'call stack',
   'loop invariant',
   'base case',
   'recurrence',
@@ -89,18 +113,13 @@ export const glosses = [
   'lis',
   'edit distance',
   'knapsack',
-  'bitmask',
   'backtracking',
   'pruning',
   'branch and bound',
   'two pointers',
   'sliding window',
-  'monotonic stack',
-  'monotonic queue',
   'suffix array',
   'lcp',
-  'trie',
-  'rolling hash',
   'prefix function',
   'failure function',
   'convex hull',

@@ -48,7 +48,7 @@
   </ol>
 </section>
 
-<section class="decor-column mx-auto max-w-5xl px-4 pb-20" aria-labelledby="topics-title">
+<section class="decor-column mx-auto max-w-5xl px-4 pb-12" aria-labelledby="topics-title">
   <h2 id="topics-title" class="mb-6 text-center text-2xl font-bold text-slate-900">
     {copy.hub.topicsTitle}
   </h2>
@@ -96,4 +96,16 @@
       </ul>
     </section>
   {/each}
+</section>
+
+<section class="decor-column mx-auto max-w-5xl px-4 pb-20">
+  <a
+    href={resolve(/** @type {'/'} */ ('/thuat-ngu/'))}
+    class="focus-ring block rounded-[var(--card-radius)] border border-teal-200 bg-teal-50 p-5 text-teal-900 hover:border-teal-600"
+  >
+    <h2 class="mb-1 text-xl font-bold text-teal-800 underline underline-offset-4">
+      {copy.glossary.title}
+    </h2>
+    <p class="text-sm leading-relaxed">{copy.glossary.homeBody}</p>
+  </a>
 </section>

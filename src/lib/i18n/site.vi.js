@@ -2,14 +2,14 @@ export const site = {
   title: 'TinTưởng',
   tagline: 'Học cấu trúc dữ liệu và thuật toán bằng cách chạy từng bước',
   description:
-    'TinTưởng là chuyến tham quan có tương tác qua các cấu trúc dữ liệu và thuật toán. Mỗi bài chạy thuật toán thật trên đầu vào do bạn chọn: tiến từng bước, lùi lại và xem chi phí tăng dần.',
+    'TinTưởng là chuyến tham quan có tương tác qua các cấu trúc dữ liệu và thuật toán. Mỗi bài chạy thuật toán thật trên đầu vào do em chọn: tiến từng bước, lùi lại và xem chi phí tăng dần.',
 };
 
 export const hub = {
   topicsTitle: 'Chủ đề',
   howTitle: 'Mỗi bài học diễn ra thế nào',
   how: [
-    { title: 'Chạy', body: 'Thuật toán thật chạy trên đầu vào của bạn và ghi lại mọi bước.' },
+    { title: 'Chạy', body: 'Thuật toán thật chạy trên đầu vào của em và ghi lại mọi bước.' },
     {
       title: 'Đi từng bước',
       body: 'Phát, tạm dừng, lùi lại hoặc kéo thanh bước, kèm dòng mã giả tương ứng được tô sáng.',
@@ -19,13 +19,36 @@ export const hub = {
       body: 'Sửa đầu vào và xem số bước tăng hay giảm ra sao.',
     },
   ],
-  /** @param {string} topic */
-  startCta: (topic) => `Bắt đầu với ${topic.toLowerCase()}`,
+  /**
+   * The topic title lower-cased mid-sentence, except a leading acronym ("BFS", "DSU").
+   * @param {string} topic
+   */
+  startCta: (topic) =>
+    `Bắt đầu với ${/^\p{Lu}{2}/u.test(topic) ? topic : topic.charAt(0).toLowerCase() + topic.slice(1)}`,
   /** @param {number} level */
   levelLabel: (level) => `Phần ${level}`,
   /** @param {number} ready @param {number} planned */
   lessonCount: (ready, planned) => `${ready}/${planned} bài đã sẵn sàng`,
   comingSoon: 'Sắp ra mắt',
+};
+
+export const glossary = {
+  title: 'Thuật ngữ',
+  lead: 'Nghĩa tiếng Việt và giải thích ngắn gọn của các thuật ngữ trong bài học.',
+  searchLabel: 'Tìm thuật ngữ',
+  /** @param {number} n */
+  found: (n) => (n === 0 ? 'Không tìm thấy thuật ngữ nào.' : `Tìm thấy ${n} thuật ngữ`),
+  jumpLabel: 'Đến chữ cái',
+  /** @param {number} n */
+  count: (n) => `${n} thuật ngữ`,
+  meaning: 'Nghĩa:',
+  learnedIn: 'Học ở:',
+  seeAlso: 'Xem thêm:',
+  lessonTitle: 'Thuật ngữ trong bài',
+  viewAll: 'Xem tất cả thuật ngữ',
+  homeBody:
+    'Tra nghĩa tiếng Việt của stack, queue, hash table, BFS và các thuật ngữ khác, kèm bài học giải thích từng thuật ngữ.',
+  empty: 'Thuật ngữ đang được cập nhật.',
 };
 
 export const stub = {
@@ -40,7 +63,7 @@ export const stub = {
 
 export const moved = {
   title: 'Bài học đã chuyển chỗ',
-  body: 'Bài học giờ nằm ở địa chỉ mới. Trình duyệt sẽ tự đưa bạn đến đó.',
+  body: 'Bài học giờ nằm ở địa chỉ mới. Trình duyệt sẽ tự đưa em đến đó.',
   link: 'Đến bài học',
 };
 
@@ -88,7 +111,7 @@ export const controls = {
   stoppedAt: /** @param {number} i @param {number} n */ (i, n) =>
     i === n ? `Đã xong ở bước ${n}/${n}.` : `Đã dừng ở bước ${i}/${n}.`,
   shortcuts:
-    'Phím tắt: mũi tên trái và phải để lùi hoặc tiến một bước; phím cách để phát hoặc tạm dừng sau khi bạn nhấp vào hình minh hoạ. Tốc độ 1× là một bước mỗi giây.',
+    'Phím tắt: mũi tên trái và phải để lùi hoặc tiến một bước; phím cách để phát hoặc tạm dừng sau khi em nhấp vào hình minh hoạ. Tốc độ 1× là một bước mỗi giây.',
 };
 
 export const practice = {
@@ -99,7 +122,7 @@ export const practice = {
   questionOf: (i, n) => `Câu ${i}/${n}`,
   solved: 'Đã giải',
   check: 'Kiểm tra',
-  answerLabel: 'Câu trả lời của bạn',
+  answerLabel: 'Câu trả lời của em',
   /** @param {string} unit */
   unitHint: (unit) => `Đơn vị: ${unit}`,
   /** @param {number} shown @param {number} total */
@@ -120,16 +143,16 @@ export const practice = {
   /** @type {Record<import('$lib/components/answer-check.js').CheckReason, string>} */
   feedback: {
     correct: 'Đúng rồi!',
-    empty: 'Hãy trả lời câu hỏi trước đã.',
+    empty: 'Em hãy trả lời trước khi kiểm tra.',
     incomplete: 'Hãy xếp đủ mọi mục rồi mới kiểm tra.',
     invalid: 'Hãy nhập một số, ví dụ 42 hoặc 3,5.',
     unit: 'Giá trị đúng rồi, nhưng đơn vị chưa đúng.',
-    wrong: 'Chưa đúng, thử lại nhé. Bạn có thể mở gợi ý.',
+    wrong: 'Chưa đúng, thử lại nhé. Em có thể mở gợi ý.',
   },
 };
 
 /** Spoken names of the three linear containers. */
-const containerNames = { stack: 'Ngăn xếp', queue: 'Hàng đợi', deque: 'Hàng đợi hai đầu' };
+const containerNames = { stack: 'Stack', queue: 'Queue', deque: 'Deque' };
 
 export const visuals = {
   /** Default spoken names for the shared state palette; lessons may pass their own labels. */
@@ -153,17 +176,17 @@ export const visuals = {
   nullLabel: 'null',
   /** @param {string[]} labels @param {boolean} doubly @param {boolean} circular */
   listSummary: (labels, doubly, circular) =>
-    `Danh sách liên kết ${doubly ? 'đôi' : 'đơn'}${circular ? ', vòng' : ''}: ${labels.length === 0 ? 'rỗng' : labels.join(' → ')}`,
+    `Linked list ${doubly ? 'đôi' : 'đơn'}${circular ? ', vòng' : ''}: ${labels.length === 0 ? 'rỗng' : labels.join(' → ')}`,
   top: 'đỉnh',
   bottom: 'đáy',
-  front: 'đầu hàng',
-  back: 'cuối hàng',
+  front: 'đầu',
+  back: 'cuối',
   /** @param {'stack' | 'queue' | 'deque'} kind @param {string[]} labels */
   containerSummary: (kind, labels) =>
     labels.length === 0
       ? `${containerNames[kind]} đang rỗng.`
       : kind === 'stack'
-        ? `Ngăn xếp, từ đáy lên đỉnh: ${labels.join(', ')}.`
+        ? `Stack, từ đáy lên đỉnh: ${labels.join(', ')}.`
         : `${containerNames[kind]}, từ đầu đến cuối: ${labels.join(', ')}.`,
   emptyTree: 'Cây đang rỗng.',
   /** @param {string} label @param {string} state @param {number} depth */

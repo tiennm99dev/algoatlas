@@ -2,12 +2,13 @@ import { chapters } from './index.js';
 
 /**
  * Every page a search engine should index, root-relative with the trailing slash the
- * prerendered directories need: the home page, each topic hub and each lesson.
+ * prerendered directories need: the home page, the glossary, each topic hub and each lesson.
  * @returns {string[]}
  */
 export function sitemapPaths() {
   return [
     '/',
+    '/thuat-ngu/',
     ...chapters.flatMap((c) => [`/${c.slug}/`, ...c.lessons.map((l) => `/${c.slug}/${l.slug}/`)]),
   ];
 }
