@@ -67,7 +67,7 @@ function practice() {
 describe('sets, maps and frequency counting lesson', () => {
   it('counts the words and re-sorts the map by frequency', () => {
     render();
-    expect(narration()).toBe('Ánh xạ count đang rỗng. Mỗi từ sẽ tốn một lần tra bảng băm.');
+    expect(narration()).toBe('Ánh xạ count đang rỗng. Mỗi từ sẽ tốn một lần tra hash table.');
     next(1);
     expect(narration()).toBe('Đọc “lúa”, từ thứ 1. Nó đã là khoá của count chưa?');
     next(1);

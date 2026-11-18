@@ -65,7 +65,7 @@ describe('load factor and rehashing lesson', () => {
   it('inserts, crosses the threshold and rehashes key by key', () => {
     render();
     expect(narration()).toBe(
-      'Một bảng rỗng có 4 ngăn. Bảng lớn lên bằng cách gấp đôi m khi α vượt 0.75.',
+      'Một bảng rỗng có 4 bucket. Bảng lớn lên bằng cách gấp đôi m khi α vượt 0.75.',
     );
     next(1);
     expect(narration()).toBe('Chèn 12 vào chuỗi 12 mod 4 = 0. Giờ n = 1. Tốn một bước.');
@@ -75,13 +75,15 @@ describe('load factor and rehashing lesson', () => {
     expect(document.querySelector('[role="meter"]')?.getAttribute('aria-valuenow')).toBe('1');
     next(1);
     expect(narration()).toBe(
-      'Cấp phát 8 ngăn bằng cách gấp đôi m. Cả 4 khoá phải dời, vì k mod 8 khác k mod 4.',
+      'Cấp phát 8 bucket bằng cách gấp đôi m. Cả 4 khoá phải dời, vì k mod 8 khác k mod 4.',
     );
     next(1);
     expect(narration()).toBe('Dời 12 sang chuỗi 12 mod 8 = 4. Còn 3 khoá đang chờ.');
-    expect(document.body.textContent).toContain('Đang băm lại vào 8 ngăn');
+    expect(document.body.textContent).toContain('Đang rehash vào 8 bucket');
     next(4);
-    expect(narration()).toBe('Đã băm lại: α giảm còn 4/8 = 0.50. Lần chèn này tốn 1 + 4 = 5 bước.');
+    expect(narration()).toBe(
+      'Đã rehash xong: α giảm còn 4/8 = 0.50. Lần chèn này tốn 1 + 4 = 5 bước.',
+    );
     expect(byTest('gauge')).not.toContain('vượt ngưỡng');
   });
 

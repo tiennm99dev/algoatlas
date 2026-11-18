@@ -36,7 +36,7 @@ export const countPseudocode = {
   map: [
     'count = hash map rỗng',
     'for w in stream:',
-    '  if w in count:             // một lần tra bảng băm',
+    '  if w in count:             // một lần tra hash table',
     '    count[w] = count[w] + 1',
     '  else:',
     '    count[w] = 1',
@@ -45,7 +45,7 @@ export const countPseudocode = {
   set: [
     'seen = hash set rỗng',
     'for w in stream:',
-    '  if w in seen:              // một lần tra bảng băm',
+    '  if w in seen:              // một lần tra hash table',
     '    w là từ lặp lại',
     '  else:',
     '    thêm w vào seen',

@@ -38,11 +38,11 @@ export const MAX_KEY = 999;
 
 export const hashPseudocode = [
   'insert(key):',
-  '  b = h(key)   // một ngăn trong 0..m-1',
+  '  b = h(key)   // một bucket trong 0..m-1',
   '  duyệt chuỗi b: if có phần tử bằng key, cập nhật nó rồi dừng',
   '  nối key vào cuối chuỗi b; n = n + 1',
   '  if n / m > 0.75: grow()',
-  'grow(): m = kích thước lớn hơn; chèn lại mọi khoá bằng hàm băm mới',
+  'grow(): m = kích thước lớn hơn; chèn lại mọi khoá bằng hàm hash mới',
   'search(key): b = hash(key); duyệt chuỗi b; tìm thấy hoặc không tìm thấy',
 ];
 

@@ -204,7 +204,7 @@ export const vi = {
     [
       'Bộ nhớ',
       'O(u)',
-      'Mọi cụm và bản tóm tắt đều có sẵn từ đầu; dùng bảng băm cho các cụm khác rỗng sẽ giảm xuống còn O(n).',
+      'Mọi cụm và bản tóm tắt đều có sẵn từ đầu; dùng hash table (bảng băm) cho các cụm khác rỗng sẽ giảm xuống còn O(n).',
     ],
   ],
   practiceTitle: 'Tự kiểm tra',
@@ -244,7 +244,7 @@ export const vi = {
       options: [
         'Vì bản tóm tắt không bao giờ được cập nhật',
         'Vì một cụm rỗng chỉ cần min = max = low(x), tốn O(1)',
-        'Vì các cụm là bảng băm',
+        'Vì các cụm là hash table',
         'Vì high(x) luôn bằng 0',
       ],
       answer: 1,

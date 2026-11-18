@@ -62,13 +62,13 @@ export const dijkstraPseudocode = [
   'while queue khác rỗng:',
   '  u = extractMin()',
   '  for (u → v, w) in edges(u):   // cạnh u → v, trọng số w',
-  '    if v chưa từng vào hàng đợi: insert(v, dist(u) + w)',
-  '    else if v đang trong hàng đợi and dist(u) + w < key(v):',
+  '    if v chưa từng vào queue: insert(v, dist(u) + w)',
+  '    else if v đang trong queue and dist(u) + w < key(v):',
   '      decreaseKey(v, dist(u) + w)',
 ];
 
 export const mixPseudocode = [
-  'for round in 1..10:   // hàng đợi chứa n khoá',
+  'for round in 1..10:   // queue chứa n khoá',
   '  insert() a lần          // a khoá mới',
   '  decreaseKey() d lần     // trên d khoá đang có',
   '  extractMin() e lần',

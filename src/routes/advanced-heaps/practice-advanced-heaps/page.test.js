@@ -83,7 +83,7 @@ describe('practice: advanced heaps lesson', () => {
     render();
     expect(text()).toContain('Thuật toán Dijkstra xuất phát từ đỉnh 0 trên 12 đỉnh và 40 cạnh.');
     click(button('Bước tiếp'));
-    expect(text()).toContain('insert(0, 0): đỉnh nguồn vào hàng đợi.');
+    expect(text()).toContain('insert(0, 0): đỉnh nguồn vào priority queue.');
     click(button('Bước tiếp'));
     expect(text()).toContain('extractMin() trả về đỉnh 0');
     click(button('Đến bước cuối'));
@@ -116,7 +116,9 @@ describe('practice: advanced heaps lesson', () => {
   it('runs an operation mix set with sliders', () => {
     render();
     click(radio('mode', 'mix'));
-    expect(text()).toContain('Một hàng đợi gồm n = 1024 khoá chạy 10 vòng theo tỉ lệ đã đặt.');
+    expect(text()).toContain(
+      'Một priority queue gồm n = 1024 khoá chạy 10 vòng theo tỉ lệ đã đặt.',
+    );
     commit(input('decreases'), '0');
     click(button('Bước tiếp'));
     expect(text()).toContain('Vòng 1: 4 lần chèn. Mỗi lần tốn nhị phân 11, Fibonacci 1, vEB 5.');

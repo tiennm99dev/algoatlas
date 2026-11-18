@@ -16,16 +16,16 @@ export const vi = {
   level: 'Cơ bản',
   title: 'Tập hợp, ánh xạ và đếm tần suất',
   intro:
-    'Phần lớn chương trình dùng bảng băm qua hai giao diện. Tập hợp (set) trả lời câu hỏi “x có ở đây không?”; ánh xạ (map) lưu một giá trị cho mỗi khoá, chẳng hạn một từ đã xuất hiện bao nhiêu lần. Cả hai đều tốn trung bình O(1) cho mỗi thao tác, nên chỉ một lượt duyệt qua dòng n từ là đếm xong tất cả trong O(n).',
+    'Phần lớn chương trình dùng hash table (bảng băm) qua hai giao diện. Tập hợp (set) trả lời câu hỏi “x có ở đây không?”; ánh xạ (map) lưu một giá trị cho mỗi khoá, chẳng hạn một từ đã xuất hiện bao nhiêu lần. Cả hai đều tốn trung bình O(1) cho mỗi thao tác, nên chỉ một lượt duyệt qua dòng n từ là đếm xong tất cả trong O(n).',
   summary:
-    'Cho một dòng từ chảy vào một ánh xạ băm để đếm và một tập hợp băm để phát hiện từ lặp lại, rồi so sánh một lần tra bảng băm cho mỗi từ với việc quét một danh sách.',
+    'Cho một dòng từ chảy vào một ánh xạ hash để đếm và một tập hợp hash để phát hiện từ lặp lại, rồi so sánh một lần tra hash table cho mỗi từ với việc quét một danh sách.',
   instruction:
-    'Gõ vài từ hoặc chọn một bộ mẫu, chọn Ánh xạ hoặc Tập hợp, rồi đi từng bước qua dòng từ. Mỗi từ được tra đúng một lần: ánh xạ tăng số đếm của nó, tập hợp báo nó là từ lặp lại. Quan sát danh sách tần suất được sắp xếp lại khi số đếm thay đổi, và so sánh số lần tra bảng băm với số phép so sánh mà một danh sách thường cần.',
+    'Gõ vài từ hoặc chọn một bộ mẫu, chọn Ánh xạ hoặc Tập hợp, rồi đi từng bước qua dòng từ. Mỗi từ được tra đúng một lần: ánh xạ tăng số đếm của nó, tập hợp báo nó là từ lặp lại. Quan sát danh sách tần suất được sắp xếp lại khi số đếm thay đổi, và so sánh số lần tra hash table với số phép so sánh mà một danh sách thường cần.',
   takeaways: [
     'Tập hợp lưu mỗi khoá đúng một lần và trả lời câu hỏi “có thuộc không”: thêm, xoá và kiểm tra đều tốn trung bình O(1).',
     'Ánh xạ lưu một giá trị cho mỗi khoá. Đếm tần suất là ứng dụng kinh điển: count[w] = count[w] + 1 nếu w đã là khoá, ngược lại count[w] = 1.',
-    'Một lượt duyệt với ánh xạ băm đếm n từ trong trung bình O(n). Một danh sách các từ khác nhau quét từ đầu tốn tới d phép so sánh cho mỗi từ, tổng cộng O(n · d).',
-    'Bảng băm không giữ thứ tự: muốn liệt kê từ theo tần suất, hãy sắp xếp d mục sau khi đếm xong, tốn O(d log d).',
+    'Một lượt duyệt với ánh xạ hash đếm n từ trong trung bình O(n). Một danh sách các từ khác nhau quét từ đầu tốn tới d phép so sánh cho mỗi từ, tổng cộng O(n · d).',
+    'Hash table không giữ thứ tự: muốn liệt kê từ theo tần suất, hãy sắp xếp d mục sau khi đếm xong, tốn O(d log d).',
     'Nạp bộ “Ăn quả nhớ kẻ trồng cây” ở chế độ Tập hợp và tìm từ đầu tiên bị lặp lại, rồi chuyển sang Ánh xạ để xem những từ nào cùng có số đếm cao nhất.',
   ],
   complexityHead: ['Thao tác', 'Chi phí', 'Vì sao'],
@@ -33,7 +33,7 @@ export const vi = {
     [
       'contains, add (tập hợp)',
       'O(1)',
-      'Trung bình: băm một lần rồi đi một chuỗi ngắn hoặc một dải dò ngắn.',
+      'Trung bình: hash một lần rồi đi một chuỗi ngắn hoặc một dải dò ngắn.',
     ],
     [
       'get, put (ánh xạ)',
@@ -45,7 +45,7 @@ export const vi = {
     ['Bộ nhớ', 'O(d)', 'Một mục cho mỗi từ khác nhau.'],
   ],
   nextTeaser:
-    'Bài tiếp theo, Luyện tập: bài toán về băm, dùng ánh xạ băm để giải bài tổng hai số và gom nhóm các từ đảo chữ chỉ trong một lượt duyệt.',
+    'Bài tiếp theo, Luyện tập: bài toán về hash, dùng ánh xạ hash để giải bài tổng hai số và gom nhóm các từ đảo chữ chỉ trong một lượt duyệt.',
 
   modeLabel: 'Cấu trúc',
   modes: { map: 'Ánh xạ (đếm)', set: 'Tập hợp (đã gặp)' },
@@ -75,7 +75,7 @@ export const vi = {
   entryLabel: (word, c) => `${word}: ${c}`,
   stats: {
     distinct: 'Số từ khác nhau',
-    lookups: 'Số lần tra bảng băm',
+    lookups: 'Số lần tra hash table',
     listCompares: 'Số phép so sánh khi quét danh sách',
     repeats: 'Số từ lặp lại',
     firstRepeat: 'Từ lặp lại đầu tiên',
@@ -95,8 +95,8 @@ export const vi = {
     switch (f.kind) {
       case 'start':
         return mode === 'map'
-          ? 'Ánh xạ count đang rỗng. Mỗi từ sẽ tốn một lần tra bảng băm.'
-          : 'Tập hợp seen đang rỗng. Mỗi từ sẽ tốn một lần tra bảng băm.';
+          ? 'Ánh xạ count đang rỗng. Mỗi từ sẽ tốn một lần tra hash table.'
+          : 'Tập hợp seen đang rỗng. Mỗi từ sẽ tốn một lần tra hash table.';
       case 'read':
         return `Đọc ${w}, từ thứ ${f.index + 1}. Nó ${mode === 'map' ? 'đã là khoá của count' : 'đã có trong seen'} chưa?`;
       case 'hit': {
@@ -155,7 +155,7 @@ export const vi = {
         '“nồi” lần hai được tìm thấy ở vị trí 1, còn “nấu” lần hai ở vị trí 3.',
       ],
       solution:
-        'Các từ mới: 0 + 1 + 2 + 3 + 4 + 5 = 15. Các từ lặp lại: 1 cho “nồi” và 3 cho “nấu”. Tổng là 19, so với chỉ 8 lần tra bảng băm. Nạp bộ “Nồi đồng nấu ốc” để kiểm tra.',
+        'Các từ mới: 0 + 1 + 2 + 3 + 4 + 5 = 15. Các từ lặp lại: 1 cho “nồi” và 3 cho “nấu”. Tổng là 19, so với chỉ 8 lần tra hash table. Nạp bộ “Nồi đồng nấu ốc” để kiểm tra.',
     },
     {
       type: 'number',
@@ -172,8 +172,8 @@ export const vi = {
       prompt:
         'Một máy chủ phải từ chối mọi yêu cầu có mã số đã xử lí rồi, ngoài ra không cần gì thêm. Cấu trúc nào hợp nhất?',
       options: [
-        'Một tập hợp băm chứa các mã đã xử lí',
-        'Một ánh xạ băm từ mã sang số đếm',
+        'Một tập hợp hash chứa các mã đã xử lí',
+        'Một ánh xạ hash từ mã sang số đếm',
         'Một danh sách mã đã sắp xếp',
       ],
       answer: 0,

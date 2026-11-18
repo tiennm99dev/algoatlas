@@ -15,8 +15,6 @@ export const pendingTopics = new Set([
 
   'linked-lists',
 
-  'structures',
-
   'recursion',
 
   'trees',
@@ -34,8 +32,6 @@ export const pendingTopics = new Set([
   'balanced-bst',
 
   'flows',
-
-  'advanced-heaps',
 
   'computation-models',
 ]);

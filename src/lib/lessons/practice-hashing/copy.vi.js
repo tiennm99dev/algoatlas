@@ -10,11 +10,11 @@ export const vi = {
   slug: 'practice-hashing',
   topic: 'structures',
   level: 'Trung bình',
-  title: 'Luyện tập: bài toán về băm',
+  title: 'Luyện tập: bài toán về hash',
   intro:
-    'Hai bài toán kinh điển mà ánh xạ băm giải được chỉ trong một lượt duyệt. Bài tổng hai số (two-sum) hỏi hai số có tổng bằng một giá trị đích: thay vì thử mọi cặp, ta nhớ từng số đã đi qua và hỏi xem số còn lại của cặp đã có chưa. Bài gom nhóm từ đảo chữ (anagram) cho mỗi từ một khoá là “các chữ cái của nó, đã sắp xếp”, nên những từ có cùng bộ chữ cái rơi vào cùng một danh sách.',
+    'Hai bài toán kinh điển mà một ánh xạ dùng hash (băm) giải được chỉ trong một lượt duyệt. Bài tổng hai số (two-sum) hỏi hai số có tổng bằng một giá trị đích: thay vì thử mọi cặp, ta nhớ từng số đã đi qua và hỏi xem số còn lại của cặp đã có chưa. Bài gom nhóm từ đảo chữ (anagram) cho mỗi từ một khoá là “các chữ cái của nó, đã sắp xếp”, nên những từ có cùng bộ chữ cái rơi vào cùng một danh sách.',
   summary:
-    'Chạy bài tổng hai số và bài gom nhóm từ đảo chữ trên đầu vào của bạn, xem ánh xạ băm sau mỗi bước, rồi dùng trình chạy để trả lời các câu hỏi.',
+    'Chạy bài tổng hai số và bài gom nhóm từ đảo chữ trên đầu vào của em, xem ánh xạ hash sau mỗi bước, rồi dùng trình chạy để trả lời các câu hỏi.',
   instruction:
     'Chọn một bài toán, gõ đầu vào hoặc nạp một bộ mẫu, rồi đi từng bước. Khung ánh xạ hiện mọi mục sau mỗi bước, mục đang được đọc hoặc ghi sẽ được tô sáng. Dùng trình chạy để trả lời các câu hỏi bên dưới.',
   takeaways: [
@@ -27,7 +27,7 @@ export const vi = {
   complexityHead: ['Bài toán', 'Chi phí', 'Vì sao'],
   complexity: [
     [
-      'Tổng hai số, ánh xạ băm',
+      'Tổng hai số, ánh xạ hash',
       'O(n)',
       'Thời gian trung bình: mỗi số một lần tra và nhiều nhất một lần lưu. Ánh xạ dùng O(n) bộ nhớ.',
     ],

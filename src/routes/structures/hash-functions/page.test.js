@@ -69,19 +69,19 @@ function practice() {
 describe('designing hash functions lesson', () => {
   it('piles the attack keys into one bucket on the left only', () => {
     render();
-    expect(narration()).toContain('Trái: k mod 16. Phải: băm phổ quát với a = 389, b = 120.');
+    expect(narration()).toContain('Trái: k mod 16. Phải: universal hashing với a = 389, b = 120.');
     next(1);
     expect(narration()).toBe('Khoá 0: 0 mod 16 = 0; ((389·0 + 120) mod 1009) mod 16 = 8.');
     next(1);
-    expect(narration()).toBe('Ngăn 0 bên trái giờ có 1 khoá; ngăn 8 bên phải có 1 khoá.');
+    expect(narration()).toBe('Bucket 0 bên trái giờ có 1 khoá; bucket 8 bên phải có 1 khoá.');
     click(button('Đến bước cuối'));
     expect(narration()).toBe(
-      'Đã băm 32 khoá. Số cặp va chạm: 496 với hàm băm cố định, 19 với hàm băm phổ quát.',
+      'Đã hash 32 khoá. Số cặp va chạm: 496 với hàm hash cố định, 19 với hàm hash phổ quát.',
     );
     expect(byTest('left-max')).toBe('32');
     expect(byTest('left-empty')).toBe('15');
     expect(byTest('expected')).toBe(
-      'Một hàm băm thật sự ngẫu nhiên có kì vọng C(32, 2)/16 = 31 cặp va chạm.',
+      'Một hàm hash thật sự ngẫu nhiên có kì vọng C(32, 2)/16 = 31 cặp va chạm.',
     );
   });
 
@@ -118,7 +118,7 @@ describe('designing hash functions lesson', () => {
     expect(byTest('left-max')).toBe('2');
     commit(field('input[name="count"]'), '4');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('Đã băm 4 khoá.');
+    expect(narration()).toContain('Đã hash 4 khoá.');
   });
 
   it('draws new a and b from the button and offers new random keys', () => {
@@ -130,7 +130,7 @@ describe('designing hash functions lesson', () => {
     commit(field('select[name="keys"]'), 'random');
     click(buttonByText('Bộ khoá mới'));
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('Đã băm 32 khoá.');
+    expect(narration()).toContain('Đã hash 32 khoá.');
   });
 
   it('steps with the arrow keys', () => {

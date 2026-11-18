@@ -5,7 +5,7 @@
 const METHOD_NAMES = {
   linear: 'dò tuyến tính',
   quadratic: 'dò bậc hai',
-  double: 'băm kép',
+  double: 'double hashing',
 };
 
 export const vi = {
@@ -14,9 +14,9 @@ export const vi = {
   level: 'Cơ bản',
   title: 'Xử lí va chạm: móc nối và địa chỉ mở',
   intro:
-    'Hai khoá rất hay băm vào cùng một ngăn. Móc nối (separate chaining) giữ một danh sách ở mỗi ngăn; địa chỉ mở (open addressing) cất mọi khoá ngay trong bảng và, khi va chạm, dò sang các ô khác theo một thứ tự cố định. Hãy đổ cùng một bộ khoá vào cả hai loại bảng rồi so sánh xem khoá nằm ở đâu và mỗi lần tra cứu tốn bao nhiêu.',
+    'Hai khoá rất hay được hash (băm) vào cùng một bucket (ngăn). Móc nối (separate chaining) giữ một danh sách ở mỗi bucket; địa chỉ mở (open addressing) cất mọi khoá ngay trong bảng và, khi va chạm, dò sang các ô khác theo một thứ tự cố định. Hãy đổ cùng một bộ khoá vào cả hai loại bảng rồi so sánh xem khoá nằm ở đâu và mỗi lần tra cứu tốn bao nhiêu.',
   summary:
-    'Chèn cùng một bộ khoá vào bảng móc nối và bảng địa chỉ mở đặt cạnh nhau, rồi so sánh dò tuyến tính, dò bậc hai và băm kép.',
+    'Chèn cùng một bộ khoá vào bảng móc nối và bảng địa chỉ mở đặt cạnh nhau, rồi so sánh dò tuyến tính, dò bậc hai và double hashing.',
   instruction:
     'Chọn một cách dò và một bộ khoá, rồi đi từng bước. Mỗi khoá được chèn vào bảng móc nối trước (cột trái), rồi vào bảng dò (cột phải). Quan sát dãy dò khi ô gốc đã có khoá, sau đó tìm một khoá và so sánh chi phí của một lần tìm trượt ở hai bảng.',
   takeaways: [
@@ -24,19 +24,19 @@ export const vi = {
     'Địa chỉ mở giữ mọi khoá trong bảng. Khi va chạm, nó thử lần lượt các ô h(k) + f(i) với i = 1, 2, …, và phép tìm dừng ở khoá cần tìm hoặc ở ô trống đầu tiên.',
     'Dò tuyến tính (linear probing, f(i) = i) tạo ra những dải ô đã có khoá rất dài, gọi là cụm sơ cấp; khoá nào rơi vào một dải cũng làm dải đó dài thêm.',
     'Dò bậc hai (quadratic probing, f(i) = i²) nhảy ra khỏi các dải, nhưng các khoá cùng ô gốc vẫn đi chung một đường dò, và nó có thể bỏ sót ô trống: với 11 ô, nó chỉ tới được 6 ô.',
-    'Băm kép (double hashing, f(i) = i · h₂(k)) cho mỗi khoá một bước nhảy riêng, nên các khoá cùng ô gốc đi những đường khác nhau. Nạp bộ “Cùng ô gốc” rồi chuyển qua lại giữa ba cách dò để thấy điều đó.',
+    'Double hashing (băm kép), với f(i) = i · h₂(k), cho mỗi khoá một bước nhảy riêng, nên các khoá cùng ô gốc đi những đường khác nhau. Nạp bộ “Cùng ô gốc” rồi chuyển qua lại giữa ba cách dò để thấy điều đó.',
   ],
   complexityHead: ['Thao tác', 'Chi phí', 'Vì sao'],
   complexity: [
     [
       'Tìm kiếm, móc nối',
       'O(1 + α)',
-      'Trung bình: băm một lần rồi đi dọc một chuỗi, có độ dài trung bình bằng hệ số tải α = n/m.',
+      'Trung bình: hash một lần rồi đi dọc một chuỗi, có độ dài trung bình bằng hệ số tải α = n/m.',
     ],
     [
       'Tìm trượt, địa chỉ mở',
       '1/(1 − α)',
-      'Số lần dò kì vọng khi băm đều: mỗi lần dò gặp ô trống với xác suất ít nhất 1 − α.',
+      'Số lần dò kì vọng khi hàm hash rải đều: mỗi lần dò gặp ô trống với xác suất ít nhất 1 − α.',
     ],
     [
       'Xấu nhất, mọi cách',
@@ -50,13 +50,13 @@ export const vi = {
     ],
   ],
   nextTeaser:
-    'Bài tiếp theo, Hệ số tải và băm lại, cho thấy bảng biết khi nào cần lớn lên và vì sao gấp đôi kích thước vẫn rẻ.',
+    'Bài tiếp theo, Hệ số tải và rehash, cho thấy bảng biết khi nào cần lớn lên và vì sao gấp đôi kích thước vẫn rẻ.',
 
   methodLabel: 'Cách dò',
   methods: {
     linear: 'Tuyến tính',
     quadratic: 'Bậc hai',
-    double: 'Băm kép',
+    double: 'Double hashing',
   },
   methodNames: METHOD_NAMES,
   presetLabel: 'Bộ mẫu',
@@ -188,14 +188,15 @@ export const vi = {
     },
     {
       type: 'number',
-      prompt: 'Băm kép với h₂(k) = 7 − (k mod 7). Ô 8 và ô 2 đã có khoá. Khoá 30 nằm ở ô nào?',
+      prompt:
+        'Double hashing với h₂(k) = 7 − (k mod 7). Ô 8 và ô 2 đã có khoá. Khoá 30 nằm ở ô nào?',
       answer: 7,
       hints: [
         'h(30) = 30 mod 11 = 8 và h₂(30) = 7 − 2 = 5.',
         'Các lần dò là 8, 8 + 5, 8 + 10, … mod 11.',
       ],
       solution:
-        'Lần dò 0 là ô 8 (có khoá), lần dò 1 là (8 + 5) mod 11 = 2 (có khoá), lần dò 2 là (8 + 10) mod 11 = 7, ô này trống. Nạp bộ “Hỗn hợp” với băm kép để kiểm tra.',
+        'Lần dò 0 là ô 8 (có khoá), lần dò 1 là (8 + 5) mod 11 = 2 (có khoá), lần dò 2 là (8 + 10) mod 11 = 7, ô này trống. Nạp bộ “Hỗn hợp” với double hashing để kiểm tra.',
     },
     {
       type: 'number',
@@ -213,11 +214,11 @@ export const vi = {
     {
       type: 'choice',
       prompt: 'Cách nào có thể không đặt được một khoá dù bảng 11 ô vẫn còn ô trống?',
-      options: ['Dò tuyến tính', 'Dò bậc hai', 'Băm kép với kích thước bảng nguyên tố'],
+      options: ['Dò tuyến tính', 'Dò bậc hai', 'Double hashing với kích thước bảng nguyên tố'],
       answer: 1,
       hints: ['Hãy liệt kê i² mod 11 với i = 0, 1, …, 10.'],
       solution:
-        'i² mod 11 chỉ nhận các giá trị 0, 1, 4, 9, 5 và 3, nên dò bậc hai chỉ ghé 6 trong 11 ô. Dò tuyến tính ghé đủ mọi ô, băm kép cũng vậy vì bước nhảy không bao giờ bằng 0 và 11 là số nguyên tố.',
+        'i² mod 11 chỉ nhận các giá trị 0, 1, 4, 9, 5 và 3, nên dò bậc hai chỉ ghé 6 trong 11 ô. Dò tuyến tính ghé đủ mọi ô, double hashing cũng vậy vì bước nhảy không bao giờ bằng 0 và 11 là số nguyên tố.',
     },
   ],
 };

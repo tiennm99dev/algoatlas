@@ -67,7 +67,7 @@ describe('hash table lesson', () => {
   it('ends with the inserts done and the table grown to 23', () => {
     render();
     toEnd();
-    expect(text()).toContain('Đã chèn 10 khoá vào 23 ngăn.');
+    expect(text()).toContain('Đã chèn 10 khoá vào 23 bucket.');
     expect(stat('Kích thước bảng')).toBe('23');
   });
 
@@ -78,7 +78,7 @@ describe('hash table lesson', () => {
     expect(text()).toMatch(/Bước 1\//);
     expect(text()).toContain('frac(k');
     toEnd();
-    expect(text()).toContain('vào 16 ngăn');
+    expect(text()).toContain('vào 16 bucket');
   });
 
   it('multiples of 8 pile up under a power of two and spread under a prime', () => {
@@ -96,7 +96,7 @@ describe('hash table lesson', () => {
     render();
     commit(field('input[type="number"]'), '62');
     click(buttonByText('Tìm'));
-    expect(text()).toContain('Tìm 62: băm vào ngăn 16.');
+    expect(text()).toContain('Tìm 62: hash vào bucket 16.');
     toEnd();
     expect(text()).toContain('62 không có trong chuỗi 16: tốn 2 phép so sánh.');
   });
@@ -146,7 +146,7 @@ describe('hash table lesson', () => {
     commit(input, '');
     expect(input.value).toBe('39');
     click(buttonByText('Tìm'));
-    expect(text()).toContain('Tìm 39: băm vào ngăn');
+    expect(text()).toContain('Tìm 39: hash vào bucket');
   });
 
   it('draws the hit chip at the end of a long colliding chain', () => {
@@ -158,8 +158,8 @@ describe('hash table lesson', () => {
     click(buttonByText('Tìm'));
     toEnd();
     expect(text()).toContain('Tìm thấy 987 ở vị trí 21');
-    const hit = [...document.querySelectorAll('ol[aria-label="Các ngăn"] span.sr-only')].find((e) =>
-      e.textContent?.includes('tìm thấy'),
+    const hit = [...document.querySelectorAll('ol[aria-label="Các bucket"] span.sr-only')].find(
+      (e) => e.textContent?.includes('tìm thấy'),
     );
     expect(hit?.parentElement?.textContent).toContain('987');
   });
@@ -170,13 +170,13 @@ describe('hash table lesson', () => {
     commit(input, '39');
     input.form?.requestSubmit();
     flushSync();
-    expect(text()).toContain('Tìm 39: băm vào ngăn');
+    expect(text()).toContain('Tìm 39: hash vào bucket');
   });
 
   it('says a search was cleared when the hash function changes', () => {
     render();
     click(buttonByText('Tìm'));
-    expect(text()).toContain('Tìm 62: băm vào ngăn');
+    expect(text()).toContain('Tìm 62: hash vào bucket');
     click(field('input[value="mod-pow2"]'));
     expect(document.querySelector('p[aria-live]')?.textContent).toContain(
       'Phép tìm đã bị xoá vì bảng vừa thay đổi.',
@@ -186,8 +186,8 @@ describe('hash table lesson', () => {
 
   it('gives each bucket index a spoken Bucket prefix', () => {
     render();
-    const first = document.querySelector('ol[aria-label="Các ngăn"] li');
-    expect(first?.querySelector('span.sr-only')?.textContent).toBe('Ngăn ');
-    expect(first?.textContent).toMatch(/^Ngăn 0/);
+    const first = document.querySelector('ol[aria-label="Các bucket"] li');
+    expect(first?.querySelector('span.sr-only')?.textContent).toBe('Bucket ');
+    expect(first?.textContent).toMatch(/^Bucket 0/);
   });
 });

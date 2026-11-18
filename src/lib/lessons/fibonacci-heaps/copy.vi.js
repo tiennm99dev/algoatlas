@@ -8,7 +8,7 @@ export const vi = {
   level: 'Nâng cao',
   title: 'Heap nhị thức và heap Fibonacci',
   intro:
-    'Heap nhị thức (binomial heap) hay heap Fibonacci là một rừng các cây có thứ tự heap: mỗi gốc nhỏ hơn mọi nút bên dưới nó, và gốc nhỏ nhất chính là phần tử nhỏ nhất. Hai heap như vậy gộp lại chỉ bằng cách nối danh sách gốc của chúng, nên đây là các heap gộp được. Heap Fibonacci còn đi xa hơn và “lười”: chèn và giảm khoá (decrease-key) chỉ đụng tới danh sách gốc, tốn O(1) khấu hao, còn việc dọn dẹp thì để dành cho lần lấy min.',
+    'Heap nhị thức (binomial heap) hay heap Fibonacci là một rừng các cây có thứ tự heap (đống): mỗi gốc nhỏ hơn mọi nút bên dưới nó, và gốc nhỏ nhất chính là phần tử nhỏ nhất. Hai heap như vậy gộp lại chỉ bằng cách nối danh sách gốc của chúng, nên đây là các heap gộp được. Heap Fibonacci còn đi xa hơn và “lười”: chèn và giảm khoá (decrease-key) chỉ đụng tới danh sách gốc, tốn O(1) khấu hao, còn việc dọn dẹp thì để dành cho lần lấy min.',
   summary:
     'Chèn, lấy min và giảm khoá trên heap Fibonacci hoặc heap nhị thức, đi từng bước qua danh sách gốc lười, phép hợp nhất theo bậc và các lần cắt dây chuyền.',
   instruction:

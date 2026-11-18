@@ -42,7 +42,7 @@ const pseudocodeFor = (fn) => [
   FIXED_LINE[fn],
   '  phổ quát:  b₂ = ((a·k + b) mod 1009) mod 16',
   '  count[b₁] += 1;  count[b₂] += 1',
-  'số cặp va chạm = Σ c·(c − 1)/2 trên mọi ngăn',
+  'số cặp va chạm = Σ c·(c − 1)/2 trên mọi bucket',
 ];
 
 /** @type {Record<FixedHash, string[]>} */

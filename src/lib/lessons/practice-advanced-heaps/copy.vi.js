@@ -23,11 +23,11 @@ export const vi = {
   level: 'Nâng cao',
   title: 'Luyện tập: heap nâng cao',
   intro:
-    'Một thuật toán nên dùng hàng đợi ưu tiên (priority queue) nào? Điều đó phụ thuộc vào tỉ lệ các thao tác nó dùng, vào số khoá hàng đợi chứa, và vào việc các khoá có phải là số nguyên nhỏ hay không. Hãy cho heap nhị phân, heap Fibonacci và cây van Emde Boas thi đấu trên đúng các thao tác hàng đợi mà thuật toán Dijkstra thực hiện, hoặc trên một tỉ lệ thao tác do bạn đặt, rồi xem cấu trúc nào tốn ít bước nhất.',
+    'Một thuật toán nên dùng priority queue (hàng đợi ưu tiên) nào? Điều đó phụ thuộc vào tỉ lệ các thao tác nó dùng, vào số khoá priority queue chứa, và vào việc các khoá có phải là số nguyên nhỏ hay không. Hãy cho heap nhị phân, heap Fibonacci và cây van Emde Boas thi đấu trên đúng các thao tác priority queue mà thuật toán Dijkstra thực hiện, hoặc trên một tỉ lệ thao tác do em đặt, rồi xem cấu trúc nào tốn ít bước nhất.',
   summary:
-    'Cho heap nhị phân, heap Fibonacci và cây van Emde Boas thi đấu trên các thao tác hàng đợi của thuật toán Dijkstra hoặc trên một tỉ lệ thao tác, rồi chọn đúng hàng đợi ưu tiên.',
+    'Cho heap nhị phân, heap Fibonacci và cây van Emde Boas thi đấu trên các thao tác priority queue của thuật toán Dijkstra hoặc trên một tỉ lệ thao tác, rồi chọn đúng priority queue.',
   instruction:
-    'Ở chế độ Dijkstra, kéo các thanh trượt để đổi đồ thị (hoặc bấm Đồ thị mới) rồi đi từng bước qua lần chạy: mỗi lần chèn, lấy min và giảm khoá đều được tính cho cả ba hàng đợi. Ở chế độ Tỉ lệ thao tác, đặt kích thước hàng đợi và số thao tác mỗi vòng. Đổi vũ trụ u của cây vEB ở cả hai chế độ, và bấm Đến bước cuối để đọc tổng số bước.',
+    'Ở chế độ Dijkstra, kéo các thanh trượt để đổi đồ thị (hoặc bấm Đồ thị mới) rồi đi từng bước qua lần chạy: mỗi lần chèn, lấy min và giảm khoá đều được tính cho cả ba priority queue. Ở chế độ Tỉ lệ thao tác, đặt kích thước priority queue và số thao tác mỗi vòng. Đổi vũ trụ u của cây vEB ở cả hai chế độ, và bấm Đến bước cuối để đọc tổng số bước.',
   modeLabel: 'Khối lượng công việc',
   modes: { dijkstra: 'Dijkstra', mix: 'Tỉ lệ thao tác' },
   verticesLabel: 'Số đỉnh V',
@@ -36,7 +36,7 @@ export const vi = {
   newGraph: 'Đồ thị mới',
   /** @param {number} seed */
   graphName: (seed) => `Đồ thị số ${seed}`,
-  sizeLabel: 'Kích thước hàng đợi n',
+  sizeLabel: 'Kích thước priority queue n',
   insertsLabel: 'Số lần chèn mỗi vòng',
   decreasesLabel: 'Số lần giảm khoá mỗi vòng',
   extractsLabel: 'Số lần lấy min mỗi vòng',
@@ -60,14 +60,14 @@ export const vi = {
     inserts: 'Số lần chèn',
     decreases: 'Số lần giảm khoá',
     extracts: 'Số lần lấy min',
-    size: 'Kích thước hàng đợi (lớn nhất)',
+    size: 'Kích thước priority queue (lớn nhất)',
     maxKey: 'Khoá lớn nhất',
     memory: 'Bộ nhớ của cây vEB: u ô',
   },
   noKeys: '—',
   costTitle: 'Số bước mỗi thao tác ở kích thước này',
   /** @param {number} s */
-  costCaption: (s) => `Tính với s = ${s} khoá trong hàng đợi.`,
+  costCaption: (s) => `Tính với s = ${s} khoá trong priority queue.`,
   costHead: ['Thao tác', 'Nhị phân', 'Fibonacci', 'vEB'],
   opNames: { insert: 'chèn', decrease: 'giảm khoá', extract: 'lấy min' },
   modelTitle: 'Mô hình chi phí',
@@ -90,13 +90,13 @@ export const vi = {
     switch (f.kind) {
       case 'start':
         return f.mode === 'dijkstra'
-          ? `Thuật toán Dijkstra xuất phát từ đỉnh 0 trên ${graph.v} đỉnh và ${graph.e} cạnh. Mỗi thao tác hàng đợi đều được tính cho cả ba hàng đợi.`
-          : `Một hàng đợi gồm n = ${f.size} khoá chạy 10 vòng theo tỉ lệ đã đặt. Mỗi thao tác đều được tính cho cả ba hàng đợi.`;
+          ? `Thuật toán Dijkstra xuất phát từ đỉnh 0 trên ${graph.v} đỉnh và ${graph.e} cạnh. Mỗi thao tác priority queue đều được tính cho cả ba priority queue.`
+          : `Một priority queue gồm n = ${f.size} khoá chạy 10 vòng theo tỉ lệ đã đặt. Mỗi thao tác đều được tính cho cả ba priority queue.`;
       case 'insert':
         if (f.mode === 'mix')
           return `Vòng ${f.round}: ${f.batch} lần chèn. Mỗi lần tốn ${costs(one)}.${fit}`;
         return f.opIndex === 0
-          ? `insert(0, 0): đỉnh nguồn vào hàng đợi. Chi phí: ${costs(f.step)}.`
+          ? `insert(0, 0): đỉnh nguồn vào priority queue. Chi phí: ${costs(f.step)}.`
           : `Lần đầu tới được đỉnh ${f.vertex}: chèn nó với khoá ${f.key}. Chi phí: ${costs(f.step)}.${fit}`;
       case 'decrease':
         if (f.mode === 'mix')
@@ -122,11 +122,11 @@ export const vi = {
   takeaways: [
     'Thuật toán Dijkstra thực hiện V lần chèn, V lần lấy min và tối đa E lần giảm khoá. Heap nhị phân tốn log V cho mỗi thao tác, tổng O((V + E) log V); heap Fibonacci chỉ tốn O(1) khấu hao cho mỗi lần giảm khoá, tổng O(E + V log V), nên thắng trên đồ thị dày.',
     'Lấy min trên heap Fibonacci tốn hơn trên heap nhị phân (cận log_φ n vào khoảng 1,44 log₂ n), nên khối lượng công việc gồm chủ yếu là lấy min có lợi cho heap nhị phân; trong mã thật, hằng số lớn hơn và việc lần theo con trỏ còn nới rộng khoảng cách đó.',
-    'Với khoá nguyên nhỏ hơn u, cây van Emde Boas làm mọi thao tác trong O(log log u), nhanh hơn log n khi hàng đợi đủ lớn. Nó cần các khoá nằm gọn trong u, và tốn O(u) bộ nhớ dù chứa ít khoá đến đâu.',
-    'Chọn theo khối lượng công việc: mặc định dùng heap nhị phân, dùng heap Fibonacci (hoặc heap ghép cặp) khi phép giảm khoá chiếm đa số, và dùng cây vEB hoặc hàng đợi theo ngăn khi có nhiều khoá nguyên nhỏ.',
+    'Với khoá nguyên nhỏ hơn u, cây van Emde Boas làm mọi thao tác trong O(log log u), nhanh hơn log n khi priority queue đủ lớn. Nó cần các khoá nằm gọn trong u, và tốn O(u) bộ nhớ dù chứa ít khoá đến đâu.',
+    'Chọn theo khối lượng công việc: mặc định dùng heap nhị phân, dùng heap Fibonacci (hoặc heap ghép cặp) khi phép giảm khoá chiếm đa số, và dùng cây vEB hoặc priority queue chia theo bucket khi có nhiều khoá nguyên nhỏ.',
     'Thử xem: ở chế độ Tỉ lệ thao tác, đặt n = 2^20 với chỉ chèn và lấy min, rồi đổi u từ 2^32 xuống 2^16 và xem cây vEB bị loại.',
   ],
-  complexityHead: ['Hàng đợi', 'Chi phí', 'Vì sao'],
+  complexityHead: ['Priority queue', 'Chi phí', 'Vì sao'],
   complexity: [
     [
       'Heap nhị phân',
@@ -165,7 +165,7 @@ export const vi = {
       unit: 'lần',
       hints: ['Bấm Đến bước cuối rồi đọc ô Số lần giảm khoá.'],
       solution:
-        'Chỉ 5 trong 40 cạnh tìm được đường đi ngắn hơn tới một đỉnh đã ở trong hàng đợi; những lần nới lỏng cạnh khác hoặc tới một đỉnh lần đầu (một lần chèn), hoặc không cải thiện được gì.',
+        'Chỉ 5 trong 40 cạnh tìm được đường đi ngắn hơn tới một đỉnh đã ở trong priority queue; những lần nới lỏng cạnh khác hoặc tới một đỉnh lần đầu (một lần chèn), hoặc không cải thiện được gì.',
     },
     {
       type: 'number',
@@ -193,7 +193,7 @@ export const vi = {
     {
       type: 'choice',
       prompt:
-        'Chuyển sang Tỉ lệ thao tác với n = 2^10, u = 2^16 và mỗi vòng 4 lần chèn, 0 lần giảm khoá, 4 lần lấy min. Hàng đợi nào tốn ít bước nhất?',
+        'Chuyển sang Tỉ lệ thao tác với n = 2^10, u = 2^16 và mỗi vòng 4 lần chèn, 0 lần giảm khoá, 4 lần lấy min. Priority queue nào tốn ít bước nhất?',
       options: ['Heap nhị phân', 'Heap Fibonacci', 'Cây van Emde Boas'],
       answer: 2,
       hints: ['Đặt các thanh trượt, bấm Đến bước cuối rồi tìm dấu ✓ ít bước nhất.'],
@@ -213,7 +213,7 @@ export const vi = {
     {
       type: 'choice',
       prompt:
-        'Giờ đặt mỗi vòng 4 lần chèn, 20 lần giảm khoá và 4 lần lấy min (n = 2^10, u = 2^16). Hàng đợi nào thắng?',
+        'Giờ đặt mỗi vòng 4 lần chèn, 20 lần giảm khoá và 4 lần lấy min (n = 2^10, u = 2^16). Priority queue nào thắng?',
       options: ['Heap nhị phân', 'Heap Fibonacci', 'Cây van Emde Boas'],
       answer: 1,
       hints: ['Với heap Fibonacci, mỗi lần giảm khoá tốn 1 bước.'],
@@ -224,7 +224,7 @@ export const vi = {
       type: 'multi',
       prompt: 'Những khẳng định nào đúng?',
       options: [
-        'Cây vEB trên u = 2^16 không thể chứa một hàng đợi gồm n = 2^20 khoá khác nhau',
+        'Cây vEB trên u = 2^16 không thể chứa một priority queue gồm n = 2^20 khoá khác nhau',
         'Heap Fibonacci làm cho từng lần lấy min đều nhanh',
         'Thuật toán Dijkstra với heap Fibonacci chạy trong O(E + V log V)',
         'Bộ nhớ của cây vEB tăng theo u, không theo số khoá',
