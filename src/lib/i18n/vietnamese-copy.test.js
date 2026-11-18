@@ -238,3 +238,54 @@ describe.each(sources)('Vietnamese copy in %s', (_, strings) => {
     }
   });
 });
+
+// Every source file as text, to catch UTF-8 that was read as Latin-1 or Windows-1252 and saved
+// again ("dừng" turned into "d" + "á»«" + "ng").
+const rawSources = /** @type {Record<string, string>} */ (
+  import.meta.glob(['/src/**/*.{js,svelte,json,html,css}', '/scripts/*.js'], {
+    query: '?raw',
+    import: 'default',
+    eager: true,
+  })
+);
+// The lead bytes of Vietnamese letters as Windows-1252 text: E1 BA/BB (ạ-ỹ), C3 (á, â, ê, ô…),
+// C4 (ă, đ), C6 (ơ, ư), and E2 80 (dashes and quotes). Escaped so this file does not match itself.
+// Windows-1252 letters for the bytes 80-9F.
+const CP1252 = String.fromCodePoint(
+  ...'20ac 201a 0192 201e 2026 2020 2021 02c6 2030 0160 2039 0152 017d 2018 2019 201c 201d 2022 2013 2014 02dc 2122 0161 203a 0153 017e 0178'
+    .split(' ')
+    .map((hex) => parseInt(hex, 16)),
+);
+const EURO = String.fromCodePoint(0x20ac);
+const MOJIBAKE_RE = new RegExp(
+  [
+    String.raw`\xe1[\xba\xbb]`,
+    String.raw`\xc3[\x80-\xbf${CP1252}]`,
+    String.raw`\xc4[\x80-\xbf${CP1252}]`,
+    String.raw`\xc6[\xa0-\xbf]`,
+    String.raw`\xe2${EURO}`,
+  ].join('|'),
+  'u',
+);
+
+describe('source files', () => {
+  it('pattern finds mis-decoded UTF-8 but not real Vietnamese', () => {
+    const garble = (/** @type {string} */ s) =>
+      String.fromCharCode(...new TextEncoder().encode(s)).replace(/[\u0080-\u009f]/g, (c) =>
+        new TextDecoder('windows-1252').decode(new Uint8Array([c.charCodeAt(0)])),
+      );
+    for (const word of ['dừng', 'được', 'ăn', 'tiếp', 'là', 'Đúng', 'ơn', '—'])
+      expect(MOJIBAKE_RE.test(garble(word)), word).toBe(true);
+    expect(MOJIBAKE_RE.test('NGÃ, Ã, ÁÀẢÃẠ, dừng, được, Ăn')).toBe(false);
+  });
+
+  it('have no mis-decoded UTF-8', () => {
+    expect(Object.keys(rawSources).length).toBeGreaterThan(300);
+    const hits = Object.entries(rawSources).flatMap(([file, text]) =>
+      text
+        .split('\n')
+        .flatMap((line, i) => (MOJIBAKE_RE.test(line) ? [`${file}:${i + 1}: ${line.trim()}`] : [])),
+    );
+    expect(hits).toEqual([]);
+  });
+});
