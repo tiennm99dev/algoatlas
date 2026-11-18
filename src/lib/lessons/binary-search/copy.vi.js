@@ -8,11 +8,11 @@ export const vi = {
   intro:
     'Trong một mảng đã sắp xếp, chỉ một phép so sánh đã cho biết giá trị cần tìm nằm ở nửa nào. Bỏ nửa kia đi rồi lặp lại: một triệu phần tử chỉ cần nhiều nhất 20 phép so sánh.',
   summary:
-    'Chia đôi mảng đã sắp xếp sau mỗi phép so sánh, rồi tự điều khiển ở chế độ “Bạn tự làm” và thử thắng tìm kiếm nhị phân.',
+    'Chia đôi mảng đã sắp xếp sau mỗi phép so sánh, rồi tự điều khiển ở chế độ “Em tự làm” và thử thắng tìm kiếm nhị phân.',
   instruction:
-    'Chế độ Xem chạy thuật toán từng bước. Chế độ Bạn tự làm cho bạn tự chọn ô để đọc: thử xem bạn có thắng được tìm kiếm nhị phân không.',
+    'Chế độ Xem chạy thuật toán từng bước. Chế độ Em tự làm cho em tự chọn ô để đọc: thử xem em có thắng được tìm kiếm nhị phân không.',
   modeLabel: 'Chế độ',
-  modes: { watch: 'Xem', drive: 'Bạn tự làm' },
+  modes: { watch: 'Xem', drive: 'Em tự làm' },
   targetLabel: 'Giá trị cần tìm',
   sizeLabel: 'Kích thước',
   newArray: 'Mảng mới',
@@ -26,12 +26,12 @@ export const vi = {
     mid: 'Điểm giữa đang đọc',
     found: 'Đã tìm thấy',
     out: 'Đã loại',
-    probed: 'Bạn đã đọc',
+    probed: 'Em đã đọc',
   },
   foundMarker: '✓',
   binaryCount: 'Số lần đọc của tìm kiếm nhị phân',
   linearCount: 'Số lần đọc của tìm kiếm tuần tự',
-  yourCount: 'Số lần bạn đọc',
+  yourCount: 'Số lần em đọc',
   /** @param {SearchFrame} f @param {number[]} a @param {number} target */
   describe(f, a, target) {
     switch (f.kind) {
@@ -59,7 +59,7 @@ export const vi = {
     found: /** @param {number} n @param {number} best */ (n, best) =>
       n <= best
         ? `Tìm thấy sau ${n} lần đọc, giỏi ngang tìm kiếm nhị phân (${best}).`
-        : `Tìm thấy sau ${n} lần đọc. Tìm kiếm nhị phân chỉ cần ${best}. Bạn có luôn chọn ô ở giữa không?`,
+        : `Tìm thấy sau ${n} lần đọc. Tìm kiếm nhị phân chỉ cần ${best}. Em có luôn chọn ô ở giữa không?`,
     missing: /** @param {number} n @param {number} best */ (n, best) =>
       `Sau ${n} lần đọc thì không còn ô nào: giá trị cần tìm không có trong mảng. Tìm kiếm nhị phân chứng minh được điều đó sau ${best} lần.`,
     restart: 'Thử lại',
@@ -69,7 +69,7 @@ export const vi = {
     'Mỗi lần đọc chia đôi số ứng viên, nên chi phí nhiều nhất là ⌊log₂ n⌋ + 1 lần đọc. Mảng dài gấp đôi chỉ thêm một bước.',
     'Chọn đúng điểm giữa mới bảo đảm được cận đó. Đọc lệch tâm có thể gặp may, nhưng trường hợp xấu nhất lại tệ hơn.',
     'Cẩn thận lỗi lệch một: vòng lặp chạy khi lo ≤ hi, và cửa sổ dời tới mid ± 1, không bao giờ dời tới mid.',
-    'Thử chế độ “Bạn tự làm”: tự đọc các ô và xem bạn có tìm ra giá trị với ít lần đọc hơn tìm kiếm nhị phân không.',
+    'Thử chế độ “Em tự làm”: tự đọc các ô và xem em có tìm ra giá trị với ít lần đọc hơn tìm kiếm nhị phân không.',
   ],
   complexity: [
     ['Tốt nhất', 'O(1)', 'Điểm giữa đầu tiên chính là giá trị cần tìm.'],

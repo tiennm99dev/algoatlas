@@ -11,8 +11,6 @@ export const pendingTopics = new Set([
 
   'sorting',
 
-  'searching',
-
   'linked-lists',
 
   'recursion',

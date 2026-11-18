@@ -16,7 +16,7 @@ export const vi = {
   level: 'Trung bình',
   title: 'Luyện tập: bài toán tìm kiếm',
   intro:
-    'Tìm kiếm nhị phân rất ngắn, và gần như mọi lỗi của nó đều nằm ở chỗ biên: điều kiện vòng lặp, cách cập nhật lo hoặc hi, hay giá trị ban đầu của hi. Ở đây có năm phiên bản của cùng một thuật toán, mỗi bản chỉ khác nhau một dòng. Chạy chúng trên mảng của bạn, thử mọi giá trị cần tìm cùng lúc, và xem chính xác bản nào lặp vô hạn, bỏ sót hay đọc quá cuối mảng.',
+    'Tìm kiếm nhị phân rất ngắn, và gần như mọi lỗi của nó đều nằm ở chỗ biên: điều kiện vòng lặp, cách cập nhật lo hoặc hi, hay giá trị ban đầu của hi. Ở đây có năm phiên bản của cùng một thuật toán, mỗi bản chỉ khác nhau một dòng. Chạy chúng trên mảng của em, thử mọi giá trị cần tìm cùng lúc, và xem chính xác bản nào lặp vô hạn, bỏ sót hay đọc quá cuối mảng.',
   summary:
     'Gỡ lỗi bốn bản tìm kiếm nhị phân chỉ khác bản đúng đúng một dòng ở biên: tìm những giá trị làm mỗi bản lặp vô hạn, bỏ sót hoặc đọc ra ngoài mảng.',
   instruction:
@@ -49,7 +49,7 @@ export const vi = {
     ],
   ],
   nextTeaser:
-    'Chủ đề tiếp theo rời mảng để sang các nút nối với nhau bằng con trỏ, bắt đầu với Danh sách liên kết đơn.',
+    'Chủ đề tiếp theo rời mảng để sang các nút nối với nhau bằng con trỏ, bắt đầu với Linked list đơn (danh sách liên kết đơn).',
   versionLabel: 'Phiên bản',
   /** @param {Version} v */
   versionName: (v) => `Phiên bản ${v}`,
