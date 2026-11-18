@@ -82,6 +82,8 @@
   const cellsBottom = $derived(top + CELL);
   const indexY = $derived(cellsBottom + (showIndices ? INDEX_H : 0));
   const vbW = $derived(slots * PITCH - GAP);
+  // About 32 px per cell at least, so a long strip scrolls in its frame instead of shrinking.
+  const minW = $derived(Math.min(vbW, Math.max(360, slots * 32)));
   const vbH = $derived(indexY + pointerBand + 2);
   const fade = $derived(speed < 8 ? 'transition-colors' : '');
 
@@ -168,7 +170,7 @@
     role={onselect ? 'group' : 'img'}
     aria-label={summary}
     class="mx-auto block h-auto"
-    style="width: {vbW + 4}px; max-width: 100%; min-width: {Math.min(vbW, 360)}px"
+    style="width: {vbW + 4}px; max-width: 100%; min-width: {minW}px"
   >
     {#each windowRows as w, wi (wi)}
       {@const y = windowBand - (w.row + 1) * BRACKET + 4}

@@ -64,6 +64,18 @@ describe('ArrayStrip', () => {
     expect(indices).toEqual(['0', '1', '2', '3', '4']);
   });
 
+  it('keeps about 32 px per cell so a long strip scrolls instead of shrinking', () => {
+    const minWidth = () => svg().style.minWidth;
+    render({});
+    expect(minWidth()).toBe('172px');
+    unmount(/** @type {Record<string, any>} */ (app));
+    render({ values: Array.from({ length: 11 }, (_, i) => i) });
+    expect(minWidth()).toBe('360px');
+    unmount(/** @type {Record<string, any>} */ (app));
+    render({ values: Array.from({ length: 31 }, (_, i) => i) });
+    expect(minWidth()).toBe('992px');
+  });
+
   it('becomes a roving-focus row of buttons with onselect', () => {
     const onselect = vi.fn();
     render({ onselect, selected: 1 });
