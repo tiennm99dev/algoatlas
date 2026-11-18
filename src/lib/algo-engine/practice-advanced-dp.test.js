@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { lcg } from './seeded-random.js';
 import {
   DEFAULTS,
   PARAM,
@@ -7,7 +8,6 @@ import {
   growthSizes,
   makeInput,
   racePseudocode,
-  seeded,
   solveFast,
   solveNaive,
 } from './practice-advanced-dp.js';
@@ -17,7 +17,7 @@ const factorial = (n) => (n <= 1 ? 1 : n * factorial(n - 1));
 
 describe('naive and optimised solvers', () => {
   it('agree on every problem across sizes and inputs', () => {
-    const rand = seeded(71);
+    const rand = lcg(71);
     for (const problem of PROBLEMS)
       for (let t = 0; t < 25; t++) {
         const top = problem === 'tour' ? 8 : 300;

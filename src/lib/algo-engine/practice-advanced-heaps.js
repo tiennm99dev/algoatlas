@@ -14,6 +14,8 @@
  *   integer keys below u.
  */
 
+import { lcg } from './seeded-random.js';
+
 /**
  * @typedef {'dijkstra'|'mix'} RaceMode
  * @typedef {{sizeBits: number, inserts: number, decreases: number, extracts: number}} OpMix
@@ -111,8 +113,7 @@ export function opCost(type, s, bits) {
  * @returns {WeightedEdge[]}
  */
 export function makeGraph(v, e, maxW, seed) {
-  let s = seed >>> 0;
-  const rand = () => (s = (s * 1664525 + 1013904223) % 4294967296) / 4294967296;
+  const rand = lcg(seed);
   const pick = (/** @type {number} */ n) => Math.floor(rand() * n);
   const weight = () => 1 + pick(maxW);
   /** @type {WeightedEdge[]} */

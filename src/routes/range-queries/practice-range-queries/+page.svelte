@@ -7,6 +7,7 @@
   import SegmentedControl from '$lib/components/segmented-control.svelte';
   import StepControls from '$lib/components/step-controls.svelte';
   import { STATE_BG } from '$lib/components/visual-state.js';
+  import { lcg } from '$lib/algo-engine/seeded-random.js';
   import {
     DEFAULT_N,
     DEFAULT_SEED,
@@ -20,7 +21,6 @@
     makeWorkload,
     opsFit,
     parseOps,
-    seededRand,
     workloadPseudocode,
     workloadTrace,
   } from '$lib/algo-engine/practice-range-queries.js';
@@ -38,7 +38,7 @@
   const BAR_SPAN = 3;
 
   // A fixed first workload and seed keep the prerendered HTML and the hydrated page identical.
-  const FIRST_OPS = makeWorkload(DEFAULT_N, FIRST_SHAPE, seededRand(DEFAULT_SEED));
+  const FIRST_OPS = makeWorkload(DEFAULT_N, FIRST_SHAPE, lcg(DEFAULT_SEED));
   const firstFrames = workloadTrace(DEFAULT_N, FIRST_OPS);
 
   let n = $state(DEFAULT_N);
@@ -96,7 +96,7 @@
   /** Draws a workload from the builder's counts and the current seed. */
   function draw() {
     typed = false;
-    ops = makeWorkload(n, shape, seededRand(seed));
+    ops = makeWorkload(n, shape, lcg(seed));
     run();
   }
 

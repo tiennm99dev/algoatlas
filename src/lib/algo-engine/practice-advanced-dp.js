@@ -17,6 +17,8 @@
  * Work counts what each method reads: window values or candidates, hull steps, additions.
  */
 
+import { lcg } from './seeded-random.js';
+
 /** @typedef {'window'|'squares'|'tour'} RaceProblem */
 
 /**
@@ -101,16 +103,6 @@ export const racePseudocode = {
   },
 };
 
-/** A deterministic generator, so an input number always gives the same input. */
-/** @param {number} seed */
-export function seeded(seed) {
-  let s = seed >>> 0;
-  return () => {
-    s = (s * 1664525 + 1013904223) % 4294967296;
-    return s / 4294967296;
-  };
-}
-
 /**
  * The input for an input number: costs 1..99, positions with gaps 1..9 from 0, or cities on
  * a 21 × 21 grid.
@@ -118,7 +110,7 @@ export function seeded(seed) {
  * @returns {RaceInput}
  */
 export function makeInput(problem, n, param, seed) {
-  const rand = seeded(seed * 7919 + n);
+  const rand = lcg(seed * 7919 + n);
   const int = (/** @type {number} */ lo, /** @type {number} */ hi) =>
     lo + Math.floor(rand() * (hi - lo + 1));
   if (problem === 'tour') {

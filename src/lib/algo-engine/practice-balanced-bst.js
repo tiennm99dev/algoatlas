@@ -14,6 +14,7 @@ import {
   rotateLeft,
   rotateRight,
 } from './balanced-core.js';
+import { lcg } from './seeded-random.js';
 
 export const MAX_OPS = 40;
 export const MAX_LIVE_KEYS = 15;
@@ -213,21 +214,12 @@ function skipWalk(towers, key) {
 }
 
 /**
- * The generator a trace uses for its coin flips, so the same seed gives the same towers.
- * @param {number} seed
- */
-export function seededRand(seed) {
-  let s = seed;
-  return () => (s = (s * 1664525 + 1013904223) % 4294967296) / 4294967296;
-}
-
-/**
  * @param {RunnerOp[]} ops
  * @param {{ rand?: () => number, counted?: boolean }} [options]  `counted` stores subtree sizes
  *   and link widths, so a rank costs one walk.
  * @returns {RunnerFrame[]}
  */
-export function runnerTrace(ops, { rand = seededRand(DEFAULT_SEED), counted = false } = {}) {
+export function runnerTrace(ops, { rand = lcg(DEFAULT_SEED), counted = false } = {}) {
   const bst = makeTree(false);
   const avl = makeTree(true);
   /** @type {SkipTower[]} */

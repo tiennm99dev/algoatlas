@@ -231,6 +231,8 @@ with `naiveComparisons(text, pattern)`, both from `src/lib/algo-engine/text-matc
 theory engines take `gcd`, `isPrime` and `powMod` from `src/lib/algo-engine/number-theory.js`;
 never redefine them in an engine, copy or page. Exact fractions (`Frac`, `frac`, `fadd`, `fsub`,
 `fmul`, `fdiv`, `isZero`, `fcmp`, `fabs`, `fvalue`) come from `src/lib/algo-engine/rational.js`.
+Seeded random input and coin flips use `lcg(seed)` from `src/lib/algo-engine/seeded-random.js`,
+never a copy of the generator.
 Geometry engines take `sub`, `dot`, `cross`, `orient`, `turnOf`, `inBox`, `samePoint`, `dist2`
 and `hullOf` (Andrew's monotone chain) from `src/lib/algo-engine/plane-geometry.js`.
 

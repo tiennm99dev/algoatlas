@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { lcg } from './seeded-random.js';
 import {
   MAX_KEY,
   MAX_LIVE_KEYS,
@@ -8,7 +9,6 @@ import {
   parseOps,
   runnerPseudocode,
   runnerTrace,
-  seededRand,
 } from './practice-balanced-bst.js';
 
 /** @typedef {import('./practice-balanced-bst.js').RunnerFrame} Frame */
@@ -158,12 +158,11 @@ describe('runner trace', () => {
 
   it('the same seed gives the same towers, and another seed can differ', () => {
     const list = makeRunnerOps('sorted');
-    const a = last(runnerTrace(list, { rand: seededRand(1) }));
-    const b = last(runnerTrace(list, { rand: seededRand(1) }));
+    const a = last(runnerTrace(list, { rand: lcg(1) }));
+    const b = last(runnerTrace(list, { rand: lcg(1) }));
     expect(a.towers).toEqual(b.towers);
     const totals = new Set();
-    for (let s = 1; s <= 12; s++)
-      totals.add(last(runnerTrace(list, { rand: seededRand(s) })).skip.total);
+    for (let s = 1; s <= 12; s++) totals.add(last(runnerTrace(list, { rand: lcg(s) })).skip.total);
     expect(totals.size).toBeGreaterThan(1);
   });
 

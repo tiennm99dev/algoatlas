@@ -101,12 +101,6 @@ export function startValues(n) {
   return Array.from({ length: n }, (_, i) => (i * 37 + 11) % (MAX_VALUE + 1));
 }
 
-/** Deterministic generator for reproducible workloads. @param {number} [seed] */
-export function seededRand(seed = DEFAULT_SEED) {
-  let s = seed;
-  return () => (s = (s * 1664525 + 1013904223) % 4294967296) / 4294967296;
-}
-
 /** @param {number[]} values @returns {Structure} */
 function plainArray(values) {
   const a = values.slice();

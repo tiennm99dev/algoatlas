@@ -28,16 +28,6 @@ export const quicksortPseudocode = [
 ];
 
 /**
- * A seeded generator (a linear congruential one), for reproducible runs.
- * @param {number} seed
- * @returns {() => number}
- */
-export function lcg(seed) {
-  let s = seed >>> 0;
-  return () => (s = (s * 1664525 + 1013904223) % 4294967296) / 4294967296;
-}
-
-/**
  * @typedef {object} QuickFrame
  * @property {'start'|'call'|'pick'|'compare'|'swap'|'place'|'done'} kind
  * @property {PivotRule} rule

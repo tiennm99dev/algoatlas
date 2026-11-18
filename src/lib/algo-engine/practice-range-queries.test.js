@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { lcg } from './seeded-random.js';
 import {
   DEFAULT_SEED,
   MAX_N,
@@ -10,7 +11,6 @@ import {
   makeWorkload,
   opsFit,
   parseOps,
-  seededRand,
   startValues,
   workloadPseudocode,
   workloadTrace,
@@ -215,7 +215,7 @@ describe('workload trace', () => {
   it('crowns the textbook winner on each preset at the largest size', () => {
     /** @param {string} name */
     const winner = (name) =>
-      last(workloadTrace(MAX_N, makeWorkload(MAX_N, WORKLOAD_PRESETS[name], seededRand())))
+      last(workloadTrace(MAX_N, makeWorkload(MAX_N, WORKLOAD_PRESETS[name], lcg(DEFAULT_SEED))))
         .cheapest;
     expect(winner('staticSums')).toEqual(['prefix']);
     expect(winner('sumsAndSets')).toEqual(['fenwick']);
@@ -311,8 +311,8 @@ describe('workload builder', () => {
 
   it('repeats a workload from the same seed', () => {
     const shape = WORKLOAD_PRESETS.everything;
-    expect(formatOps(makeWorkload(64, shape, seededRand(DEFAULT_SEED)))).toBe(
-      formatOps(makeWorkload(64, shape, seededRand(DEFAULT_SEED))),
+    expect(formatOps(makeWorkload(64, shape, lcg(DEFAULT_SEED)))).toBe(
+      formatOps(makeWorkload(64, shape, lcg(DEFAULT_SEED))),
     );
   });
 });

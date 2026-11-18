@@ -2,6 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
+import { lcg } from '$lib/algo-engine/seeded-random.js';
 import {
   HASH_PRESETS,
   MAX_KEY,
@@ -12,7 +13,6 @@ import {
   exactMeanPairs,
   fixedPairs,
   hashOf,
-  lcg,
   perfectHashTrace,
 } from '$lib/algo-engine/universal-perfect-hashing.js';
 import { en as m } from '$lib/lessons/universal-perfect-hashing/copy.en.js';

@@ -8,6 +8,7 @@
   import StepControls from '$lib/components/step-controls.svelte';
   import { STATE_BG } from '$lib/components/visual-state.js';
   import { parseValueList } from '$lib/algo-engine/parse-values.js';
+  import { lcg } from '$lib/algo-engine/seeded-random.js';
   import {
     MAX_N,
     MAX_RUNS,
@@ -17,7 +18,6 @@
     RUN_BATCH,
     expectedComparisons,
     histogram,
-    lcg,
     quicksortPseudocode,
     quicksortRun,
     quicksortTrace,

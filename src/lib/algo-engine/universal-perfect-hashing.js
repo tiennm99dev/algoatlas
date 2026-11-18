@@ -35,16 +35,6 @@ export const perfectHashPseudocode = [
   'lookup(k): j = h(k); look only in slot hⱼ(k) of bucket j',
 ];
 
-/**
- * A seeded generator (a linear congruential one), for reproducible draws.
- * @param {number} seed
- * @returns {() => number}
- */
-export function lcg(seed) {
-  let s = seed >>> 0;
-  return () => (s = (s * 1664525 + 1013904223) % 4294967296) / 4294967296;
-}
-
 /** @param {number} k @param {number} a @param {number} b @param {number} m */
 export const hashOf = (k, a, b, m) => ((a * k + b) % P) % m;
 

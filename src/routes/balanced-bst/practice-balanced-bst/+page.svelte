@@ -7,6 +7,7 @@
   import StepControls from '$lib/components/step-controls.svelte';
   import TreeView from '$lib/components/tree-view.svelte';
   import { STATE_BG } from '$lib/components/visual-state.js';
+  import { lcg } from '$lib/algo-engine/seeded-random.js';
   import {
     DEFAULT_SEED,
     MAX_OPS,
@@ -16,7 +17,6 @@
     parseOps,
     runnerPseudocode,
     runnerTrace,
-    seededRand,
   } from '$lib/algo-engine/practice-balanced-bst.js';
   import { en as m } from '$lib/lessons/practice-balanced-bst/copy.en.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
@@ -43,7 +43,7 @@
   // Text shown in place of the narration, only on the frame it was raised on.
   let notice = $state({ text: '', at: -1 });
 
-  const player = createPlayer(runnerTrace(INITIAL_OPS, { rand: seededRand(seed) }));
+  const player = createPlayer(runnerTrace(INITIAL_OPS, { rand: lcg(seed) }));
   const frame = $derived(player.frame);
   const finalFrame = $derived(player.frames[player.frames.length - 1]);
   const counted = $derived(rankMode === 'counted');
@@ -51,7 +51,7 @@
   const barScale = $derived(Math.max(1, ...IDS.map((id) => finalFrame[id].total)));
 
   function trace() {
-    return runnerTrace(ops, { rand: seededRand(seed), counted: rankMode === 'counted' });
+    return runnerTrace(ops, { rand: lcg(seed), counted: rankMode === 'counted' });
   }
 
   /** Rebuild the trace on the same sequence, staying on the same step. */

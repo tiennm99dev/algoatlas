@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest';
+import { lcg } from './seeded-random.js';
 import {
   MAX_N,
   MAX_VALUE,
   QUICK_PRESETS,
   expectedComparisons,
   histogram,
-  lcg,
   quicksortPseudocode,
   quicksortRun,
   quicksortTrace,
