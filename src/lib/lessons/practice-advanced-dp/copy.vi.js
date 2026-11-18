@@ -13,7 +13,7 @@ export const vi = {
   summary:
     'Cho lời giải QHĐ ngây thơ và lời giải đã tối ưu chạy đua trên cùng một đầu vào: chú ếch nhảy trong cửa sổ, bước nhảy có chi phí bình phương, và bài toán người du lịch.',
   instruction:
-    'Chọn một bài toán, đặt kích thước và tham số, rồi chọn số hiệu đầu vào. Các bộ đếm công việc cập nhật ngay; nhấn “Chạy và đo thời gian” để đo cả hai cách trên trình duyệt của bạn và điền bảng tăng trưởng. Sau đó dùng trình chạy để trả lời các câu hỏi bên dưới.',
+    'Chọn một bài toán, đặt kích thước và tham số, rồi chọn số hiệu đầu vào. Các bộ đếm công việc cập nhật ngay; nhấn “Chạy và đo thời gian” để đo cả hai cách trên trình duyệt của em và điền bảng tăng trưởng. Sau đó dùng trình chạy để trả lời các câu hỏi bên dưới.',
   problemLabel: 'Bài toán',
   problems: {
     window: 'Chú ếch nhảy trong cửa sổ',
@@ -30,9 +30,9 @@ export const vi = {
   },
   /** @type {Record<RaceProblem, string>} */
   optimisation: {
-    window: 'Hàng đợi đơn điệu: O(n) thay cho O(n·k)',
+    window: 'Queue đơn điệu: O(n) thay cho O(n·k)',
     squares: 'Kĩ thuật bao lồi: O(n) thay cho O(n²)',
-    tour: 'QHĐ trên mặt nạ bit (Held-Karp): O(2ⁿ · n²) thay cho O(n!)',
+    tour: 'QHĐ bitmask (Held-Karp): O(2ⁿ · n²) thay cho O(n!)',
   },
   sizeLabel: 'Kích thước n',
   /** @type {Record<RaceProblem, string>} */
@@ -80,7 +80,7 @@ export const vi = {
   differ: (a, b) => `Hai đáp án khác nhau: ${a} và ${b}.`,
   workNote: {
     window:
-      'Công việc: số giá trị trong cửa sổ đã đọc, so với số lần đọc, đẩy vào và lấy ra ở hàng đợi hai đầu.',
+      'Công việc: số giá trị trong cửa sổ đã đọc, so với số lần đọc, đẩy vào và lấy ra ở deque (hàng đợi hai đầu).',
     squares:
       'Công việc: số ứng viên j đã thử, so với số lần kiểm tra bao, dời con trỏ và đẩy đường vào.',
     tour: 'Công việc: số phép cộng trên mọi hành trình, so với số lần chuyển trạng thái của Held-Karp.',
@@ -98,18 +98,14 @@ export const vi = {
   codeTitle: { naive: 'Ngây thơ', fast: 'Đã tối ưu' },
   takeaways: [
     'Nén trạng thái: khi trạng thái phải nhớ một tập hợp, hãy lưu nó bằng các bit. Các trạng thái (mask, thành phố) của Held-Karp biến (n − 1)! hành trình thành 2ⁿ · n trạng thái.',
-    'Lấy giá trị nhỏ nhất trên một cửa sổ trượt các trạng thái trước đó thì dùng hàng đợi đơn điệu: một giá trị mới hơn và nhỏ hơn làm các giá trị cũ vô dụng mãi mãi.',
+    'Lấy giá trị nhỏ nhất trên một cửa sổ trượt các trạng thái trước đó thì dùng queue đơn điệu (hàng đợi đơn điệu): một giá trị mới hơn và nhỏ hơn làm các giá trị cũ vô dụng mãi mãi.',
     'Chi phí tách được thành dp[j] + b[j]·x[i] cộng các số hạng chỉ phụ thuộc i thì dùng kĩ thuật bao lồi: mỗi j là một đường thẳng, mỗi i là một truy vấn.',
     'Kĩ thuật tối ưu có chi phí phụ: với n rất nhỏ, vòng lặp ngây thơ có thể làm ít việc hơn. Hãy so sánh sự tăng trưởng, đừng chỉ nhìn một kích thước.',
     'Tăng n dần dần cho một bài toán và nhấn “Chạy” mỗi lần: xem công việc ngây thơ tăng theo n·k, n² hay n! trong khi công việc đã tối ưu gần như không đổi.',
   ],
   complexityHead: ['Bài toán', 'Ngây thơ → đã tối ưu', 'Vì sao'],
   complexity: [
-    [
-      'Chú ếch nhảy trong cửa sổ',
-      'O(n·k) → O(n)',
-      'Mỗi chỉ số vào và ra khỏi hàng đợi hai đầu một lần.',
-    ],
+    ['Chú ếch nhảy trong cửa sổ', 'O(n·k) → O(n)', 'Mỗi chỉ số vào và ra khỏi deque một lần.'],
     [
       'Bước nhảy có chi phí bình phương',
       'O(n²) → O(n)',
@@ -166,7 +162,7 @@ export const vi = {
     {
       type: 'choice',
       prompt: 'Kĩ thuật tối ưu nào làm bài bước nhảy có chi phí bình phương chạy nhanh?',
-      options: ['Hàng đợi đơn điệu', 'Kĩ thuật bao lồi', 'QHĐ trên mặt nạ bit', 'Tối ưu Knuth'],
+      options: ['Queue đơn điệu', 'Kĩ thuật bao lồi', 'QHĐ bitmask', 'Tối ưu Knuth'],
       answer: 1,
       hints: ['Khai triển (x[i] − x[j])² rồi nhóm các số hạng có chứa j.'],
       solution:
@@ -176,11 +172,11 @@ export const vi = {
       type: 'choice',
       prompt:
         'Chú ếch nhảy trong cửa sổ, n = 10, k = 3, số hiệu đầu vào 1. Cách nào làm ít việc hơn?',
-      options: ['Cách ngây thơ', 'Hàng đợi đơn điệu', 'Hai cách làm lượng việc như nhau'],
+      options: ['Cách ngây thơ', 'Queue đơn điệu', 'Hai cách làm lượng việc như nhau'],
       answer: 0,
       hints: ['So sánh hai bộ đếm “Công việc” khi n = 10.'],
       solution:
-        'Cách ngây thơ đọc 24 giá trị; hàng đợi hai đầu làm 27 bước. Hàng đợi chỉ thắng khi n·k lớn lên, như bảng tăng trưởng cho thấy.',
+        'Cách ngây thơ đọc 24 giá trị; deque làm 27 bước. Queue đơn điệu chỉ thắng khi n·k lớn lên, như bảng tăng trưởng cho thấy.',
     },
   ],
   nextTeaser:

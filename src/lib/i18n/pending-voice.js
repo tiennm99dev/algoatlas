@@ -45,11 +45,7 @@ export const pendingTopics = new Set([
 
   'flows',
 
-  'advanced-dp',
-
   'tree-techniques',
-
-  'intractability',
 
   'advanced-heaps',
 

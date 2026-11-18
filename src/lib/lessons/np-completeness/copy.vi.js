@@ -15,9 +15,9 @@ export const vi = {
   intro:
     'Một bài toán là NP-khó khi mọi bài toán thuộc NP đều quy dẫn được về nó, và là NP-đầy đủ khi nó còn thuộc chính NP. Định lí Cook–Levin cho ta bài toán NP-đầy đủ đầu tiên, SAT. Từ đó, mỗi chứng minh NP-khó mới chỉ cần một phép quy dẫn (reduction) từ một bài toán đã biết là khó, nên các bài toán NP-đầy đủ đã biết tạo thành một tấm bản đồ nối với nhau bằng các mũi tên quy dẫn.',
   summary:
-    'Đi theo bản đồ các bài toán NP-đầy đủ kinh điển, và chạy từng bước phép quy dẫn từ 3-SAT về phủ đỉnh trên một công thức do bạn nhập.',
+    'Đi theo bản đồ các bài toán NP-đầy đủ kinh điển, và chạy từng bước phép quy dẫn từ 3-SAT về phủ đỉnh trên một công thức do em nhập.',
   instruction:
-    'Bấm vào một bài toán trên bản đồ để đọc vì sao nó NP-khó. Sau đó chạy từng bước phép quy dẫn từ 3-SAT về phủ đỉnh: nhập một công thức, đặt mỗi biến là đúng (Đ) hoặc sai (S), và xem tập phủ gồm k đỉnh dựng từ phép gán của bạn có phủ hết mọi cạnh hay không.',
+    'Bấm vào một bài toán trên bản đồ để đọc vì sao nó NP-khó. Sau đó chạy từng bước phép quy dẫn từ 3-SAT về phủ đỉnh: nhập một công thức, đặt mỗi biến là đúng (Đ) hoặc sai (S), và xem tập phủ gồm k đỉnh dựng từ phép gán của em có phủ hết mọi cạnh hay không.',
   mapTitle: 'Bản đồ các bài toán NP-đầy đủ',
   mapNote:
     'Mũi tên A → B là một phép quy dẫn A ≤ₚ B, nên B khó ít nhất bằng A. Mũi tên được tô đậm là phép quy dẫn trong trình chạy bên dưới.',
@@ -214,7 +214,7 @@ export const vi = {
     },
     {
       type: 'choice',
-      prompt: 'Bạn muốn chứng minh một bài toán mới X là NP-khó. Bạn dựng phép quy dẫn nào?',
+      prompt: 'Em muốn chứng minh một bài toán mới X là NP-khó. Em dựng phép quy dẫn nào?',
       options: [
         'Từ X về một bài toán NP-đầy đủ đã biết.',
         'Từ một bài toán NP-đầy đủ đã biết về X.',

@@ -189,5 +189,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Bài sau là phần luyện tập: phép quy dẫn và độ khó, nơi bạn tự phân loại các bài toán và chọn chiều quy dẫn.',
+    'Bài sau là phần luyện tập: phép quy dẫn và độ khó, nơi em tự phân loại các bài toán và chọn chiều quy dẫn.',
 };

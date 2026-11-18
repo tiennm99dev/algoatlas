@@ -15,11 +15,11 @@ export const vi = {
   slug: 'bitmask-dp',
   topic: 'advanced-dp',
   level: 'Nâng cao',
-  title: 'QHĐ trên mặt nạ bit và bài toán người du lịch',
+  title: 'QHĐ bitmask và bài toán người du lịch',
   intro:
-    'Có những trạng thái quy hoạch động (dynamic programming) phải nhớ cả một tập hợp: những thành phố mà hành trình đã đi qua. Khi tập đủ nhỏ, ta lưu nó bằng các bit của một số nguyên, gọi là mặt nạ bit (bitmask): bit c bằng 1 khi thành phố c thuộc tập. Thuật toán Held-Karp dùng mỗi trạng thái cho một cặp (tập thành phố đã thăm, thành phố đang đứng) và giải bài toán người du lịch trong O(2ⁿ · n²), thay vì thử hết (n − 1)! hành trình.',
+    'Có những trạng thái quy hoạch động (dynamic programming) phải nhớ cả một tập hợp: những thành phố mà hành trình đã đi qua. Khi tập đủ nhỏ, ta lưu nó bằng các bit của một số nguyên, gọi là bitmask (mặt nạ bit): bit c bằng 1 khi thành phố c thuộc tập. Thuật toán Held-Karp dùng mỗi trạng thái cho một cặp (tập thành phố đã thăm, thành phố đang đứng) và giải bài toán người du lịch trong O(2ⁿ · n²), thay vì thử hết (n − 1)! hành trình.',
   summary:
-    'Lưu tập thành phố đã thăm bằng một mặt nạ bit và giải bài toán người du lịch bằng thuật toán Held-Karp trong O(2ⁿ · n²).',
+    'Lưu tập thành phố đã thăm bằng một bitmask và giải bài toán người du lịch bằng thuật toán Held-Karp trong O(2ⁿ · n²).',
   instruction:
     'Kéo các thành phố trên lưới, thêm hoặc bớt vài thành phố, rồi chạy từng bước. Mỗi hàng của bảng là một mặt nạ: các bit sáng là những thành phố đã thăm. ● đánh dấu trạng thái đang được đọc, con đường nét đứt là thành phố ta thử thêm vào, còn ô có thể được cải thiện mang dấu ○, hoặc ✎ khi nó nhận một giá trị ngắn hơn.',
   presetLabel: 'Ví dụ',
@@ -131,7 +131,7 @@ export const vi = {
     }
   },
   takeaways: [
-    'Một mặt nạ bit lưu một tập có tới khoảng 20 phần tử trong một số nguyên: bit c bằng 1 khi phần tử c thuộc tập. Thêm c bằng mask | 2ᶜ, kiểm tra bằng mask & 2ᶜ, và tập đầy đủ là 2ⁿ − 1.',
+    'Một bitmask lưu một tập có tới khoảng 20 phần tử trong một số nguyên: bit c bằng 1 khi phần tử c thuộc tập. Thêm c bằng mask | 2ᶜ, kiểm tra bằng mask & 2ᶜ, và tập đầy đủ là 2ⁿ − 1.',
     'Trạng thái của Held-Karp là (mask, j): các thành phố đã thăm và thành phố đang đứng. Thứ tự đi qua các thành phố trước đó không còn quan trọng, chỉ cần biết là những thành phố nào, và chính điều đó gom (n − 1)! hành trình lại thành 2ⁿ · n trạng thái.',
     'dp[mask | 2ᵏ][k] = min theo j của dp[mask][j] + d[j][k]. Bật thêm một bit làm số lớn lên, nên duyệt mặt nạ theo thứ tự tăng dần sẽ tính xong mọi trạng thái trước khi nó được đọc.',
     'Thời gian O(2ⁿ · n²), bộ nhớ O(2ⁿ · n): ổn với n ≈ 20, vô vọng với 100. Vét cạn cần (n − 1)! hành trình: đã là 120 với 6 thành phố và hơn 10¹⁷ với 20 thành phố.',

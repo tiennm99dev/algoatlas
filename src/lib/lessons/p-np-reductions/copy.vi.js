@@ -13,7 +13,7 @@ export const vi = {
   summary:
     'Quy dẫn CLIQUE về TẬP ĐỘC LẬP bằng cách dựng đồ thị bù theo từng cặp đỉnh, rồi kiểm tra một chứng chỉ bằng bộ kiểm chứng chạy trong thời gian đa thức.',
   instruction:
-    'Chạy từng bước phép quy dẫn khi nó điền H, đồ thị bù của G, từng cặp một; sau đó xem bộ kiểm chứng kiểm tra chứng chỉ S của bạn. Bấm vào các đỉnh để thêm vào hoặc bỏ khỏi S, đổi k, chọn một ví dụ, hoặc sửa G bằng các công cụ vẽ và xem H thay đổi theo.',
+    'Chạy từng bước phép quy dẫn khi nó điền H, đồ thị bù của G, từng cặp một; sau đó xem bộ kiểm chứng kiểm tra chứng chỉ S của em. Bấm vào các đỉnh để thêm vào hoặc bỏ khỏi S, đổi k, chọn một ví dụ, hoặc sửa G bằng các công cụ vẽ và xem H thay đổi theo.',
   problemsTitle: 'Hai bài toán quyết định',
   /** @param {number} k */
   cliqueQuestion: (k) => `CLIQUE: G có ${k} đỉnh đôi một nối với nhau không?`,

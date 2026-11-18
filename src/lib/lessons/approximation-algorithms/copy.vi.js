@@ -14,7 +14,7 @@ export const vi = {
   intro:
     'Khi một bài toán là NP-khó, đáp án chính xác có thể tốn thời gian hàm mũ. Một thuật toán xấp xỉ chạy trong thời gian đa thức và chứng minh được rằng đáp án của nó không kém tối ưu quá một hệ số cố định, gọi là tỉ số xấp xỉ (approximation ratio). Phủ đỉnh (vertex cover) có một thuật toán 2-xấp xỉ đơn giản, còn thuật toán tham lam (greedy) cho phủ tập giữ được trong khoảng hệ số ln n.',
   summary:
-    'So sánh thuật toán 2-xấp xỉ dựa trên ghép cặp và quy tắc tham lam cho bài toán phủ đỉnh với tối ưu thực sự, trên một đồ thị do bạn vẽ.',
+    'So sánh thuật toán 2-xấp xỉ dựa trên ghép cặp và quy tắc tham lam cho bài toán phủ đỉnh với tối ưu thực sự, trên một đồ thị do em vẽ.',
   instruction:
     'Chọn một thuật toán rồi chạy từng bước. ◆ đánh dấu một tập phủ nhỏ nhất, tìm bằng vét cạn, nên hãy so sánh ô “Kích thước tập phủ” với ô “Tối ưu” trong lúc chạy. Tự vẽ đồ thị bằng các công cụ, hoặc nạp các ví dụ nơi mỗi thuật toán làm tệ nhất.',
   algorithmLabel: 'Thuật toán',
@@ -100,7 +100,7 @@ export const vi = {
     [
       'Tham lam theo bậc',
       'O(V · E)',
-      'Tối đa V vòng, mỗi vòng đếm lại các cạnh chưa phủ; dùng hàng đợi theo ngăn sẽ đưa về O(V + E).',
+      'Tối đa V vòng, mỗi vòng đếm lại các cạnh chưa phủ; dùng một queue chia theo bucket sẽ đưa về O(V + E).',
     ],
     [
       'Tham lam cho phủ tập',

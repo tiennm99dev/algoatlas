@@ -14,7 +14,7 @@ export const vi = {
   summary:
     'Tính giá trị chọn và bỏ theo thứ tự duyệt sau để tìm tập độc lập có trọng số lớn nhất, và đổi gốc để có tổng khoảng cách của mọi nút trong O(n).',
   instruction:
-    'Chọn một bài toán rồi chạy từng bước. Giá trị của mỗi nút hiện ngay bên dưới nút đó; ● là nút đang giải, ◇ là các nút đang chờ trên ngăn xếp đệ quy, ○ là nút con đang được gộp vào, và ✓ là cây con đã xong. Chọn một nút để đổi trọng số, thêm con hoặc xoá cây con của nó.',
+    'Chọn một bài toán rồi chạy từng bước. Giá trị của mỗi nút hiện ngay bên dưới nút đó; ● là nút đang giải, ◇ là các nút đang chờ trên call stack (ngăn xếp lời gọi), ○ là nút con đang được gộp vào, và ✓ là cây con đã xong. Chọn một nút để đổi trọng số, thêm con hoặc xoá cây con của nó.',
   problemLabel: 'Bài toán',
   problems: { mis: 'Tập độc lập', reroot: 'Tổng khoảng cách (đổi gốc)' },
   presetLabel: 'Ví dụ',
@@ -66,7 +66,7 @@ export const vi = {
       : 'Dưới mỗi nút: kích thước · tổng khoảng cách phía dưới, rồi Σ là tổng khoảng cách tới mọi nút.',
   nodeStates: {
     current: 'đang giải',
-    stack: 'trên ngăn xếp',
+    stack: 'trên call stack',
     child: 'nút con đang đọc',
     settled: 'cây con đã xong',
     picked: 'được chọn',
@@ -76,7 +76,7 @@ export const vi = {
   },
   legend: {
     current: 'Đang giải',
-    stack: 'Đang chờ trên ngăn xếp',
+    stack: 'Đang chờ trên call stack',
     child: 'Nút con đang đọc',
     settled: 'Cây con đã xong',
     picked: 'Được chọn',
@@ -171,9 +171,9 @@ export const vi = {
   complexity: [
     ['Lượt duyệt sau', 'O(n)', 'Mỗi nút được vào một lần và gộp vào cha một lần.'],
     ['Lượt đổi gốc', 'O(n)', 'Mỗi cạnh dời gốc một lần, trong O(1).'],
-    ['Bộ nhớ', 'O(n)', 'Vài con số cho mỗi nút, cộng ngăn xếp đệ quy có độ sâu h.'],
+    ['Bộ nhớ', 'O(n)', 'Vài con số cho mỗi nút, cộng call stack có độ sâu h.'],
     ['Vét cạn tập', 'O(2ⁿ · n)', 'Mọi tập con, mỗi tập được kiểm tra với các cạnh.'],
-    ['Tổng khoảng cách kiểu ngây thơ', 'O(n²)', 'Mỗi nút một lần duyệt theo chiều rộng.'],
+    ['Tổng khoảng cách kiểu ngây thơ', 'O(n²)', 'Mỗi nút một lần BFS.'],
   ],
   practiceTitle: 'Tự kiểm tra',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */

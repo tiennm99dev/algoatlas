@@ -23,7 +23,7 @@ export const vi = {
   intro:
     'Nhiều công thức chuyển của quy hoạch động (dynamic programming) lấy giá trị nhỏ nhất qua mọi trạng thái trước đó, nên tốn O(n²) hoặc hơn. Khi chi phí có hình dạng đặc biệt, một cấu trúc dữ liệu hoặc một lập luận về thứ tự giúp bỏ qua phần lớn ứng viên. Kĩ thuật bao lồi (convex hull trick) xử lí các chi phí dạng dp[j] + b[j]·x[i]: mỗi trạng thái trước đó là một đường thẳng, và chỉ những đường thuộc đường bao dưới mới có thể thắng.',
   summary:
-    'Tăng tốc công thức chuyển QHĐ bằng kĩ thuật bao lồi, hàng đợi đơn điệu, QHĐ chia để trị và tối ưu Knuth.',
+    'Tăng tốc công thức chuyển QHĐ bằng kĩ thuật bao lồi, queue đơn điệu, QHĐ chia để trị và tối ưu Knuth.',
   instruction:
     'Nhập các đường thẳng dạng cặp “hệ số góc tung độ gốc” và các giá trị x cần truy vấn, hoặc chọn một ví dụ, rồi chạy từng bước. Các đường được thêm theo hệ số góc; đường nào bị đường mới làm cho vô dụng sẽ bị lấy ra và vẽ nét đứt. Đường đậm là đường bao dưới, và các truy vấn đi dọc theo nó bằng một con trỏ chỉ dịch sang phải.',
   linesLabel: 'Các đường thẳng (m b, …)',
@@ -125,7 +125,7 @@ export const vi = {
   },
   takeaways: [
     'Kĩ thuật bao lồi: công thức chuyển dp[i] = min theo j của dp[j] + b[j]·x[i] là tìm đường thấp nhất tại x[i]. Chỉ giữ đường bao dưới. Khi các hệ số góc được thêm theo thứ tự và các truy vấn cũng theo thứ tự, mỗi đường được đẩy vào và lấy ra một lần, còn con trỏ chỉ dịch sang phải: tổng cộng O(n) thay cho O(n²).',
-    'Hàng đợi đơn điệu (monotonic queue): dp[i] = min của dp[j] trên một cửa sổ trượt i − k ≤ j < i. Giữ một hàng đợi hai đầu (deque) các ứng viên có giá trị tăng dần; một giá trị mới hơn và nhỏ hơn làm các giá trị cũ vô dụng mãi mãi. O(n) thay cho O(n·k).',
+    'Queue đơn điệu (hàng đợi đơn điệu): dp[i] = min của dp[j] trên một cửa sổ trượt i − k ≤ j < i. Giữ một deque (hàng đợi hai đầu) các ứng viên có giá trị tăng dần; một giá trị mới hơn và nhỏ hơn làm các giá trị cũ vô dụng mãi mãi. O(n) thay cho O(n·k).',
     'QHĐ chia để trị: khi điểm chia tốt nhất opt(i) không bao giờ giảm khi i tăng, ta giải i ở giữa trước và chỉ tìm ở mỗi nửa về phía của nó so với opt(mid). Mỗi tầng tốn O(n log n) thay cho O(n²).',
     'Tối ưu Knuth: với QHĐ trên đoạn mà điểm chia tốt nhất thoả opt[i][j − 1] ≤ opt[i][j] ≤ opt[i + 1][j], mỗi ô chỉ tìm giữa điểm chia của hai ô bên cạnh, và tổng công việc rút gọn thành O(n²) thay cho O(n³).',
     'Chọn ví dụ có một đường vô dụng, rồi đổi tung độ gốc của nó thành 8: đường bao lõm xuống và đường đó gia nhập bao lồi.',
@@ -142,7 +142,7 @@ export const vi = {
       'O((n + q) log n)',
       'Tìm kiếm nhị phân trên đường bao cho mỗi x.',
     ],
-    ['Hàng đợi đơn điệu', 'O(n)', 'Mỗi chỉ số vào và ra khỏi hàng đợi hai đầu một lần.'],
+    ['Queue đơn điệu', 'O(n)', 'Mỗi chỉ số vào và ra khỏi deque một lần.'],
     [
       'QHĐ chia để trị',
       'O(k · n log n)',
@@ -183,17 +183,17 @@ export const vi = {
     {
       type: 'choice',
       prompt: 'Kĩ thuật tối ưu nào hợp với dp[i] = a[i] + min(dp[i − k], …, dp[i − 1])?',
-      options: ['Kĩ thuật bao lồi', 'Hàng đợi đơn điệu', 'Tối ưu Knuth', 'QHĐ trên mặt nạ bit'],
+      options: ['Kĩ thuật bao lồi', 'Queue đơn điệu', 'Tối ưu Knuth', 'QHĐ bitmask'],
       answer: 1,
       hints: ['Các ứng viên tạo thành một cửa sổ trượt.'],
       solution:
-        'Đây là giá trị nhỏ nhất trên cửa sổ trượt: giữ một hàng đợi hai đầu các chỉ số có giá trị dp tăng dần, tổng cộng O(n).',
+        'Đây là giá trị nhỏ nhất trên cửa sổ trượt: giữ một deque các chỉ số có giá trị dp tăng dần, tổng cộng O(n).',
     },
     {
       type: 'choice',
       prompt:
         'Kĩ thuật tối ưu nào hợp với dp[i] = min theo j < i của dp[j] + b[j]·x[i], khi b giảm dần?',
-      options: ['Kĩ thuật bao lồi', 'Hàng đợi đơn điệu', 'QHĐ chia để trị', 'QHĐ chữ số'],
+      options: ['Kĩ thuật bao lồi', 'Queue đơn điệu', 'QHĐ chia để trị', 'QHĐ chữ số'],
       answer: 0,
       hints: ['Đọc dp[j] + b[j]·x như một đường thẳng theo x.'],
       solution:
@@ -209,5 +209,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Bài sau là phần luyện tập: bài toán QHĐ nâng cao, nơi bạn tự chọn trạng thái và kĩ thuật cho từng đề.',
+    'Bài sau là phần luyện tập: bài toán QHĐ nâng cao, nơi em tự chọn trạng thái và kĩ thuật cho từng đề.',
 };

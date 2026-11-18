@@ -107,7 +107,7 @@ export const vi = {
   level: 'Nâng cao',
   title: 'Luyện tập: phép quy dẫn và độ khó',
   intro:
-    'Trước khi thử giải một bài toán, hãy xác định xem nó khó tới đâu. Nhiều bài toán dễ và khó trông gần như giống hệt nhau: đường đi ngắn nhất và dài nhất, chu trình Euler và chu trình Hamilton, 2-SAT và 3-SAT. Nhận ra mình đang gặp bài nào cho bạn biết nên tìm một thuật toán chính xác, một phép xấp xỉ, hay một phép quy dẫn (reduction) chứng minh rằng cả hai đều không có.',
+    'Trước khi thử giải một bài toán, hãy xác định xem nó khó tới đâu. Nhiều bài toán dễ và khó trông gần như giống hệt nhau: đường đi ngắn nhất và dài nhất, chu trình Euler và chu trình Hamilton, 2-SAT và 3-SAT. Nhận ra đang gặp bài nào cho em biết nên tìm một thuật toán chính xác, một phép xấp xỉ, hay một phép quy dẫn (reduction) chứng minh rằng cả hai đều không có.',
   summary:
     'Xếp các thẻ bài toán vào ba ô đa thức, NP-đầy đủ và xấp xỉ được, rồi chạy từng bước phần kiểm tra để xem thuật toán hay phép quy dẫn đứng sau mỗi thẻ.',
   instruction:
@@ -122,7 +122,7 @@ export const vi = {
       'Giải chính xác thì NP-khó, nhưng đạt được trong một hệ số hằng bằng thuật toán đa thức.',
   },
   cards,
-  handTitle: 'Các thẻ của bạn',
+  handTitle: 'Các thẻ của em',
   checkAll: 'Kiểm tra tất cả',
   deal: 'Chia lượt thẻ mới',
   clear: 'Xoá các câu trả lời',
@@ -162,7 +162,7 @@ export const vi = {
     'Muốn chứng minh một bài toán mới là khó, hãy chọn bài toán NP-đầy đủ đã biết giống nó nhất: chu trình Hamilton cho lộ trình và thứ tự, 3-SAT cho lựa chọn đúng/sai, phủ đỉnh hay clique cho việc chọn đỉnh, tổng tập con hay phân hoạch cho các con số.',
     'NP-đầy đủ là một khẳng định về đáp án chính xác. Nhiều bài toán tối ưu NP-khó vẫn có phép xấp xỉ tốt, như phủ đỉnh, TSP metric, bài toán cái túi (knapsack) và xếp thùng, trong khi những bài khác, như clique và TSP tổng quát, không chịu bất kì hệ số hằng nào.',
     'Khi vẫn cần đáp án chính xác, hãy dùng một tham số cố định, nhánh cận (branch and bound), hoặc quy hoạch động trên một miền số nhỏ, như cách giải giả đa thức của bài toán cái túi.',
-    'Chia vài lượt thẻ mới cho tới khi bạn đã gặp mọi thẻ, và thử nói ra bài toán nguồn của phép quy dẫn cho mỗi thẻ trước khi chạy tới nó.',
+    'Chia vài lượt thẻ mới cho tới khi em đã gặp mọi thẻ, và thử nói ra bài toán nguồn của phép quy dẫn cho mỗi thẻ trước khi chạy tới nó.',
   ],
   complexityHead: ['Bài toán', 'Tốt nhất đã biết', 'Vì sao'],
   complexity: [
@@ -213,7 +213,7 @@ export const vi = {
     {
       type: 'choice',
       prompt:
-        'Bạn muốn chứng minh bài toán đường đi đơn dài nhất là NP-khó. Nên quy dẫn từ bài toán đã biết nào là tự nhiên nhất?',
+        'Em muốn chứng minh bài toán đường đi đơn dài nhất là NP-khó. Nên quy dẫn từ bài toán đã biết nào là tự nhiên nhất?',
       options: ['Đường đi ngắn nhất', 'Đường đi Hamilton', '2-SAT', 'Ghép cặp cực đại'],
       answer: 1,
       hints: ['Một đường đi gồm n − 1 cạnh không lặp đỉnh thì thăm mọi đỉnh.'],
@@ -241,7 +241,7 @@ export const vi = {
     {
       type: 'choice',
       prompt:
-        'Bạn phải phủ một đồ thị một triệu đỉnh trong vòng một giây, và gấp đôi tối ưu vẫn chấp nhận được. Bạn dùng gì?',
+        'Em phải phủ một đồ thị một triệu đỉnh trong vòng một giây, và gấp đôi tối ưu vẫn chấp nhận được. Em dùng gì?',
       options: [
         'Cây tìm kiếm bị chặn, vì phủ đỉnh là FPT.',
         'Vét cạn qua mọi tập con.',
