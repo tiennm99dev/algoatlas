@@ -46,6 +46,9 @@ jobs:
         env:
           SITE_BASE: /algoatlas
 
+      - name: Chunk sizes
+        run: npm run size-report
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
         with:
