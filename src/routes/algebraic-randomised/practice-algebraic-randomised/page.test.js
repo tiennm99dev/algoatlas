@@ -15,7 +15,7 @@ import {
   recurrenceByLoop,
   recurrenceTrace,
 } from '$lib/algo-engine/practice-algebraic-randomised.js';
-import { en as m } from '$lib/lessons/practice-algebraic-randomised/copy.en.js';
+import { vi as m } from '$lib/lessons/practice-algebraic-randomised/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -80,13 +80,13 @@ describe('algebraic practice lesson', () => {
     expect(stat('formula')).toBe('aₙ = 2·aₙ₋₁ + 3·aₙ₋₂ + 5; a₀ = 1, a₁ = 1');
     expect(stat('size')).toBe('3 × 3');
     next(1);
-    expect(narration()).toContain('coefficients 2, 3 and then the constant 5');
+    expect(narration()).toContain('hệ số 2, 3 rồi đến hằng số 5');
     next(1);
-    expect(narration()).toContain('Row 1 just copies aₙ₋₁');
+    expect(narration()).toContain('Hàng 1 chỉ chép aₙ₋₁');
     next(1);
-    expect(narration()).toContain('The last row keeps the constant 1');
+    expect(narration()).toContain('Hàng cuối giữ hằng số 1');
     next(1);
-    expect(narration()).toContain('Start with R = I and P = M, and e = n = 10.');
+    expect(narration()).toContain('Bắt đầu với R = I và P = M, và e = n = 10.');
     toLast();
     expect(stat('answer')).toBe('66430');
     expect(stat('products')).toBe('5');
@@ -136,10 +136,10 @@ describe('algebraic practice lesson', () => {
   it('multiplies big numbers by diagonals and carries', () => {
     render();
     pickProblem('bignum');
-    expect(narration()).toContain('Multiply 1234 by 5678');
+    expect(narration()).toContain('Nhân 1234 với 5678');
     next(3);
     expect(narration()).toBe(
-      'c[2] sums the products on one diagonal, where i + j = 2: 4·6 + 3·7 + 2·8 = 61.',
+      'c[2] cộng các tích trên một đường chéo, nơi i + j = 2: 4·6 + 3·7 + 2·8 = 61.',
     );
     const marked = [...document.querySelectorAll('[role="img"] text, svg text')].filter(
       (t) => t.textContent === '+',
@@ -164,7 +164,7 @@ describe('algebraic practice lesson', () => {
     render();
     toLast();
     pickProblem('bignum');
-    expect(narration()).toContain('Multiply 1234 by 5678');
+    expect(narration()).toContain('Nhân 1234 với 5678');
     pickProblem('recurrence');
     expect(stat('answer')).toBe('66430');
   });

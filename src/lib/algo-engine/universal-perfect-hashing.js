@@ -21,18 +21,18 @@ export const SAMPLE_BATCH = 100;
 export const MAX_SAMPLES = 5000;
 
 export const perfectHashPseudocode = [
-  'build(K, n keys):',
+  'build(K, n khoá):',
   '  repeat:',
-  '    draw a, b; h(k) = ((a·k + b) mod p) mod n',
-  '    put each key k in bucket h(k)',
+  '    rút a, b; h(k) = ((a·k + b) mod p) mod n',
+  '    đặt mỗi khoá k vào ngăn h(k)',
   '  until Σ nⱼ² < 4n',
-  '  for each bucket j with nⱼ > 0:',
+  '  for j in buckets if nⱼ > 0:',
   '    mⱼ = nⱼ²',
   '    repeat:',
-  '      draw aⱼ, bⱼ; hⱼ(k) = ((aⱼ·k + bⱼ) mod p) mod mⱼ',
-  '      put each key of bucket j in slot hⱼ(k)',
-  '    until no two keys share a slot',
-  'lookup(k): j = h(k); look only in slot hⱼ(k) of bucket j',
+  '      rút aⱼ, bⱼ; hⱼ(k) = ((aⱼ·k + bⱼ) mod p) mod mⱼ',
+  '      đặt mỗi khoá k của ngăn j vào ô hⱼ(k)',
+  '    until không có hai khoá nào chung một ô',
+  'lookup(k): j = h(k); chỉ xem ô hⱼ(k) của ngăn j',
 ];
 
 /** @param {number} k @param {number} a @param {number} b @param {number} m */

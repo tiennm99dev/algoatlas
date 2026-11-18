@@ -31,13 +31,13 @@ export const MAX_PIVOTS = 20;
  */
 
 export const simplexPseudocode = [
-  'start at x = y = 0: the slacks are basic',
+  'bắt đầu ở x = y = 0: các biến bù nằm trong cơ sở',
   'loop:',
-  '  e = variable with the largest positive reduced cost',
-  '  if none: return the current corner (optimal)',
-  '  l = row with the smallest bᵢ / aᵢₑ over aᵢₑ > 0',
-  '  if none: return “unbounded”',
-  '  pivot on (l, e): e enters, row l’s variable leaves',
+  '  e = biến có chi phí rút gọn dương lớn nhất',
+  '  if không có: return đỉnh hiện tại  // tối ưu',
+  '  l = hàng có bᵢ / aᵢₑ nhỏ nhất, xét các aᵢₑ > 0',
+  '  if không có: return “không bị chặn”',
+  '  xoay tại (l, e): e vào, biến của hàng l ra',
 ];
 
 /**

@@ -12,7 +12,7 @@ import {
   expectedComparisons,
   quicksortTrace,
 } from '$lib/algo-engine/randomised-algorithms.js';
-import { en as m } from '$lib/lessons/randomised-algorithms/copy.en.js';
+import { vi as m } from '$lib/lessons/randomised-algorithms/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -81,15 +81,17 @@ function pickRule(value) {
 describe('randomised algorithms lesson', () => {
   it('steps through one randomised run that ends sorted', () => {
     render();
-    expect(narration()).toContain('Sort 16 values with a uniformly random pivot');
+    expect(narration()).toContain(
+      'Sắp xếp 16 giá trị, mỗi lời gọi dùng một chốt chọn ngẫu nhiên đều',
+    );
     expect(stat('expected')).toBe(m.oneDp(expectedComparisons(16)));
     expect(stat('worst')).toBe('120');
     next(2);
-    expect(narration()).toMatch(/The coin picks position \d+: swap it to the end/);
+    expect(narration()).toMatch(/Đồng xu chọn vị trí \d+: đổi nó về cuối/);
     next(1);
-    expect(narration()).toMatch(/^Compare \d+ with x = \d+/);
+    expect(narration()).toMatch(/^So sánh \d+ với x = \d+/);
     toLast();
-    expect(narration()).toContain('the output is always sorted');
+    expect(narration()).toContain('kết quả luôn được sắp xếp');
     const markers = [...document.querySelectorAll('[role="img"] span')]
       .map((s) => s.textContent?.trim())
       .filter((t) => t === '✓');
@@ -103,7 +105,7 @@ describe('randomised algorithms lesson', () => {
     toLast();
     expect(stat('comparisons')).toBe('120');
     expect(stat('depth')).toBe('15');
-    expect(narration()).toContain('Every run on this input takes exactly the same steps');
+    expect(narration()).toContain('Mọi lần chạy trên đầu vào này đều đi đúng những bước như nhau');
   });
 
   it('samples many runs into a histogram, and clears it when the input changes', () => {
@@ -112,7 +114,7 @@ describe('randomised algorithms lesson', () => {
     click(buttonByText(m.runMany(RUN_BATCH)));
     click(buttonByText(m.runMany(RUN_BATCH)));
     expect(stat('runs')).toBe('200');
-    expect(stat('correct')).toBe('200 of 200');
+    expect(stat('correct')).toBe('200/200');
     expect(Math.abs(Number(stat('mean')) - expectedComparisons(16))).toBeLessThan(5);
     expect(document.querySelector('[data-testid="histogram"]')?.children.length).toBeGreaterThan(1);
     pickRule('last');

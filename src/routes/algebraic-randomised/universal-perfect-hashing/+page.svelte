@@ -23,7 +23,7 @@
     perfectHashTrace,
     sampleDraw,
   } from '$lib/algo-engine/universal-perfect-hashing.js';
-  import { en as m } from '$lib/lessons/universal-perfect-hashing/copy.en.js';
+  import { vi as m } from '$lib/lessons/universal-perfect-hashing/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */

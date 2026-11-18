@@ -18,14 +18,14 @@ export const MAX_MOVE = 9;
 export const grundyPseudocode = [
   'for x = 0 to N:',
   '  seen = { }',
-  '  for each legal move s ≤ x:',
-  '    add g(x − s) to seen',
-  '  g(x) = mex(seen)   (smallest value not in seen)',
+  '  for s in moves if s ≤ x:',
+  '    seen.add(g(x − s))',
+  '  g(x) = mex(seen)   // giá trị nhỏ nhất không thuộc seen',
   'X = 0',
-  'for each pile of h stones:',
+  'for h in piles:   // đống h viên sỏi',
   '  X = X xor g(h)',
-  'if X ≠ 0: move a pile h to one with g = g(h) xor X',
-  'else: every move leaves X ≠ 0, so the mover loses',
+  'if X ≠ 0: đưa một đống h về đống có g = g(h) xor X',
+  'else: mọi nước đi để lại X ≠ 0, nên người sắp đi thua',
 ];
 
 /**

@@ -25,26 +25,26 @@ export const PROBLEMS = /** @type {Problem[]} */ (['recurrence', 'bignum']);
 /** @type {Record<Problem, string[]>} */
 export const PSEUDOCODE = {
   recurrence: [
-    'build M, size k (k + 1 with a constant d):',
-    '  row 0 = c₁ … cₖ (then d)',
-    '  row i = 1 in column i − 1, for i = 1 … k − 1',
-    '  last row = 0 … 0 1   (keeps the constant 1)',
+    'dựng M cỡ k (k + 1 nếu có hằng số d):',
+    '  hàng 0 = c₁ … cₖ (rồi d)',
+    '  hàng i = 1 ở cột i − 1, với i = 1 … k − 1',
+    '  hàng cuối = 0 … 0 1   // giữ hằng số 1',
     'R = I, P = M, e = n',
     'while e > 0:',
-    '  if e is odd: R = R · P mod m',
+    '  if e lẻ: R = R · P mod m',
     '  e = ⌊e / 2⌋; if e > 0: P = P · P mod m',
-    'v = R · v₀ mod m, where v₀ = (aₖ₋₁, …, a₀ (, 1))',
-    'aₙ = entry k − 1 of v   (where a₀ started)',
+    'v = R · v₀ mod m, với v₀ = (aₖ₋₁, …, a₀ (, 1))',
+    'aₙ = phần tử k − 1 của v   // chỗ a₀ đứng lúc đầu',
   ],
   bignum: [
-    'a, b = digit lists, lowest digit first',
+    'a, b = danh sách chữ số, chữ số thấp nhất trước',
     'for k = 0 to len(a) + len(b) − 2:',
-    '  c[k] = Σ a[i] · b[k − i]   (a convolution)',
+    '  c[k] = Σ a[i] · b[k − i]   // tích chập',
     'carry = 0',
     'for k = 0 to len(c) − 1:',
     '  t = c[k] + carry; digit[k] = t mod 10; carry = ⌊t / 10⌋',
-    'while carry > 0: append carry mod 10; carry = ⌊carry / 10⌋',
-    'return the digits, highest first',
+    'while carry > 0: digit.append(carry mod 10); carry = ⌊carry / 10⌋',
+    'return các chữ số, chữ số cao nhất trước',
   ],
 };
 

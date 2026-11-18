@@ -14,7 +14,7 @@ import {
   nimSum,
   winningMoves,
 } from '$lib/algo-engine/sprague-grundy.js';
-import { en as m } from '$lib/lessons/sprague-grundy/copy.en.js';
+import { vi as m } from '$lib/lessons/sprague-grundy/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -84,17 +84,17 @@ const stones = () => document.querySelectorAll('[data-testid="board"] button').l
 describe('Nim and Sprague-Grundy lesson', () => {
   it('steps through mex and the XOR of the piles', () => {
     render();
-    expect(narration()).toContain('3 piles: 3, 4, 5');
+    expect(narration()).toContain('3 đống: 3, 4, 5');
     next(1);
-    expect(narration()).toContain('A pile of 0 stones has no moves');
+    expect(narration()).toContain('Một đống 0 viên sỏi không có nước đi nào');
     next(1);
-    expect(narration()).toContain('The smallest whole number not in { } is 0, so g(0) = 0.');
+    expect(narration()).toContain('Số tự nhiên nhỏ nhất không thuộc { } là 0, nên g(0) = 0.');
     next(2);
-    expect(narration()).toContain('Taking 1 leaves 0 stones, with g(0) = 0');
+    expect(narration()).toContain('Bốc 1 viên thì còn lại 0 viên, với g(0) = 0');
     expect(stat('seen')).toBe('seen = { 0 }');
     toLast();
-    expect(narration()).toContain('X = 2 ≠ 0, so the player to move wins');
-    expect(narration()).toContain('take 2 stones from pile 1');
+    expect(narration()).toContain('X = 2 ≠ 0, nên người sắp đi thắng');
+    expect(narration()).toContain('bốc 2 viên sỏi từ đống 1');
     expect(stat('lookups')).toBe('15');
     expect(stat('positions')).toBe('6');
     expect(stat('verdict')).toBe(m.verdicts.win);
@@ -108,8 +108,8 @@ describe('Nim and Sprague-Grundy lesson', () => {
     expect(stat('hint')).toBe(m.hint([{ pile: 0, take: 2 }]));
     // Take 2 from the pile of 3 by clicking its second stone: X becomes 0, the computer must
     // break it and we can restore it.
-    click(button('Take 2 stones from pile 1'));
-    expect(stat('status')).toMatch(/^You take 2 stones from pile 1\. The computer takes/);
+    click(button('Bốc 2 viên sỏi từ đống 1'));
+    expect(stat('status')).toMatch(/^Bạn bốc 2 viên sỏi từ đống 1\. Máy bốc/);
     expect(document.querySelector('[data-testid="hint"]')).toBeNull();
     expect(Number(stat('xor'))).not.toBe(0);
     click(buttonByText(m.restart));
@@ -120,15 +120,15 @@ describe('Nim and Sprague-Grundy lesson', () => {
   it('wins a whole game by always following the hint', () => {
     render();
     for (let turn = 0; turn < 20; turn++) {
-      if (stat('status')?.includes('You win')) break;
+      if (stat('status')?.includes('Bạn thắng')) break;
       const board = [...document.querySelectorAll('[data-testid="board"] li')].map(
         (li) => li.querySelectorAll('button').length,
       );
       const g = grundyValues('nim', [], 5);
       const [w] = winningMoves(board, 'nim', [], g);
-      click(button(`Take ${w.take} ${w.take === 1 ? 'stone' : 'stones'} from pile ${w.pile + 1}`));
+      click(button(`Bốc ${w.take} viên sỏi từ đống ${w.pile + 1}`));
     }
-    expect(stat('status')).toContain('You win!');
+    expect(stat('status')).toContain('Bạn thắng rồi!');
     click(buttonByText(m.takeButton));
     expect(stat('status')).toBe(m.over);
   });
@@ -139,13 +139,13 @@ describe('Nim and Sprague-Grundy lesson', () => {
     expect(stat('xor')).toBe(
       String(nimSum([7, 9, 12], grundyValues('subtraction', [1, 3, 4], 12))),
     );
-    click(button('Take 2 stones from pile 1'));
+    click(button('Bốc 2 viên sỏi từ đống 1'));
     expect(stat('status')).toBe(m.illegal(0, [1, 3, 4]));
     commit(field('preset'), 'balanced');
     commit(field('take'), '1');
     commit(field('pile'), '2');
     click(buttonByText(m.takeButton));
-    expect(stat('status')).toMatch(/^You take 1 stone from pile 3\. The computer takes/);
+    expect(stat('status')).toMatch(/^Bạn bốc 1 viên sỏi từ đống 3\. Máy bốc/);
     expect(stat('xor')).toBe('0');
     commit(field('take'), '0');
     expect(stat('status')).toBe(m.takeError(MAX_PILE));
@@ -160,14 +160,14 @@ describe('Nim and Sprague-Grundy lesson', () => {
     input.focus();
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     flushSync();
-    expect(stat('status')).toMatch(/^You take 2 stones from pile 1\./);
+    expect(stat('status')).toMatch(/^Bạn bốc 2 viên sỏi từ đống 1\./);
   });
 
   it('rebuilds for typed piles, a new rule and new takes, and refuses bad input', () => {
     render();
     commit(field('piles'), '1 2 3');
     toLast();
-    expect(narration()).toContain('X = 0, so the player to move loses');
+    expect(narration()).toContain('X = 0, nên người sắp đi thua');
     expect(stat('verdict')).toBe(m.verdicts.lose);
     pickRule('subtraction');
     commit(field('moves'), '2');

@@ -15,7 +15,7 @@
     fftTrace,
     rootOfUnity,
   } from '$lib/algo-engine/fast-fourier-transform.js';
-  import { en as m } from '$lib/lessons/fast-fourier-transform/copy.en.js';
+  import { vi as m } from '$lib/lessons/fast-fourier-transform/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */

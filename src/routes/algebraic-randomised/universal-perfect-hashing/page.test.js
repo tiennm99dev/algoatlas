@@ -15,7 +15,7 @@ import {
   hashOf,
   perfectHashTrace,
 } from '$lib/algo-engine/universal-perfect-hashing.js';
-import { en as m } from '$lib/lessons/universal-perfect-hashing/copy.en.js';
+import { vi as m } from '$lib/lessons/universal-perfect-hashing/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -86,21 +86,21 @@ describe('universal and perfect hashing lesson', () => {
       /** @type {import('$lib/algo-engine/universal-perfect-hashing.js').PerfectFrame} */ (
         trace.at(-1)
       );
-    expect(narration()).toContain('Build a perfect hash table for 9 keys');
+    expect(narration()).toContain('Dựng bảng băm hoàn hảo cho 9 khoá');
     next(2);
     const place = trace[2];
     expect(narration()).toContain(
       `h(${place.key}) = ((${place.a}·${place.key} + ${place.b}) mod 101) mod 9`,
     );
     expect(narration()).toContain(
-      `put ${place.key} in bucket ${hashOf(place.key, place.a, place.b, 9)}`,
+      `đặt ${place.key} vào ngăn ${hashOf(place.key, place.a, place.b, 9)}`,
     );
     toLast();
-    expect(narration()).toContain(`using 9 + ${done.slots} = ${9 + done.slots} slots`);
+    expect(narration()).toContain(`dùng 9 + ${done.slots} = ${9 + done.slots} ô`);
     expect(stat('first-draws')).toBe(String(done.firstDraws));
     expect(stat('second-draws')).toBe(String(done.secondDraws));
     expect(stat('sum-squares')).toBe(`${done.sumSquares} / 36`);
-    expect(marked('bucket finished')).toBe(done.slots);
+    expect(marked('ngăn đã xong')).toBe(done.slots);
   });
 
   it('looks a key up in the finished table only', () => {
@@ -109,11 +109,11 @@ describe('universal and perfect hashing lesson', () => {
     expect(narration()).toBe(m.lookupWait);
     toLast();
     click(buttonByText(m.lookupButton));
-    expect(narration()).toMatch(/^60 hashes to bucket \d+, then to its slot \d+: found 60/);
+    expect(narration()).toMatch(/^60 được băm vào ngăn \d+, rồi vào ô \d+ của ngăn: tìm thấy 60/);
     commit(field('probe'), '11');
     click(buttonByText(m.lookupButton));
-    expect(narration()).toMatch(/^11 hashes to bucket \d+/);
-    expect(narration()).toContain('not stored');
+    expect(narration()).toMatch(/^11 được băm vào ngăn \d+/);
+    expect(narration()).toContain('không có trong bảng');
     commit(field('probe'), '500');
     expect(narration()).toBe(m.lookupError(MAX_KEY));
     expect(field('probe').value).toBe('11');
@@ -128,7 +128,7 @@ describe('universal and perfect hashing lesson', () => {
     input.focus();
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     flushSync();
-    expect(narration()).toMatch(/^52 hashes to bucket \d+, then to its slot \d+: found 52/);
+    expect(narration()).toMatch(/^52 được băm vào ngăn \d+, rồi vào ô \d+ của ngăn: tìm thấy 52/);
   });
 
   it('samples random draws and compares them with the fixed hash', () => {
@@ -142,7 +142,7 @@ describe('universal and perfect hashing lesson', () => {
     click(buttonByText(m.sampleMany(SAMPLE_BATCH)));
     expect(stat('draws')).toBe('200');
     expect(Number(stat('mean'))).toBeLessThan(6);
-    expect(Number(stat('good')?.split(' ')[0])).toBeGreaterThan(100);
+    expect(Number(stat('good')?.split('/')[0])).toBeGreaterThan(100);
     expect(document.querySelector('[data-testid="histogram"]')?.children.length).toBe(46);
     click(buttonByText(m.clear));
     expect(stat('draws')).toBe('0');
@@ -160,17 +160,17 @@ describe('universal and perfect hashing lesson', () => {
   it('rebuilds from typed keys, refuses bad ones, and redraws', () => {
     render();
     commit(field('keys'), '5 17');
-    expect(narration()).toContain('for 2 keys');
+    expect(narration()).toContain('cho 2 khoá');
     expect(stat('fixed')).toBe(String(fixedPairs([5, 17])));
     toLast();
-    expect(narration()).toContain('No two keys share a slot');
+    expect(narration()).toContain('Không có hai khoá nào chung một ô');
     for (const bad of ['5', '5 5', '1 2 300']) {
       commit(field('keys'), bad);
       expect(narration()).toBe(m.keysError(MIN_N, MAX_N, MAX_KEY));
       expect(field('keys').value).toBe('5, 17');
     }
     click(buttonByText(m.reroll));
-    expect(narration()).toContain('for 2 keys');
+    expect(narration()).toContain('cho 2 khoá');
   });
 
   it('checks a practice answer, wrong then right, with a hint', () => {

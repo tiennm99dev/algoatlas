@@ -17,7 +17,7 @@
     lupTrace,
     splitFactors,
   } from '$lib/algo-engine/lup-decomposition.js';
-  import { en as m } from '$lib/lessons/lup-decomposition/copy.en.js';
+  import { vi as m } from '$lib/lessons/lup-decomposition/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */

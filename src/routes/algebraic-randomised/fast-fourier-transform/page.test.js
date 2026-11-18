@@ -8,7 +8,7 @@ import {
   MAX_COEFFS,
   fftTrace,
 } from '$lib/algo-engine/fast-fourier-transform.js';
-import { en as m } from '$lib/lessons/fast-fourier-transform/copy.en.js';
+import { vi as m } from '$lib/lessons/fast-fourier-transform/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -68,11 +68,11 @@ describe('fast Fourier transform lesson', () => {
     expect(stat('result')).toBe(m.resultPending);
     next(1);
     expect(stat('phase')).toBe(m.phaseTitles.a);
-    expect(narration()).toContain('bit-reversed order: 0, 2, 1, 3');
+    expect(narration()).toContain('thứ tự đảo bit: 0, 2, 1, 3');
     next(1);
-    expect(narration()).toContain('Stage 1, len 2: w = ω₄⁰ = 1');
-    expect(titles()).toContain('Column 1, row 0: 1, u + t');
-    expect(titles()).toContain('Column 0, row 1: 0, v');
+    expect(narration()).toContain('Giai đoạn 1, len 2: w = ω₄⁰ = 1');
+    expect(titles()).toContain('Cột 1, hàng 0: 1, u + t');
+    expect(titles()).toContain('Cột 0, hàng 1: 0, v');
     expect(stat('twiddle')).toBe('w = ω₄⁰ = 1');
     next(3);
     expect(stat('stage')).toBe('2');
@@ -84,7 +84,7 @@ describe('fast Fourier transform lesson', () => {
     expect(stat('result')).toBe('3 + 7x + 2x²');
     expect(stat('butterflies')).toBe('12');
     expect(stat('naive')).toBe('4');
-    expect(narration()).toContain('Check at x = 10: 21 × 13 = 273');
+    expect(narration()).toContain('Kiểm tra tại x = 10: 21 × 13 = 273');
     expect(stat('phase')).toBe(m.phaseTitles.inverse);
   });
 
@@ -92,7 +92,7 @@ describe('fast Fourier transform lesson', () => {
     render();
     const frames = fftTrace(FFT_PRESETS.linear.a, FFT_PRESETS.linear.b);
     next(frames.findIndex((f) => f.kind === 'pointwise'));
-    expect(narration()).toContain('only 4 multiplications');
+    expect(narration()).toContain('chỉ 4 phép nhân');
     const rows = [...document.querySelectorAll('[data-testid="values"] tbody tr')].map((tr) =>
       [...tr.querySelectorAll('td')].map((td) => td.textContent?.trim()),
     );

@@ -18,12 +18,12 @@ export const MAX_RUNS = 5000;
 export const quicksortPseudocode = [
   'quicksort(A, p, r):',
   '  if p < r:',
-  '    k = random index in p … r   (or k = r)',
-  '    swap A[k] and A[r]; x = A[r]; i = p − 1',
+  '    k = random(p … r)   // hoặc k = r',
+  '    swap A[k], A[r]; x = A[r]; i = p − 1',
   '    for j = p to r − 1:',
   '      if A[j] ≤ x:',
-  '        i = i + 1; swap A[i] and A[j]',
-  '    swap A[i + 1] and A[r]; q = i + 1',
+  '        i = i + 1; swap A[i], A[j]',
+  '    swap A[i + 1], A[r]; q = i + 1',
   '    quicksort(A, p, q − 1); quicksort(A, q + 1, r)',
 ];
 

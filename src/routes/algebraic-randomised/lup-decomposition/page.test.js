@@ -4,7 +4,7 @@ import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
 import { fvalue } from '$lib/algo-engine/rational.js';
 import { LUP_PRESETS, MAX_ENTRY, lupTrace } from '$lib/algo-engine/lup-decomposition.js';
-import { en as m } from '$lib/lessons/lup-decomposition/copy.en.js';
+import { vi as m } from '$lib/lessons/lup-decomposition/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -78,13 +78,13 @@ function pickPivoting(value) {
 describe('LUP decomposition lesson', () => {
   it('factors and solves the CLRS example', () => {
     render();
-    expect(narration()).toContain('Factor the 3×3 matrix');
+    expect(narration()).toContain('Phân tích ma trận 3×3');
     next(1);
-    expect(narration()).toContain('is 5, in row 2');
+    expect(narration()).toContain('là 5, ở hàng 2');
     expect(roles('pivot')).toBe(1);
     expect(roles('searched')).toBe(2);
     next(1);
-    expect(narration()).toContain('Swap rows 0 and 2');
+    expect(narration()).toContain('Đổi chỗ hàng 0 và hàng 2');
     expect(vector('perm')).toEqual(['2', '1', '0']);
     next(1);
     expect(narration()).toContain('l = a[1][0] / a[0][0] = 3/5');
@@ -105,10 +105,10 @@ describe('LUP decomposition lesson', () => {
     commit(field('preset'), 'zeroPivot');
     pickPivoting('lu');
     toLast();
-    expect(narration()).toContain('Stopped on a zero pivot');
+    expect(narration()).toContain('Đã dừng vì gặp chốt bằng 0');
     expect(document.querySelector('[data-testid="factor-L"]')).toBeNull();
     click(button('Bước trước'));
-    expect(narration()).toContain('plain LU cannot divide by it');
+    expect(narration()).toContain('LU thường không chia được cho nó');
     pickPivoting('lup');
     toLast();
     expect(vector('x')).toEqual(['1', '1', '1']);
@@ -131,7 +131,7 @@ describe('LUP decomposition lesson', () => {
     expect(vector('x')).toEqual(['3', '−1/2']);
     commit(field('preset'), 'singular');
     toLast();
-    expect(narration()).toContain('singular');
+    expect(narration()).toContain('suy biến');
     commit(field('size'), '4');
     toLast();
     expect(vector('x')).toEqual(['1', '1', '1', '1']);

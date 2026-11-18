@@ -10,7 +10,7 @@ import {
   simplexTrace,
 } from '$lib/algo-engine/linear-programming.js';
 import { fvalue } from '$lib/algo-engine/rational.js';
-import { en as m } from '$lib/lessons/linear-programming/copy.en.js';
+import { vi as m } from '$lib/lessons/linear-programming/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -73,23 +73,23 @@ const next = (times) => {
 describe('linear programming lesson', () => {
   it('walks the classic example from (0, 0) to the optimum (3, 1)', () => {
     render();
-    expect(narration()).toContain('Maximise z = 3x + 2y');
+    expect(narration()).toContain('Tìm max z = 3x + 2y');
     expect(corners()).toHaveLength(5);
-    expect(corners()).toContain('Corner A (0, 0), current corner');
+    expect(corners()).toContain('Đỉnh A (0, 0), đỉnh hiện tại');
     next(1);
-    expect(narration()).toContain('x has the largest positive reduced cost, 3');
+    expect(narration()).toContain('x có chi phí rút gọn dương lớn nhất, 3');
     expect(document.querySelector('[data-testid="tableau"] thead')?.textContent).toContain('x ↓');
     next(1);
-    expect(narration()).toContain('The smallest ratio is 3, in row 3, so s₃ leaves');
+    expect(narration()).toContain('Tỉ số nhỏ nhất là 3, ở hàng 3, nên s₃ ra khỏi cơ sở');
     expect(stat('row-2')).toContain('●');
     next(1);
-    expect(narration()).toContain('Now at corner (3, 0) with z = 9');
+    expect(narration()).toContain('Giờ ta ở đỉnh (3, 0) với z = 9');
     expect(stat('corner')).toBe('(3, 0)');
     toLast();
     expect(stat('z')).toBe('11');
     expect(stat('corner')).toBe('(3, 1)');
     expect(stat('pivots')).toBe('2');
-    expect(stat('status')).toBe('optimal');
+    expect(stat('status')).toBe('tối ưu');
     expect(stat('dual')).toBe(
       m.dualValues(
         /** @type {any} */ (simplexTrace(LP_PRESETS.classic.c, LP_PRESETS.classic.cons).at(-1))
@@ -97,8 +97,8 @@ describe('linear programming lesson', () => {
         { num: 11, den: 1 },
       ),
     );
-    expect(corners()).toContain('Corner C (3, 1), optimal');
-    expect(corners().filter((label) => label?.endsWith('visited'))).toHaveLength(2);
+    expect(corners()).toContain('Đỉnh C (3, 1), tối ưu');
+    expect(corners().filter((label) => label?.endsWith('đã thăm'))).toHaveLength(2);
   });
 
   it('rebuilds from the objective, a coefficient and the presets', () => {
@@ -114,15 +114,15 @@ describe('linear programming lesson', () => {
     expect(stat('z')).toBe('5');
     commit(field('preset'), 'unbounded');
     toLast();
-    expect(stat('status')).toBe('unbounded');
+    expect(stat('status')).toBe('không bị chặn');
     expect(stat('dual')).toBe(m.dualNone);
     commit(field('c1'), '-3');
     toLast();
-    expect(stat('status')).toBe('optimal');
+    expect(stat('status')).toBe('tối ưu');
     expect(stat('corner')).toBe('(0, 2)');
     commit(field('preset'), 'degenerate');
     next(2);
-    expect(narration()).toContain('degenerate');
+    expect(narration()).toContain('suy biến');
   });
 
   it('adds and removes constraints within the limits', () => {

@@ -23,7 +23,7 @@
     parseBig,
     recurrenceTrace,
   } from '$lib/algo-engine/practice-algebraic-randomised.js';
-  import { en as m } from '$lib/lessons/practice-algebraic-randomised/copy.en.js';
+  import { vi as m } from '$lib/lessons/practice-algebraic-randomised/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */
@@ -510,7 +510,7 @@
           <div class="col-span-2 rounded-xl border border-slate-200 bg-white p-3">
             <dt class="text-xs text-slate-500">{m.recStats.e}</dt>
             <dd class="text-xl font-bold break-all tabular-nums" data-testid="e">
-              {rf.e.toLocaleString('en-US')}
+              {rf.e}
             </dd>
           </div>
           <div class="col-span-2 rounded-xl border border-slate-200 bg-white p-3">

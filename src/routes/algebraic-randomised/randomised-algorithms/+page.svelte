@@ -23,7 +23,7 @@
     quicksortTrace,
     worstComparisons,
   } from '$lib/algo-engine/randomised-algorithms.js';
-  import { en as m } from '$lib/lessons/randomised-algorithms/copy.en.js';
+  import { vi as m } from '$lib/lessons/randomised-algorithms/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */

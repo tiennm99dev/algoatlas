@@ -12,15 +12,15 @@ export const MAX_COEFFS = 8;
 export const MAX_ABS = 9;
 
 export const fftPseudocode = [
-  'n = smallest power of 2 > deg A + deg B',
-  'y = coefficients in bit-reversed order',
+  'n = luỹ thừa nhỏ nhất của 2 lớn hơn deg A + deg B',
+  'y = các hệ số theo thứ tự đảo bit',
   'for len = 2, 4, …, n:',
-  '  for each block of len, j = 0 … len/2 − 1:',
+  '  for block in blocks(len), j = 0 … len/2 − 1:',
   '    w = ω_len^j;  u = y[top];  t = w · y[bottom]',
   '    y[top] = u + t;  y[bottom] = u − t',
-  'C(ωᵏ) = A(ωᵏ) · B(ωᵏ) for every k',
-  'inverse FFT: same loops with ω⁻¹, then divide by n',
-  'round each coefficient to a whole number',
+  'C(ωᵏ) = A(ωᵏ) · B(ωᵏ) với mọi k',
+  'FFT ngược: cùng các vòng lặp với ω⁻¹, rồi chia cho n',
+  'làm tròn mỗi hệ số về số nguyên',
 ];
 
 /** @typedef {{ re: number, im: number }} Complex */

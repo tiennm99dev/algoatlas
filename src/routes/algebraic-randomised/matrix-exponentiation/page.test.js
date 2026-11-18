@@ -9,7 +9,7 @@ import {
   RECURRENCES,
   matrixPowTrace,
 } from '$lib/algo-engine/matrix-exponentiation.js';
-import { en as m } from '$lib/lessons/matrix-exponentiation/copy.en.js';
+import { vi as m } from '$lib/lessons/matrix-exponentiation/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -70,19 +70,19 @@ function pickMode(value) {
 describe('matrix exponentiation lesson', () => {
   it('squares its way to the tenth Fibonacci number', () => {
     render();
-    expect(narration()).toContain('In binary n is 1010');
+    expect(narration()).toContain('Ở hệ nhị phân, n là 1010');
     expect(cells('matrix-m')).toEqual(['1', '1', '1', '0']);
     expect(cells('matrix-r')).toEqual(['1', '0', '0', '1']);
     expect(stat('answer')).toBe(m.answerPending);
     click(button('Bước tiếp'));
-    expect(narration()).toContain('bit 0 is 0');
+    expect(narration()).toContain('bit 0 bằng 0');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('square P = P · P to get M^2');
+    expect(narration()).toContain('bình phương P = P · P để có M^2');
     expect(cells('matrix-p')).toEqual(['2', '1', '1', '1']);
     click(button('Bước tiếp'));
-    expect(narration()).toContain('bit 1 is 1');
+    expect(narration()).toContain('bit 1 bằng 1');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Now R = M^2');
+    expect(narration()).toContain('Giờ R = M^2');
     expect(stat('invariant')).toBe('R = M^2, P = M^2');
     toLast();
     expect(stat('answer')).toBe('55');
@@ -104,7 +104,7 @@ describe('matrix exponentiation lesson', () => {
     toLast();
     expect(stat('answer')?.length).toBe(209);
     expect(stat('digits')).toBe('209');
-    expect(narration()).toContain('a number with 209 digits');
+    expect(narration()).toContain('một số có 209 chữ số');
     commit(field('preset'), 'fibMod');
     expect(field('m').value).toBe(String(MAX_MODULUS));
     toLast();

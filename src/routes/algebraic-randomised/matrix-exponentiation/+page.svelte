@@ -19,7 +19,7 @@
     matrixPowPseudocode,
     matrixPowTrace,
   } from '$lib/algo-engine/matrix-exponentiation.js';
-  import { en as m } from '$lib/lessons/matrix-exponentiation/copy.en.js';
+  import { vi as m } from '$lib/lessons/matrix-exponentiation/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */
@@ -319,7 +319,7 @@
         <div class="rounded-xl border border-slate-200 bg-white p-3">
           <dt class="text-xs text-slate-500">{m.stats.loop}</dt>
           <dd class="text-xl font-bold break-all tabular-nums" data-testid="loop">
-            {frame.n.toLocaleString('en-US')}
+            {frame.n}
           </dd>
         </div>
         <div class="rounded-xl border border-slate-200 bg-white p-3">
@@ -338,7 +338,7 @@
       </div>
       <ChipList
         title={m.chipsTitle}
-        items={frame.used.map((p) => ({ label: p.toLocaleString('en-US') }))}
+        items={frame.used.map((p) => ({ label: String(p) }))}
         emptyText={m.chipsEmpty}
         limit={50}
       />

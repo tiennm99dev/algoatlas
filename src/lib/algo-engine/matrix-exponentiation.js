@@ -26,14 +26,14 @@ export const RECURRENCES = {
 };
 
 export const matrixPowPseudocode = [
-  'R = I   (the identity)',
+  'R = I   // ma trận đơn vị',
   'P = M',
   'while e > 0:',
-  '  if e is odd:',
+  '  if e lẻ:',
   '    R = R · P',
   '  e = ⌊e / 2⌋',
   '  if e > 0: P = P · P',
-  'aₙ = last entry of R · v₀',
+  'aₙ = phần tử cuối của R · v₀',
 ];
 
 /**

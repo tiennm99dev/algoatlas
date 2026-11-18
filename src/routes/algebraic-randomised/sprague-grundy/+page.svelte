@@ -24,7 +24,7 @@
     takesFrom,
     winningMoves,
   } from '$lib/algo-engine/sprague-grundy.js';
-  import { en as m } from '$lib/lessons/sprague-grundy/copy.en.js';
+  import { vi as m } from '$lib/lessons/sprague-grundy/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */
