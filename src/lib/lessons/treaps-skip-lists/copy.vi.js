@@ -19,7 +19,7 @@ export const vi = {
   level: 'Nâng cao',
   title: 'Treap và skip list',
   intro:
-    'Thay cho các quy tắc cân bằng chặt chẽ, hai cấu trúc này dùng sự ngẫu nhiên. Skip list xếp chồng nhiều danh sách liên kết (linked list) đã sắp xếp, chiều cao cột của mỗi khoá do tung đồng xu quyết định, nên phép tìm đi nhanh trên các tầng cao rồi tụt dần xuống. Treap gán cho mỗi khoá một độ ưu tiên ngẫu nhiên và giữ cây vừa là BST theo khoá, vừa là heap nhỏ nhất theo độ ưu tiên, nên độ ưu tiên nhỏ nhất nằm ở gốc. Cả hai đều đạt thời gian kì vọng O(log n), dù chèn theo thứ tự nào.',
+    'Thay cho các quy tắc cân bằng chặt chẽ, hai cấu trúc này dùng sự ngẫu nhiên. Skip list (danh sách nhảy) xếp chồng nhiều linked list (danh sách liên kết) đã sắp xếp, chiều cao cột của mỗi khoá do tung đồng xu quyết định, nên phép tìm đi nhanh trên các tầng cao rồi tụt dần xuống. Treap (cây treap) gán cho mỗi khoá một độ ưu tiên ngẫu nhiên và giữ cây vừa là BST theo khoá, vừa là min-heap (heap nhỏ nhất) theo độ ưu tiên, nên độ ưu tiên nhỏ nhất nằm ở gốc. Cả hai đều đạt thời gian kì vọng O(log n), dù chèn theo thứ tự nào.',
   summary:
     'Chạy từng bước các cột skip list dựng bằng tung đồng xu và phép tìm tụt xuống từng tầng, rồi xem độ ưu tiên ngẫu nhiên quay một treap thành hình.',
   instruction:
@@ -216,7 +216,7 @@ export const vi = {
   takeaways: [
     'Tầng dưới cùng của skip list chứa mọi khoá theo thứ tự. Cột của mỗi khoá cao thêm một tầng sau mỗi lần sấp, nên khoảng một nửa số khoá lên tới tầng 2, một phần tư lên tới tầng 3, cứ thế, tổng cộng khoảng log₂ n tầng.',
     'Phép tìm sang phải khi khoá kế tiếp còn nhỏ hơn, và tụt xuống trong trường hợp ngược lại. Mỗi tầng chỉ ghé kì vọng khoảng hai nút, nên thời gian kì vọng là O(log n), không cần phép quay nào.',
-    'Treap cùng lúc là BST theo khoá và heap theo độ ưu tiên; ở đây là heap nhỏ nhất, nên độ ưu tiên nhỏ hơn nằm gần gốc hơn. Nếu các độ ưu tiên khác nhau, với một tập cặp (khoá, độ ưu tiên) cho trước chỉ có đúng một cây như vậy, dù chèn theo thứ tự nào.',
+    'Treap cùng lúc là BST theo khoá và heap (đống) theo độ ưu tiên; ở đây là min-heap, nên độ ưu tiên nhỏ hơn nằm gần gốc hơn. Nếu các độ ưu tiên khác nhau, với một tập cặp (khoá, độ ưu tiên) cho trước chỉ có đúng một cây như vậy, dù chèn theo thứ tự nào.',
     'Vì độ ưu tiên là ngẫu nhiên chứ không do đầu vào quyết định, không ai có thể ép cây thành hình xấu bằng thứ tự chèn. Cây trông như một BST dựng từ thứ tự chèn ngẫu nhiên, với chiều cao kì vọng O(log n).',
     'Trong skip list, thử “Các cột trải đều” rồi so với “Không có cột cao”: tìm 70 tốn 6 phép so sánh so với 7, và khoảng cách đó lớn dần khi danh sách dài ra. Với treap, so sánh “Khoá tăng dần, độ ưu tiên lẫn lộn” (cao 4) với “Khoá tăng dần, độ ưu tiên tăng dần” (cao 7), rồi mở “Cùng các cặp, thứ tự khác”.',
   ],
@@ -304,7 +304,7 @@ export const vi = {
     {
       type: 'choice',
       prompt:
-        'Trong treap heap nhỏ nhất này, một lá mới có khoá 40, độ ưu tiên 5 là con phải của khoá 20, độ ưu tiên 9. Điều gì xảy ra tiếp theo?',
+        'Trong treap min-heap này, một lá mới có khoá 40, độ ưu tiên 5 là con phải của khoá 20, độ ưu tiên 9. Điều gì xảy ra tiếp theo?',
       options: [
         'Quay trái, để 40 thành cha của 20',
         'Quay phải, để 40 thành cha của 20',
@@ -322,7 +322,7 @@ export const vi = {
     {
       type: 'multi',
       prompt:
-        'Những khẳng định nào đúng với các treap heap nhỏ nhất của bài này, khi các độ ưu tiên khác nhau?',
+        'Những khẳng định nào đúng với các treap min-heap của bài này, khi các độ ưu tiên khác nhau?',
       options: [
         'Tập các cặp (khoá, độ ưu tiên) quyết định hình dạng của cây',
         'Nút có độ ưu tiên nhỏ nhất là gốc',

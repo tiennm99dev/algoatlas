@@ -85,7 +85,7 @@ export const vi = {
   },
   takeaways: [
     'Tìm kiếm, chèn và xoá trên BST đều đi theo một đường từ gốc xuống lá, nên tốn O(chiều cao). Câu hỏi duy nhất là cây cao đến đâu.',
-    'BST thường có hình dạng do thứ tự chèn quyết định. Dãy tăng dần, giảm dần hay ziczac đều dựng nên một nhánh dài cao n tầng: thực chất là một danh sách liên kết (linked list) tốn thêm bước, mỗi thao tác tốn O(n) và tổng cộng khoảng n²/2 phép so sánh.',
+    'BST thường có hình dạng do thứ tự chèn quyết định. Dãy tăng dần, giảm dần hay ziczac đều dựng nên một nhánh dài cao n tầng: thực chất là một linked list (danh sách liên kết) tốn thêm bước, mỗi thao tác tốn O(n) và tổng cộng khoảng n²/2 phép so sánh.',
     'Cây cân bằng bảo đảm chiều cao O(log n). Không cây nhị phân nào chứa n khoá lại thấp hơn ⌈log₂(n + 1)⌉ tầng, và cây AVL luôn cao không quá khoảng 1,44 lần mức đó.',
     'Một phép quay đưa một nút con lên trên nút cha của nó và chuyển một cây con sang phía bên kia. Nó chỉ đổi một số hằng liên kết và không bao giờ làm đổi thứ tự giữa, nên cây vẫn là một BST hợp lệ.',
     'Thử dãy “Tăng dần”, rồi “Thứ tự vốn đã cân bằng”: với dãy đầu, BST thường cao 10 khi có 10 khoá; với dãy sau, cây chỉ cao 4 với 15 khoá và không cần phép quay nào.',

@@ -284,7 +284,7 @@ export const vi = {
     }
   },
   takeaways: [
-    'Một ánh xạ có thứ tự (TreeMap của Java, std::map của C++) bên dưới là một cây cân bằng. Chính việc giữ khoá theo thứ tự cho phép tìm khoá liền trước, liền sau, duyệt theo thứ tự và truy vấn đoạn, những việc mà bảng băm (hash table) không làm được.',
+    'Một ánh xạ có thứ tự (TreeMap của Java, std::map của C++) bên dưới là một cây cân bằng. Chính việc giữ khoá theo thứ tự cho phép tìm khoá liền trước, liền sau, duyệt theo thứ tự và truy vấn đoạn, những việc mà hash table (bảng băm) không làm được.',
     'Lưu size trong mỗi nút. Với select, s = size(left) + 1 là vị trí của nút hiện tại trong cây con của nó: dừng nếu k = s, rẽ trái nếu k < s, còn lại thì trừ s khỏi k và rẽ phải. Với rank, mỗi lần lượt đi rẽ phải thì cộng thêm s.',
     'Một trường được cập nhật rẻ khi nó chỉ phụ thuộc vào chính nút và hai con của nút. Mỗi thay đổi chỉ chạm một đường đi, và một phép quay chỉ tính lại hai nút, nên chèn và xoá vẫn tốn O(log n). Không thể lưu thứ hạng của nút theo cách này: chèn một khoá nhỏ nhất mới sẽ làm đổi mọi thứ hạng.',
     'Cây đoạn xếp các đoạn theo đầu trái và lưu đầu phải lớn nhất của mỗi cây con. Nếu left.max ≥ lo thì rẽ trái là an toàn: khi bên trái không có đoạn nào giao, đoạn có đầu phải bằng left.max phải bắt đầu sau khi truy vấn kết thúc, và không đoạn nào bên phải bắt đầu sớm hơn.',
@@ -309,7 +309,7 @@ export const vi = {
     ['Bộ nhớ', 'O(n)', 'Mỗi khoá một nút, mỗi nút lưu thêm một số.'],
   ],
   nextTeaser:
-    'Bài sau là luyện tập: bài toán cây cân bằng, nơi bạn chạy cùng một dãy thao tác trên BST, cây AVL và skip list để so sánh chi phí.',
+    'Bài sau là luyện tập: bài toán cây cân bằng, nơi em chạy cùng một dãy thao tác trên BST, cây AVL và skip list để so sánh chi phí.',
   practiceTitle: 'Tự kiểm tra',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
   practice: [

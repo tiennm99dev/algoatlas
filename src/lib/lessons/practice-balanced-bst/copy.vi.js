@@ -21,11 +21,11 @@ export const vi = {
   level: 'Trung bình',
   title: 'Luyện tập: bài toán cây cân bằng',
   intro:
-    'Chọn cấu trúc có thứ tự nào là tuỳ vào việc nó thực sự phải làm. Hãy chạy cùng một dãy thao tác trên một BST thường, một cây AVL và một skip list, đếm số phép so sánh mỗi cấu trúc tốn, và xem khi nào cân bằng đáng đồng tiền, cũng như truy vấn thứ hạng tốn bao nhiêu khi có và khi không lưu số đếm.',
+    'Chọn cấu trúc có thứ tự nào là tuỳ vào việc nó thực sự phải làm. Hãy chạy cùng một dãy thao tác trên một BST thường, một cây AVL và một skip list (danh sách nhảy), đếm số phép so sánh mỗi cấu trúc tốn, và xem khi nào cân bằng đáng đồng tiền, cũng như truy vấn thứ hạng tốn bao nhiêu khi có và khi không lưu số đếm.',
   summary:
     'Chạy một dãy thao tác trên BST thường, cây AVL và skip list, so sánh chi phí, và xem việc lưu số đếm giúp gì cho truy vấn thứ hạng.',
   instruction:
-    'Chọn một dãy có sẵn hoặc tự gõ dãy của bạn, rồi chạy từng bước hoặc nhảy đến bước cuối để xem tổng. Đổi cách trả lời truy vấn thứ hạng, tung lại đồng xu cho skip list, và dùng hình minh hoạ để trả lời các câu hỏi bên dưới.',
+    'Chọn một dãy có sẵn hoặc tự gõ dãy của em, rồi chạy từng bước hoặc nhảy đến bước cuối để xem tổng. Đổi cách trả lời truy vấn thứ hạng, tung lại đồng xu cho skip list, và dùng hình minh hoạ để trả lời các câu hỏi bên dưới.',
   opsLabel: 'Các thao tác',
   opsAria:
     'Các thao tác: i là chèn, s là tìm, d là xoá, r là thứ hạng, mỗi chữ theo sau là một khoá từ 0 đến 99.',
@@ -153,7 +153,7 @@ export const vi = {
     ],
   ],
   nextTeaser:
-    'Tiếp theo là ôn tập: thuật toán cốt lõi, nơi bạn gom lại những gì đã học ở cả phần này qua một loạt câu hỏi.',
+    'Tiếp theo là ôn tập: thuật toán cốt lõi, nơi em gom lại những gì đã học ở cả phần này qua một loạt câu hỏi.',
   practiceTitle: 'Bài luyện tập',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
   practice: [
@@ -237,7 +237,7 @@ export const vi = {
       prompt:
         'Một trò chơi có bảng điểm trực tiếp. Điểm số thay đổi liên tục và người chơi hỏi “tôi đang đứng thứ mấy?”. Cấu trúc nào hợp nhất?',
       options: [
-        'Một bảng băm (hash table) lưu điểm',
+        'Một hash table lưu điểm',
         'Một BST thường xếp theo điểm',
         'Một cây cân bằng có lưu kích thước cây con',
         'Một mảng đã sắp xếp',
@@ -248,21 +248,21 @@ export const vi = {
         'Mảng đã sắp xếp tốn bao nhiêu cho mỗi lần cập nhật?',
       ],
       solution:
-        'Cây cân bằng có lưu kích thước cây con làm cả cập nhật lẫn xếp hạng trong O(log n). Bảng băm không có thứ tự, mảng đã sắp xếp cần O(n) cho mỗi lần cập nhật, còn BST thường có thể thoái hoá thành một chuỗi.',
+        'Cây cân bằng có lưu kích thước cây con làm cả cập nhật lẫn xếp hạng trong O(log n). Hash table (bảng băm) không có thứ tự, mảng đã sắp xếp cần O(n) cho mỗi lần cập nhật, còn BST thường có thể thoái hoá thành một chuỗi.',
     },
     {
       type: 'multi',
       prompt: 'Những cặp nhu cầu và cấu trúc nào là hợp lí?',
       options: [
         'Chỉ mục trên đĩa, mỗi lần đọc nút đều chậm: cây B',
-        'Tra cứu khớp chính xác, không cần thứ tự: bảng băm',
+        'Tra cứu khớp chính xác, không cần thứ tự: hash table',
         'Khoá đến theo thứ tự tăng dần và phải tìm được: BST thường',
         'Một ánh xạ có thứ tự ngắn gọn, đơn giản, không phép quay: skip list',
       ],
       answers: [0, 1, 3],
       hints: ['Nghĩ xem mỗi cấu trúc có hình dạng thế nào với đầu vào tệ nhất của nó.'],
       solution:
-        'Cây B gói nhiều khoá vào mỗi trang đĩa, bảng băm cho thời gian kì vọng O(1) khi không cần thứ tự, và skip list không cần phép quay. Đầu vào tăng dần chính là thứ biến BST thường thành một chuỗi.',
+        'Cây B gói nhiều khoá vào mỗi trang đĩa, hash table cho thời gian kì vọng O(1) khi không cần thứ tự, và skip list không cần phép quay. Đầu vào tăng dần chính là thứ biến BST thường thành một chuỗi.',
     },
   ],
 };
