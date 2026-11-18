@@ -22,12 +22,12 @@ export const MAX_K = 15;
 
 export const centroidPseudocode = [
   'decompose(piece, p):',
-  '  size[] = subtree sizes of the piece, rooted at its first node r',
-  '  c = r; while c has a child w with size[w] > |piece| / 2: c = w',
-  '  c is the centroid: no part left without c has more than |piece| / 2 nodes',
-  '  count pairs through c: dist(x) + dist(y) = K, x and y in different parts (or y = c)',
-  '  remove c; its parent in the centroid tree is p',
-  '  for each part P left by removing c: decompose(P, c)',
+  '  size[] = kích thước các cây con trong piece, gốc tại nút đầu tiên r',
+  '  c = r; while c có con w với size[w] > |piece| / 2: c = w',
+  '  c là trọng tâm: bỏ c đi thì không phần nào còn quá |piece| / 2 nút',
+  '  đếm các cặp qua c: dist(x) + dist(y) = K, x và y ở hai phần khác nhau (hoặc y = c)',
+  '  xoá c; cha của c trong cây trọng tâm là p',
+  '  for P in các phần còn lại khi bỏ c: decompose(P, c)',
 ];
 
 /**

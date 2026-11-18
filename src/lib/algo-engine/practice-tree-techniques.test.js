@@ -10,7 +10,7 @@ import {
   practiceTrace,
 } from './practice-tree-techniques.js';
 import { isRootedTree, lettered, randomParents } from './rooted-tree.js';
-import { en as m } from '$lib/lessons/practice-tree-techniques/copy.en.js';
+import { vi as m } from '$lib/lessons/practice-tree-techniques/copy.vi.js';
 
 /** Deterministic LCG so random trees are reproducible. */
 function seeded(seed = 1) {

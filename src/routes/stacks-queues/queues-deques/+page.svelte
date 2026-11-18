@@ -16,7 +16,7 @@
     dequeTrace,
     makeDequeOps,
   } from '$lib/algo-engine/queues-deques.js';
-  import { en as m } from '$lib/lessons/queues-deques/copy.en.js';
+  import { vi as m } from '$lib/lessons/queues-deques/copy.vi.js';
   import RingBuffer from '$lib/components/ring-buffer.svelte';
   import { createPlayer } from '$lib/player/player.svelte.js';
 

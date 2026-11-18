@@ -52,11 +52,11 @@ export const MAX_VALUE = 9;
  */
 
 export const hldPseudocode = [
-  'dfs1(v): size[v] = 1; for each child c: dfs1(c); size[v] += size[c]',
-  '  heavy[v] = the child with the largest size (none for a leaf)',
+  'dfs1(v): size[v] = 1; for c in children(v): dfs1(c); size[v] += size[c]',
+  '  heavy[v] = con có size lớn nhất (lá thì không có)',
   'dfs2(v, h): head[v] = h; pos[v] = next++',
-  '  if v has a heavy child: dfs2(heavy[v], h)     (same chain)',
-  '  for each light child c: dfs2(c, c)            (new chain)',
+  '  if v có con nặng: dfs2(heavy[v], h)       (cùng chuỗi)',
+  '  for c là con nhẹ của v: dfs2(c, c)        (chuỗi mới)',
   'query(u, v):',
   '  while head[u] ≠ head[v]:',
   '    if depth[head[u]] < depth[head[v]]: swap u, v',

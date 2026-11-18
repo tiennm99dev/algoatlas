@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/stacks/copy.en.js';
+import { vi as m } from '$lib/lessons/stacks/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -79,7 +79,7 @@ describe('stacks lesson', () => {
     render();
     expect(narration()).toContain('top = −1');
     click(button('Đến bước cuối'));
-    expect(svgLabel('Stack')).toBe('Stack, bottom to top: 3, 8, 5. Top is 5.');
+    expect(svgLabel('Ngăn xếp')).toBe('Ngăn xếp, từ đáy lên đỉnh: 3, 8, 5. Đỉnh là 5.');
     expect(byTest('top')).toBe('2');
     expect(byTest('pushes')).toBe('3');
   });
@@ -87,8 +87,8 @@ describe('stacks lesson', () => {
   it('pushes in two steps: check for room, then write a[top]', () => {
     render();
     commit(valueInput(), '42');
-    click(buttonByText('Push'));
-    expect(narration()).toContain('push(42): top = 2, below 5');
+    click(buttonByText('push'));
+    expect(narration()).toContain('push(42): top = 2, nhỏ hơn 5');
     click(button('Bước tiếp'));
     expect(narration()).toContain('a[3] = 42');
     expect(byTest('top')).toBe('3');
@@ -96,13 +96,13 @@ describe('stacks lesson', () => {
 
   it('pops the last value pushed and leaves a stale slot', () => {
     render();
-    click(buttonByText('Pop'));
+    click(buttonByText('pop'));
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Read 5 from a[2]');
+    expect(narration()).toContain('Đọc 5 từ a[2]');
     expect(byTest('result')).toBe('5');
-    expect(svgLabel('Array')).toContain('a[2] 5 (stale)');
-    click(buttonByText('Peek'));
-    expect(narration()).toBe('peek() returns 8, the top, without removing it.');
+    expect(svgLabel('Mảng')).toContain('a[2] 5 (cũ)');
+    click(buttonByText('peek'));
+    expect(narration()).toBe('peek() trả về 8, phần tử ở đỉnh, mà không lấy nó ra.');
   });
 
   it('overflows the array but not the linked list', () => {
@@ -110,30 +110,32 @@ describe('stacks lesson', () => {
     commit(/** @type {HTMLSelectElement} */ (document.querySelector('select')), 'overflow');
     click(button('Đến bước cuối'));
     click(button('Bước trước'));
-    expect(narration()).toContain('Stack overflow: 5 has nowhere to go');
+    expect(narration()).toContain('Tràn ngăn xếp: 5 không còn chỗ để vào');
     pickImpl('linked');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('7 items on the stack, 5 on top');
-    expect(svgLabel('Linked')).toContain('Linked list from top: 5 → 6 → 1 → 7 → 2 → 9 → 4 → null');
+    expect(narration()).toContain('Ngăn xếp có 7 phần tử, 5 ở đỉnh');
+    expect(svgLabel('Danh sách')).toContain(
+      'Danh sách liên kết từ đỉnh: 5 → 6 → 1 → 7 → 2 → 9 → 4 → null',
+    );
   });
 
   it('links a new node in front in the linked list', () => {
     render();
     pickImpl('linked');
     commit(valueInput(), '11');
-    click(buttonByText('Push'));
-    expect(narration()).toContain('point its next at the current top, 5');
-    expect(svgLabel('New node')).toContain('New node 11, not linked yet');
+    click(buttonByText('push'));
+    expect(narration()).toContain('cho con trỏ kế tiếp của nút trỏ tới đỉnh hiện tại, 5');
+    expect(svgLabel('Nút mới')).toContain('Nút mới 11, chưa được nối vào');
     click(button('Bước tiếp'));
     expect(byTest('top')).toBe('11');
   });
 
   it('reports underflow on an empty stack', () => {
     render();
-    click(buttonByText('Reset'));
-    click(buttonByText('Pop'));
+    click(buttonByText('Làm lại'));
+    click(buttonByText('pop'));
     click(button('Bước tiếp'));
-    expect(narration()).toBe('Stack underflow: there is nothing to pop. The stack is unchanged.');
+    expect(narration()).toBe('Ngăn xếp rỗng: không có gì để pop. Ngăn xếp giữ nguyên.');
   });
 
   it('keeps the last valid value and shows a notice for a bad one', () => {
@@ -143,7 +145,7 @@ describe('stacks lesson', () => {
     valueInput().value = '';
     valueInput().dispatchEvent(new Event('input', { bubbles: true }));
     flushSync();
-    click(buttonByText('Push'));
+    click(buttonByText('push'));
     expect(narration()).toBe(m.valueError);
     expect(valueInput().value).toBe('7');
   });
@@ -151,20 +153,20 @@ describe('stacks lesson', () => {
   it('refuses a ninth node in the linked drawing', () => {
     render();
     pickImpl('linked');
-    for (let k = 0; k < 6; k++) click(buttonByText('Push'));
+    for (let k = 0; k < 6; k++) click(buttonByText('push'));
     expect(narration()).toBe(m.drawingFull);
   });
 
   it('undoes, and pushes when Enter submits the form', () => {
     render();
-    click(buttonByText('Pop'));
-    click(buttonByText('Undo last'));
-    expect(svgLabel('Stack')).toContain('3, 8, 5');
+    click(buttonByText('pop'));
+    click(buttonByText('Hoàn tác'));
+    expect(svgLabel('Ngăn xếp')).toContain('3, 8, 5');
     commit(valueInput(), '9');
     /** @type {HTMLFormElement} */ (valueInput().closest('form')).requestSubmit();
     flushSync();
     expect(narration()).toContain('push(9)');
-    expect(buttonByText('Pop').type).toBe('button');
+    expect(buttonByText('pop').type).toBe('button');
   });
 
   it('steps back with the arrow keys', () => {

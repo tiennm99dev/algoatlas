@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/heavy-light-decomposition/copy.en.js';
+import { vi as m } from '$lib/lessons/heavy-light-decomposition/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -54,7 +54,7 @@ const byTest = (id) => document.querySelector(`[data-testid="${id}"]`)?.textCont
 const node = (label) => {
   const el = [...document.querySelectorAll('g[role="button"]')].find((g) => {
     const name = g.getAttribute('aria-label') ?? '';
-    return name === `Node ${label}` || name.startsWith(`Node ${label},`);
+    return name === `Nút ${label}` || name.startsWith(`Nút ${label},`);
   });
   if (!el) throw new Error(`no node ${label}`);
   return el;
@@ -84,21 +84,19 @@ function setValue(value) {
 describe('heavy-light decomposition lesson', () => {
   it('sizes subtrees, then numbers the chains heavy child first', () => {
     render();
-    expect(narration()).toContain('First walk (dfs1)');
+    expect(narration()).toContain('Lượt duyệt thứ nhất (dfs1)');
     expect(byTest('array-empty')).toBe(m.arrayEmpty);
     next(2);
     expect(narration()).toBe(
-      'H has size 2. Its largest child is M (size 1), so H–M is a heavy edge.',
+      'H có kích thước 2. Con lớn nhất của nó là M (kích thước 1), nên H–M là cạnh nặng.',
     );
     next(14);
-    expect(narration()).toBe(
-      'Second walk (dfs2): the root A starts the first chain at position 0.',
-    );
+    expect(narration()).toBe('Lượt duyệt thứ hai (dfs2): gốc A mở đầu chuỗi thứ nhất ở vị trí 0.');
     next(5);
-    expect(narration()).toBe('I hangs on a light edge: it starts a new chain at position 5.');
+    expect(narration()).toBe('I treo trên một cạnh nhẹ: nó mở đầu một chuỗi mới ở vị trí 5.');
     expect(byTest('array-empty')).toBeUndefined();
     expect(node('I').getAttribute('aria-label')).toBe(
-      'Node I, value 5, position 5 on chain I, worked on now',
+      'Nút I, giá trị 5, vị trí 5 trên chuỗi I, đang xử lí',
     );
     expect(byTest('chains')).toBeUndefined();
   });
@@ -107,13 +105,13 @@ describe('heavy-light decomposition lesson', () => {
     render();
     click(button('Đến bước cuối'));
     expect(narration()).toBe(
-      'Path sum = 8 + 6 + 20 = 34, from 3 ranges and 29 segment-tree nodes. Walking the path one node at a time reads 8 nodes.',
+      'Tổng trên đường đi = 8 + 6 + 20 = 34, từ 3 đoạn và 29 nút cây phân đoạn. Đi dọc đường đi từng nút một thì phải đọc 8 nút.',
     );
     expect(byTest('sum')).toBe('34');
     expect(byTest('ranges')).toBe('3');
     expect(byTest('walk')).toBe('8');
-    expect(node('G').getAttribute('aria-label')).toContain('already summed');
-    expect(node('K').getAttribute('aria-label')).not.toContain('summed');
+    expect(node('G').getAttribute('aria-label')).toContain('đã cộng');
+    expect(node('K').getAttribute('aria-label')).not.toContain('đã cộng');
     expect(document.body.textContent).toContain('A–B–D–H–M');
   });
 
@@ -121,7 +119,7 @@ describe('heavy-light decomposition lesson', () => {
     render();
     choose('u', '10');
     expect(narration()).toBe(
-      'Every chain is now a block of positions. Sum the values on the path K – L (3 nodes).',
+      'Giờ mỗi chuỗi là một khối vị trí. Cộng các giá trị trên đường đi K – L (3 nút).',
     );
     click(button('Đến bước cuối'));
     expect(byTest('sum')).toBe(String(5 + 2 + 8));
@@ -144,7 +142,7 @@ describe('heavy-light decomposition lesson', () => {
     expect(byTest('sum')).toBe('26');
     setValue('12');
     expect(narration()).toBe(m.errors.value(9));
-    click(buttonByText('Undo'));
+    click(buttonByText('Hoàn tác'));
     click(button('Đến bước cuối'));
     expect(byTest('sum')).toBe('34');
   });
@@ -152,13 +150,13 @@ describe('heavy-light decomposition lesson', () => {
   it('adds a child, removes a subtree and refuses the root', () => {
     render();
     click(node('M'));
-    click(buttonByText('Add child'));
-    expect(byTest('selected')).toBe('Selected: P');
+    click(buttonByText('Thêm con'));
+    expect(byTest('selected')).toBe('Đang chọn: P');
     click(node('A'));
-    click(buttonByText('Remove subtree'));
+    click(buttonByText('Xoá cây con'));
     expect(narration()).toBe(m.errors.root);
     click(node('C'));
-    click(buttonByText('Remove subtree'));
+    click(buttonByText('Xoá cây con'));
     // L went with C's subtree, so v falls back to the root A.
     click(button('Đến bước cuối'));
     expect(byTest('sum')).toBe(String(3 + 1 + 1 + 6 + 9));
@@ -175,7 +173,7 @@ describe('heavy-light decomposition lesson', () => {
       new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }),
     );
     flushSync();
-    expect(byTest('selected')).toBe('Selected: B');
+    expect(byTest('selected')).toBe('Đang chọn: B');
   });
 
   it('checks a practice answer, wrong then right, with a hint', () => {

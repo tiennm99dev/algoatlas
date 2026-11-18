@@ -17,7 +17,7 @@
     parsePostfix,
     postfixTrace,
   } from '$lib/algo-engine/stack-applications.js';
-  import { en as m } from '$lib/lessons/stack-applications/copy.en.js';
+  import { vi as m } from '$lib/lessons/stack-applications/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/stack-applications.js').AppMode} AppMode */

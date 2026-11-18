@@ -23,7 +23,7 @@
     pathUp,
     queryStart,
   } from '$lib/algo-engine/lca-binary-lifting.js';
-  import { en as m } from '$lib/lessons/lca-binary-lifting/copy.en.js';
+  import { vi as m } from '$lib/lessons/lca-binary-lifting/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/lca-binary-lifting.js').RootedTree} RootedTree */

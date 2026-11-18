@@ -23,17 +23,17 @@ export const MAX_VALUE = 99;
 export const monoPseudocode = {
   'next-greater': [
     'for i = 0 to n − 1:',
-    '  while stack not empty and a[top] < a[i]:',
+    '  while stack khác rỗng and a[top] < a[i]:',
     '    answer[top] = a[i]; pop()',
     '  push(i)',
-    'every index left on the stack: answer = −1',
+    'mọi chỉ số còn lại trên stack: answer = −1',
   ],
   'window-max': [
     'for i = 0 to n − 1:',
-    '  if front = i − k: popFront()        ▹ slid out of the window',
-    '  while deque not empty and a[back] ≤ a[i]: popBack()',
+    '  if front = i − k: popFront()        ▹ đã trượt ra khỏi cửa sổ',
+    '  while deque khác rỗng and a[back] ≤ a[i]: popBack()',
     '  pushBack(i)',
-    '  if i ≥ k − 1: max of a[i − k + 1..i] = a[front]',
+    '  if i ≥ k − 1: max(a[i − k + 1..i]) = a[front]',
   ],
 };
 

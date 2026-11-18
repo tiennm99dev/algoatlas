@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/monotonic-stack-queue/copy.en.js';
+import { vi as m } from '$lib/lessons/monotonic-stack-queue/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -75,20 +75,22 @@ function practice() {
 describe('monotonic stack and queue lesson', () => {
   it('pops shorter bars when a taller one arrives and records their answer', () => {
     render();
-    expect(narration()).toContain('The stack holds the indices still waiting');
+    expect(narration()).toContain('Ngăn xếp giữ các chỉ số còn đang chờ');
     next(7);
-    expect(narration()).toBe('The top is a[1] = 2, smaller than 7: 7 is its next greater element.');
+    expect(narration()).toBe('Đỉnh là a[1] = 2, nhỏ hơn 7: 7 là phần tử lớn hơn kế tiếp của nó.');
     next(1);
-    expect(narration()).toBe('Pop index 1 and record answer[1] = 7. It is gone for good.');
-    expect(label('Next greater answers')).toContain('not known yet, 7, not known yet');
+    expect(narration()).toBe('Pop chỉ số 1 và ghi answer[1] = 7. Nó bị bỏ hẳn.');
+    expect(label('Đáp án lớn hơn kế tiếp')).toContain('chưa biết, 7, chưa biết');
     next(3);
-    expect(label('Stack')).toBe('Stack, bottom to top: index 2 (7).');
+    expect(label('Ngăn xếp')).toBe('Ngăn xếp, từ đáy lên đỉnh: chỉ số 2 (7).');
   });
 
   it('finishes with every answer and the 2n bound', () => {
     render();
     click(button('Đến bước cuối'));
-    expect(label('Next greater answers')).toBe('Next greater answers: 7, 7, 8, 5, 5, 8, -1, -1.');
+    expect(label('Đáp án lớn hơn kế tiếp')).toBe(
+      'Đáp án lớn hơn kế tiếp: 7, 7, 8, 5, 5, 8, -1, -1.',
+    );
     expect(byTest('pushes')).toBe('8');
     expect(byTest('pops')).toBe('6');
     expect(byTest('bound')).toBe('14 ≤ 16');
@@ -105,12 +107,12 @@ describe('monotonic stack and queue lesson', () => {
     render();
     pickMode('window-max');
     click(button('Đến bước cuối'));
-    expect(label('Window maxima')).toBe('Window maxima: 7, 7, 7, 5, 8, 8.');
+    expect(label('Lớn nhất của các cửa sổ')).toBe('Lớn nhất của các cửa sổ: 7, 7, 7, 5, 8, 8.');
     click(button('Bước trước'));
-    expect(narration()).toBe('The window a[5..7] is complete: its maximum is the front, a[6] = 8.');
+    expect(narration()).toBe('Cửa sổ a[5..7] đã đủ: giá trị lớn nhất của nó ở đầu hàng, a[6] = 8.');
     commit(input('k'), '2');
     click(button('Đến bước cuối'));
-    expect(label('Window maxima')).toBe('Window maxima: 4, 7, 7, 3, 5, 8, 8.');
+    expect(label('Lớn nhất của các cửa sổ')).toBe('Lớn nhất của các cửa sổ: 4, 7, 7, 3, 5, 8, 8.');
   });
 
   it('expires the front when it leaves the window', () => {
@@ -123,7 +125,7 @@ describe('monotonic stack and queue lesson', () => {
       seen.push(narration());
       click(button('Bước tiếp'));
     }
-    expect(seen).toContain('Index 0 has slid out of the window a[1..2]: pop it from the front.');
+    expect(seen).toContain('Chỉ số 0 đã trượt ra khỏi cửa sổ a[1..2]: pop nó ở đầu hàng.');
   });
 
   it('refuses bad values and a bad k, keeping the last valid ones', () => {
@@ -146,7 +148,7 @@ describe('monotonic stack and queue lesson', () => {
     flushSync();
     expect(input('k').value).toBe('2');
     click(button('Đến bước cuối'));
-    expect(label('Window maxima')).toBe('Window maxima: 5.');
+    expect(label('Lớn nhất của các cửa sổ')).toBe('Lớn nhất của các cửa sổ: 5.');
   });
 
   it('steps back with the arrow keys', () => {

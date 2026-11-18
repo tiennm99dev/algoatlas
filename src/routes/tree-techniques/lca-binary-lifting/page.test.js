@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/lca-binary-lifting/copy.en.js';
+import { vi as m } from '$lib/lessons/lca-binary-lifting/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -54,7 +54,7 @@ const byTest = (id) => document.querySelector(`[data-testid="${id}"]`)?.textCont
 const node = (label) => {
   const el = [...document.querySelectorAll('g[role="button"]')].find((g) => {
     const name = g.getAttribute('aria-label') ?? '';
-    return name === `Node ${label}` || name.startsWith(`Node ${label},`);
+    return name === `Nút ${label}` || name.startsWith(`Nút ${label},`);
   });
   if (!el) throw new Error(`no node ${label}`);
   return el;
@@ -75,47 +75,47 @@ function practice() {
 describe('lowest common ancestor and binary lifting lesson', () => {
   it('builds the table cell by cell from two half jumps', () => {
     render();
-    expect(narration()).toContain('Build the jump table first: 14 nodes × 4 rows');
+    expect(narration()).toContain('Dựng bảng nhảy trước: 14 nút × 4 hàng');
     next(1);
-    expect(narration()).toContain('Row 2⁰ is each node’s parent');
+    expect(narration()).toContain('Hàng 2⁰ là cha của mỗi nút');
     expect(byTest('cells')).toBe('14');
     next(4);
     expect(narration()).toBe(
-      'up[1][D]: 1 level up from D is B, and 1 more from there is A. Two half jumps make one jump of 2.',
+      'up[1][D]: đi lên 1 tầng từ D là B, và lên thêm 1 tầng từ đó là A. Hai bước nhảy một nửa ghép thành một bước nhảy 2.',
     );
-    expect(node('D').getAttribute('aria-label')).toBe('Node D, depth 2, its cell is being filled');
-    expect(node('B').getAttribute('aria-label')).toContain('halfway ancestor');
+    expect(node('D').getAttribute('aria-label')).toBe('Nút D, độ sâu 2, đang điền ô của nút');
+    expect(node('B').getAttribute('aria-label')).toContain('tổ tiên ở nửa đường');
   });
 
   it('answers the family query and agrees with the Euler tour', () => {
     render();
     click(button('Đến bước cuối'));
-    expect(narration()).toBe('lca = B, after 10 table reads and 3 pointer moves.');
+    expect(narration()).toBe('lca = B, sau 10 lần đọc bảng và 3 lần dời con trỏ.');
     expect(byTest('lca')).toBe('B');
     expect(byTest('d')).toBe('2');
     expect(byTest('cells')).toBe('56');
-    expect(node('B').getAttribute('aria-label')).toContain('the lowest common ancestor');
-    expect(node('H').getAttribute('aria-label')).toContain('on the u–v path');
-    expect(byTest('euler')).toContain('the shallowest entry is B (depth 1)');
+    expect(node('B').getAttribute('aria-label')).toContain('tổ tiên chung gần nhất');
+    expect(node('H').getAttribute('aria-label')).toContain('trên đường đi u–v');
+    expect(byTest('euler')).toContain('mục nông nhất là B (độ sâu 1)');
   });
 
   it('re-runs the query when u or v changes, opening on the query', () => {
     render();
     choose('v', '12');
-    expect(narration()).toBe('Table done (56 cells). Now ask lca(N, M).');
+    expect(narration()).toBe('Đã dựng xong bảng (56 ô). Giờ hỏi lca(N, M).');
     click(button('Đến bước cuối'));
     expect(byTest('lca')).toBe('A');
-    expect(byTest('euler')).toContain('the shallowest entry is A (depth 0)');
+    expect(byTest('euler')).toContain('mục nông nhất là A (độ sâu 0)');
   });
 
   it('swaps u and v when v is deeper and stops early on an ancestor', () => {
     render();
     choose('u', '1');
     next(1);
-    expect(narration()).toContain('I is deeper, so swap: u = I (depth 3), v = B (depth 1).');
+    expect(narration()).toContain('I sâu hơn, nên đổi chỗ: u = I (độ sâu 3), v = B (độ sâu 1).');
     click(button('Đến bước cuối'));
     expect(byTest('lca')).toBe('B');
-    expect(narration()).toBe('lca = B, after 1 table read and 1 pointer move.');
+    expect(narration()).toBe('lca = B, sau 1 lần đọc bảng và 1 lần dời con trỏ.');
   });
 
   it('lifts along a 16-node path by 8, 4, 2 and 1', () => {
@@ -130,20 +130,20 @@ describe('lowest common ancestor and binary lifting lesson', () => {
   it('adds and removes nodes, refuses the root and undoes', () => {
     render();
     click(node('I'));
-    click(buttonByText('Add child'));
-    expect(byTest('selected')).toBe('Selected: O');
+    click(buttonByText('Thêm con'));
+    expect(byTest('selected')).toBe('Đang chọn: O');
     expect(byTest('cells')).toBe('60');
     click(node('A'));
-    click(buttonByText('Remove subtree'));
+    click(buttonByText('Xoá cây con'));
     expect(narration()).toBe(m.errors.root);
     click(node('D'));
-    click(buttonByText('Remove subtree'));
+    click(buttonByText('Xoá cây con'));
     // N went with D's subtree, so u falls back to the nearest kept ancestor, B.
-    expect(byTest('selected')).toBe('Selected: B');
+    expect(byTest('selected')).toBe('Đang chọn: B');
     click(button('Đến bước cuối'));
     expect(byTest('lca')).toBe('B');
-    click(buttonByText('Undo'));
-    click(buttonByText('Undo'));
+    click(buttonByText('Hoàn tác'));
+    click(buttonByText('Hoàn tác'));
     click(button('Đến bước cuối'));
     expect(byTest('cells')).toBe('56');
   });
@@ -151,7 +151,7 @@ describe('lowest common ancestor and binary lifting lesson', () => {
   it('refuses a seventeenth node', () => {
     render();
     choose('preset', 'path');
-    click(buttonByText('Add child'));
+    click(buttonByText('Thêm con'));
     expect(narration()).toBe(m.errors.full(16));
   });
 
@@ -165,7 +165,7 @@ describe('lowest common ancestor and binary lifting lesson', () => {
       new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }),
     );
     flushSync();
-    expect(byTest('selected')).toBe('Selected: B');
+    expect(byTest('selected')).toBe('Đang chọn: B');
   });
 
   it('checks a practice answer, wrong then right, with a hint', () => {

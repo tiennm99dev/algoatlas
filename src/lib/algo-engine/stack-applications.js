@@ -19,19 +19,19 @@ export const MAX_NUMBER = 99;
 
 export const appPseudocode = {
   brackets: [
-    'for each character c of s:',
-    '  if c is ( [ or {: push(c)',
-    '  else if c is ) ] or }:',
-    '    if stack is empty or top does not match c: unbalanced, stop',
+    'for c in s:',
+    '  if c in "([{": push(c)',
+    '  else if c in ")]}":',
+    '    if stack rỗng or top không khớp c: không cân đối, stop',
     '    pop()',
-    'balanced exactly when the stack is empty at the end',
+    'cân đối khi và chỉ khi cuối cùng stack rỗng',
   ],
   postfix: [
-    'for each token t of the expression:',
-    '  if t is a number: push(t)',
-    '  else: b = pop(); a = pop()   ▹ needs two values',
+    'for t in tokens:   // đọc từng kí hiệu của biểu thức',
+    '  if t là số: push(t)',
+    '  else: b = pop(); a = pop()   ▹ cần hai giá trị',
     '    push(a t b)',
-    'the answer is the single value left on the stack',
+    'đáp số là giá trị duy nhất còn lại trên stack',
   ],
   calls: ['fact(n):', '  if n ≤ 1: return 1', '  return n × fact(n − 1)'],
 };

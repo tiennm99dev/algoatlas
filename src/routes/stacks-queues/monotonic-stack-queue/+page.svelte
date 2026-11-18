@@ -14,7 +14,7 @@
     monoTrace,
     parseMonoValues,
   } from '$lib/algo-engine/monotonic-stack-queue.js';
-  import { en as m } from '$lib/lessons/monotonic-stack-queue/copy.en.js';
+  import { vi as m } from '$lib/lessons/monotonic-stack-queue/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/monotonic-stack-queue.js').MonoMode} MonoMode */

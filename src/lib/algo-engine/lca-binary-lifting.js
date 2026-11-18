@@ -48,14 +48,14 @@ export function naiveLca(parent, u, v) {
 }
 
 export const liftingPseudocode = [
-  'build: for each v: depth[v] = depth[parent[v]] + 1; up[0][v] = parent[v]',
+  'build: for v in nodes: depth[v] = depth[parent[v]] + 1; up[0][v] = parent[v]',
   '  for k = 1 to LOG − 1:',
-  '    for each v: up[k][v] = up[k−1][ up[k−1][v] ]',
+  '    for v in nodes: up[k][v] = up[k−1][ up[k−1][v] ]',
   'lca(u, v):',
   '  if depth[u] < depth[v]: swap u, v',
   '  d = depth[u] − depth[v]',
   '  for k = LOG − 1 down to 0:',
-  '    if bit k of d is 1: u = up[k][u]',
+  '    if bit thứ k của d là 1: u = up[k][u]',
   '  if u = v: return u',
   '  for k = LOG − 1 down to 0:',
   '    if up[k][u] ≠ up[k][v]: u = up[k][u]; v = up[k][v]',

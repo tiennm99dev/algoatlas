@@ -17,7 +17,7 @@
     hldTrace,
     makeHldPreset,
   } from '$lib/algo-engine/heavy-light-decomposition.js';
-  import { en as m } from '$lib/lessons/heavy-light-decomposition/copy.en.js';
+  import { vi as m } from '$lib/lessons/heavy-light-decomposition/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/heavy-light-decomposition.js').ValuedTree} ValuedTree */

@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/stack-applications/copy.en.js';
+import { vi as m } from '$lib/lessons/stack-applications/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -74,16 +74,16 @@ function practice() {
 describe('stack applications lesson', () => {
   it('checks the nested preset, pushing openers and popping on matches', () => {
     render();
-    expect(narration()).toContain('The stack starts empty');
+    expect(narration()).toContain('Ngăn xếp ban đầu rỗng');
     next(3);
     expect(narration()).toBe(
-      'character 3 is (, an opening bracket: push it. It waits for its partner.',
+      'Kí tự thứ 3 là (, một dấu ngoặc mở: push nó. Nó chờ dấu đóng tương ứng.',
     );
     expect(stackLabel()).toBe('Ngăn xếp, từ đáy lên đỉnh: {, [, (.');
     next(1);
-    expect(narration()).toContain('the top was (: they match, so pop it');
+    expect(narration()).toContain('còn đỉnh là (: hai dấu khớp nhau, nên pop');
     click(button('Đến bước cuối'));
-    expect(byTest('verdict')).toBe('balanced');
+    expect(byTest('verdict')).toBe('cân đối');
     expect(byTest('depth')).toBe('3');
   });
 
@@ -92,8 +92,8 @@ describe('stack applications lesson', () => {
     commit(input('brackets'), '(a[b)]');
     click(button('Đến bước cuối'));
     click(button('Bước trước'));
-    expect(narration()).toContain('character 5 is ), but the top is [');
-    expect(byTest('verdict')).toBe('unbalanced');
+    expect(narration()).toContain('Kí tự thứ 5 là ), nhưng đỉnh là [');
+    expect(byTest('verdict')).toBe('không cân đối');
   });
 
   it('reports openers left at the end and a closer with nothing open', () => {
@@ -101,10 +101,10 @@ describe('stack applications lesson', () => {
     commit(/** @type {HTMLSelectElement} */ (document.querySelector('select')), 'open');
     click(button('Đến bước cuối'));
     click(button('Bước trước'));
-    expect(narration()).toContain('1 opener never closed');
+    expect(narration()).toContain('còn 1 dấu mở chưa bao giờ được đóng');
     commit(input('brackets'), ')');
     next(1);
-    expect(narration()).toContain('the stack is empty: no opener is waiting');
+    expect(narration()).toContain('ngăn xếp đang rỗng: không có dấu mở nào chờ nó');
   });
 
   it('refuses text longer than 24 characters', () => {
@@ -119,7 +119,7 @@ describe('stack applications lesson', () => {
     pickMode('postfix');
     commit(input('postfix'), '8 3 -');
     next(3);
-    expect(narration()).toBe('- is an operator: pop b = 3, then a = 8.');
+    expect(narration()).toBe('- là một toán tử: pop b = 3, rồi a = 8.');
     click(button('Đến bước cuối'));
     expect(byTest('verdict')).toBe('5');
   });
@@ -138,7 +138,7 @@ describe('stack applications lesson', () => {
     commit(/** @type {HTMLSelectElement} */ (document.querySelector('select')), 'missing');
     click(button('Đến bước cuối'));
     click(button('Bước trước'));
-    expect(narration()).toContain('+ needs two values, but the stack holds 1');
+    expect(narration()).toContain('+ cần hai giá trị, nhưng ngăn xếp chỉ có 1');
   });
 
   it('grows and unwinds the call stack of fact(n)', () => {
@@ -148,7 +148,7 @@ describe('stack applications lesson', () => {
     next(3);
     expect(stackLabel()).toBe('Ngăn xếp, từ đáy lên đỉnh: fact(3), fact(2), fact(1).');
     next(2);
-    expect(narration()).toBe('fact(2) resumes: 2 × 1 = 2. Return it and pop the frame.');
+    expect(narration()).toBe('fact(2) chạy tiếp: 2 × 1 = 2. Trả về giá trị đó và pop khung.');
     click(button('Đến bước cuối'));
     expect(byTest('verdict')).toBe('fact = 6');
     commit(input('n'), '12');

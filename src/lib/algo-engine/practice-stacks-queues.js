@@ -26,17 +26,17 @@ export const practicePseudocode = {
   'two-stack-queue': [
     'enqueue(v): inbox.push(v)',
     'dequeue():',
-    '  if outbox is empty:',
-    '    while inbox not empty: outbox.push(inbox.pop())',
-    '  if outbox is empty: the queue is empty, stop',
+    '  if outbox rỗng:',
+    '    while inbox khác rỗng: outbox.push(inbox.pop())',
+    '  if outbox rỗng: hàng đợi rỗng, stop',
     '  return outbox.pop()',
   ],
   'min-stack': [
     'push(v): main.push(v)',
-    '  if mins is empty or v ≤ mins.top: mins.push(v)',
-    'pop(): if main is empty: stop',
+    '  if mins rỗng or v ≤ mins.top: mins.push(v)',
+    'pop(): if main rỗng: stop',
     '  v = main.pop(); if v = mins.top: mins.pop()',
-    'getMin(): return mins.top   ▹ needs main not empty',
+    'getMin(): return mins.top   ▹ cần main khác rỗng',
   ],
 };
 

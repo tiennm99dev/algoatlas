@@ -40,11 +40,11 @@ export const MAX_VALUE = 9;
  */
 
 export const practicePseudocode = [
-  'for each operation:',
-  '  sum u v:  naive: walk the path, adding values   HLD: one segment-tree range per chain',
-  '  dist u v: naive: walk the path, counting edges  HLD: climb chains to the lca;',
+  'for op in ops:',
+  '  sum u v:  thô: đi dọc đường đi, cộng giá trị   HLD: mỗi chuỗi một đoạn trên cây phân đoạn',
+  '  dist u v: thô: đi dọc đường đi, đếm cạnh      HLD: leo theo các chuỗi đến lca;',
   '            dist = depth[u] + depth[v] − 2·depth[lca]',
-  '  set v x:  naive: a[v] = x                       HLD: update the leaf and its ancestors',
+  '  set v x:  thô: a[v] = x                         HLD: cập nhật lá và các tổ tiên của nó',
 ];
 
 /**

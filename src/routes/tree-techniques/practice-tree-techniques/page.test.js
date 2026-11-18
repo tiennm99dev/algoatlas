@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/practice-tree-techniques/copy.en.js';
+import { vi as m } from '$lib/lessons/practice-tree-techniques/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -70,31 +70,31 @@ const opsField = () =>
 const nodeName = (label) =>
   [...document.querySelectorAll('svg g title')]
     .map((t) => t.textContent ?? '')
-    .find((t) => t.startsWith(`Node ${label},`)) ?? '';
+    .find((t) => t.startsWith(`Nút ${label},`)) ?? '';
 
 describe('advanced tree problems practice', () => {
   it('runs each operation both ways and keeps the totals', () => {
     render();
     expect(narration()).toBe(
-      '5 operations on a tree of 15 nodes, cut into 6 heavy chains. Each step runs one operation both ways.',
+      '5 thao tác trên một cây 15 nút, được cắt thành 6 chuỗi nặng. Mỗi bước chạy một thao tác theo cả hai cách.',
     );
     next(1);
     expect(narration()).toBe(
-      'sum M L = 34. Naive: walk the 8 nodes of the path. HLD: 3 chain ranges, 29 segment-tree nodes visited.',
+      'sum M L = 34. Cách thô: đi qua 8 nút của đường đi. HLD: 3 đoạn trên chuỗi, thăm 29 nút cây phân đoạn.',
     );
     expect(byTest('answer')).toBe('34');
-    expect(nodeName('A')).toBe('Node A, value 3, the lowest common ancestor');
-    expect(nodeName('M')).toBe('Node M, value 9, on the query path, u');
+    expect(nodeName('A')).toBe('Nút A, giá trị 3, tổ tiên chung gần nhất');
+    expect(nodeName('M')).toBe('Nút M, giá trị 9, trên đường đi của truy vấn, u');
     next(1);
     expect(narration()).toBe(
-      'dist M L = 7 edges: lca A, so 4 + 3 − 2·0. Naive: walk 8 nodes. HLD: climb 3 chains to A, then read 3 depths: 6 steps.',
+      'dist M L = 7 cạnh: lca là A, nên 4 + 3 − 2·0. Cách thô: đi qua 8 nút. HLD: leo qua 3 chuỗi đến A, rồi đọc 3 độ sâu: 6 bước.',
     );
     next(1);
-    expect(nodeName('D')).toBe('Node D, value 0, value just set');
+    expect(nodeName('D')).toBe('Nút D, giá trị 0, vừa đặt giá trị');
     click(button('Đến bước cuối'));
     expect(byTest('naive')).toBe('34');
     expect(byTest('hld')).toBe('75');
-    expect(narration()).toContain('naive 34, HLD 75, the naive walk did less here.');
+    expect(narration()).toContain('cách thô 34, HLD 75, ở đây cách thô làm ít việc hơn.');
     expect(document.body.textContent).toContain('sum M L → 33 · 8 · 29');
   });
 
@@ -122,7 +122,7 @@ describe('advanced tree problems practice', () => {
     click(button('Đến bước cuối'));
     expect(byTest('naive')).toBe('50');
     expect(byTest('hld')).toBe('80');
-    expect(byTest('step')).toBe('5 / 5');
+    expect(byTest('step')).toBe('5/5');
   });
 
   it('checks a practice answer, wrong then right, with a hint', () => {

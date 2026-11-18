@@ -20,7 +20,7 @@
     stackPseudocode,
     stackTrace,
   } from '$lib/algo-engine/stacks.js';
-  import { en as m } from '$lib/lessons/stacks/copy.en.js';
+  import { vi as m } from '$lib/lessons/stacks/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/stacks.js').StackOp} StackOp */

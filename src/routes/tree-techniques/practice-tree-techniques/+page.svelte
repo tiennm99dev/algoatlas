@@ -18,7 +18,7 @@
     practicePseudocode,
     practiceTrace,
   } from '$lib/algo-engine/practice-tree-techniques.js';
-  import { en as m } from '$lib/lessons/practice-tree-techniques/copy.en.js';
+  import { vi as m } from '$lib/lessons/practice-tree-techniques/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/heavy-light-decomposition.js').ValuedTree} ValuedTree */
@@ -163,8 +163,8 @@
     [
       m.stats.step,
       frame.op >= 0
-        ? `${frame.op + 1} / ${ops.length}`
-        : `${frame.kind === 'done' ? ops.length : 0} / ${ops.length}`,
+        ? `${frame.op + 1}/${ops.length}`
+        : `${frame.kind === 'done' ? ops.length : 0}/${ops.length}`,
       'step',
     ],
     [m.stats.naive, String(frame.naiveTotal), 'naive'],

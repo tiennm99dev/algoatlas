@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/centroid-decomposition/copy.en.js';
+import { vi as m } from '$lib/lessons/centroid-decomposition/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -54,7 +54,7 @@ const byTest = (id) => document.querySelector(`[data-testid="${id}"]`)?.textCont
 const node = (label) => {
   const el = [...document.querySelectorAll('g[role="button"]')].find((g) => {
     const name = g.getAttribute('aria-label') ?? '';
-    return name === `Node ${label}` || name.startsWith(`Node ${label},`);
+    return name === `Nút ${label}` || name.startsWith(`Nút ${label},`);
   });
   if (!el) throw new Error(`no node ${label}`);
   return el;
@@ -84,40 +84,42 @@ function setK(value) {
 /** @param {string} label */
 const centroidNode = (label) =>
   [...document.querySelectorAll('svg[role="img"] g')].some(
-    (g) => g.querySelector('title')?.textContent?.startsWith(`Centroid ${label},`) ?? false,
+    (g) => g.querySelector('title')?.textContent?.startsWith(`Trọng tâm ${label},`) ?? false,
   );
 
 describe('centroid decomposition lesson', () => {
   it('walks to the first centroid and counts pairs through it', () => {
     render();
-    expect(narration()).toContain('Decompose the whole tree, 14 nodes');
+    expect(narration()).toContain('Phân rã cả cây, 14 nút');
     next(2);
     expect(narration()).toBe(
-      'B holds 8 nodes, more than half of 14: the centroid must be in there. Move to B.',
+      'B chứa 8 nút, nhiều hơn một nửa của 14: trọng tâm phải nằm trong đó. Đi tới B.',
     );
-    expect(node('B').getAttribute('aria-label')).toBe('Node B, subtree size 8, the walk is here');
+    expect(node('B').getAttribute('aria-label')).toBe(
+      'Nút B, kích thước cây con 8, lượt đi đang ở đây',
+    );
     next(1);
-    expect(narration()).toContain('B is the centroid: removing it leaves parts of 6, 5, 2.');
+    expect(narration()).toContain('B là trọng tâm: bỏ nó đi còn lại các phần 6, 5, 2.');
     next(1);
     expect(byTest('pairs')).toBe('10');
     expect(node('N').getAttribute('aria-label')).toBe(
-      'Node N, distance 4 from the centroid, in the piece worked on',
+      'Nút N, cách trọng tâm 4, thuộc mảnh đang xử lí',
     );
     next(1);
     expect(byTest('removed')).toBe('1');
     expect(centroidNode('B')).toBe(true);
-    expect(node('D').getAttribute('aria-label')).toContain('in a piece waiting its turn');
+    expect(node('D').getAttribute('aria-label')).toContain('thuộc một mảnh đang chờ đến lượt');
   });
 
   it('finishes with the centroid tree and the pair count', () => {
     render();
     click(button('Đến bước cuối'));
     expect(narration()).toBe(
-      'Done: the centroid tree has 4 levels for 14 nodes, and 41 nodes were sized in all pieces together. Pairs exactly 3 edges apart: 16.',
+      'Xong: cây trọng tâm có 4 tầng cho 14 nút, và tổng số nút được tính kích thước trong mọi mảnh là 41. Số cặp cách nhau đúng 3 cạnh: 16.',
     );
     expect(byTest('levels')).toBe('4');
     expect(byTest('removed')).toBe('14');
-    expect(node('A').getAttribute('aria-label')).toContain('level 3 in the centroid tree');
+    expect(node('A').getAttribute('aria-label')).toContain('tầng 3 trong cây trọng tâm');
   });
 
   it('recounts for a new K on the same step and refuses a bad K', () => {
@@ -146,27 +148,27 @@ describe('centroid decomposition lesson', () => {
   it('adds a child, removes a subtree, refuses the root and undoes', () => {
     render();
     click(node('N'));
-    click(buttonByText('Add child'));
-    expect(byTest('selected')).toBe('Selected: O');
+    click(buttonByText('Thêm con'));
+    expect(byTest('selected')).toBe('Đang chọn: O');
     click(button('Đến bước cuối'));
     expect(byTest('removed')).toBe('15');
     click(node('A'));
-    click(buttonByText('Remove subtree'));
+    click(buttonByText('Xoá cây con'));
     expect(narration()).toBe(m.errors.root);
     click(node('B'));
-    click(buttonByText('Remove subtree'));
+    click(buttonByText('Xoá cây con'));
     click(button('Đến bước cuối'));
     expect(byTest('removed')).toBe('6');
-    click(buttonByText('Undo'));
-    click(buttonByText('Undo'));
+    click(buttonByText('Hoàn tác'));
+    click(buttonByText('Hoàn tác'));
     click(button('Đến bước cuối'));
     expect(byTest('removed')).toBe('14');
   });
 
   it('refuses a seventeenth node', () => {
     render();
-    for (let i = 0; i < 2; i++) click(buttonByText('Add child'));
-    click(buttonByText('Add child'));
+    for (let i = 0; i < 2; i++) click(buttonByText('Thêm con'));
+    click(buttonByText('Thêm con'));
     expect(narration()).toBe(m.errors.full(16));
   });
 
@@ -180,7 +182,7 @@ describe('centroid decomposition lesson', () => {
       new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }),
     );
     flushSync();
-    expect(byTest('selected')).toBe('Selected: B');
+    expect(byTest('selected')).toBe('Đang chọn: B');
   });
 
   it('checks a practice answer, wrong then right, with a hint', () => {

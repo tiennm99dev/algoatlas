@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/practice-stacks-queues/copy.en.js';
+import { vi as m } from '$lib/lessons/practice-stacks-queues/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -82,13 +82,15 @@ describe('practice: stacks and queues lesson', () => {
   it('pours the inbox into the outbox on the first dequeue', () => {
     render();
     next(4);
-    expect(narration()).toBe('dequeue(): the outbox is empty, so pour the whole inbox into it.');
+    expect(narration()).toBe('dequeue(): outbox rỗng, nên đổ cả inbox sang.');
     next(1);
-    expect(narration()).toContain('Pop 3 from the inbox and push it onto the outbox');
+    expect(narration()).toContain('Pop 3 từ inbox rồi push nó vào outbox');
     next(2);
-    expect(label('outbox')).toBe('outbox (dequeue pops here), bottom to top: 3, 2, 1. Top is 1.');
+    expect(label('outbox')).toBe(
+      'outbox (dequeue pop từ đây), từ đáy lên đỉnh: 3, 2, 1. Đỉnh là 1.',
+    );
     next(1);
-    expect(narration()).toContain('Pop 1 from the outbox and return it');
+    expect(narration()).toContain('Pop 1 từ outbox và trả về');
     expect(byTest('result')).toBe('1');
   });
 
@@ -102,22 +104,22 @@ describe('practice: stacks and queues lesson', () => {
 
   it('enqueues from the form and reports an empty queue', () => {
     render();
-    click(buttonByText('Reset'));
+    click(buttonByText('Làm lại'));
     commit(valueInput(), '42');
     /** @type {HTMLFormElement} */ (valueInput().closest('form')).requestSubmit();
     flushSync();
-    expect(narration()).toBe('enqueue(42): push 42 onto the inbox. One stack operation.');
-    click(buttonByText('Dequeue'));
-    click(buttonByText('Dequeue'));
+    expect(narration()).toBe('enqueue(42): push 42 vào inbox. Một thao tác ngăn xếp.');
+    click(buttonByText('dequeue'));
+    click(buttonByText('dequeue'));
     click(button('Đến bước cuối'));
     click(button('Bước trước'));
-    expect(narration()).toContain('the queue is empty');
+    expect(narration()).toContain('hàng đợi rỗng');
   });
 
   it('refuses a ninth item and a bad value', () => {
     render();
-    click(buttonByText('Reset'));
-    for (let k = 0; k < 9; k++) click(buttonByText('Enqueue'));
+    click(buttonByText('Làm lại'));
+    for (let k = 0; k < 9; k++) click(buttonByText('enqueue'));
     expect(narration()).toBe(m.full);
     commit(valueInput(), '500');
     expect(valueInput().value).toBe('6');
@@ -127,15 +129,15 @@ describe('practice: stacks and queues lesson', () => {
     render();
     pickProblem('min-stack');
     click(button('Đến bước cuối'));
-    expect(label('mins')).toBe('mins (top = minimum), bottom to top: 5, 3. Top is 3.');
+    expect(label('mins')).toBe('mins (đỉnh = giá trị nhỏ nhất), từ đáy lên đỉnh: 5, 3. Đỉnh là 3.');
     expect(byTest('min')).toBe('3');
     click(button('Bước trước'));
-    expect(narration()).toBe('getMin() reads the top of mins: 3. No searching.');
-    click(buttonByText('Undo last'));
+    expect(narration()).toBe('getMin() đọc đỉnh của mins: 3. Không cần tìm kiếm.');
+    click(buttonByText('Hoàn tác'));
     commit(valueInput(), '9');
-    click(buttonByText('Push'));
+    click(buttonByText('push'));
     click(button('Bước tiếp'));
-    expect(narration()).toBe('9 > the minimum 3: mins stays as it is.');
+    expect(narration()).toBe('9 > giá trị nhỏ nhất 3: mins giữ nguyên.');
   });
 
   it('loads a preset and undoes', () => {
@@ -143,7 +145,7 @@ describe('practice: stacks and queues lesson', () => {
     commit(/** @type {HTMLSelectElement} */ (document.querySelector('select')), 'burst');
     click(button('Đến bước cuối'));
     expect(byTest('transfers')).toBe('5');
-    click(buttonByText('Undo last'));
+    click(buttonByText('Hoàn tác'));
     expect(byTest('queue-ops')).toBe('9');
   });
 
