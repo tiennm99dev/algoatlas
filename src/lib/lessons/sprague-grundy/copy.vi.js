@@ -15,7 +15,7 @@ export const vi = {
   level: 'Nâng cao',
   title: 'Lí thuyết trò chơi: Nim và Sprague-Grundy',
   intro:
-    'Trong trò Nim, hai người lần lượt bốc bao nhiêu viên sỏi tuỳ ý từ một đống, và ai không còn nước đi thì thua. Một thế cờ là thua với người sắp đi đúng khi XOR các kích thước đống bằng 0, nên bạn thắng được nếu luôn đi sao cho XOR về 0. Định lí Sprague-Grundy mở rộng điều này cho mọi trò chơi công bằng (impartial game): gán cho mỗi đống số Grundy của nó, tức giá trị nhỏ nhất không đạt được sau một nước đi, rồi XOR các số đó thay cho kích thước đống.',
+    'Trong trò Nim, hai người lần lượt bốc bao nhiêu viên sỏi tuỳ ý từ một đống, và ai không còn nước đi thì thua. Một thế cờ là thua với người sắp đi đúng khi XOR các kích thước đống bằng 0, nên em thắng được nếu luôn đi sao cho XOR về 0. Định lí Sprague-Grundy mở rộng điều này cho mọi trò chơi công bằng (impartial game): gán cho mỗi đống số Grundy của nó, tức giá trị nhỏ nhất không đạt được sau một nước đi, rồi XOR các số đó thay cho kích thước đống.',
   summary:
     'Tính số Grundy bằng mex, XOR chúng qua các đống, rồi chơi Nim hoặc trò bốc sỏi có giới hạn với một máy luôn tìm ra nước thắng.',
   instruction:
@@ -99,26 +99,26 @@ export const vi = {
   /** @param {number} x */
   yourTurn: (x) =>
     x !== 0
-      ? `Đến lượt bạn. X = ${x} ≠ 0, nên bạn có thể thắng: hãy tìm nước đi làm X = 0.`
-      : 'Đến lượt bạn. X = 0, nên mọi nước đi đều để lại X ≠ 0, và máy luôn tìm ra nước đáp trả thắng.',
+      ? `Đến lượt em. X = ${x} ≠ 0, nên em có thể thắng: hãy tìm nước đi làm X = 0.`
+      : 'Đến lượt em. X = 0, nên mọi nước đi đều để lại X ≠ 0, và máy luôn tìm ra nước đáp trả thắng.',
   noMoves:
-    'Không đống nào còn nước đi hợp lệ, nên bạn, người sắp đi, thua. Hãy đổi các đống hoặc chơi lại.',
+    'Không đống nào còn nước đi hợp lệ, nên em, người sắp đi, thua. Hãy đổi các đống hoặc chơi lại.',
   /** @param {{ pile: number, take: number }[]} wins */
   hint: (wins) =>
     wins.length
       ? `${wins.length === 1 ? 'Nước thắng' : 'Các nước thắng'}: ${wins.map((w) => moveText(w)).join('; ')}.`
-      : 'Từ đây không có nước nào thắng: X đã bằng 0, nên bạn bốc thế nào thì máy cũng đưa được X về 0.',
+      : 'Từ đây không có nước nào thắng: X đã bằng 0, nên em bốc thế nào thì máy cũng đưa được X về 0.',
   /** @param {{ pile: number, take: number }} you @param {{ pile: number, take: number }} it @param {number} x */
   reply: (you, it, x) =>
-    `Bạn ${moveText(you)}. Máy ${moveText(it)}. ${x !== 0 ? `X = ${x} ≠ 0, nên bạn vẫn có thể thắng.` : 'X = 0, nên nếu chơi tốt nhất thì máy thắng từ đây.'}`,
+    `Em ${moveText(you)}. Máy ${moveText(it)}. ${x !== 0 ? `X = ${x} ≠ 0, nên em vẫn có thể thắng.` : 'X = 0, nên nếu chơi tốt nhất thì máy thắng từ đây.'}`,
   /** @param {{ pile: number, take: number }} you */
-  youWin: (you) => `Bạn ${moveText(you)}, và máy hết nước đi. Bạn thắng rồi!`,
+  youWin: (you) => `Em ${moveText(you)}, và máy hết nước đi. Em thắng rồi!`,
   /** @param {{ pile: number, take: number }} you @param {{ pile: number, take: number }} it */
-  youLose: (you, it) => `Bạn ${moveText(you)}. Máy ${moveText(it)} và bạn hết nước đi. Máy thắng.`,
+  youLose: (you, it) => `Em ${moveText(you)}. Máy ${moveText(it)} và em hết nước đi. Máy thắng.`,
   /** @param {number} i @param {number[]} takes */
   illegal: (i, takes) =>
     takes.length
-      ? `Từ đống ${i + 1}, bạn được bốc ${takes.join(', ')} viên sỏi.`
+      ? `Từ đống ${i + 1}, em được bốc ${takes.join(', ')} viên sỏi.`
       : `Đống ${i + 1} không có nước đi hợp lệ.`,
   /** @param {number} max */
   takeError: (max) => `Hãy bốc một số nguyên viên sỏi từ 1 đến ${max}.`,
@@ -129,7 +129,7 @@ export const vi = {
     'Số Grundy g(x) = mex{ g(y) : y đạt được từ x }, trong đó mex là số tự nhiên nhỏ nhất vắng mặt trong tập. g = 0 đúng tại các thế thua.',
     'Định lí Sprague-Grundy: tổng của các trò chơi độc lập có giá trị bằng XOR các số Grundy của chúng. Người sắp đi thắng đúng khi X ≠ 0, bằng cách đưa một đống từ g(h) về g(h) xor X.',
     'Trong Nim, g(h) = h, nên phép thử chính là XOR các kích thước đống. Trong trò “bốc 1, 3 hoặc 4”, các giá trị lặp lại 0 1 0 1 2 3 2 với chu kì 7.',
-    'Thử “Nim 1, 2, 3 (thua)”: bạn đi trước với X = 0, và bạn làm gì thì máy cũng đưa X về 0 rồi thắng.',
+    'Thử “Nim 1, 2, 3 (thua)”: em đi trước với X = 0, và dù làm gì thì máy cũng đưa X về 0 rồi thắng.',
   ],
   complexityHead: ['Việc', 'Chi phí', 'Vì sao'],
   complexity: [
@@ -167,11 +167,11 @@ export const vi = {
     },
     {
       type: 'choice',
-      prompt: 'Nim với các đống 1, 2 và 3, và đến lượt bạn. Nếu hai bên chơi tốt nhất thì sao?',
+      prompt: 'Nim với các đống 1, 2 và 3, và đến lượt em. Nếu hai bên chơi tốt nhất thì sao?',
       options: [
-        'Bạn thắng, bằng cách bốc hết đống 3 viên',
-        'Bạn thua: X = 0, nên nước đi nào cũng trao chiến thắng cho đối thủ',
-        'Bạn thắng, bằng cách bốc 1 viên từ đống 2 viên',
+        'Em thắng, bằng cách bốc hết đống 3 viên',
+        'Em thua: X = 0, nên nước đi nào cũng trao chiến thắng cho đối thủ',
+        'Em thắng, bằng cách bốc 1 viên từ đống 2 viên',
         'Ván hoà',
       ],
       answer: 1,
@@ -199,5 +199,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Tiếp theo là bài luyện tập: bài toán đại số và ngẫu nhiên, nơi bạn tự dựng ma trận cho một hệ thức truy hồi và nhân số lớn bằng tích chập.',
+    'Tiếp theo là bài luyện tập: bài toán đại số và ngẫu nhiên, nơi em tự dựng ma trận cho một hệ thức truy hồi và nhân số lớn bằng tích chập.',
 };

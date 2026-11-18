@@ -61,8 +61,6 @@ export const pendingTopics = new Set([
 
   'tree-techniques',
 
-  'algebraic-randomised',
-
   'intractability',
 
   'advanced-heaps',

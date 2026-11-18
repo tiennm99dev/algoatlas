@@ -133,7 +133,7 @@ export const vi = {
       'O(k³ log n)',
       'Khoảng 2·log₂ n tích ma trận k×k, mỗi tích k³ phép nhân số.',
     ],
-    ['Bộ nhớ', 'O(k²)', 'Chỉ cần R, P và M. Trang này giữ mọi khung hình để bạn lùi lại được.'],
+    ['Bộ nhớ', 'O(k²)', 'Chỉ cần R, P và M. Trang này giữ mọi khung hình để em lùi lại được.'],
     [
       'Fibonacci chính xác',
       'O(n) chữ số',

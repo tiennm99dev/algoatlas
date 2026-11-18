@@ -9,9 +9,9 @@ export const vi = {
   level: 'Trung bình',
   title: 'Thuật toán ngẫu nhiên',
   intro:
-    'Một thuật toán ngẫu nhiên (randomised algorithm) tung đồng xu trong lúc chạy. Thuật toán kiểu Las Vegas, như sắp xếp nhanh ngẫu nhiên, luôn trả về đáp án đúng nhưng thời gian chạy là ngẫu nhiên; thuật toán kiểu Monte Carlo, như phép kiểm tra số nguyên tố Miller-Rabin, luôn chạy nhanh nhưng có thể sai với một xác suất nhỏ. Chọn chốt ngẫu nhiên nghĩa là không có đầu vào cố định nào là xấu: mọi đầu vào đều được sắp xếp trong thời gian kì vọng O(n log n).',
+    'Một thuật toán ngẫu nhiên (randomised algorithm) tung đồng xu trong lúc chạy. Thuật toán kiểu Las Vegas, như quicksort (sắp xếp nhanh) ngẫu nhiên, luôn trả về đáp án đúng nhưng thời gian chạy là ngẫu nhiên; thuật toán kiểu Monte Carlo, như phép kiểm tra số nguyên tố Miller-Rabin, luôn chạy nhanh nhưng có thể sai với một xác suất nhỏ. Chọn chốt ngẫu nhiên nghĩa là không có đầu vào cố định nào là xấu: mọi đầu vào đều được sắp xếp trong thời gian kì vọng O(n log n).',
   summary:
-    'Sắp xếp nhanh ngẫu nhiên, một thuật toán Las Vegas: chạy nhiều lần, vẽ số phép so sánh, rồi so giá trị trung bình với kì vọng 2(n + 1)Hₙ − 4n.',
+    'Quicksort ngẫu nhiên, một thuật toán Las Vegas: chạy nhiều lần, vẽ số phép so sánh, rồi so giá trị trung bình với kì vọng 2(n + 1)Hₙ − 4n.',
   instruction:
     'Nhập một dãy hoặc chọn sẵn, chọn quy tắc lấy chốt rồi chạy từng bước một lần chạy. Sau đó bấm “Chạy 100 lần” và xem biểu đồ tần suất số phép so sánh: với chốt ngẫu nhiên, các cột dồn quanh giá trị kì vọng dù đầu vào xếp thế nào. Chuyển sang “Phần tử cuối” trên dãy đã sắp xếp để thấy mọi lần chạy đều rơi vào trường hợp xấu nhất.',
   fields: { values: 'Các giá trị', rule: 'Chốt' },
@@ -132,7 +132,7 @@ export const vi = {
   practice: [
     {
       type: 'choice',
-      prompt: 'Sắp xếp nhanh ngẫu nhiên thuộc loại thuật toán ngẫu nhiên nào?',
+      prompt: 'Quicksort ngẫu nhiên thuộc loại thuật toán ngẫu nhiên nào?',
       options: [
         'Las Vegas: luôn đúng, thời gian chạy ngẫu nhiên',
         'Monte Carlo: thời gian chạy cố định, có thể sai',
@@ -167,14 +167,14 @@ export const vi = {
       prompt: 'Những thuật toán nào dưới đây thuộc loại Monte Carlo?',
       options: [
         'Phép kiểm tra số nguyên tố Miller-Rabin',
-        'Sắp xếp nhanh ngẫu nhiên',
+        'Quicksort ngẫu nhiên',
         'Thuật toán co cạnh ngẫu nhiên của Karger tìm lát cắt nhỏ nhất',
         'Chọn phần tử ngẫu nhiên (quickselect)',
       ],
       answers: [0, 2],
       hints: ['Hỏi với từng thuật toán: nó có bao giờ trả lời sai không?'],
       solution:
-        'Miller-Rabin có thể gọi một hợp số là số nguyên tố, và một lần chạy thuật toán Karger có thể bỏ lỡ lát cắt nhỏ nhất. Sắp xếp nhanh và quickselect luôn trả về đáp án đúng, nên chúng thuộc loại Las Vegas.',
+        'Miller-Rabin có thể gọi một hợp số là số nguyên tố, và một lần chạy thuật toán Karger có thể bỏ lỡ lát cắt nhỏ nhất. Quicksort và quickselect luôn trả về đáp án đúng, nên chúng thuộc loại Las Vegas.',
     },
     {
       type: 'number',
@@ -190,5 +190,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Bài sau là băm phổ quát và băm hoàn hảo: rút ngẫu nhiên một hàm băm để va chạm hiếm, rồi dựng bảng không có va chạm nào.',
+    'Bài sau là universal hashing và perfect hashing: rút ngẫu nhiên một hàm hash để va chạm hiếm, rồi dựng bảng không có va chạm nào.',
 };

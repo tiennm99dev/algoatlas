@@ -24,15 +24,15 @@ export const perfectHashPseudocode = [
   'build(K, n khoá):',
   '  repeat:',
   '    rút a, b; h(k) = ((a·k + b) mod p) mod n',
-  '    đặt mỗi khoá k vào ngăn h(k)',
+  '    đặt mỗi khoá k vào bucket h(k)',
   '  until Σ nⱼ² < 4n',
   '  for j in buckets if nⱼ > 0:',
   '    mⱼ = nⱼ²',
   '    repeat:',
   '      rút aⱼ, bⱼ; hⱼ(k) = ((aⱼ·k + bⱼ) mod p) mod mⱼ',
-  '      đặt mỗi khoá k của ngăn j vào ô hⱼ(k)',
+  '      đặt mỗi khoá k của bucket j vào ô hⱼ(k)',
   '    until không có hai khoá nào chung một ô',
-  'lookup(k): j = h(k); chỉ xem ô hⱼ(k) của ngăn j',
+  'lookup(k): j = h(k); chỉ xem ô hⱼ(k) của bucket j',
 ];
 
 /** @param {number} k @param {number} a @param {number} b @param {number} m */

@@ -32,7 +32,7 @@ export const vi = {
     fourByFour: 'LU thường vẫn chạy (4×4)',
     singular: 'Ma trận suy biến',
   },
-  inputTitle: 'Hệ của bạn A · x = b',
+  inputTitle: 'Hệ của em A · x = b',
   /** @param {number} r @param {number} c */
   cellAria: (r, c) => `A hàng ${r}, cột ${c}`,
   /** @param {number} r */
@@ -184,7 +184,7 @@ export const vi = {
       prompt: 'Sắp xếp các bước giải A·x = b bằng LUP theo đúng thứ tự.',
       items: ['Thế ngược: U·x = y', 'Phân tích P·A = L·U', 'Thế xuôi: L·y = P·b'],
       answer: [1, 2, 0],
-      hints: ['Bạn cần có các nhân tử trước khi giải với chúng.'],
+      hints: ['Em cần có các nhân tử trước khi giải với chúng.'],
       solution:
         'Trước hết phân tích một lần, rồi giải hệ tam giác dưới để tìm y từ trên xuống, rồi giải hệ tam giác trên để tìm x từ dưới lên.',
     },

@@ -109,7 +109,7 @@ describe('Nim and Sprague-Grundy lesson', () => {
     // Take 2 from the pile of 3 by clicking its second stone: X becomes 0, the computer must
     // break it and we can restore it.
     click(button('Bốc 2 viên sỏi từ đống 1'));
-    expect(stat('status')).toMatch(/^Bạn bốc 2 viên sỏi từ đống 1\. Máy bốc/);
+    expect(stat('status')).toMatch(/^Em bốc 2 viên sỏi từ đống 1\. Máy bốc/);
     expect(document.querySelector('[data-testid="hint"]')).toBeNull();
     expect(Number(stat('xor'))).not.toBe(0);
     click(buttonByText(m.restart));
@@ -120,7 +120,7 @@ describe('Nim and Sprague-Grundy lesson', () => {
   it('wins a whole game by always following the hint', () => {
     render();
     for (let turn = 0; turn < 20; turn++) {
-      if (stat('status')?.includes('Bạn thắng')) break;
+      if (stat('status')?.includes('Em thắng')) break;
       const board = [...document.querySelectorAll('[data-testid="board"] li')].map(
         (li) => li.querySelectorAll('button').length,
       );
@@ -128,7 +128,7 @@ describe('Nim and Sprague-Grundy lesson', () => {
       const [w] = winningMoves(board, 'nim', [], g);
       click(button(`Bốc ${w.take} viên sỏi từ đống ${w.pile + 1}`));
     }
-    expect(stat('status')).toContain('Bạn thắng rồi!');
+    expect(stat('status')).toContain('Em thắng rồi!');
     click(buttonByText(m.takeButton));
     expect(stat('status')).toBe(m.over);
   });
@@ -145,7 +145,7 @@ describe('Nim and Sprague-Grundy lesson', () => {
     commit(field('take'), '1');
     commit(field('pile'), '2');
     click(buttonByText(m.takeButton));
-    expect(stat('status')).toMatch(/^Bạn bốc 1 viên sỏi từ đống 3\. Máy bốc/);
+    expect(stat('status')).toMatch(/^Em bốc 1 viên sỏi từ đống 3\. Máy bốc/);
     expect(stat('xor')).toBe('0');
     commit(field('take'), '0');
     expect(stat('status')).toBe(m.takeError(MAX_PILE));
@@ -160,7 +160,7 @@ describe('Nim and Sprague-Grundy lesson', () => {
     input.focus();
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     flushSync();
-    expect(stat('status')).toMatch(/^Bạn bốc 2 viên sỏi từ đống 1\./);
+    expect(stat('status')).toMatch(/^Em bốc 2 viên sỏi từ đống 1\./);
   });
 
   it('rebuilds for typed piles, a new rule and new takes, and refuses bad input', () => {

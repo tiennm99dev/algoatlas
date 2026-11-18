@@ -37,7 +37,7 @@ export const vi = {
   summary:
     'Biến mọi hệ thức truy hồi tuyến tính có hằng số thành ma trận chuyển rồi nâng nó lên luỹ thừa n, và nhân số lớn như một tích chập chữ số cộng với phần nhớ.',
   instruction:
-    'Chọn một bài toán. Với hệ thức truy hồi, nhập các hệ số, một hằng số nếu có và các giá trị ban đầu, rồi chạy từng bước: trước hết ma trận được dựng từng hàng, sau đó luỹ thừa nhị phân bình phương nó. Với số lớn, nhập hai thừa số và xem mỗi tổng cột c[k] hình thành dọc một đường chéo của lưới chữ số trước khi xử lí phần nhớ. Dùng những gì bạn thấy để trả lời các câu hỏi bên dưới nhé.',
+    'Chọn một bài toán. Với hệ thức truy hồi, nhập các hệ số, một hằng số nếu có và các giá trị ban đầu, rồi chạy từng bước: trước hết ma trận được dựng từng hàng, sau đó luỹ thừa nhị phân bình phương nó. Với số lớn, nhập hai thừa số và xem mỗi tổng cột c[k] hình thành dọc một đường chéo của lưới chữ số trước khi xử lí phần nhớ. Dùng những gì em thấy để trả lời các câu hỏi bên dưới nhé.',
   problemLabel: 'Bài toán',
   problems: { recurrence: 'Từ hệ thức truy hồi đến ma trận', bignum: 'Nhân số lớn' },
   fields: {

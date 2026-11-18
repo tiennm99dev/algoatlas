@@ -86,21 +86,21 @@ describe('universal and perfect hashing lesson', () => {
       /** @type {import('$lib/algo-engine/universal-perfect-hashing.js').PerfectFrame} */ (
         trace.at(-1)
       );
-    expect(narration()).toContain('Dựng bảng băm hoàn hảo cho 9 khoá');
+    expect(narration()).toContain('Dựng hash table hoàn hảo cho 9 khoá');
     next(2);
     const place = trace[2];
     expect(narration()).toContain(
       `h(${place.key}) = ((${place.a}·${place.key} + ${place.b}) mod 101) mod 9`,
     );
     expect(narration()).toContain(
-      `đặt ${place.key} vào ngăn ${hashOf(place.key, place.a, place.b, 9)}`,
+      `đặt ${place.key} vào bucket ${hashOf(place.key, place.a, place.b, 9)}`,
     );
     toLast();
     expect(narration()).toContain(`dùng 9 + ${done.slots} = ${9 + done.slots} ô`);
     expect(stat('first-draws')).toBe(String(done.firstDraws));
     expect(stat('second-draws')).toBe(String(done.secondDraws));
     expect(stat('sum-squares')).toBe(`${done.sumSquares} / 36`);
-    expect(marked('ngăn đã xong')).toBe(done.slots);
+    expect(marked('bucket đã xong')).toBe(done.slots);
   });
 
   it('looks a key up in the finished table only', () => {
@@ -109,10 +109,12 @@ describe('universal and perfect hashing lesson', () => {
     expect(narration()).toBe(m.lookupWait);
     toLast();
     click(buttonByText(m.lookupButton));
-    expect(narration()).toMatch(/^60 được băm vào ngăn \d+, rồi vào ô \d+ của ngăn: tìm thấy 60/);
+    expect(narration()).toMatch(
+      /^60 được hash vào bucket \d+, rồi vào ô \d+ của bucket: tìm thấy 60/,
+    );
     commit(field('probe'), '11');
     click(buttonByText(m.lookupButton));
-    expect(narration()).toMatch(/^11 được băm vào ngăn \d+/);
+    expect(narration()).toMatch(/^11 được hash vào bucket \d+/);
     expect(narration()).toContain('không có trong bảng');
     commit(field('probe'), '500');
     expect(narration()).toBe(m.lookupError(MAX_KEY));
@@ -128,7 +130,9 @@ describe('universal and perfect hashing lesson', () => {
     input.focus();
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     flushSync();
-    expect(narration()).toMatch(/^52 được băm vào ngăn \d+, rồi vào ô \d+ của ngăn: tìm thấy 52/);
+    expect(narration()).toMatch(
+      /^52 được hash vào bucket \d+, rồi vào ô \d+ của bucket: tìm thấy 52/,
+    );
   });
 
   it('samples random draws and compares them with the fixed hash', () => {
