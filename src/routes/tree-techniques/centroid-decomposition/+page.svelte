@@ -15,12 +15,7 @@
     centroidTrace,
     makeCentroidPreset,
   } from '$lib/algo-engine/centroid-decomposition.js';
-  import {
-    MAX_NODES,
-    addLeaf,
-    childrenOf,
-    removeSubtree,
-  } from '$lib/algo-engine/lca-binary-lifting.js';
+  import { MAX_NODES, addLeaf, childrenOf, removeSubtree } from '$lib/algo-engine/rooted-tree.js';
   import { en as m } from '$lib/lessons/centroid-decomposition/copy.en.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 

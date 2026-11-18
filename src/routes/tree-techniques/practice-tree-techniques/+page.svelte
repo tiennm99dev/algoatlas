@@ -7,8 +7,8 @@
   import StepControls from '$lib/components/step-controls.svelte';
   import TreeView from '$lib/components/tree-view.svelte';
   import { STATE_BG } from '$lib/components/visual-state.js';
-  import { decompose } from '$lib/algo-engine/heavy-light-decomposition.js';
-  import { childrenOf } from '$lib/algo-engine/lca-binary-lifting.js';
+  import { decompose } from '$lib/algo-engine/heavy-light-core.js';
+  import { childrenOf } from '$lib/algo-engine/rooted-tree.js';
   import {
     PRACTICE_PRESETS,
     formatOp,

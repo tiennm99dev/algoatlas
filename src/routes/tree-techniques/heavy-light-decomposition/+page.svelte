@@ -8,6 +8,7 @@
   import StepControls from '$lib/components/step-controls.svelte';
   import TreeView from '$lib/components/tree-view.svelte';
   import { STATE_BG } from '$lib/components/visual-state.js';
+  import { MAX_NODES, addLeaf, childrenOf, removeSubtree } from '$lib/algo-engine/rooted-tree.js';
   import {
     HLD_PRESETS,
     MAX_VALUE,
@@ -16,12 +17,6 @@
     hldTrace,
     makeHldPreset,
   } from '$lib/algo-engine/heavy-light-decomposition.js';
-  import {
-    MAX_NODES,
-    addLeaf,
-    childrenOf,
-    removeSubtree,
-  } from '$lib/algo-engine/lca-binary-lifting.js';
   import { en as m } from '$lib/lessons/heavy-light-decomposition/copy.en.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 

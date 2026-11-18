@@ -1,16 +1,13 @@
 import { describe, expect, it } from 'vitest';
+import { decompose, pathNodes, pathRanges } from './heavy-light-core.js';
+import { MAX_NODES, depthsOf, isRootedTree, randomParents } from './rooted-tree.js';
 import {
   HLD_PRESETS,
-  decompose,
   hldPseudocode,
   hldQueryStart,
   hldTrace,
   makeHldPreset,
-  pathNodes,
-  pathRanges,
-  sumTree,
 } from './heavy-light-decomposition.js';
-import { MAX_NODES, depthsOf, isRootedTree, randomParents } from './lca-binary-lifting.js';
 
 /** Deterministic LCG so random trees are reproducible. */
 function seeded(seed = 1) {
@@ -44,22 +41,6 @@ function oracleSum(parent, value, u, v) {
 const sample = makeHldPreset('sample');
 
 describe('heavy-light decomposition', () => {
-  it('gives every chain a block of consecutive positions, heavy child next', () => {
-    const rand = seeded(4);
-    for (let trial = 0; trial < 30; trial++) {
-      const parent = randomParents(1 + Math.floor(rand() * MAX_NODES), rand);
-      const d = decompose(parent);
-      expect([...d.pos].sort((a, b) => a - b)).toEqual(parent.map((_, i) => i));
-      parent.forEach((p, v) => {
-        if (d.heavy[v] >= 0) {
-          expect(d.pos[d.heavy[v]]).toBe(d.pos[v] + 1);
-          expect(d.head[d.heavy[v]]).toBe(d.head[v]);
-        }
-        if (p >= 0 && d.heavy[p] !== v) expect(d.head[v]).toBe(v);
-      });
-    }
-  });
-
   it('crosses at most log₂ n light edges on any root path', () => {
     const rand = seeded(8);
     for (let trial = 0; trial < 30; trial++) {
@@ -125,14 +106,6 @@ describe('heavy-light decomposition', () => {
     expect(placed.map((f) => f.current).slice(0, 5)).toEqual([0, 1, 3, 7, 12]);
     expect(placed.map((f) => f.via).slice(0, 2)).toEqual(['root', 'heavy']);
     expect(frames.at(-1)?.size[0]).toBe(15);
-  });
-
-  it('counts segment-tree visits and writes', () => {
-    const seg = sumTree([1, 2, 3, 4]);
-    expect(seg.query(0, 3)).toEqual({ sum: 10, visits: 1 });
-    expect(seg.query(1, 2)).toEqual({ sum: 5, visits: 7 });
-    expect(seg.set(2, 10)).toBe(3);
-    expect(seg.query(0, 3).sum).toBe(17);
   });
 
   it('builds valid presets and stays far under 400 frames', () => {

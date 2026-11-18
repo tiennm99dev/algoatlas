@@ -9,7 +9,7 @@ import {
   practicePseudocode,
   practiceTrace,
 } from './practice-tree-techniques.js';
-import { isRootedTree, lettered, randomParents } from './lca-binary-lifting.js';
+import { isRootedTree, lettered, randomParents } from './rooted-tree.js';
 import { en as m } from '$lib/lessons/practice-tree-techniques/copy.en.js';
 
 /** Deterministic LCG so random trees are reproducible. */

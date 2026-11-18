@@ -1,23 +1,24 @@
 import { describe, expect, it } from 'vitest';
 import {
-  LOG,
   MAX_NODES,
-  PRESETS,
-  addLeaf,
   childrenOf,
   depthsOf,
-  eulerLca,
-  eulerTour,
   isRootedTree,
   lettered,
+  randomParents,
+  removeSubtree,
+} from './rooted-tree.js';
+import {
+  LOG,
+  PRESETS,
+  eulerLca,
+  eulerTour,
   liftingPseudocode,
   liftingTrace,
   makeLiftPreset,
   naiveLca,
   pathUp,
   queryStart,
-  randomParents,
-  removeSubtree,
 } from './lca-binary-lifting.js';
 
 /** Deterministic LCG so random trees are reproducible. */
@@ -156,14 +157,6 @@ describe('Euler tour', () => {
 });
 
 describe('tree model', () => {
-  it('adds leaves up to the cap and names them with unused letters', () => {
-    let t = lettered([-1, 0]);
-    t = /** @type {import('./lca-binary-lifting.js').RootedTree} */ (addLeaf(t, 1));
-    expect(t.labels).toEqual(['A', 'B', 'C']);
-    expect(t.parent).toEqual([-1, 0, 1]);
-    expect(addLeaf(lettered(randomParents(MAX_NODES, seeded(2))), 0)).toBeNull();
-  });
-
   it('removes a whole subtree, keeps names and reports the old indices', () => {
     const { tree, keep } = removeSubtree(family, 3);
     expect(tree.labels).toEqual(['A', 'B', 'C', 'E', 'F', 'I', 'J', 'K', 'M']);

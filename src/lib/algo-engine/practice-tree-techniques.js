@@ -12,8 +12,8 @@
  * Both answer every query; the trace shows one frame per operation with both costs.
  */
 
-import { decompose, pathNodes, pathRanges, sumTree } from './heavy-light-decomposition.js';
-import { isRootedTree, lettered, randomParents } from './lca-binary-lifting.js';
+import { decompose, pathNodes, pathRanges, sumTree } from './heavy-light-core.js';
+import { isRootedTree, lettered, randomParents } from './rooted-tree.js';
 
 export const MAX_NODES = 26;
 export const MAX_OPS = 12;

@@ -16,13 +16,7 @@
  * order of the centroid's neighbours (its parent, then its children).
  */
 
-import {
-  MAX_NODES,
-  childrenOf,
-  isRootedTree,
-  lettered,
-  randomParents,
-} from './lca-binary-lifting.js';
+import { MAX_NODES, childrenOf, isRootedTree, lettered, randomParents } from './rooted-tree.js';
 
 export const MAX_K = 15;
 
@@ -56,7 +50,7 @@ export const centroidPseudocode = [
  */
 
 /**
- * @param {import('./lca-binary-lifting.js').RootedTree} t @param {number} k
+ * @param {import('./rooted-tree.js').RootedTree} t @param {number} k
  * @returns {CentroidFrame[]}
  */
 export function centroidTrace(t, k) {
@@ -245,7 +239,7 @@ export const CENTROID_PRESETS = /** @type {const} */ (['sample', 'path', 'star',
 
 /**
  * @param {CentroidPreset} preset @param {() => number} [rand]
- * @returns {import('./lca-binary-lifting.js').RootedTree}
+ * @returns {import('./rooted-tree.js').RootedTree}
  */
 export function makeCentroidPreset(preset, rand = Math.random) {
   if (preset === 'sample') return lettered([-1, 0, 0, 1, 1, 2, 3, 3, 4, 5, 5, 7, 9, 11]);

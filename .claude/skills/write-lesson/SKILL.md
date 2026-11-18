@@ -210,7 +210,11 @@ in the array layout: `leftOf`, `rightOf`, `parentOf`, `depthOf`, `filled`, `chil
 Engines read a typed list of whole numbers with `parse-values.js` (`parseValueList`), never a
 copy. Balanced trees share `balanced-core.js` (`rotateLeft`, `rotateRight`, `refreshHeight`,
 `balanceFactor`, and the skip list's `rollHeight` and `MAX_TOWER`), and segment trees
-`segment-spans.js` (`treeSpans`). `tree-view` keeps a readable minimum width and scrolls inside
+`segment-spans.js` (`treeSpans`). Rooted-tree lessons share `src/lib/algo-engine/rooted-tree.js`,
+the editable parent-list model (`RootedTree`, `MAX_NODES`, `isRootedTree`, `childrenOf`,
+`depthsOf`, `addLeaf`, `removeSubtree`, `randomParents`, `lettered`, `nextLabel`), and
+`heavy-light-core.js` (`decompose`, `sumTree` with visit counts, `pathNodes`, `pathRanges`).
+`tree-view` keeps a readable minimum width and scrolls inside
 its card, so a wide tree never shrinks its labels.
 Edge-list shortest-path engines share `src/lib/algo-engine/weighted-edges.js`: `indexEdges(ids,
 edges)` numbers the vertices and lists the edges by index, and `cycleFrom(parent, start, n)`

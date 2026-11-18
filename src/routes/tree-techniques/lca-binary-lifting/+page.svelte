@@ -9,17 +9,19 @@
   import { STATE_BG } from '$lib/components/visual-state.js';
   import {
     MAX_NODES,
-    PRESETS,
     addLeaf,
     childrenOf,
     depthsOf,
+    removeSubtree,
+  } from '$lib/algo-engine/rooted-tree.js';
+  import {
+    PRESETS,
     eulerLca,
     liftingPseudocode,
     liftingTrace,
     makeLiftPreset,
     pathUp,
     queryStart,
-    removeSubtree,
   } from '$lib/algo-engine/lca-binary-lifting.js';
   import { en as m } from '$lib/lessons/lca-binary-lifting/copy.en.js';
   import { createPlayer } from '$lib/player/player.svelte.js';

@@ -8,13 +8,7 @@ import {
   makeCentroidPreset,
   pairsAtDistance,
 } from './centroid-decomposition.js';
-import {
-  MAX_NODES,
-  childrenOf,
-  isRootedTree,
-  lettered,
-  randomParents,
-} from './lca-binary-lifting.js';
+import { MAX_NODES, childrenOf, isRootedTree, lettered, randomParents } from './rooted-tree.js';
 
 /** Deterministic LCG so random trees are reproducible. */
 function seeded(seed = 1) {
