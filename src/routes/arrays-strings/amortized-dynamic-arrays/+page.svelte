@@ -15,10 +15,10 @@
     appendPseudocode,
     appendTrace,
   } from '$lib/algo-engine/amortized-dynamic-arrays.js';
-  import { en as m } from '$lib/lessons/amortized-dynamic-arrays/copy.en.js';
+  import { vi as m } from '$lib/lessons/amortized-dynamic-arrays/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
-  /** @typedef {import('$lib/lessons/amortized-dynamic-arrays/copy.en.js').AppendMethod} AppendMethod */
+  /** @typedef {import('$lib/lessons/amortized-dynamic-arrays/copy.vi.js').AppendMethod} AppendMethod */
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */
 
   // A fixed first input keeps the prerendered HTML and the hydrated page identical.

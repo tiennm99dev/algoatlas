@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/practice-arrays-strings/copy.en.js';
+import { vi as m } from '$lib/lessons/practice-arrays-strings/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -103,35 +103,35 @@ function practice() {
 describe('array and string practice lesson', () => {
   it('runs two pointers on the sorted pair-sum sample', () => {
     render();
-    expect(verdict()).toContain('Two pointers: Best fit');
+    expect(verdict()).toContain('Hai con trỏ: Phù hợp nhất');
     expect(narration()).toBe(
-      'Find a pair with sum 14. Put lo on the first value and hi on the last.',
+      'Tìm một cặp có tổng 14. Đặt lo ở giá trị đầu tiên và hi ở giá trị cuối cùng.',
     );
     click(button('Bước tiếp'));
     expect(narration()).toBe(
-      'a[0] + a[6] = 1 + 15 = 16 > 14: too big. a[lo] is the smallest partner left for a[hi], so move hi left.',
+      'a[0] + a[6] = 1 + 15 = 16 > 14: quá lớn. a[lo] là bạn ghép nhỏ nhất còn lại của a[hi], nên dời hi sang trái.',
     );
-    expect(text()).toContain('Index 6: 15, read now');
+    expect(text()).toContain('Chỉ số 6: 15, đang đọc');
     click(button('Đến bước cuối'));
-    expect(narration()).toBe('Done: a[1] + a[5] = 14, after 3 steps.');
+    expect(narration()).toBe('Xong: a[1] + a[5] = 14, sau 3 bước.');
     expect(stat(m.stats.answer)).toBe('(1, 5)');
-    expect(text()).toContain('Index 1: 3, part of the answer');
+    expect(text()).toContain('Chỉ số 1: 3, thuộc đáp án');
     expect(compareSteps()).toEqual({
-      'Two pointers': '3',
-      'Sliding window': m.notApplicable,
-      'Prefix sums': m.notApplicable,
-      'Brute force': '10',
+      'Hai con trỏ': '3',
+      'Cửa sổ trượt': m.notApplicable,
+      'Tổng tiền tố': m.notApplicable,
+      'Vét cạn': '10',
     });
   });
 
   it('explains a technique that does not fit', () => {
     render();
     pickTechnique('window');
-    expect(verdict()).toContain('Sliding window: Does not fit');
-    expect(narration()).toContain('Sliding window does not fit this problem.');
+    expect(verdict()).toContain('Cửa sổ trượt: Không phù hợp');
+    expect(narration()).toContain('Cửa sổ trượt không phù hợp với bài toán này.');
     expect(text()).toContain(m.noCode);
     pickTechnique('brute');
-    expect(verdict()).toContain('Brute force: Works, but not the best');
+    expect(verdict()).toContain('Vét cạn: Dùng được, nhưng chưa tốt nhất');
     click(button('Đến bước cuối'));
     expect(stat(m.stats.steps)).toBe('10');
   });
@@ -143,14 +143,14 @@ describe('array and string practice lesson', () => {
     pickTechnique('window');
     click(button('Đến bước cuối'));
     expect(stat(m.stats.answer)).toBe('2');
-    expect(narration()).toBe('Done: the shortest run is a[4..5], length 2, after 11 steps.');
+    expect(narration()).toBe('Xong: đoạn ngắn nhất là a[4..5], độ dài 2, sau 11 bước.');
     pickTechnique('prefix');
     expect(text()).toContain(m.auxTitles.prefix);
     click(button('Bước tiếp'));
     expect(narration()).toBe('P[1] = P[0] + a[0] = 0 + 2 = 2.');
     click(button('Đến bước cuối'));
     expect(stat(m.stats.steps)).toBe('23');
-    expect(compareSteps()['Brute force']).toBe('17');
+    expect(compareSteps()['Vét cạn']).toBe('17');
   });
 
   it('answers range queries with prefix sums and edits the queries', () => {
@@ -177,9 +177,9 @@ describe('array and string practice lesson', () => {
     commit(input('values'), 'lever');
     click(button('Đến bước cuối'));
     expect(stat(m.stats.answer)).toBe(m.no);
-    expect(text()).toContain('Index 0: l, does not match');
+    expect(text()).toContain('Chỉ số 0: l, không khớp');
     click(buttonByText(m.sampleButton));
-    expect(input('values').value).toBe('racecar');
+    expect(input('values').value).toBe('abcdcba');
     click(button('Đến bước cuối'));
     expect(stat(m.stats.answer)).toBe(m.yes);
   });

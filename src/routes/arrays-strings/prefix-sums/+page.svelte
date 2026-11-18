@@ -15,7 +15,7 @@
     prefixPseudocode,
     prefixTrace,
   } from '$lib/algo-engine/prefix-sums.js';
-  import { en as m } from '$lib/lessons/prefix-sums/copy.en.js';
+  import { vi as m } from '$lib/lessons/prefix-sums/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/prefix-sums.js').PrefixMode} PrefixMode */

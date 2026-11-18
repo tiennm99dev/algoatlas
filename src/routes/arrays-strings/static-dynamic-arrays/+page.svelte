@@ -19,7 +19,7 @@
     pushPseudocode,
     pushedValue,
   } from '$lib/algo-engine/static-dynamic-arrays.js';
-  import { en as m } from '$lib/lessons/static-dynamic-arrays/copy.en.js';
+  import { vi as m } from '$lib/lessons/static-dynamic-arrays/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/static-dynamic-arrays.js').Growth} Growth */

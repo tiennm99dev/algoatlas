@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/string-basics/copy.en.js';
+import { vi as m } from '$lib/lessons/string-basics/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -87,23 +87,23 @@ describe('string basics lesson', () => {
   it('joins ten letters by concatenation with 45 copies', () => {
     render();
     expect(narration()).toBe(
-      'Join 10 pieces with s = s + p. s starts as the empty string, and strings are immutable: once made, a string never changes.',
+      'Nối 10 mảnh bằng s = s + p. s bắt đầu là xâu rỗng, và xâu là bất biến: đã tạo ra thì không bao giờ đổi.',
     );
     expect(text()).toContain(m.emptyString);
-    stepUntil('Copy all 2 characters');
+    stepUntil('Sao chép cả 2 kí tự');
     expect(narration()).toBe(
-      'Copy all 2 characters of s into t. s itself stays unchanged; only t is written.',
+      'Sao chép cả 2 kí tự của s sang t. Bản thân s vẫn giữ nguyên; chỉ t được ghi.',
     );
     expect(text()).toContain(m.blocks.t);
-    expect(text()).toContain('Index 0: a, copied from');
+    expect(text()).toContain('Chỉ số 0: a, được sao chép đi');
     click(button('Bước tiếp'));
     expect(narration()).toBe(
-      'Write “c” after them and let s = t: 1 write and 2 copies for this piece. The old s is garbage now.',
+      'Ghi “c” vào sau chúng rồi cho s = t: 1 lần ghi và 2 lần sao chép cho mảnh này. Xâu s cũ giờ thành rác.',
     );
-    expect(text()).toContain('Index 2: c, just written');
+    expect(text()).toContain('Chỉ số 2: c, vừa ghi');
     click(button('Đến bước cuối'));
     expect(narration()).toBe(
-      'Done: “abcdefghij” after 45 copies of old characters and 10 writes, 55 steps in total.',
+      'Xong: “abcdefghij” sau 45 lần sao chép kí tự cũ và 10 lần ghi, tổng cộng 55 bước.',
     );
     expect(stat(m.stats.copies)).toBe('45');
     expect(stat(m.stats.work)).toBe('55');
@@ -115,10 +115,10 @@ describe('string basics lesson', () => {
     render();
     pickMode('builder');
     expect(text()).toContain('joinByBuilder(pieces, cap):');
-    expect(text()).toContain('0 characters in 4 slots');
-    stepUntil('needs 5 slots');
+    expect(text()).toContain('0 kí tự trong 4 ô');
+    stepUntil('cần 5 ô');
     expect(narration()).toBe(
-      'Piece 5, “e”, needs 5 slots but the buffer has 4. Allocate a new buffer of max(2 × 4, 5) = 8.',
+      'Mảnh 5, “e”, cần 5 ô nhưng vùng đệm chỉ có 4. Cấp phát vùng đệm mới gồm max(2 × 4, 5) = 8 ô.',
     );
     expect(text()).toContain(m.blocks.newBuffer);
     click(button('Đến bước cuối'));
@@ -134,9 +134,9 @@ describe('string basics lesson', () => {
   it('loads presets and typed pieces', () => {
     render();
     click(buttonByText(m.presets.words));
-    expect(input('pieces').value).toBe('The quick brown fox jumps');
+    expect(input('pieces').value).toBe('Tin học thật là vui');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('“Thequickbrownfoxjumps”');
+    expect(narration()).toContain('“Tinhọcthậtlàvui”');
     commit(input('pieces'), 'ab cd ef gh ij kl');
     click(button('Đến bước cuối'));
     expect(stat(m.stats.copies)).toBe('30');
@@ -158,11 +158,11 @@ describe('string basics lesson', () => {
   it('inspects characters and their encodings', () => {
     render();
     const summary = () => document.querySelector('[data-testid="inspect-summary"]')?.textContent;
-    expect(summary()).toContain('6 characters (code points), 11 UTF-8 bytes, 7 UTF-16 units');
+    expect(summary()).toContain('6 kí tự (điểm mã), 11 byte UTF-8, 7 đơn vị UTF-16');
     expect(text()).toContain('U+1EC7');
     expect(text()).toContain('E1 BB 87');
     commit(input('inspect'), 'Ab');
-    expect(summary()).toContain('2 characters (code points), 2 UTF-8 bytes, 2 UTF-16 units');
+    expect(summary()).toContain('2 kí tự (điểm mã), 2 byte UTF-8, 2 đơn vị UTF-16');
     commit(input('inspect'), '');
     expect(text()).toContain(m.inspectErrors.empty);
     expect(input('inspect').value).toBe('Ab');
@@ -172,7 +172,7 @@ describe('string basics lesson', () => {
     render();
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
     flushSync();
-    expect(narration()).toContain('Piece 1, “a”');
+    expect(narration()).toContain('Mảnh 1, “a”');
   });
 
   it('checks the first question with a hint', () => {

@@ -19,7 +19,7 @@ export const MAX_VALUE = 99;
 
 export const pointerPseudocode = {
   pair: [
-    'pairSum(a, T):          ▹ a sorted ascending',
+    'pairSum(a, T):          ▹ a tăng dần',
     '  lo = 0; hi = n − 1',
     '  while lo < hi:',
     '    s = a[lo] + a[hi]',
@@ -29,7 +29,7 @@ export const pointerPseudocode = {
     '  return none',
   ],
   partition: [
-    'partition(a, p):        ▹ values < p to the left',
+    'partition(a, p):        ▹ các giá trị < p sang trái',
     '  i = 0; j = n − 1',
     '  while i ≤ j:',
     '    if a[i] < p: i = i + 1',

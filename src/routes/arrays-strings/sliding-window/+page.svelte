@@ -14,7 +14,7 @@
     windowPseudocode,
     windowTrace,
   } from '$lib/algo-engine/sliding-window.js';
-  import { en as m } from '$lib/lessons/sliding-window/copy.en.js';
+  import { vi as m } from '$lib/lessons/sliding-window/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/sliding-window.js').WindowMode} WindowMode */

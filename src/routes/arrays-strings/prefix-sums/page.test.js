@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/prefix-sums/copy.en.js';
+import { vi as m } from '$lib/lessons/prefix-sums/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -94,11 +94,11 @@ describe('prefix sums lesson', () => {
   it('builds P and answers a[2..5] with two lookups', () => {
     render();
     expect(narration()).toBe(
-      'Build P for 8 values: P[0] = 0, the sum of no elements. Then answer the sum of a[2..5].',
+      'Dựng P cho 8 giá trị: P[0] = 0, tổng của không phần tử nào. Sau đó trả lời tổng của a[2..5].',
     );
     click(button('Bước tiếp'));
     expect(narration()).toBe('P[1] = P[0] + a[0] = 0 + 3 = 3.');
-    expect(text()).toContain('P[1]: 3, just written');
+    expect(text()).toContain('P[1]: 3, vừa ghi');
     click(button('Đến bước cuối'));
     expect(queryLine()).toBe('a[2] + … + a[5] = P[6] − P[2] = 23 − 4 = 19');
     expect(stat(m.stats.result)).toBe('19');
@@ -114,7 +114,7 @@ describe('prefix sums lesson', () => {
     expect(narration()).toBe(m.pickFirst(3));
     cellA(0).dispatchEvent(new MouseEvent('click', { bubbles: true }));
     flushSync();
-    expect(narration()).toBe('Sum of a[0..3] = P[4] − P[0] = 9: two lookups instead of 4 reads.');
+    expect(narration()).toBe('Tổng của a[0..3] = P[4] − P[0] = 9: hai lần tra thay vì 4 lần đọc.');
     expect(input('l').value).toBe('0');
     expect(input('r').value).toBe('3');
   });
@@ -150,18 +150,18 @@ describe('prefix sums lesson', () => {
     expect(narration()).toBe('D[0] = a[0] = 3.');
     click(button('Bước tiếp'));
     expect(narration()).toBe('D[1] = a[1] − a[0] = 1 − 3 = −2.');
-    stepUntil('Update 2');
+    stepUntil('Lần cập nhật 2');
     click(button('Bước tiếp'));
     expect(narration()).toBe(
-      'r + 1 = 8 = n: the range runs to the end, so nothing needs cancelling. 1 cell changed instead of 6.',
+      'r + 1 = 8 = n: đoạn chạy đến cuối mảng, nên không cần bù trừ gì. Sửa 1 ô thay vì 6.',
     );
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Updated array: 3, 6, 7, 4, 3, 7, 0, 4');
+    expect(text()).toContain('Mảng sau cập nhật: 3, 6, 7, 4, 3, 7, 0, 4');
     expect(stat(m.stats.writes)).toBe('3');
     expect(stat(m.stats.naiveWrites)).toBe('9');
     expect(stat(m.stats.updates)).toBe('2 / 2');
     expect(narration()).toBe(
-      'Done: 3 cells of D changed instead of 9 element writes, plus one rebuild pass of 8 steps.',
+      'Xong: sửa 3 ô của D thay vì 9 lần ghi phần tử, cộng một lượt dựng lại 8 bước.',
     );
   });
 
@@ -176,7 +176,7 @@ describe('prefix sums lesson', () => {
     commit(input('values'), '0 0 0 0 0 0');
     commit(input('updates'), '1 3 5; 2 5 2');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Updated array: 0, 5, 7, 7, 2, 2');
+    expect(text()).toContain('Mảng sau cập nhật: 0, 5, 7, 7, 2, 2');
     expect(text()).toContain('D[4]: −5');
   });
 

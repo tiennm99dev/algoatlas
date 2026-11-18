@@ -58,7 +58,7 @@ export const FIT = {
 /** @type {Record<ProblemId, PracticeInput>} */
 export const SAMPLES = {
   'pair-sum': { values: [1, 3, 4, 6, 8, 11, 15], text: '', target: 14, queries: [] },
-  palindrome: { values: [], text: 'racecar', target: 0, queries: [] },
+  palindrome: { values: [], text: 'abcdcba', target: 0, queries: [] },
   'max-window': { values: [4, -1, 2, 7, -3, 5, 1, -2], text: '', target: 3, queries: [] },
   'shortest-window': { values: [2, 3, 1, 2, 4, 3], text: '', target: 7, queries: [] },
   'range-sums': {
@@ -80,7 +80,7 @@ const BUILD = '  for i = 0 to n − 1: P[i + 1] = P[i] + a[i]';
 export const practicePseudocode = {
   'pair-sum': {
     pointers: [
-      'pairSum(a, T):          ▹ a sorted ascending',
+      'pairSum(a, T):          ▹ a tăng dần',
       '  lo = 0; hi = n − 1',
       '  while lo < hi:',
       '    s = a[lo] + a[hi]',
@@ -108,7 +108,7 @@ export const practicePseudocode = {
     ],
     brute: [
       'isPalindromeByCopy(s):',
-      '  r = new string of n characters   ▹ O(n) extra memory',
+      '  r = xâu mới gồm n kí tự          ▹ thêm O(n) bộ nhớ',
       '  for i = 0 to n − 1: r[i] = s[n − 1 − i]',
       '  for i = 0 to n − 1:',
       '    if s[i] ≠ r[i]: return false',
@@ -138,14 +138,14 @@ export const practicePseudocode = {
       'maxWindowBrute(a, k):',
       '  best = −∞',
       '  for l = 0 to n − k:',
-      '    sum = a[l] + … + a[l + k − 1]   ▹ k additions',
+      '    sum = a[l] + … + a[l + k − 1]   ▹ k phép cộng',
       '    best = max(best, sum)',
       '  return best',
     ],
   },
   'shortest-window': {
     window: [
-      'shortestWindow(a, S):    ▹ every a[i] ≥ 0',
+      'shortestWindow(a, S):    ▹ mọi a[i] ≥ 0',
       '  l = 0; sum = 0; best = ∞',
       '  for r = 0 to n − 1:',
       '    sum = sum + a[r]',
@@ -181,14 +181,14 @@ export const practicePseudocode = {
       'rangeSums(a, queries):',
       '  P[0] = 0',
       BUILD,
-      '  for each (l, r) in queries:',
-      '    answer P[r + 1] − P[l]      ▹ one subtraction',
+      '  for (l, r) in queries:',
+      '    answers.push(P[r + 1] − P[l])   ▹ một phép trừ',
       '  return answers',
     ],
     brute: [
       'rangeSumsBrute(a, queries):',
-      '  for each (l, r) in queries:',
-      '    answer a[l] + … + a[r]      ▹ r − l + 1 additions',
+      '  for (l, r) in queries:',
+      '    answers.push(a[l] + … + a[r])   ▹ r − l + 1 phép cộng',
       '  return answers',
     ],
   },

@@ -17,14 +17,14 @@ export const MIN_CHARGE = 1;
 export const MAX_CHARGE = 4;
 
 export const appendPseudocode = [
-  'append(x):              ▹ charged c coins',
+  'append(x):              ▹ thu phí c xu',
   '  bank = bank + c',
   '  if size == capacity:',
   '    B = allocate(2 × capacity)',
   '    for i = 0 to size − 1:',
-  '      B[i] = A[i]         ▹ spends 1 coin',
+  '      B[i] = A[i]         ▹ tiêu 1 xu',
   '    A = B; capacity = 2 × capacity',
-  '  A[size] = x             ▹ spends 1 coin',
+  '  A[size] = x             ▹ tiêu 1 xu',
   '  size = size + 1',
 ];
 

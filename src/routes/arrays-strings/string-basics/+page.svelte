@@ -19,7 +19,7 @@
     joinTrace,
     parsePieces,
   } from '$lib/algo-engine/string-basics.js';
-  import { en as m } from '$lib/lessons/string-basics/copy.en.js';
+  import { vi as m } from '$lib/lessons/string-basics/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/string-basics.js').JoinMode} JoinMode */
@@ -28,7 +28,7 @@
   /** @type {Record<keyof typeof m.presets, string[]>} */
   const PRESETS = {
     letters: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
-    words: ['The', 'quick', 'brown', 'fox', 'jumps'],
+    words: ['Tin', 'học', 'thật', 'là', 'vui'],
     vietnamese: ['Xin', 'chào', 'các', 'bạn'],
   };
   const presetKeys = /** @type {(keyof typeof m.presets)[]} */ (Object.keys(PRESETS));

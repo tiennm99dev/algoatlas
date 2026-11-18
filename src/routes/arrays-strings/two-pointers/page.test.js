@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/two-pointers/copy.en.js';
+import { vi as m } from '$lib/lessons/two-pointers/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -85,18 +85,18 @@ describe('two pointers lesson', () => {
   it('finds 4 + 6 = 10 after 5 sums', () => {
     render();
     expect(narration()).toBe(
-      'Sorted array of 6. Looking for two values that add up to 10: lo starts at 0, hi at 5.',
+      'Mảng đã sắp xếp gồm 6 phần tử. Ta tìm hai giá trị có tổng bằng 10: lo bắt đầu ở 0, hi ở 5.',
     );
     click(button('Bước tiếp'));
     expect(narration()).toBe('a[0] + a[5] = 1 + 11 = 12.');
     expect(text()).toContain('1 + 11 = 12 > 10');
     click(button('Bước tiếp'));
     expect(narration()).toContain('12 > 10');
-    expect(narration()).toContain('move hi to 4');
+    expect(narration()).toContain('dời hi đến 4');
     expect(arrayLabel()).toContain('hi ở 4');
-    expect(text()).toContain('Index 5: 11, ruled out');
+    expect(text()).toContain('Chỉ số 5: 11, đã bị loại');
     click(button('Đến bước cuối'));
-    expect(narration()).toBe('Done: 4 + 6 = 10 after 5 sums; brute force could need 15.');
+    expect(narration()).toBe('Xong: 4 + 6 = 10 sau 5 tổng; vét cạn có thể cần đến 15.');
     expect(stat(m.stats.sums)).toBe('5');
     expect(stat(m.stats.pairs)).toBe('15');
     expect(stat(m.stats.result)).toBe('(2, 3)');
@@ -107,8 +107,8 @@ describe('two pointers lesson', () => {
     commit(input('target'), '99');
     click(button('Đến bước cuối'));
     expect(stat(m.stats.sums)).toBe('5');
-    expect(stat(m.stats.result)).toBe('none');
-    expect(narration()).toContain('no pair after 5 sums');
+    expect(stat(m.stats.result)).toBe('không có');
+    expect(narration()).toContain('không có cặp nào sau 5 tổng');
   });
 
   it('partitions the same values around 5 in place', () => {
@@ -116,16 +116,16 @@ describe('two pointers lesson', () => {
     pickMode('partition');
     expect(input('pivot')).not.toBeNull();
     expect(text()).toContain('partition(a, p):');
-    expect(narration()).toBe('Partition 6 values around p = 5: i starts at 0, j at 5.');
+    expect(narration()).toBe('Phân hoạch 6 giá trị quanh p = 5: i bắt đầu ở 0, j ở 5.');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('swap them to get 4 and 8');
+    expect(narration()).toContain('đổi chỗ chúng để được 4 và 8');
     click(button('Đến bước cuối'));
     expect(stat(m.stats.swaps)).toBe('2');
     expect(stat(m.stats.reads)).toBe('7');
     expect(stat(m.stats.result)).toBe('3');
     expect(arrayLabel()).toContain('< p phủ từ 0 đến 2');
     expect(narration()).toBe(
-      'Done: i passed j. a[0..3) holds the 3 values < 5 and a[3..6) the rest, after 2 swaps and no extra array.',
+      'Xong: i đã vượt qua j. a[0..3) chứa 3 giá trị < 5, còn a[3..6) chứa phần còn lại, sau 2 lần đổi chỗ và không cần mảng phụ.',
     );
   });
 
@@ -144,7 +144,7 @@ describe('two pointers lesson', () => {
     commit(input('values'), '9 −3 2');
     expect(input('values').value).toBe('9, -3, 2');
     expect(narration()).toBe(
-      'Sorted array of 3. Looking for two values that add up to 10: lo starts at 0, hi at 2.',
+      'Mảng đã sắp xếp gồm 3 phần tử. Ta tìm hai giá trị có tổng bằng 10: lo bắt đầu ở 0, hi ở 2.',
     );
   });
 
@@ -152,7 +152,7 @@ describe('two pointers lesson', () => {
     render();
     click(buttonByText(m.randomButton));
     click(button('Đến bước cuối'));
-    expect(stat(m.stats.result)).not.toBe('none');
+    expect(stat(m.stats.result)).not.toBe('không có');
     expect(input('values').value.split(', ')).toHaveLength(6);
   });
 

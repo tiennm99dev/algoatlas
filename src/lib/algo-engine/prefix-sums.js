@@ -32,7 +32,7 @@ export const prefixPseudocode = {
   difference: [
     'D[0] = a[0]',
     'for i = 1 to n − 1: D[i] = a[i] − a[i − 1]',
-    'addRange(l, r, v):     ▹ add v to a[l..r]',
+    'addRange(l, r, v):     ▹ cộng v vào a[l..r]',
     '  D[l] = D[l] + v',
     '  if r + 1 < n: D[r + 1] = D[r + 1] − v',
     'rebuild:',

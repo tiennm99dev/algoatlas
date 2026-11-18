@@ -21,7 +21,7 @@
     solveTrace,
     stepsByTechnique,
   } from '$lib/algo-engine/practice-arrays-strings.js';
-  import { en as m } from '$lib/lessons/practice-arrays-strings/copy.en.js';
+  import { vi as m } from '$lib/lessons/practice-arrays-strings/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/practice-arrays-strings.js').ProblemId} ProblemId */

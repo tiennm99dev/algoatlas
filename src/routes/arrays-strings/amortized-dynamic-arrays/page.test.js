@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/amortized-dynamic-arrays/copy.en.js';
+import { vi as m } from '$lib/lessons/amortized-dynamic-arrays/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -80,48 +80,50 @@ describe('amortized dynamic arrays lesson', () => {
   it('pays for 9 appends with 3 coins each', () => {
     render();
     expect(narration()).toBe(
-      'An empty dynamic array with capacity 1 and an empty bank. We will run 9 appends, each charged 3 coins.',
+      'Một mảng động rỗng sức chứa 1 và một ống heo rỗng. Ta sẽ chạy 9 lần thêm, mỗi lần thu 3 xu.',
     );
     click(button('Bước tiếp'));
-    expect(narration()).toBe('Append 1: pay 3 coins into the bank, which now holds 3.');
+    expect(narration()).toBe('Lần thêm 1: bỏ 3 xu vào ống heo, giờ ống heo có 3 xu.');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Write 1 into A[0] for 1 coin. Append 1 cost 1 step');
+    expect(narration()).toContain('Ghi 1 vào A[0], tốn 1 xu. Lần thêm 1 tốn 1 bước');
     click(button('Đến bước cuối'));
     expect(stat(m.stats.total)).toBe('24');
     expect(stat(m.stats.bound)).toBe('27');
     expect(stat(m.stats.bank)).toBe('3');
     expect(stat(m.stats.worst)).toBe('9');
-    expect(narration()).toContain('The bank never went below 0, so c = 3 pays for every append.');
+    expect(narration()).toContain(
+      'Ống heo chưa bao giờ xuống dưới 0, nên c = 3 trả đủ cho mọi lần thêm.',
+    );
   });
 
   it('shows the old block while a resize copies it', () => {
     render();
-    stepUntil('Allocate a block of 4 slots');
+    stepUntil('Cấp phát một khối 4 ô');
     expect(text()).toContain(m.oldBlockTitle);
     click(button('Bước tiếp'));
-    expect(narration()).toBe('Copy element 0 for 1 coin. Bank: 5.');
-    stepUntil('Resize done');
+    expect(narration()).toBe('Sao chép phần tử 0, tốn 1 xu. Ống heo: 5.');
+    stepUntil('Đổi kích thước xong');
     expect(text()).not.toContain(m.oldBlockTitle);
   });
 
   it('goes into debt on append 5 with a charge of 2', () => {
     render();
     commit(input('charge'), '2');
-    stepUntil('in debt!');
-    expect(narration()).toBe('Copy element 3 for 1 coin. Bank: −1 — in debt!');
+    stepUntil('đang âm!');
+    expect(narration()).toBe('Sao chép phần tử 3, tốn 1 xu. Ống heo: −1 — đang âm!');
     expect(stat(m.stats.op)).toBe('5 / 9');
     expect(text()).toContain(m.debt);
     click(button('Đến bước cuối'));
     expect(text()).toContain(m.accounting.broke(5, 2));
-    expect(narration()).toContain('The bank went into debt on append 5, so c = 2 is not enough.');
+    expect(narration()).toContain('Ống heo bị âm ở lần thêm 5, nên c = 2 là chưa đủ.');
   });
 
   it('adds up the same run with the aggregate method', () => {
     render();
     pickMethod('aggregate');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('9 appends: 9 writes + copies 1 + 2 + 4 + 8 = 9 + 15 = 24 steps.');
-    expect(text()).toContain('24 < 3 × 9 = 27, an average of 2.67 steps per append.');
+    expect(text()).toContain('9 lần thêm: 9 lần ghi + sao chép 1 + 2 + 4 + 8 = 9 + 15 = 24 bước.');
+    expect(text()).toContain('24 < 3 × 9 = 27, trung bình 2.67 bước mỗi lần thêm.');
   });
 
   it('keeps the last valid values and submits with Enter', () => {

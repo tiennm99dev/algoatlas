@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/static-dynamic-arrays/copy.en.js';
+import { vi as m } from '$lib/lessons/static-dynamic-arrays/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -87,18 +87,18 @@ function practice() {
 describe('static and dynamic arrays lesson', () => {
   it('counts a resizing push as started in the steps per push', () => {
     render();
-    stepUntil('Copy A[0]');
+    stepUntil('Sao chép A[0]');
     // Pushes 1 and 2 wrote, push 3 has made one copy: 3 steps over 3 started pushes.
     expect(stat(m.stats.average)).toBe('1');
-    stepUntil('Push 3: write');
+    stepUntil('Lần thêm 3: ghi');
     expect(stat(m.stats.average)).toBe('1.67');
   });
 
   it('doubles from capacity 2 through 9 pushes', () => {
     render();
-    expect(narration()).toContain('An empty dynamic array with capacity 2 at address 1000.');
+    expect(narration()).toContain('Một mảng động rỗng, sức chứa 2, ở địa chỉ 1000.');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Push 1: write 10 into A[0]');
+    expect(narration()).toContain('Lần thêm 1: ghi 10 vào A[0]');
     expect(stat(m.stats.size)).toBe('1 / 2');
     click(button('Đến bước cuối'));
     expect(stat(m.stats.size)).toBe('9 / 16');
@@ -106,28 +106,30 @@ describe('static and dynamic arrays lesson', () => {
     expect(stat(m.stats.resizes)).toBe('3');
     expect(stat(m.stats.spare)).toBe('7');
     expect(stat(m.stats.average)).toBe('2.56');
-    expect(narration()).toContain('9 pushes made 9 writes and 14 copies over 3 resizes');
+    expect(narration()).toContain(
+      '9 lần thêm gồm 9 lần ghi và 14 lần sao chép qua 3 lần đổi kích thước',
+    );
   });
 
   it('shows the new block while copying and moves A to its address', () => {
     render();
-    stepUntil('Allocate block B');
+    stepUntil('Cấp phát khối B');
     expect(text()).toContain(m.blockB);
-    expect(narration()).toContain('Allocate block B with 4 slots at address 1024');
+    expect(narration()).toContain('Cấp phát khối B gồm 4 ô ở địa chỉ 1024');
     click(button('Bước tiếp'));
-    expect(narration()).toBe('Copy A[0] = 10 into B[0]. 1 copy so far in this push.');
-    stepUntil('Free the old one');
-    expect(narration()).toContain('A now starts at 1024 with capacity 4');
+    expect(narration()).toBe('Sao chép A[0] = 10 sang B[0]. Lần thêm này đã sao chép 1 lần.');
+    stepUntil('Giải phóng khối cũ');
+    expect(narration()).toContain('A giờ bắt đầu ở 1024, sức chứa 4');
     expect(text()).not.toContain(m.blockB);
   });
 
   it('refuses pushes onto a full static array', () => {
     render();
     pickGrowth('static');
-    expect(text()).toContain('error "array is full"');
+    expect(text()).toContain('error "mảng đã đầy"');
     click(button('Đến bước cuối'));
     expect(narration()).toBe(
-      'Done: 2 values stored, 7 pushes refused because the static array was full.',
+      'Xong: lưu được 2 giá trị, 7 lần thêm bị từ chối vì mảng tĩnh đã đầy.',
     );
     expect(stat(m.stats.copies)).toBe('0');
   });
@@ -154,8 +156,8 @@ describe('static and dynamic arrays lesson', () => {
     expect(document.activeElement).toBe(cellA(1));
     cellA(1).dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     flushSync();
-    expect(readLine()).toContain('A[1] lives at');
-    expect(readLine()).toContain('give 20');
+    expect(readLine()).toContain('A[1] nằm ở');
+    expect(readLine()).toContain('cho ra 20');
     cellA(12).dispatchEvent(new MouseEvent('click', { bubbles: true }));
     flushSync();
     expect(readLine()).toBe(m.readSpare(12));
@@ -171,7 +173,7 @@ describe('static and dynamic arrays lesson', () => {
     expect(input('pushes').value).toBe('9');
     commit(input('pushes'), '0');
     click(button('Đến bước cuối'));
-    expect(narration()).toBe('Done: nothing was pushed.');
+    expect(narration()).toBe('Xong: không có giá trị nào được thêm.');
   });
 
   it('checks the first question with a hint', () => {

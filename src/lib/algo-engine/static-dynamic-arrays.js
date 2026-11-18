@@ -39,19 +39,19 @@ export const addressOf = (base, i) => base + ELEMENT_BYTES * i;
 
 export const pushPseudocode = {
   static: [
-    'push(x):              ▹ fixed capacity',
+    'push(x):              ▹ sức chứa cố định',
     '  if size == capacity:',
-    '    error "array is full"',
+    '    error "mảng đã đầy"',
     '  A[size] = x',
     '  size = size + 1',
   ],
   dynamic: [
     'push(x):',
     '  if size == capacity:',
-    '    newCap = grow(capacity)   ▹ 2 × cap, or cap + 1',
-    '    B = allocate(newCap)      ▹ a new contiguous block',
+    '    newCap = grow(capacity)   ▹ 2 × cap, hoặc cap + 1',
+    '    B = allocate(newCap)      ▹ một khối liền mới',
     '    for i = 0 to size − 1:',
-    '      B[i] = A[i]             ▹ copy: 1 step each',
+    '      B[i] = A[i]             ▹ sao chép: mỗi lần 1 bước',
     '    free A; A = B; capacity = newCap',
     '  A[size] = x',
     '  size = size + 1',

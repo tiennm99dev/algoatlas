@@ -15,7 +15,7 @@
     pointerTrace,
     randomValues,
   } from '$lib/algo-engine/two-pointers.js';
-  import { en as m } from '$lib/lessons/two-pointers/copy.en.js';
+  import { vi as m } from '$lib/lessons/two-pointers/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/two-pointers.js').PointerMode} PointerMode */

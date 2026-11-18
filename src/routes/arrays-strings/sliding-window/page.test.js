@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/sliding-window/copy.en.js';
+import { vi as m } from '$lib/lessons/sliding-window/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -90,21 +90,21 @@ describe('sliding window lesson', () => {
   it('slides a window of 3 to the best sum 9', () => {
     render();
     expect(narration()).toBe(
-      'Find the largest sum of 3 consecutive values among 6. Start by adding up the first window.',
+      'Tìm tổng lớn nhất của 3 giá trị liên tiếp trong 6 giá trị. Bắt đầu bằng cách cộng cửa sổ đầu tiên.',
     );
     click(button('Bước tiếp'));
-    expect(narration()).toBe('Add a[0] = 2: the first window’s sum is 2 so far.');
-    stepUntil('Slide right');
+    expect(narration()).toBe('Cộng a[0] = 2: tổng của cửa sổ đầu tiên đến giờ là 2.');
+    stepUntil('Trượt sang phải');
     expect(narration()).toBe(
-      'Slide right: add a[3] = 1 and take out a[0] = 2, so the sum is 7, not more than the best 8.',
+      'Trượt sang phải: cộng a[3] = 1 và trừ a[0] = 2, nên tổng là 7, không hơn tốt nhất 8.',
     );
-    expect(text()).toContain('Running sum: 8 + 1 − 2 = 7');
-    expect(arrayLabel()).toContain('sum 7 phủ từ 1 đến 3');
-    expect(arrayLabel()).toContain('best phủ từ 0 đến 2');
-    expect(text()).toContain('Index 3: 1, just added to the sum');
+    expect(text()).toContain('Tổng chạy: 8 + 1 − 2 = 7');
+    expect(arrayLabel()).toContain('tổng 7 phủ từ 1 đến 3');
+    expect(arrayLabel()).toContain('tốt nhất phủ từ 0 đến 2');
+    expect(text()).toContain('Chỉ số 3: 1, vừa được cộng vào tổng');
     click(button('Đến bước cuối'));
     expect(narration()).toBe(
-      'Done: the best window is a[2..5) with sum 9, after 9 updates instead of 12.',
+      'Xong: cửa sổ tốt nhất là a[2..5) với tổng 9, sau 9 lần cập nhật thay vì 12.',
     );
     expect(stat(m.stats.best)).toBe('9');
     expect(stat(m.stats.updates)).toBe('9');
@@ -115,11 +115,11 @@ describe('sliding window lesson', () => {
     render();
     pickMode('variable');
     expect(text()).toContain('shortestWindow(a, S):');
-    stepUntil('Take out');
-    expect(narration()).toBe('Take out a[0] = 2 and move l to 1: sum 6.');
+    stepUntil('Trừ a[');
+    expect(narration()).toBe('Trừ a[0] = 2 và dời l đến 1: tổng 6.');
     click(button('Đến bước cuối'));
     expect(narration()).toBe(
-      'Done: the shortest window is a[0..3), length 3. Each value entered once and left at most once: 9 updates.',
+      'Xong: cửa sổ ngắn nhất là a[0..3), độ dài 3. Mỗi giá trị vào một lần và ra nhiều nhất một lần: 9 lần cập nhật.',
     );
     expect(stat(m.stats.bestLength)).toBe('3');
     expect(stat(m.stats.shrinks)).toBe('3');
@@ -127,7 +127,7 @@ describe('sliding window lesson', () => {
     commit(input('s'), '100');
     click(button('Đến bước cuối'));
     expect(stat(m.stats.bestLength)).toBe(m.none);
-    expect(narration()).toContain('no run of values reaches 100');
+    expect(narration()).toContain('không đoạn nào đạt tới 100');
   });
 
   it('finds 4, 3 with five left moves', () => {
