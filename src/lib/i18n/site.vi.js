@@ -41,9 +41,9 @@ export const glossary = {
   jumpLabel: 'Đến chữ cái',
   /** @param {number} n */
   count: (n) => `${n} thuật ngữ`,
-  meaning: 'Nghĩa:',
   learnedIn: 'Học ở:',
   seeAlso: 'Xem thêm:',
+  aka: 'Tên khác, từ liên quan:',
   lessonTitle: 'Thuật ngữ trong bài',
   viewAll: 'Xem tất cả thuật ngữ',
   homeBody:

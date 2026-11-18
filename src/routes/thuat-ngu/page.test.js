@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { flushSync, mount, tick, unmount } from 'svelte';
 import GlossaryPage from './+page.svelte';
 import GlossaryTerms from '$lib/components/glossary-terms.svelte';
-import { allTerms } from '$lib/glossary/index.js';
+import { allTerms, fold } from '$lib/glossary/index.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -22,7 +22,7 @@ afterEach(() => {
 
 const status = () => document.querySelector('[role="status"]')?.textContent?.trim();
 const shown = () =>
-  [...document.querySelectorAll('.glossary-entry')].filter((e) => !e.hasAttribute('hidden'));
+  [...document.querySelectorAll('.gl > div')].filter((e) => !e.hasAttribute('hidden'));
 
 /** @param {string} value */
 function search(value) {
@@ -48,16 +48,28 @@ describe('glossary page', () => {
     expect(letters).not.toContain('Đ');
   });
 
-  it('marks English names with lang="en" and gives English terms their meaning', () => {
+  it('marks English names with lang="en" and gives each term its counterpart in parentheses', () => {
     render(GlossaryPage);
     const stack = /** @type {HTMLElement} */ (document.getElementById('stack'));
     expect(stack.querySelector('dt')?.getAttribute('lang')).toBe('en');
-    expect(stack.textContent).toContain('ngăn xếp');
+    expect(stack.querySelector('dt [lang="vi"]')?.textContent).toBe('(ngăn xếp)');
     const window = /** @type {HTMLElement} */ (document.getElementById('cua-so-truot'));
-    expect(window.querySelector('dt [lang="en"]')?.textContent).toBe('sliding window');
+    expect(window.querySelector('dt [lang="en"]')?.textContent).toBe('(sliding window)');
     expect(window.querySelector('a[href="/arrays-strings/sliding-window/"]')?.textContent).toBe(
       'Cửa sổ trượt',
     );
+  });
+
+  it('shows the counterpart only when it differs from the term, and labels other names', () => {
+    render(GlossaryPage);
+    for (const e of allTerms()) {
+      const dt = document.getElementById(e.id)?.querySelector('dt');
+      const span = dt?.querySelector('span');
+      const counterpart = e.vi ?? e.en ?? '';
+      if (fold(counterpart) === fold(e.term)) expect(span, e.id).toBeNull();
+      else expect(span?.textContent, e.id).toBe(`(${counterpart})`);
+    }
+    expect(document.getElementById('stack')?.textContent).toContain('Tên khác, từ liên quan: LIFO');
   });
 
   it('filters by name without tone marks, never by definition, and counts the result', () => {
@@ -71,6 +83,8 @@ describe('glossary page', () => {
     expect(shown().map((e) => e.id)).toContain('stack-don-dieu');
     search('LIFO');
     expect(shown().map((e) => e.id)).toEqual(['stack']);
+    search('Sliding Window');
+    expect(shown().map((e) => e.id)).toContain('cua-so-truot');
     search('zzzz');
     expect(shown()).toHaveLength(0);
     expect(status()).toBe('Không tìm thấy thuật ngữ nào.');
@@ -83,23 +97,51 @@ describe('glossary page', () => {
 });
 
 describe('glossary cross-links', () => {
-  it('clear a search that hides the entry they point at', async () => {
-    // jsdom has no layout, so it has no scrollIntoView either.
-    const scroll = vi.fn();
-    Element.prototype.scrollIntoView = scroll;
+  /**
+   * Clicks `link` and reports whether `id` was already shown when the click finished, that is
+   * before the browser follows the link and scrolls.
+   * @param {HTMLAnchorElement} link @param {string} id
+   */
+  function shownOnClick(link, id) {
+    let shownThen = false;
+    const check = () => (shownThen = !document.getElementById(id)?.hasAttribute('hidden'));
+    window.addEventListener('click', check, { once: true });
+    link.click();
+    return shownThen;
+  }
+
+  it('clear a search that hides the entry they point at, before the browser scrolls', () => {
     render(GlossaryPage);
     search('LIFO');
     const link = /** @type {HTMLAnchorElement} */ (
       document.querySelector('#stack a[href="#queue"]')
     );
-    link.click();
-    flushSync();
+    expect(shownOnClick(link, 'queue')).toBe(true);
     expect(
       /** @type {HTMLInputElement} */ (document.querySelector('input[type="search"]')).value,
     ).toBe('');
+  });
+
+  it('let the letter jump list clear the search too', () => {
+    render(GlossaryPage);
+    search('LIFO');
+    expect(document.getElementById('chu-q')?.hasAttribute('hidden')).toBe(true);
+    const link = /** @type {HTMLAnchorElement} */ (document.querySelector('a[href="#chu-s"]'));
+    expect(shownOnClick(link, 'chu-q')).toBe(true);
+  });
+
+  it('show a hidden entry a hash change lands on', async () => {
+    // jsdom has no layout, so it has no scrollIntoView either.
+    const scroll = vi.fn();
+    Element.prototype.scrollIntoView = scroll;
+    render(GlossaryPage);
+    search('LIFO');
+    location.hash = '#queue';
+    window.dispatchEvent(new HashChangeEvent('hashchange'));
+    flushSync();
     expect(document.getElementById('queue')?.hasAttribute('hidden')).toBe(false);
     await tick();
-    expect(scroll).toHaveBeenCalledOnce();
+    expect(scroll).toHaveBeenCalled();
   });
 });
 

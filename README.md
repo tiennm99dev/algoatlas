@@ -43,7 +43,7 @@ npm run stubs     # unwritten lessons per topic; `-- <topic>` lists one, `--stri
 npm run preview   # serve build/
 ```
 
-Size budget: no client JS chunk may pass 60 KB gzip. CI runs `npm run size-report` after the build and fails on a bigger one, so a page-wide import such as the whole lesson registry cannot slip into every page unnoticed.
+Size budget: no client JS chunk may pass 60 KB gzip. CI runs `npm run size-report` after the build and fails on a bigger one, so a page-wide import such as the whole lesson registry cannot slip into every page unnoticed. It also fails when `build/thuat-ngu/index.html` is missing or passes 540 KB raw, 100 KB gzip, or 40 KB of `class` attributes.
 
 ## Deploy
 
