@@ -32,17 +32,17 @@ const A = (Math.sqrt(5) - 1) / 2;
 
 /** @type {Record<FixedHash, string>} */
 const FIXED_LINE = {
-  mod: '  fixed:     b₁ = k mod 16',
-  multiply: '  fixed:     b₁ = ⌊16 · frac(k · 0.618…)⌋',
+  mod: '  cố định:   b₁ = k mod 16',
+  multiply: '  cố định:   b₁ = ⌊16 · frac(k · 0.618…)⌋',
 };
 
 /** @param {FixedHash} fn */
 const pseudocodeFor = (fn) => [
-  'for each key k:',
+  'for k in keys:',
   FIXED_LINE[fn],
-  '  universal: b₂ = ((a·k + b) mod 1009) mod 16',
+  '  phổ quát:  b₂ = ((a·k + b) mod 1009) mod 16',
   '  count[b₁] += 1;  count[b₂] += 1',
-  'colliding pairs = Σ c·(c − 1)/2 over the buckets',
+  'số cặp va chạm = Σ c·(c − 1)/2 trên mọi ngăn',
 ];
 
 /** @type {Record<FixedHash, string[]>} */

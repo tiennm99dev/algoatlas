@@ -21,7 +21,7 @@
     vebPseudocode,
     vebTrace,
   } from '$lib/algo-engine/van-emde-boas.js';
-  import { en as m } from '$lib/lessons/van-emde-boas/copy.en.js';
+  import { vi as m } from '$lib/lessons/van-emde-boas/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/van-emde-boas.js').VebOp} VebOp */

@@ -12,7 +12,7 @@
     makeKeys,
     parseKeys,
   } from '$lib/algo-engine/hash-table.js';
-  import { en as m } from '$lib/lessons/hash-table/copy.en.js';
+  import { vi as m } from '$lib/lessons/hash-table/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/hash-table.js').HashFn} HashFn */

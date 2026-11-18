@@ -10,14 +10,14 @@
     countTrace,
     parseWords,
   } from '$lib/algo-engine/sets-maps-counting.js';
-  import { en as m } from '$lib/lessons/sets-maps-counting/copy.en.js';
+  import { vi as m } from '$lib/lessons/sets-maps-counting/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/sets-maps-counting.js').CountMode} CountMode */
   /** @typedef {import('$lib/algo-engine/sets-maps-counting.js').WordPreset} WordPreset */
 
   const MODES = /** @type {CountMode[]} */ (['map', 'set']);
-  const PRESETS = /** @type {WordPreset[]} */ (['hat', 'woodchuck', 'hamlet']);
+  const PRESETS = /** @type {WordPreset[]} */ (['lua-nep', 'an-qua', 'noi-dong']);
 
   /** @param {string} text */
   const wordsOf = (text) => {
@@ -27,10 +27,10 @@
 
   // A fixed first stream keeps the prerendered HTML and the hydrated page identical.
   let mode = $state(/** @type {CountMode} */ ('map'));
-  let preset = $state('hat');
-  let text = $state(PRESET_TEXT.hat);
-  let lastValidText = PRESET_TEXT.hat;
-  const INITIAL_WORDS = wordsOf(PRESET_TEXT.hat);
+  let preset = $state('lua-nep');
+  let text = $state(PRESET_TEXT['lua-nep']);
+  let lastValidText = PRESET_TEXT['lua-nep'];
+  const INITIAL_WORDS = wordsOf(PRESET_TEXT['lua-nep']);
   let words = $state.raw(INITIAL_WORDS);
   let notice = $state({ text: '', at: -1 });
 

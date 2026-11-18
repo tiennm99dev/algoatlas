@@ -19,7 +19,7 @@ const perOp = (c, k) => ({
   veb: c.veb / k,
 });
 
-export const en = {
+export const vi = {
   slug: 'practice-advanced-heaps',
   topic: 'advanced-heaps',
   level: 'Nâng cao',

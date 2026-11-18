@@ -11,7 +11,7 @@
     loadPseudocode,
     loadTrace,
   } from '$lib/algo-engine/load-factor-rehashing.js';
-  import { en as m } from '$lib/lessons/load-factor-rehashing/copy.en.js';
+  import { vi as m } from '$lib/lessons/load-factor-rehashing/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/load-factor-rehashing.js').Growth} Growth */

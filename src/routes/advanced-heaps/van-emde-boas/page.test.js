@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/van-emde-boas/copy.en.js';
+import { vi as m } from '$lib/lessons/van-emde-boas/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;

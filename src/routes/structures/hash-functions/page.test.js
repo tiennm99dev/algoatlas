@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/hash-functions/copy.en.js';
+import { vi as m } from '$lib/lessons/hash-functions/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -69,21 +69,19 @@ function practice() {
 describe('designing hash functions lesson', () => {
   it('piles the attack keys into one bucket on the left only', () => {
     render();
-    expect(narration()).toContain(
-      'Left: k mod 16. Right: universal hashing with a = 389, b = 120.',
-    );
+    expect(narration()).toContain('Trái: k mod 16. Phải: băm phổ quát với a = 389, b = 120.');
     next(1);
-    expect(narration()).toBe('Key 0: 0 mod 16 = 0; ((389·0 + 120) mod 1009) mod 16 = 8.');
+    expect(narration()).toBe('Khoá 0: 0 mod 16 = 0; ((389·0 + 120) mod 1009) mod 16 = 8.');
     next(1);
-    expect(narration()).toBe('Left bucket 0 now holds 1 key; right bucket 8 holds 1 key.');
+    expect(narration()).toBe('Ngăn 0 bên trái giờ có 1 khoá; ngăn 8 bên phải có 1 khoá.');
     click(button('Đến bước cuối'));
     expect(narration()).toBe(
-      '32 keys hashed. Colliding pairs: 496 with the fixed hash, 19 with the universal one.',
+      'Đã băm 32 khoá. Số cặp va chạm: 496 với hàm băm cố định, 19 với hàm băm phổ quát.',
     );
     expect(byTest('left-max')).toBe('32');
     expect(byTest('left-empty')).toBe('15');
     expect(byTest('expected')).toBe(
-      'A truly random hash expects C(32, 2)/16 = 31 colliding pairs.',
+      'Một hàm băm thật sự ngẫu nhiên có kì vọng C(32, 2)/16 = 31 cặp va chạm.',
     );
   });
 
@@ -97,8 +95,8 @@ describe('designing hash functions lesson', () => {
     commit(a, '3');
     commit(b, '5');
     click(button('Đến bước cuối'));
-    expect(byTest('right-pairs')).toBe('Colliding pairs: 265');
-    expect(document.body.textContent).toContain('Universal: ((3·k + 5) mod 1009) mod 16');
+    expect(byTest('right-pairs')).toBe('Số cặp va chạm: 265');
+    expect(document.body.textContent).toContain('Phổ quát: ((3·k + 5) mod 1009) mod 16');
   });
 
   it('rebuilds the attack against the multiplication method', () => {
@@ -106,40 +104,40 @@ describe('designing hash functions lesson', () => {
     click(field('input[name="fixed"][value="multiply"]'));
     next(3);
     expect(narration()).toBe(
-      'Key 13: ⌊16 · frac(13 · 0.618…)⌋ = 0; ((389·13 + 120) mod 1009) mod 16 = 4.',
+      'Khoá 13: ⌊16 · frac(13 · 0.618…)⌋ = 0; ((389·13 + 120) mod 1009) mod 16 = 4.',
     );
     click(button('Đến bước cuối'));
-    expect(byTest('left-pairs')).toBe('Colliding pairs: 496');
+    expect(byTest('left-pairs')).toBe('Số cặp va chạm: 496');
   });
 
   it('spreads sequential keys evenly under k mod 16', () => {
     render();
     commit(field('select[name="keys"]'), 'sequential');
     click(button('Đến bước cuối'));
-    expect(byTest('left-pairs')).toBe('Colliding pairs: 16');
+    expect(byTest('left-pairs')).toBe('Số cặp va chạm: 16');
     expect(byTest('left-max')).toBe('2');
     commit(field('input[name="count"]'), '4');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('4 keys hashed.');
+    expect(narration()).toContain('Đã băm 4 khoá.');
   });
 
   it('draws new a and b from the button and offers new random keys', () => {
     render();
-    click(buttonByText('New a, b'));
+    click(buttonByText('Đổi a, b'));
     const a = Number(field('input[name="a"]').value);
     expect(a >= 1 && a <= 1008).toBe(true);
-    expect(document.body.textContent).toContain(`Universal: ((${a}·k`);
+    expect(document.body.textContent).toContain(`Phổ quát: ((${a}·k`);
     commit(field('select[name="keys"]'), 'random');
-    click(buttonByText('New keys'));
+    click(buttonByText('Bộ khoá mới'));
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('32 keys hashed.');
+    expect(narration()).toContain('Đã băm 32 khoá.');
   });
 
   it('steps with the arrow keys', () => {
     render();
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
     flushSync();
-    expect(narration()).toContain('Key 0:');
+    expect(narration()).toContain('Khoá 0:');
   });
 
   it('checks a practice answer, wrong then right, with a hint', () => {

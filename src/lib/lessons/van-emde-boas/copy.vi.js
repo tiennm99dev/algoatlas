@@ -5,7 +5,7 @@
 /** @param {number} k @param {string} one @param {string} many */
 const count = (k, one, many) => `${k} ${k === 1 ? one : many}`;
 
-export const en = {
+export const vi = {
   slug: 'van-emde-boas',
   topic: 'advanced-heaps',
   level: 'Nâng cao',

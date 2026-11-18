@@ -48,12 +48,12 @@ describe('countTrace', () => {
   });
 
   it('counts the list-scan comparisons of a front-to-back search', () => {
-    const words = parseWords(PRESET_TEXT.hamlet);
+    const words = parseWords(PRESET_TEXT['noi-dong']);
     if ('error' in words) throw new Error('preset must parse');
     const last = countTrace(words.words).at(-1);
-    // Misses cost 0 + 1 + 2 + 3 + 4 + 5 + 6 + 7; "to" and "be" are found at positions 1 and 2.
-    expect(last?.listCompares).toBe(31);
-    expect(last?.firstRepeat).toBe('to');
+    // Misses cost 0 + 1 + 2 + 3 + 4 + 5; "nồi" and "nấu" are found at positions 1 and 3.
+    expect(last?.listCompares).toBe(19);
+    expect(last?.firstRepeat).toBe('nồi');
   });
 
   it('pays (n − 1)n/2 list comparisons on all-distinct words but n hash lookups', () => {
@@ -108,6 +108,11 @@ describe('parseWords', () => {
     expect(parseWords('The cat, the HAT! Don’t stop.')).toEqual({
       words: ['the', 'cat', 'the', 'hat', "don't", 'stop'],
     });
+  });
+
+  it('keeps Vietnamese letters whole, in NFC', () => {
+    expect(parseWords('Nồi ĐỒNG, nấu ốc!')).toEqual({ words: ['nồi', 'đồng', 'nấu', 'ốc'] });
+    expect(parseWords('hoa\u0300')).toEqual({ words: ['hoà'] });
   });
 
   it('rejects empty, long and over-long input', () => {

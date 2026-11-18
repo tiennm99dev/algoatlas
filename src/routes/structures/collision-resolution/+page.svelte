@@ -15,7 +15,7 @@
     parseKeys,
     probeSlot,
   } from '$lib/algo-engine/collision-resolution.js';
-  import { en as m } from '$lib/lessons/collision-resolution/copy.en.js';
+  import { vi as m } from '$lib/lessons/collision-resolution/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/collision-resolution.js').ProbeMethod} ProbeMethod */

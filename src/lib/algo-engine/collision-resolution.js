@@ -51,15 +51,15 @@ const PROBE_LINE = {
 /** @param {ProbeMethod} method */
 const pseudocodeFor = (method) => [
   'insert(k):',
-  '  chaining: b = h(k) = k mod 11',
-  '    compare k with every key in chain b',
-  '    append k to chain b',
-  '  probing: for i = 0, 1, …, 10:',
+  '  móc nối: b = h(k) = k mod 11',
+  '    so sánh k với mọi khoá trong chuỗi b',
+  '    nối k vào cuối chuỗi b',
+  '  dò: for i = 0, 1, …, 10:',
   PROBE_LINE[method],
-  '    if slot s is empty: put k there and stop',
-  '    else slot s is taken: a collision, try i + 1',
-  '  every probe hit a taken slot: the insert fails',
-  'search(k): same order; stop at k (hit) or at an empty slot (miss)',
+  '    if ô s trống: đặt k vào đó rồi dừng',
+  '    else ô s đã có khoá: va chạm, thử i + 1',
+  '  mọi lần dò đều gặp ô đã có khoá: chèn thất bại',
+  'search(k): cùng thứ tự; dừng ở k (tìm thấy) hoặc ở ô trống (không thấy)',
 ];
 
 /** @type {Record<ProbeMethod, string[]>} */

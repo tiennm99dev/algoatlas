@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
 import { collisionTrace } from '$lib/algo-engine/collision-resolution.js';
-import { en as m } from '$lib/lessons/collision-resolution/copy.en.js';
+import { vi as m } from '$lib/lessons/collision-resolution/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -75,15 +75,11 @@ function practice() {
 describe('collision resolution lesson', () => {
   it('fills both tables and compares the costs at the end', () => {
     render();
-    expect(narration()).toContain(
-      'The left column uses chaining, the right column linear probing.',
-    );
+    expect(narration()).toContain('Cột trái dùng móc nối, cột phải dùng dò tuyến tính.');
     next(1);
-    expect(narration()).toBe('Insert 22: h(22) = 22 mod 11 = 0.');
+    expect(narration()).toBe('Chèn 22: h(22) = 22 mod 11 = 0.');
     click(button('Đến bước cuối'));
-    expect(narration()).toBe(
-      'Done. Chaining made 3 comparisons; linear probing inspected 14 slots.',
-    );
+    expect(narration()).toBe('Xong. Móc nối thực hiện 3 phép so sánh; dò tuyến tính đã xem 14 ô.');
     expect(byTest('probes')).toBe('14');
     expect(byTest('longest')).toBe('2');
     expect(slotCell(10)).toBe('30');
@@ -94,10 +90,10 @@ describe('collision resolution lesson', () => {
     // 22, 41, 53, 46 go home; 30 collides at 8 and 9, then lands in 10.
     click(button('Đến bước cuối'));
     const frames = 60;
-    for (let i = 0; i < frames && !narration().startsWith('Probe i = 2: slot 10'); i++) {
+    for (let i = 0; i < frames && !narration().startsWith('Lần dò i = 2: ô 10'); i++) {
       click(button('Bước trước'));
     }
-    expect(narration()).toBe('Probe i = 2: slot 10 is empty. 30 goes there after 2 collisions.');
+    expect(narration()).toBe('Lần dò i = 2: ô 10 trống. 30 vào ô này sau 2 lần va chạm.');
     const chips = [...document.querySelectorAll('ol li')].map((li) => li.textContent?.trim());
     expect(chips).toContain('i=0: 8');
     expect(chips).toContain('i=1: 9');
@@ -109,11 +105,11 @@ describe('collision resolution lesson', () => {
     pickMethod('quadratic');
     click(button('Đến bước cuối'));
     expect(byTest('failed')).toBe('1');
-    expect(narration()).toContain('could not place 1 key');
+    expect(narration()).toContain('không đặt được 1 khoá');
     pickMethod('double');
     next(1);
     expect(narration()).toBe(
-      'Insert 0: h(0) = 0 mod 11 = 0. Its step is h₂(0) = 7 − (0 mod 7) = 7.',
+      'Chèn 0: h(0) = 0 mod 11 = 0. Bước nhảy của nó là h₂(0) = 7 − (0 mod 7) = 7.',
     );
     click(button('Đến bước cuối'));
     expect(byTest('failed')).toBe('0');
@@ -122,16 +118,16 @@ describe('collision resolution lesson', () => {
 
   it('seeks to a search and charges a miss in both tables', () => {
     render();
-    click(buttonByText('Search'));
-    expect(narration()).toBe('Search for 34: h(34) = 34 mod 11 = 1.');
+    click(buttonByText('Tìm'));
+    expect(narration()).toBe('Tìm 34: h(34) = 34 mod 11 = 1.');
     next(3);
     expect(narration()).toBe(
-      'Chaining: 34 is not in chain 1. The miss cost 2 comparisons, the whole chain.',
+      'Móc nối: 34 không có trong chuỗi 1. Lần tìm trượt tốn 2 phép so sánh, tức cả chuỗi.',
     );
     click(button('Đến bước cuối'));
     click(button('Bước trước'));
     expect(narration()).toBe(
-      'Probing: slot 5 is empty, so 34 is not in the table. The miss cost 5 probes.',
+      'Dò: ô 5 trống, nên 34 không có trong bảng. Lần tìm trượt tốn 5 lần dò.',
     );
   });
 
@@ -141,10 +137,10 @@ describe('collision resolution lesson', () => {
     commit(input, '67');
     input.form?.requestSubmit();
     flushSync();
-    expect(narration()).toBe('Search for 67: h(67) = 67 mod 11 = 1.');
+    expect(narration()).toBe('Tìm 67: h(67) = 67 mod 11 = 1.');
     click(button('Đến bước cuối'));
     click(button('Bước trước'));
-    expect(narration()).toBe('Probing: found 67 in slot 4 after 4 probes.');
+    expect(narration()).toBe('Dò: tìm thấy 67 ở ô 4 sau 4 lần dò.');
   });
 
   it('keeps the last valid keys and search value on bad input', () => {
@@ -172,13 +168,13 @@ describe('collision resolution lesson', () => {
     const last = trace[trace.findIndex((f) => f.kind === 'fail') - 1];
     expect(last.attempt).toBe(10);
     expect(m.describe(last, 'quadratic')).toBe(
-      'Probe i = 10: slot 1 holds 11. A collision, and that was the last probe.',
+      'Lần dò i = 10: ô 1 chứa 11. Va chạm, và đó là lần dò cuối cùng.',
     );
   });
 
   it('says a search was cleared when the method changes', () => {
     render();
-    click(buttonByText('Search'));
+    click(buttonByText('Tìm'));
     pickMethod('double');
     expect(narration()).toBe(m.searchDropped);
     expect(document.body.textContent).toMatch(/Bước 1\//);
@@ -188,7 +184,7 @@ describe('collision resolution lesson', () => {
     render();
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
     flushSync();
-    expect(narration()).toBe('Insert 22: h(22) = 22 mod 11 = 0.');
+    expect(narration()).toBe('Chèn 22: h(22) = 22 mod 11 = 0.');
   });
 
   it('checks a practice answer, wrong then right, with a hint', () => {

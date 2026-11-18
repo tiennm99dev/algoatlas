@@ -6,7 +6,7 @@
  */
 
 /** @typedef {'map'|'set'} CountMode */
-/** @typedef {'hat'|'woodchuck'|'hamlet'} WordPreset */
+/** @typedef {'lua-nep'|'an-qua'|'noi-dong'} WordPreset */
 
 /**
  * @typedef {object} CountEntry
@@ -34,22 +34,22 @@ export const MAX_WORD_LENGTH = 12;
 /** @type {Record<CountMode, string[]>} */
 export const countPseudocode = {
   map: [
-    'count = empty hash map',
-    'for each word w in the stream:',
-    '  if w is in count:          // one hash lookup',
+    'count = hash map rỗng',
+    'for w in stream:',
+    '  if w in count:             // một lần tra bảng băm',
     '    count[w] = count[w] + 1',
     '  else:',
     '    count[w] = 1',
-    'list the entries by count, largest first',
+    'liệt kê các mục theo count, lớn nhất trước',
   ],
   set: [
-    'seen = empty hash set',
-    'for each word w in the stream:',
-    '  if w is in seen:           // one hash lookup',
-    '    w is a repeat',
+    'seen = hash set rỗng',
+    'for w in stream:',
+    '  if w in seen:              // một lần tra bảng băm',
+    '    w là từ lặp lại',
     '  else:',
-    '    add w to seen',
-    'seen holds every distinct word once',
+    '    thêm w vào seen',
+    'seen chứa mỗi từ khác nhau đúng một lần',
   ],
 };
 
@@ -116,18 +116,20 @@ export function countTrace(words) {
 
 /** @type {Record<WordPreset, string>} */
 export const PRESET_TEXT = {
-  hat: 'the cat and the hat and the bat sat on the mat',
-  woodchuck: 'how much wood would a woodchuck chuck if a woodchuck could chuck wood',
-  hamlet: 'to be or not to be that is the question',
+  'lua-nep': 'lúa nếp là lúa nếp làng lúa lên lớp lớp lòng nàng lâng lâng',
+  'an-qua': 'ăn quả nhớ kẻ trồng cây ăn khoai nhớ kẻ cho dây mà trồng',
+  'noi-dong': 'nồi đồng nấu ốc nồi đất nấu ếch',
 };
 
 /**
- * Splits text into lower-case words of letters and inner apostrophes.
+ * Splits text into lower-case words of letters (Vietnamese tone marks included, in NFC) and
+ * inner apostrophes.
  * @param {string} text
  * @returns {{words: string[]} | {error: 'empty'|'count'|'length'}}
  */
 export function parseWords(text) {
-  const words = (text.toLowerCase().match(/[a-z]+(?:['’][a-z]+)*/g) ?? []).map((w) =>
+  const lower = text.normalize('NFC').toLowerCase();
+  const words = (lower.match(/[\p{L}\p{M}]+(?:['’][\p{L}\p{M}]+)*/gu) ?? []).map((w) =>
     w.replace(/’/g, "'"),
   );
   if (words.length === 0) return { error: 'empty' };

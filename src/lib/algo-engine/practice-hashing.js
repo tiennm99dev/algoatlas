@@ -40,21 +40,21 @@ export const MAX_WORD_LENGTH = 8;
 /** @type {Record<HashProblem, string[]>} */
 export const hashPracticePseudocode = {
   'two-sum': [
-    'seen = empty map            // value → index',
+    'seen = map rỗng             // giá trị → chỉ số',
     'for i = 0, 1, …, n − 1:',
     '  need = target − nums[i]',
-    '  if need is in seen:',
+    '  if need in seen:',
     '    return (seen[need], i)',
     '  seen[nums[i]] = i',
-    'return "no pair"',
+    'return "không có cặp nào"',
   ],
   anagrams: [
-    'groups = empty map          // sorted letters → words',
-    'for each word w:',
-    '  key = the letters of w, sorted',
-    '  if key is in groups: append w to groups[key]',
+    'groups = map rỗng           // chữ cái đã sắp → các từ',
+    'for w in words:',
+    '  key = các chữ cái của w, đã sắp xếp',
+    '  if key in groups: nối w vào cuối groups[key]',
     '  else: groups[key] = [w]',
-    'return the lists in groups',
+    'return các danh sách trong groups',
   ],
 };
 

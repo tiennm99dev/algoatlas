@@ -67,8 +67,8 @@ describe('hash table lesson', () => {
   it('ends with the inserts done and the table grown to 23', () => {
     render();
     toEnd();
-    expect(text()).toContain('Inserted 10 keys into 23 buckets.');
-    expect(stat('Table size')).toBe('23');
+    expect(text()).toContain('Đã chèn 10 khoá vào 23 ngăn.');
+    expect(stat('Kích thước bảng')).toBe('23');
   });
 
   it('switching to multiplication resets and shows its formula', () => {
@@ -78,7 +78,7 @@ describe('hash table lesson', () => {
     expect(text()).toMatch(/Bước 1\//);
     expect(text()).toContain('frac(k');
     toEnd();
-    expect(text()).toContain('into 16 buckets');
+    expect(text()).toContain('vào 16 ngăn');
   });
 
   it('multiples of 8 pile up under a power of two and spread under a prime', () => {
@@ -86,36 +86,36 @@ describe('hash table lesson', () => {
     commit(field('select[name="preset"]'), 'multiples-of-8');
     click(field('input[value="mod-pow2"]'));
     toEnd();
-    expect(stat('Longest chain')).toBe('5');
+    expect(stat('Chuỗi dài nhất')).toBe('5');
     click(field('input[value="mod-prime"]'));
     toEnd();
-    expect(stat('Longest chain')).toBe('1');
+    expect(stat('Chuỗi dài nhất')).toBe('1');
   });
 
   it('seeks to a missing-key search and reports the whole chain', () => {
     render();
     commit(field('input[type="number"]'), '62');
-    click(buttonByText('Search'));
-    expect(text()).toContain('Search 62: hash to bucket 16.');
+    click(buttonByText('Tìm'));
+    expect(text()).toContain('Tìm 62: băm vào ngăn 16.');
     toEnd();
-    expect(text()).toContain('62 is not in chain 16: 2 comparisons.');
+    expect(text()).toContain('62 không có trong chuỗi 16: tốn 2 phép so sánh.');
   });
 
   it('stops a search hit at the key’s position', () => {
     render();
     commit(field('input[type="number"]'), '39');
-    click(buttonByText('Search'));
+    click(buttonByText('Tìm'));
     toEnd();
-    expect(text()).toContain('Found 39 at position 0 of chain 16 after 1 comparison.');
+    expect(text()).toContain('Tìm thấy 39 ở vị trí 0 của chuỗi 16 sau 1 phép so sánh.');
   });
 
   it('keeps the last valid keys when custom text is invalid', () => {
     render();
     commit(field('select[name="preset"]'), 'custom');
-    const before = text().match(/Step \d+ of \d+/)?.[0];
+    const before = text().match(/Bước \d+\/\d+/)?.[0];
     commit(field('input[type="text"]'), '5, -3');
-    expect(text()).toContain('Keys must be whole numbers from 0 to 999.');
-    expect(text().match(/Step \d+ of \d+/)?.[0]).toBe(before);
+    expect(text()).toContain('Các khoá phải là số nguyên từ 0 đến 999.');
+    expect(text().match(/Bước \d+\/\d+/)?.[0]).toBe(before);
     expect(field('input[type="text"]').value).toBe('12, 44, 13, 88, 23, 94, 11, 39, 20, 16');
   });
 
@@ -125,15 +125,15 @@ describe('hash table lesson', () => {
     commit(field('input[type="text"]'), '5, -3');
     expect(document.querySelector('[role="alert"]')).toBeNull();
     const narration = document.querySelector('p[aria-live]');
-    expect(narration?.textContent).toContain('Keys must be whole numbers from 0 to 999.');
+    expect(narration?.textContent).toContain('Các khoá phải là số nguyên từ 0 đến 999.');
     click(button('Bước tiếp'));
-    expect(document.querySelector('p[aria-live]')?.textContent).not.toContain('Keys must be');
+    expect(document.querySelector('p[aria-live]')?.textContent).not.toContain('Các khoá phải');
   });
 
   it('confirms new keys in the narration', () => {
     render();
-    click(buttonByText('New keys'));
-    expect(document.querySelector('p[aria-live]')?.textContent).toContain('New keys loaded.');
+    click(buttonByText('Bộ khoá mới'));
+    expect(document.querySelector('p[aria-live]')?.textContent).toContain('Đã nạp bộ khoá mới.');
   });
 
   it('keeps the last valid search key when the entry is invalid', () => {
@@ -141,12 +141,12 @@ describe('hash table lesson', () => {
     const input = field('input[type="number"]');
     commit(input, '1500');
     expect(input.value).toBe('62');
-    expect(text()).toContain('Keys must be whole numbers from 0 to 999.');
+    expect(text()).toContain('Các khoá phải là số nguyên từ 0 đến 999.');
     commit(input, '39');
     commit(input, '');
     expect(input.value).toBe('39');
-    click(buttonByText('Search'));
-    expect(text()).toContain('Search 39: hash to bucket');
+    click(buttonByText('Tìm'));
+    expect(text()).toContain('Tìm 39: băm vào ngăn');
   });
 
   it('draws the hit chip at the end of a long colliding chain', () => {
@@ -155,11 +155,11 @@ describe('hash table lesson', () => {
     const keys = Array.from({ length: 22 }, (_, i) => i * 47);
     commit(field('input[type="text"]'), keys.join(', '));
     commit(field('input[type="number"]'), '987');
-    click(buttonByText('Search'));
+    click(buttonByText('Tìm'));
     toEnd();
-    expect(text()).toContain('Found 987 at position 21');
-    const hit = [...document.querySelectorAll('ol[aria-label="Buckets"] span.sr-only')].find((e) =>
-      e.textContent?.includes('found'),
+    expect(text()).toContain('Tìm thấy 987 ở vị trí 21');
+    const hit = [...document.querySelectorAll('ol[aria-label="Các ngăn"] span.sr-only')].find((e) =>
+      e.textContent?.includes('tìm thấy'),
     );
     expect(hit?.parentElement?.textContent).toContain('987');
   });
@@ -170,24 +170,24 @@ describe('hash table lesson', () => {
     commit(input, '39');
     input.form?.requestSubmit();
     flushSync();
-    expect(text()).toContain('Search 39: hash to bucket');
+    expect(text()).toContain('Tìm 39: băm vào ngăn');
   });
 
   it('says a search was cleared when the hash function changes', () => {
     render();
-    click(buttonByText('Search'));
-    expect(text()).toContain('Search 62: hash to bucket');
+    click(buttonByText('Tìm'));
+    expect(text()).toContain('Tìm 62: băm vào ngăn');
     click(field('input[value="mod-pow2"]'));
     expect(document.querySelector('p[aria-live]')?.textContent).toContain(
-      'The search was cleared because the table changed.',
+      'Phép tìm đã bị xoá vì bảng vừa thay đổi.',
     );
     expect(text()).toMatch(/Bước 1\//);
   });
 
   it('gives each bucket index a spoken Bucket prefix', () => {
     render();
-    const first = document.querySelector('ol[aria-label="Buckets"] li');
-    expect(first?.querySelector('span.sr-only')?.textContent).toBe('Bucket ');
-    expect(first?.textContent).toMatch(/^Bucket 0/);
+    const first = document.querySelector('ol[aria-label="Các ngăn"] li');
+    expect(first?.querySelector('span.sr-only')?.textContent).toBe('Ngăn ');
+    expect(first?.textContent).toMatch(/^Ngăn 0/);
   });
 });

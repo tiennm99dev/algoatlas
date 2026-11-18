@@ -38,20 +38,20 @@ export const MAX_INSERTS = 32;
 export const loadPseudocode = {
   double: [
     'insert(k):',
-    '  append k to chain k mod m;  n = n + 1',
+    '  nối k vào chuỗi k mod m;  n = n + 1',
     '  α = n / m',
     '  if α > threshold:',
     '    m′ = 2 · m',
-    '    move every key k to chain k mod m′   // n moves',
+    '    dời mọi khoá k sang chuỗi k mod m′   // n lần dời',
     '    m = m′',
   ],
   add: [
     'insert(k):',
-    '  append k to chain k mod m;  n = n + 1',
+    '  nối k vào chuỗi k mod m;  n = n + 1',
     '  α = n / m',
     '  if α > threshold:',
     '    m′ = m + 4',
-    '    move every key k to chain k mod m′   // n moves',
+    '    dời mọi khoá k sang chuỗi k mod m′   // n lần dời',
     '    m = m′',
   ],
 };

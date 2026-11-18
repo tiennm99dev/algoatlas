@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/practice-hashing/copy.en.js';
+import { vi as m } from '$lib/lessons/practice-hashing/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -71,14 +71,14 @@ function practice() {
 describe('practice: hashing problems lesson', () => {
   it('solves the classic two-sum and shows the map after each step', () => {
     render();
-    expect(narration()).toBe('The map seen is empty. Find two numbers in nums that add up to 9.');
+    expect(narration()).toBe('Map seen đang rỗng. Tìm hai số trong nums có tổng bằng 9.');
     next(1);
-    expect(narration()).toBe('i = 0: nums[0] = 2, so need = 9 − 2 = 7. Is 7 in seen?');
+    expect(narration()).toBe('i = 0: nums[0] = 2, nên need = 9 − 2 = 7. 7 có trong seen không?');
     next(1);
-    expect(narration()).toBe('No. Store seen[2] = 0 and move on.');
+    expect(narration()).toBe('Không. Lưu seen[2] = 0 rồi đi tiếp.');
     expect(mapRows()).toEqual([['2', '0']]);
     next(2);
-    expect(narration()).toBe('Yes: seen[2] = 0. nums[0] + nums[1] = 2 + 7 = 9. Return (0, 1).');
+    expect(narration()).toBe('Có: seen[2] = 0. nums[0] + nums[1] = 2 + 7 = 9. Trả về (0, 1).');
     expect(byTest('result')).toBe('(0, 1)');
     expect(byTest('lookups')).toBe('2');
   });
@@ -87,13 +87,15 @@ describe('practice: hashing problems lesson', () => {
     render();
     commit(field('select[name="preset"]'), 'late');
     click(button('Đến bước cuối'));
-    expect(narration()).toBe('Done: (4, 5) after 6 lookups, which settled 15 pairs.');
+    expect(narration()).toBe('Xong: (4, 5) sau 6 lần tra, đã xét xong 15 cặp.');
     commit(field('select[name="preset"]'), 'none');
     click(button('Đến bước cuối'));
-    expect(byTest('result')).toBe('no pair');
+    expect(byTest('result')).toBe('không có cặp');
     expect(byTest('entries')).toBe('4');
     click(button('Bước trước'));
-    expect(narration()).toBe('No two numbers add up to 20: 4 lookups settled all 6 pairs.');
+    expect(narration()).toBe(
+      'Không có hai số nào có tổng bằng 20: 4 lần tra đã xét xong cả 6 cặp.',
+    );
   });
 
   it('never pairs a number with itself and keeps the last valid input', () => {
@@ -101,7 +103,7 @@ describe('practice: hashing problems lesson', () => {
     commit(field('input[name="nums"]'), '5');
     commit(field('input[name="target"]'), '10');
     click(button('Đến bước cuối'));
-    expect(narration()).toBe('Done: there is no pair.');
+    expect(narration()).toBe('Xong: không có cặp nào.');
     commit(field('input[name="nums"]'), '5, x');
     expect(narration()).toBe(m.numsErrors.format);
     expect(field('input[name="nums"]').value).toBe('5');
@@ -117,11 +119,11 @@ describe('practice: hashing problems lesson', () => {
     render();
     click(field('input[name="problem"][value="anagrams"]'));
     next(1);
-    expect(narration()).toBe('“eat” sorted is “aet”. Is “aet” in groups?');
+    expect(narration()).toBe('Sắp xếp chữ cái của “eat” được “aet”. “aet” có trong groups không?');
     next(3);
-    expect(narration()).toBe('Yes: append “tea” to groups[“aet”], which now holds 2 words.');
+    expect(narration()).toBe('Có: nối “tea” vào groups[“aet”], giờ nhóm này có 2 từ.');
     click(button('Đến bước cuối'));
-    expect(narration()).toBe('Done: 6 words in 3 groups.');
+    expect(narration()).toBe('Xong: 6 từ thuộc 3 nhóm.');
     expect(mapRows()).toEqual([
       ['aet', 'eat, tea, ate'],
       ['ant', 'tan, nat'],

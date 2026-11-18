@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/load-factor-rehashing/copy.en.js';
+import { vi as m } from '$lib/lessons/load-factor-rehashing/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -65,34 +65,34 @@ describe('load factor and rehashing lesson', () => {
   it('inserts, crosses the threshold and rehashes key by key', () => {
     render();
     expect(narration()).toBe(
-      'An empty table with 4 buckets. It grows by doubling m when α passes 0.75.',
+      'Một bảng rỗng có 4 ngăn. Bảng lớn lên bằng cách gấp đôi m khi α vượt 0.75.',
     );
     next(1);
-    expect(narration()).toBe('Insert 12 into chain 12 mod 4 = 0. Now n = 1. One step.');
+    expect(narration()).toBe('Chèn 12 vào chuỗi 12 mod 4 = 0. Giờ n = 1. Tốn một bước.');
     next(7);
-    expect(narration()).toBe('α = 4/4 = 1.00 > 0.75: time to grow.');
-    expect(byTest('gauge')).toContain('over the threshold');
+    expect(narration()).toBe('α = 4/4 = 1.00 > 0.75: đến lúc mở rộng.');
+    expect(byTest('gauge')).toContain('vượt ngưỡng');
     expect(document.querySelector('[role="meter"]')?.getAttribute('aria-valuenow')).toBe('1');
     next(1);
     expect(narration()).toBe(
-      'Allocate 8 buckets by doubling m. All 4 keys must move, because k mod 8 is not k mod 4.',
+      'Cấp phát 8 ngăn bằng cách gấp đôi m. Cả 4 khoá phải dời, vì k mod 8 khác k mod 4.',
     );
     next(1);
-    expect(narration()).toBe('Move 12 to chain 12 mod 8 = 4. 3 keys still waiting.');
-    expect(document.body.textContent).toContain('Rehashing into 8 buckets');
+    expect(narration()).toBe('Dời 12 sang chuỗi 12 mod 8 = 4. Còn 3 khoá đang chờ.');
+    expect(document.body.textContent).toContain('Đang băm lại vào 8 ngăn');
     next(4);
-    expect(narration()).toBe('Rehashed: α drops to 4/8 = 0.50. This insert cost 1 + 4 = 5 steps.');
-    expect(byTest('gauge')).not.toContain('over the threshold');
+    expect(narration()).toBe('Đã băm lại: α giảm còn 4/8 = 0.50. Lần chèn này tốn 1 + 4 = 5 bước.');
+    expect(byTest('gauge')).not.toContain('vượt ngưỡng');
   });
 
   it('ends with the total and the average cost', () => {
     render();
     click(button('Đến bước cuối'));
     expect(narration()).toBe(
-      '12 inserts cost 23 steps with 2 resizes: 1.92 steps per insert on average.',
+      '12 lần chèn tốn 23 bước, có 2 lần đổi kích thước: trung bình 1.92 bước mỗi lần chèn.',
     );
     expect(byTest('m')).toBe('16');
-    expect(byTest('average')).toBe('Average: 23/12 = 1.92 steps per insert');
+    expect(byTest('average')).toBe('Trung bình: 23/12 = 1.92 bước mỗi lần chèn');
   });
 
   it('shows adding 4 buckets costing more than doubling', () => {
@@ -115,7 +115,7 @@ describe('load factor and rehashing lesson', () => {
     click(button('Đến bước cuối'));
     expect(byTest('m')).toBe('4');
     expect(byTest('grows')).toBe('0');
-    expect(byTest('gauge')).toBe('α = 32/4 = 8.00, never resizes');
+    expect(byTest('gauge')).toBe('α = 32/4 = 8.00, không bao giờ đổi kích thước');
     expect(Number(byTest('longest'))).toBeGreaterThanOrEqual(8);
   });
 

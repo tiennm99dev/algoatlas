@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/sets-maps-counting/copy.en.js';
+import { vi as m } from '$lib/lessons/sets-maps-counting/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -67,34 +67,34 @@ function practice() {
 describe('sets, maps and frequency counting lesson', () => {
   it('counts the words and re-sorts the map by frequency', () => {
     render();
-    expect(narration()).toBe('The map count is empty. Each word will cost one hash lookup.');
+    expect(narration()).toBe('Ánh xạ count đang rỗng. Mỗi từ sẽ tốn một lần tra bảng băm.');
     next(1);
-    expect(narration()).toBe('Read “the”, word 1. Is it a key of count?');
+    expect(narration()).toBe('Đọc “lúa”, từ thứ 1. Nó đã là khoá của count chưa?');
     next(1);
-    expect(narration()).toBe('No: add “the” with count 1. The map now has 1 key.');
+    expect(narration()).toBe('Chưa: thêm “lúa” với số đếm 1. Ánh xạ giờ có 1 khoá.');
     next(6);
-    expect(narration()).toBe('Yes: count[“the”] goes from 1 to 2.');
-    expect(mapRows()[0]).toBe('the: 2');
+    expect(narration()).toBe('Rồi: count[“lúa”] tăng từ 1 lên 2.');
+    expect(mapRows()[0]).toBe('lúa: 2');
     click(button('Đến bước cuối'));
-    expect(narration()).toBe('Done. 12 words, 8 distinct. Most frequent: “the”, 4 times.');
-    expect(mapRows().slice(0, 2)).toEqual(['the: 4', 'and: 2']);
-    expect(byTest('lookups')).toBe('12');
-    expect(byTest('list-compares')).toBe('34');
+    expect(narration()).toBe('Xong. 14 từ, 9 từ khác nhau. Xuất hiện nhiều nhất: “lúa”, 3 lần.');
+    expect(mapRows().slice(0, 2)).toEqual(['lúa: 3', 'nếp: 2']);
+    expect(byTest('lookups')).toBe('14');
+    expect(byTest('list-compares')).toBe('55');
   });
 
   it('finds the first repeat with a set', () => {
     render();
-    commit(field('select[name="preset"]'), 'woodchuck');
+    commit(field('select[name="preset"]'), 'an-qua');
     click(field('input[name="mode"][value="set"]'));
-    next(18);
-    expect(narration()).toBe('Yes: “a” is already in seen. It is the first repeated word.');
-    expect(byTest('first-repeat')).toBe('a');
+    next(14);
+    expect(narration()).toBe('Rồi: “ăn” đã có trong seen. Đây là từ lặp lại đầu tiên.');
+    expect(byTest('first-repeat')).toBe('ăn');
     click(button('Đến bước cuối'));
-    expect(narration()).toBe('Done. 9 distinct words out of 13; 4 words were repeats.');
-    expect(document.querySelector('[data-testid="set"]')?.textContent).toContain('woodchuck');
+    expect(narration()).toBe('Xong. Có 10 từ khác nhau trong 14 từ; 4 từ là từ lặp lại.');
+    expect(document.querySelector('[data-testid="set"]')?.textContent).toContain('trồng');
     click(field('input[name="mode"][value="map"]'));
     expect(narration()).toBe(
-      'Done. 13 words, 9 distinct. Most frequent: “wood”, “a”, “woodchuck” and “chuck”, 2 times each.',
+      'Xong. 14 từ, 10 từ khác nhau. Xuất hiện nhiều nhất: “ăn”, “nhớ”, “kẻ” và “trồng”, mỗi từ 2 lần.',
     );
   });
 
@@ -103,7 +103,7 @@ describe('sets, maps and frequency counting lesson', () => {
     const input = field('input[name="words"]');
     commit(input, '123 !!');
     expect(narration()).toBe(m.wordErrors.empty);
-    expect(input.value).toBe('the cat and the hat and the bat sat on the mat');
+    expect(input.value).toBe('lúa nếp là lúa nếp làng lúa lên lớp lớp lòng nàng lâng lâng');
     commit(input, 'B a, A b c');
     click(button('Đến bước cuối'));
     expect(mapRows()).toEqual(['b: 2', 'a: 2', 'c: 1']);
@@ -114,7 +114,7 @@ describe('sets, maps and frequency counting lesson', () => {
     render();
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
     flushSync();
-    expect(narration()).toBe('Read “the”, word 1. Is it a key of count?');
+    expect(narration()).toBe('Đọc “lúa”, từ thứ 1. Nó đã là khoá của count chưa?');
   });
 
   it('checks a practice answer, wrong then right, with a hint', () => {
@@ -127,7 +127,7 @@ describe('sets, maps and frequency counting lesson', () => {
       );
       flushSync();
     };
-    answer.value = 'wood';
+    answer.value = 'quả';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
     expect(q.textContent).toContain('Chưa đúng');
@@ -136,7 +136,7 @@ describe('sets, maps and frequency counting lesson', () => {
     );
     click(/** @type {HTMLButtonElement} */ (hint));
     expect(q.textContent).toContain(m.practice[1].hints[0]);
-    answer.value = 'a';
+    answer.value = 'ăn';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();
     expect(q.textContent).toContain('Đúng rồi!');

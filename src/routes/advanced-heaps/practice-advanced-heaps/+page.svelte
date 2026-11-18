@@ -21,7 +21,7 @@
     opCost,
     racePseudocode,
   } from '$lib/algo-engine/practice-advanced-heaps.js';
-  import { en as m } from '$lib/lessons/practice-advanced-heaps/copy.en.js';
+  import { vi as m } from '$lib/lessons/practice-advanced-heaps/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/practice-advanced-heaps.js').RaceMode} RaceMode */
