@@ -53,7 +53,7 @@ export const dfsTopoPseudocode = [
   'visit(u):',
   '  đánh dấu u đang thăm',
   '  for v in adj[u]:  // mỗi cạnh u → v',
-  '    if v đang thăm: cạnh ngược, có chu trình — stop',
+  '    if v đang thăm: cạnh ngược, có chu trình — dá»«ng',
   '    if v chưa thăm: visit(v)',
   '  đánh dấu u hoàn tất; finished.append(u)',
   'order = finished đảo ngược',

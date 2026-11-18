@@ -82,7 +82,7 @@ export const primPseudocode = {
     'key[v] = ∞ với mọi v; key[s] = 0',
     'lặp lại V lần:',
     '  u = đỉnh ngoài tree có khoá nhỏ nhất   // duyệt hết các đỉnh',
-    '  if key[u] = ∞: stop   // phần còn lại không tới được',
+    '  if key[u] = ∞: dá»«ng   // phần còn lại không tới được',
     '  thêm u và cạnh parent[u] — u vào tree',
     '  for x in adj[u] if x not in tree:  // mỗi cạnh u — x',
     '    if w(u — x) < key[x]: key[x] = w(u — x); parent[x] = u',

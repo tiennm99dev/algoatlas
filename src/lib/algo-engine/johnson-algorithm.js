@@ -60,7 +60,7 @@ export const johnsonPseudocode = [
   'thêm đỉnh q và cạnh q → v trọng số 0 với mọi v',
   'Bellman-Ford từ q: h[q] = 0, mọi h khác = ∞; tối đa V vòng:',
   '  for (u, v, w) in edges: if h[u] + w < h[v]: h[v] = h[u] + w',
-  'if còn cạnh nới lỏng được: có chu trình âm; stop',
+  'if còn cạnh nới lỏng được: có chu trình âm; dá»«ng',
   'for (u, v, w) in edges: w′ = w + h[u] − h[v]        // w′ ≥ 0',
   'for s in V:',
   '  Dijkstra từ s với trọng số w′: d′[s] = 0, còn lại ∞',

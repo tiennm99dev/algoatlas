@@ -55,7 +55,7 @@ export const kruskalPseudocode = [
   'sắp xếp các cạnh theo trọng số',
   'mỗi đỉnh là một tập riêng; tree = []',
   'for u — v in sortedEdges:  // theo thứ tự đã sắp xếp',
-  '  if tree có V − 1 cạnh: stop',
+  '  if tree có V − 1 cạnh: dá»«ng',
   '  if find(u) = find(v): bỏ qua   // sẽ khép một chu trình',
   '  union(u, v); thêm u — v vào tree',
   'return tree',

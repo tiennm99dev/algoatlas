@@ -22,7 +22,7 @@ export const appPseudocode = {
     'for c in s:',
     '  if c in "([{": push(c)',
     '  else if c in ")]}":',
-    '    if stack rỗng or top không khớp c: không cân đối, stop',
+    '    if stack rỗng or top không khớp c: không cân đối, dá»«ng',
     '    pop()',
     'cân đối khi và chỉ khi cuối cùng stack rỗng',
   ],

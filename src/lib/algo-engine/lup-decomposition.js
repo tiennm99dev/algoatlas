@@ -23,26 +23,26 @@ const LINES = {
 
 export const lupPseudocode = [
   'for k = 0 to n − 1:',
-  '  p = the row i ≥ k with the largest |a[i][k]|',
-  '  if a[p][k] = 0: stop, A is singular',
-  '  swap rows k and p of a, and π[k] with π[p]',
+  '  p = hàng i ≥ k có |a[i][k]| lớn nhất',
+  '  if a[p][k] = 0: dừng, A suy biến',
+  '  swap hàng k và hàng p của a, và π[k] với π[p]',
   '  for i = k + 1 to n − 1:',
-  '    a[i][k] = a[i][k] / a[k][k]      (into L)',
-  '    a[i][j] −= a[i][k] · a[k][j] for j > k   (U)',
-  'y[i] = b[π[i]] − Σ(j < i) l[i][j]·y[j], top down',
-  'x[i] = (y[i] − Σ(j > i) u[i][j]·x[j]) / u[i][i], bottom up',
+  '    a[i][k] = a[i][k] / a[k][k]      (ghi vào L)',
+  '    a[i][j] −= a[i][k] · a[k][j] với j > k   (U)',
+  'y[i] = b[π[i]] − Σ(j < i) l[i][j]·y[j], từ trên xuống',
+  'x[i] = (y[i] − Σ(j > i) u[i][j]·x[j]) / u[i][i], từ dưới lên',
   'return x',
 ];
 
 export const luPseudocode = [
   'for k = 0 to n − 1:',
-  '  p = k   (no pivoting)',
-  '  if a[k][k] = 0: stop, zero pivot',
+  '  p = k   (không chọn chốt)',
+  '  if a[k][k] = 0: dừng, chốt bằng 0',
   '  for i = k + 1 to n − 1:',
-  '    a[i][k] = a[i][k] / a[k][k]      (into L)',
-  '    a[i][j] −= a[i][k] · a[k][j] for j > k   (U)',
-  'y[i] = b[i] − Σ(j < i) l[i][j]·y[j], top down',
-  'x[i] = (y[i] − Σ(j > i) u[i][j]·x[j]) / u[i][i], bottom up',
+  '    a[i][k] = a[i][k] / a[k][k]      (ghi vào L)',
+  '    a[i][j] −= a[i][k] · a[k][j] với j > k   (U)',
+  'y[i] = b[i] − Σ(j < i) l[i][j]·y[j], từ trên xuống',
+  'x[i] = (y[i] − Σ(j > i) u[i][j]·x[j]) / u[i][i], từ dưới lên',
   'return x',
 ];
 

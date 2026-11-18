@@ -22,7 +22,7 @@ export const rankPseudocode = [
   '  return r',
   'union(a, b):',
   '  ra = find(a); rb = find(b)',
-  '  if ra == rb: stop',
+  '  if ra == rb: dá»«ng',
   '  if byRank and rank[ra] < rank[rb]: swap(ra, rb)',
   '  parent[rb] = ra',
   '  if byRank and rank[ra] == rank[rb]: rank[ra] += 1',

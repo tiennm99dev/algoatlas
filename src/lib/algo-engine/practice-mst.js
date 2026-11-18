@@ -83,7 +83,7 @@ export const bottleneckPseudocode = [
   'for u — v in sortedEdges:  // theo thứ tự đã sắp xếp',
   '  if find(u) = find(v): bỏ qua',
   '  union(u, v)',
-  '  if find(s) = find(t): bottleneck = w(u — v); stop',
+  '  if find(s) = find(t): bottleneck = w(u — v); dá»«ng',
   'đường s → t trong rừng: không cạnh nào trên đó nặng hơn nút cổ chai',
 ];
 

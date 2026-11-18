@@ -36,7 +36,7 @@ export const aStarPseudocode = [
   'while open khác rỗng:',
   '  cell = open.popMin()            // f = g + h nhỏ nhất; nếu hoà: h nhỏ hơn',
   '  if closed[cell]: continue       // mục cũ',
-  '  closed[cell] = true; if cell == goal: lần theo parent để dựng đường đi; stop',
+  '  closed[cell] = true; if cell == goal: lần theo parent để dựng đường đi; dá»«ng',
   '  for n in openNeighbors(cell) if not closed[n]:',
   '    if g[cell] + 1 < g[n]:',
   '      g[n] = g[cell] + 1; parent[n] = cell; open.push((g[n] + h(n), n))',

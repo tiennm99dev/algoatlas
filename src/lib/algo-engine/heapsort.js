@@ -34,7 +34,7 @@ export const heapsortPseudocode = [
   'siftDown(a, i, size):',
   '  while 2i + 1 < size:  // i có con',
   '    c = con lớn hơn của i',
-  '    if a[c] <= a[i]: stop',
+  '    if a[c] <= a[i]: dá»«ng',
   '    swap(a[i], a[c]); i = c',
   'xong: a đã được sắp xếp',
 ];

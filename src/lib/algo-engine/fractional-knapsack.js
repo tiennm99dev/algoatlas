@@ -67,7 +67,7 @@ export const knapsackPseudocode = [
   '  sắp xếp items theo value / weight, cao nhất trước',
   '  room = W; total = 0',
   '  for i in items:  // theo thứ tự đã sắp xếp',
-  '    if room = 0: stop  // túi đã đầy',
+  '    if room = 0: dá»«ng  // túi đã đầy',
   '    take = min(wᵢ, room)  // cả vật, hoặc phần còn vừa',
   '    total = total + vᵢ · take / wᵢ; room = room − take',
   '  return total',

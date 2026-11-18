@@ -46,7 +46,7 @@ export const twoSatPseudocode = [
   'for (a ∨ b) in clauses: thêm các cạnh ¬a → b và ¬b → a',
   'tìm các SCC của đồ thị kéo theo (Tarjan tìm thành phần không có cạnh ra trước)',
   'for x in variables:',
-  '  if x và ¬x cùng một SCC: vô nghiệm, stop',
+  '  if x và ¬x cùng một SCC: vô nghiệm, dá»«ng',
   '  x = true if comp[x] được tìm thấy trước comp[¬x], else false',
   'mọi mệnh đề đều được thoả',
 ];

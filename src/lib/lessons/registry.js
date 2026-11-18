@@ -22,9 +22,8 @@ export { lessonNeighbors, lessonPath, topicPath } from './paths.js';
  */
 
 // A lesson registers itself by adding `<slug>/copy.vi.js`; the curriculum decides its place.
-// Lessons still on the old `copy.en.js` name are read too, until every copy is renamed.
-const modules = /** @type {Record<string, {vi?: LessonCopy, en?: LessonCopy}>} */ (
-  import.meta.glob(['./*/copy.vi.js', './*/copy.en.js'], { eager: true })
+const modules = /** @type {Record<string, { vi: LessonCopy }>} */ (
+  import.meta.glob('./*/copy.vi.js', { eager: true })
 );
 
 /**
@@ -33,7 +32,7 @@ const modules = /** @type {Record<string, {vi?: LessonCopy, en?: LessonCopy}>} *
  */
 export const lessons = Object.values(modules)
   .map((mod) => {
-    const copy = /** @type {LessonCopy} */ (mod.vi ?? mod.en);
+    const copy = mod.vi;
     const entry = findLesson(copy.slug);
     if (!entry) throw new Error(`Lesson ${copy.slug} is not in the curriculum`);
     if (entry.chapter.slug !== copy.topic) {

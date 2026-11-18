@@ -114,7 +114,9 @@
 .decor-column {
   position: relative;
   background: var(--page-bg);
-  box-shadow: 0 0 0 1.5rem var(--page-bg);
+  box-shadow:
+    -1.5rem 0 var(--page-bg),
+    1.5rem 0 var(--page-bg);
 }
 
 /* THPT keeps the ribbon flat: the subject tint over a one-pixel ink line, no motifs. */

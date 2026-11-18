@@ -43,7 +43,7 @@ export const bipartitePseudocode = [
   '    u = queue.dequeue()',
   '    for v in adj[u]:',
   '      if colour[v] == null: colour[v] = màu còn lại; queue.enqueue(v)',
-  '      else if colour[v] == colour[u]: chu trình lẻ, không hai phía — stop',
+  '      else if colour[v] == colour[u]: chu trình lẻ, không hai phía — dá»«ng',
   'hai phía: mỗi màu là một phía',
 ];
 
@@ -53,7 +53,7 @@ export const undirectedCyclePseudocode = [
   '  đánh dấu u đã thăm',
   '  for v in adj[u]:',
   '    if v == parent: bỏ qua, đó là cạnh vừa đi tới',
-  '    else if v đã thăm: có chu trình — stop',
+  '    else if v đã thăm: có chu trình — dá»«ng',
   '    else: visit(v, u)',
   'không có chu trình: đồ thị là một rừng',
 ];
@@ -63,7 +63,7 @@ export const directedCyclePseudocode = [
   'visit(u):',
   '  đánh dấu u đang thăm',
   '  for v in adj[u]:  // mỗi cạnh u → v',
-  '    if v đang thăm: cạnh ngược, có chu trình — stop',
+  '    if v đang thăm: cạnh ngược, có chu trình — dá»«ng',
   '    if v đã hoàn tất: không có chu trình qua v, bỏ qua',
   '    if v chưa thăm: visit(v)',
   '  đánh dấu u hoàn tất',
