@@ -204,5 +204,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Bài sau, luyện tập: mô hình hoá bằng luồng, bạn tự dựng mạng luồng cho những bài toán có lời văn.',
+    'Bài sau, luyện tập: mô hình hoá bằng luồng, em tự dựng mạng luồng cho những bài toán có lời văn.',
 };

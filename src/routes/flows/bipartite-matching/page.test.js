@@ -105,7 +105,7 @@ describe('Bipartite matching lesson', () => {
     expect(vertex(1)).toBe('Đỉnh B, chưa ghép, đang tìm kiếm');
     click(button('Bước tiếp'));
     expect(text()).toContain(
-      'B xét 1: 1 đã ghép với A. Liệu A có chuyển sang bạn ghép khác được không? Chạy try(A).',
+      'B xét 1: 1 đã ghép với A. Liệu A có chuyển sang đỉnh ghép khác được không? Chạy try(A).',
     );
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));

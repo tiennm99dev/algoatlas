@@ -27,7 +27,7 @@ export const vi = {
   summary:
     'Tìm một luồng cực đại, tô bóng các đỉnh s còn đến được trong đồ thị thặng dư, rồi đọc ra một lát cắt nhỏ nhất có cùng giá trị.',
   instruction:
-    'Chạy từng bước: luồng được tìm trước, rồi BFS tô bóng các đỉnh s còn đến được. Các cạnh đánh dấu ✂ ở cuối tạo thành lát cắt nhỏ nhất. Sau đó chọn “Lát cắt của bạn”, chuyển các đỉnh giữa hai phía và so sánh sức chứa của lát cắt bạn chọn với luồng cực đại.',
+    'Chạy từng bước: luồng được tìm trước, rồi BFS (duyệt theo chiều rộng) tô bóng các đỉnh s còn đến được. Các cạnh đánh dấu ✂ ở cuối tạo thành lát cắt nhỏ nhất. Sau đó chọn “Lát cắt của em”, chuyển các đỉnh giữa hai phía và so sánh sức chứa của lát cắt em chọn với luồng cực đại.',
   presetLabel: 'Mạng',
   presets: {
     classic: 'Mạng trong sách',
@@ -37,7 +37,7 @@ export const vi = {
   sourceLabel: 'Đỉnh phát s',
   sinkLabel: 'Đỉnh thu t',
   viewLabel: 'Chế độ xem',
-  views: { flow: 'Luồng / sức chứa', residual: 'Đồ thị thặng dư', mine: 'Lát cắt của bạn' },
+  views: { flow: 'Luồng / sức chứa', residual: 'Đồ thị thặng dư', mine: 'Lát cắt của em' },
   resetGraph: 'Đặt lại mạng',
   editTitle: 'Sửa mạng',
   editor: {
@@ -56,7 +56,7 @@ export const vi = {
     flow: 'Mạng luồng. Mỗi cạnh ghi luồng / sức chứa; phía chứa đỉnh phát của lát cắt được tô bóng.',
     residual:
       'Đồ thị thặng dư. Cung liền còn trống c − f, cung nét đứt huỷ luồng; các đỉnh s đến được được tô bóng.',
-    mine: 'Lát cắt của bạn. Các đỉnh tô bóng thuộc phía S; cạnh đi từ S sang T được ghi kèm sức chứa.',
+    mine: 'Lát cắt của em. Các đỉnh tô bóng thuộc phía S; cạnh đi từ S sang T được ghi kèm sức chứa.',
   },
   /** @param {string} name @param {string} state */
   vertexLabel: (name, state) => [`Đỉnh ${name}`, state].filter(Boolean).join(', '),
@@ -78,7 +78,7 @@ export const vi = {
     sink: 'đỉnh thu',
     sSide: 'phía S',
     reached: 's đến được',
-    now: 'vừa lấy ra khỏi hàng đợi',
+    now: 'vừa lấy ra khỏi queue',
     newly: 'vừa đến được',
     onPath: 'trên đường vừa đẩy',
     cut: 'cạnh cắt',
@@ -86,7 +86,7 @@ export const vi = {
     carries: 'đang có luồng',
   },
   legend: {
-    now: 'Vừa lấy ra khỏi hàng đợi',
+    now: 'Vừa lấy ra khỏi queue',
     reached: 's đến được (phía S)',
     path: 'Đường vừa đẩy',
     cut: 'Cạnh cắt, S → T',
@@ -99,10 +99,10 @@ export const vi = {
     cut: 'Sức chứa lát cắt',
     edges: 'Số cạnh cắt',
   },
-  queueTitle: 'Hàng đợi BFS',
+  queueTitle: 'Queue BFS',
   emptyQueue: 'rỗng',
   mine: {
-    title: 'Lát cắt của bạn',
+    title: 'Lát cắt của em',
     help: 'Bấm vào một đỉnh để chuyển nó giữa phía S và phía T. s luôn ở phía S và t luôn ở phía T.',
     /** @param {string} name @param {boolean} inS */
     button: (name, inS) => `${name}: ${inS ? 'S' : 'T'}`,
@@ -135,8 +135,8 @@ export const vi = {
         return `Không còn đường nào từ ${s} đến ${t} còn trống, nên luồng có giá trị ${f.value} là cực đại. Giờ ta tìm các đỉnh ${s} còn đến được qua những cung còn trống.`;
       case 'visit':
         return f.found.length
-          ? `Lấy ${names[f.at]} ra khỏi hàng đợi. Các cung còn trống của nó đến được ${join(f.found.map((v) => names[v]))}, các đỉnh này vào phía S.`
-          : `Lấy ${names[f.at]} ra khỏi hàng đợi. Nó không đến được đỉnh mới nào: các cung của nó đã đầy hoặc dẫn ngược vào phía S.`;
+          ? `Lấy ${names[f.at]} ra khỏi queue. Các cung còn trống của nó đến được ${join(f.found.map((v) => names[v]))}, các đỉnh này vào phía S.`
+          : `Lấy ${names[f.at]} ra khỏi queue. Nó không đến được đỉnh mới nào: các cung của nó đã đầy hoặc dẫn ngược vào phía S.`;
       case 'cut': {
         const parts = f.cut.map((k) => edgeInfo[k]);
         return parts.length
@@ -154,7 +154,7 @@ export const vi = {
     'Với mọi luồng f và mọi lát cắt, |f| = (luồng S → T) − (luồng T → S) ≤ c(S, T). Vậy mọi lát cắt đều chặn trên mọi luồng.',
     'Khi không còn đường tăng luồng, gọi S là tập các đỉnh s đến được trong đồ thị thặng dư. Mỗi cạnh S → T đều đầy và mỗi cạnh T → S đều trống, nên |f| = c(S, T): luồng này cực đại và lát cắt này nhỏ nhất.',
     'Sau khi có luồng, phép tìm các đỉnh đến được chỉ tốn O(V + E). Khi có nhiều lát cắt nhỏ nhất, nó trả về lát cắt có phía S nhỏ nhất.',
-    'Thử xem: trên “Nhiều lát cắt nhỏ nhất”, dùng “Lát cắt của bạn” để tìm mọi phía S có sức chứa bằng luồng cực đại 7.',
+    'Thử xem: trên “Nhiều lát cắt nhỏ nhất”, dùng “Lát cắt của em” để tìm mọi phía S có sức chứa bằng luồng cực đại 7.',
   ],
   complexityHead: ['Bước', 'Chi phí', 'Vì sao'],
   complexity: [
@@ -173,7 +173,7 @@ export const vi = {
     {
       type: 'number',
       prompt:
-        'Trên “Mạng trong sách”, dùng “Lát cắt của bạn” với S = {S, A}. Sức chứa của lát cắt này bằng bao nhiêu?',
+        'Trên “Mạng trong sách”, dùng “Lát cắt của em” với S = {S, A}. Sức chứa của lát cắt này bằng bao nhiêu?',
       answer: 25,
       tolerance: 0,
       hints: [
@@ -197,7 +197,7 @@ export const vi = {
       options: ['{S}', '{S, A}', '{S, B}', '{S, A, B}'],
       answers: [0, 1, 3],
       hints: [
-        'Thử từng phương án bằng “Lát cắt của bạn”.',
+        'Thử từng phương án bằng “Lát cắt của em”.',
         'Các cạnh đi qua {S, A} là S → B, A → B và A → T.',
       ],
       solution:

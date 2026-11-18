@@ -46,7 +46,7 @@ export const kuhnPseudocode = [
   'try(x):',
   '  for r in neighbours(x) and r not in visited:',
   '    đánh dấu r vào visited',
-  '    if r chưa ghép, or try(match[r]) đổi được bạn ghép của r:',
+  '    if r chưa ghép, or try(match[r]) đổi được đỉnh ghép của r:',
   '      ghép x với r (lật đường đi); return true',
   '  return false',
 ];

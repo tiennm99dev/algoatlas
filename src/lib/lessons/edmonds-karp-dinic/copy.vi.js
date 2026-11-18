@@ -17,7 +17,7 @@ export const vi = {
   level: 'Nâng cao',
   title: 'Thuật toán Edmonds-Karp và Dinic',
   intro:
-    'Thuật toán Ford-Fulkerson chạy được với bất kì đường tăng luồng (augmenting path) nào, nhưng chọn kém có thể khiến mỗi vòng chỉ đẩy được một lượng rất nhỏ. Thuật toán Edmonds-Karp luôn lấy một đường đi ngắn nhất, tìm bằng duyệt theo chiều rộng (BFS), nhờ đó số vòng không vượt quá O(V·E) dù sức chứa thế nào. Thuật toán Dinic còn đi xa hơn: một lần BFS dựng đồ thị phân tầng, rồi duyệt theo chiều sâu (DFS) đẩy cả một luồng chặn qua đó trước lần BFS tiếp theo.',
+    'Thuật toán Ford-Fulkerson chạy được với bất kì đường tăng luồng (augmenting path) nào, nhưng chọn kém có thể khiến mỗi vòng chỉ đẩy được một lượng rất nhỏ. Thuật toán Edmonds-Karp luôn lấy một đường đi ngắn nhất, tìm bằng BFS (duyệt theo chiều rộng), nhờ đó số vòng không vượt quá O(V·E) dù sức chứa thế nào. Thuật toán Dinic còn đi xa hơn: một lần BFS dựng đồ thị phân tầng, rồi DFS (duyệt theo chiều sâu) đẩy cả một luồng chặn qua đó trước lần BFS tiếp theo.',
   summary:
     'So sánh các đường tăng luồng ngắn nhất của Edmonds-Karp với đồ thị phân tầng và luồng chặn của Dinic trên cùng một mạng.',
   instruction:

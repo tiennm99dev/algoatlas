@@ -104,12 +104,12 @@ describe('Max-flow min-cut lesson', () => {
     expect(text()).toContain('luồng có giá trị 23 là cực đại.');
     click(button('Bước tiếp'));
     expect(text()).toContain(
-      'Lấy S ra khỏi hàng đợi. Các cung còn trống của nó đến được A và B, các đỉnh này vào phía S.',
+      'Lấy S ra khỏi queue. Các cung còn trống của nó đến được A và B, các đỉnh này vào phía S.',
     );
-    expect(vertexTitle(0)).toBe('Đỉnh S, đỉnh phát, vừa lấy ra khỏi hàng đợi, s đến được');
+    expect(vertexTitle(0)).toBe('Đỉnh S, đỉnh phát, vừa lấy ra khỏi queue, s đến được');
     expect(vertexTitle(1)).toBe('Đỉnh A, vừa đến được, s đến được');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Lấy A ra khỏi hàng đợi. Nó không đến được đỉnh mới nào');
+    expect(text()).toContain('Lấy A ra khỏi queue. Nó không đến được đỉnh mới nào');
     click(button('Đến bước cuối'));
     click(button('Bước trước'));
     expect(text()).toContain(

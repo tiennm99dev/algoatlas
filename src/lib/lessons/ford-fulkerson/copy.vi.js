@@ -185,7 +185,7 @@ export const vi = {
     {
       type: 'choice',
       prompt:
-        'Trên “Huỷ luồng”, DFS đầu tiên gửi 1 đơn vị theo S → A → B → T. Cạnh nào không mang luồng ở cuối?',
+        'Trên “Huỷ luồng”, DFS (duyệt theo chiều sâu) đầu tiên gửi 1 đơn vị theo S → A → B → T. Cạnh nào không mang luồng ở cuối?',
       options: ['S → A', 'A → B', 'A → T', 'B → T'],
       answer: 1,
       hints: ['Đường đi thứ hai là S → B ⇠ A → T.', 'Bước B ⇠ A huỷ đơn vị luồng trên A → B.'],
@@ -208,5 +208,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Bài sau, thuật toán Edmonds-Karp và Dinic chọn đường tăng luồng ngắn nhất bằng BFS, nên số lần đẩy không còn phụ thuộc vào sức chứa.',
+    'Bài sau, thuật toán Edmonds-Karp và Dinic chọn đường tăng luồng ngắn nhất bằng BFS (duyệt theo chiều rộng), nên số lần đẩy không còn phụ thuộc vào sức chứa.',
 };

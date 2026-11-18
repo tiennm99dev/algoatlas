@@ -89,7 +89,7 @@ export const vi = {
       case 'look':
         return `${x} xét ${r}: ${r} chưa ghép. Đường xen kẽ ${p} kết thúc ở một đỉnh chưa ghép, nên đó là một đường tăng.`;
       case 'follow':
-        return `${x} xét ${r}: ${r} đã ghép với ${leftName(f.matchR[f.right])}. Liệu ${leftName(f.matchR[f.right])} có chuyển sang bạn ghép khác được không? Chạy try(${leftName(f.matchR[f.right])}).`;
+        return `${x} xét ${r}: ${r} đã ghép với ${leftName(f.matchR[f.right])}. Liệu ${leftName(f.matchR[f.right])} có chuyển sang đỉnh ghép khác được không? Chạy try(${leftName(f.matchR[f.right])}).`;
       case 'skip':
         return `${x} bỏ qua ${r}: lần tìm này đã thăm đỉnh đó rồi.`;
       case 'back':
@@ -119,20 +119,24 @@ export const vi = {
   takeaways: [
     'Quy dẫn về luồng cực đại: thêm đỉnh phát s nối đến mọi đỉnh bên trái bằng cạnh sức chứa 1, cho mọi cạnh trái–phải sức chứa 1 (hướng từ trái sang phải), và nối mọi đỉnh bên phải đến đỉnh thu t với sức chứa 1. Giá trị luồng cực đại là số cặp của cách ghép lớn nhất, và các cạnh mang luồng chính là các cặp.',
     'Một đường tăng bắt đầu ở một đỉnh bên trái chưa ghép, đi xen kẽ cạnh chưa ghép và cạnh đã ghép, rồi kết thúc ở một đỉnh bên phải chưa ghép. Lật nó thêm được một cặp. Một cách ghép cặp là lớn nhất khi và chỉ khi không còn đường tăng nào (định lí Berge).',
-    'Thuật toán Kuhn chạy một lần DFS cho mỗi đỉnh bên trái, mỗi lần tìm thăm mỗi đỉnh bên phải tối đa một lần: tổng cộng O(V·E). Một đỉnh bên phải đã ghép sẽ nhờ bạn ghép của nó chuyển sang chỗ khác, đó chính là cung ngược của mạng luồng.',
+    'Thuật toán Kuhn chạy một lần DFS (duyệt theo chiều sâu) cho mỗi đỉnh bên trái, mỗi lần tìm thăm mỗi đỉnh bên phải tối đa một lần: tổng cộng O(V·E). Một đỉnh bên phải đã ghép sẽ nhờ đỉnh đang ghép với nó chuyển sang chỗ khác, đó chính là cung ngược của mạng luồng.',
     'Hopcroft-Karp là Dinic trên mạng sức chứa 1 này: mỗi pha lật một tập tối đại các đường tăng ngắn nhất không chung đỉnh, chỉ cần O(√V) pha, và tổng chi phí là O(E·√V).',
     'Thử xem: trên “Có người bị thừa”, đặt bên phải 4 đỉnh và đánh dấu B – 4. Đoán số cặp lớn nhất mới trước khi chạy, rồi so sánh cách Kuhn và Hopcroft-Karp đạt được nó.',
   ],
   complexityHead: ['Thuật toán', 'Chi phí', 'Vì sao'],
   complexity: [
     ['Kuhn', 'O(V·E)', 'Một lần DFS cho mỗi đỉnh bên trái, mỗi lần xét mỗi cạnh tối đa một lần.'],
-    ['Hopcroft-Karp', 'O(E·√V)', 'O(√V) pha, mỗi pha gồm một lần BFS và một lượt DFS tốn O(E).'],
+    [
+      'Hopcroft-Karp',
+      'O(E·√V)',
+      'O(√V) pha, mỗi pha gồm một lần BFS (duyệt theo chiều rộng) và một lượt DFS tốn O(E).',
+    ],
     [
       'Giải như luồng cực đại',
       'O(V·E)',
       'Ford-Fulkerson với giá trị luồng tối đa V/2 cần tối đa V/2 lần tăng luồng, mỗi lần O(E).',
     ],
-    ['Bộ nhớ', 'O(V + E)', 'Danh sách kề, một bạn ghép cho mỗi đỉnh và các dấu đã thăm.'],
+    ['Bộ nhớ', 'O(V + E)', 'Danh sách kề, một đỉnh ghép cho mỗi đỉnh và các dấu đã thăm.'],
   ],
   practiceTitle: 'Tự kiểm tra',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */

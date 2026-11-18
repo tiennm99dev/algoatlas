@@ -25,28 +25,28 @@ export const vi = {
   summary:
     'Biến các bài toán có lời văn thành mạng luồng với siêu đỉnh phát, siêu đỉnh thu, tách đỉnh và sức chứa bằng 1, rồi kiểm tra mô hình và giải bằng luồng cực đại.',
   instruction:
-    'Chọn một câu chuyện và đọc kĩ. Ở chế độ “Dựng”, thêm, xoá và nối lại các cạnh, đặt sức chứa cho chúng đến khi hình vẽ mô tả đúng câu chuyện, rồi bấm “Kiểm tra mô hình”. Chuyển sang “Chạy” và chạy từng bước Edmonds-Karp trên hình vẽ của bạn; các cạnh đánh dấu ✂ ở cuối là thứ giới hạn đáp số.',
+    'Chọn một câu chuyện và đọc kĩ. Ở chế độ “Dựng”, thêm, xoá và nối lại các cạnh, đặt sức chứa cho chúng đến khi hình vẽ mô tả đúng câu chuyện, rồi bấm “Kiểm tra mô hình”. Chuyển sang “Chạy” và chạy từng bước Edmonds-Karp trên hình vẽ của em; các cạnh đánh dấu ✂ ở cuối là thứ giới hạn đáp số.',
   scenarioLabel: 'Câu chuyện',
   scenarios: {
     supply: {
       name: 'Nông trại và chợ',
       labels: ['S', 'F', 'G', 'D', 'P', 'Q', 'T'],
       story:
-        'Hai nông trại F và G mỗi ngày thu hoạch 9 và 7 tấn rau. Xe tải chở rau theo các đường một chiều có giới hạn mỗi ngày: F → D 5, F → P 3, G → D 6 và G → Q 2, rồi từ kho D → P 4 và D → Q 6. Chợ P bán được 8 tấn mỗi ngày, chợ Q bán được 9 tấn. Mỗi ngày có thể đưa tối đa bao nhiêu tấn rau đến các chợ? S và T là các đỉnh dự phòng cho mô hình của bạn.',
+        'Hai nông trại F và G mỗi ngày thu hoạch 9 và 7 tấn rau. Xe tải chở rau theo các đường một chiều có giới hạn mỗi ngày: F → D 5, F → P 3, G → D 6 và G → Q 2, rồi từ kho D → P 4 và D → Q 6. Chợ P bán được 8 tấn mỗi ngày, chợ Q bán được 9 tấn. Mỗi ngày có thể đưa tối đa bao nhiêu tấn rau đến các chợ? S và T là các đỉnh dự phòng cho mô hình của em.',
       tip: 'Có hai nơi phát và hai nơi nhận: nối S đến mỗi nông trại với sức chứa bằng sản lượng thu hoạch, và nối mỗi chợ đến T với sức chứa bằng lượng chợ bán được.',
     },
     routers: {
       name: 'Bộ định tuyến có giới hạn',
       labels: ['S', 'A', 'A′', 'B', 'B′', 'T'],
       story:
-        'Máy chủ S truyền dữ liệu đến T qua hai bộ định tuyến A và B. Các đường truyền chịu được, tính bằng Mbit/s: S → A 8, S → B 6, A → B 4, A → T 5 và B → T 9. Bộ định tuyến A chuyển tiếp được tổng cộng tối đa 6 Mbit/s, còn B tối đa 7. Tổng tốc độ cao nhất là bao nhiêu? A′ và B′ là các đỉnh dự phòng cho mô hình của bạn.',
+        'Máy chủ S truyền dữ liệu đến T qua hai bộ định tuyến A và B. Các đường truyền chịu được, tính bằng Mbit/s: S → A 8, S → B 6, A → B 4, A → T 5 và B → T 9. Bộ định tuyến A chuyển tiếp được tổng cộng tối đa 6 Mbit/s, còn B tối đa 7. Tổng tốc độ cao nhất là bao nhiêu? A′ và B′ là các đỉnh dự phòng cho mô hình của em.',
       tip: 'Giới hạn trên một đỉnh chưa phải là cạnh. Tách A thành A → A′ với sức chứa 6: các đường đi vào A vẫn nối vào A, các đường đi ra từ A thì xuất phát từ A′. Làm tương tự với B.',
     },
     clubs: {
       name: 'Học sinh và câu lạc bộ',
       labels: ['S', 'X', 'Y', 'Z', 'C', 'R', 'T'],
       story:
-        'Ba học sinh X, Y và Z đăng kí vào câu lạc bộ cờ vua C và câu lạc bộ rô-bốt R. X và Z thích cả hai câu lạc bộ, Y chỉ thích cờ vua. X và Z có thời gian cho hai câu lạc bộ, Y chỉ cho một. Câu lạc bộ cờ vua còn 2 chỗ, rô-bốt còn 3 chỗ. Không ai vào một câu lạc bộ hai lần. Có thể có tối đa bao nhiêu lượt đăng kí? S và T là các đỉnh dự phòng cho mô hình của bạn.',
+        'Ba học sinh X, Y và Z đăng kí vào câu lạc bộ cờ vua C và câu lạc bộ rô-bốt R. X và Z thích cả hai câu lạc bộ, Y chỉ thích cờ vua. X và Z có thời gian cho hai câu lạc bộ, Y chỉ cho một. Câu lạc bộ cờ vua còn 2 chỗ, rô-bốt còn 3 chỗ. Không ai vào một câu lạc bộ hai lần. Có thể có tối đa bao nhiêu lượt đăng kí? S và T là các đỉnh dự phòng cho mô hình của em.',
       tip: 'Một đơn vị luồng là một lượt đăng kí. S → học sinh mang số câu lạc bộ học sinh đó được vào, học sinh → câu lạc bộ mang 1 (tối đa một lần), câu lạc bộ → T mang số chỗ còn trống.',
     },
     convoys: {
@@ -77,7 +77,7 @@ export const vi = {
   clipped: (max) => `Sức chứa lớn hơn ${max} được giảm xuống ${max}.`,
   shownModel: 'Đây là một mô hình đúng. Chuyển sang Chạy để xem luồng cực đại trên đó.',
   boardAria:
-    'Mô hình của bạn khi luồng cực đại đang chạy. Mỗi cạnh ghi luồng / sức chứa; sau khi chạy xong, phía chứa đỉnh phát của lát cắt nhỏ nhất được tô bóng.',
+    'Mô hình của em khi luồng cực đại đang chạy. Mỗi cạnh ghi luồng / sức chứa; sau khi chạy xong, phía chứa đỉnh phát của lát cắt nhỏ nhất được tô bóng.',
   /** @param {string} name @param {string} state */
   vertexLabel: (name, state) => [`Đỉnh ${name}`, state].filter(Boolean).join(', '),
   /** @param {string} u @param {string} v @param {number} f @param {number} c @param {string} state */
@@ -139,7 +139,7 @@ export const vi = {
     if (!f.valid) return 'Mô hình cần có cả S và T. Bấm “Đặt lại hình vẽ” để lấy lại đỉnh đã xoá.';
     switch (f.kind) {
       case 'start':
-        return `Mô hình của bạn có ${vertices} đỉnh và ${edgeInfo.length} cạnh. Giờ Edmonds-Karp đẩy luồng từ ${s} đến ${t} theo các đường ngắn nhất còn trống.`;
+        return `Mô hình của em có ${vertices} đỉnh và ${edgeInfo.length} cạnh. Giờ Edmonds-Karp đẩy luồng từ ${s} đến ${t} theo các đường ngắn nhất còn trống.`;
       case 'augment':
         return `Đã đẩy ${f.bottleneck} theo ${route(f.path, names)}. Luồng đến lúc này: ${f.value}.`;
       case 'maxflow': {
@@ -150,7 +150,7 @@ export const vi = {
           : `Không cạnh nào đi ra khỏi {${side.join(', ')}}, tập các đỉnh ${s} đến được, nên không có gì đi được từ ${s} đến ${t}. Hãy nối chúng lại.`;
       }
       case 'done':
-        return `Mô hình của bạn mang được tối đa ${f.value}. Nếu mô hình đúng, đó là đáp số của câu chuyện; bấm “Kiểm tra mô hình” để đối chiếu.`;
+        return `Mô hình của em mang được tối đa ${f.value}. Nếu mô hình đúng, đó là đáp số của câu chuyện; bấm “Kiểm tra mô hình” để đối chiếu.`;
     }
   },
   takeaways: [
@@ -275,7 +275,7 @@ export const vi = {
     {
       type: 'number',
       prompt:
-        'Một mạng có 9 đỉnh và 14 cạnh. Bạn tách 4 đỉnh để gán sức chứa cho chúng. Mạng mới có bao nhiêu cạnh?',
+        'Một mạng có 9 đỉnh và 14 cạnh. Em tách 4 đỉnh để gán sức chứa cho chúng. Mạng mới có bao nhiêu cạnh?',
       answer: 18,
       unit: 'cạnh',
       tolerance: 0,
@@ -287,5 +287,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Bài sau, QHĐ trên mặt nạ bit và bài toán người du lịch dùng mặt nạ bit để ghi nhớ những thành phố đã đi qua.',
+    'Bài sau, QHĐ bitmask và bài toán người du lịch dùng bitmask (mặt nạ bit) để ghi nhớ những thành phố đã đi qua.',
 };

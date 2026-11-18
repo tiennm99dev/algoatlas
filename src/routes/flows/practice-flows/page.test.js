@@ -109,7 +109,7 @@ describe('Flow modelling practice', () => {
   it('builds the farms model by hand, checks it and solves it', () => {
     render();
     expect(text()).toContain(m.scenarios.supply.story);
-    expect(text()).toContain('Mô hình của bạn có 7 đỉnh và 6 cạnh.');
+    expect(text()).toContain('Mô hình của em có 7 đỉnh và 6 cạnh.');
     expect(status()).toContain(m.check.idle);
     click(button('Đến bước cuối'));
     expect(statValue(m.stats.value)).toBe('0');
@@ -132,7 +132,7 @@ describe('Flow modelling practice', () => {
     click(button('Đến bước cuối'));
     expect(statValue(m.stats.value)).toBe('15');
     expect(statValue(m.stats.cut)).toBe('15');
-    expect(text()).toContain('Mô hình của bạn mang được tối đa 15.');
+    expect(text()).toContain('Mô hình của em mang được tối đa 15.');
     click(button('Bước trước'));
     expect(text()).toContain(
       'S vẫn đến được {S, F}; các cạnh đầy F → D, F → P và S → G đi ra khỏi phía đó, tạo thành lát cắt nhỏ nhất 5 + 3 + 7 = 15.',
@@ -190,7 +190,7 @@ describe('Flow modelling practice', () => {
     expect(vertex(6).getAttribute('aria-label')).toContain('Đỉnh T,');
     expect(text()).not.toContain('Mô hình cần có cả S và T.');
     click(buttonByText(m.resetDrawing));
-    expect(text()).toContain('Mô hình của bạn có 7 đỉnh và 6 cạnh.');
+    expect(text()).toContain('Mô hình của em có 7 đỉnh và 6 cạnh.');
   });
 
   it('checks practice answers with a hint', () => {
