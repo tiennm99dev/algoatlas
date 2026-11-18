@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/p-np-reductions/copy.en.js';
+import { vi as m } from '$lib/lessons/p-np-reductions/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -49,34 +49,34 @@ const field = (/** @type {string} */ selector) =>
 describe('P, NP and reductions lesson', () => {
   it('builds H pair by pair, then verifies the certificate', () => {
     render();
-    expect(narration()).toContain('The input is G and k = 4');
+    expect(narration()).toContain('Đầu vào là G và k = 4');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('A – B is an edge of G, so H gets no edge there');
+    expect(narration()).toContain('A – B là một cạnh của G, nên H không có cạnh ở đó');
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
-    expect(narration()).toContain('A – E is not an edge of G, so add it to H');
+    expect(narration()).toContain('A – E không phải cạnh của G, nên thêm nó vào H');
     expect(byTest('map-steps')).toBe('4');
     click(button('Đến bước cuối'));
     expect(byTest('map-steps')).toBe('15');
     expect(byTest('checks')).toBe('6');
-    expect(byTest('verdict')).toBe('S is accepted.');
-    expect(byTest('answer')).toBe('yes, for example {A, B, C, D}');
-    expect(narration()).toContain('Both answers are yes');
+    expect(byTest('verdict')).toBe('S được chấp nhận.');
+    expect(byTest('answer')).toBe('có, ví dụ {A, B, C, D}');
+    expect(narration()).toContain('Cả hai câu trả lời đều là “có”');
   });
 
   it('rejects a wrong certificate for a yes instance, then accepts a fixed one', () => {
     render();
     commit(field('select[name="preset"]'), 'house');
     click(button('Đến bước cuối'));
-    expect(byTest('verdict')).toBe('S is rejected.');
-    expect(byTest('answer')).toBe('yes, for example {A, B, C}');
-    click(button('Vertex D, in the certificate'));
-    expect(narration()).toContain('The verifier rejects it at once');
-    click(button('Vertex C, not in the certificate'));
-    expect(narration()).toContain('A – B is an edge of G, and so not an edge of H');
+    expect(byTest('verdict')).toBe('S bị bác bỏ.');
+    expect(byTest('answer')).toBe('có, ví dụ {A, B, C}');
+    click(button('Đỉnh D, thuộc chứng chỉ'));
+    expect(narration()).toContain('Bộ kiểm chứng bác bỏ nó ngay');
+    click(button('Đỉnh C, không thuộc chứng chỉ'));
+    expect(narration()).toContain('A – B là một cạnh của G, nên không phải cạnh của H');
     click(button('Đến bước cuối'));
-    expect(byTest('verdict')).toBe('S is accepted.');
+    expect(byTest('verdict')).toBe('S được chấp nhận.');
     expect(field('select[name="preset"]').value).toBe('');
   });
 
@@ -84,7 +84,7 @@ describe('P, NP and reductions lesson', () => {
     render();
     commit(field('input[name="k"]'), '5');
     click(button('Đến bước cuối'));
-    expect(byTest('answer')).toBe('no');
+    expect(byTest('answer')).toBe('không');
     expect(byTest('subsets')).toBe('6');
     commit(field('input[name="k"]'), '9');
     expect(narration()).toBe(m.kError(6));
@@ -96,15 +96,15 @@ describe('P, NP and reductions lesson', () => {
     click(/** @type {HTMLInputElement} */ (document.querySelector('input[value="remove"]')));
     click(/** @type {Element} */ (document.querySelector('[aria-label="Xoá cạnh giữa A và B"]')));
     click(button('Đến bước cuối'));
-    expect(byTest('verdict')).toBe('S is rejected.');
-    expect(byTest('answer')).toBe('no');
+    expect(byTest('verdict')).toBe('S bị bác bỏ.');
+    expect(byTest('answer')).toBe('không');
   });
 
   it('steps with the keyboard shortcut', () => {
     render();
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
     flushSync();
-    expect(narration()).toContain('A – B is an edge of G');
+    expect(narration()).toContain('A – B là một cạnh của G');
   });
 
   it('checks a practice answer, wrong then right, with a hint', () => {

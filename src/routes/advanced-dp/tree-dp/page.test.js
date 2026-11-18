@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
 import { TREE_PRESETS, treeDpTrace } from '$lib/algo-engine/tree-dp.js';
-import { en as m } from '$lib/lessons/tree-dp/copy.en.js';
+import { vi as m } from '$lib/lessons/tree-dp/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -60,7 +60,7 @@ const byTest = (id) => document.querySelector(`[data-testid="${id}"]`)?.textCont
 /** @param {string} name */
 const node = (name) => {
   const el = [...document.querySelectorAll('[role="button"][aria-label]')].find((n) =>
-    n.getAttribute('aria-label')?.startsWith(`Node ${name},`),
+    n.getAttribute('aria-label')?.startsWith(`Nút ${name},`),
   );
   if (!el) throw new Error(`no node ${name}`);
   return el;
@@ -69,7 +69,7 @@ const field = (/** @type {string} */ selector) =>
   /** @type {HTMLInputElement} */ (document.querySelector(selector));
 const nodeCount = () =>
   [...document.querySelectorAll('[role="button"][aria-label]')].filter((n) =>
-    n.getAttribute('aria-label')?.startsWith('Node '),
+    n.getAttribute('aria-label')?.startsWith('Nút '),
   ).length;
 
 function practice() {
@@ -83,25 +83,25 @@ function practice() {
 describe('tree DP lesson', () => {
   it('solves the independent set in post-order and reads the choice back', () => {
     render();
-    expect(narration()).toContain('Pick nodes of the largest total weight');
+    expect(narration()).toContain('Chọn các nút có tổng trọng số lớn nhất');
     click(button('Bước tiếp'));
     expect(narration()).toBe(
-      'Solve A: picked alone it brings inc = 3; left out, exc = 0. Its children come first.',
+      'Giải A: nếu chọn, riêng nó mang lại inc = 3; nếu bỏ, exc = 0. Các con của nó được giải trước.',
     );
     for (let i = 0; i < 4; i++) click(button('Bước tiếp'));
     expect(narration()).toBe(
-      'Fold in E (inc 6, exc 0). If B is picked, E must be left out: inc[B] += 0 → 5. If not, E takes its better value: exc[B] += 6 → 6.',
+      'Gộp E vào (inc 6, exc 0). Nếu chọn B thì phải bỏ E: inc[B] += 0 → 5. Nếu không, E lấy giá trị tốt hơn của nó: exc[B] += 6 → 6.',
     );
     expect(node('E').getAttribute('aria-label')).toBe(
-      'Node E, weight 6, include 6, exclude 0, child read now',
+      'Nút E, trọng số 6, chọn 6, bỏ 0, nút con đang đọc',
     );
     click(button('Đến bước cuối'));
-    expect(narration()).toBe('Best total 16, from the picked nodes A, E, F, G, H.');
+    expect(narration()).toBe('Tổng tốt nhất là 16, từ các nút được chọn A, E, F, G, H.');
     expect(byTest('answer')).toBe('16');
     expect(byTest('settled')).toBe('8 / 8');
     expect(byTest('edges')).toBe('7 / 7');
     expect(byTest('naive')).toBe('256');
-    expect(node('B').getAttribute('aria-label')).toContain('left out');
+    expect(node('B').getAttribute('aria-label')).toContain('bị bỏ');
   });
 
   it('reroots the tree for every distance sum', () => {
@@ -112,12 +112,12 @@ describe('tree DP lesson', () => {
     expect(byTest('edges')).toBe('14 / 14');
     expect(byTest('naive')).toBe('56');
     expect(node('D').getAttribute('aria-label')).toBe(
-      'Node D, distance sum 13, distance sum known',
+      'Nút D, tổng khoảng cách 13, đã biết tổng khoảng cách',
     );
-    expect(node('A').getAttribute('aria-label')).toBe('Node A, distance sum 11, best centre');
+    expect(node('A').getAttribute('aria-label')).toBe('Nút A, tổng khoảng cách 11, tâm tốt nhất');
     click(button('Bước trước'));
     expect(narration()).toBe(
-      'Move the root from D to H: 1 node comes one step closer and 7 move one step away. all[H] = 13 − 1 + 7 = 19.',
+      'Dời gốc từ D sang H: 1 nút gần thêm một bước và 7 nút xa thêm một bước. all[H] = 13 − 1 + 7 = 19.',
     );
   });
 

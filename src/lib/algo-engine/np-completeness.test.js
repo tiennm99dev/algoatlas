@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { en as m } from '$lib/lessons/np-completeness/copy.en.js';
+import { vi as m } from '$lib/lessons/np-completeness/copy.vi.js';
 import {
   GADGET_PRESETS,
   MAP_PROBLEMS,

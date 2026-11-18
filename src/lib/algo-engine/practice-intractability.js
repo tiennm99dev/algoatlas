@@ -60,10 +60,10 @@ export const HAND_SIZE = START_HAND.length;
 
 export const classifyPseudocode = [
   'classify(problem):',
-  '  if a known polynomial algorithm solves it exactly: Polynomial',
-  '  reduce a known NP-complete problem to it:',
-  '    if a polynomial algorithm stays within a constant factor: Approximable',
-  '    else: NP-complete',
+  '  if có thuật toán đa thức đã biết giải chính xác: Đa thức',
+  '  quy dẫn một bài NP-đầy đủ đã biết về problem:',
+  '    if có thuật toán đa thức đạt trong hệ số hằng: Xấp xỉ được',
+  '    else: NP-đầy đủ',
 ];
 
 /** Pseudocode lines that justify each bin. @type {Record<Bin, number[]>} */

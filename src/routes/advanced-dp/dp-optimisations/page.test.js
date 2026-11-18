@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
 import { HULL_PRESETS, hullTrace } from '$lib/algo-engine/dp-optimisations.js';
-import { en as m } from '$lib/lessons/dp-optimisations/copy.en.js';
+import { vi as m } from '$lib/lessons/dp-optimisations/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -68,12 +68,12 @@ function practice() {
 describe('DP optimisations lesson', () => {
   it('builds the hull, skips a parallel line and walks the queries', () => {
     render();
-    expect(narration()).toContain('6 lines and 11 queries');
+    expect(narration()).toContain('6 đường thẳng và 11 truy vấn');
     for (let i = 0; i < 7; i++) click(button('Bước tiếp'));
-    expect(narration()).toBe('L2 stays: it is lowest from x = 2 until L3 takes over at x = 4.');
+    expect(narration()).toBe('L2 ở lại: nó thấp nhất từ x = 2 cho tới khi L3 thay thế tại x = 4.');
     for (let i = 0; i < 3; i++) click(button('Bước tiếp'));
     expect(narration()).toBe(
-      'L4 is parallel to L3 and not lower, so it is never the lowest. Skip it.',
+      'L4 song song với L3 và không thấp hơn, nên nó không bao giờ là đường thấp nhất. Bỏ qua nó.',
     );
     expect(chips(m.linesTitle).some((c) => c?.startsWith('L4: y = 9 ✕'))).toBe(true);
     click(button('Đến bước cuối'));
@@ -83,7 +83,7 @@ describe('DP optimisations lesson', () => {
     expect(byTest('compares')).toBe('11 / 11');
     expect(byTest('naive')).toBe('66');
     expect(narration()).toBe(
-      '11 answers with 3 hull checks and 11 pointer comparisons, against 66 for trying every line at every x.',
+      'Có 11 đáp án sau 3 lần kiểm tra bao và 11 lần so sánh của con trỏ, so với 66 lần nếu thử mọi đường tại mọi x.',
     );
   });
 
@@ -95,7 +95,7 @@ describe('DP optimisations lesson', () => {
     );
     for (let i = 0; i < at; i++) click(button('Bước tiếp'));
     expect(narration()).toBe(
-      'L3 is useless: L1 crosses L2 at x = 5, not after x = 6 where L3 would take over. Pop L3.',
+      'L3 vô dụng: L1 cắt L2 tại x = 5, không nằm sau x = 6, chỗ mà L3 lẽ ra bắt đầu thấp nhất. Lấy L3 ra.',
     );
     click(button('Đến bước cuối'));
     expect(chips(m.hullTitle)).toEqual(['L4', 'L2', 'L1', 'L5']);
@@ -110,15 +110,15 @@ describe('DP optimisations lesson', () => {
     expect(field('input[name="queries"]').value).toBe('3 7');
     click(button('Đến bước cuối'));
     expect(narration()).toBe(
-      '2 answers with 0 hull checks and 2 pointer comparisons, against 4 for trying every line at every x.',
+      'Có 2 đáp án sau 0 lần kiểm tra bao và 2 lần so sánh của con trỏ, so với 4 lần nếu thử mọi đường tại mọi x.',
     );
     commit(field('input[name="lines"]'), '9 0');
-    expect(narration()).toBe('Slopes go from −5 to 5, intercepts from -20 to 30.');
+    expect(narration()).toBe('Hệ số góc từ −5 đến 5, tung độ gốc từ -20 đến 30.');
     expect(field('input[name="lines"]').value).toBe('1 0, -1 10');
     commit(field('input[name="lines"]'), 'one two');
-    expect(narration()).toContain('Write each line as two whole numbers');
+    expect(narration()).toContain('Viết mỗi đường thẳng bằng hai số nguyên');
     commit(field('input[name="queries"]'), '11');
-    expect(narration()).toBe('Each x must be from 0 to 10.');
+    expect(narration()).toBe('Mỗi x phải từ 0 đến 10.');
     expect(field('input[name="queries"]').value).toBe('3 7');
   });
 
@@ -130,7 +130,7 @@ describe('DP optimisations lesson', () => {
     expect(dashed()).toBeLessThan(before);
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
     flushSync();
-    expect(narration()).toBe('At x = 10, the lowest line is L6: 0.');
+    expect(narration()).toBe('Tại x = 10, đường thấp nhất là L6: 0.');
   });
 
   it('stores practice answers that the engine reproduces', () => {

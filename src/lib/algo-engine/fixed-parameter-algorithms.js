@@ -56,14 +56,14 @@ export const MAX_K = 5;
  */
 
 export const fptPseudocode = [
-  'vc(G, k):  // ≤ k vertices?',
-  '  while some v has > k edges:',
-  '    take v; k = k − 1',
-  '  if > k² edges left: return no',
+  'vc(G, k):  // có tập phủ ≤ k đỉnh?',
+  '  while có v với > k cạnh:',
+  '    lấy v; k = k − 1',
+  '  if còn > k² cạnh: return "không"',
   'search(G, k):',
-  '  if G has no edges: return yes',
-  '  if k = 0: return no',
-  '  u – v = first uncovered edge',
+  '  if G không còn cạnh: return "có"',
+  '  if k = 0: return "không"',
+  '  u – v = cạnh chưa phủ đầu tiên',
   '  return search(G − u, k − 1)',
   '      or search(G − v, k − 1)',
 ];

@@ -22,7 +22,7 @@
     parseLines,
     parseQueries,
   } from '$lib/algo-engine/dp-optimisations.js';
-  import { en as m } from '$lib/lessons/dp-optimisations/copy.en.js';
+  import { vi as m } from '$lib/lessons/dp-optimisations/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/dp-optimisations.js').Line} Line */

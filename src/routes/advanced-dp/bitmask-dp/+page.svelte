@@ -18,7 +18,7 @@
     transitionCount,
     tspPseudocode,
   } from '$lib/algo-engine/bitmask-dp.js';
-  import { en as m } from '$lib/lessons/bitmask-dp/copy.en.js';
+  import { vi as m } from '$lib/lessons/bitmask-dp/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/bitmask-dp.js').City} City */

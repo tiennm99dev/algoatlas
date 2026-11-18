@@ -69,23 +69,23 @@ export const TREE_PRESETS = [
 /** @type {Record<TreeProblem, string[]>} */
 export const treeDpPseudocode = {
   mis: [
-    'solve(v):                       // post-order',
+    'solve(v):                       // duyệt sau',
     '  inc[v] = w[v]; exc[v] = 0',
-    '  for each child c of v:',
+    '  for c in children(v):',
     '    solve(c)',
-    '    inc[v] += exc[c]             // v picked: c left out',
-    '    exc[v] += max(inc[c], exc[c]) // v left out: c is free',
+    '    inc[v] += exc[c]             // chọn v: bỏ c',
+    '    exc[v] += max(inc[c], exc[c]) // bỏ v: c tự do',
     'answer = max(inc[root], exc[root])',
-    'top-down: pick a free v if inc[v] ≥ exc[v]',
+    'từ trên xuống: chọn v tự do nếu inc[v] ≥ exc[v]',
   ],
   reroot: [
-    'down(v):                        // post-order',
+    'down(v):                        // duyệt sau',
     '  size[v] = 1; sub[v] = 0',
-    '  for each child c: down(c)',
+    '  for c in children(v): down(c)',
     '    size[v] += size[c]; sub[v] += sub[c] + size[c]',
     'all[root] = sub[root]',
-    'up(v):                          // pre-order',
-    '  for each child c:',
+    'up(v):                          // duyệt trước',
+    '  for c in children(v):',
     '    all[c] = all[v] − size[c] + (n − size[c])',
   ],
 };

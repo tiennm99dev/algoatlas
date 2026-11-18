@@ -15,7 +15,7 @@
     harmonic,
     matchingPseudocode,
   } from '$lib/algo-engine/approximation-algorithms.js';
-  import { en as m } from '$lib/lessons/approximation-algorithms/copy.en.js';
+  import { vi as m } from '$lib/lessons/approximation-algorithms/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/graph-editor.js').GraphNode} GraphNode */

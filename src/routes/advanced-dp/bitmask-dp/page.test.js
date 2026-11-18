@@ -8,7 +8,7 @@ import {
   heldKarpTrace,
   transitionCount,
 } from '$lib/algo-engine/bitmask-dp.js';
-import { en as m } from '$lib/lessons/bitmask-dp/copy.en.js';
+import { vi as m } from '$lib/lessons/bitmask-dp/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -81,28 +81,28 @@ function practice() {
 describe('bitmask DP lesson', () => {
   it('fills the mask table and reads back the shortest tour', () => {
     render();
-    expect(narration()).toContain('Visit all 4 cities');
+    expect(narration()).toContain('Đi qua cả 4 thành phố');
     expect(rows()).toBe(8);
     click(button('Bước tiếp'));
-    expect(narration()).toBe(
-      'Mask 1 = 0001: only A is visited and the walk stands on A, so dp[{A}][A] = 0.',
-    );
+    expect(narration()).toBe('Mặt nạ 1 = 0001: mới thăm A và đang đứng ở A, nên dp[{A}][A] = 0.');
     expect(cell(1, 0)?.textContent?.trim()).toBe('0●');
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
     expect(narration()).toBe(
-      'From {A} at A, go to B: 0 + 5 = 5 for dp[{A, B}][B]. The first walk to that state.',
+      'Từ {A} đang ở A, đi tới B: 0 + 5 = 5 cho dp[{A, B}][B]. Đây là đường đi đầu tiên tới trạng thái đó.',
     );
-    expect(cell(3, 1)?.getAttribute('aria-label')).toBe('dp[{A, B}][B]: 5, improved');
+    expect(cell(3, 1)?.getAttribute('aria-label')).toBe('dp[{A, B}][B]: 5, vừa cải thiện');
     expect(cell(3, 0)?.textContent?.trim()).toBe(m.outside);
     click(button('Đến bước cuối'));
-    expect(narration()).toBe('The shortest tour is A → C → D → B → A, length 20.');
+    expect(narration()).toBe('Hành trình ngắn nhất là A → C → D → B → A, dài 20.');
     expect(byTest('best')).toBe('20');
     expect(byTest('tries')).toBe('15 / 15');
     expect(byTest('reached')).toBe('13 / 13');
     expect(byTest('tours')).toBe('6');
     expect(byTest('walk')).toBe('A → C → D → B → A');
-    expect(cell(15, 1)?.getAttribute('aria-label')).toBe('dp[{A, B, C, D}][B]: 15, on the tour');
+    expect(cell(15, 1)?.getAttribute('aria-label')).toBe(
+      'dp[{A, B, C, D}][B]: 15, trên hành trình',
+    );
   });
 
   it('loads presets and rebuilds on every edit of the cities', () => {
@@ -117,7 +117,7 @@ describe('bitmask DP lesson', () => {
     pick('four');
     click(buttonByText(m.addCity));
     expect(rows()).toBe(16);
-    expect(city(4).getAttribute('aria-label')).toContain('City E at (0, 0)');
+    expect(city(4).getAttribute('aria-label')).toContain('Thành phố E ở (0, 0)');
     expect(byTest('tries')).toBe(`0 / ${transitionCount(5)}`);
     click(buttonByText(m.removeCity));
     expect(rows()).toBe(8);
@@ -128,7 +128,7 @@ describe('bitmask DP lesson', () => {
   it('moves, selects and removes a city with the keyboard', () => {
     render();
     press(city(3), 'ArrowLeft', true);
-    expect(city(3).getAttribute('aria-label')).toContain('City D at (6, 4)');
+    expect(city(3).getAttribute('aria-label')).toContain('Thành phố D ở (6, 4)');
     click(button('Đến bước cuối'));
     const want = heldKarpTrace(
       distances([...CITY_PRESETS[0].cities.slice(0, 3), { x: 6, y: 4 }]),

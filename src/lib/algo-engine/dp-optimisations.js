@@ -84,13 +84,13 @@ export const HULL_PRESETS = [
 ];
 
 export const hullPseudocode = [
-  'minAt(lines, queries):     // smallest m·x + b at each x',
-  '  sort lines by slope, largest first; equal slopes keep the lowest',
-  '  for each line L:',
-  '    while the hull has 2+ lines and its last line is never',
-  '          strictly lowest once L joins:  pop the last line',
-  '    push L onto the hull',
-  '  p = 0;  for each query x, smallest first:',
+  'minAt(lines, queries):     // m·x + b nhỏ nhất tại mỗi x',
+  '  sắp xếp lines theo hệ số góc giảm dần; cùng hệ số góc thì giữ đường thấp nhất',
+  '  for L in lines:',
+  '    while hull có từ 2 đường and đường cuối không bao giờ',
+  '          thấp nhất thực sự khi L vào:  pop đường cuối',
+  '    push L vào hull',
+  '  p = 0;  for x in queries:  // x nhỏ nhất trước',
   '    while p + 1 < size and hull[p+1](x) ≤ hull[p](x): p = p + 1',
   '    answer(x) = hull[p](x)',
 ];

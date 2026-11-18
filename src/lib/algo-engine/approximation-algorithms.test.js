@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { indexPairs } from './plain-edges.js';
-import { en as m } from '$lib/lessons/approximation-algorithms/copy.en.js';
+import { vi as m } from '$lib/lessons/approximation-algorithms/copy.vi.js';
 import {
   COVER_PRESETS,
   MAX_NODES,

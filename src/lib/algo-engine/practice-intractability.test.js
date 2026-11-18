@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { en as m } from '$lib/lessons/practice-intractability/copy.en.js';
+import { vi as m } from '$lib/lessons/practice-intractability/copy.vi.js';
 import {
   BINS,
   CARDS,

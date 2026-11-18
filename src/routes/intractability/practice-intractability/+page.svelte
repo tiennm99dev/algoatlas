@@ -12,7 +12,7 @@
     dealHand,
     sortTrace,
   } from '$lib/algo-engine/practice-intractability.js';
-  import { en as m } from '$lib/lessons/practice-intractability/copy.en.js';
+  import { vi as m } from '$lib/lessons/practice-intractability/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/practice-intractability.js').Bin} Bin */

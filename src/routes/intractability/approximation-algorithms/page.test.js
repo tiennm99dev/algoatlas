@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/approximation-algorithms/copy.en.js';
+import { vi as m } from '$lib/lessons/approximation-algorithms/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -51,19 +51,19 @@ const vertex = (id) => /** @type {Element} */ (document.querySelector(`[data-nod
 describe('approximation algorithms lesson', () => {
   it('runs the matching 2-approximation on the spider', () => {
     render();
-    expect(narration()).toContain('Read the 6 edges in order');
+    expect(narration()).toContain('Đọc lần lượt 6 cạnh');
     expect(byTest('optimum')).toBe('3');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Neither end of A – B is in the cover. Take both');
+    expect(narration()).toContain('Cả hai đầu của A – B đều chưa thuộc tập phủ. Lấy cả hai');
     expect(byTest('cover')).toBe('2');
     click(button('Bước tiếp'));
-    expect(narration()).toBe('A – C already has an end in the cover. Skip it.');
+    expect(narration()).toBe('A – C đã có một đầu thuộc tập phủ. Bỏ qua nó.');
     click(button('Đến bước cuối'));
     expect(byTest('cover')).toBe('6');
     expect(byTest('side')).toBe('3');
     expect(byTest('ratio')).toBe('2');
     expect(vertex(1).getAttribute('aria-label')).toBe(
-      'Vertex B, in the cover, in a smallest cover',
+      'Đỉnh B, thuộc tập phủ, thuộc một tập phủ nhỏ nhất',
     );
   });
 
@@ -71,11 +71,11 @@ describe('approximation algorithms lesson', () => {
     render();
     click(field('input[name="algorithm"][value="greedy"]'));
     click(button('Bước tiếp'));
-    expect(narration()).toContain('A touches 3 uncovered edges, the most of any vertex');
+    expect(narration()).toContain('A chạm tới 3 cạnh chưa phủ, nhiều nhất trong mọi đỉnh');
     click(button('Đến bước cuối'));
     expect(byTest('cover')).toBe('4');
     expect(byTest('ratio')).toBe('1.33');
-    expect(narration()).toContain('The optimum {B, C, D} has 3');
+    expect(narration()).toContain('Tối ưu {B, C, D} có 3 đỉnh');
   });
 
   it('loads the star and the path', () => {
@@ -103,7 +103,7 @@ describe('approximation algorithms lesson', () => {
     render();
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
     flushSync();
-    expect(narration()).toContain('Neither end of A – B');
+    expect(narration()).toContain('Cả hai đầu của A – B');
   });
 
   it('checks a practice answer, wrong then right, with a hint', () => {
@@ -127,7 +127,7 @@ describe('approximation algorithms lesson', () => {
       (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {Element} */ (hint));
-    expect(q.textContent).toContain('read Cover size');
+    expect(q.textContent).toContain('đọc ô “Kích thước tập phủ”');
     answer.value = '6';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();

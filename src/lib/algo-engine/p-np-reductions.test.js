@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { en as m } from '$lib/lessons/p-np-reductions/copy.en.js';
+import { vi as m } from '$lib/lessons/p-np-reductions/copy.vi.js';
 import {
   MAX_NODES,
   REDUCTION_PRESETS,

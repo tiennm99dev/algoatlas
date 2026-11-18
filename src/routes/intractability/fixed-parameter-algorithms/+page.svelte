@@ -16,7 +16,7 @@
     fptTrace,
     subsetsUpTo,
   } from '$lib/algo-engine/fixed-parameter-algorithms.js';
-  import { en as m } from '$lib/lessons/fixed-parameter-algorithms/copy.en.js';
+  import { vi as m } from '$lib/lessons/fixed-parameter-algorithms/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/graph-editor.js').GraphNode} GraphNode */

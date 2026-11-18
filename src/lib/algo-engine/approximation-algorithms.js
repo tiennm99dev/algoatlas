@@ -40,21 +40,21 @@ export const MAX_NODES = 10;
  */
 
 export const matchingPseudocode = [
-  'approxCover(G):  // maximal matching',
+  'approxCover(G):  // ghép cặp tối đại',
   '  C = { }',
-  '  for each edge u – v:',
-  '    if neither u nor v is in C:',
-  '      add u and v to C  // M gets u – v',
-  '    else: skip, already covered',
+  '  for u – v in edges(G):',
+  '    if u not in C and v not in C:',
+  '      thêm u và v vào C  // M nhận u – v',
+  '    else: bỏ qua, đã được phủ',
   '  return C  // |C| = 2|M| ≤ 2 · OPT',
 ];
 
 export const greedyPseudocode = [
-  'greedyCover(G):  // greedy set cover',
+  'greedyCover(G):  // tham lam cho phủ tập',
   '  C = { }',
-  '  while some edge is uncovered:',
-  '    v = the vertex touching the most uncovered edges',
-  '    add v to C, and mark its edges covered',
+  '  while còn cạnh chưa phủ:',
+  '    v = đỉnh chạm tới nhiều cạnh chưa phủ nhất',
+  '    thêm v vào C, đánh dấu các cạnh của v đã phủ',
   '  return C  // |C| ≤ H(Δ) · OPT',
 ];
 

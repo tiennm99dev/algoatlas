@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { checkAnswer, exerciseProblems } from '$lib/components/answer-check.js';
 import { digitTrace } from '$lib/algo-engine/digit-dp.js';
-import { en as m } from '$lib/lessons/digit-dp/copy.en.js';
+import { vi as m } from '$lib/lessons/digit-dp/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -65,30 +65,30 @@ function practice() {
 describe('digit DP lesson', () => {
   it('fills digit by digit and lets the tight prefix die', () => {
     render();
-    expect(narration()).toContain('Count the numbers from 0 to 345 whose digits add up to 10.');
+    expect(narration()).toContain('Đếm các số từ 0 đến 345 có tổng chữ số bằng 10.');
     for (let i = 0; i < 3; i++) click(button('Bước tiếp'));
     expect(narration()).toBe(
-      'The tight prefix (sum 0) may take a digit below 3, from 0 to 2. Each one falls below N and becomes loose: +1 to sums 0..2.',
+      'Tiền tố chặt (tổng 0) có thể nhận một chữ số nhỏ hơn 3, từ 0 đến 2. Mỗi chữ số như vậy làm số nhỏ hơn N và tiền tố trở thành lỏng: +1 vào các tổng 0..2.',
     );
-    expect(labelled('Digit 3')).toEqual(['Digit 3: allowed, stays tight']);
-    expect(labelled('Digit 4')).toEqual(['Digit 4: blocked, the number would pass N']);
-    expect(labelled('Digit 1:')).toEqual(['Digit 1: allowed, the prefix is loose']);
+    expect(labelled('Chữ số 3')).toEqual(['Chữ số 3: được phép, vẫn chặt']);
+    expect(labelled('Chữ số 4')).toEqual(['Chữ số 4: bị chặn, số sẽ vượt N']);
+    expect(labelled('Chữ số 1:')).toEqual(['Chữ số 1: được phép, tiền tố lỏng']);
     click(button('Bước tiếp'));
     expect(narration()).toBe(
-      'Or the tight prefix takes 3 itself and still equals N’s prefix: t = 0 + 3 = 3.',
+      'Hoặc tiền tố chặt nhận đúng chữ số 3 và vẫn bằng tiền tố của N: t = 0 + 3 = 3.',
     );
     for (let i = 0; i < 4; i++) click(button('Bước tiếp'));
     expect(narration()).toBe(
-      '1 loose prefix has sum 1. It is already below N, so any digit 0–9 may follow: add 1 to sums 1..10.',
+      'Có 1 tiền tố lỏng với tổng 1, đều đã nhỏ hơn N, nên mọi chữ số 0–9 đều được đứng tiếp: cộng 1 vào các tổng 1..10.',
     );
-    expect(labelled('1 digit, sum 1:')).toEqual(['1 digit, sum 1: 1, spread now']);
+    expect(labelled('1 chữ số, tổng 1:')).toEqual(['1 chữ số, tổng 1: 1, đang lan ra']);
     click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('33');
     expect(byTest('transitions')).toBe('155 / 155');
     expect(byTest('brute')).toBe('346');
     expect(byTest('states')).toBe('44');
-    expect(labelled('Position 3')).toEqual(['Position 3: digit 5, tight prefix died']);
-    expect(labelled('3 digits, sum 10:')).toEqual(['3 digits, sum 10: 33, the answer']);
+    expect(labelled('Vị trí 3')).toEqual(['Vị trí 3: chữ số 5, tiền tố chặt đã bị loại']);
+    expect(labelled('3 chữ số, tổng 10:')).toEqual(['3 chữ số, tổng 10: 33, đáp án']);
   });
 
   it('counts N itself when its tight prefix ends on S', () => {
@@ -98,7 +98,7 @@ describe('digit DP lesson', () => {
     click(button('Đến bước cuối'));
     const want = digitTrace(1234, 10).at(-1)?.result;
     expect(byTest('answer')).toBe(String(want));
-    expect(narration()).toContain('plus N itself');
+    expect(narration()).toContain('cộng thêm chính N');
   });
 
   it('names a single number in the singular when N is the only one', () => {
@@ -108,7 +108,7 @@ describe('digit DP lesson', () => {
     click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('1');
     expect(narration()).toBe(
-      '1 number: 0 loose ones with sum 5, plus N itself, whose tight prefix ends at 5.',
+      'Có 1 số: 0 số lỏng có tổng 5, cộng thêm chính N, vì tiền tố chặt kết thúc với tổng 5.',
     );
   });
 
@@ -131,7 +131,7 @@ describe('digit DP lesson', () => {
     expect(field('input[name="limit"]').value).toBe('1000');
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
     flushSync();
-    expect(narration()).toContain('Before the first digit');
+    expect(narration()).toContain('Trước chữ số đầu tiên');
     click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('21');
   });

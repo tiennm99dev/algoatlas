@@ -46,16 +46,16 @@ export const MAX_NODES = 8;
  */
 
 export const reductionPseudocode = [
-  'reduce(G, k):       // CLIQUE ≤ₚ IND. SET',
-  '  H = same vertices, no edges',
-  '  for each pair u, v:',
-  '    if u – v not in G: add u – v to H',
-  '  return (H, k)      // n(n − 1)/2 pairs',
-  'verify(G, k, S):    // S: certificate',
-  '  if |S| < k: reject',
-  '  for each pair u, v in S:',
-  '    if u – v not in G: reject',
-  '  accept',
+  'reduce(G, k):       // CLIQUE ≤ₚ TẬP ĐỘC LẬP',
+  '  H = cùng tập đỉnh, chưa có cạnh',
+  '  for (u, v) in pairs(V):',
+  '    if u – v not in G: thêm u – v vào H',
+  '  return (H, k)      // n(n − 1)/2 cặp',
+  'verify(G, k, S):    // S: chứng chỉ',
+  '  if |S| < k: return "bác bỏ"',
+  '  for (u, v) in pairs(S):',
+  '    if u – v not in G: return "bác bỏ"',
+  '  return "chấp nhận"',
 ];
 
 /**

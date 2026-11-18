@@ -14,7 +14,7 @@
     digitPseudocode,
     digitTrace,
   } from '$lib/algo-engine/digit-dp.js';
-  import { en as m } from '$lib/lessons/digit-dp/copy.en.js';
+  import { vi as m } from '$lib/lessons/digit-dp/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/visual-state.js').VisualState} VisualState */

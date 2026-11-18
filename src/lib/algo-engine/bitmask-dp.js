@@ -76,15 +76,15 @@ export const CITY_PRESETS = [
 ];
 
 export const tspPseudocode = [
-  'heldKarp(d[0..n-1][0..n-1]):    // start and end at A',
-  '  dp[{A}][A] = 0                 // mask 1: only A visited',
-  '  for mask = 1 to 2ⁿ − 1 with A in mask:',
-  '    for j in mask with dp[mask][j] set:',
+  'heldKarp(d[0..n-1][0..n-1]):    // xuất phát và kết thúc ở A',
+  '  dp[{A}][A] = 0                 // mask 1: mới thăm A',
+  '  for mask = 1 to 2ⁿ − 1:  // chỉ xét mask chứa A',
+  '    for j in mask:  // dp[mask][j] đã có giá trị',
   '      for k not in mask:',
   '        cand = dp[mask][j] + d[j][k]',
-  '        if cand < dp[mask | 2ᵏ][k]: set it; from = j',
-  '  best = min over j ≠ A of dp[2ⁿ − 1][j] + d[j][A]',
-  '  follow from[][] back to rebuild the tour',
+  '        if cand < dp[mask | 2ᵏ][k]: ghi cand; from = j',
+  '  best = min(dp[2ⁿ − 1][j] + d[j][A]) với j ≠ A',
+  '  lần theo from[][] để dựng lại hành trình',
 ];
 
 /** Grid steps between every pair of cities. @param {City[]} cities */

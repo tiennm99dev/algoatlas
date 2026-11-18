@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/practice-intractability/copy.en.js';
+import { vi as m } from '$lib/lessons/practice-intractability/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -53,18 +53,18 @@ const byTest = (id) => document.querySelector(`[data-testid="${id}"]`)?.textCont
 describe('reductions and hardness practice', () => {
   it('checks the sort one card at a time', () => {
     render();
-    expect(narration()).toContain('Sort the 8 cards');
+    expect(narration()).toContain('Xếp 8 thẻ');
     sort('eulerCircuit', 'p');
     sort('hamCycle', 'p');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Euler circuit: right, Polynomial.');
-    expect(byTest('verdict-eulerCircuit')).toContain('✓ Right.');
+    expect(narration()).toContain('Chu trình Euler: đúng, Đa thức.');
+    expect(byTest('verdict-eulerCircuit')).toContain('✓ Đúng.');
     expect(byTest('verdict-hamCycle')).toBeUndefined();
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Hamiltonian cycle: not Polynomial, it is NP-complete.');
+    expect(narration()).toContain('Chu trình Hamilton: không phải Đa thức, mà là NP-đầy đủ.');
     expect(byTest('wrong')).toBe('1');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('2-SAT: not sorted. It is Polynomial.');
+    expect(narration()).toContain('2-SAT: chưa xếp. Thẻ này thuộc ô Đa thức.');
   });
 
   it('scores everything with Check all, and clears', () => {
@@ -83,7 +83,7 @@ describe('reductions and hardness practice', () => {
     click(buttonByText(m.checkAll));
     expect(byTest('right')).toBe('8');
     expect(byTest('checked')).toBe('8 / 8');
-    expect(narration()).toContain('A perfect sort.');
+    expect(narration()).toContain('Xếp hoàn hảo.');
     click(buttonByText(m.clear));
     click(buttonByText(m.checkAll));
     expect(byTest('unsorted')).toBe('8');
@@ -100,7 +100,7 @@ describe('reductions and hardness practice', () => {
     render();
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
     flushSync();
-    expect(narration()).toContain('Euler circuit: not sorted');
+    expect(narration()).toContain('Chu trình Euler: chưa xếp');
   });
 
   it('checks a practice answer, wrong then right, with a hint', () => {
@@ -124,7 +124,7 @@ describe('reductions and hardness practice', () => {
       (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {Element} */ (hint));
-    expect(q.textContent).toContain('Check all and count');
+    expect(q.textContent).toContain('Bấm “Kiểm tra tất cả” và đếm');
     answer.value = '3';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();

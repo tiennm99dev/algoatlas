@@ -57,16 +57,16 @@ export const VAR_NAMES = 'abcd';
  */
 
 export const gadgetPseudocode = [
-  'reduce(φ: n variables, m clauses):',
-  '  for each variable x: add edge x – ¬x',
-  '  for each clause: add a triangle',
-  '    join each corner to its literal',
+  'reduce(φ):          // n biến, m mệnh đề',
+  '  for x in variables: thêm cạnh x – ¬x',
+  '  for C in clauses: thêm một tam giác',
+  '    nối mỗi đỉnh tam giác với literal của nó',
   '  return (G, k = n + 2m)',
-  'cover(G, an assignment):',
-  '  for each variable: take its true literal',
-  '  for each clause: leave out one true',
-  '    literal’s corner, take the other two',
-  '  all edges covered ⇔ φ is satisfied',
+  'cover(G, assignment):',
+  '  for x in variables: lấy literal đúng của x',
+  '  for C in clauses: bỏ ra đỉnh tam giác của',
+  '    một literal đúng, lấy hai đỉnh còn lại',
+  '  mọi cạnh được phủ ⇔ φ được thoả',
 ];
 
 /**

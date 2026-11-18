@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/fixed-parameter-algorithms/copy.en.js';
+import { vi as m } from '$lib/lessons/fixed-parameter-algorithms/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -57,31 +57,31 @@ const treeNode = (start) =>
 describe('fixed-parameter algorithms lesson', () => {
   it('searches the spider for a cover of 3', () => {
     render();
-    expect(narration()).toContain('Is there a vertex cover of at most k = 3 vertices?');
+    expect(narration()).toContain('Có tập phủ đỉnh nào gồm tối đa k = 3 đỉnh không?');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('A – B is the first uncovered edge');
+    expect(narration()).toContain('A – B là cạnh chưa phủ đầu tiên');
     expect(byTest('made')).toBe('1');
     click(button('Đến bước cuối'));
     expect(byTest('made')).toBe('15');
-    expect(byTest('answer')).toBe('yes, {B, C, D}');
+    expect(byTest('answer')).toBe('có, {B, C, D}');
     expect(byTest('brute')).toBe('64');
-    expect(narration()).toContain('Done: yes, after 15 search nodes.');
+    expect(narration()).toContain('Xong: “có”, sau 15 nút tìm kiếm.');
   });
 
   it('says no for k = 2, and at once with the kernel', () => {
     render();
     commit(field('input[name="k"]'), '2');
     click(button('Đến bước cuối'));
-    expect(byTest('answer')).toBe('no');
+    expect(byTest('answer')).toBe('không');
     expect(byTest('made')).toBe('7');
     click(field('input[name="kernel"][value="on"]'));
     click(button('Bước tiếp'));
-    expect(narration()).toContain('A has more than 2 uncovered edges');
+    expect(narration()).toContain('A có nhiều hơn 2 cạnh chưa phủ');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('3 edges are left: the answer is no');
+    expect(narration()).toContain('Còn lại 3 cạnh: câu trả lời là “không”');
     click(button('Đến bước cuối'));
     expect(byTest('made')).toBe('0');
-    expect(narration()).toBe('Done: the kernel answered no before any search.');
+    expect(narration()).toBe('Xong: hạt nhân đã trả lời “không” trước khi tìm kiếm.');
   });
 
   it('refuses a bad k and keeps the last one', () => {
@@ -96,21 +96,21 @@ describe('fixed-parameter algorithms lesson', () => {
     commit(field('select[name="preset"]'), 'stars');
     click(button('Đến bước cuối'));
     expect(byTest('budget')).toBe('0');
-    expect(byTest('answer')).toBe('yes, {A, B}');
+    expect(byTest('answer')).toBe('có, {A, B}');
     click(/** @type {HTMLInputElement} */ (document.querySelector('input[value="remove"]')));
     click(/** @type {Element} */ (document.querySelector('[aria-label="Xoá cạnh giữa A và B"]')));
     expect(field('select[name="preset"]').value).toBe('');
     click(button('Đến bước cuối'));
-    expect(byTest('answer')).toBe('yes, {A, B}');
+    expect(byTest('answer')).toBe('có, {A, B}');
   });
 
   it('jumps to a search node by pointer and keyboard', () => {
     render();
     click(button('Đến bước cuối'));
-    click(treeNode('Took A,'));
+    click(treeNode('Đã lấy A,'));
     expect(byTest('made')).toBe('2');
     click(button('Đến bước cuối'));
-    treeNode('Root,').dispatchEvent(
+    treeNode('Gốc,').dispatchEvent(
       new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }),
     );
     flushSync();
@@ -138,7 +138,7 @@ describe('fixed-parameter algorithms lesson', () => {
       (b) => b.textContent?.trim() === 'Xem gợi ý',
     );
     click(/** @type {Element} */ (hint));
-    expect(q.textContent).toContain('A binary tree at most k deep');
+    expect(q.textContent).toContain('Một cây nhị phân sâu không quá k');
     answer.value = '31';
     answer.dispatchEvent(new Event('input', { bubbles: true }));
     submit();

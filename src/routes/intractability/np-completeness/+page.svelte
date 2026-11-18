@@ -17,7 +17,7 @@
     literalText,
     parseFormula,
   } from '$lib/algo-engine/np-completeness.js';
-  import { en as m } from '$lib/lessons/np-completeness/copy.en.js';
+  import { vi as m } from '$lib/lessons/np-completeness/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/np-completeness.js').Formula} Formula */

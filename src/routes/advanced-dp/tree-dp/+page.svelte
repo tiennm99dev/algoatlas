@@ -21,7 +21,7 @@
     treeDpPseudocode,
     treeDpTrace,
   } from '$lib/algo-engine/tree-dp.js';
-  import { en as m } from '$lib/lessons/tree-dp/copy.en.js';
+  import { vi as m } from '$lib/lessons/tree-dp/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/tree-dp.js').TreeProblem} TreeProblem */

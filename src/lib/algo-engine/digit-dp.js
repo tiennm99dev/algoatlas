@@ -36,14 +36,14 @@ export const DIGIT_PRESETS = [
 ];
 
 export const digitPseudocode = [
-  'count(N, S):                 // x in 0..N with digit sum S',
-  '  cnt[s] = 0 for every s;  t = 0   // t: sum of the tight prefix',
-  '  for each position i, D = N[i]:',
-  '    next[s] = 0 for every s',
-  '    for each s, d = 0..9: next[s + d] += cnt[s]   // loose: any digit',
-  '    for d = 0..D − 1: next[t + d] += 1          // tight, smaller digit → loose',
-  '    t = t + D                                   // tight, same digit → still tight',
-  '    cnt = next                     // sums above S are dropped',
+  'count(N, S):                 // đếm x trong 0..N có tổng chữ số S',
+  '  cnt[s] = 0 với mọi s;  t = 0   // t: tổng của tiền tố chặt',
+  '  for i in positions(N):  D = N[i]',
+  '    next[s] = 0 với mọi s',
+  '    for s, d = 0..9: next[s + d] += cnt[s]   // lỏng: mọi chữ số',
+  '    for d = 0..D − 1: next[t + d] += 1          // chặt, chữ số nhỏ hơn → lỏng',
+  '    t = t + D                                   // chặt, cùng chữ số → vẫn chặt',
+  '    cnt = next                     // bỏ các tổng lớn hơn S',
   '  return cnt[S] + (t == S ? 1 : 0)',
 ];
 

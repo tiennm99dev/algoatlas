@@ -18,7 +18,7 @@
     solveFast,
     solveNaive,
   } from '$lib/algo-engine/practice-advanced-dp.js';
-  import { en as m } from '$lib/lessons/practice-advanced-dp/copy.en.js';
+  import { vi as m } from '$lib/lessons/practice-advanced-dp/copy.vi.js';
 
   /** @typedef {import('$lib/algo-engine/practice-advanced-dp.js').RaceProblem} RaceProblem */
   /** @typedef {{n: number, naiveOps: number, fastOps: number, naiveMs: number, fastMs: number}} GrowthRow */

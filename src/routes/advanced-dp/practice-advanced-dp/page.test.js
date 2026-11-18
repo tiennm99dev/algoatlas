@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
 import { makeInput, solveFast, solveNaive } from '$lib/algo-engine/practice-advanced-dp.js';
-import { en as m } from '$lib/lessons/practice-advanced-dp/copy.en.js';
+import { vi as m } from '$lib/lessons/practice-advanced-dp/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -95,14 +95,14 @@ describe('advanced DP practice lesson', () => {
     expect(byTest('naive-answer')).toBe('61');
     expect(byTest('naive-ops')).toBe('24');
     expect(byTest('fast-ops')).toBe('27');
-    expect(byTest('verdict')).toContain('the naive method does less work');
+    expect(byTest('verdict')).toContain('cách ngây thơ làm ít việc hơn');
     click(/** @type {HTMLInputElement} */ (document.querySelector('input[value="tour"]')));
     commit(field('n'), '9');
-    expect(byTest('naive-ops')).toBe('362,880');
+    expect(byTest('naive-ops')).toBe('362880');
     expect(field('param')).toBeNull();
     click(/** @type {HTMLInputElement} */ (document.querySelector('input[value="squares"]')));
     commit(field('n'), '2000');
-    expect(byTest('naive-ops')).toBe('1,999,000');
+    expect(byTest('naive-ops')).toBe('1999000');
   });
 
   it('refuses bad values and does not run on them', () => {
