@@ -17,7 +17,7 @@
     lazyTrace,
     parseLazyValues,
   } from '$lib/algo-engine/lazy-propagation.js';
-  import { en as m } from '$lib/lessons/lazy-propagation/copy.en.js';
+  import { vi as m } from '$lib/lessons/lazy-propagation/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/lazy-propagation.js').LazyOp} LazyOp */

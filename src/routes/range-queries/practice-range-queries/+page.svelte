@@ -24,7 +24,7 @@
     workloadPseudocode,
     workloadTrace,
   } from '$lib/algo-engine/practice-range-queries.js';
-  import { en as m } from '$lib/lessons/practice-range-queries/copy.en.js';
+  import { vi as m } from '$lib/lessons/practice-range-queries/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/practice-range-queries.js').RangeSize} RangeSize */
@@ -191,8 +191,9 @@
     draw();
   }
 
+  // Programming notation, so a typed copy of a shown count is a valid answer.
   /** @param {number} x */
-  const count = (x) => x.toLocaleString('en-US');
+  const count = (x) => String(x);
   /** @param {number} part */
   const share = (part) => Math.min(100, (part / barScale) * 100);
   /** @param {WorkloadOp} op */

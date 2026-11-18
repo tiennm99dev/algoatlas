@@ -25,8 +25,8 @@ export const blocksPseudocode = [
   'query(l, r):',
   '  total = 0; i = l',
   '  while i ≤ r:',
-  '    if i starts a block and the block ends by r:',
-  '      total += sum[⌊i / s⌋]; i = next block start',
+  '    if i là đầu khối and khối đó kết thúc không quá r:',
+  '      total += sum[⌊i / s⌋]; i = đầu khối kế tiếp',
   '    else: total += a[i]; i += 1',
   '  return total',
   'set(i, x):',
@@ -34,9 +34,9 @@ export const blocksPseudocode = [
 ];
 
 export const moPseudocode = [
-  'sort queries by (⌊l / s⌋, r)',
+  'sắp xếp các truy vấn theo (⌊l / s⌋, r)',
   'curL = 0, curR = −1, distinct = 0',
-  'for each query (l, r) in sorted order:',
+  'for (l, r) in queries:  // theo thứ tự đã sắp',
   '  while curL > l: curL −= 1; add(a[curL])',
   '  while curR < r: curR += 1; add(a[curR])',
   '  while curL < l: remove(a[curL]); curL += 1',

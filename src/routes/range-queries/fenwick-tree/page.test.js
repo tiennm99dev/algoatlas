@@ -4,7 +4,7 @@ import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
 import { fenwickTrace } from '$lib/algo-engine/fenwick-tree.js';
-import { en as m } from '$lib/lessons/fenwick-tree/copy.en.js';
+import { vi as m } from '$lib/lessons/fenwick-tree/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -89,28 +89,28 @@ const opsCard = () =>
 describe('Fenwick tree lesson', () => {
   it('opens on the first prefix query and walks its jumps', () => {
     render();
-    expect(text()).toContain('prefix(7): start with sum = 0 and i = 7.');
+    expect(text()).toContain('prefix(7): bắt đầu với sum = 0 và i = 7.');
     expect(arcCount()).toBe(0);
     next(1);
-    expect(text()).toContain('t[7] sums a[7..7], 2. Running sum = 2.');
+    expect(text()).toContain('t[7] là tổng của a[7..7], bằng 2. Tổng hiện tại = 2.');
     next(1);
-    expect(text()).toContain('Clear the lowest bit: i = 7 − 1 = 6');
+    expect(text()).toContain('Xoá bit thấp nhất: i = 7 − 1 = 6');
     expect(arcCount()).toBe(1);
     expect(document.querySelector('[data-testid="bits-line"]')?.textContent).toContain(
       'lowbit(6) = 2',
     );
     next(1);
-    expect(text()).toContain('Running sum = 16.');
+    expect(text()).toContain('Tổng hiện tại = 16.');
   });
 
   it('steps back to the build', () => {
     render();
     click(button('Về bước đầu'));
-    expect(text()).toContain('All 8 cells of t start at 0.');
+    expect(text()).toContain('Cả 8 ô của t bắt đầu bằng 0.');
     next(1);
-    expect(text()).toContain('t[1] gets a[1] = 3');
+    expect(text()).toContain('t[1] nhận a[1] = 3');
     next(1);
-    expect(text()).toContain('Parent of 1 is 1 + lowbit(1) = 2');
+    expect(text()).toContain('Cha của 1 là 1 + lowbit(1) = 2');
   });
 
   it('ends the log with the range sum and the totals', () => {
@@ -124,7 +124,7 @@ describe('Fenwick tree lesson', () => {
         { type: 'range', l: 3, r: 7 },
       ],
     ).at(-1);
-    expect(text()).toContain(`read ${last?.totalReads} cells and wrote ${last?.totalWrites} cells`);
+    expect(text()).toContain(`đọc tổng cộng ${last?.totalReads} ô và ghi ${last?.totalWrites} ô`);
   });
 
   it('adds a delta and shows the jump past n', () => {
@@ -132,11 +132,13 @@ describe('Fenwick tree lesson', () => {
     commit(input('index'), '5');
     commit(input('delta'), '-2');
     click(buttonByText(m.addButton));
-    expect(text()).toContain('add(5, −2): a[5] changes');
+    expect(text()).toContain('add(5, −2): a[5] thay đổi');
     next(1);
-    expect(text()).toContain('Add −2: t[5] = 3.');
+    expect(text()).toContain('Cộng −2: t[5] = 3.');
     next(5);
-    expect(text()).toContain('i = 8 + 8 = 16, past n = 8, so the update stops after 3 writes.');
+    expect(text()).toContain(
+      'i = 8 + 8 = 16, vượt quá n = 8, nên phép cập nhật dừng sau 3 lần ghi.',
+    );
   });
 
   it('runs a range sum through two prefix walks', () => {
@@ -144,7 +146,7 @@ describe('Fenwick tree lesson', () => {
     commit(input('index'), '6');
     commit(input('from'), '3');
     click(buttonByText(m.rangeButton));
-    expect(text()).toContain('prefix(6): start');
+    expect(text()).toContain('prefix(6): bắt đầu');
     click(button('Đến bước cuối'));
     click(button('Bước trước'));
     expect(text()).toMatch(/a\[3\.\.6\] = prefix\(6\) − prefix\(2\)/);
@@ -157,14 +159,14 @@ describe('Fenwick tree lesson', () => {
       .querySelector('form')
       ?.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
     flushSync();
-    expect(text()).toContain('prefix(4): start');
+    expect(text()).toContain('prefix(4): bắt đầu');
   });
 
   it('sets the index from a cell by pointer and by keyboard', () => {
     render();
     click(cell(6));
     expect(input('index').value).toBe('6');
-    expect(text()).toContain('t[6] sums a[5..6], 2 values.');
+    expect(text()).toContain('t[6] là tổng của a[5..6], gồm 2 giá trị.');
     const focused = cell(3);
     focused.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     flushSync();
@@ -185,7 +187,7 @@ describe('Fenwick tree lesson', () => {
     expect(text()).not.toContain('range(3, 7)');
     click(buttonByText(m.reset));
     expect(text()).not.toContain('prefix(7)');
-    expect(text()).toContain('Done: the operations read 0 cells and wrote 0 cells');
+    expect(text()).toContain('Xong: các thao tác đọc tổng cộng 0 ô và ghi 0 ô');
   });
 
   it('refuses bad input and keeps the last valid value', () => {
@@ -265,7 +267,9 @@ describe('Fenwick tree lesson', () => {
     const before = opsCard();
     pressEnter(input('values'), '1, 2, 3, 4, 5, 6, 7, 8, 9');
     expect(input('values').value).toBe('1, 2, 3, 4, 5, 6, 7, 8, 9');
-    expect(opsCard().replace(' (running now)', '')).toBe(before.replace(' (running now)', ''));
+    expect(opsCard().replace(` (${m.opsHotLabel})`, '')).toBe(
+      before.replace(` (${m.opsHotLabel})`, ''),
+    );
   });
 
   it('keeps a cell in the tab order when the array shrinks', () => {

@@ -4,7 +4,7 @@ import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
 import { canonicalCover, segmentTrace, treeSpans } from '$lib/algo-engine/segment-tree.js';
-import { en as m } from '$lib/lessons/segment-tree/copy.en.js';
+import { vi as m } from '$lib/lessons/segment-tree/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -101,7 +101,7 @@ function pressEnter(el, value) {
 describe('segment tree lesson', () => {
   it('opens on the finished query with its cover lit', () => {
     render();
-    expect(text()).toContain('query[1, 6] = 29, from 4 covering nodes');
+    expect(text()).toContain('query[1, 6] = 29, từ 4 nút phủ');
     expect(coverLine()).toContain('[1, 1] = 5, [2, 3] = 5, [4, 5] = 12, [6, 6] = 7');
     expect(inRange()).toEqual([1, 2, 3, 4, 5, 6]);
   });
@@ -110,7 +110,7 @@ describe('segment tree lesson', () => {
     render();
     drag(2, 5);
     expect(inRange()).toEqual([2, 3, 4, 5]);
-    expect(coverLine()).toContain('[2, 3] = 5, [4, 5] = 12. Sum of 2 nodes.');
+    expect(coverLine()).toContain('[2, 3] = 5, [4, 5] = 12. Tổng của 2 nút.');
     expect(text()).toContain('query[2, 5] = 17');
     drag(5, 0);
     expect(inRange()).toEqual([0, 1, 2, 3, 4, 5]);
@@ -131,7 +131,7 @@ describe('segment tree lesson', () => {
       /** @type {HTMLElement} */ (document.querySelector(`[data-index="${i}"]`));
     cell(0).dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     flushSync();
-    expect(text()).toContain('Range starts at 0.');
+    expect(text()).toContain('Đoạn bắt đầu ở 0.');
     cell(3).dispatchEvent(new KeyboardEvent('keydown', { key: ' ', bubbles: true }));
     flushSync();
     expect(inRange()).toEqual([0, 1, 2, 3]);
@@ -148,13 +148,13 @@ describe('segment tree lesson', () => {
   it('replays the query through the three cases', () => {
     render();
     click(buttonByText(m.replay));
-    expect(text()).toContain('Node [0, 7] is only partly inside [1, 6]');
+    expect(text()).toContain('Nút [0, 7] chỉ nằm một phần trong [1, 6]');
     for (let i = 0; i < 3; i++) click(button('Bước tiếp'));
-    expect(text()).toContain('Node [0, 0] is outside [1, 6]: return the identity 0');
+    expect(text()).toContain('Nút [0, 0] nằm ngoài [1, 6]: trả về phần tử trung hoà 0');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Node [1, 1] is fully inside [1, 6]: return its value 5');
+    expect(text()).toContain('Nút [1, 1] nằm trọn trong [1, 6]: trả về giá trị 5');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Node [0, 1] merges what its children returned: 5.');
+    expect(text()).toContain('Nút [0, 1] gộp các kết quả mà hai con trả về: 5.');
   });
 
   it('changes the merge function on the same operations', () => {
@@ -163,7 +163,7 @@ describe('segment tree lesson', () => {
     expect(text()).toContain('query[1, 6] = 1,');
     click(buttonByText(m.replay));
     for (let i = 0; i < 3; i++) click(button('Bước tiếp'));
-    expect(text()).toContain('return the identity +∞');
+    expect(text()).toContain('trả về phần tử trung hoà +∞');
     click(/** @type {Element} */ (document.querySelector('input[value="max"]')));
     expect(text()).toContain('query[1, 6] = 9,');
   });
@@ -173,31 +173,31 @@ describe('segment tree lesson', () => {
     commit(input('index'), '4');
     commit(input('value'), '0');
     click(buttonByText(m.setButton));
-    expect(text()).toContain('Index 4 is in [0, 7]');
+    expect(text()).toContain('Chỉ số 4 nằm trong [0, 7]');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('The root stores 28.');
+    expect(text()).toContain('Gốc lưu 28.');
   });
 
   it('steps back to the build', () => {
     render();
     click(button('Về bước đầu'));
-    expect(text()).toContain('Build bottom-up over 8 values with sum');
+    expect(text()).toContain('Dựng từ dưới lên trên 8 giá trị với phép sum');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Leaf [0, 0] copies the value 2.');
+    expect(text()).toContain('Lá [0, 0] chép giá trị 2.');
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
-    expect(text()).toContain('Node [0, 1] = sum(left child, right child) = 7.');
+    expect(text()).toContain('Nút [0, 1] = sum(con trái, con phải) = 7.');
   });
 
   it('undoes and resets, and a drag starts a new query', () => {
     render();
     click(buttonByText(m.undo));
-    expect(text()).toContain('Done: all operations ran.');
+    expect(text()).toContain('Xong: đã chạy hết các thao tác.');
     drag(0, 1);
     expect(coverLine()).toContain('[0, 1] = 7');
     click(buttonByText(m.reset));
     expect(inRange()).toEqual([]);
-    expect(text()).toContain('The root stores 37.');
+    expect(text()).toContain('Gốc lưu 37.');
   });
 
   it('refuses bad input and keeps the last valid value', () => {
@@ -282,7 +282,7 @@ describe('segment tree lesson', () => {
   it('counts a one-node cover in the singular', () => {
     render();
     drag(0, 7);
-    expect(coverLine()).toContain('Sum of 1 node.');
+    expect(coverLine()).toContain('Tổng của 1 nút.');
   });
 });
 

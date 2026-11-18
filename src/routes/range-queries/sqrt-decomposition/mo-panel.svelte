@@ -11,7 +11,7 @@
     parseQueries,
     parseValues,
   } from '$lib/algo-engine/sqrt-decomposition.js';
-  import { en as m } from '$lib/lessons/sqrt-decomposition/copy.en.js';
+  import { vi as m } from '$lib/lessons/sqrt-decomposition/copy.vi.js';
   import { MO_PRESETS } from './start-inputs.js';
 
   /** @typedef {import('$lib/algo-engine/sqrt-decomposition.js').MoFrame} MoFrame */

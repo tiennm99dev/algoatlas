@@ -4,7 +4,7 @@
   import SegmentedControl from '$lib/components/segmented-control.svelte';
   import StepControls from '$lib/components/step-controls.svelte';
   import { blocksTrace, moTrace } from '$lib/algo-engine/sqrt-decomposition.js';
-  import { en as m } from '$lib/lessons/sqrt-decomposition/copy.en.js';
+  import { vi as m } from '$lib/lessons/sqrt-decomposition/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
   import BlocksPanel from './blocks-panel.svelte';
   import MoPanel from './mo-panel.svelte';

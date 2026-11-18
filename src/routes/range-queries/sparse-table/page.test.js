@@ -4,7 +4,7 @@ import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
 import { floorLog2, foldRange, sparseTrace } from '$lib/algo-engine/sparse-table.js';
-import { en as m } from '$lib/lessons/sparse-table/copy.en.js';
+import { vi as m } from '$lib/lessons/sparse-table/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -67,21 +67,23 @@ const tableCell = (label) =>
 describe('sparse table lesson', () => {
   it('starts on the build and ends with the query answer', () => {
     render();
-    expect(text()).toContain('Build the table for 8 values with min, then answer a[1..6].');
+    expect(text()).toContain('Dựng bảng cho 8 giá trị với phép min, rồi trả lời truy vấn a[1..6].');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Level 0 holds blocks of length 1');
+    expect(text()).toContain('Tầng 0 gồm các khối độ dài 1');
     click(button('Đến bước cuối'));
     expect(document.querySelector('[data-testid="result-line"]')?.textContent).toContain(
       'min(st[2][1], st[2][3]) = min(1, 1) = 1',
     );
-    expect(text()).toContain('took 2 reads instead of 6 reads');
+    expect(text()).toContain('chỉ tốn 2 lần đọc thay vì 6 lần');
   });
 
   it('types a range and jumps to its query', () => {
     render();
     commit(input('l'), '4');
     commit(input('r'), '7');
-    expect(text()).toContain('The range has 4 cells. The largest power of two that fits is 2^2');
+    expect(text()).toContain(
+      'Đoạn có 4 ô. Luỹ thừa của 2 lớn nhất không vượt quá độ dài này là 2^2',
+    );
     click(button('Đến bước cuối'));
     expect(document.querySelector('[data-testid="result-line"]')?.textContent).toContain(
       'min(st[2][4], st[2][4]) = min(1, 1) = 1',
@@ -91,20 +93,20 @@ describe('sparse table lesson', () => {
   it('picks a range with two clicks and with the keyboard', () => {
     render();
     click(arrayCell(0));
-    expect(text()).toContain('Range starts at 0.');
+    expect(text()).toContain('Đoạn bắt đầu ở 0.');
     click(arrayCell(2));
-    expect(text()).toContain('The range has 3 cells');
+    expect(text()).toContain('Đoạn có 3 ô');
     const first = /** @type {HTMLElement} */ (arrayCell(5));
     first.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     flushSync();
-    expect(text()).toContain('Range starts at 5.');
+    expect(text()).toContain('Đoạn bắt đầu ở 5.');
   });
 
   it('shows the overlap failing under sum', () => {
     render();
     click(/** @type {Element} */ (document.querySelector('input[value="sum"]')));
     click(button('Đến bước cuối'));
-    expect(text()).toContain('wrong answer 31 instead of 23');
+    expect(text()).toContain('đáp án sai 31 thay vì 23');
   });
 
   it('changes the table when the operation changes', () => {
@@ -121,10 +123,10 @@ describe('sparse table lesson', () => {
     click(button('Đến bước cuối'));
     click(tableCell('st[2][1]'));
     expect(document.querySelector('[data-testid="inspect-line"]')?.textContent).toContain(
-      'st[2][1] covers a[1..4], 4 cells: min = 1.',
+      'st[2][1] phủ a[1..4], gồm 4 ô: min = 1.',
     );
     click(tableCell('st[3][5]'));
-    expect(text()).toContain('length 8 starting at 5 would run past the end');
+    expect(text()).toContain('khối độ dài 8 bắt đầu tại 5 sẽ vượt quá cuối');
   });
 
   it('refuses bad input and keeps the last valid value', () => {
@@ -135,7 +137,7 @@ describe('sparse table lesson', () => {
     commit(input('values'), '100');
     expect(text()).toContain(m.valueErrors.range);
     commit(input('r'), '99');
-    expect(text()).toContain('l and r must be whole numbers');
+    expect(text()).toContain('l và r phải là số nguyên');
     expect(input('r').value).toBe('6');
   });
 
@@ -180,17 +182,17 @@ describe('sparse table lesson', () => {
     commit(input('r'), '2');
     click(/** @type {Element} */ (document.querySelector('input[value="sum"]')));
     click(button('Đến bước cuối'));
-    expect(text()).toContain('the right answer 2, by luck');
-    expect(text()).not.toContain('wrong answer');
+    expect(text()).toContain('ra đáp án đúng 2, nhưng là do may');
+    expect(text()).not.toContain('đáp án sai');
   });
 
   it('clears a refusal when a valid table cell is inspected next', () => {
     render();
     click(button('Đến bước cuối'));
     click(tableCell(m.tableCellLabel(3, 1, null, false, '')));
-    expect(text()).toContain('No block here');
+    expect(text()).toContain('Không có khối ở đây');
     click(tableCell(m.tableCellLabel(0, 1, 2, true, '')));
-    expect(text()).not.toContain('No block here');
+    expect(text()).not.toContain('Không có khối ở đây');
   });
 
   it('names a negative value as out of range', () => {

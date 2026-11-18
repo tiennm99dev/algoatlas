@@ -24,7 +24,7 @@ export const SEG_MERGES = /** @type {SegMerge[]} */ (['sum', 'min', 'max']);
 export const segmentPseudocode = [
   'build(v, lo, hi):',
   '  if lo == hi: tree[v] = a[lo]; return',
-  '  build both children, then tree[v] = merge(tree[2v], tree[2v + 1])',
+  '  dựng hai con, rồi tree[v] = merge(tree[2v], tree[2v + 1])',
   'query(v, lo, hi, l, r):',
   '  if r < lo or hi < l: return identity',
   '  if l ≤ lo and hi ≤ r: return tree[v]',
@@ -32,7 +32,7 @@ export const segmentPseudocode = [
   '  return merge(query(2v, lo, mid, l, r), query(2v + 1, mid + 1, hi, l, r))',
   'set(v, lo, hi, i, x):',
   '  if lo == hi: tree[v] = x; return',
-  '  recurse into the child whose range holds i',
+  '  đệ quy vào con có đoạn chứa i',
   '  tree[v] = merge(tree[2v], tree[2v + 1])',
 ];
 

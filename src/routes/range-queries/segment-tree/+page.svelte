@@ -18,7 +18,7 @@
     segmentPseudocode,
     segmentTrace,
   } from '$lib/algo-engine/segment-tree.js';
-  import { en as m } from '$lib/lessons/segment-tree/copy.en.js';
+  import { vi as m } from '$lib/lessons/segment-tree/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
   import RangeDrag from './range-drag.svelte';
 

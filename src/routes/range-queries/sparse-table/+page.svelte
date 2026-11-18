@@ -14,7 +14,7 @@
     sparsePseudocode,
     sparseTrace,
   } from '$lib/algo-engine/sparse-table.js';
-  import { en as m } from '$lib/lessons/sparse-table/copy.en.js';
+  import { vi as m } from '$lib/lessons/sparse-table/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/sparse-table.js').SparseOp} SparseOp */

@@ -16,7 +16,7 @@
     lowbit,
     parseFenwickValues,
   } from '$lib/algo-engine/fenwick-tree.js';
-  import { en as m } from '$lib/lessons/fenwick-tree/copy.en.js';
+  import { vi as m } from '$lib/lessons/fenwick-tree/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
   import FenwickArcs from './fenwick-arcs.svelte';
 

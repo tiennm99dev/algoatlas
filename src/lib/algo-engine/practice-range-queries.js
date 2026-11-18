@@ -40,12 +40,12 @@ export const STRUCTURE_IDS = /** @type {StructureId[]} */ ([
 ]);
 
 export const workloadPseudocode = [
-  'for each structure: build it, counting touches',
-  'for each operation in the workload:',
-  '  sum or min of a[l..r]: each structure reads what it needs',
-  '  set a[i] = v: each structure rewrites what depends on a[i]',
-  '  a structure that cannot answer the query drops out',
-  'cheapest = fewest total touches among those still in',
+  'for s in structures: build(s)  // đếm số lần chạm',
+  'for op in workload:',
+  '  tổng hoặc min của a[l..r]: mỗi cấu trúc đọc những gì nó cần',
+  '  set a[i] = v: mỗi cấu trúc ghi lại những gì phụ thuộc vào a[i]',
+  '  cấu trúc nào không trả lời được truy vấn thì bị loại',
+  'cheapest = cấu trúc còn lại có tổng số lần chạm ít nhất',
 ];
 
 /**

@@ -9,7 +9,7 @@ import {
   moOrder,
   worstReads,
 } from '$lib/algo-engine/sqrt-decomposition.js';
-import { en as m } from '$lib/lessons/sqrt-decomposition/copy.en.js';
+import { vi as m } from '$lib/lessons/sqrt-decomposition/copy.vi.js';
 import { BLOCK_START, BLOCK_START_OPS } from './start-inputs.js';
 
 /** @type {Record<string, any> | null} */
@@ -94,42 +94,44 @@ function pressEnter(el, value) {
 describe('sqrt decomposition lesson: blocks', () => {
   it('opens on the first query and walks loose cells and whole blocks', () => {
     render();
-    expect(text()).toContain('Sum of a[2..13]: start at the left end with total 0.');
+    expect(text()).toContain('Tổng của a[2..13]: bắt đầu từ đầu trái với total = 0.');
     next(1);
-    expect(text()).toContain('Cell 2 cannot use a whole block here, so read it: 4. Total = 4.');
+    expect(text()).toContain(
+      'Ô 2 không dùng được cả khối ở đây, nên ta đọc nó: 4. Tổng hiện tại = 4.',
+    );
     next(2);
-    expect(text()).toContain('Block 1 fits inside the range, so read its stored sum 22');
+    expect(text()).toContain('Khối 1 nằm trọn trong đoạn, nên ta đọc tổng đã lưu 22');
     next(4);
-    expect(text()).toContain('The sum is 64, from 6 reads instead of 12.');
+    expect(text()).toContain('Tổng bằng 64, sau 6 lần đọc thay vì 12.');
   });
 
   it('applies a point update to one cell and one block sum', () => {
     render();
     next(8);
-    expect(text()).toContain('a[5] becomes 0, and block 1’s sum shifts to 13.');
+    expect(text()).toContain('a[5] thành 0, và tổng của khối 1 đổi thành 13.');
     click(button('Đến bước cuối'));
     click(button('Bước trước'));
-    expect(text()).toContain('The sum is 55, from 6 reads instead of 12.');
+    expect(text()).toContain('Tổng bằng 55, sau 6 lần đọc thay vì 12.');
   });
 
   it('steps back to the build', () => {
     render();
     click(button('Về bước đầu'));
-    expect(text()).toContain('Split 16 values into blocks of 4');
+    expect(text()).toContain('Chia 16 giá trị thành các khối 4 ô');
     next(1);
-    expect(text()).toContain('a[0] = 3 is in block 0, whose sum is now 3.');
+    expect(text()).toContain('a[0] = 3 thuộc khối 0, tổng của khối giờ là 3.');
   });
 
   it('shows the cost rise on both sides of the square root', () => {
     render();
-    expect(tradeOff()).toContain('the costliest range needs 8 reads');
+    expect(tradeOff()).toContain('đoạn tốn kém nhất cần 8 lần đọc');
     commit(input('block'), '1');
-    expect(tradeOff()).toContain('the costliest range needs 16 reads');
+    expect(tradeOff()).toContain('đoạn tốn kém nhất cần 16 lần đọc');
     commit(input('block'), '16');
-    expect(tradeOff()).toContain('the costliest range needs 15 reads');
+    expect(tradeOff()).toContain('đoạn tốn kém nhất cần 15 lần đọc');
     click(buttonByText(m.rootButton));
     expect(input('block').value).toBe('4');
-    expect(tradeOff()).toContain('the costliest range needs 8 reads');
+    expect(tradeOff()).toContain('đoạn tốn kém nhất cần 8 lần đọc');
   });
 
   it('runs a typed query with Enter, and a picked one with two clicks', () => {
@@ -142,12 +144,12 @@ describe('sqrt decomposition lesson: blocks', () => {
     flushSync();
     expect(opsCard()).toContain('sum(4, 7)');
     next(1);
-    expect(text()).toContain('Block 1 fits inside the range');
+    expect(text()).toContain('Khối 1 nằm trọn trong đoạn');
 
     const cell = (/** @type {number} */ i) =>
       /** @type {HTMLElement} */ (document.querySelector(`[data-index="${i}"]`));
     click(cell(9));
-    expect(text()).toContain('Range starts at 9.');
+    expect(text()).toContain('Đoạn bắt đầu ở 9.');
     cell(1).dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     flushSync();
     expect(opsCard()).toContain('sum(1, 9)');
@@ -159,7 +161,7 @@ describe('sqrt decomposition lesson: blocks', () => {
     commit(input('index'), '0');
     commit(input('value'), '-7');
     click(buttonByText(m.setButton));
-    expect(text()).toContain('a[0] becomes −7, and block 0’s sum shifts to −1.');
+    expect(text()).toContain('a[0] thành −7, và tổng của khối 0 đổi thành −1.');
     click(buttonByText(m.undo));
     expect(opsCard()).not.toContain('set(0, −7)');
     click(buttonByText(m.reset));
@@ -223,13 +225,15 @@ describe('sqrt decomposition lesson: blocks', () => {
     const before = opsCard();
     pressEnter(input('block'), '3');
     expect(input('block').value).toBe('3');
-    expect(opsCard().replace(' (running now)', '')).toBe(before.replace(' (running now)', ''));
+    expect(opsCard().replace(` (${m.opsHotLabel})`, '')).toBe(
+      before.replace(` (${m.opsHotLabel})`, ''),
+    );
   });
 
   it('does not claim more loose cells than the array has', () => {
     render();
     commit(input('block'), '16');
-    expect(tradeOff()).toContain('the costliest range needs 15 reads');
+    expect(tradeOff()).toContain('đoạn tốn kém nhất cần 15 lần đọc');
     expect(tradeOff()).not.toMatch(/30|1 blocks/);
   });
 
@@ -241,7 +245,7 @@ describe('sqrt decomposition lesson: blocks', () => {
     commit(input('r'), '4');
     click(buttonByText(m.queryButton));
     next(1);
-    expect(text()).toContain('instead of 2 cells');
+    expect(text()).toContain('thay vì 2 ô');
   });
 
   it('keeps the fields inside a shortened array after switching away and back', () => {
@@ -263,28 +267,30 @@ describe('sqrt decomposition lesson: Mo’s algorithm', () => {
   it('sorts the queries, then slides the window', () => {
     render();
     openMo();
-    expect(text()).toContain('6 queries over 16 values, all known in advance.');
+    expect(text()).toContain('6 truy vấn trên 16 giá trị, đã biết hết từ trước.');
     next(1);
-    expect(text()).toContain('Sort by the block of l, then by r.');
+    expect(text()).toContain('Sắp xếp theo khối của l, rồi theo r.');
     next(1);
-    expect(text()).toContain('Next is Q1, [0, 3].');
+    expect(text()).toContain('Tiếp theo là Q1, [0, 3].');
     next(1);
-    expect(text()).toContain('Add a[0] = 1. Distinct values in the window: 1.');
+    expect(text()).toContain('Thêm a[0] = 1. Số giá trị phân biệt trong cửa sổ: 1.');
   });
 
   it('answers in the typed slots and reports both move counts', () => {
     render();
     openMo();
     click(button('Đến bước cuối'));
-    expect(text()).toMatch(/Done: \d+ moves in sorted order, against \d+ in the typed order\./);
-    expect(text()).toContain('Answers: 3, 3, 4, 2, 4, 4, in the typed order.');
+    expect(text()).toMatch(
+      /Xong: \d+ bước dịch theo thứ tự đã sắp, so với \d+ theo thứ tự đã gõ\./,
+    );
+    expect(text()).toContain('Đáp án: 3, 3, 4, 2, 4, 4, theo thứ tự đã gõ.');
   });
 
   it('removes values and updates the counts', () => {
     render();
     openMo();
     next(10);
-    expect(text()).toContain('Remove a[0] = 1.');
+    expect(text()).toContain('Bỏ a[0] = 1.');
   });
 
   it('loads a preset and takes typed queries', () => {
@@ -293,7 +299,7 @@ describe('sqrt decomposition lesson: Mo’s algorithm', () => {
     commit(input('preset'), 'nested');
     expect(input('queries').value).toBe('0 15, 1 14, 5 10, 6 9, 2 13');
     commit(input('queries'), '0 1, 2 3');
-    expect(text()).toContain('2 queries over 16 values');
+    expect(text()).toContain('2 truy vấn trên 16 giá trị');
     expect(input('preset').value).toBe('');
   });
 
@@ -319,7 +325,7 @@ describe('sqrt decomposition lesson: Mo’s algorithm', () => {
     commit(input('mo-values'), '1, 2, 1, 3');
     expect(input('queries').value).toBe('0 3, 1 3, 2 3');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Answers: 3, 3, 2, in the typed order.');
+    expect(text()).toContain('Đáp án: 3, 3, 2, theo thứ tự đã gõ.');
   });
 
   it('keeps each half’s state across a switch', () => {

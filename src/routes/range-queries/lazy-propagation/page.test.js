@@ -4,7 +4,7 @@ import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
 import { lazyTrace } from '$lib/algo-engine/lazy-propagation.js';
-import { en as m } from '$lib/lessons/lazy-propagation/copy.en.js';
+import { vi as m } from '$lib/lessons/lazy-propagation/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -85,36 +85,36 @@ describe('lazy propagation lesson', () => {
   it('opens on the first update, which stops at the root with a tag', () => {
     render();
     expect(text()).toContain(
-      'Node [0, 7] is fully inside [0, 7]: its sum changes by +5 × 8, and its tag grows by +5.',
+      'Nút [0, 7] nằm trọn trong [0, 7]: tổng của nó thay đổi +5 × 8, và nhãn tăng thêm +5.',
     );
     expect(text()).toContain('[0, 7] +5');
-    expect(document.querySelector('svg[aria-label*="1 pending tag"]')).toBeTruthy();
+    expect(document.querySelector('svg[aria-label*="1 nhãn chờ"]')).toBeTruthy();
   });
 
   it('shows the leaves falling behind the true array', () => {
     render();
-    expect(document.querySelector('svg[aria-label*="8 leaves are behind"]')).toBeTruthy();
+    expect(document.querySelector('svg[aria-label*="8 lá đang chậm"]')).toBeTruthy();
   });
 
   it('pushes the tag down when the next update must go below the node', () => {
     render();
     next(1);
-    expect(text()).toContain('Its tag +5 has to move first.');
+    expect(text()).toContain('Nhãn +5 của nó phải đi xuống trước.');
     next(1);
-    expect(text()).toContain('Push +5 down: [0, 3] and [4, 7] take it');
+    expect(text()).toContain('Đẩy +5 xuống: [0, 3] và [4, 7] nhận nhãn');
     next(1);
-    expect(text()).toContain('Node [0, 3] is outside [4, 7]');
+    expect(text()).toContain('Nút [0, 3] nằm ngoài [4, 7]');
     next(1);
-    expect(text()).toContain('its sum changes by +2 × 4, and its tag grows by +2');
+    expect(text()).toContain('tổng của nó thay đổi +2 × 4, và nhãn tăng thêm +2');
     next(1);
-    expect(text()).toContain('Back up: node [0, 7] adds its children and now stores 84.');
+    expect(text()).toContain('Đi ngược lên: nút [0, 7] cộng hai con và giờ lưu 84.');
   });
 
   it('answers the query after pushing along one path', () => {
     render();
     click(button('Đến bước cuối'));
     click(button('Bước trước'));
-    expect(text()).toContain('The sum of [5, 5] is 13, after 2 pushes.');
+    expect(text()).toContain('Tổng của [5, 5] là 13, sau 2 lần đẩy xuống.');
     expect(text()).toContain('[0, 3] +5');
   });
 
@@ -125,7 +125,7 @@ describe('lazy propagation lesson', () => {
     commit(input('x'), '-4');
     click(buttonByText(m.addButton));
     expect(text()).toContain('add(1, 2, −4)');
-    expect(text()).toContain('Node [0, 7] is partly inside [1, 2]');
+    expect(text()).toContain('Nút [0, 7] chỉ nằm một phần trong [1, 2]');
   });
 
   it('runs a sum query with Enter', () => {
@@ -144,10 +144,10 @@ describe('lazy propagation lesson', () => {
     const cell = (/** @type {number} */ i) =>
       /** @type {HTMLElement} */ (document.querySelector(`[data-index="${i}"]`));
     click(cell(6));
-    expect(text()).toContain('Range starts at 6.');
+    expect(text()).toContain('Đoạn bắt đầu ở 6.');
     cell(3).dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     flushSync();
-    expect(text()).toContain('Range set to [3, 6].');
+    expect(text()).toContain('Đã chọn đoạn [3, 6].');
     expect(input('l').value).toBe('3');
     expect(input('r').value).toBe('6');
   });
@@ -156,10 +156,10 @@ describe('lazy propagation lesson', () => {
     render();
     click(buttonByText(m.undo));
     expect(opsCard()).not.toContain('query(5, 5)');
-    expect(text()).toContain('Done: the updates and push-downs changed');
+    expect(text()).toContain('Xong: các lần cập nhật và đẩy xuống đã đổi');
     click(buttonByText(m.reset));
     expect(opsCard()).not.toContain('add(0, 7, 5)');
-    expect(text()).toContain('Done: the updates and push-downs changed 0 node sums');
+    expect(text()).toContain('Xong: các lần cập nhật và đẩy xuống đã đổi tổng của 0 nút');
   });
 
   it('refuses bad input and keeps the last valid value', () => {
@@ -236,7 +236,9 @@ describe('lazy propagation lesson', () => {
     expect(opsCard()).toContain('add(2, 6, 4)');
     const before = opsCard();
     pressEnter(input('values'), '1, 2, 3, 4, 5, 6, 7, 8, 9');
-    expect(opsCard().replace(' (running now)', '')).toBe(before.replace(' (running now)', ''));
+    expect(opsCard().replace(` (${m.opsHotLabel})`, '')).toBe(
+      before.replace(` (${m.opsHotLabel})`, ''),
+    );
   });
 });
 
