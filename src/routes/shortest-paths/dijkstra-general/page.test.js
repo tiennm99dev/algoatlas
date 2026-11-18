@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/dijkstra-general/copy.en.js';
+import { vi as m } from '$lib/lessons/dijkstra-general/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -92,43 +92,41 @@ function answer(q, value) {
 describe('Dijkstra on general graphs lesson', () => {
   it('runs from A, skips stale entries and ends with the final distances', () => {
     render();
-    expect(text()).toContain(
-      'Set dist[A] = 0 and every other label to ∞. Push (0, A) into the heap.',
-    );
+    expect(text()).toContain('Đặt dist[A] = 0 và mọi nhãn khác là ∞. Đẩy (0, A) vào heap.');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Pop (0, A), the smallest entry, and it matches dist[A]. Settle A');
+    expect(text()).toContain('Lấy (0, A) ra, mục nhỏ nhất, và nó khớp với dist[A]. Chốt A');
     click(button('Bước tiếp'));
     expect(text()).toContain(
-      'Edge A — B (weight 4): 0 + 4 = 4 < ∞. Lower dist[B] and push (4, B).',
+      'Cạnh A — B (trọng số 4): 0 + 4 = 4 < ∞. Giảm dist[B] và đẩy (4, B) vào.',
     );
     for (let i = 0; i < 4; i++) click(button('Bước tiếp'));
     expect(text()).toContain(
-      'Edge C — B (weight 2): 1 + 2 = 3 < 4. Lower dist[B] and push (3, B); the old (4, B) stays in the heap, now stale.',
+      'Cạnh C — B (trọng số 2): 1 + 2 = 3 < 4. Giảm dist[B] và đẩy (3, B) vào; mục cũ (4, B) vẫn nằm trong heap, giờ thành bản cũ.',
     );
     click(button('Đến bước cuối'));
     expect(text()).toContain(
-      'The heap is empty. 6 vertices settled with 10 pushes and 10 pops, 4 of them stale.',
+      'Heap đã rỗng. Đã chốt 6 đỉnh với 10 lần đẩy vào và 10 lần lấy ra, trong đó 4 lần là bản cũ.',
     );
     expect(statValue(m.stats.stale)).toBe('4');
     expect(statValue(m.stats.relaxations)).toBe('18');
-    expect(vertex(5).getAttribute('aria-label')).toBe('Vertex F, d = 13, settled');
+    expect(vertex(5).getAttribute('aria-label')).toBe('Đỉnh F, d = 13, đã chốt');
   });
 
   it('shows a stale pop in the narration and the heap', () => {
     render();
     let guard = 0;
-    while (!text().includes('this entry is stale') && guard++ < 40) click(button('Bước tiếp'));
-    expect(text()).toContain('Pop (4, B), but dist[B] is already 3');
+    while (!text().includes('mục này là bản cũ') && guard++ < 40) click(button('Bước tiếp'));
+    expect(text()).toContain('Lấy (4, B) ra, nhưng dist[B] đã là 3');
   });
 
   it('reruns when the source or a weight changes, and rejects a bad weight', () => {
     render();
     commit(sourceSelect(), '5');
     click(button('Đến bước cuối'));
-    expect(vertex(0).getAttribute('aria-label')).toBe('Vertex A, d = 13, settled');
+    expect(vertex(0).getAttribute('aria-label')).toBe('Đỉnh A, d = 13, đã chốt');
     commit(weightField('A — C'), '5');
     click(button('Đến bước cuối'));
-    expect(vertex(0).getAttribute('aria-label')).toBe('Vertex A, d = 14, settled');
+    expect(vertex(0).getAttribute('aria-label')).toBe('Đỉnh A, d = 14, đã chốt');
     commit(weightField('A — C'), 'x');
     expect(text()).toContain(m.badWeight(99));
     expect(weightField('A — C').value).toBe('5');
@@ -143,14 +141,14 @@ describe('Dijkstra on general graphs lesson', () => {
     click(vertex(0));
     click(vertex(5));
     click(button('Đến bước cuối'));
-    expect(vertex(5).getAttribute('aria-label')).toBe('Vertex F, d = 1, settled');
+    expect(vertex(5).getAttribute('aria-label')).toBe('Đỉnh F, d = 1, đã chốt');
     expect(weightField('A — F').value).toBe('1');
   });
 
   it('steps with the keyboard shortcut', () => {
     render();
     press(document.body, 'ArrowRight');
-    expect(text()).toContain('Settle A');
+    expect(text()).toContain('Chốt A');
   });
 
   it('checks practice answers with a hint', () => {

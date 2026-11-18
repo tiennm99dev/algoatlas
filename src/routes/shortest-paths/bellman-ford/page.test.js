@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/bellman-ford/copy.en.js';
+import { vi as m } from '$lib/lessons/bellman-ford/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -95,7 +95,7 @@ function answer(q, value) {
 function row(header) {
   const cells = [...document.querySelectorAll('svg title')]
     .map((el) => el.textContent ?? '')
-    .filter((l) => l.startsWith(`Round ${header},`));
+    .filter((l) => l.startsWith(`Vòng ${header},`));
   return cells.map((l) => l.split(': ')[1].split(',')[0]);
 }
 
@@ -103,21 +103,21 @@ describe('Bellman-Ford lesson', () => {
   it('fills the table round by round and stops early', () => {
     render();
     expect(text()).toContain(
-      'Set the source’s label to 0 and every other label to ∞. With 5 vertices, at most 4 rounds are needed.',
+      'Đặt nhãn của đỉnh nguồn là 0 và mọi nhãn khác là ∞. Với 5 đỉnh, cần tối đa 4 vòng.',
     );
     click(button('Bước tiếp'));
-    expect(text()).toContain('Round 1: relax every edge once, in list order.');
+    expect(text()).toContain('Vòng 1: nới lỏng mỗi cạnh một lần, theo thứ tự trong danh sách.');
     click(button('Bước tiếp'));
     expect(text()).toContain(
-      'Edge C → D (weight 3): d[C] is still ∞, so nothing to do this round.',
+      'Cạnh C → D (trọng số 3): d[C] vẫn là ∞, nên vòng này chưa có gì để làm.',
     );
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Done after 3 rounds and 24 edge checks');
+    expect(text()).toContain('Xong sau 3 vòng và 24 lần xét cạnh');
     click(button('Bước trước'));
-    expect(text()).toContain('Round 3 changed nothing, so the next round would not either.');
+    expect(text()).toContain('Vòng 3 không đổi gì, nên vòng sau cũng vậy.');
     expect(statValue(m.stats.relaxations)).toBe('24');
     expect(statValue(m.stats.updates)).toBe('5');
-    expect(statValue(m.stats.round)).toBe('3 of 4');
+    expect(statValue(m.stats.round)).toBe('3/4');
     expect(row('1')).toEqual(['0', '6', '7', '11', '4']);
     expect(row('2')).toEqual(['0', '6', '7', '5', '4']);
   });
@@ -126,7 +126,7 @@ describe('Bellman-Ford lesson', () => {
     render();
     commit(presetSelect(), 'good');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Done after 2 rounds and 16 edge checks');
+    expect(text()).toContain('Xong sau 2 vòng và 16 lần xét cạnh');
   });
 
   it('flags the negative cycle in round V', () => {
@@ -134,39 +134,39 @@ describe('Bellman-Ford lesson', () => {
     commit(presetSelect(), 'cycle');
     click(button('Đến bước cuối'));
     expect(text()).toContain(
-      'Edge B → C (weight −2): 1 + (−2) = −1 < 1: after V − 1 rounds an edge can still be relaxed, so a negative cycle is reachable. Following the parent links finds A → B → D → A.',
+      'Cạnh B → C (trọng số −2): 1 + (−2) = −1 < 1: sau V − 1 vòng vẫn còn cạnh nới lỏng được, nên từ đỉnh nguồn đến được một chu trình âm. Lần theo các liên kết cha, ta tìm ra A → B → D → A.',
     );
-    expect(statValue(m.stats.round)).toBe('V (check)');
+    expect(statValue(m.stats.round)).toBe('V (kiểm tra)');
     expect(row('V')).toEqual(['0', '−3', '1', '1', '−2']);
-    expect(vertex(1).getAttribute('aria-label')).toContain('on the negative cycle');
+    expect(vertex(1).getAttribute('aria-label')).toContain('trên chu trình âm');
   });
 
   it('reruns on a typed weight, rejects a bad one, and resets', () => {
     render();
     commit(weightField('D → A'), '0');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Following the parent links finds A → B → D → A.');
+    expect(text()).toContain('Lần theo các liên kết cha, ta tìm ra A → B → D → A.');
     commit(weightField('D → A'), '1.5');
     expect(text()).toContain(m.badWeight(99));
     expect(weightField('D → A').value).toBe('0');
     click(buttonByText(m.resetGraph));
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Done after 3 rounds');
+    expect(text()).toContain('Xong sau 3 vòng');
   });
 
   it('changes the source, draws an edge, and steps with the keyboard', () => {
     render();
     commit(sourceSelect(), '2');
     click(button('Đến bước cuối'));
-    expect(vertex(0).getAttribute('aria-label')).toBe('Vertex S, d = ∞');
+    expect(vertex(0).getAttribute('aria-label')).toBe('Đỉnh S, d = ∞');
     radio('connect');
     click(vertex(2));
     click(vertex(0));
     click(button('Đến bước cuối'));
-    expect(vertex(0).getAttribute('aria-label')).toBe('Vertex S, d = 1');
+    expect(vertex(0).getAttribute('aria-label')).toBe('Đỉnh S, d = 1');
     click(button('Về bước đầu'));
     press(document.body, 'ArrowRight');
-    expect(text()).toContain('Round 1: relax every edge once');
+    expect(text()).toContain('Vòng 1: nới lỏng mỗi cạnh một lần');
   });
 
   it('checks practice answers with a hint', () => {

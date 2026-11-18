@@ -48,29 +48,29 @@ describe('dijkstra lesson', () => {
   it('finds the cheapest route and compares it with the BFS route', () => {
     render();
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Reached the goal at cost 17');
-    expect(text()).toContain('BFS route: 11 steps, cost 27');
-    expect(text()).toContain('Dijkstra route: 17 steps, cost 17');
+    expect(text()).toContain('Đã đến đích với chi phí 17');
+    expect(text()).toContain('Đường BFS: 11 bước, chi phí 27');
+    expect(text()).toContain('Đường Dijkstra: 17 bước, chi phí 17');
   });
 
   it('adds mud from the keyboard and states its cost in the label', () => {
     render();
     pickTool('mud');
     keyActivate(button('Hàng 0, cột 0'));
-    expect(button('Hàng 0, cột 0, mud, cost 5')).toBeTruthy();
-    expect(text()).toContain('Mud added at (0,0).');
+    expect(button('Hàng 0, cột 0, bùn, chi phí 5')).toBeTruthy();
+    expect(text()).toContain('Đã thêm bùn ở (0,0).');
   });
 
   it('a wall replaces the mud underneath it', () => {
     render();
-    keyActivate(button('Hàng 4, cột 6, mud, cost 5'));
-    expect(button('Hàng 4, cột 6, Wall')).toBeTruthy();
+    keyActivate(button('Hàng 4, cột 6, bùn, chi phí 5'));
+    expect(button('Hàng 4, cột 6, Tường')).toBeTruthy();
   });
 
   it('announces the best cost in cell labels', () => {
     render();
     click(button('Đến bước cuối'));
-    expect(button('Hàng 4, cột 2, Start, best cost 0')).toBeTruthy();
+    expect(button('Hàng 4, cột 2, Điểm xuất phát, chi phí tốt nhất 0')).toBeTruthy();
   });
 
   it('reports no path when the goal is walled in', () => {
@@ -84,55 +84,55 @@ describe('dijkstra lesson', () => {
       keyActivate(button(`Hàng ${r}, cột ${c}`));
     }
     click(button('Đến bước cuối'));
-    expect(text()).toContain('walls cut it off');
+    expect(text()).toContain('tường đã chặn kín');
   });
 
   it('moving the start onto mud clears its cost and says so', () => {
     render();
     pickTool('start');
-    keyActivate(button('Hàng 4, cột 7, mud, cost 5'));
-    expect(text()).toContain('Đã dời điểm xuất phát đến (4,7). The mud under it was cleared.');
+    keyActivate(button('Hàng 4, cột 7, bùn, chi phí 5'));
+    expect(text()).toContain('Đã dời điểm xuất phát đến (4,7). Bùn ở ô đó đã được dọn.');
     // No mud is announced under the start.
-    expect(button('Hàng 4, cột 7, Start, best cost 0')).toBeTruthy();
+    expect(button('Hàng 4, cột 7, Điểm xuất phát, chi phí tốt nhất 0')).toBeTruthy();
     const next = button('Bước tiếp');
-    for (let i = 0; i < 20 && !text().includes('(4,8) is open and unreached'); i++) click(next);
+    for (let i = 0; i < 20 && !text().includes('(4,8) còn trống và chưa ai đến'); i++) click(next);
     // The first hop into the neighboring mud costs 3 (the average of 1 and 5), not 5.
     expect(text()).toContain(
-      '(4,8) is open and unreached — its cost is 0 + 3 (mud step) = 3 via (4,7)',
+      '(4,8) còn trống và chưa ai đến — chi phí là 0 + 3 (bước có bùn) = 3 qua (4,7)',
     );
   });
 
   it('moving the goal onto mud clears its cost too', () => {
     render();
     pickTool('goal');
-    keyActivate(button('Hàng 4, cột 8, mud, cost 5'));
-    expect(button('Hàng 4, cột 8, Goal')).toBeTruthy();
-    expect(text()).toContain('The mud under it was cleared.');
+    keyActivate(button('Hàng 4, cột 8, bùn, chi phí 5'));
+    expect(button('Hàng 4, cột 8, Đích')).toBeTruthy();
+    expect(text()).toContain('Bùn ở ô đó đã được dọn.');
   });
 
   it('labels a stale pop as skipped, not as expanding', () => {
     render();
     const next = button('Bước tiếp');
-    for (let i = 0; i < 600 && !text().includes('a stale entry, skip it'); i++) click(next);
-    expect(text()).toContain('a stale entry, skip it');
-    expect(document.querySelector('button[aria-label*="Stale copy, skipped"]')).not.toBeNull();
-    expect(document.querySelector('button[aria-label*="Expanding"]')).toBeNull();
+    for (let i = 0; i < 600 && !text().includes('đây là bản cũ, bỏ qua'); i++) click(next);
+    expect(text()).toContain('đây là bản cũ, bỏ qua');
+    expect(document.querySelector('button[aria-label*="Bản cũ, bỏ qua"]')).not.toBeNull();
+    expect(document.querySelector('button[aria-label*="Đang mở rộng"]')).toBeNull();
   });
 
   it('narrates a relaxation as popped cost plus step, naming a mud step', () => {
     render();
     const next = button('Bước tiếp');
-    for (let i = 0; i < 600 && !text().includes('(mud step)'); i++) click(next);
-    expect(text()).toMatch(/\d+ \+ \d+ \(mud step\) = \d+/);
+    for (let i = 0; i < 600 && !text().includes('(bước có bùn)'); i++) click(next);
+    expect(text()).toMatch(/\d+ \+ \d+ \(bước có bùn\) = \d+/);
   });
 
   it('labels a stale queue entry and the hot chip as just pushed', () => {
     render();
     const next = button('Bước tiếp');
     const chips = () => [...document.querySelectorAll('ol li')].map((c) => c.textContent ?? '');
-    for (let i = 0; i < 600 && !chips().some((t) => t.includes('(stale)')); i++) click(next);
-    expect(chips().some((t) => /^\(\d+,\d+\) \d+ \(stale\)$/.test(t.trim()))).toBe(true);
-    expect(chips().some((t) => t.includes('(just pushed)'))).toBe(true);
+    for (let i = 0; i < 600 && !chips().some((t) => t.includes('(cũ)')); i++) click(next);
+    expect(chips().some((t) => /^\(\d+,\d+\) \d+ \(cũ\)$/.test(t.trim()))).toBe(true);
+    expect(chips().some((t) => t.includes('(vừa đẩy vào)'))).toBe(true);
   });
 
   it('lights only the live queue entry of the touched cell', () => {
@@ -141,7 +141,7 @@ describe('dijkstra lesson', () => {
     for (let i = 0; i < 600; i++) {
       click(next);
       const chips = [...document.querySelectorAll('ol li')];
-      const labels = chips.map((c) => c.textContent?.replace(/ \(just pushed\)$/, '').trim());
+      const labels = chips.map((c) => c.textContent?.replace(/ \(vừa đẩy vào\)$/, '').trim());
       const hot = chips.filter((c) => c.querySelector('.sr-only'));
       if (hot.length && new Set(labels.map((l) => l?.split(' ')[0])).size < labels.length) {
         // A duplicate cell is queued: exactly one of its entries is hot.

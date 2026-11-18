@@ -43,15 +43,15 @@ export const MAX_WEIGHT = 99;
  */
 
 export const bellmanFordPseudocode = [
-  'dist[v] = ∞ for every v; dist[s] = 0',
-  'repeat V − 1 times (round i = 1, 2, …):',
-  '  for each edge (u, v, w) in the list:',
+  'dist[v] = ∞ với mọi v; dist[s] = 0',
+  'for i = 1 to V − 1:    // vòng i',
+  '  for (u, v, w) in edges:',
   '    if dist[u] + w < dist[v]:',
   '      dist[v] = dist[u] + w; parent[v] = u',
-  '  if no label changed this round: stop early (no negative cycle)',
-  'round V: for each edge (u, v, w):',
+  '  if not changed: stop    // dừng sớm, không có chu trình âm',
+  'for (u, v, w) in edges:    // vòng thứ V',
   '  if dist[u] + w < dist[v]:',
-  '    report a negative cycle; stop',
+  '    return "có chu trình âm"',
   'return dist, parent',
 ];
 

@@ -33,14 +33,14 @@ export const HEURISTICS = /** @type {Heuristic[]} */ (['zero', 'manhattan', 'tri
 
 export const aStarPseudocode = [
   'g[*] = ∞; g[start] = 0; open = [(f = h(start), start)]',
-  'while open is not empty:',
-  '  cell = open.popMin()            // smallest f = g + h; ties: smaller h',
-  '  if cell is closed: continue     // stale entry',
-  '  close cell; if cell == goal: walk parents back; stop',
-  '  for each open neighbour n of cell that is not closed:',
+  'while open khác rỗng:',
+  '  cell = open.popMin()            // f = g + h nhỏ nhất; nếu hoà: h nhỏ hơn',
+  '  if closed[cell]: continue       // mục cũ',
+  '  closed[cell] = true; if cell == goal: lần theo parent để dựng đường đi; stop',
+  '  for n in openNeighbors(cell) if not closed[n]:',
   '    if g[cell] + 1 < g[n]:',
   '      g[n] = g[cell] + 1; parent[n] = cell; open.push((g[n] + h(n), n))',
-  'no path — goal is walled off',
+  'không có đường đi — đích bị tường vây kín',
 ];
 
 /**

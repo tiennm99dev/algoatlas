@@ -69,13 +69,13 @@ export const MAX_WEIGHT = 99;
  */
 
 export const zeroOnePseudocode = [
-  'dist[v] = ∞ for every v; dist[s] = 0',
+  'dist[v] = ∞ với mọi v; dist[s] = 0',
   'deque = [s]',
-  'while deque is not empty:',
+  'while deque khác rỗng:',
   '  u = deque.popFront()',
-  '  if u is done: continue    // a later copy of u',
-  '  mark u done',
-  '  for each edge u → v of weight w (0 or 1):',
+  '  if done[u]: continue    // một bản sau của u',
+  '  done[u] = true',
+  '  for (v, w) in adj[u]:    // w là 0 hoặc 1',
   '    if dist[u] + w < dist[v]:',
   '      dist[v] = dist[u] + w; parent[v] = u',
   '      if w == 0: deque.pushFront(v) else: deque.pushBack(v)',
@@ -83,22 +83,22 @@ export const zeroOnePseudocode = [
 ];
 
 export const dagShortPseudocode = [
-  'order = a topological order of the DAG',
-  'dist[v] = ∞ for every v; dist[s] = 0',
-  'for each u in order:',
-  '  if dist[u] == ∞: continue    // s cannot reach u',
-  '  for each edge u → v of weight w:',
+  'order = topoOrder(G)    // một thứ tự tô-pô của DAG',
+  'dist[v] = ∞ với mọi v; dist[s] = 0',
+  'for u in order:',
+  '  if dist[u] == ∞: continue    // s không đến được u',
+  '  for (v, w) in adj[u]:',
   '    if dist[u] + w < dist[v]:',
   '      dist[v] = dist[u] + w; parent[v] = u',
   'return dist, parent',
 ];
 
 export const dagLongPseudocode = [
-  'order = a topological order of the DAG',
-  'dist[v] = −∞ for every v; dist[s] = 0',
-  'for each u in order:',
-  '  if dist[u] == −∞: continue    // s cannot reach u',
-  '  for each edge u → v of weight w:',
+  'order = topoOrder(G)    // một thứ tự tô-pô của DAG',
+  'dist[v] = −∞ với mọi v; dist[s] = 0',
+  'for u in order:',
+  '  if dist[u] == −∞: continue    // s không đến được u',
+  '  for (v, w) in adj[u]:',
   '    if dist[u] + w > dist[v]:',
   '      dist[v] = dist[u] + w; parent[v] = u',
   'return dist, parent',

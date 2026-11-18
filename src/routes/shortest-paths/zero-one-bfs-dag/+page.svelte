@@ -15,7 +15,7 @@
     zeroOnePseudocode,
     zeroOneTrace,
   } from '$lib/algo-engine/zero-one-bfs-dag.js';
-  import { en as m } from '$lib/lessons/zero-one-bfs-dag/copy.en.js';
+  import { vi as m } from '$lib/lessons/zero-one-bfs-dag/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/graph-editor.js').GraphNode} GraphNode */

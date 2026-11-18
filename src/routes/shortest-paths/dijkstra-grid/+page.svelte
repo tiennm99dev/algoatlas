@@ -13,7 +13,7 @@
     randomTerrain,
   } from '$lib/algo-engine/dijkstra-grid.js';
   import { bfsGridTrace } from '$lib/algo-engine/graph.js';
-  import { en as m } from '$lib/lessons/dijkstra-grid/copy.en.js';
+  import { vi as m } from '$lib/lessons/dijkstra-grid/copy.vi.js';
   import { createGridEditor } from '$lib/player/grid-editor.svelte.js';
 
   /** @typedef {import('$lib/player/grid-editor.svelte.js').GridInput} GridInput */

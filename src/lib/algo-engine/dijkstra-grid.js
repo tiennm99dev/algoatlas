@@ -27,15 +27,15 @@ export const MUD_COST = 5;
 
 export const dijkstraPseudocode = [
   'dist[*] = infinity; dist[start] = 0; pq = [(0, start)]',
-  'while pq is not empty:',
+  'while pq khác rỗng:',
   '  (d, cell) = pq.popMin()',
-  '  if d > dist[cell]: continue                 // stale entry',
-  '  if cell == goal: walk parents back; stop',
-  '  for each open neighbor of cell:',
-  '    nd = d + step(cell, neighbor)     // average of the two cells’ costs',
+  '  if d > dist[cell]: continue                 // mục cũ',
+  '  if cell == goal: lần theo parent để dựng đường đi; stop',
+  '  for neighbor in openNeighbors(cell):',
+  '    nd = d + step(cell, neighbor)     // trung bình chi phí của hai ô',
   '    if nd < dist[neighbor]:',
   '      dist[neighbor] = nd; parent[neighbor] = cell; pq.push((nd, neighbor))',
-  'no path — goal is walled off',
+  'không có đường đi — đích bị tường vây kín',
 ];
 
 /**

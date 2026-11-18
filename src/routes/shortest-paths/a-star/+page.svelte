@@ -13,7 +13,7 @@
     compareHeuristics,
     heuristic,
   } from '$lib/algo-engine/a-star.js';
-  import { en as m } from '$lib/lessons/a-star/copy.en.js';
+  import { vi as m } from '$lib/lessons/a-star/copy.vi.js';
   import { createGridEditor } from '$lib/player/grid-editor.svelte.js';
 
   /** @typedef {import('$lib/player/grid-editor.svelte.js').GridInput} GridInput */

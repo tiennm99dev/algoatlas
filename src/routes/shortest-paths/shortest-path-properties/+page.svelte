@@ -13,7 +13,7 @@
     shortestDistances,
     treePath,
   } from '$lib/algo-engine/shortest-path-properties.js';
-  import { en as m } from '$lib/lessons/shortest-path-properties/copy.en.js';
+  import { vi as m } from '$lib/lessons/shortest-path-properties/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/graph-editor.js').GraphNode} GraphNode */

@@ -57,17 +57,17 @@ export const MAX_WEIGHT = 99;
  */
 
 export const johnsonPseudocode = [
-  'add a vertex q and an edge q → v of weight 0 for every v',
-  'Bellman-Ford from q: h[q] = 0, every other h = ∞; up to V rounds:',
-  '  for each edge (u, v, w): if h[u] + w < h[v]: h[v] = h[u] + w',
-  'if an edge can still be relaxed: negative cycle; stop',
-  'for each edge (u, v, w): w′ = w + h[u] − h[v]        // w′ ≥ 0',
-  'for each vertex s:',
-  '  Dijkstra from s with weights w′: d′[s] = 0, others ∞',
-  '    settle the unsettled vertex u with the smallest d′',
-  '    for each edge u → v: if d′[u] + w′ < d′[v]: d′[v] = d′[u] + w′',
-  '  d[s][t] = d′[t] − h[s] + h[t] for every t',
-  'return the matrix d',
+  'thêm đỉnh q và cạnh q → v trọng số 0 với mọi v',
+  'Bellman-Ford từ q: h[q] = 0, mọi h khác = ∞; tối đa V vòng:',
+  '  for (u, v, w) in edges: if h[u] + w < h[v]: h[v] = h[u] + w',
+  'if còn cạnh nới lỏng được: có chu trình âm; stop',
+  'for (u, v, w) in edges: w′ = w + h[u] − h[v]        // w′ ≥ 0',
+  'for s in V:',
+  '  Dijkstra từ s với trọng số w′: d′[s] = 0, còn lại ∞',
+  '    chốt đỉnh u chưa chốt có d′ nhỏ nhất',
+  '    for (v, w′) in adj[u]: if d′[u] + w′ < d′[v]: d′[v] = d′[u] + w′',
+  '  d[s][t] = d′[t] − h[s] + h[t] với mọi t',
+  'return d',
 ];
 
 /**

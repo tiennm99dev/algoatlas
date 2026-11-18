@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/floyd-warshall/copy.en.js';
+import { vi as m } from '$lib/lessons/floyd-warshall/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -82,65 +82,64 @@ function answer(q, value) {
 const cell = (from, to) =>
   /** @type {Element} */ (
     [...document.querySelectorAll('[role="button"]')].find((el) =>
-      (el.getAttribute('aria-label') ?? '').startsWith(`From ${from} to ${to}:`),
+      (el.getAttribute('aria-label') ?? '').startsWith(`Từ ${from} đến ${to}:`),
     )
   );
 
 describe('Floyd-Warshall lesson', () => {
   it('starts from direct edges and ends with all shortest distances', () => {
     render();
-    expect(text()).toContain('Start with direct edges only');
-    expect(cell('D', 'A').getAttribute('aria-label')).toBe('From D to A: ∞, picked');
+    expect(text()).toContain('Bắt đầu chỉ với các cạnh trực tiếp');
+    expect(cell('D', 'A').getAttribute('aria-label')).toBe('Từ D đến A: ∞, đã chọn');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Phase k = A: paths may now pass through A.');
+    expect(text()).toContain('Giai đoạn k = A: giờ đường đi được phép đi qua A.');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Done: 64 comparisons');
-    expect(cell('D', 'A').getAttribute('aria-label')).toBe('From D to A: 3, picked');
-    expect(cell('A', 'B').getAttribute('aria-label')).toBe('From A to B: −1');
-    expect(text()).toContain('D → A: D → B → A, weight 3.');
+    expect(text()).toContain('Xong: 64 phép so sánh');
+    expect(cell('D', 'A').getAttribute('aria-label')).toBe('Từ D đến A: 3, đã chọn');
+    expect(cell('A', 'B').getAttribute('aria-label')).toBe('Từ A đến B: −1');
+    expect(text()).toContain('D → A: D → B → A, trọng số 3.');
   });
 
   it('jumps phase by phase with Next k and shows an improvement', () => {
     render();
     click(buttonByText(m.nextK));
     click(buttonByText(m.nextK));
-    expect(text()).toContain('Phase k = B: paths may now pass through A, B.');
-    expect(cell('B', 'C').getAttribute('aria-label')).toBe('From B to C: 2, row or column k');
+    expect(text()).toContain('Giai đoạn k = B: giờ đường đi được phép đi qua A, B.');
+    expect(cell('B', 'C').getAttribute('aria-label')).toBe('Từ B đến C: 2, hàng hoặc cột k');
     let guard = 0;
-    while (!text().includes('Going through B is shorter') && guard++ < 20)
-      click(button('Bước tiếp'));
-    expect(text()).toContain('D → B → A: −1 + 4 = 3 < ∞. Going through B is shorter');
+    while (!text().includes('Đi qua B ngắn hơn') && guard++ < 20) click(button('Bước tiếp'));
+    expect(text()).toContain('D → B → A: −1 + 4 = 3 < ∞. Đi qua B ngắn hơn');
   });
 
   it('picks a cell with the pointer and the keyboard', () => {
     render();
     click(button('Đến bước cuối'));
     click(cell('A', 'B'));
-    expect(text()).toContain('A → B: A → C → D → B, weight −1.');
+    expect(text()).toContain('A → B: A → C → D → B, trọng số −1.');
     press(cell('A', 'B'), 'ArrowRight');
     press(cell('A', 'C'), 'Enter');
-    expect(text()).toContain('A → C: A → C, weight −2.');
+    expect(text()).toContain('A → C: A → C, trọng số −2.');
   });
 
   it('flags a negative cycle on the diagonal', () => {
     render();
     commit(presetSelect(), 'cycle');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('The diagonal is negative for A, B, C, D');
-    expect(text()).toContain('the path runs into a negative cycle');
+    expect(text()).toContain('Đường chéo âm ở A, B, C, D');
+    expect(text()).toContain('đường đi lọt vào một chu trình âm');
   });
 
   it('reruns on a typed weight, rejects a bad one, and steps with the keyboard', () => {
     render();
     commit(weightField('B → A'), '1');
     click(button('Đến bước cuối'));
-    expect(cell('D', 'A').getAttribute('aria-label')).toBe('From D to A: 0, picked');
+    expect(cell('D', 'A').getAttribute('aria-label')).toBe('Từ D đến A: 0, đã chọn');
     commit(weightField('B → A'), 'abc');
     expect(text()).toContain(m.badWeight(99));
     expect(weightField('B → A').value).toBe('1');
     click(buttonByText(m.resetGraph));
     press(document.body, 'ArrowRight');
-    expect(text()).toContain('Phase k = A');
+    expect(text()).toContain('Giai đoạn k = A');
   });
 
   it('checks practice answers with a hint', () => {

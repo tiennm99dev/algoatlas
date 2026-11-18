@@ -16,7 +16,7 @@
     pseudocode,
     shortestPathTrace,
   } from '$lib/algo-engine/practice-shortest-paths.js';
-  import { en as m } from '$lib/lessons/practice-shortest-paths/copy.en.js';
+  import { vi as m } from '$lib/lessons/practice-shortest-paths/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/graph-editor.js').GraphNode} GraphNode */

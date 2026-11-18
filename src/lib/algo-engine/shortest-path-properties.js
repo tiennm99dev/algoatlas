@@ -37,8 +37,8 @@ export const MAX_WEIGHT = 99;
  */
 
 export const relaxPseudocode = [
-  'd[s] = 0; d[v] = ∞ and parent[v] = none for every other v',
-  'for each edge (u, v, w) in the chosen order:',
+  'd[s] = 0; với mọi v khác: d[v] = ∞, parent[v] = null',
+  'for (u, v, w) in order:  // theo thứ tự đã chọn',
   '  if d[u] + w < d[v]:',
   '    d[v] = d[u] + w',
   '    parent[v] = u',

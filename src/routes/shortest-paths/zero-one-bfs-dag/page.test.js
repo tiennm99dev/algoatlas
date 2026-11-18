@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/zero-one-bfs-dag/copy.en.js';
+import { vi as m } from '$lib/lessons/zero-one-bfs-dag/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -57,7 +57,7 @@ const text = () => document.body.textContent ?? '';
 const vertexTitle = (name) =>
   [...document.querySelectorAll('svg title')]
     .map((t) => t.textContent ?? '')
-    .find((t) => t.startsWith(`Vertex ${name},`));
+    .find((t) => t.startsWith(`Đỉnh ${name},`));
 /** @param {string} label */
 const statValue = (label) =>
   [...document.querySelectorAll('dt')]
@@ -95,22 +95,26 @@ function answer(q, value) {
 describe('0-1 BFS and DAG shortest paths lesson', () => {
   it('runs 0-1 BFS with front and back pushes and a skipped copy', () => {
     render();
-    expect(text()).toContain('Set d[S] = 0, every other label ∞, and put S in the deque.');
+    expect(text()).toContain('Đặt d[S] = 0, mọi nhãn khác là ∞, và đưa S vào hàng đợi hai đầu.');
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
     expect(text()).toContain(
-      'Edge S → A has weight 1: d[A] = 0 + 1 = 1 < ∞. One more than S, so push A to the back.',
+      'Cạnh S → A có trọng số 1: d[A] = 0 + 1 = 1 < ∞. Hơn S một đơn vị, nên đẩy A vào cuối hàng.',
     );
     click(button('Bước tiếp'));
     expect(text()).toContain(
-      'Edge S → B has weight 0: d[B] = 0 + 0 = 0 < ∞. Same distance as S, so push B to the front.',
+      'Cạnh S → B có trọng số 0: d[B] = 0 + 0 = 0 < ∞. Cùng khoảng cách với S, nên đẩy B vào đầu hàng.',
     );
     let guard = 0;
-    while (!text().includes('Pop T again') && guard++ < 40) click(button('Bước tiếp'));
-    expect(text()).toContain('Pop T again: this copy was pushed before a shorter route was found');
+    while (!text().includes('Lấy T ra lần nữa') && guard++ < 40) click(button('Bước tiếp'));
+    expect(text()).toContain(
+      'Lấy T ra lần nữa: bản này được đẩy vào trước khi ta tìm được đường ngắn hơn',
+    );
     click(button('Đến bước cuối'));
-    expect(text()).toContain('The deque is empty after 8 pops, 3 to the front and 4 to the back.');
-    expect(vertexTitle('T')).toBe('Vertex T, d = 1, done');
+    expect(text()).toContain(
+      'Hàng đợi hai đầu đã rỗng sau 8 lần lấy ra, 3 lần đẩy vào đầu hàng và 4 lần đẩy vào cuối hàng.',
+    );
+    expect(vertexTitle('T')).toBe('Đỉnh T, d = 1, đã xong');
   });
 
   it('toggles a 0-1 weight and reruns', () => {
@@ -118,7 +122,7 @@ describe('0-1 BFS and DAG shortest paths lesson', () => {
     click(button(m.toggleAria('E → T', 0)));
     click(button('Đến bước cuối'));
     expect(statValue(m.stats.pops)).toBe('7');
-    expect(vertexTitle('T')).toBe('Vertex T, d = 2, done');
+    expect(vertexTitle('T')).toBe('Đỉnh T, d = 2, đã xong');
     click(buttonByText(m.resetWeights));
     click(button('Đến bước cuối'));
     expect(statValue(m.stats.pops)).toBe('8');
@@ -128,14 +132,14 @@ describe('0-1 BFS and DAG shortest paths lesson', () => {
     render();
     radio('short');
     expect(text()).toContain(
-      'Sort the DAG topologically: R, S, T, X, Y, Z. Every edge points from left to right in this order.',
+      'Sắp xếp tô-pô DAG: R, S, T, X, Y, Z. Theo thứ tự này, mọi cạnh đều hướng từ trái sang phải.',
     );
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
-    expect(text()).toContain('R still has d = ∞: the source cannot reach it');
+    expect(text()).toContain('R vẫn có d = ∞: từ đỉnh nguồn không đến được nó');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('One pass over the order relaxed 8 edges, each once');
-    expect(vertexTitle('Z')).toContain('Vertex Z, d = 3');
+    expect(text()).toContain('Một lượt duyệt theo thứ tự đã nới lỏng 8 cạnh, mỗi cạnh một lần');
+    expect(vertexTitle('Z')).toContain('Đỉnh Z, d = 3');
     expect(statValue(m.stats.relaxations)).toBe('8 / 10');
   });
 
@@ -143,11 +147,11 @@ describe('0-1 BFS and DAG shortest paths lesson', () => {
     render();
     radio('long');
     click(button('Đến bước cuối'));
-    expect(vertexTitle('Z')).toContain('Vertex Z, d = 10');
-    expect(vertexTitle('R')).toContain('Vertex R, d = −∞');
+    expect(vertexTitle('Z')).toContain('Đỉnh Z, d = 10');
+    expect(vertexTitle('R')).toContain('Đỉnh R, d = −∞');
     commit(weightField('X → Z'), '-5');
     click(button('Đến bước cuối'));
-    expect(vertexTitle('Z')).toContain('Vertex Z, d = 6');
+    expect(vertexTitle('Z')).toContain('Đỉnh Z, d = 6');
     commit(weightField('X → Z'), '500');
     expect(text()).toContain(m.badWeight(99));
     expect(weightField('X → Z').value).toBe('-5');
@@ -157,7 +161,7 @@ describe('0-1 BFS and DAG shortest paths lesson', () => {
     render();
     commit(sourceSelect(), '2');
     press(document.body, 'ArrowRight');
-    expect(text()).toContain('Pop B from the front.');
+    expect(text()).toContain('Lấy B ra từ đầu hàng.');
   });
 
   it('checks practice answers with a hint', () => {

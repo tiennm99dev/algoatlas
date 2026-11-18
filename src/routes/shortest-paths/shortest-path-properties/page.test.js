@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/shortest-path-properties/copy.en.js';
+import { vi as m } from '$lib/lessons/shortest-path-properties/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -87,17 +87,17 @@ function answer(q, value) {
 describe('shortest-path properties lesson', () => {
   it('relaxes the edge list once and ends with exact labels', () => {
     render();
-    expect(text()).toContain('Start: d[S] = 0 and every other label is ∞');
+    expect(text()).toContain('Bắt đầu: d[S] = 0 và mọi nhãn khác là ∞');
     click(button('Bước tiếp'));
     expect(text()).toContain(
-      'Relax S → A (weight 6): d[S] + 6 = 0 + 6 = 6 < ∞, so lower d[A] to 6 and set parent[A] = S.',
+      'Nới lỏng S → A (trọng số 6): d[S] + 6 = 0 + 6 = 6 < ∞, nên ta giảm d[A] xuống 6 và đặt parent[A] = S.',
     );
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Done after 7 relaxations: every label is the true shortest distance');
+    expect(text()).toContain('Xong sau 7 lần nới lỏng: mọi nhãn đều là khoảng cách ngắn nhất thật');
     expect(statValue(m.stats.exact)).toBe('5 / 5');
     expect(statValue(m.stats.updates)).toBe('5');
-    expect(text()).toContain('S → B → A → C → D: weight 2 + 3 + 2 + 1 = 8.');
-    expect(vertex(4).getAttribute('aria-label')).toBe('Vertex D, d = 8, exact');
+    expect(text()).toContain('S → B → A → C → D: trọng số 2 + 3 + 2 + 1 = 8.');
+    expect(vertex(4).getAttribute('aria-label')).toBe('Đỉnh D, d = 8, chính xác');
   });
 
   it('shows how a bad order leaves labels wrong, and fixes them with more relaxations', () => {
@@ -105,12 +105,12 @@ describe('shortest-path properties lesson', () => {
     commit(presetSelect(), 'reverse');
     click(button('Bước tiếp'));
     expect(text()).toContain(
-      'Relax B → D (weight 9): d[B] is ∞, so going through B gives nothing yet.',
+      'Nới lỏng B → D (trọng số 9): d[B] là ∞, nên đi qua B chưa giúp được gì.',
     );
     click(button('Đến bước cuối'));
-    expect(text()).toContain('only 2 of 5 labels are exact');
+    expect(text()).toContain('mới có 2/5 nhãn chính xác');
     click(button(m.relaxAria('B → A')));
-    expect(text()).toContain('d[B] + 3 = 2 + 3 = 5 < 6, so lower d[A] to 5');
+    expect(text()).toContain('d[B] + 3 = 2 + 3 = 5 < 6, nên ta giảm d[A] xuống 5');
     expect(statValue(m.stats.relaxations)).toBe('8');
     click(buttonByText(m.undo));
     expect(statValue(m.stats.relaxations)).toBe('7');
@@ -123,12 +123,12 @@ describe('shortest-path properties lesson', () => {
     render();
     commit(weightField('S → B'), '9');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('S → A → C → D: weight 6 + 2 + 1 = 9.');
+    expect(text()).toContain('S → A → C → D: trọng số 6 + 2 + 1 = 9.');
     commit(weightField('S → B'), '-3');
     expect(text()).toContain(m.badWeight(99));
     expect(weightField('S → B').value).toBe('9');
     click(buttonByText(m.resetWeights));
-    expect(text()).toContain('weight 2 + 3 + 2 + 1 = 8');
+    expect(text()).toContain('trọng số 2 + 3 + 2 + 1 = 8');
   });
 
   it('flags a label that lags behind its tree path', () => {
@@ -136,14 +136,14 @@ describe('shortest-path properties lesson', () => {
     click(buttonByText(m.clear));
     for (const e of ['S → A', 'A → C', 'S → B', 'B → A']) click(button(m.relaxAria(e)));
     click(vertex(3));
-    expect(text()).toContain('S → B → A → C: weight 2 + 3 + 2 = 7.');
-    expect(text()).toContain('The label d[C] = 8 is still higher');
+    expect(text()).toContain('S → B → A → C: trọng số 2 + 3 + 2 = 7.');
+    expect(text()).toContain('Nhãn d[C] = 8 vẫn còn lớn hơn');
   });
 
   it('picks a vertex with the keyboard and steps with the arrow key', () => {
     render();
     press(document.body, 'ArrowRight');
-    expect(text()).toContain('Relax S → A');
+    expect(text()).toContain('Nới lỏng S → A');
     press(vertex(1), 'Enter');
     expect(text()).toContain(`${m.pathTitle}: A`);
   });

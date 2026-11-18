@@ -39,14 +39,14 @@ export const MAX_WEIGHT = 99;
  */
 
 export const floydPseudocode = [
-  'dist[i][j] = w(i, j) for each edge, 0 when i = j, ∞ otherwise',
-  'next[i][j] = j for each edge i → j',
-  'for each vertex k:    // k may now be an intermediate stop',
-  '  for each vertex i:',
-  '    for each vertex j:',
+  'dist[i][j] = w(i, j) nếu có cạnh, 0 khi i = j, ∞ nếu không',
+  'next[i][j] = j với mỗi cạnh i → j',
+  'for k in V:    // giờ k được làm điểm dừng trung gian',
+  '  for i in V:',
+  '    for j in V:',
   '      if dist[i][k] + dist[k][j] < dist[i][j]:',
   '        dist[i][j] = dist[i][k] + dist[k][j]; next[i][j] = next[i][k]',
-  'if dist[v][v] < 0 for some v: report a negative cycle',
+  'if dist[v][v] < 0 với một v nào đó: báo có chu trình âm',
   'return dist, next',
 ];
 

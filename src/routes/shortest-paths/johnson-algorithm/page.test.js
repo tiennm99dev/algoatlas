@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/johnson-algorithm/copy.en.js';
+import { vi as m } from '$lib/lessons/johnson-algorithm/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -76,7 +76,7 @@ function radio(value) {
 function matrixRow(from) {
   return [...document.querySelectorAll('svg title')]
     .map((el) => el.textContent ?? '')
-    .filter((l) => l.startsWith(`From ${from} to `))
+    .filter((l) => l.startsWith(`Từ ${from} đến `))
     .map((l) => l.split(': ')[1].split(',')[0]);
 }
 
@@ -114,21 +114,21 @@ describe('Johnson’s algorithm lesson', () => {
   it('runs Bellman-Ford, reweights, and fills the matrix row by row', () => {
     render();
     expect(text()).toContain(
-      'Add a new vertex q with an edge of weight 0 to each of the 5 vertices.',
+      'Thêm một đỉnh mới q, nối đến mỗi đỉnh trong 5 đỉnh bằng một cạnh trọng số 0.',
     );
     expect(statValue(m.stats.phase)).toBe(m.phases.start);
     click(button('Bước tiếp'));
-    expect(text()).toContain('Bellman-Ford round 1');
-    stepUntil('Round 3 changed nothing, so the potentials are final');
+    expect(text()).toContain('Bellman-Ford, vòng 1');
+    stepUntil('Vòng 3 không đổi gì, nên các thế năng đã là cuối cùng');
     expect(text()).toContain('h(C) = −5');
-    stepUntil('Edge A → C: w′ = 8 + 0 − (−5) = 13.');
+    stepUntil('Cạnh A → C: w′ = 8 + 0 − (−5) = 13.');
     expect(statValue(m.stats.phase)).toBe(m.phases.reweight);
     expect(reweighted('A → C')).toBe('13');
-    stepUntil('Dijkstra from A is done.');
+    stepUntil('Dijkstra từ A đã xong.');
     expect(matrixRow('A')).toEqual(['0', '1', '−3', '2', '−4']);
     expect(matrixRow('B')).toEqual(['—', '—', '—', '—', '—']);
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Done: 5 Dijkstra runs filled the whole matrix');
+    expect(text()).toContain('Xong: 5 lần chạy Dijkstra đã điền kín ma trận');
     expect(matrixRow('B')).toEqual(['3', '0', '−4', '1', '−1']);
     expect(matrixRow('E')).toEqual(['8', '5', '1', '6', '0']);
     expect(statValue(m.stats.bfChecks)).toBe('42');
@@ -152,13 +152,11 @@ describe('Johnson’s algorithm lesson', () => {
     render();
     commit(presetSelect(), 'cycle');
     click(button('Đến bước cuối'));
-    expect(text()).toContain(
-      'Stopped: with a negative cycle there is no all-pairs answer to give.',
-    );
+    expect(text()).toContain('Đã dừng: khi có chu trình âm thì không có kết quả cho mọi cặp đỉnh.');
     expect(statValue(m.stats.phase)).toBe(m.phases.cycle);
     click(button('Bước trước'));
-    expect(text()).toContain('so the graph has a negative cycle: B → D → C → B.');
-    expect(vertex(1).getAttribute('aria-label')).toContain('on the negative cycle');
+    expect(text()).toContain('nên đồ thị có chu trình âm: B → D → C → B.');
+    expect(vertex(1).getAttribute('aria-label')).toContain('trên chu trình âm');
   });
 
   it('keeps every h at 0 when no weight is negative', () => {
@@ -173,19 +171,19 @@ describe('Johnson’s algorithm lesson', () => {
     render();
     commit(weightField('D → C'), '-6');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Stopped: with a negative cycle');
+    expect(text()).toContain('Đã dừng: khi có chu trình âm');
     commit(weightField('D → C'), 'abc');
     expect(text()).toContain(m.badWeight(99));
     expect(weightField('D → C').value).toBe('-6');
     click(buttonByText(m.resetGraph));
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Done: 5 Dijkstra runs');
+    expect(text()).toContain('Xong: 5 lần chạy Dijkstra');
   });
 
   it('steps with the keyboard', () => {
     render();
     press(document.body, 'ArrowRight');
-    expect(text()).toContain('Bellman-Ford round 1');
+    expect(text()).toContain('Bellman-Ford, vòng 1');
   });
 
   it('checks practice answers with a hint', () => {

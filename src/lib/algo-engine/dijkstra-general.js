@@ -51,13 +51,13 @@ export const MAX_WEIGHT = 99;
  */
 
 export const dijkstraPseudocode = [
-  'dist[v] = ∞ for every v; dist[s] = 0',
+  'dist[v] = ∞ với mọi v; dist[s] = 0',
   'heap = [(0, s)]',
-  'while heap is not empty:',
+  'while heap khác rỗng:',
   '  (d, u) = heap.popMin()',
-  '  if d > dist[u]: continue    // stale entry, skip it',
-  '  settle u',
-  '  for each edge u — v of weight w:',
+  '  if d > dist[u]: continue    // mục cũ, bỏ qua',
+  '  chốt u',
+  '  for (v, w) in adj[u]:',
   '    if dist[u] + w < dist[v]:',
   '      dist[v] = dist[u] + w; parent[v] = u',
   '      heap.push((dist[v], v))',

@@ -14,7 +14,7 @@
     dijkstraPseudocode,
     dijkstraTrace,
   } from '$lib/algo-engine/dijkstra-general.js';
-  import { en as m } from '$lib/lessons/dijkstra-general/copy.en.js';
+  import { vi as m } from '$lib/lessons/dijkstra-general/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/graph-editor.js').GraphNode} GraphNode */

@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/a-star/copy.en.js';
+import { vi as m } from '$lib/lessons/a-star/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -90,13 +90,13 @@ function answer(q, value) {
 describe('A* lesson', () => {
   it('runs Manhattan A* to a shortest path and compares the heuristics', () => {
     render();
-    expect(text()).toContain('Put the start in the open set with g = 0 and f = h(start) = 11.');
+    expect(text()).toContain('Đưa điểm xuất phát vào tập mở với g = 0 và f = h(start) = 11.');
     click(button('Bước tiếp'));
-    expect(text()).toContain('Pop (4,2) with f = g + h = 0 + 11 = 11');
+    expect(text()).toContain('Lấy (4,2) ra với f = g + h = 0 + 11 = 11');
     click(button('Bước tiếp'));
-    expect(text()).toContain('g = 0 + 1 = 1 and h = 12, so f = 13. Push it.');
+    expect(text()).toContain('g = 0 + 1 = 1 và h = 12, nên f = 13. Đẩy nó vào.');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('Reached the goal after expanding 36 cells. The path has 15 steps');
+    expect(text()).toContain('Đã đến đích sau khi mở rộng 36 ô. Đường đi có 15 bước');
     expect(statValue(m.stats.expanded)).toBe('36');
     expect(statValue(m.stats.path)).toBe('15');
     expect(compareRow(m.heuristics.zero)).toEqual(['118', '15']);
@@ -107,12 +107,12 @@ describe('A* lesson', () => {
   it('switches the heuristic and reruns', () => {
     render();
     radio('zero');
-    expect(text()).toContain('A* is exactly Dijkstra');
+    expect(text()).toContain('A* chính là thuật toán Dijkstra');
     click(button('Đến bước cuối'));
     expect(statValue(m.stats.expanded)).toBe('118');
     radio('triple');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('The path has 21 steps, but 3 × Manhattan can overestimate');
+    expect(text()).toContain('Đường đi có 21 bước, nhưng 3 × Manhattan có thể đoán quá');
   });
 
   it('switches the cell numbers between g, h and f', () => {
@@ -121,24 +121,24 @@ describe('A* lesson', () => {
     expect(button('Hàng 0, cột 0, h 17')).toBeTruthy();
     radio('f');
     click(button('Đến bước cuối'));
-    expect(button('Hàng 4, cột 2, Start, f 11')).toBeTruthy();
+    expect(button('Hàng 4, cột 2, Điểm xuất phát, f 11')).toBeTruthy();
     radio('g');
-    expect(button('Hàng 4, cột 13, Goal, g 15')).toBeTruthy();
+    expect(button('Hàng 4, cột 13, Đích, g 15')).toBeTruthy();
   });
 
   it('edits walls from the keyboard, refuses the start cell, and resets', () => {
     render();
-    keyActivate(button('Hàng 4, cột 9, Wall'));
+    keyActivate(button('Hàng 4, cột 9, Tường'));
     expect(text()).toContain('Đã bỏ tường ở (4,9).');
     expect(compareRow(m.heuristics.manhattan)).toEqual(['12', '11']);
-    keyActivate(button('Hàng 4, cột 2, Start, f 11'));
+    keyActivate(button('Hàng 4, cột 2, Điểm xuất phát, f 11'));
     expect(text()).toContain(m.blockedCell);
     radio('goal');
     keyActivate(button('Hàng 0, cột 0'));
     expect(text()).toContain('Đã dời đích đến (0,0).');
     click(buttonByText(m.resetGrid));
     expect(compareRow(m.heuristics.manhattan)).toEqual(['36', '15']);
-    expect(button('Hàng 4, cột 13, Goal')).toBeTruthy();
+    expect(button('Hàng 4, cột 13, Đích')).toBeTruthy();
   });
 
   it('reports a sealed goal and steps with the keyboard', () => {
@@ -151,10 +151,10 @@ describe('A* lesson', () => {
     ])
       keyActivate(button(`Hàng ${r}, cột ${c}`));
     click(button('Đến bước cuối'));
-    expect(text()).toContain('walls cut it off');
+    expect(text()).toContain('tường đã chặn kín');
     click(button('Về bước đầu'));
     press(document.body, 'ArrowRight');
-    expect(text()).toContain('Pop (4,2)');
+    expect(text()).toContain('Lấy (4,2) ra');
   });
 
   it('checks practice answers with a hint', () => {

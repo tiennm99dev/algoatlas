@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import Page from './+page.svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/practice-shortest-paths/copy.en.js';
+import { vi as m } from '$lib/lessons/practice-shortest-paths/copy.vi.js';
 
 /** @type {Record<string, any> | null} */
 let app = null;
@@ -97,14 +97,14 @@ function answer(q, value) {
 describe('shortest-path practice', () => {
   it('runs BFS on the moves puzzle and calls it the best fit', () => {
     render();
-    expect(text()).toContain('BFS: put the source in the queue.');
+    expect(text()).toContain('BFS: đưa đỉnh nguồn vào hàng đợi.');
     expect(text()).toContain(m.verdictPending);
     click(button('Bước tiếp'));
-    expect(text()).toContain('Dequeue 1, 0 edges from the source.');
+    expect(text()).toContain('Lấy 1 ra khỏi hàng đợi, cách đỉnh nguồn 0 cạnh.');
     click(button('Đến bước cuối'));
     expect(statValue(m.stats.answer)).toBe('4');
     expect(text()).toContain(m.verdicts.best);
-    expect(text()).toContain('d(10) = 4, after looking at 13 edges. Best fit: BFS.');
+    expect(text()).toContain('d(10) = 4, sau khi xét 13 cạnh. Hợp nhất: BFS.');
   });
 
   it('shows BFS going wrong on the road trip, and Dijkstra getting it right', () => {
@@ -113,7 +113,7 @@ describe('shortest-path practice', () => {
     click(button('Đến bước cuối'));
     expect(text()).toContain(m.verdicts.wrong);
     expect(text()).toContain(
-      'BFS says d(T) = 12, but the shortest distance is 8. Best fit: Dijkstra.',
+      'BFS cho d(T) = 12, nhưng khoảng cách ngắn nhất là 8. Hợp nhất: Dijkstra.',
     );
     expect(compareRow('BFS')).toEqual(['12', '8']);
     expect(compareRow('Bellman-Ford')).toEqual(['8', '16']);
@@ -128,11 +128,11 @@ describe('shortest-path practice', () => {
     click(buttonByText(m.scenarios.cashback.title));
     radio('dijkstra');
     const next = button('Bước tiếp');
-    for (let i = 0; i < 40 && !text().includes('Settle B at d = 5'); i++) click(next);
-    expect(text()).toContain('Settle B at d = 5');
+    for (let i = 0; i < 40 && !text().includes('Chốt B với d = 5'); i++) click(next);
+    expect(text()).toContain('Chốt B với d = 5');
     click(button('Đến bước cuối'));
     expect(statValue(m.stats.answer)).toBe('7');
-    expect(text()).toContain('Dijkstra says d(T) = 7, but the shortest distance is 6.');
+    expect(text()).toContain('Dijkstra cho d(T) = 7, nhưng khoảng cách ngắn nhất là 6.');
     radio('bellman-ford');
     click(button('Đến bước cuối'));
     expect(statValue(m.stats.answer)).toBe('6');
@@ -145,10 +145,10 @@ describe('shortest-path practice', () => {
     click(button('Đến bước cuối'));
     expect(statValue(m.stats.answer)).toBe(m.cycleAnswer);
     click(button('Bước trước'));
-    expect(text()).toContain('A negative cycle is reachable: A → B → C → A.');
+    expect(text()).toContain('Đến được một chu trình âm: A → B → C → A.');
     radio('bfs');
     click(button('Đến bước cuối'));
-    expect(text()).toContain('yet BFS still printed numbers');
+    expect(text()).toContain('vậy mà BFS vẫn in ra các con số');
   });
 
   it('reruns on a typed weight, rejects a bad one, and resets', () => {
@@ -156,7 +156,7 @@ describe('shortest-path practice', () => {
     commit(weightField('5 → 10'), '3');
     click(button('Đến bước cuối'));
     expect(text()).toContain(
-      'BFS says d(10) = 6, but the shortest distance is 5. Best fit: Dijkstra.',
+      'BFS cho d(10) = 6, nhưng khoảng cách ngắn nhất là 5. Hợp nhất: Dijkstra.',
     );
     radio('dijkstra');
     click(button('Đến bước cuối'));
@@ -176,7 +176,7 @@ describe('shortest-path practice', () => {
     expect(statValue(m.stats.answer)).toBe('3');
     click(button('Về bước đầu'));
     press(document.body, 'ArrowRight');
-    expect(text()).toContain('Dequeue 1');
+    expect(text()).toContain('Lấy 1 ra khỏi hàng đợi');
   });
 
   it('checks practice answers with a hint', () => {

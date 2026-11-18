@@ -13,7 +13,7 @@
     bellmanFordPseudocode,
     bellmanFordTrace,
   } from '$lib/algo-engine/bellman-ford.js';
-  import { en as m } from '$lib/lessons/bellman-ford/copy.en.js';
+  import { vi as m } from '$lib/lessons/bellman-ford/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/components/graph-editor.js').GraphNode} GraphNode */
