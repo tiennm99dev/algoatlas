@@ -19,7 +19,7 @@
     oneDimTrace,
     parseOneDimList,
   } from '$lib/algo-engine/dp-one-dimensional.js';
-  import { en as m } from '$lib/lessons/dp-one-dimensional/copy.en.js';
+  import { vi as m } from '$lib/lessons/dp-one-dimensional/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/dp-one-dimensional.js').OneDimProblem} OneDimProblem */

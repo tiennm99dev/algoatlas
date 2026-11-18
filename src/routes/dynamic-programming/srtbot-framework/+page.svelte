@@ -14,7 +14,7 @@
     srtbotPseudocode,
     srtbotTrace,
   } from '$lib/algo-engine/srtbot-framework.js';
-  import { en as m } from '$lib/lessons/srtbot-framework/copy.en.js';
+  import { vi as m } from '$lib/lessons/srtbot-framework/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/srtbot-framework.js').SrtbotProblem} SrtbotProblem */

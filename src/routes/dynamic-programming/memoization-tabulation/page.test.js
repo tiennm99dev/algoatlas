@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/memoization-tabulation/copy.en.js';
+import { vi as m } from '$lib/lessons/memoization-tabulation/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -46,7 +46,7 @@ const narration = () => document.querySelector('p[aria-live]')?.textContent?.tri
 const byTest = (id) => document.querySelector(`[data-testid="${id}"]`)?.textContent?.trim();
 const field = (/** @type {string} */ selector) =>
   /** @type {HTMLInputElement} */ (document.querySelector(selector));
-const treeNodes = () => document.querySelectorAll('svg[aria-label^="Call tree"] circle').length;
+const treeNodes = () => document.querySelectorAll('svg[aria-label^="Cây lời gọi"] circle').length;
 /** @param {string} label */
 const cellTitles = (label) =>
   [...document.querySelectorAll('svg title')]
@@ -65,10 +65,10 @@ describe('memoization and tabulation lesson', () => {
   it('runs plain recursion and counts the repeated work', () => {
     render();
     expect(narration()).toBe(
-      'Ready to call fib(5). Plain recursion stores nothing, so it will work out the same values again and again.',
+      'Sẵn sàng gọi fib(5). Đệ quy thuần không lưu gì, nên ta sẽ tính đi tính lại cùng những giá trị.',
     );
     click(button('Bước tiếp'));
-    expect(narration()).toBe('Call fib(5). Is 5 ≤ 1?');
+    expect(narration()).toBe('Gọi fib(5). 5 ≤ 1 không?');
     click(button('Đến bước cuối'));
     expect(byTest('result')).toBe('5');
     expect(byTest('calls')).toBe('15');
@@ -76,9 +76,9 @@ describe('memoization and tabulation lesson', () => {
     expect(byTest('hits')).toBe('0');
     expect(treeNodes()).toBe(15);
     expect(narration()).toBe(
-      'fib(5) = 5 after 15 calls and 7 additions. fib(1) alone was worked out 5 times.',
+      'fib(5) = 5 sau 15 lời gọi và 7 phép cộng. Riêng fib(1) đã được tính 5 lần.',
     );
-    expect(cellTitles('fib(2) worked out')).toEqual(['fib(2) worked out 3 times, repeated work']);
+    expect(cellTitles('fib(2) được tính')).toEqual(['fib(2) được tính 3 lần, làm lặp lại']);
   });
 
   it('collapses the tree with memoization and drops it with tabulation', () => {
@@ -89,10 +89,10 @@ describe('memoization and tabulation lesson', () => {
     expect(byTest('hits')).toBe('3');
     expect(byTest('additions')).toBe('4');
     expect(treeNodes()).toBe(9);
-    expect(cellTitles('memo[5]')).toEqual(['memo[5]: 5, the answer']);
+    expect(cellTitles('memo[5]')).toEqual(['memo[5]: 5, đáp án']);
     click(button('Bước trước'));
     expect(narration()).toBe(
-      'fib(5) = fib(4) + fib(3) = 3 + 2 = 5. Store it in memo[5] so every later call can look it up.',
+      'fib(5) = fib(4) + fib(3) = 3 + 2 = 5. Lưu vào memo[5] để mọi lời gọi sau tra được.',
     );
 
     click(field('input[name="mode"][value="table"]'));
@@ -101,9 +101,9 @@ describe('memoization and tabulation lesson', () => {
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
     expect(narration()).toBe(
-      'dp[3] = dp[2] + dp[1] = 1 + 1 = 2. Both cells were filled earlier in the loop.',
+      'dp[3] = dp[2] + dp[1] = 1 + 1 = 2. Cả hai ô đã được lấp ở các lần lặp trước.',
     );
-    expect(cellTitles('dp[1]')).toEqual(['dp[1]: 1, read now']);
+    expect(cellTitles('dp[1]')).toEqual(['dp[1]: 1, đang đọc']);
     click(button('Đến bước cuối'));
     expect(byTest('calls')).toBe('0');
     expect(byTest('additions')).toBe('4');

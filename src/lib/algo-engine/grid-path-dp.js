@@ -87,18 +87,18 @@ export const gridPseudocode = {
   count: [
     'paths(grid[0..m-1][0..n-1]):',
     '  for r = 0 to m-1: for c = 0 to n-1:',
-    '    if grid[r][c] is a wall: P[r][c] = 0',
+    '    if wall(grid[r][c]): P[r][c] = 0',
     '    else if r == 0 and c == 0: P[0][0] = 1',
-    '    else: P[r][c] = P[r-1][c] + P[r][c-1]   // off the grid counts 0',
+    '    else: P[r][c] = P[r-1][c] + P[r][c-1]   // ngoài lưới tính là 0',
     '  return P[m-1][n-1]',
   ],
   min: [
     'minCost(grid[0..m-1][0..n-1]):',
     '  for r = 0 to m-1: for c = 0 to n-1:',
-    '    if grid[r][c] is a wall: B[r][c] = ∞',
+    '    if wall(grid[r][c]): B[r][c] = ∞',
     '    else if r == 0 and c == 0: B[0][0] = grid[0][0]',
-    '    else: B[r][c] = grid[r][c] + min(B[r-1][c], B[r][c-1])   // off the grid is ∞',
-    '  walk back from B[m-1][n-1] along the smaller neighbour',
+    '    else: B[r][c] = grid[r][c] + min(B[r-1][c], B[r][c-1])   // ngoài lưới là ∞',
+    '  đi ngược từ B[m-1][n-1] theo ô lân cận nhỏ hơn',
     '  return B[m-1][n-1]',
   ],
 };

@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/dp-one-dimensional/copy.en.js';
+import { vi as m } from '$lib/lessons/dp-one-dimensional/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -52,7 +52,7 @@ const titles = () =>
 const chips = () =>
   [...document.querySelectorAll('ol li')]
     .map((li) => li.textContent?.trim() ?? '')
-    .filter((t) => t.startsWith('house') || /^\d+$/.test(t));
+    .filter((t) => t.startsWith('nhà') || /^\d+$/.test(t));
 
 function practice() {
   const section = [...document.querySelectorAll('section')].find(
@@ -66,15 +66,15 @@ describe('1D DP lesson', () => {
   it('fills the stairs row left to right with two arcs per cell', () => {
     render();
     expect(narration()).toBe(
-      'Count the ways to climb 5 steps. The row has a cell per step, dp[0] to dp[5].',
+      'Đếm số cách leo 5 bậc. Hàng có một ô cho mỗi bậc, từ dp[0] đến dp[5].',
     );
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
     expect(narration()).toBe(
-      'The last move to step 2 climbed 1 step (from 1) or 2 (from 0). Count both: dp[2] = dp[1] + dp[0] = 1 + 1 = 2.',
+      'Bước cuối cùng lên bậc 2 là bước 1 bậc (từ 1) hoặc 2 bậc (từ 0). Cộng cả hai: dp[2] = dp[1] + dp[0] = 1 + 1 = 2.',
     );
     expect(arcs()).toHaveLength(2);
-    expect(titles()[2]).toBe('dp[2]: 2, filled now');
+    expect(titles()[2]).toBe('dp[2]: 2, vừa lấp');
     click(button('Đến bước cuối'));
     expect(arcs()).toHaveLength(0);
     expect(byTest('result')).toBe('8');
@@ -89,17 +89,17 @@ describe('1D DP lesson', () => {
     expect(byTest('result')).toBe('2');
     expect(byTest('lookups')).toBe('13');
     expect(chips()).toEqual(['3', '3']);
-    expect(titles()[3]).toBe('dp[3]: 1, on the best chain');
+    expect(titles()[3]).toBe('dp[3]: 1, trên chuỗi tốt nhất');
     click(button('Bước trước'));
     expect(arcs()).toHaveLength(3);
     expect(narration()).toBe(
-      'Try each coin as the last one: coin 1 → dp[5] + 1 = 3; coin 3 → dp[3] + 1 = 2; coin 4 → dp[2] + 1 = 3. The fewest is 2, with coin 3 last.',
+      'Thử lần lượt từng đồng xu làm đồng cuối: xu 1 → dp[5] + 1 = 3; xu 3 → dp[3] + 1 = 2; xu 4 → dp[2] + 1 = 3. Ít nhất là 2, với xu 3 ở cuối.',
     );
     commit(field('input[name="coins"]'), '2 5');
     commit(field('input[name="amount"]'), '3');
     click(button('Đến bước cuối'));
     expect(byTest('result')).toBe('∞');
-    expect(narration()).toBe('dp[3] = ∞: these coins cannot make 3.');
+    expect(narration()).toBe('dp[3] = ∞: các đồng xu này không tạo được 3.');
   });
 
   it('robs the best houses', () => {
@@ -107,11 +107,11 @@ describe('1D DP lesson', () => {
     click(field('input[name="problem"][value="robber"]'));
     click(button('Đến bước cuối'));
     expect(byTest('result')).toBe('12');
-    expect(chips()).toEqual(['house 1', 'house 3', 'house 5']);
+    expect(chips()).toEqual(['nhà 1', 'nhà 3', 'nhà 5']);
     commit(field('input[name="houses"]'), '5, 1, 1, 5');
     click(button('Đến bước cuối'));
     expect(byTest('result')).toBe('10');
-    expect(chips()).toEqual(['house 1', 'house 4']);
+    expect(chips()).toEqual(['nhà 1', 'nhà 4']);
   });
 
   it('refuses bad input and keeps the last valid value', () => {
@@ -130,7 +130,7 @@ describe('1D DP lesson', () => {
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
     flushSync();
     expect(narration()).toBe(
-      'Base cases: dp[0] = 1, the one way to climb nothing, and dp[1] = 1, a single step.',
+      'Trường hợp cơ sở: dp[0] = 1, cách duy nhất để không leo bậc nào, và dp[1] = 1, một bước duy nhất.',
     );
   });
 

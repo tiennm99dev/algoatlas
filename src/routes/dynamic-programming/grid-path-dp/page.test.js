@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/grid-path-dp/copy.en.js';
+import { vi as m } from '$lib/lessons/grid-path-dp/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -72,18 +72,20 @@ describe('grid and path DP lesson', () => {
   it('fills the count table and steps through a cell', () => {
     render();
     expect(narration()).toBe(
-      'Count the paths from the top-left cell to the bottom-right cell of this 4 × 5 grid, moving only right or down.',
+      'Đếm số đường đi từ ô trên cùng bên trái tới ô dưới cùng bên phải của lưới 4 × 5 này, chỉ đi sang phải hoặc xuống dưới.',
     );
     click(button('Bước tiếp'));
-    expect(narration()).toBe('Base case: one path reaches the start, the empty one. P[0][0] = 1.');
+    expect(narration()).toBe(
+      'Trường hợp cơ sở: có một đường đi tới điểm xuất phát, đó là đường đi rỗng. P[0][0] = 1.',
+    );
     click(button('Bước tiếp'));
-    expect(narration()).toBe('The first row has only the cell to the left: P[0][1] = 1.');
+    expect(narration()).toBe('Hàng đầu tiên chỉ có ô bên trái: P[0][1] = 1.');
     expect(arrows()).toBe(1);
     click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('7');
     expect(byTest('filled')).toBe('20 / 20');
     expect(byTest('open')).toBe('35');
-    expect(narration()).toBe('7 paths reach the goal.');
+    expect(narration()).toBe('Có 7 đường đi tới đích.');
   });
 
   it('adds a wall by clicking the grid and shows the new count at once', () => {
@@ -92,7 +94,7 @@ describe('grid and path DP lesson', () => {
     click(cell(0, 1, 3));
     expect(field('select[name="preset"]').value).toBe('');
     expect(byTest('answer')).toBe('12');
-    expect(cell(0, 1, 3).getAttribute('aria-label')).toBe('Cell (1, 3): wall');
+    expect(cell(0, 1, 3).getAttribute('aria-label')).toBe('Ô (1, 3): tường');
     click(buttonByText(m.resetGrid));
     click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('28');
@@ -120,11 +122,11 @@ describe('grid and path DP lesson', () => {
     render();
     click(button('Đến bước cuối'));
     click(cell(1, 3, 4));
-    expect(byTest('sums')).toBe('above 3 + left 4 = 7');
-    expect(narration()).toBe('A path arrives from above or from the left: P[3][4] = 3 + 4 = 7.');
+    expect(byTest('sums')).toBe('trên 3 + trái 4 = 7');
+    expect(narration()).toBe('Đường đi tới từ phía trên hoặc từ bên trái: P[3][4] = 3 + 4 = 7.');
     expect(arrows()).toBe(2);
     click(cell(1, 1, 1));
-    expect(narration()).toBe('(1, 1) is a wall, so no path passes through it: P[1][1] = 0.');
+    expect(narration()).toBe('(1, 1) là tường, nên không đường đi nào qua đó: P[1][1] = 0.');
   });
 
   it('finds the cheapest path, the greedy cost and an edited cost', () => {
@@ -133,14 +135,14 @@ describe('grid and path DP lesson', () => {
     commit(field('select[name="preset"]'), 'costs');
     click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('7');
-    expect(narration()).toBe('The cheapest path costs 7 and visits 5 cells.');
+    expect(narration()).toBe('Đường đi rẻ nhất tốn 7 và đi qua 5 ô.');
     commit(field('select[name="preset"]'), 'trap');
     click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('9');
     expect(byTest('greedy')).toBe('14');
     click(field('input[name="tool"][value="cost"]'));
     click(cell(0, 2, 0));
-    expect(cell(0, 2, 0).getAttribute('aria-label')).toContain('cost 2');
+    expect(cell(0, 2, 0).getAttribute('aria-label')).toContain('chi phí 2');
     expect(byTest('answer')).toBe('10');
   });
 
@@ -151,12 +153,12 @@ describe('grid and path DP lesson', () => {
     click(cell(0, 2, 2));
     expect(byTest('answer')).toBe('∞');
     expect(narration()).toBe(
-      'No path reaches the goal: walls block every route, so the cost stays ∞.',
+      'Không đường đi nào tới được đích: tường chặn mọi lối, nên chi phí vẫn là ∞.',
     );
     click(field('input[name="mode"][value="count"]'));
     click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('0');
-    expect(narration()).toBe('No path reaches the goal: walls block every route.');
+    expect(narration()).toBe('Không đường đi nào tới được đích: tường chặn mọi lối.');
   });
 
   it('resizes the grid and refuses a bad size', () => {
@@ -167,7 +169,7 @@ describe('grid and path DP lesson', () => {
     expect(byTest('filled')).toBe('4 / 4');
     expect(byTest('open')).toBe('2');
     commit(field('input[name="rows"]'), '9');
-    expect(narration()).toBe('Rows and columns must be whole numbers from 1 to 8.');
+    expect(narration()).toBe('Số hàng và số cột phải là số nguyên từ 1 đến 8.');
     expect(field('input[name="rows"]').value).toBe('2');
   });
 
@@ -175,7 +177,7 @@ describe('grid and path DP lesson', () => {
     render();
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
     flushSync();
-    expect(narration()).toContain('Base case');
+    expect(narration()).toContain('Trường hợp cơ sở');
   });
 
   it('checks a practice answer, wrong then right, with a hint', () => {

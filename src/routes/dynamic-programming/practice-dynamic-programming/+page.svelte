@@ -25,7 +25,7 @@
     randomValues,
     runDesign,
   } from '$lib/algo-engine/practice-dynamic-programming.js';
-  import { en as m } from '$lib/lessons/practice-dynamic-programming/copy.en.js';
+  import { vi as m } from '$lib/lessons/practice-dynamic-programming/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/practice-dynamic-programming.js').Problem} Problem */

@@ -16,7 +16,7 @@
     lisTrace,
     parseLisValues,
   } from '$lib/algo-engine/longest-increasing-subsequence.js';
-  import { en as m } from '$lib/lessons/longest-increasing-subsequence/copy.en.js';
+  import { vi as m } from '$lib/lessons/longest-increasing-subsequence/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/longest-increasing-subsequence.js').LisMethod} LisMethod */

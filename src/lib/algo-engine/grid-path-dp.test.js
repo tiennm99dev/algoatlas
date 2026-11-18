@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { en as copy } from '$lib/lessons/grid-path-dp/copy.en.js';
+import { vi as copy } from '$lib/lessons/grid-path-dp/copy.vi.js';
 import {
   GRID_PRESETS,
   MAX_COST,

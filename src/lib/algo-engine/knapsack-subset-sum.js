@@ -95,7 +95,7 @@ export const KNAP_PRESETS = {
 
 const rowLoop = {
   'row-down': (/** @type {string} */ w) => `    for c = W down to ${w}:`,
-  'row-up': (/** @type {string} */ w) => `    for c = ${w} up to W:      // reads this item again`,
+  'row-up': (/** @type {string} */ w) => `    for c = ${w} up to W:      // đọc lại món này`,
 };
 
 /** @type {Record<KnapProblem, Record<KnapLayout, string[]>>} */
@@ -103,24 +103,24 @@ export const knapPseudocode = {
   knapsack: {
     table: [
       'knapsack(w[1..n], v[1..n], W):',
-      '  K[0][c] = 0 for every c            // no items, no value',
+      '  K[0][c] = 0 for c in 0..W         // không có món, không có giá trị',
       '  for i = 1 to n: for c = 0 to W:',
-      '    K[i][c] = K[i-1][c]              // skip item i',
+      '    K[i][c] = K[i-1][c]              // bỏ món i',
       '    if w[i] ≤ c and K[i-1][c-w[i]] + v[i] > K[i][c]:',
-      '      K[i][c] = K[i-1][c-w[i]] + v[i]   // take item i',
-      '  walk back from K[n][W]: a change means item i was taken',
+      '      K[i][c] = K[i-1][c-w[i]] + v[i]   // lấy món i',
+      '  đi ngược từ K[n][W]: giá trị đổi nghĩa là món i đã được lấy',
     ],
     'row-down': [
-      'knapsack(w[1..n], v[1..n], W), one row:',
-      '  dp[c] = 0 for every c',
+      'knapsack(w[1..n], v[1..n], W), một hàng:',
+      '  dp[c] = 0 for c in 0..W',
       '  for i = 1 to n:',
       rowLoop['row-down']('w[i]'),
       '      dp[c] = max(dp[c], dp[c-w[i]] + v[i])',
       '  return dp[W]',
     ],
     'row-up': [
-      'knapsack(w[1..n], v[1..n], W), one row:',
-      '  dp[c] = 0 for every c',
+      'knapsack(w[1..n], v[1..n], W), một hàng:',
+      '  dp[c] = 0 for c in 0..W',
       '  for i = 1 to n:',
       rowLoop['row-up']('w[i]'),
       '      dp[c] = max(dp[c], dp[c-w[i]] + v[i])',
@@ -132,13 +132,13 @@ export const knapPseudocode = {
       'subsetSum(w[1..n], T):',
       '  S[0][0] = true; S[0][c] = false for c > 0',
       '  for i = 1 to n: for c = 0 to T:',
-      '    S[i][c] = S[i-1][c]              // skip item i',
+      '    S[i][c] = S[i-1][c]              // bỏ món i',
       '    if w[i] ≤ c and not S[i][c] and S[i-1][c-w[i]]:',
-      '      S[i][c] = true                 // take item i',
-      '  if S[n][T]: walk back to name the items',
+      '      S[i][c] = true                 // lấy món i',
+      '  if S[n][T]: đi ngược để nêu tên các món',
     ],
     'row-down': [
-      'subsetSum(w[1..n], T), one row:',
+      'subsetSum(w[1..n], T), một hàng:',
       '  dp[0] = true; dp[c] = false for c > 0',
       '  for i = 1 to n:',
       rowLoop['row-down']('w[i]').replace('W', 'T'),
@@ -146,7 +146,7 @@ export const knapPseudocode = {
       '  return dp[T]',
     ],
     'row-up': [
-      'subsetSum(w[1..n], T), one row:',
+      'subsetSum(w[1..n], T), một hàng:',
       '  dp[0] = true; dp[c] = false for c > 0',
       '  for i = 1 to n:',
       rowLoop['row-up']('w[i]').replace('W', 'T'),

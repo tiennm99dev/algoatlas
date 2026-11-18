@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/lcs-edit-distance/copy.en.js';
+import { vi as m } from '$lib/lessons/lcs-edit-distance/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -67,27 +67,27 @@ describe('LCS and edit distance lesson', () => {
   it('fills the LCS table and walks back to read BCBA', () => {
     render();
     expect(narration()).toBe(
-      'Find the longest common subsequence of ABCBDAB and BDCABA. The table has 8 × 7 cells, one per pair of prefixes.',
+      'Tìm dãy con chung dài nhất của ABCBDAB và BDCABA. Bảng có 8 × 7 ô, mỗi ô ứng với một cặp tiền tố.',
     );
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
     expect(narration()).toBe(
-      'A ≠ B: one of them is not in the LCS. Drop A → 0, drop B → 0. Keep the larger (drop A from a): L[1][1] = 0.',
+      'A ≠ B: một trong hai không thuộc LCS. Bỏ A → 0, bỏ B → 0. Giữ giá trị lớn hơn (bỏ A khỏi a): L[1][1] = 0.',
     );
     expect(arrows()).toBe(2);
-    expect(titles()).toContain('ε vs B: 0, read, and kept');
+    expect(titles()).toContain('ε với B: 0, được đọc và được giữ');
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
     expect(narration()).toBe(
-      'a[1] = b[4] = A: a match. Extend the diagonal: L[1][4] = L[0][3] + 1 = 1.',
+      'a[1] = b[4] = A: trùng nhau. Nối dài đường chéo: L[1][4] = L[0][3] + 1 = 1.',
     );
     expect(arrows()).toBe(1);
     click(button('Đến bước cuối'));
     expect(byTest('result')).toBe('4');
     expect(byTest('filled')).toBe('56 / 56');
     expect(chips()).toEqual(['B', 'C', 'B', 'A']);
-    expect(titles()).toContain('ABCBDAB vs BDCABA: 4, the answer');
+    expect(titles()).toContain('ABCBDAB với BDCABA: 4, đáp án');
   });
 
   it('computes the edit distance and the alignment', () => {
@@ -97,15 +97,15 @@ describe('LCS and edit distance lesson', () => {
     expect(field('input[name="a"]').value).toBe('KITTEN');
     click(button('Bước tiếp'));
     expect(narration()).toBe(
-      'Base cases: D[i][0] = i, deleting all i letters, and D[0][j] = j, inserting all j letters.',
+      'Trường hợp cơ sở: D[i][0] = i, xoá cả i chữ cái, và D[0][j] = j, chèn cả j chữ cái.',
     );
     click(button('Đến bước cuối'));
     expect(byTest('result')).toBe('3');
     const edits = [...document.querySelectorAll('[data-testid="alignment"] ul li')].map(
       (li) => li.textContent,
     );
-    expect(edits).toEqual(['K → S', 'E → I', 'insert G']);
-    expect(narration()).toBe('KITTEN becomes SITTING in 3 edits: K → S, E → I, insert G.');
+    expect(edits).toEqual(['K → S', 'E → I', 'chèn G']);
+    expect(narration()).toBe('KITTEN thành SITTING sau 3 phép sửa: K → S, E → I, chèn G.');
   });
 
   it('reads typed words and refuses bad ones', () => {
@@ -129,7 +129,7 @@ describe('LCS and edit distance lesson', () => {
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
     flushSync();
     expect(narration()).toBe(
-      'Base cases: row 0 and column 0 are 0, because an empty prefix has no letters in common with anything.',
+      'Trường hợp cơ sở: hàng 0 và cột 0 đều bằng 0, vì tiền tố rỗng không có chữ cái chung nào với bất kì xâu nào.',
     );
   });
 

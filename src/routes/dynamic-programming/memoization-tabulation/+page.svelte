@@ -8,7 +8,7 @@
   import TreeView from '$lib/components/tree-view.svelte';
   import { STATE_BG } from '$lib/components/visual-state.js';
   import { MAX_N, fibPseudocode, fibTrace } from '$lib/algo-engine/memoization-tabulation.js';
-  import { en as m } from '$lib/lessons/memoization-tabulation/copy.en.js';
+  import { vi as m } from '$lib/lessons/memoization-tabulation/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/memoization-tabulation.js').FibMode} FibMode */

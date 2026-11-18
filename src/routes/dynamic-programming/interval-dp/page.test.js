@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
 import { INTERVAL_PRESETS, intervalTrace, orderCount } from '$lib/algo-engine/interval-dp.js';
-import { en as m } from '$lib/lessons/interval-dp/copy.en.js';
+import { vi as m } from '$lib/lessons/interval-dp/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -63,17 +63,19 @@ describe('interval DP lesson', () => {
   it('fills by length and rebuilds the matrix order', () => {
     render();
     expect(narration()).toBe(
-      'Multiply 3 matrices with the fewest scalar multiplications. The product is the same in any order, but the work is not.',
+      'Nhân 3 ma trận với ít phép nhân số nhất. Tích là như nhau với mọi thứ tự, nhưng khối lượng công việc thì không.',
     );
     click(button('Bước tiếp'));
-    expect(narration()).toBe('Length 1: one matrix needs no multiplication, so the diagonal is 0.');
+    expect(narration()).toBe(
+      'Độ dài 1: một ma trận không cần phép nhân nào, nên đường chéo bằng 0.',
+    );
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Length 2');
+    expect(narration()).toContain('Độ dài 2');
     click(button('Bước tiếp'));
-    expect(narration()).toBe('Interval A1..A2: start at ∞ and try 1 split.');
+    expect(narration()).toBe('Đoạn A1..A2: bắt đầu bằng ∞ và thử 1 cách chia.');
     click(button('Bước tiếp'));
     expect(narration()).toBe(
-      'Split after A1: 0 + 0 + 10·100·5 = 5000. The first option, so it is the best so far.',
+      'Chia ngay sau A1: 0 + 0 + 10·100·5 = 5000. Đây là phương án đầu tiên, nên tạm thời là tốt nhất.',
     );
     expect(arrows()).toBe(2);
     click(button('Đến bước cuối'));
@@ -88,15 +90,15 @@ describe('interval DP lesson', () => {
   it('jumps to a cell by pointer and by keyboard', () => {
     render();
     click(cell(0, 1));
-    expect(narration()).toBe('m[1][2] = 5000, with the best split after A1: A1 and A2.');
+    expect(narration()).toBe('m[1][2] = 5000, với cách chia tốt nhất ngay sau A1: A1 và A2.');
     const here = cell(1, 1);
     here.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
     flushSync();
     cell(1, 2).dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     flushSync();
-    expect(narration()).toBe('m[2][3] = 25000, with the best split after A2: A2 and A3.');
+    expect(narration()).toBe('m[2][3] = 25000, với cách chia tốt nhất ngay sau A2: A2 và A3.');
     click(cell(2, 0));
-    expect(narration()).toBe('m[2][3] = 25000, with the best split after A2: A2 and A3.');
+    expect(narration()).toBe('m[2][3] = 25000, với cách chia tốt nhất ngay sau A2: A2 và A3.');
   });
 
   it('switches to rod cutting and reads the pieces', () => {
@@ -106,7 +108,7 @@ describe('interval DP lesson', () => {
     commit(field('select[name="preset"]'), 'eight');
     click(button('Bước tiếp'));
     expect(narration()).toBe(
-      'Length 1: one unit cannot be cut, so each cell on the diagonal is its price, 1.',
+      'Độ dài 1: một khúc không cắt được, nên mỗi ô trên đường chéo là giá của nó, 1.',
     );
     click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('22');
@@ -115,7 +117,7 @@ describe('interval DP lesson', () => {
     expect(byTest('orders')).toBe('128');
     commit(field('select[name="preset"]'), 'whole');
     click(button('Đến bước cuối'));
-    expect(narration()).toBe('The best price: 9, with pieces 3.');
+    expect(narration()).toBe('Giá tốt nhất: 9, với các mẩu 3.');
   });
 
   it('reads typed input and refuses bad lists', () => {
@@ -125,19 +127,19 @@ describe('interval DP lesson', () => {
     click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('24');
     commit(field('input[name="input"]'), '5');
-    expect(narration()).toBe('Type 2 to 8 dimensions: n matrices have n + 1.');
+    expect(narration()).toBe('Hãy gõ từ 2 đến 8 kích thước: n ma trận có n + 1 kích thước.');
     expect(field('input[name="input"]').value).toBe('2, 3, 4');
     commit(field('input[name="input"]'), '2, 101');
-    expect(narration()).toBe('Each dimension must be from 1 to 100.');
+    expect(narration()).toBe('Mỗi kích thước phải từ 1 đến 100.');
     commit(field('input[name="input"]'), 'a, b');
-    expect(narration()).toBe('Write whole numbers separated by commas.');
+    expect(narration()).toBe('Hãy viết các số nguyên cách nhau bởi dấu phẩy.');
   });
 
   it('steps with the arrow keys', () => {
     render();
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
     flushSync();
-    expect(narration()).toContain('Length 1');
+    expect(narration()).toContain('Độ dài 1');
   });
 
   it('stores practice answers that the engine reproduces', () => {

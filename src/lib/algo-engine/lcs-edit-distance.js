@@ -56,21 +56,21 @@ export const STRING_PRESETS = {
 export const stringDpPseudocode = {
   lcs: [
     'lcs(a[1..m], b[1..n]):',
-    '  L[i][0] = L[0][j] = 0        // an empty prefix shares nothing',
+    '  L[i][0] = L[0][j] = 0        // tiền tố rỗng không có gì chung',
     '  for i = 1 to m: for j = 1 to n:',
-    '    if a[i] == b[j]: L[i][j] = L[i-1][j-1] + 1   // match',
-    '    else: L[i][j] = max(L[i-1][j], L[i][j-1])    // drop a[i] or b[j]',
-    '  walk back from L[m][n] to read the LCS',
+    '    if a[i] == b[j]: L[i][j] = L[i-1][j-1] + 1   // trùng nhau',
+    '    else: L[i][j] = max(L[i-1][j], L[i][j-1])    // bỏ a[i] hoặc b[j]',
+    '  đi ngược từ L[m][n] để đọc ra LCS',
   ],
   edit: [
     'edit(a[1..m], b[1..n]):',
-    '  D[i][0] = i; D[0][j] = j     // delete all, or insert all',
+    '  D[i][0] = i; D[0][j] = j     // xoá hết, hoặc chèn hết',
     '  for i = 1 to m: for j = 1 to n:',
-    '    if a[i] == b[j]: D[i][j] = D[i-1][j-1]       // keep',
-    '    else: D[i][j] = 1 + min(D[i-1][j-1],  // replace a[i] by b[j]',
-    '                            D[i-1][j],    // delete a[i]',
-    '                            D[i][j-1])    // insert b[j]',
-    '  walk back from D[m][n] to read the edits',
+    '    if a[i] == b[j]: D[i][j] = D[i-1][j-1]       // giữ',
+    '    else: D[i][j] = 1 + min(D[i-1][j-1],  // thay a[i] bằng b[j]',
+    '                            D[i-1][j],    // xoá a[i]',
+    '                            D[i][j-1])    // chèn b[j]',
+    '  đi ngược từ D[m][n] để đọc ra các phép sửa',
   ],
 };
 

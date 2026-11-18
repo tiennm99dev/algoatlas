@@ -118,7 +118,7 @@ const TERM_CODE = {
   prev: 'dp[i-1]',
   prev2: 'dp[i-2]',
   'prev-if': '(dp[i-1] if a[i] ≠ 0)',
-  'prev2-if': '(dp[i-2] if a[i-1]a[i] is 10..26)',
+  'prev2-if': '(dp[i-2] if a[i-1]a[i] in 10..26)',
 };
 
 /**
@@ -136,7 +136,7 @@ export function normalizeTerms(problem, terms) {
  */
 export function designPseudocode(problem, design) {
   const parts = normalizeTerms(problem, design.terms).map((t) => TERM_CODE[t]);
-  let body = 'nothing';
+  let body = '∅   // chưa chọn số hạng nào';
   if (parts.length) {
     body = design.combine === 'sum' ? parts.join(' + ') : `${design.combine}(${parts.join(', ')})`;
   }

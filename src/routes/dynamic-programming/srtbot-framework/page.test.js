@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/srtbot-framework/copy.en.js';
+import { vi as m } from '$lib/lessons/srtbot-framework/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -71,18 +71,20 @@ describe('SRTBOT framework lesson', () => {
   it('walks the six steps and fills the bowling table', () => {
     render();
     expect(narration()).toBe(
-      'Design a dynamic program for bowling in six SRTBOT steps, then run it on these 10 values.',
+      'Thiết kế lời giải QHĐ cho bài ném ki qua sáu bước SRTBOT, rồi chạy nó trên 10 giá trị này.',
     );
     expect(current()).toBe('');
     next(1);
     expect(current()).toContain(m.stepNames.subproblems);
     next(3);
     expect(current()).toContain(m.stepNames.base);
-    expect(narration()).toBe('B, base case: B(10) = 0. No pins are left, so no points.');
+    expect(narration()).toBe(
+      'B, trường hợp cơ sở: B(10) = 0. Không còn ki nào, nên không có điểm.',
+    );
     next(1);
     expect(current()).toContain(m.stepNames.relate);
     expect(narration()).toBe(
-      'B(9) = max of skip pin 9: B(10) = 0; hit pin 9: 2 + 0 = 2. The best is 2.',
+      'B(9) = giá trị lớn nhất trong: bỏ qua ki 9: B(10) = 0; ném trúng ki 9: 2 + 0 = 2. Tốt nhất là 2.',
     );
     const options = document.querySelectorAll('[data-testid="options"] li');
     expect(options).toHaveLength(2);
@@ -97,10 +99,10 @@ describe('SRTBOT framework lesson', () => {
   it('jumps to a step from the guide', () => {
     render();
     click(button(m.showAria(m.stepNames.original)));
-    expect(narration()).toBe('O, original problem: B(0) = 104, the best score on the whole row.');
+    expect(narration()).toBe('O, bài toán gốc: B(0) = 104, điểm lớn nhất trên cả hàng.');
     click(button(m.showAria(m.stepNames.topo)));
     expect(narration()).toBe(
-      'T, topological order: every B(i) needs larger indices only, so fill from B(10) down to B(0).',
+      'T, thứ tự tô-pô: mỗi B(i) chỉ cần các chỉ số lớn hơn, nên ta lấp từ B(10) xuống B(0).',
     );
   });
 
@@ -110,7 +112,7 @@ describe('SRTBOT framework lesson', () => {
     expect(field('input[name="values"]').value).toBe('−2, 1, −3, 4, −1, 2, 1, −5, 4');
     click(button(m.showAria(m.stepNames.original)));
     expect(narration()).toBe(
-      'O, original problem: the best run may end anywhere, so take the largest x(i). It is x(6) = 6.',
+      'O, bài toán gốc: đoạn tốt nhất có thể kết thúc ở bất kì đâu, nên ta lấy x(i) lớn nhất. Đó là x(6) = 6.',
     );
     click(field('input[name="problem"][value="bowling"]'));
     commit(field('input[name="values"]'), '3 4 -1 5');

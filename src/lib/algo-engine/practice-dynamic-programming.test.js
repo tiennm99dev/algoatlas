@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { en as copy } from '$lib/lessons/practice-dynamic-programming/copy.en.js';
+import { vi as copy } from '$lib/lessons/practice-dynamic-programming/copy.vi.js';
 import {
   ANSWERS,
   BASES,
@@ -221,10 +221,10 @@ describe('designPseudocode', () => {
       '  return max(dp[1..n])',
     ]);
     expect(designPseudocode('decode', CORRECT.decode)[3]).toBe(
-      '    dp[i] = (dp[i-1] if a[i] ≠ 0) + (dp[i-2] if a[i-1]a[i] is 10..26)',
+      '    dp[i] = (dp[i-1] if a[i] ≠ 0) + (dp[i-2] if a[i-1]a[i] in 10..26)',
     );
     expect(designPseudocode('climb', { ...CORRECT.climb, terms: [] })[3]).toBe(
-      '    dp[i] = nothing',
+      '    dp[i] = ∅   // chưa chọn số hạng nào',
     );
   });
 

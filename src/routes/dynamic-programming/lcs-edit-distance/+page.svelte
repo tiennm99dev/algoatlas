@@ -14,7 +14,7 @@
     stringDpPseudocode,
     stringDpTrace,
   } from '$lib/algo-engine/lcs-edit-distance.js';
-  import { en as m } from '$lib/lessons/lcs-edit-distance/copy.en.js';
+  import { vi as m } from '$lib/lessons/lcs-edit-distance/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/lcs-edit-distance.js').StringDpMode} StringDpMode */

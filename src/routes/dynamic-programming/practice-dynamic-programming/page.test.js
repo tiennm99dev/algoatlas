@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/practice-dynamic-programming/copy.en.js';
+import { vi as m } from '$lib/lessons/practice-dynamic-programming/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -70,11 +70,11 @@ function practice() {
 describe('dynamic programming practice lesson', () => {
   it('opens on a failing design and shows the first wrong cell', () => {
     render();
-    expect(narration()).toBe('Run your design on 9 values.');
-    expect(byTest('samples-summary')).toBe('1 of 5 samples pass.');
+    expect(narration()).toBe('Chạy thiết kế của bạn trên 9 giá trị.');
+    expect(byTest('samples-summary')).toBe('Đạt 1/5 mẫu.');
     click(buttonByText(m.jumpWrong));
     expect(narration()).toBe(
-      'dp[i−1] + a[i] → −1. dp[2] = −1. ✕ Your meaning says it should be 1.',
+      'dp[i−1] + a[i] → −1. dp[2] = −1. ✕ Theo ý nghĩa bạn chọn, ô này phải là 1.',
     );
   });
 
@@ -84,14 +84,14 @@ describe('dynamic programming practice lesson', () => {
     click(term('a'));
     click(field('input[name="answer"][value="largest"]'));
     expect(byTest('samples-summary')).toBe(
-      'All 5 samples pass: the cells keep the promise and the answer is right.',
+      'Cả 5 mẫu đều đạt: các ô giữ đúng lời hứa và đáp án đúng.',
     );
     click(button('Đến bước cuối'));
     expect(byTest('got')).toBe('6 ✓');
     expect(byTest('expected')).toBe('6');
     expect(byTest('wrong')).toBe('0');
     expect(narration()).toBe(
-      'Solved on this input: every cell keeps its promise and the answer is right.',
+      'Đã giải được trên đầu vào này: mọi ô đều giữ đúng lời hứa và đáp án đúng.',
     );
     click(buttonByText(m.jumpWrong));
     expect(narration()).toBe(m.noWrong);
@@ -102,13 +102,13 @@ describe('dynamic programming practice lesson', () => {
     click(field('input[name="state"][value="ending"]'));
     click(term('a'));
     click(button('Bước tiếp'));
-    expect(narration()).toBe('Base: dp[0] = 0.');
+    expect(narration()).toBe('Cơ sở: dp[0] = 0.');
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
     expect(narration()).toBe(
-      'a[i] → 1; dp[i−1] + a[i] → −1. dp[2] = 1. ✓ It matches the meaning you chose.',
+      'a[i] → 1; dp[i−1] + a[i] → −1. dp[2] = 1. ✓ Khớp với ý nghĩa bạn đã chọn.',
     );
-    expect(byTest('options')).toContain('✓ chosen');
+    expect(byTest('options')).toContain('✓ được chọn');
     expect(arrows()).toBe(1);
   });
 
@@ -126,8 +126,8 @@ describe('dynamic programming practice lesson', () => {
     click(field('input[name="base"][value="1"]'));
     click(button('Đến bước cuối'));
     expect(byTest('got')).toBe('3 ✓');
-    expect(byTest('samples-summary')).toContain('All 5 samples pass');
-    click(sample('Sample 5'));
+    expect(byTest('samples-summary')).toContain('Cả 5 mẫu đều đạt');
+    click(sample('Mẫu 5'));
     expect(field('input[name="values"]').value).toBe('100');
     click(button('Đến bước cuối'));
     expect(byTest('got')).toBe('0 ✓');
@@ -140,7 +140,7 @@ describe('dynamic programming practice lesson', () => {
     click(button('Đến bước cuối'));
     expect(byTest('wrong')).toBe('0');
     expect(narration()).toBe(
-      'Every cell keeps its promise, but the answer is wrong. Either the state does not answer the question, or the answer is read from the wrong place.',
+      'Mọi ô đều giữ đúng lời hứa, nhưng đáp án sai. Hoặc trạng thái không trả lời đúng câu hỏi, hoặc đáp án được đọc sai chỗ.',
     );
   });
 
@@ -160,25 +160,25 @@ describe('dynamic programming practice lesson', () => {
     expect(sample(m.yourInput).textContent).toContain('4, −1, 2');
     expect(field('input[name="values"]').value).toBe('4, −1, 2');
     commit(field('input[name="values"]'), '4, x');
-    expect(narration()).toBe('Write whole numbers separated by commas.');
+    expect(narration()).toBe('Hãy viết các số nguyên cách nhau bởi dấu phẩy.');
     expect(field('input[name="values"]').value).toBe('4, −1, 2');
     commit(field('input[name="values"]'), '500');
-    expect(narration()).toBe('Each value must be from −99 to 99.');
+    expect(narration()).toBe('Mỗi giá trị phải từ −99 đến 99.');
     commit(field('input[name="values"]'), '');
-    expect(narration()).toBe('Type 1 to 10 values.');
+    expect(narration()).toBe('Hãy gõ từ 1 đến 10 giá trị.');
   });
 
   it('draws a random input', () => {
     render();
     click(buttonByText(m.randomInput));
-    expect(narration()).toMatch(/^Run your design on \d+ values\.$/);
+    expect(narration()).toMatch(/^Chạy thiết kế của bạn trên \d+ giá trị\.$/);
   });
 
   it('steps with the arrow keys', () => {
     render();
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
     flushSync();
-    expect(narration()).toBe('Base: dp[0] = 0.');
+    expect(narration()).toBe('Cơ sở: dp[0] = 0.');
   });
 
   it('checks a practice answer, wrong then right, with a hint', () => {

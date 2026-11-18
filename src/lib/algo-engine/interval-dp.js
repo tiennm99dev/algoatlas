@@ -64,26 +64,26 @@ export const INTERVAL_PRESETS = {
 /** @type {Record<IntervalProblem, string[]>} */
 export const intervalPseudocode = {
   matrix: [
-    'chain(p[0..n]):          // A[i] is p[i-1] × p[i]',
-    '  m[i][i] = 0 for every i        // one matrix, no work',
+    'chain(p[0..n]):          // A[i] có kích thước p[i-1] × p[i]',
+    '  m[i][i] = 0 for i in 1..n      // một ma trận, không tốn gì',
     '  for len = 2 to n:',
     '    for i = 1 to n-len+1:  j = i+len-1',
     '      m[i][j] = ∞',
-    '      for k = i to j-1:          // split after A[k]',
+    '      for k = i to j-1:          // chia ngay sau A[k]',
     '        cost = m[i][k] + m[k+1][j] + p[i-1]·p[k]·p[j]',
     '        if cost < m[i][j]: m[i][j] = cost; s[i][j] = k',
-    '  read the order from s[1][n], top-down',
+    '  đọc thứ tự từ s[1][n], từ trên xuống',
   ],
   rod: [
-    'rod(p[1..n]):            // r[i][j]: best for units i..j',
-    '  r[i][i] = p[1] for every i     // one unit, no cut',
+    'rod(p[1..n]):            // r[i][j]: tốt nhất cho các khúc i..j',
+    '  r[i][i] = p[1] for i in 1..n   // một khúc, không cắt',
     '  for len = 2 to n:',
     '    for i = 1 to n-len+1:  j = i+len-1',
-    '      r[i][j] = p[len]; s[i][j] = 0   // sell it whole',
-    '      for k = i to j-1:          // cut after unit k',
+    '      r[i][j] = p[len]; s[i][j] = 0   // bán nguyên mẩu',
+    '      for k = i to j-1:          // cắt ngay sau khúc k',
     '        value = r[i][k] + r[k+1][j]',
     '        if value > r[i][j]: r[i][j] = value; s[i][j] = k',
-    '  read the cuts from s[1][n], top-down',
+    '  đọc các nhát cắt từ s[1][n], từ trên xuống',
   ],
 };
 

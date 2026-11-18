@@ -20,7 +20,7 @@
     resizeGrid,
     toggleWall,
   } from '$lib/algo-engine/grid-path-dp.js';
-  import { en as m } from '$lib/lessons/grid-path-dp/copy.en.js';
+  import { vi as m } from '$lib/lessons/grid-path-dp/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/grid-path-dp.js').GridMode} GridMode */

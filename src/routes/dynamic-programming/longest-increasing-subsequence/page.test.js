@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/longest-increasing-subsequence/copy.en.js';
+import { vi as m } from '$lib/lessons/longest-increasing-subsequence/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -77,20 +77,18 @@ describe('longest increasing subsequence lesson', () => {
     render();
     click(button('Bước tiếp'));
     expect(narration()).toBe(
-      'Index 0, value 10: on its own it is a run of length 1, so L[0] = 1. Now check every earlier value.',
+      'Chỉ số 0, giá trị 10: riêng nó là một dãy dài 1, nên L[0] = 1. Giờ ta xét mọi giá trị phía trước.',
     );
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
     expect(narration()).toBe(
-      '10 < 22, so 22 can follow the run ending at index 0: L[1] = L[0] + 1 = 2, prev[1] = 0.',
+      '10 < 22, nên 22 có thể đứng sau dãy kết thúc ở chỉ số 0: L[1] = L[0] + 1 = 2, prev[1] = 0.',
     );
     click(button('Đến bước cuối'));
     expect(byTest('comparisons')).toBe('45');
     expect(byTest('length')).toBe('6');
     expect(chips()).toEqual(['10', '22', '33', '50', '60', '80']);
-    expect(narration()).toBe(
-      'The LIS has length 6: 10, 22, 33, 50, 60, 80. That took 45 comparisons.',
-    );
+    expect(narration()).toBe('LIS có độ dài 6: 10, 22, 33, 50, 60, 80. Mất 45 lần so sánh.');
   });
 
   it('deals the values onto piles with fewer comparisons', () => {
@@ -99,17 +97,17 @@ describe('longest increasing subsequence lesson', () => {
     expect(piles()).toEqual([]);
     for (let k = 0; k < 3; k++) click(button('Bước tiếp'));
     expect(narration()).toBe(
-      'Take a[1] = 22. Binary search the 1 pile top for the leftmost top ≥ 22.',
+      'Lấy a[1] = 22. Tìm kiếm nhị phân trên 1 lá trên cùng để tìm lá trái nhất ≥ 22.',
     );
     click(button('Bước tiếp'));
     expect(narration()).toBe(
-      'Search piles 0 to 0: the top of pile 0 is 10 < 22, so look to the right of it.',
+      'Tìm trong các chồng 0 đến 0: lá trên cùng của chồng 0 là 10 < 22, nên ta tìm ở bên phải nó.',
     );
     click(button('Đến bước cuối'));
     expect(byTest('comparisons')).toBe('17');
     expect(byTest('length')).toBe('6');
     expect(piles()).toHaveLength(6);
-    expect(piles()[0]).toBe('Pile 0, bottom to top: 10, 9, 3.');
+    expect(piles()[0]).toBe('Chồng 0, từ dưới lên trên: 10, 9, 3.');
     expect(chips()).toEqual(['10', '22', '33', '41', '60', '80']);
   });
 

@@ -8,7 +8,7 @@ import {
   greedyValue,
   knapTrace,
 } from '$lib/algo-engine/knapsack-subset-sum.js';
-import { en as m } from '$lib/lessons/knapsack-subset-sum/copy.en.js';
+import { vi as m } from '$lib/lessons/knapsack-subset-sum/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -68,14 +68,16 @@ describe('knapsack and subset sum lesson', () => {
   it('fills the table and names the items', () => {
     render();
     expect(narration()).toBe(
-      'Pack 4 items into capacity 7 for the most value. Each item is taken whole, at most once.',
+      'Xếp 4 món vào sức chứa 7 để được giá trị lớn nhất. Mỗi món được lấy nguyên cả món, nhiều nhất một lần.',
     );
     click(button('Bước tiếp'));
-    expect(narration()).toBe('Base case: row 0 has no items, so every capacity holds value 0.');
+    expect(narration()).toBe(
+      'Trường hợp cơ sở: hàng 0 không có món nào, nên mọi sức chứa đều có giá trị 0.',
+    );
     click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('9');
     expect(byTest('filled')).toBe('40 / 40');
-    expect(narration()).toBe('The best value is 9: item 2, item 3.');
+    expect(narration()).toBe('Giá trị lớn nhất là 9: món 2, món 3.');
     expect(byTest('greedy')).toBe('8');
   });
 
@@ -83,17 +85,15 @@ describe('knapsack and subset sum lesson', () => {
     render();
     commit(field('input[name="slider-capacity"]'), '6');
     commit(field('input[name="slider-item"]'), '3');
-    expect(byTest('slider-cell')).toBe('Cell (3, 6)');
-    expect(byTest('choice')).toContain('Skip: K[2][6]');
-    expect(byTest('choice')).toContain('Take: K[2][2] + 5');
-    expect(narration()).toBe('Skip → 5, take → 6. Take item 3: K[3][6] = 6.');
+    expect(byTest('slider-cell')).toBe('Ô (3, 6)');
+    expect(byTest('choice')).toContain('Bỏ: K[2][6]');
+    expect(byTest('choice')).toContain('Lấy: K[2][2] + 5');
+    expect(narration()).toBe('Bỏ → 5, lấy → 6. Lấy món 3: K[3][6] = 6.');
     expect(arrows()).toBe(2);
     click(cell(1, 0));
-    expect(narration()).toBe(
-      'Item 1 weighs 1, more than c = 0: it does not fit, so skip it. K[1][0] = 0.',
-    );
+    expect(narration()).toBe('Món 1 nặng 1, hơn c = 0: không vừa, nên bỏ. K[1][0] = 0.');
     expect(arrows()).toBe(1);
-    expect(byTest('choice')).toContain('does not fit');
+    expect(byTest('choice')).toContain('không vừa');
   });
 
   it('resets the sliders when a smaller example loads', () => {
@@ -101,10 +101,10 @@ describe('knapsack and subset sum lesson', () => {
     commit(field('input[name="slider-capacity"]'), '7');
     commit(field('input[name="slider-item"]'), '4');
     commit(field('select[name="preset"]'), 'trap');
-    expect(byTest('slider-cell')).toBe('Cell (0, 0)');
+    expect(byTest('slider-cell')).toBe('Ô (0, 0)');
     commit(field('input[name="slider-capacity"]'), '5');
     commit(field('input[name="slider-item"]'), '3');
-    expect(narration()).toBe('Skip → 16, take → 22. Take item 3: K[3][5] = 22.');
+    expect(narration()).toBe('Bỏ → 16, lấy → 22. Lấy món 3: K[3][5] = 22.');
   });
 
   it('picks a cell with the keyboard', () => {
@@ -133,7 +133,7 @@ describe('knapsack and subset sum lesson', () => {
     expect(byTest('answer')).toBe('9');
     expect(byTest('correct')).toBe('3');
     expect(byTest('reuses')).toBe('3');
-    expect(narration()).toContain('but the true 0/1 answer is 3');
+    expect(narration()).toContain('nhưng đáp án 0/1 thật là 3');
   });
 
   it('switches to subset sum and answers yes and no', () => {
@@ -141,11 +141,11 @@ describe('knapsack and subset sum lesson', () => {
     click(field('input[name="problem"][value="subset"]'));
     expect(field('input[name="items"]').value).toBe('3, 34, 4, 12, 5, 2');
     click(button('Đến bước cuối'));
-    expect(byTest('answer')).toBe('Yes');
+    expect(byTest('answer')).toBe('Có');
     commit(field('select[name="preset"]'), 'even');
     click(button('Đến bước cuối'));
-    expect(byTest('answer')).toBe('No');
-    expect(narration()).toBe('No subset weighs exactly 7.');
+    expect(byTest('answer')).toBe('Không');
+    expect(narration()).toBe('Không có tập con nào nặng đúng bằng 7.');
   });
 
   it('reads typed items and refuses bad ones', () => {
@@ -156,29 +156,31 @@ describe('knapsack and subset sum lesson', () => {
     click(button('Đến bước cuối'));
     expect(byTest('answer')).toBe('7');
     commit(field('input[name="items"]'), 'oops');
-    expect(narration()).toBe('Write each item as weight:value, for example 2:3, 3:4.');
+    expect(narration()).toBe('Hãy viết mỗi món dưới dạng khối lượng:giá trị, ví dụ 2:3, 3:4.');
     expect(field('input[name="items"]').value).toBe('2:3, 3:4');
     commit(field('input[name="capacity"]'), '99');
-    expect(narration()).toBe('The capacity must be a whole number from 0 to 15.');
+    expect(narration()).toBe('Sức chứa phải là số nguyên từ 0 đến 15.');
     expect(field('input[name="capacity"]').value).toBe('5');
-    expect(byTest('pseudo-note')).toContain('W = 5 takes 3 bits');
+    expect(byTest('pseudo-note')).toContain('viết W = 5 cần 3 bit');
   });
 
   it('steps with the arrow keys', () => {
     render();
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
     flushSync();
-    expect(narration()).toBe('Base case: row 0 has no items, so every capacity holds value 0.');
+    expect(narration()).toBe(
+      'Trường hợp cơ sở: hàng 0 không có món nào, nên mọi sức chứa đều có giá trị 0.',
+    );
   });
 
   it('states the pseudo-polynomial note for the target and for an empty capacity', () => {
     render();
     commit(field('input[name="capacity"]'), '0');
-    expect(byTest('pseudo-note')).toContain('W = 0 takes 1 bit');
-    expect(byTest('pseudo-note')).not.toContain('One more bit');
+    expect(byTest('pseudo-note')).toContain('viết W = 0 cần 1 bit');
+    expect(byTest('pseudo-note')).not.toContain('Thêm một bit nữa');
     click(/** @type {Element} */ (document.querySelector('input[name="problem"][value="subset"]')));
-    expect(byTest('pseudo-note')).toContain('T = 9 takes 4 bits');
-    expect(byTest('pseudo-note')).toContain('One more bit, T = 19');
+    expect(byTest('pseudo-note')).toContain('viết T = 9 cần 4 bit');
+    expect(byTest('pseudo-note')).toContain('Thêm một bit nữa, T = 19');
   });
 
   it('moves the slider readout when a cell of row 0 is clicked', () => {
