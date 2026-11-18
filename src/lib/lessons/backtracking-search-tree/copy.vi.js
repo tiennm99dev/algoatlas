@@ -7,11 +7,11 @@ export const vi = {
   level: 'Cơ bản',
   title: 'Quay lui và cây tìm kiếm',
   intro:
-    'Quay lui (backtracking) giải bài toán bằng cách chọn từng bước một, đi theo lựa chọn đó xa nhất có thể, rồi huỷ nó để thử lựa chọn tiếp theo. Mọi lựa chọn có thể tạo thành một cây, gọi là cây không gian trạng thái, và việc tìm kiếm là một lượt duyệt theo chiều sâu trên cây đó. Cắt tỉa (pruning) là thứ làm cho cách này dùng được trong thực tế: hễ một nhánh chắc chắn không dẫn tới đáp án, cả cây con bên dưới nó bị bỏ qua.',
+    'Quay lui (backtracking) giải bài toán bằng cách chọn từng bước một, đi theo lựa chọn đó xa nhất có thể, rồi huỷ nó để thử lựa chọn tiếp theo. Mọi lựa chọn có thể tạo thành một cây, gọi là cây không gian trạng thái, và việc tìm kiếm là một lượt DFS (duyệt theo chiều sâu) trên cây đó. Cắt tỉa (pruning) là thứ làm cho cách này dùng được trong thực tế: hễ một nhánh chắc chắn không dẫn tới đáp án, cả cây con bên dưới nó bị bỏ qua.',
   summary:
     'Xem cây không gian trạng thái lớn dần khi bài tìm tổng tập con chọn, khám phá rồi bỏ chọn, và xem phép cắt tỉa cắt cụt cả những nhánh lớn.',
   instruction:
-    'Chạy từng bước ví dụ và xem cây lớn dần, rồi đổi mục “Cắt tỉa” và so sánh ô “Số nút đã thăm”. Nhập dãy số và tổng cần đạt của bạn, hoặc bấm (hay nhấn Enter) vào một nút trên cây để nhảy tới lúc nút đó được thăm.',
+    'Chạy từng bước ví dụ và xem cây lớn dần, rồi đổi mục “Cắt tỉa” và so sánh ô “Số nút đã thăm”. Nhập dãy số và tổng cần đạt của em, hoặc bấm (hay nhấn Enter) vào một nút trên cây để nhảy tới lúc nút đó được thăm.',
   /** @param {number} target */
   problem: (target) =>
     `Tìm mọi tập con của các số dương này có tổng bằng ${target}. Mỗi tầng của cây quyết định một số: lấy nó (bên trái), hoặc bỏ nó (bên phải).`,
@@ -103,7 +103,7 @@ export const vi = {
   },
   takeaways: [
     'Phép tìm kiếm quay lui nào cũng có cùng ba thao tác: chọn một phương án, khám phá mọi thứ theo sau nó, rồi bỏ chọn để phương án tiếp theo bắt đầu từ một trạng thái sạch.',
-    'Cây không gian trạng thái có một nút cho mỗi lời giải dở dang. Phép tìm kiếm là một lượt duyệt theo chiều sâu trên cây, nên nó chỉ lưu đường đi hiện tại, không lưu cả cây.',
+    'Cây không gian trạng thái có một nút cho mỗi lời giải dở dang. Phép tìm kiếm là một lượt DFS trên cây, nên nó chỉ lưu đường đi hiện tại, không lưu cả cây.',
     'Một phép cắt tỉa là một phép thử chứng minh được rằng bên dưới một nút không có đáp án nào. Bỏ qua một nút là bỏ qua mọi thứ bên dưới nó, vì thế một phép thử sớm có thể tiết kiệm hơn nhiều so với một phép thử muộn.',
     'Phép cắt tỉa không bao giờ được vứt bỏ một đáp án. “Tổng vượt quá tổng cần đạt” chỉ an toàn ở đây vì mọi số đều dương: nếu có số âm, một tổng quá lớn vẫn có thể giảm xuống lại.',
     'Nạp ví dụ “Cần dùng mọi số” và lần lượt đặt “Cắt tỉa” là Tắt, rồi Quá lớn, rồi Quá lớn hoặc quá nhỏ. Số nút đã thăm giữ ở 63, vẫn ở 63, rồi giảm còn 11. Phép thử nào đã làm việc, và vì sao?',

@@ -15,7 +15,7 @@ export const vi = {
   summary:
     'Chạy từng bước một bộ sinh khi nó chọn và bỏ chọn các phần tử để liệt kê mọi hoán vị, tổ hợp hoặc tập con, có và không có phần tử trùng.',
   instruction:
-    'Chọn thứ cần sinh rồi chạy từng bước: cây cho thấy mỗi lần chọn, và mục “Kết quả” được điền dần mỗi khi đệ quy tới một đầu ra. Nhập các phần tử của bạn, rồi thử những phần tử lặp lại như A A B và đổi mục “Phần tử lặp lại” để so sánh số kết quả.',
+    'Chọn thứ cần sinh rồi chạy từng bước: cây cho thấy mỗi lần chọn, và mục “Kết quả” được điền dần mỗi khi đệ quy tới một đầu ra. Nhập các phần tử của em, rồi thử những phần tử lặp lại như A A B và đổi mục “Phần tử lặp lại” để so sánh số kết quả.',
   modeLabel: 'Sinh',
   modes: { perm: 'Hoán vị', comb: 'Tổ hợp', subset: 'Tập con' },
   uniqueLabel: 'Phần tử lặp lại',
@@ -109,7 +109,7 @@ export const vi = {
     ['Hoán vị', 'O(n · n!)', 'n! kết quả độ dài n, và tổng cộng nhiều nhất e · n! lời gọi.'],
     ['Tổ hợp', 'O(k · C(n, k))', 'C(n, k) kết quả độ dài k; không lời gọi nào bị phí.'],
     ['Tập con', 'O(n · 2ⁿ)', '2ⁿ kết quả, mỗi kết quả một lời gọi, độ dài trung bình n/2.'],
-    ['Bộ nhớ', 'O(n)', 'Đường đi và ngăn xếp lời gọi, không tính các kết quả đã lưu.'],
+    ['Bộ nhớ', 'O(n)', 'Đường đi và call stack (ngăn xếp lời gọi), không tính các kết quả đã lưu.'],
   ],
   practiceTitle: 'Tự kiểm tra',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */

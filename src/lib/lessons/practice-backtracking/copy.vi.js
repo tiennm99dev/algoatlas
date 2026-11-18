@@ -12,7 +12,7 @@ export const vi = {
   summary:
     'Chạy bài tìm từ trong lưới, khám phá và lùi lại từng chữ cái, và bài tổng tổ hợp, cắt tỉa những số quá lớn không còn vừa.',
   instruction:
-    'Với “Tìm từ trong lưới”, nhập một từ rồi chạy từng bước: đường đi dài ra theo các chữ cái khớp và lùi lại ở ngõ cụt. Bấm (hay nhấn Enter) vào một ô để nhảy tới lần đầu ô đó được kiểm tra. Với “Tổng tổ hợp”, nhập dãy số và tổng của bạn, rồi xem cây lớn dần và các kết quả được điền vào. Dùng hình minh hoạ để trả lời các câu hỏi bên dưới.',
+    'Với “Tìm từ trong lưới”, nhập một từ rồi chạy từng bước: đường đi dài ra theo các chữ cái khớp và lùi lại ở ngõ cụt. Bấm (hay nhấn Enter) vào một ô để nhảy tới lần đầu ô đó được kiểm tra. Với “Tổng tổ hợp”, nhập dãy số và tổng của em, rồi xem cây lớn dần và các kết quả được điền vào. Dùng hình minh hoạ để trả lời các câu hỏi bên dưới.',
   modeLabel: 'Bài toán',
   modes: { word: 'Tìm từ trong lưới', sum: 'Tổng tổ hợp' },
   gridLabel: 'Các hàng của lưới',
@@ -174,7 +174,7 @@ export const vi = {
     [
       'Tìm từ, bộ nhớ',
       'O(L)',
-      'Ngăn xếp lời gọi và đường đi giữ nhiều nhất L ô, cộng thêm các dấu.',
+      'Call stack (ngăn xếp lời gọi) và đường đi giữ nhiều nhất L ô, cộng thêm các dấu.',
     ],
     [
       'Tổng tổ hợp, thời gian',

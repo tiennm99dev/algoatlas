@@ -15,7 +15,7 @@ export const vi = {
   summary:
     'Giải bài toán cái túi 0/1 bằng nhánh cận, và xem các nút bị cắt tỉa khi cận của chúng không thể vượt giá trị tốt nhất đã tìm được.',
   instruction:
-    'Chạy từng bước phép tìm kiếm và so sánh cận của mỗi nút mới với ô “Tốt nhất hiện có”. Đổi mục “Thứ tự tìm kiếm” và so sánh ô “Số nút đã tạo”. Nhập các đồ vật của bạn thành cặp khối lượng:giá trị, hoặc bấm (hay nhấn Enter) vào một nút để nhảy tới lúc nút đó được tạo.',
+    'Chạy từng bước phép tìm kiếm và so sánh cận của mỗi nút mới với ô “Tốt nhất hiện có”. Đổi mục “Thứ tự tìm kiếm” và so sánh ô “Số nút đã tạo”. Nhập các đồ vật của em thành cặp khối lượng:giá trị, hoặc bấm (hay nhấn Enter) vào một nút để nhảy tới lúc nút đó được tạo.',
   /** @param {number} capacity */
   problem: (capacity) =>
     `Xếp đồ vật vào một cái túi sức chứa ${capacity} sao cho tổng giá trị lớn nhất. Mỗi vật hoặc lấy nguyên cả, hoặc không lấy.`,
@@ -213,19 +213,19 @@ export const vi = {
       type: 'text',
       prompt: 'Trong kiểu tìm tốt nhất trước, cấu trúc dữ liệu nào giữ biên?',
       accept: [
-        'hàng đợi ưu tiên',
-        'một hàng đợi ưu tiên',
+        'priority queue',
+        'một priority queue',
         'heap',
-        'heap lớn nhất',
+        'max-heap',
         'max-heap',
         'priority queue',
         'binary heap',
       ],
       hints: ['Nó phải trả lại nhanh nút có cận lớn nhất.'],
       solution:
-        'Một hàng đợi ưu tiên (priority queue), thường là một heap nhị phân với khoá là cận.',
+        'Một priority queue (hàng đợi ưu tiên), thường là một heap nhị phân (đống nhị phân) với khoá là cận.',
     },
   ],
   nextTeaser:
-    'Bài sau là phần luyện tập: bài toán quay lui, nơi bạn tự tìm trạng thái và bước huỷ cho từng bài.',
+    'Bài sau là phần luyện tập: bài toán quay lui, nơi em tự tìm trạng thái và bước huỷ cho từng bài.',
 };

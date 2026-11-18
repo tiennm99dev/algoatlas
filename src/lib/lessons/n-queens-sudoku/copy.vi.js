@@ -16,7 +16,7 @@ export const vi = {
   summary:
     'Đặt quân hậu lên bàn cờ và điền chữ số vào lưới Sudoku, rồi xem phép tìm kiếm lùi lại ngay khi một ràng buộc không thoả.',
   instruction:
-    'Chạy từng bước bài N quân hậu và xem một quân hậu bị rút lại mỗi khi một hàng không còn ô an toàn. Đổi n, hoặc bấm (hay nhấn Enter) vào một ô ở hàng trên cùng để giữ quân hậu đầu tiên ở đó. Với Sudoku, bấm vào một ô để đổi chữ số của nó, rồi chạy từng bước để xem phép tìm kiếm giải lưới của bạn.',
+    'Chạy từng bước bài N quân hậu và xem một quân hậu bị rút lại mỗi khi một hàng không còn ô an toàn. Đổi n, hoặc bấm (hay nhấn Enter) vào một ô ở hàng trên cùng để giữ quân hậu đầu tiên ở đó. Với Sudoku, bấm vào một ô để đổi chữ số của nó, rồi chạy từng bước để xem phép tìm kiếm giải lưới của em.',
   modeLabel: 'Câu đố',
   modes: { queens: 'N quân hậu', sudoku: 'Sudoku' },
   nLabel: 'Kích thước bàn cờ n',
@@ -154,7 +154,7 @@ export const vi = {
     'Đặt và huỷ phải là hai thao tác ngược hẳn nhau. Với N quân hậu, nghĩa là phải xoá cờ đánh dấu của cột và của cả hai đường chéo. Bất kì trạng thái nào còn sót lại cũng âm thầm làm hỏng các nhánh sau.',
     'Phép kiểm tra nhanh là nhờ trạng thái được lưu sẵn. Hai đường chéo ứng với r − c và r + c, nên mỗi cột và mỗi đường chéo một cờ đánh dấu là trả lời được “ô này có bị khống chế không?” trong O(1).',
     'Chọn thứ tự tốt tạo ra khác biệt lớn. Các chương trình giải Sudoku thường điền tiếp ô bị ràng buộc nhiều nhất, tức ô còn ít chữ số hợp lệ nhất, nên thất bại sớm hơn và cắt tỉa sớm hơn. Thứ tự đơn giản từ trái sang phải của bài này dễ theo dõi hơn, nhưng chậm hơn.',
-    'Đặt n bằng 8 và đọc ô “Số ô đã thử”. Rồi bấm vào cột 3 của hàng trên cùng và so sánh. Bạn đoán nước đi đầu tiên nào là tốt nhất?',
+    'Đặt n bằng 8 và đọc ô “Số ô đã thử”. Rồi bấm vào cột 3 của hàng trên cùng và so sánh. Em đoán nước đi đầu tiên nào là tốt nhất?',
   ],
   complexityHead: ['Đại lượng', 'Chi phí', 'Vì sao'],
   complexity: [
@@ -168,7 +168,11 @@ export const vi = {
       'O(1)',
       'Có cờ đánh dấu cho mỗi cột và mỗi đường chéo, không phải quét.',
     ],
-    ['N quân hậu, bộ nhớ', 'O(n)', 'Các quân hậu đã đặt, các cờ đánh dấu và ngăn xếp lời gọi.'],
+    [
+      'N quân hậu, bộ nhớ',
+      'O(n)',
+      'Các quân hậu đã đặt, các cờ đánh dấu và call stack (ngăn xếp lời gọi).',
+    ],
     [
       'Sudoku, xấu nhất',
       'O(sᵉ)',
