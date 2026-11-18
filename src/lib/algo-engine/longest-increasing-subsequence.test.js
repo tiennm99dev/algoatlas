@@ -7,15 +7,7 @@ import {
   lisTrace,
   parseLisValues,
 } from './longest-increasing-subsequence.js';
-
-/** Deterministic LCG so random cases are reproducible. */
-function seeded(seed = 1) {
-  let s = seed;
-  return () => {
-    s = (s * 1664525 + 1013904223) % 4294967296;
-    return s / 4294967296;
-  };
-}
+import { lcg } from './seeded-random.js';
 
 /** Longest strictly increasing subsequence length over every subset. @param {number[]} a */
 function lisBrute(a) {
@@ -54,7 +46,7 @@ describe.each(METHODS)('%s', (method) => {
   });
 
   it('matches brute force on edge and random inputs', () => {
-    const rand = seeded(method === 'dp' ? 4 : 8);
+    const rand = lcg(method === 'dp' ? 4 : 8);
     const cases = [[5], [1, 1, 1], [1, 2, 3, 4], [4, 3, 2, 1], [2, 2, 3, 3, 1, 4]];
     for (let t = 0; t < 60; t++)
       cases.push(Array.from({ length: 1 + (t % MAX_N) }, () => Math.floor(rand() * 21) - 10));

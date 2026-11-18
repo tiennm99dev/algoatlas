@@ -9,12 +9,7 @@ import {
   suffixPseudocode,
   suffixTrace,
 } from './suffix-arrays.js';
-
-/** Deterministic LCG so random texts are reproducible. */
-function seeded(seed = 1) {
-  let s = seed;
-  return () => (s = (s * 1664525 + 1013904223) % 4294967296) / 4294967296;
-}
+import { lcg } from './seeded-random.js';
 
 /** @param {import('./suffix-arrays.js').SuffixFrame[]} frames */
 const last = (frames) => /** @type {import('./suffix-arrays.js').SuffixFrame} */ (frames.at(-1));
@@ -53,7 +48,7 @@ describe('suffix array', () => {
   });
 
   it('matches sorted suffixes and direct LCPs on random strings', () => {
-    const rand = seeded(5);
+    const rand = lcg(5);
     for (let round = 0; round < 300; round++) {
       const s = randomWord(1 + Math.floor(rand() * MAX_LEN), rand, round % 2 ? 'ab' : 'abc');
       const f = last(suffixTrace(s));
@@ -63,7 +58,7 @@ describe('suffix array', () => {
   });
 
   it('orders by the first 2k letters after each round', () => {
-    const rand = seeded(9);
+    const rand = lcg(9);
     for (let round = 0; round < 60; round++) {
       const s = randomWord(MAX_LEN, rand, 'ab');
       for (const f of suffixTrace(s)) {
@@ -81,7 +76,7 @@ describe('suffix array', () => {
 
 describe('cost counters', () => {
   it('needs about log₂ n rounds and at most 2n Kasai comparisons', () => {
-    const rand = seeded(11);
+    const rand = lcg(11);
     for (let round = 0; round < 100; round++) {
       const s = randomWord(MAX_LEN, rand, 'ab');
       const f = last(suffixTrace(s));
@@ -113,7 +108,7 @@ describe('cost counters', () => {
 
 describe('what the LCP array answers', () => {
   it('counts distinct substrings against a set', () => {
-    const rand = seeded(21);
+    const rand = lcg(21);
     for (let round = 0; round < 100; round++) {
       const s = randomWord(1 + Math.floor(rand() * MAX_LEN), rand, 'abc');
       const all = new Set();
@@ -125,7 +120,7 @@ describe('what the LCP array answers', () => {
   });
 
   it('finds the longest repeat against a direct search', () => {
-    const rand = seeded(23);
+    const rand = lcg(23);
     for (let round = 0; round < 100; round++) {
       const s = randomWord(1 + Math.floor(rand() * MAX_LEN), rand, 'ab');
       const f = last(suffixTrace(s));

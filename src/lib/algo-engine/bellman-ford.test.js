@@ -1,11 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { MAX_NODES, bellmanFordPseudocode, bellmanFordTrace } from './bellman-ford.js';
-
-/** Deterministic LCG so random graphs are reproducible. */
-function seeded(seed = 1) {
-  let s = seed;
-  return () => (s = (s * 1664525 + 1013904223) % 4294967296) / 4294967296;
-}
+import { lcg } from './seeded-random.js';
 
 // S A B C D, listed in an order that needs more than one round.
 const IDS = [0, 1, 2, 3, 4];
@@ -98,7 +93,7 @@ describe('Bellman-Ford', () => {
   });
 
   it('agrees with Floyd-Warshall on random graphs', () => {
-    const rand = seeded(13);
+    const rand = lcg(13);
     let cycles = 0;
     for (let t = 0; t < 120; t++) {
       const n = 1 + Math.floor(rand() * MAX_NODES);

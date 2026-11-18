@@ -9,15 +9,7 @@ import {
   treeDpPseudocode,
   treeDpTrace,
 } from './tree-dp.js';
-
-/** Deterministic LCG so random cases are reproducible. */
-function seeded(seed = 1) {
-  let s = seed;
-  return () => {
-    s = (s * 1664525 + 1013904223) % 4294967296;
-    return s / 4294967296;
-  };
-}
+import { lcg } from './seeded-random.js';
 
 /** Heaviest independent set by trying every subset. @param {import('./tree-dp.js').TreeInput} t */
 function bruteSet(t) {
@@ -66,7 +58,7 @@ describe('maximum-weight independent set', () => {
   });
 
   it('matches every subset by brute force and reads back a valid set of that weight', () => {
-    const rand = seeded(41);
+    const rand = lcg(41);
     for (let t = 0; t < 60; t++) {
       const tree = randomTree(1 + Math.floor(rand() * MAX_NODES), rand);
       const last = tree && treeDpTrace('mis', tree).at(-1);
@@ -105,7 +97,7 @@ describe('maximum-weight independent set', () => {
 
 describe('rerooting', () => {
   it('matches a breadth-first search from every node', () => {
-    const rand = seeded(42);
+    const rand = lcg(42);
     const trees = [...TREE_PRESETS.map((p) => p.tree), { parent: [-1], weight: [1] }];
     for (let t = 0; t < 40; t++) trees.push(randomTree(1 + Math.floor(rand() * MAX_NODES), rand));
     for (const tree of trees) {
@@ -145,7 +137,7 @@ describe('tree edits', () => {
   });
 
   it('builds random trees with parents first', () => {
-    const t = randomTree(MAX_NODES, seeded(3));
+    const t = randomTree(MAX_NODES, lcg(3));
     t.parent.forEach((p, i) => expect(p).toBeLessThan(i));
     expect(t.parent).toHaveLength(MAX_NODES);
   });
@@ -167,7 +159,7 @@ describe('frames', () => {
 
   it('start and end with the named kinds and stay small at the cap', () => {
     for (const p of /** @type {const} */ (['mis', 'reroot'])) {
-      const frames = treeDpTrace(p, randomTree(MAX_NODES, seeded(9)));
+      const frames = treeDpTrace(p, randomTree(MAX_NODES, lcg(9)));
       expect(frames[0].kind).toBe('start');
       expect(frames.at(-1)?.kind).toBe('done');
       expect(frames.length).toBeLessThan(400);
