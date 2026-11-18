@@ -18,7 +18,7 @@
     inorderKeys,
     makeOps,
   } from '$lib/algo-engine/avl-trees.js';
-  import { en as m } from '$lib/lessons/avl-trees/copy.en.js';
+  import { vi as m } from '$lib/lessons/avl-trees/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/avl-trees.js').AvlOp} AvlOp */

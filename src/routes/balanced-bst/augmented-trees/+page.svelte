@@ -9,7 +9,7 @@
     makeOrderOps,
     orderTrace,
   } from '$lib/algo-engine/augmented-trees.js';
-  import { en as m } from '$lib/lessons/augmented-trees/copy.en.js';
+  import { vi as m } from '$lib/lessons/augmented-trees/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
   import IntervalPanel from './interval-panel.svelte';
   import { QUERY_TYPES } from './node-roles.js';

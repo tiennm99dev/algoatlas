@@ -12,15 +12,15 @@ export const MIN_KEY = 0;
 export const MAX_KEY = 99;
 
 export const avlPseudocode = [
-  'walk down from the root as in a BST',
-  'insert: attach a leaf; delete: unlink the node (two children: copy the successor first)',
-  'for each ancestor, from the bottom up:',
+  'đi xuống từ gốc như trên BST',
+  'chèn: gắn một lá; xoá: gỡ nút (có hai con: chép nút kế tiếp vào trước)',
+  'for node in tổ tiên, từ dưới lên:',
   '  height = 1 + max(height(left), height(right))',
   '  bf = height(left) − height(right)',
-  '  bf = +2, left child bf ≥ 0: rotate right (LL)',
-  '  bf = +2, left child bf < 0: rotate left at child, then right (LR)',
-  '  bf = −2, right child bf ≤ 0: rotate left (RR)',
-  '  bf = −2, right child bf > 0: rotate right at child, then left (RL)',
+  '  bf = +2, bf của con trái ≥ 0: quay phải (LL)',
+  '  bf = +2, bf của con trái < 0: quay trái tại con, rồi quay phải (LR)',
+  '  bf = −2, bf của con phải ≤ 0: quay trái (RR)',
+  '  bf = −2, bf của con phải > 0: quay phải tại con, rồi quay trái (RL)',
 ];
 
 /**

@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/b-trees/copy.en.js';
+import { vi as m } from '$lib/lessons/b-trees/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -74,68 +74,68 @@ const treeLabel = () => document.querySelector('svg[role="img"]')?.getAttribute(
 describe('B-trees lesson', () => {
   it('starts empty and grows to three levels at order 3', () => {
     render(Page);
-    expect(narration()).toContain('The tree is empty.');
+    expect(narration()).toContain('Cây đang rỗng.');
     click(button('Đến bước cuối'));
     expect(stat('height')).toBe('3');
     expect(stat('splits')).toBe('4');
-    expect(treeLabel()).toContain('Level 1: 40. Level 2: 20, 60. Level 3: 10, 30, 50, 70.');
+    expect(treeLabel()).toContain('Tầng 1: 40. Tầng 2: 20, 60. Tầng 3: 10, 30, 50, 70.');
   });
 
   it('narrates a split and a new root', () => {
     render(Page);
-    stepTo('one too many for order 3');
-    stepTo('becomes a new root');
+    stepTo('thừa một khoá so với bậc 3');
+    stepTo('trở thành gốc mới');
     expect(stat('splits')).toBe('1');
-    stepTo('moves up into the parent');
+    stepTo('được đẩy lên nút cha, và các khoá');
   });
 
   it('rebuilds the same log when the order changes', () => {
     render(Page);
     pickOrder('5');
-    expect(treeLabel()).toContain('B-tree of order 5, height 2.');
+    expect(treeLabel()).toContain('Cây B bậc 5, chiều cao 2.');
     expect(stat('height')).toBe('2');
     pickOrder('4');
-    expect(treeLabel()).toContain('Level 1: 20, 40.');
+    expect(treeLabel()).toContain('Tầng 1: 20, 40.');
   });
 
   it('merges, shrinks and borrows on the delete preset', () => {
     render(Page);
     commit(presetSelect(), 'merge');
-    stepTo('Remove the key from the leaf.');
-    stepTo('Look at its siblings');
-    stepTo('No sibling can spare a key');
-    stepTo('its only child becomes the root');
+    stepTo('Xoá khoá khỏi lá.');
+    stepTo('nhìn sang các nút anh em');
+    stepTo('Không nút anh em nào dư khoá');
+    stepTo('con duy nhất của nó trở thành gốc');
     expect(stat('height')).toBe('2');
-    stepTo('sits in an inner node');
-    stepTo('A sibling can spare a key');
+    stepTo('nằm ở một nút trong');
+    stepTo('Một nút anh em dư được một khoá');
     click(button('Đến bước cuối'));
     expect(stat('fixes')).toBe('3');
-    expect(treeLabel()).toContain('Level 1: 20, 50. Level 2: 10, 30, 60.');
+    expect(treeLabel()).toContain('Tầng 1: 20, 50. Tầng 2: 10, 30, 60.');
   });
 
   it('inserts, searches and deletes a typed key', () => {
     render(Page);
     commit(keyInput(), '45');
-    click(buttonByText('Insert'));
-    expect(narration()).toContain('Read a node');
+    click(buttonByText('Chèn'));
+    expect(narration()).toContain('Đọc một nút');
     click(button('Đến bước cuối'));
     expect(stat('size')).toBe('8');
-    click(buttonByText('Search'));
-    stepTo('Found 45 after');
+    click(buttonByText('Tìm'));
+    stepTo('Đã tìm thấy 45 sau');
     expect(stat('reads')).toBe('3');
-    click(buttonByText('Delete'));
+    click(buttonByText('Xoá'));
     click(button('Đến bước cuối'));
     expect(stat('size')).toBe('7');
   });
 
   it('undoes the last operation and resets', () => {
     render(Page);
-    click(buttonByText('Undo last'));
+    click(buttonByText('Hoàn tác'));
     expect(stat('size')).toBe('6');
     expect(presetSelect().value).toBe('');
-    click(buttonByText('Reset'));
-    expect(narration()).toContain('The tree is empty.');
-    const reset = buttonByText('Reset');
+    click(buttonByText('Đặt lại'));
+    expect(narration()).toContain('Cây đang rỗng.');
+    const reset = buttonByText('Đặt lại');
     expect(reset.getAttribute('aria-disabled')).toBe('true');
     expect(reset.disabled).toBe(false);
   });
@@ -147,22 +147,22 @@ describe('B-trees lesson', () => {
     expect(keyInput().value).toBe('45');
     keyInput().value = '150';
     keyInput().dispatchEvent(new Event('input', { bubbles: true }));
-    click(buttonByText('Search'));
-    expect(narration()).toContain('whole numbers from 0 to 99');
+    click(buttonByText('Tìm'));
+    expect(narration()).toContain('số nguyên từ 0 đến 99');
     expect(keyInput().value).toBe('45');
     click(button('Bước tiếp'));
-    expect(narration()).not.toContain('whole numbers');
+    expect(narration()).not.toContain('số nguyên');
   });
 
   it('refuses a key past the size cap and an operation past the log cap', () => {
     render(Page);
     for (let k = 1; k < 16; k++) {
       commit(keyInput(), String(k));
-      click(buttonByText('Insert'));
+      click(buttonByText('Chèn'));
     }
-    expect(narration()).toContain('The tree is full (20 keys).');
-    for (let i = 0; i < 4; i++) click(buttonByText('Search'));
-    expect(narration()).toContain('The log is full (24 operations).');
+    expect(narration()).toContain('Cây đã đầy (20 khoá).');
+    for (let i = 0; i < 4; i++) click(buttonByText('Tìm'));
+    expect(narration()).toContain('Danh sách thao tác đã đầy (24 thao tác).');
   });
 
   it('inserts when Enter submits the form', () => {
@@ -170,8 +170,8 @@ describe('B-trees lesson', () => {
     commit(keyInput(), '45');
     /** @type {HTMLFormElement} */ (keyInput().closest('form')).requestSubmit();
     flushSync();
-    expect(narration()).toContain('Read a node');
-    expect(buttonByText('Search').type).toBe('button');
+    expect(narration()).toContain('Đọc một nút');
+    expect(buttonByText('Tìm').type).toBe('button');
   });
 
   it('lets the random preset be chosen twice in a row', () => {
@@ -216,10 +216,10 @@ describe('B-trees lesson', () => {
   it('marks a node being read apart from a node just changed', () => {
     render(Page);
     const title = () => document.querySelector('g[data-node] title')?.textContent ?? '';
-    stepTo('Read a node');
+    stepTo('Đọc một nút');
     click(button('Bước tiếp'));
-    stepTo('Add 20 to the leaf');
-    expect(title()).toContain('changed now');
-    expect(title()).not.toContain('being read');
+    stepTo('Thêm 20 vào lá');
+    expect(title()).toContain('vừa thay đổi');
+    expect(title()).not.toContain('đang đọc');
   });
 });

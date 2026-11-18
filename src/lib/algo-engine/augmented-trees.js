@@ -15,11 +15,11 @@ export const MIN_KEY = 0;
 export const MAX_KEY = 99;
 
 export const orderPseudocode = [
-  'insert / delete: walk down as in a BST and change one node',
-  'walking back up, at each ancestor:',
+  'chèn / xoá: đi xuống như trên BST và thay đổi một nút',
+  'trên đường đi ngược lên, tại mỗi nút tổ tiên:',
   '  size = 1 + size(left) + size(right)',
-  '  balance factor ±2: rotate and recompute the two moved sizes',
-  'select(k): x = root (1 ≤ k ≤ size(root), else no such key)',
+  '  hệ số cân bằng ±2: quay và tính lại size của hai nút bị dời',
+  'select(k): x = root (1 ≤ k ≤ size(root), nếu không thì không có khoá đó)',
   '  s = size(x.left) + 1',
   '  k = s: return x',
   '  k < s: x = x.left',
@@ -28,19 +28,19 @@ export const orderPseudocode = [
   '  key < x.key: x = x.left',
   '  key > x.key: r = r + size(x.left) + 1, x = x.right',
   '  key = x.key: return r + size(x.left)',
-  '  x is empty: return r',
+  '  x rỗng: return r',
 ];
 
 export const intervalPseudocode = [
-  'insert / delete: walk down by low endpoint and change one node',
-  'walking back up, at each ancestor:',
-  '  max = largest of high, left.max, right.max',
-  '  balance factor ±2: rotate and recompute the two moved maxes',
+  'chèn / xoá: đi xuống theo đầu trái và thay đổi một nút',
+  'trên đường đi ngược lên, tại mỗi nút tổ tiên:',
+  '  max = max(high, left.max, right.max)',
+  '  hệ số cân bằng ±2: quay và tính lại max của hai nút bị dời',
   'overlap(lo, hi): x = root',
-  'while x exists and x does not overlap [lo, hi]:',
-  '  x.left exists and x.left.max ≥ lo: x = x.left',
-  '  otherwise: x = x.right',
-  'return x (empty means nothing overlaps)',
+  'while x khác rỗng and x không giao [lo, hi]:',
+  '  x.left khác rỗng and x.left.max ≥ lo: x = x.left',
+  '  else: x = x.right',
+  'return x  // rỗng nghĩa là không đoạn nào giao',
 ];
 
 /**

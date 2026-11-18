@@ -12,12 +12,12 @@ export const MIN_KEY = 0;
 export const MAX_KEY = 99;
 
 export const whyBalancePseudocode = [
-  'for each key k in the sequence:',
-  '  plain BST: walk from the root, attach k as a new leaf',
-  '  AVL: walk from the root, attach k as a new leaf',
-  '  AVL: walk back up, updating each height',
-  '  AVL: heights of two children differ by 2? rotate to fix it',
-  'compare the two heights and the comparisons spent',
+  'for k in keys:',
+  '  BST thường: đi từ gốc xuống, gắn k thành một lá mới',
+  '  AVL: đi từ gốc xuống, gắn k thành một lá mới',
+  '  AVL: đi ngược lên, cập nhật chiều cao từng nút',
+  '  AVL: chiều cao hai con lệch nhau 2? quay để sửa',
+  'so sánh hai chiều cao và số phép so sánh đã tốn',
 ];
 
 /**

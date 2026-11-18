@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/avl-trees/copy.en.js';
+import { vi as m } from '$lib/lessons/avl-trees/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -60,11 +60,11 @@ const stat = (id) => document.querySelector(`[data-testid="${id}"]`)?.textConten
 describe('AVL trees lesson', () => {
   it('starts empty and walks the left-right case to a balanced tree', () => {
     render(Page);
-    expect(narration()).toContain('The tree is empty.');
+    expect(narration()).toContain('Cây đang rỗng.');
     click(button('Đến bước cuối'));
     expect(stat('height')).toBe('2');
     expect(stat('rotations')).toBe('2');
-    expect(narration()).toContain('every balance factor within ±1');
+    expect(narration()).toContain('mọi hệ số cân bằng đều nằm trong ±1');
   });
 
   it('narrates the walk, the broken factor and each rotation', () => {
@@ -77,20 +77,22 @@ describe('AVL trees lesson', () => {
       click(button('Bước tiếp'));
     }
     const all = seen.join(' | ');
-    expect(all).toContain('10 < 30, so go left.');
-    expect(all).toContain('This is the LR case.');
-    expect(all).toContain('First half of LR');
-    expect(all).toContain('Rotate right at 30');
+    expect(all).toContain('10 < 30, nên rẽ trái.');
+    expect(all).toContain('Đây là trường hợp LR.');
+    expect(all).toContain('Nửa đầu của LR');
+    expect(all).toContain('Quay phải tại 30');
   });
 
   it('highlights the current repair case in the table', () => {
     render(Page);
     for (let i = 0; i < 40; i++) {
-      if (narration().includes('LR case')) break;
+      if (narration().includes('trường hợp LR')) break;
       click(button('Bước tiếp'));
     }
-    expect(document.querySelector('[data-testid="case-LR"]')?.textContent).toContain('(now)');
-    expect(document.querySelector('[data-testid="case-LL"]')?.textContent).not.toContain('(now)');
+    expect(document.querySelector('[data-testid="case-LR"]')?.textContent).toContain('(lúc này)');
+    expect(document.querySelector('[data-testid="case-LL"]')?.textContent).not.toContain(
+      '(lúc này)',
+    );
   });
 
   it('states the height limit that matches the fewest keys per height', () => {
@@ -99,7 +101,7 @@ describe('AVL trees lesson', () => {
     for (let h = 2; h <= 7; h++) fewest[h] = fewest[h - 1] + fewest[h - 2] + 1;
     for (let n = 1; n <= 33; n++) {
       const limit = fewest.findLastIndex((count) => count <= n);
-      expect(m.bound(n)).toContain(`at most ${limit}.`);
+      expect(m.bound(n)).toContain(`nhiều nhất là ${limit}.`);
     }
   });
 
@@ -112,15 +114,15 @@ describe('AVL trees lesson', () => {
   it('inserts, searches and deletes a typed key', () => {
     render(Page);
     commit(keyInput(), '25');
-    click(buttonByText('Insert'));
-    expect(narration()).toContain('Compare 25 with 20.');
+    click(buttonByText('Chèn'));
+    expect(narration()).toContain('So sánh 25 với 20.');
     click(button('Đến bước cuối'));
     expect(stat('height')).toBe('3');
     commit(keyInput(), '25');
-    click(buttonByText('Search'));
+    click(buttonByText('Tìm'));
     click(button('Đến bước cuối'));
     expect(stat('height')).toBe('3');
-    click(buttonByText('Delete'));
+    click(buttonByText('Xoá'));
     click(button('Đến bước cuối'));
     expect(stat('height')).toBe('2');
   });
@@ -131,12 +133,12 @@ describe('AVL trees lesson', () => {
     click(button('Đến bước cuối'));
     expect(stat('rotations')).toBe('6');
     expect(stat('height')).toBe('4');
-    click(buttonByText('Undo last'));
+    click(buttonByText('Hoàn tác'));
     expect(presetSelect().value).toBe('');
     expect(stat('rotations')).toBe('5');
-    click(buttonByText('Reset'));
-    expect(narration()).toContain('The tree is empty.');
-    expect(buttonByText('Reset').getAttribute('aria-disabled')).toBe('true');
+    click(buttonByText('Đặt lại'));
+    expect(narration()).toContain('Cây đang rỗng.');
+    expect(buttonByText('Đặt lại').getAttribute('aria-disabled')).toBe('true');
   });
 
   it('repairs at two levels on the cascading delete', () => {
@@ -161,26 +163,26 @@ describe('AVL trees lesson', () => {
     expect(keyInput().value).toBe('45');
     keyInput().value = '150';
     keyInput().dispatchEvent(new Event('input', { bubbles: true }));
-    click(buttonByText('Search'));
-    expect(narration()).toContain('whole numbers from 0 to 99');
+    click(buttonByText('Tìm'));
+    expect(narration()).toContain('số nguyên từ 0 đến 99');
     expect(keyInput().value).toBe('45');
     click(button('Bước tiếp'));
-    expect(narration()).not.toContain('whole numbers');
+    expect(narration()).not.toContain('số nguyên');
   });
 
   it('refuses a key past the size cap', () => {
     render(Page);
     for (let k = 40; k < 53; k++) {
       commit(keyInput(), String(k));
-      click(buttonByText('Insert'));
+      click(buttonByText('Chèn'));
     }
-    expect(narration()).toContain('The tree is full (15 keys).');
+    expect(narration()).toContain('Cây đã đầy (15 khoá).');
   });
 
   it('refuses an operation past the log cap', () => {
     render(Page);
-    for (let i = 0; i < 18; i++) click(buttonByText('Search'));
-    expect(narration()).toContain('The log is full (20 operations).');
+    for (let i = 0; i < 18; i++) click(buttonByText('Tìm'));
+    expect(narration()).toContain('Danh sách thao tác đã đầy (20 thao tác).');
   });
 
   it('lets a node be picked by pointer and keyboard', () => {

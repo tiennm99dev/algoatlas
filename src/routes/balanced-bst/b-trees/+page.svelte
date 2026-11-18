@@ -20,7 +20,7 @@
     layoutBTree,
     makeOps,
   } from '$lib/algo-engine/b-trees.js';
-  import { en as m } from '$lib/lessons/b-trees/copy.en.js';
+  import { vi as m } from '$lib/lessons/b-trees/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/b-trees.js').BOp} BOp */

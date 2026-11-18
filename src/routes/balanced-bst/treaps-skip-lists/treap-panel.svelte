@@ -16,7 +16,7 @@
     treapPseudocode,
     treapTrace,
   } from '$lib/algo-engine/treaps-skip-lists.js';
-  import { en as m } from '$lib/lessons/treaps-skip-lists/copy.en.js';
+  import { vi as m } from '$lib/lessons/treaps-skip-lists/copy.vi.js';
 
   /** @typedef {import('$lib/algo-engine/treaps-skip-lists.js').TreapOp} TreapOp */
   /** @typedef {import('$lib/algo-engine/treaps-skip-lists.js').TreapFrame} TreapFrame */

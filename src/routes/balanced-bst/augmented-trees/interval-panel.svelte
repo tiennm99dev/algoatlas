@@ -14,7 +14,7 @@
     intervalTrace,
     makeIntervalOps,
   } from '$lib/algo-engine/augmented-trees.js';
-  import { en as m } from '$lib/lessons/augmented-trees/copy.en.js';
+  import { vi as m } from '$lib/lessons/augmented-trees/copy.vi.js';
   import { LEGEND, QUERY_TYPES, ROLE_STATE, roleOf } from './node-roles.js';
 
   /** @typedef {import('$lib/algo-engine/augmented-trees.js').IntervalOp} IntervalOp */

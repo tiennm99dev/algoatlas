@@ -14,17 +14,17 @@ export const MAX_KEY = 99;
 export const ORDERS = /** @type {const} */ ([3, 4, 5]);
 
 export const bTreePseudocode = [
-  'search: read one node per level; scan its keys to pick a child',
-  'insert: walk to the leaf where k belongs, add k in key order',
-  'while a node holds m keys (overflow):',
-  '  split it: the median moves up, the rest become two nodes',
-  '  no parent: the median becomes a new root (height + 1)',
-  'delete: k in an inner node? swap in its predecessor from a leaf',
-  'remove k from the leaf',
-  'while a non-root node holds under ⌈m/2⌉ − 1 keys (underflow):',
-  '  a sibling can spare a key: borrow it through the parent',
-  '  otherwise merge with a sibling and the separator between them',
-  '  root left with no keys: its only child becomes the root (height − 1)',
+  'tìm: mỗi tầng đọc một nút; duyệt các khoá để chọn con',
+  'chèn: đi đến lá chứa được k, thêm k đúng thứ tự khoá',
+  'while một nút chứa m khoá (tràn):',
+  '  tách nút: trung vị lên trên, phần còn lại thành hai nút',
+  '  không có cha: trung vị thành gốc mới (chiều cao + 1)',
+  'xoá: k ở nút trong? thay bằng khoá liền trước nằm ở lá',
+  'xoá k khỏi lá',
+  'while một nút không phải gốc có ít hơn ⌈m/2⌉ − 1 khoá (thiếu):',
+  '  anh em dư một khoá: mượn khoá qua nút cha',
+  '  else: gộp với một anh em và khoá ngăn cách giữa hai nút',
+  '  gốc hết khoá: con duy nhất của nó thành gốc (chiều cao − 1)',
 ];
 
 /**

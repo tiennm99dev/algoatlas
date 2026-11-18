@@ -9,7 +9,7 @@
     skipListTrace,
     treapTrace,
   } from '$lib/algo-engine/treaps-skip-lists.js';
-  import { en as m } from '$lib/lessons/treaps-skip-lists/copy.en.js';
+  import { vi as m } from '$lib/lessons/treaps-skip-lists/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
   import SkipListPanel from './skip-list-panel.svelte';
   import TreapPanel from './treap-panel.svelte';

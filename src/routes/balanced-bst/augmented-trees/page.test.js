@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/augmented-trees/copy.en.js';
+import { vi as m } from '$lib/lessons/augmented-trees/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -71,7 +71,7 @@ function stepTo(text) {
 describe('ordered maps and augmented trees lesson', () => {
   it('opens on the first query with the tree already built, sizes on the nodes', () => {
     render();
-    expect(narration()).toBe('Find the 5th smallest key, starting at the root with k = 5.');
+    expect(narration()).toBe('Tìm khoá nhỏ thứ 5, bắt đầu từ gốc với k = 5.');
     expect(stat('size')).toBe('7');
     expect(document.body.textContent).toContain('size 7');
   });
@@ -80,31 +80,31 @@ describe('ordered maps and augmented trees lesson', () => {
     render();
     next(1);
     expect(narration()).toBe(
-      'At 40: s = 3 + 1 = 4. k = 5 > 4, so skip those 4 keys: k = 5 − 4 = 1, and go right.',
+      'Tại 40: s = 3 + 1 = 4. k = 5 > 4, nên bỏ qua 4 khoá đó: k = 5 − 4 = 1, rồi rẽ phải.',
     );
     next(1);
     expect(narration()).toBe(
-      'At 60: s = 1 + 1 = 2. k = 1 < 2, so the answer is on the left and k stays 1.',
+      'Tại 60: s = 1 + 1 = 2. k = 1 < 2, nên kết quả nằm bên trái và k vẫn là 1.',
     );
     next(1);
-    expect(narration()).toBe('At 50: s = 0 + 1 = 1, which equals k. The 5th smallest key is 50.');
+    expect(narration()).toBe('Tại 50: s = 0 + 1 = 1, đúng bằng k. Khoá nhỏ thứ 5 là 50.');
     expect(stat('answer')).toBe('50');
     expect(stat('comparisons')).toBe('3');
     expect(
       document.querySelector('[data-testid="sorted-card"] svg')?.getAttribute('aria-label'),
-    ).toContain('before the answer');
+    ).toContain('đứng trước kết quả');
   });
 
   it('adds the left size at each right turn of a rank query, and reports a gap for a missing key', () => {
     render();
-    stepTo('Find the rank of 45');
+    stepTo('Tìm thứ hạng của 45');
     next(1);
     expect(narration()).toBe(
-      '45 > 40: 40 and its 3 left keys are all smaller, so add 4. Now r = 5. Go right.',
+      '45 > 40: 40 và 3 khoá bên trái nó đều nhỏ hơn, nên cộng thêm 4. Giờ r = 5. Rẽ phải.',
     );
     next(3);
     expect(narration()).toBe(
-      '45 is not in the tree, but the count still works: 4 keys are smaller, so it would have rank 5.',
+      '45 không có trong cây, nhưng phép đếm vẫn dùng được: có 4 khoá nhỏ hơn, nên nếu có trong cây thì nó sẽ có thứ hạng 5.',
     );
     expect(stat('answer')).toBe('5');
   });
@@ -114,7 +114,7 @@ describe('ordered maps and augmented trees lesson', () => {
     click(button('Đến bước cuối'));
     click(button('Bước trước'));
     expect(narration()).toBe(
-      'There is no 9th smallest key: the root’s size says the tree holds 7 keys. No walk is needed.',
+      'Không có khoá nhỏ thứ 9: size của gốc cho biết cây chỉ có 7 khoá. Không cần đi xuống.',
     );
     expect(stat('comparisons')).toBe('0');
   });
@@ -140,10 +140,10 @@ describe('ordered maps and augmented trees lesson', () => {
     render();
     commit(input('order-preset'), 'rotations');
     expect(narration()).toBe(m.emptyTree);
-    stepTo('rotate left at 10');
-    expect(narration()).toContain('20 now has size 3 and 10 has size 1');
+    stepTo('quay trái tại 10');
+    expect(narration()).toContain('giờ 20 có size 3 và 10 có size 1');
     click(button('Bước trước'));
-    expect(narration()).toBe('At 10: size = 1 + 0 + 2 = 3.');
+    expect(narration()).toBe('Tại 10: size = 1 + 0 + 2 = 3.');
   });
 
   it('undoes, resets and reloads a preset', () => {
@@ -154,7 +154,7 @@ describe('ordered maps and augmented trees lesson', () => {
     expect(stat('size')).toBe('0');
     expect(narration()).toBe(m.emptyTree);
     commit(input('order-preset'), 'scores');
-    expect(narration()).toBe('Find the rank of 68, starting at the root with r = 1.');
+    expect(narration()).toBe('Tìm thứ hạng của 68, bắt đầu từ gốc với r = 1.');
     expect(stat('size')).toBe('8');
   });
 
@@ -187,26 +187,26 @@ describe('ordered maps and augmented trees lesson', () => {
   it('switches to the interval tree and finds an overlap by following max', () => {
     render();
     click(intervalRadio());
-    expect(narration()).toBe('Look for any interval that overlaps [22, 25], starting at the root.');
+    expect(narration()).toBe('Tìm một đoạn bất kì giao với [22, 25], bắt đầu từ gốc.');
     expect(stat('size')).toBe('10');
     expect(
       document.querySelector('[data-testid="number-line"]')?.getAttribute('aria-label'),
-    ).toContain('Query [22, 25]');
+    ).toContain('Truy vấn [22, 25]');
     next(1);
-    expect(narration()).toBe('[16, 21] does not overlap [22, 25]: it ends at 21, before 22.');
+    expect(narration()).toBe('[16, 21] không giao với [22, 25]: nó kết thúc ở 21, trước 22.');
     next(1);
-    expect(narration()).toContain('The left subtree’s max is 23 ≥ 22, so go left.');
-    stepTo('overlaps [22, 25]:');
+    expect(narration()).toContain('Giá trị max của cây con trái là 23 ≥ 22, nên rẽ trái.');
+    stepTo('] giao với [22, 25]:');
     expect(stat('answer')).toBe('[15, 23]');
   });
 
   it('reports no overlap and finds the long interval on the far left', () => {
     render();
     click(intervalRadio());
-    stepTo('so no interval overlaps [11, 14]');
-    expect(stat('answer')).toBe('none');
+    stepTo('nên không đoạn nào giao với [11, 14]');
+    expect(stat('answer')).toBe('không có');
     commit(input('interval-preset'), 'long');
-    stepTo('overlaps [80, 85]:');
+    stepTo('] giao với [80, 85]:');
     expect(stat('answer')).toBe('[10, 90]');
     expect(stat('comparisons')).toBe('3');
   });
@@ -216,9 +216,9 @@ describe('ordered maps and augmented trees lesson', () => {
     click(intervalRadio());
     commit(input('low'), '0');
     commit(input('high'), '90');
-    click(buttonByText('Reset'));
-    click(buttonByText('Insert'));
-    stepTo('The tree has 1 interval');
+    click(buttonByText('Đặt lại'));
+    click(buttonByText('Chèn'));
+    stepTo('Cây có 1 đoạn');
     const label = [...document.querySelectorAll('[data-testid="number-line"] text')].find(
       (t) => t.textContent === '[0, 90]',
     );
@@ -238,7 +238,7 @@ describe('ordered maps and augmented trees lesson', () => {
     commit(input('low'), '40');
     commit(input('high'), '50');
     click(buttonByText(m.overlap));
-    stepTo('so no interval overlaps [40, 50]');
+    stepTo('nên không đoạn nào giao với [40, 50]');
     click(button('Đến bước cuối'));
     expect(stat('size')).toBe('10');
     click(buttonByText(m.remove));

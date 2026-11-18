@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/why-balance-matters/copy.en.js';
+import { vi as m } from '$lib/lessons/why-balance-matters/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -60,7 +60,7 @@ const heightOf = (id) => document.querySelector(`[data-testid="${id}-height"]`)?
 describe('why balance matters lesson', () => {
   it('starts with two empty trees and a first narration', () => {
     render(Page);
-    expect(narration()).toContain('Both trees start empty');
+    expect(narration()).toContain('Cả hai cây đều bắt đầu rỗng');
     expect(heightOf('plain')).toBe('0');
     expect(heightOf('avl')).toBe('0');
   });
@@ -70,15 +70,15 @@ describe('why balance matters lesson', () => {
     click(button('Đến bước cuối'));
     expect(heightOf('plain')).toBe('10');
     expect(heightOf('avl')).toBe('4');
-    expect(narration()).toContain('Plain BST height 10 and 45 comparisons');
+    expect(narration()).toContain('BST thường cao 10 và tốn 45 phép so sánh');
   });
 
   it('narrates each tree in turn as it steps', () => {
     render(Page);
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Key 1 becomes the root of the plain BST.');
+    expect(narration()).toContain('Khoá 1 trở thành gốc của BST thường.');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Key 1 becomes the root of the AVL tree.');
+    expect(narration()).toContain('Khoá 1 trở thành gốc của cây AVL.');
   });
 
   it('runs a typed list and shows a rotation', () => {
@@ -86,9 +86,9 @@ describe('why balance matters lesson', () => {
     commit(keysInput(), '30, 10, 20');
     expect(presetSelect().value).toBe('');
     for (let i = 0; i < 7; i++) click(button('Bước tiếp'));
-    expect(narration()).toContain('The heavy side bends inward');
+    expect(narration()).toContain('Nhánh nặng bị gập vào trong');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('rotate right at 30');
+    expect(narration()).toContain('quay phải tại 30');
     click(button('Đến bước cuối'));
     expect(heightOf('plain')).toBe('3');
     expect(heightOf('avl')).toBe('2');
@@ -107,14 +107,14 @@ describe('why balance matters lesson', () => {
   it('refuses a bad list with a notice and keeps the last valid one', () => {
     render(Page);
     commit(keysInput(), '1, 1');
-    expect(narration()).toContain('Each key may appear only once.');
+    expect(narration()).toContain('Mỗi khoá chỉ được xuất hiện một lần.');
     expect(keysInput().value).toBe('1, 2, 3, 4, 5, 6, 7, 8, 9, 10');
     click(button('Bước tiếp'));
-    expect(narration()).not.toContain('only once');
+    expect(narration()).not.toContain('một lần');
     commit(keysInput(), '');
-    expect(narration()).toContain('Type at least one key.');
+    expect(narration()).toContain('Hãy gõ ít nhất một khoá.');
     commit(keysInput(), '500');
-    expect(narration()).toContain('from 0 to 99');
+    expect(narration()).toContain('từ 0 đến 99');
   });
 
   it('switches presets, including a random one that can be picked twice', () => {
@@ -122,7 +122,7 @@ describe('why balance matters lesson', () => {
     commit(presetSelect(), 'balanced');
     click(button('Đến bước cuối'));
     expect(heightOf('plain')).toBe('4');
-    expect(narration()).toContain('after 0 rotations');
+    expect(narration()).toContain('sau 0 phép quay');
     const rand = vi.spyOn(Math, 'random');
     commit(presetSelect(), 'random');
     const first = rand.mock.calls.length;
@@ -136,10 +136,10 @@ describe('why balance matters lesson', () => {
   it('resets to the sorted preset', () => {
     render(Page);
     commit(keysInput(), '5, 3');
-    click(buttonByText('Reset'));
+    click(buttonByText('Đặt lại'));
     expect(keysInput().value).toContain('10');
     expect(presetSelect().value).toBe('sorted');
-    expect(narration()).toContain('Both trees start empty');
+    expect(narration()).toContain('Cả hai cây đều bắt đầu rỗng');
   });
 
   it('checks a practice answer, wrong then right, with a hint', () => {

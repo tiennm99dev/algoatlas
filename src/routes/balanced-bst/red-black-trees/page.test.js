@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/red-black-trees/copy.en.js';
+import { vi as m } from '$lib/lessons/red-black-trees/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -65,13 +65,13 @@ function stepTo(part) {
 describe('red-black trees lesson', () => {
   it('starts empty and ends the textbook example with root 7', () => {
     render(Page);
-    expect(narration()).toContain('The tree is empty.');
+    expect(narration()).toContain('Cây đang rỗng.');
     click(button('Đến bước cuối'));
     expect(stat('black-height')).toBe('2');
     expect(stat('height')).toBe('4');
     expect(stat('rotations')).toBe('2');
     expect(document.querySelector('svg[role="img"]')?.getAttribute('aria-label')).toContain(
-      'In order: 1, 2, 4, 5, 7, 8, 11, 14, 15.',
+      'Theo thứ tự giữa: 1, 2, 4, 5, 7, 8, 11, 14, 15.',
     );
   });
 
@@ -79,52 +79,52 @@ describe('red-black trees lesson', () => {
     render(Page);
     click(button('Đến bước cuối'));
     expect(document.querySelectorAll('svg [data-color="red"]').length).toBeGreaterThan(0);
-    expect(document.querySelector('svg')?.textContent).toContain('B bh 2');
-    expect(document.querySelector('svg title')?.textContent).toMatch(/Key \d+, (red|black), bh/);
+    expect(document.querySelector('svg')?.textContent).toContain('đen bh 2');
+    expect(document.querySelector('svg title')?.textContent).toMatch(/Khoá \d+, (đỏ|đen), bh/);
   });
 
   it('flags a red-red pair in the rule list and clears it after the repair', () => {
     render(Page);
     commit(presetSelect(), 'outer');
-    stepTo('is red and so is its parent');
+    stepTo('của nó cũng đỏ');
     expect(document.querySelector('[data-testid="rule-red-red"]')?.textContent).toContain('✗');
-    stepTo('moves up in black');
+    stepTo('được đưa lên với màu đen');
     expect(document.querySelector('[data-testid="rule-red-red"]')?.textContent).toContain('✓');
   });
 
   it('narrates each kind of repair', () => {
     render(Page);
     commit(presetSelect(), 'uncle');
-    stepTo('The uncle is red');
+    stepTo('Nút chú màu đỏ');
     expect(document.querySelector('[data-testid="rule-root"]')?.textContent).toContain('✗');
-    stepTo('The root is red, so paint it black');
+    stepTo('Gốc đang đỏ, nên tô nó thành đen');
     commit(presetSelect(), 'inner');
-    stepTo('inner child');
-    stepTo('ready to rotate');
-    stepTo('moves up in black');
+    stepTo('con phía trong');
+    stepTo('sẵn sàng để quay');
+    stepTo('được đưa lên với màu đen');
   });
 
   it('inserts a typed key, searches it and ignores a repeat', () => {
     render(Page);
     commit(keyInput(), '6');
-    click(buttonByText('Insert'));
-    expect(narration()).toContain('Compare 6 with 7.');
+    click(buttonByText('Chèn'));
+    expect(narration()).toContain('So sánh 6 với 7.');
     click(button('Đến bước cuối'));
     expect(stat('size')).toBe('10');
-    click(buttonByText('Search'));
-    stepTo('Found 6');
-    click(buttonByText('Insert'));
-    stepTo('is already in the tree');
+    click(buttonByText('Tìm'));
+    stepTo('Đã tìm thấy 6');
+    click(buttonByText('Chèn'));
+    stepTo('đã có trong cây');
   });
 
   it('undoes the last operation and resets', () => {
     render(Page);
-    click(buttonByText('Undo last'));
+    click(buttonByText('Hoàn tác'));
     expect(stat('size')).toBe('8');
     expect(presetSelect().value).toBe('');
-    click(buttonByText('Reset'));
-    expect(narration()).toContain('The tree is empty.');
-    const reset = buttonByText('Reset');
+    click(buttonByText('Đặt lại'));
+    expect(narration()).toContain('Cây đang rỗng.');
+    const reset = buttonByText('Đặt lại');
     expect(reset.getAttribute('aria-disabled')).toBe('true');
     expect(reset.disabled).toBe(false);
   });
@@ -136,22 +136,22 @@ describe('red-black trees lesson', () => {
     expect(keyInput().value).toBe('45');
     keyInput().value = '150';
     keyInput().dispatchEvent(new Event('input', { bubbles: true }));
-    click(buttonByText('Search'));
-    expect(narration()).toContain('whole numbers from 0 to 99');
+    click(buttonByText('Tìm'));
+    expect(narration()).toContain('số nguyên từ 0 đến 99');
     expect(keyInput().value).toBe('45');
     click(button('Bước tiếp'));
-    expect(narration()).not.toContain('whole numbers');
+    expect(narration()).not.toContain('số nguyên');
   });
 
   it('refuses a key past the size cap and an operation past the log cap', () => {
     render(Page);
     for (let k = 40; k < 47; k++) {
       commit(keyInput(), String(k));
-      click(buttonByText('Insert'));
+      click(buttonByText('Chèn'));
     }
-    expect(narration()).toContain('The tree is full (15 keys).');
-    for (let i = 0; i < 10; i++) click(buttonByText('Search'));
-    expect(narration()).toContain('The log is full (24 operations).');
+    expect(narration()).toContain('Cây đã đầy (15 khoá).');
+    for (let i = 0; i < 10; i++) click(buttonByText('Tìm'));
+    expect(narration()).toContain('Danh sách thao tác đã đầy (24 thao tác).');
   });
 
   it('inserts when Enter submits the form', () => {
@@ -159,8 +159,8 @@ describe('red-black trees lesson', () => {
     commit(keyInput(), '6');
     /** @type {HTMLFormElement} */ (keyInput().closest('form')).requestSubmit();
     flushSync();
-    expect(narration()).toContain('Compare 6 with 7.');
-    expect(buttonByText('Search').type).toBe('button');
+    expect(narration()).toContain('So sánh 6 với 7.');
+    expect(buttonByText('Tìm').type).toBe('button');
   });
 
   it('lets the random preset be chosen twice in a row', () => {
@@ -204,21 +204,21 @@ describe('red-black trees lesson', () => {
 
   it('labels a node on the walk down as compared, and z only during the repair', () => {
     render(Page);
-    stepTo('Compare 2 with 11');
+    stepTo('So sánh 2 với 11');
     const titles = () =>
       [...document.querySelectorAll('g[data-color] title')].map((t) => t.textContent);
-    expect(titles().some((t) => t?.includes('compared'))).toBe(true);
-    expect(titles().some((t) => t?.includes('node being repaired'))).toBe(false);
-    stepTo('is red and so is its parent');
-    expect(titles().some((t) => t?.includes('node being repaired'))).toBe(true);
+    expect(titles().some((t) => t?.includes('đang so sánh'))).toBe(true);
+    expect(titles().some((t) => t?.includes('nút đang được sửa'))).toBe(false);
+    stepTo('của nó cũng đỏ');
+    expect(titles().some((t) => t?.includes('nút đang được sửa'))).toBe(true);
   });
 
   it('leaves the black height of the root alone when it paints the root black', () => {
     render(Page);
     commit(presetSelect(), 'uncle');
-    stepTo('The uncle is red');
+    stepTo('Nút chú màu đỏ');
     expect(stat('black-height')).toBe('2');
-    stepTo('The root is red, so paint it black');
+    stepTo('Gốc đang đỏ, nên tô nó thành đen');
     expect(stat('black-height')).toBe('2');
   });
 });

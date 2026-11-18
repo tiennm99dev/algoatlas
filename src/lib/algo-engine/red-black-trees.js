@@ -12,14 +12,14 @@ export const MIN_KEY = 0;
 export const MAX_KEY = 99;
 
 export const redBlackPseudocode = [
-  'walk down from the root as in a BST',
-  'insert: attach z as a new RED leaf',
-  'while z.parent is red:',
-  '  uncle = sibling of z.parent',
-  '  uncle red: parent, uncle = black; grandparent = red; z = grandparent',
-  '  uncle black, z an inner child: z = parent; rotate at z, away from the bend',
-  '  uncle black, z an outer child: parent = black; grandparent = red; rotate at grandparent',
-  'root = black',
+  'đi xuống từ gốc như trên BST',
+  'chèn: gắn z thành một lá ĐỎ mới',
+  'while z.parent đỏ:',
+  '  uncle = anh em của z.parent',
+  '  uncle đỏ: parent, uncle = đen; grandparent = đỏ; z = grandparent',
+  '  uncle đen, z là con phía trong: z = parent; quay tại z, ngược phía chỗ gập',
+  '  uncle đen, z là con phía ngoài: parent = đen; grandparent = đỏ; quay tại grandparent',
+  'root = đen',
 ];
 
 /**

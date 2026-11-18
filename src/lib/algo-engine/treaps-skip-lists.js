@@ -21,21 +21,21 @@ export const MAX_PRIORITY = 99;
 export const skipListPseudocode = [
   'x = head, level = top',
   'while level ≥ 1:',
-  '  if next(x, level).key < k: x = next(x, level) (move right)',
-  '  else: remember x; level = level − 1 (drop)',
-  'search / delete: next(x, 1).key = k? found : not found',
-  'insert: flip a coin until tails; tower height = 1 + heads',
-  'insert: link the new tower after the remembered x on each level; delete: unlink it',
+  '  if next(x, level).key < k: x = next(x, level)  // sang phải',
+  '  else: ghi nhớ x; level = level − 1  // tụt xuống',
+  'tìm / xoá: next(x, 1).key = k? tìm thấy : không tìm thấy',
+  'chèn: tung đồng xu đến khi ra ngửa; chiều cao cột = 1 + số lần sấp',
+  'chèn: nối cột mới sau x đã ghi nhớ ở mỗi tầng; xoá: gỡ cột',
 ];
 
 export const treapPseudocode = [
-  'walk down by key, as in a BST',
-  'insert: attach a leaf with a random priority',
-  'while the new node’s priority < its parent’s priority:',
-  '  rotate the new node up (BST order stays, heap order improves)',
-  'delete: while the node has a child:',
-  '  rotate up the child with the smaller priority',
-  'delete: the node is now a leaf, so remove it',
+  'đi xuống theo khoá, như trên BST',
+  'chèn: gắn một lá với độ ưu tiên ngẫu nhiên',
+  'while node.priority < node.parent.priority:',
+  '  quay node lên  // thứ tự BST giữ nguyên, thứ tự heap tốt hơn',
+  'xoá: while node còn con:',
+  '  quay con có độ ưu tiên nhỏ hơn lên',
+  'xoá: node giờ là lá, nên gỡ nó đi',
 ];
 
 /**

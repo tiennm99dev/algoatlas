@@ -18,7 +18,7 @@
     redBlackPseudocode,
     redBlackTrace,
   } from '$lib/algo-engine/red-black-trees.js';
-  import { en as m } from '$lib/lessons/red-black-trees/copy.en.js';
+  import { vi as m } from '$lib/lessons/red-black-trees/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/red-black-trees.js').RbOp} RbOp */

@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/treaps-skip-lists/copy.en.js';
+import { vi as m } from '$lib/lessons/treaps-skip-lists/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -77,16 +77,16 @@ function stepTo(part) {
 describe('treaps and skip lists lesson', () => {
   it('opens on the skip list search, at the top of the towers', () => {
     render(Page);
-    expect(narration()).toContain('Start at the head on level 4');
-    expect(svgLabel()).toContain('8 keys and 4 levels');
+    expect(narration()).toContain('Bắt đầu ở đầu danh sách trên tầng 4');
+    expect(svgLabel()).toContain('8 khoá và 4 tầng');
   });
 
   it('drops level by level to the target', () => {
     render(Page);
     click(button('Bước tiếp'));
-    expect(narration()).toContain('drop to level 3');
-    stepTo('move right');
-    stepTo('Found 70 on the bottom level, after 6 comparisons.');
+    expect(narration()).toContain('tụt xuống tầng 3');
+    stepTo('nên sang phải');
+    stepTo('Đã tìm thấy 70 ở tầng dưới cùng, sau 6 phép so sánh.');
     expect(stat('rights')).toBe('2');
     expect(stat('drops')).toBe('3');
   });
@@ -94,7 +94,7 @@ describe('treaps and skip lists lesson', () => {
   it('walks every key on the flat preset', () => {
     render(Page);
     commit(presetSelect(), 'flat');
-    stepTo('Found 70');
+    stepTo('Đã tìm thấy 70');
     expect(stat('comparisons')).toBe('7');
     expect(stat('drops')).toBe('0');
     expect(stat('levels')).toBe('1');
@@ -104,38 +104,38 @@ describe('treaps and skip lists lesson', () => {
     render(Page);
     commit(keyInput(), '45');
     commit(towerSelect(), '3');
-    click(buttonByText('Insert'));
-    stepTo('Heads: the tower grows to height 2.');
-    stepTo('Tails: the tower stops at height 3.');
-    stepTo('Link the new tower for 45');
+    click(buttonByText('Chèn'));
+    stepTo('Sấp: cột cao lên 2.');
+    stepTo('Ngửa: cột dừng ở chiều cao 3.');
+    stepTo('Nối cột mới của 45');
     expect(stat('size')).toBe('9');
-    expect(svgLabel()).toContain('45 height 3');
+    expect(svgLabel()).toContain('45 cao 3');
   });
 
   it('flips real coins when the field is left on coin flips', () => {
     const rand = vi.spyOn(Math, 'random').mockReturnValue(0.9);
     render(Page);
     commit(keyInput(), '45');
-    click(buttonByText('Insert'));
+    click(buttonByText('Chèn'));
     expect(rand).toHaveBeenCalled();
-    stepTo('Tails: the tower stops at height 1.');
+    stepTo('Ngửa: cột dừng ở chiều cao 1.');
     rand.mockRestore();
   });
 
   it('searches, deletes, undoes and resets in the skip list', () => {
     render(Page);
     commit(keyInput(), '40');
-    click(buttonByText('Delete'));
-    stepTo('Unlink the tower');
+    click(buttonByText('Xoá'));
+    stepTo('Gỡ cột khỏi mọi tầng');
     expect(stat('size')).toBe('7');
     commit(keyInput(), '41');
-    click(buttonByText('Search'));
-    stepTo('so 41 is not in the list');
-    click(buttonByText('Undo last'));
+    click(buttonByText('Tìm'));
+    stepTo('nên 41 không có trong danh sách');
+    click(buttonByText('Hoàn tác'));
     expect(presetSelect().value).toBe('');
-    click(buttonByText('Reset'));
-    expect(narration()).toContain('The list is empty.');
-    expect(buttonByText('Reset').getAttribute('aria-disabled')).toBe('true');
+    click(buttonByText('Đặt lại'));
+    expect(narration()).toContain('Danh sách đang rỗng.');
+    expect(buttonByText('Đặt lại').getAttribute('aria-disabled')).toBe('true');
   });
 
   it('keeps the last valid key and refuses a bad one with a notice', () => {
@@ -145,8 +145,8 @@ describe('treaps and skip lists lesson', () => {
     expect(keyInput().value).toBe('45');
     keyInput().value = '150';
     keyInput().dispatchEvent(new Event('input', { bubbles: true }));
-    click(buttonByText('Search'));
-    expect(narration()).toContain('whole numbers from 0 to 99');
+    click(buttonByText('Tìm'));
+    expect(narration()).toContain('số nguyên từ 0 đến 99');
     expect(keyInput().value).toBe('45');
   });
 
@@ -155,18 +155,18 @@ describe('treaps and skip lists lesson', () => {
     commit(towerSelect(), '1');
     for (let k = 81; k < 86; k++) {
       commit(keyInput(), String(k));
-      click(buttonByText('Insert'));
+      click(buttonByText('Chèn'));
     }
-    expect(narration()).toContain('The list is full (12 keys).');
-    for (let i = 0; i < 12; i++) click(buttonByText('Search'));
-    expect(narration()).toContain('The log is full (24 operations).');
+    expect(narration()).toContain('Danh sách đã đầy (12 khoá).');
+    for (let i = 0; i < 12; i++) click(buttonByText('Tìm'));
+    expect(narration()).toContain('Danh sách thao tác đã đầy (24 thao tác).');
   });
 
   it('switches to the treap and rotates a node up', () => {
     render(Page);
     pickMode('treap');
-    expect(narration()).toContain('The treap is empty.');
-    stepTo('moves up');
+    expect(narration()).toContain('Treap đang rỗng.');
+    stepTo('được đưa lên');
     click(button('Đến bước cuối'));
     expect(stat('height')).toBe('4');
     expect(stat('rotations')).toBe('4');
@@ -176,13 +176,13 @@ describe('treaps and skip lists lesson', () => {
   it('keeps each structure when switching away and back', () => {
     render(Page);
     commit(keyInput(), '40');
-    click(buttonByText('Delete'));
+    click(buttonByText('Xoá'));
     click(button('Đến bước cuối'));
     pickMode('treap');
     commit(keyInput(), '45');
     priorityInput().value = '1';
     priorityInput().dispatchEvent(new Event('input', { bubbles: true }));
-    click(buttonByText('Insert'));
+    click(buttonByText('Chèn'));
     pickMode('skip');
     expect(stat('size')).toBe('7');
     pickMode('treap');
@@ -198,8 +198,8 @@ describe('treaps and skip lists lesson', () => {
     expect(stat('height')).toBe('7');
     commit(keyInput(), '45');
     commit(priorityInput(), '0');
-    click(buttonByText('Insert'));
-    stepTo('Attach 45 as a leaf with priority 0.');
+    click(buttonByText('Chèn'));
+    stepTo('Gắn 45 thành một lá với độ ưu tiên 0.');
     click(button('Đến bước cuối'));
     expect(stat('height')).toBe('5');
   });
@@ -210,7 +210,7 @@ describe('treaps and skip lists lesson', () => {
     pickMode('treap');
     const before = rand.mock.calls.length;
     commit(keyInput(), '45');
-    click(buttonByText('Insert'));
+    click(buttonByText('Chèn'));
     expect(rand.mock.calls.length).toBeGreaterThan(before);
     rand.mockRestore();
   });
@@ -219,7 +219,7 @@ describe('treaps and skip lists lesson', () => {
     render(Page);
     pickMode('treap');
     commit(priorityInput(), '500');
-    expect(narration()).toContain('Priorities must be whole numbers');
+    expect(narration()).toContain('Độ ưu tiên phải là số nguyên');
     expect(priorityInput().value).toBe('');
   });
 
@@ -228,10 +228,10 @@ describe('treaps and skip lists lesson', () => {
     pickMode('treap');
     click(button('Đến bước cuối'));
     commit(keyInput(), '20');
-    click(buttonByText('Delete'));
-    stepTo('rotate it down until it is a leaf');
-    stepTo('moves up and 20 moves down');
-    stepTo('The node is a leaf now');
+    click(buttonByText('Xoá'));
+    stepTo('quay nó xuống cho đến khi nó thành lá');
+    stepTo('được đưa lên và 20 bị đưa xuống');
+    stepTo('Giờ nút đã là lá');
     expect(stat('size')).toBe('6');
   });
 
@@ -303,21 +303,21 @@ describe('treaps and skip lists lesson', () => {
   it('marks the compared key on the level it was read from, even after the drop', () => {
     render(Page);
     click(button('Bước tiếp'));
-    expect(narration()).toContain('On level 4 the next is 80');
+    expect(narration()).toContain('Trên tầng 4, khoá kế tiếp là 80');
     const title = (/** @type {string} */ id) =>
       document.querySelector(`g[data-cell="${id}"] title`)?.textContent ?? '';
-    expect(title('7-4')).toContain('compared');
-    expect(title('7-3')).not.toContain('compared');
+    expect(title('7-4')).toContain('đang so sánh');
+    expect(title('7-3')).not.toContain('đang so sánh');
   });
 
   it('says a tower at the cap stops flipping', () => {
     render(Page);
     commit(keyInput(), '45');
     commit(towerSelect(), '5');
-    click(buttonByText('Insert'));
-    stepTo('the cap in this widget');
+    click(buttonByText('Chèn'));
+    stepTo('mức tối đa của hình minh hoạ này');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Link the new tower');
+    expect(narration()).toContain('Nối cột mới');
   });
 
   it('keeps each structure’s preset across a switch', () => {
@@ -328,7 +328,7 @@ describe('treaps and skip lists lesson', () => {
     pickMode('skip');
     expect(presetSelect().value).toBe('flat');
     commit(keyInput(), '45');
-    click(buttonByText('Search'));
+    click(buttonByText('Tìm'));
     pickMode('treap');
     expect(presetSelect().value).toBe('chain');
     pickMode('skip');
@@ -340,7 +340,7 @@ describe('treaps and skip lists lesson', () => {
     pickMode('treap');
     commit(presetSelect(), 'chain');
     commit(keyInput(), '10');
-    click(buttonByText('Delete'));
-    stepTo('child 20 moves up and 10 moves down');
+    click(buttonByText('Xoá'));
+    stepTo('con 20 được đưa lên và 10 bị đưa xuống');
   });
 });

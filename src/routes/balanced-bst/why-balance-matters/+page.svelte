@@ -12,7 +12,7 @@
     whyBalancePseudocode,
     whyBalanceTrace,
   } from '$lib/algo-engine/why-balance-matters.js';
-  import { en as m } from '$lib/lessons/why-balance-matters/copy.en.js';
+  import { vi as m } from '$lib/lessons/why-balance-matters/copy.vi.js';
   import { createPlayer } from '$lib/player/player.svelte.js';
 
   /** @typedef {import('$lib/algo-engine/why-balance-matters.js').BalanceNode} BalanceNode */

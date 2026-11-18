@@ -15,7 +15,7 @@
     skipListPseudocode,
     skipListTrace,
   } from '$lib/algo-engine/treaps-skip-lists.js';
-  import { en as m } from '$lib/lessons/treaps-skip-lists/copy.en.js';
+  import { vi as m } from '$lib/lessons/treaps-skip-lists/copy.vi.js';
 
   /** @typedef {import('$lib/algo-engine/treaps-skip-lists.js').SkipOp} SkipOp */
   /** @typedef {import('$lib/algo-engine/treaps-skip-lists.js').SkipFrame} SkipFrame */
@@ -174,7 +174,7 @@
         label,
         role,
         state: role ? ROLE_STATE[role] : '',
-        title: m.cellLabel(label, level, role ? m.cellRoles[role] : ''),
+        title: m.cellLabel(column < 0 ? m.headName : label, level, role ? m.cellRoles[role] : ''),
       });
     };
     for (const level of levels) add(-1, m.head, level);

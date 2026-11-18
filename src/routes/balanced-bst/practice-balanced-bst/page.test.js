@@ -2,7 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { flushSync, mount, unmount } from 'svelte';
 import { exerciseProblems } from '$lib/components/answer-check.js';
-import { en as m } from '$lib/lessons/practice-balanced-bst/copy.en.js';
+import { vi as m } from '$lib/lessons/practice-balanced-bst/copy.vi.js';
 import Page from './+page.svelte';
 
 /** @type {Record<string, any> | null} */
@@ -63,7 +63,7 @@ const rankRadio = (value) =>
 describe('practice: balanced tree problems lesson', () => {
   it('starts on the sorted preset and reaches the totals', () => {
     render();
-    expect(narration()).toContain('Nothing has run yet');
+    expect(narration()).toContain('Chưa chạy gì cả');
     expect(stat('bst-total')).toBe('0');
     click(button('Đến bước cuối'));
     expect(stat('bst-total')).toBe('170');
@@ -72,24 +72,24 @@ describe('practice: balanced tree problems lesson', () => {
     expect(stat('avl-height')).toBe('4');
     expect(stat('avl-worst')).toBe('4');
     expect(stat('rotations')).toBe('11');
-    expect(narration()).toContain('Totals: plain BST 170, AVL tree 62');
+    expect(narration()).toContain('Tổng: BST thường 170, cây AVL 62');
   });
 
   it('narrates each operation with what every structure spent', () => {
     render();
     commit(opsField(), 'i2 i1 i3 s3 d9 i3');
-    expect(narration()).toContain('Nothing has run yet');
+    expect(narration()).toContain('Chưa chạy gì cả');
     click(button('Bước tiếp'));
-    expect(narration()).toBe('Insert 2. Comparisons: plain BST 0, AVL tree 0, skip list 0.');
+    expect(narration()).toBe('Chèn 2. Số phép so sánh: BST thường 0, cây AVL 0, skip list 0.');
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
-    expect(narration()).toContain('Search for 3: found.');
+    expect(narration()).toContain('Tìm 3: có.');
     expect(stat('bst-cost')).toBe('2');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('9 is not stored, so the delete changes nothing.');
+    expect(narration()).toContain('9 không được lưu, nên lệnh xoá không làm thay đổi gì.');
     click(button('Bước tiếp'));
-    expect(narration()).toContain('3 is already stored');
+    expect(narration()).toContain('3 đã được lưu');
     expect(stat('keys')).toBe('3');
   });
 
@@ -99,7 +99,7 @@ describe('practice: balanced tree problems lesson', () => {
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
     click(button('Bước tiếp'));
-    expect(narration()).toContain('The AVL tree needed 1 rotation.');
+    expect(narration()).toContain('Cây AVL cần 1 phép quay.');
     expect(stat('rotations')).toBe('1');
     expect(stat('avl-height')).toBe('2');
     expect(stat('bst-height')).toBe('3');
@@ -112,7 +112,7 @@ describe('practice: balanced tree problems lesson', () => {
     expect(stat('avl-total')).toBe('117');
     click(rankRadio('counted'));
     expect(stat('avl-total')).toBe('67');
-    expect(narration()).toContain('Totals:');
+    expect(narration()).toContain('Tổng:');
     click(rankRadio('walk'));
     expect(stat('avl-total')).toBe('117');
   });
@@ -124,9 +124,11 @@ describe('practice: balanced tree problems lesson', () => {
     click(button('Đến bước cuối'));
     click(button('Bước trước'));
     expect(stat('rank')).toBe('4');
-    expect(narration()).toContain('The rank of 35 is 4, found by comparing keys in sorted order.');
+    expect(narration()).toContain(
+      'Thứ hạng của 35 là 4, tìm được bằng cách so sánh các khoá theo thứ tự tăng dần.',
+    );
     click(rankRadio('counted'));
-    expect(narration()).toContain('found by walking one path');
+    expect(narration()).toContain('tìm được bằng cách đi một đường');
   });
 
   it('draws the skip list towers, and new coins can change only the skip list', () => {
@@ -135,7 +137,7 @@ describe('practice: balanced tree problems lesson', () => {
     const before = [stat('bst-total'), stat('avl-total')];
     expect(
       document.querySelector('[data-testid="skip-list"] table')?.getAttribute('aria-label'),
-    ).toContain('15 (height 3)');
+    ).toContain('15 (cao 3)');
     /** @type {Set<string | undefined>} */
     const totals = new Set();
     for (let i = 0; i < 12; i++) {
