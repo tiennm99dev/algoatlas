@@ -6,9 +6,9 @@ export const vi = {
   level: 'Nâng cao',
   title: 'Phân rã nặng nhẹ',
   intro:
-    'Phân rã nặng nhẹ (heavy-light decomposition, HLD) cắt cây thành các chuỗi sao cho mọi đường đi chỉ đi qua O(log n) chuỗi. Đánh số các nút theo từng chuỗi thì mỗi chuỗi thành một khối liền nhau của mảng, nên một truy vấn trên đường đi (tổng, giá trị lớn nhất, cập nhật) trở thành vài truy vấn đoạn trên một cây phân đoạn (segment tree).',
+    'Phân rã nặng nhẹ (heavy-light decomposition, HLD) cắt cây thành các chuỗi sao cho mọi đường đi chỉ đi qua O(log n) chuỗi. Đánh số các nút theo từng chuỗi thì mỗi chuỗi thành một khối liền nhau của mảng, nên một truy vấn trên đường đi (tổng, giá trị lớn nhất, cập nhật) trở thành vài truy vấn đoạn trên một segment tree (cây phân đoạn).',
   summary:
-    'Tách cây của chính bạn thành các chuỗi nặng, rồi xem một truy vấn tổng trên đường đi được chia thành vài đoạn liên tiếp của cây phân đoạn.',
+    'Tách cây của chính em thành các chuỗi nặng, rồi xem một truy vấn tổng trên đường đi được chia thành vài đoạn liên tiếp của segment tree.',
   instruction:
     'Chạy từng bước qua hai lượt duyệt: lượt đầu tính kích thước mọi cây con và chọn con nặng của mỗi nút (H trên cạnh), lượt thứ hai đánh số các nút để mỗi chuỗi là một khối. Sau đó chọn u và v rồi xem truy vấn leo lên từng chuỗi, mỗi lần một đoạn. Chọn một nút để đổi giá trị, thêm con hoặc xoá nó.',
   presetLabel: 'Mẫu có sẵn',
@@ -82,7 +82,7 @@ export const vi = {
   stats: {
     sum: 'Tổng trên đường đi',
     ranges: 'Số đoạn trên chuỗi',
-    visits: 'Số nút cây phân đoạn',
+    visits: 'Số nút segment tree',
     walk: 'Số nút trên đường đi',
   },
   notYet: '?',
@@ -122,26 +122,26 @@ export const vi = {
         return `${L(at(r.from))} và ${L(at(r.to))} giờ đã cùng một chuỗi${f.swapped ? ' (đã đổi chỗ để u là nút ở trên)' : ''}: cộng các vị trí ${r.from}..${r.to}: +${r.sum}.`;
       }
       case 'done':
-        return `Tổng trên đường đi = ${f.ranges.map((r) => r.sum).join(' + ')} = ${f.sum}, từ ${f.ranges.length} đoạn và ${f.visits} nút cây phân đoạn. Đi dọc đường đi từng nút một thì phải đọc ${f.pathNodes} nút.`;
+        return `Tổng trên đường đi = ${f.ranges.map((r) => r.sum).join(' + ')} = ${f.sum}, từ ${f.ranges.length} đoạn và ${f.visits} nút segment tree. Đi dọc đường đi từng nút một thì phải đọc ${f.pathNodes} nút.`;
     }
   },
   takeaways: [
     'Con nặng của một nút là con có cây con lớn nhất; cạnh tới nó là cạnh nặng, mọi cạnh khác là cạnh nhẹ.',
     'Bên dưới một cạnh nhẹ, cây con có nhiều nhất một nửa số nút của cây con phía trên, nên đường đi từ gốc qua nhiều nhất log₂ n cạnh nhẹ và mọi đường đi gặp O(log n) chuỗi.',
-    'Đánh số con nặng trước thì mỗi chuỗi có một khối vị trí liên tiếp, nên một cây phân đoạn trên mảng đó phục vụ mọi chuỗi: một truy vấn đường đi tốn O(log n) đoạn × O(log n) mỗi đoạn = O(log² n).',
+    'Đánh số con nặng trước thì mỗi chuỗi có một khối vị trí liên tiếp, nên một segment tree trên mảng đó phục vụ mọi chuỗi: một truy vấn đường đi tốn O(log n) đoạn × O(log n) mỗi đoạn = O(log² n).',
     'Truy vấn leo lên từ đầu có đầu chuỗi sâu hơn, cộng khối của chuỗi đó, rồi nhảy qua cạnh nhẹ phía trên đầu chuỗi, cho đến khi hai đầu nằm trên cùng một chuỗi.',
     'Chọn mẫu Đường thẳng: cả cây là một chuỗi, nên truy vấn nào cũng chỉ là một đoạn. Rồi chọn Cây nhị phân đầy đủ và truy vấn hai lá: bốn đoạn.',
   ],
   complexityHead: ['Thao tác', 'Chi phí', 'Vì sao'],
   complexity: [
     ['Phân rã (hai lượt duyệt)', 'O(n)', 'Mỗi lượt duyệt thăm mọi nút một lần.'],
-    ['Dựng cây phân đoạn', 'O(n)', 'Mỗi vị trí một lá, mỗi nút trong một phép cộng.'],
+    ['Dựng segment tree', 'O(n)', 'Mỗi vị trí một lá, mỗi nút trong một phép cộng.'],
     [
       'Truy vấn đường đi',
       'O(log² n)',
-      'O(log n) đoạn trên chuỗi, mỗi đoạn là một truy vấn cây phân đoạn O(log n).',
+      'O(log n) đoạn trên chuỗi, mỗi đoạn là một truy vấn segment tree O(log n).',
     ],
-    ['Cập nhật một điểm', 'O(log n)', 'Một lá của cây phân đoạn và các tổ tiên của nó.'],
+    ['Cập nhật một điểm', 'O(log n)', 'Một lá của segment tree và các tổ tiên của nó.'],
     [
       'Đi dọc đường đi theo cách thô',
       'O(n)',
@@ -181,7 +181,7 @@ export const vi = {
         'Cạnh nhẹ luôn ngắn hơn cạnh nặng.',
         'Mỗi lần đi xuống qua một cạnh nhẹ, kích thước cây con giảm ít nhất một nửa.',
         'Mỗi nút có nhiều nhất hai con.',
-        'Cây phân đoạn có log₂ n tầng.',
+        'Segment tree có log₂ n tầng.',
       ],
       answer: 1,
       hints: ['So sánh cây con của một con nhẹ với cây con của cha nó.'],

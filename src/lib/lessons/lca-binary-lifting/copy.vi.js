@@ -11,7 +11,7 @@ export const vi = {
   intro:
     'Tổ tiên chung gần nhất (LCA) của hai nút là nút sâu nhất có cả hai nút đó ở bên dưới: nơi hai đường đi từ chúng lên gốc gặp nhau. Đi lên từng bước một theo nút cha tốn O(độ sâu) cho mỗi truy vấn. Nhảy nhị phân (binary lifting) lưu sẵn, cho mọi nút, các tổ tiên ở 1, 2, 4, 8, … tầng phía trên, nên mọi lần leo đều tách được thành O(log n) bước nhảy.',
   summary:
-    'Dựng bảng nhảy nhị phân trên cây của chính bạn, rồi xem hai nút nhảy theo luỹ thừa của 2 đến tổ tiên chung gần nhất của chúng.',
+    'Dựng bảng nhảy nhị phân trên cây của chính em, rồi xem hai nút nhảy theo luỹ thừa của 2 đến tổ tiên chung gần nhất của chúng.',
   instruction:
     'Chọn u và v, hoặc chọn một nút rồi thêm hay xoá con của nó. Chạy từng bước phần dựng bảng để thấy mỗi ô được ghép từ hai bước nhảy dài một nửa, rồi đến phần truy vấn: đầu tiên u leo lên bằng độ sâu của v, sau đó cả hai cùng leo chừng nào tổ tiên của chúng còn khác nhau.',
   presetLabel: 'Mẫu có sẵn',
@@ -78,7 +78,7 @@ export const vi = {
   eulerWindow: 'lần đầu gặp u … lần đầu gặp v',
   /** @param {string} u @param {string} v @param {string} lca @param {number} depth @param {number} len */
   eulerNote: (u, v, lca, depth, len) =>
-    `Chu trình ghi lại một nút khi đi vào nó và sau mỗi lần một con của nó quay về (${len} mục). Giữa lần thăm đầu tiên của ${u} và của ${v}, mục nông nhất là ${lca} (độ sâu ${depth}): đó là LCA của chúng. Bảng thưa (sparse table) trả lời truy vấn giá trị nhỏ nhất trên đoạn này trong O(1).`,
+    `Chu trình ghi lại một nút khi đi vào nó và sau mỗi lần một con của nó quay về (${len} mục). Giữa lần thăm đầu tiên của ${u} và của ${v}, mục nông nhất là ${lca} (độ sâu ${depth}): đó là LCA của chúng. Sparse table trả lời truy vấn giá trị nhỏ nhất trên đoạn này trong O(1).`,
   stats: {
     lca: 'LCA',
     d: 'Chênh lệch độ sâu d',
@@ -131,7 +131,7 @@ export const vi = {
     'Bảng nhảy up[k][v] chứa tổ tiên cách v 2ᵏ tầng về phía trên. Hàng 0 là cha; mỗi hàng sau là hai bước nhảy của hàng trước: up[k][v] = up[k−1][up[k−1][v]]. Dựng bảng tốn O(n log n).',
     'Mọi lần leo d tầng đều tách được thành các luỹ thừa của 2 trong dạng nhị phân của d, nên đưa u lên bằng độ sâu của v cần nhiều nhất log₂ n bước nhảy.',
     'Sau đó, cho cả hai nút nhảy 2ᵏ tầng với k từ lớn đến nhỏ, chỉ khi hai nút đáp xuống còn khác nhau. Chúng dừng ngay dưới LCA, và LCA là cha của chúng: O(log n) mỗi truy vấn.',
-    'Chu trình Euler biến bài LCA thành bài giá trị nhỏ nhất trên đoạn: giữa lần thăm đầu tiên của u và của v, nút nông nhất chính là LCA. Dùng bảng thưa thì dựng mất O(n log n) và mỗi truy vấn O(1).',
+    'Chu trình Euler biến bài LCA thành bài giá trị nhỏ nhất trên đoạn: giữa lần thăm đầu tiên của u và của v, nút nông nhất chính là LCA. Dùng sparse table (bảng thưa) thì dựng mất O(n log n) và mỗi truy vấn O(1).',
     'Chọn mẫu “Đường thẳng 16 nút” và hỏi P với A: d = 15 = 8 + 4 + 2 + 1, nên u đến A sau 4 bước nhảy, trong khi đi bộ phải mất 15 bước.',
   ],
   complexityHead: ['Thao tác', 'Chi phí', 'Vì sao'],
@@ -152,7 +152,7 @@ export const vi = {
       'Mỗi tầng một bước: n − 1 bước trên cây có dạng đường thẳng.',
     ],
     [
-      'Chu trình Euler + bảng thưa',
+      'Chu trình Euler + sparse table',
       'Dựng O(n log n), truy vấn O(1)',
       'Chu trình dài 2n − 1 mục; giá trị nhỏ nhất trên đoạn lấy từ hai khối chồng lên nhau.',
     ],
@@ -203,5 +203,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Nhảy nhị phân trả lời câu hỏi về tổ tiên; muốn tính tổng trên cả một đường đi thì bài sau, Phân rã nặng nhẹ, cắt cây thành các chuỗi để dùng cây phân đoạn.',
+    'Nhảy nhị phân trả lời câu hỏi về tổ tiên; muốn tính tổng trên cả một đường đi thì bài sau, Phân rã nặng nhẹ, cắt cây thành các chuỗi để dùng segment tree (cây phân đoạn).',
 };

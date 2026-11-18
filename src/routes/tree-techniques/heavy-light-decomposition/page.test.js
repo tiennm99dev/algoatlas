@@ -105,7 +105,7 @@ describe('heavy-light decomposition lesson', () => {
     render();
     click(button('Đến bước cuối'));
     expect(narration()).toBe(
-      'Tổng trên đường đi = 8 + 6 + 20 = 34, từ 3 đoạn và 29 nút cây phân đoạn. Đi dọc đường đi từng nút một thì phải đọc 8 nút.',
+      'Tổng trên đường đi = 8 + 6 + 20 = 34, từ 3 đoạn và 29 nút segment tree. Đi dọc đường đi từng nút một thì phải đọc 8 nút.',
     );
     expect(byTest('sum')).toBe('34');
     expect(byTest('ranges')).toBe('3');

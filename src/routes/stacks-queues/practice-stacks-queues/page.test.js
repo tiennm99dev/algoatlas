@@ -108,12 +108,12 @@ describe('practice: stacks and queues lesson', () => {
     commit(valueInput(), '42');
     /** @type {HTMLFormElement} */ (valueInput().closest('form')).requestSubmit();
     flushSync();
-    expect(narration()).toBe('enqueue(42): push 42 vào inbox. Một thao tác ngăn xếp.');
+    expect(narration()).toBe('enqueue(42): push 42 vào inbox. Một thao tác stack.');
     click(buttonByText('dequeue'));
     click(buttonByText('dequeue'));
     click(button('Đến bước cuối'));
     click(button('Bước trước'));
-    expect(narration()).toContain('hàng đợi rỗng');
+    expect(narration()).toContain('queue rỗng');
   });
 
   it('refuses a ninth item and a bad value', () => {

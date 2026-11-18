@@ -7,7 +7,7 @@ export const vi = {
   level: 'Nâng cao',
   title: 'Luyện tập: bài toán cây nâng cao',
   intro:
-    'Hai bài toán cây kinh điển: tổng các giá trị trên một đường đi, và khoảng cách giữa hai nút, trong khi các giá trị liên tục thay đổi. Chạy danh sách truy vấn của chính bạn bằng phân rã nặng nhẹ (heavy-light decomposition, HLD) và bằng cách thô đi dọc đường đi, rồi so sánh khối lượng công việc của mỗi cách.',
+    'Hai bài toán cây kinh điển: tổng các giá trị trên một đường đi, và khoảng cách giữa hai nút, trong khi các giá trị liên tục thay đổi. Chạy danh sách truy vấn của chính em bằng phân rã nặng nhẹ (heavy-light decomposition, HLD) và bằng cách thô đi dọc đường đi, rồi so sánh khối lượng công việc của mỗi cách.',
   summary:
     'Nhập các truy vấn tổng trên đường đi, khoảng cách và cập nhật trên một cây, rồi so sánh phân rã nặng nhẹ với cách thô đi dọc đường đi, từng truy vấn một.',
   instruction:
@@ -82,13 +82,13 @@ export const vi = {
         return `${ops.length} thao tác trên một cây ${labels.length} nút, được cắt thành ${chains} chuỗi nặng. Mỗi bước chạy một thao tác theo cả hai cách.`;
       case 'sum':
         if (!op || op.type === 'set') return '';
-        return `sum ${L(op.u)} ${L(op.v)} = ${f.answer}. Cách thô: đi qua ${f.naive} nút của đường đi. HLD: ${f.ranges.length} đoạn trên chuỗi, thăm ${f.hld} nút cây phân đoạn.`;
+        return `sum ${L(op.u)} ${L(op.v)} = ${f.answer}. Cách thô: đi qua ${f.naive} nút của đường đi. HLD: ${f.ranges.length} đoạn trên chuỗi, thăm ${f.hld} nút segment tree.`;
       case 'dist':
         if (!op || op.type === 'set') return '';
         return `dist ${L(op.u)} ${L(op.v)} = ${f.answer} cạnh: lca là ${L(f.lca)}, nên ${depth[op.u]} + ${depth[op.v]} − 2·${depth[f.lca]}. Cách thô: đi qua ${f.naive} nút. HLD: leo qua ${f.ranges.length} chuỗi đến ${L(f.lca)}, rồi đọc 3 độ sâu: ${f.hld} bước.`;
       case 'set':
         if (!op || op.type !== 'set') return '';
-        return `set ${L(op.u)} ${op.x}: cách thô ghi 1 giá trị; HLD còn cập nhật lá của cây phân đoạn và các tổ tiên của nó: ${f.hld} nút.`;
+        return `set ${L(op.u)} ${op.x}: cách thô ghi 1 giá trị; HLD còn cập nhật lá của segment tree và các tổ tiên của nó: ${f.hld} nút.`;
       case 'done': {
         const winner =
           f.naiveTotal === f.hldTotal
@@ -101,22 +101,22 @@ export const vi = {
     }
   },
   takeaways: [
-    'Tổng trên đường đi bằng phân rã nặng nhẹ là một đoạn cây phân đoạn cho mỗi chuỗi mà đường đi gặp: O(log n) đoạn, mỗi đoạn O(log n). Cách thô đọc mọi nút trên đường đi, có thể tới n nút.',
+    'Tổng trên đường đi bằng phân rã nặng nhẹ là một đoạn segment tree (cây phân đoạn) cho mỗi chuỗi mà đường đi gặp: O(log n) đoạn, mỗi đoạn O(log n). Cách thô đọc mọi nút trên đường đi, có thể tới n nút.',
     'Khoảng cách chỉ cần tổ tiên chung gần nhất: dist(u, v) = depth[u] + depth[v] − 2·depth[lca]. Leo lên theo từng chuỗi tìm được LCA trong O(log n) bước; nhảy nhị phân cũng làm được.',
-    'Cập nhật là lúc một mảng giá trị bình thường toả sáng (một lần ghi) và là lúc HLD phải trả O(log n). Tổng tiền tố dọc các đường đi từ gốc, một cách sửa dễ khác, sẽ phải trả O(n) cho mỗi lần cập nhật.',
+    'Cập nhật là lúc một mảng giá trị bình thường toả sáng (một lần ghi) và là lúc HLD phải trả O(log n). Prefix sum (tổng tiền tố) dọc các đường đi từ gốc, một cách sửa dễ khác, sẽ phải trả O(n) cho mỗi lần cập nhật.',
     'Trên cây rất nhỏ, hằng số quyết định, và cách thô thường thắng. Trên một đường thẳng 100 000 nút, cách thô tốn 100 000 cho mỗi truy vấn, còn O(log² n) chỉ vài trăm.',
-    'Chọn Cây sâu bướm và so sánh sum N Z với sum Y Z: chi phí cách thô theo độ dài đường đi (15 so với 4), còn chi phí HLD theo số đoạn và cây phân đoạn, không theo độ dài (20 so với 30).',
+    'Chọn Cây sâu bướm và so sánh sum N Z với sum Y Z: chi phí cách thô theo độ dài đường đi (15 so với 4), còn chi phí HLD theo số đoạn và segment tree, không theo độ dài (20 so với 30).',
   ],
   complexityHead: ['Thao tác', 'Cách thô', 'Phân rã nặng nhẹ'],
   complexity: [
     [
       'Tổng hoặc giá trị lớn nhất trên đường đi',
       'O(độ dài đường đi), tới O(n)',
-      'O(log² n): O(log n) chuỗi, mỗi chuỗi một đoạn cây phân đoạn',
+      'O(log² n): O(log n) chuỗi, mỗi chuỗi một đoạn segment tree',
     ],
     ['Khoảng cách', 'O(độ dài đường đi)', 'O(log n): leo theo chuỗi đến LCA, rồi đọc ba độ sâu'],
-    ['Đặt một giá trị', 'O(1)', 'O(log n): một lá của cây phân đoạn và các tổ tiên của nó'],
-    ['Chuẩn bị', 'không cần', 'O(n): hai lượt duyệt và dựng cây phân đoạn'],
+    ['Đặt một giá trị', 'O(1)', 'O(log n): một lá của segment tree và các tổ tiên của nó'],
+    ['Chuẩn bị', 'không cần', 'O(n): hai lượt duyệt và dựng segment tree'],
   ],
   practiceTitle: 'Bài tập',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
@@ -176,7 +176,7 @@ export const vi = {
       answers: [0, 2, 3],
       hints: [
         'So sánh hai chi phí trên mỗi thẻ trong danh sách Các thao tác.',
-        'Khoảng cách chỉ cần leo theo chuỗi, không cần truy vấn cây phân đoạn.',
+        'Khoảng cách chỉ cần leo theo chuỗi, không cần truy vấn segment tree.',
       ],
       solution:
         'sum N Z tốn 15 so với 20, sum Y Z 4 so với 30, và set G 9 1 so với 5. Chỉ dist N Z rẻ hơn khi dùng HLD: 5 bước so với 15.',

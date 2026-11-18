@@ -15,8 +15,6 @@ export const pendingTopics = new Set([
 
   'linked-lists',
 
-  'stacks-queues',
-
   'structures',
 
   'recursion',
@@ -44,8 +42,6 @@ export const pendingTopics = new Set([
   'review-core',
 
   'flows',
-
-  'tree-techniques',
 
   'advanced-heaps',
 

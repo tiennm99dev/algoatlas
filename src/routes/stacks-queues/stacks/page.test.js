@@ -79,7 +79,7 @@ describe('stacks lesson', () => {
     render();
     expect(narration()).toContain('top = −1');
     click(button('Đến bước cuối'));
-    expect(svgLabel('Ngăn xếp')).toBe('Ngăn xếp, từ đáy lên đỉnh: 3, 8, 5. Đỉnh là 5.');
+    expect(svgLabel('Stack')).toBe('Stack, từ đáy lên đỉnh: 3, 8, 5. Đỉnh là 5.');
     expect(byTest('top')).toBe('2');
     expect(byTest('pushes')).toBe('3');
   });
@@ -110,12 +110,12 @@ describe('stacks lesson', () => {
     commit(/** @type {HTMLSelectElement} */ (document.querySelector('select')), 'overflow');
     click(button('Đến bước cuối'));
     click(button('Bước trước'));
-    expect(narration()).toContain('Tràn ngăn xếp: 5 không còn chỗ để vào');
+    expect(narration()).toContain('Tràn stack: 5 không còn chỗ để vào');
     pickImpl('linked');
     click(button('Đến bước cuối'));
-    expect(narration()).toContain('Ngăn xếp có 7 phần tử, 5 ở đỉnh');
-    expect(svgLabel('Danh sách')).toContain(
-      'Danh sách liên kết từ đỉnh: 5 → 6 → 1 → 7 → 2 → 9 → 4 → null',
+    expect(narration()).toContain('Stack có 7 phần tử, 5 ở đỉnh');
+    expect(svgLabel('Linked list')).toContain(
+      'Linked list từ đỉnh: 5 → 6 → 1 → 7 → 2 → 9 → 4 → null',
     );
   });
 
@@ -135,7 +135,7 @@ describe('stacks lesson', () => {
     click(buttonByText('Làm lại'));
     click(buttonByText('pop'));
     click(button('Bước tiếp'));
-    expect(narration()).toBe('Ngăn xếp rỗng: không có gì để pop. Ngăn xếp giữ nguyên.');
+    expect(narration()).toBe('Stack rỗng: không có gì để pop. Stack giữ nguyên.');
   });
 
   it('keeps the last valid value and shows a notice for a bad one', () => {
@@ -161,7 +161,7 @@ describe('stacks lesson', () => {
     render();
     click(buttonByText('pop'));
     click(buttonByText('Hoàn tác'));
-    expect(svgLabel('Ngăn xếp')).toContain('3, 8, 5');
+    expect(svgLabel('Stack')).toContain('3, 8, 5');
     commit(valueInput(), '9');
     /** @type {HTMLFormElement} */ (valueInput().closest('form')).requestSubmit();
     flushSync();

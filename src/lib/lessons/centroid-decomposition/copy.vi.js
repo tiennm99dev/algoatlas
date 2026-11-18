@@ -11,7 +11,7 @@ export const vi = {
   intro:
     'Trọng tâm (centroid) của cây là một nút mà khi bỏ nó đi, không mảnh nào còn lại chứa quá một nửa số nút của cây. Bỏ trọng tâm, rồi làm y như vậy với từng mảnh còn lại: các trọng tâm tạo thành một cây mới có độ sâu O(log n). Mọi đường đi trong cây ban đầu đi qua đúng một trọng tâm cao nhất, nên các câu hỏi về mọi đường đi, chẳng hạn có bao nhiêu cặp nút cách nhau đúng K cạnh, được chia thành những phần nhỏ.',
   summary:
-    'Tìm trọng tâm của cây do bạn dựng, bỏ nó đi, đệ quy vào các mảnh và xem cây trọng tâm lớn dần trong khi các cặp nút cách nhau K cạnh được đếm.',
+    'Tìm trọng tâm của cây do em dựng, bỏ nó đi, đệ quy vào các mảnh và xem cây trọng tâm lớn dần trong khi các cặp nút cách nhau K cạnh được đếm.',
   instruction:
     'Chạy từng bước: mỗi mảnh được tính kích thước, một lượt đi bộ tiến vào con nào chứa quá một nửa mảnh, và nút nơi lượt đi dừng lại là trọng tâm. Trọng tâm đếm các cặp đi qua nó, bị bỏ đi, rồi các phần còn lại lần lượt được phân rã. Đổi K, chọn một mẫu, hoặc chọn một nút để thêm con hay xoá cây con của nó.',
   presetLabel: 'Mẫu có sẵn',

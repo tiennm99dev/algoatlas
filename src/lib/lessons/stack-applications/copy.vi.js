@@ -15,18 +15,18 @@ export const vi = {
   slug: 'stack-applications',
   topic: 'stacks-queues',
   level: 'Trung bình',
-  title: 'Ứng dụng của ngăn xếp',
+  title: 'Ứng dụng của stack',
   intro:
-    'Hễ việc dở dang gần nhất phải xong trước, ngăn xếp (stack) là lựa chọn hợp. Bộ kiểm tra dấu ngoặc push mọi dấu ngoặc mở và pop nó khi gặp dấu đóng tương ứng; máy tính biểu thức hậu tố (postfix) push các số và để mỗi toán tử pop hai toán hạng của nó; còn chính ngăn xếp lời gọi (call stack) của máy tính push một khung cho mỗi lần gọi hàm và pop nó khi hàm trả về.',
+    'Hễ việc dở dang gần nhất phải xong trước, stack (ngăn xếp) là lựa chọn hợp. Bộ kiểm tra dấu ngoặc push mọi dấu ngoặc mở và pop nó khi gặp dấu đóng tương ứng; máy tính biểu thức hậu tố (postfix) push các số và để mỗi toán tử pop hai toán hạng của nó; còn chính call stack (ngăn xếp lời gọi) của máy tính push một khung cho mỗi lần gọi hàm và pop nó khi hàm trả về.',
   summary:
-    'Kiểm tra dấu ngoặc, tính biểu thức hậu tố và theo dõi ngăn xếp lời gọi của hàm đệ quy, mỗi lần một push hoặc một pop.',
+    'Kiểm tra dấu ngoặc, tính biểu thức hậu tố và theo dõi call stack của hàm đệ quy, mỗi lần một push hoặc một pop.',
   instruction:
-    'Chọn một việc, tự nhập dãy ngoặc, biểu thức hậu tố hoặc n, rồi chạy từng bước. Theo dõi ngăn xếp bên cạnh đầu vào: thử mẫu “Bắt chéo” để thấy một dấu đóng gặp nhầm dấu mở, và mẫu “Dài hơn” để thấy mỗi toán tử pop hai giá trị và push lại một.',
+    'Chọn một việc, tự nhập dãy ngoặc, biểu thức hậu tố hoặc n, rồi chạy từng bước. Theo dõi stack bên cạnh đầu vào: thử mẫu “Bắt chéo” để thấy một dấu đóng gặp nhầm dấu mở, và mẫu “Dài hơn” để thấy mỗi toán tử pop hai giá trị và push lại một.',
   modeLabel: 'Việc cần làm',
   modes: {
     brackets: 'Kiểm tra dấu ngoặc',
     postfix: 'Tính biểu thức hậu tố',
-    calls: 'Ngăn xếp lời gọi',
+    calls: 'Call stack',
   },
   bracketsLabel: 'Xâu có dấu ngoặc',
   postfixLabel: 'Biểu thức hậu tố',
@@ -46,15 +46,15 @@ export const vi = {
     leftover: 'Thừa giá trị',
   },
   inputTitle: 'Đầu vào, đọc từ trái sang phải',
-  stackTitle: 'Ngăn xếp',
-  callTitle: 'Ngăn xếp lời gọi (đỉnh = lời gọi đang chạy)',
+  stackTitle: 'Stack',
+  callTitle: 'Call stack (đỉnh = lời gọi đang chạy)',
   /** @param {string[]} tokens @param {number} pos */
   inputLabel: (tokens, pos) =>
     `Đầu vào ${tokens.join(' ')}${pos >= 0 ? `, đang đọc kí hiệu thứ ${pos + 1}: ${tokens[pos]}` : ''}.`,
   stats: {
     pushes: 'Số lần push',
     pops: 'Số lần pop',
-    depth: 'Ngăn xếp cao nhất',
+    depth: 'Stack cao nhất',
     verdict: 'Kết quả',
   },
   verdicts: {
@@ -91,10 +91,10 @@ export const vi = {
     switch (f.kind) {
       case 'start':
         return f.mode === 'brackets'
-          ? 'Ngăn xếp ban đầu rỗng. Đọc xâu từ trái sang phải.'
+          ? 'Stack ban đầu rỗng. Đọc xâu từ trái sang phải.'
           : f.mode === 'postfix'
-            ? 'Ngăn xếp ban đầu rỗng. Đọc các kí hiệu từ trái sang phải.'
-            : 'Chương trình gọi fact. Mỗi lời gọi có một khung riêng trên ngăn xếp lời gọi.';
+            ? 'Stack ban đầu rỗng. Đọc các kí hiệu từ trái sang phải.'
+            : 'Chương trình gọi fact. Mỗi lời gọi có một khung riêng trên call stack.';
       case 'skip':
         return `${At(f)} là “${tok(f)}”, không phải dấu ngoặc: bỏ qua.`;
       case 'push':
@@ -104,13 +104,13 @@ export const vi = {
       case 'mismatch':
         return `${At(f)} là ${tok(f)}, nhưng đỉnh là ${top(f)}: nó không đóng được dấu mở gần nhất. Không cân đối.`;
       case 'close-empty':
-        return `${At(f)} là ${tok(f)}, nhưng ngăn xếp đang rỗng: không có dấu mở nào chờ nó. Không cân đối.`;
+        return `${At(f)} là ${tok(f)}, nhưng stack đang rỗng: không có dấu mở nào chờ nó. Không cân đối.`;
       case 'leftover':
         return f.mode === 'brackets'
           ? `Xâu đã hết mà còn ${f.stack.length} dấu mở chưa bao giờ được đóng: ${f.stack.join(' ')}. Không cân đối.`
-          : `Hết kí hiệu mà ngăn xếp còn ${f.stack.length} giá trị, không phải một: thiếu một toán tử.`;
+          : `Hết kí hiệu mà stack còn ${f.stack.length} giá trị, không phải một: thiếu một toán tử.`;
       case 'balanced':
-        return 'Xâu đã hết và ngăn xếp rỗng: mọi dấu ngoặc đều được đóng bằng dấu tương ứng. Cân đối.';
+        return 'Xâu đã hết và stack rỗng: mọi dấu ngoặc đều được đóng bằng dấu tương ứng. Cân đối.';
       case 'push-number':
         return `${tok(f)} là một số: push nó.`;
       case 'pop-operands':
@@ -118,7 +118,7 @@ export const vi = {
       case 'apply':
         return `Push a ${tok(f)} b = ${top(f)}. Một giá trị thay cho hai.`;
       case 'too-few':
-        return `${tok(f)} cần hai giá trị, nhưng ngăn xếp chỉ có ${f.stack.length}. Biểu thức không phải biểu thức hậu tố hợp lệ.`;
+        return `${tok(f)} cần hai giá trị, nhưng stack chỉ có ${f.stack.length}. Biểu thức không phải biểu thức hậu tố hợp lệ.`;
       case 'div-zero':
         return `${tok(f)} sẽ chia cho 0. Biểu thức không có giá trị.`;
       case 'result':
@@ -140,15 +140,15 @@ export const vi = {
       }
       case 'done':
         return f.mode === 'calls'
-          ? `Xong. Ngăn xếp lời gọi lại rỗng và fact = ${f.value}. Nó từng sâu ${f.maxDepth} khung.`
-          : `Xong. ${f.pushes} lần push, ${f.pops} lần pop, cùng lúc có nhiều nhất ${f.maxDepth} phần tử trên ngăn xếp.`;
+          ? `Xong. Call stack lại rỗng và fact = ${f.value}. Nó từng sâu ${f.maxDepth} khung.`
+          : `Xong. ${f.pushes} lần push, ${f.pops} lần pop, cùng lúc có nhiều nhất ${f.maxDepth} phần tử trên stack.`;
     }
   },
   takeaways: [
     'Dãy ngoặc cân đối khi mỗi dấu đóng khớp với dấu mở gần nhất còn đang mở và cuối cùng không còn dấu nào mở: push dấu mở, pop khi gặp dấu đóng khớp với nó.',
-    'Kiểm tra dấu ngoặc thất bại theo ba cách: dấu đóng gặp nhầm dấu mở, dấu đóng thấy ngăn xếp rỗng, hoặc cuối cùng vẫn còn dấu mở.',
+    'Kiểm tra dấu ngoặc thất bại theo ba cách: dấu đóng gặp nhầm dấu mở, dấu đóng thấy stack rỗng, hoặc cuối cùng vẫn còn dấu mở.',
     'Biểu thức hậu tố đặt toán tử sau các toán hạng, nên không cần dấu ngoặc hay quy tắc thứ tự phép tính: push các số, còn mỗi toán tử pop b rồi a và push a op b.',
-    'Mỗi lần gọi hàm push một khung chứa n riêng của lời gọi đó; mỗi lần trả về thì pop khung. Đệ quy quá sâu sẽ hết chỗ trên ngăn xếp: tràn ngăn xếp.',
+    'Mỗi lần gọi hàm push một khung chứa n riêng của lời gọi đó; mỗi lần trả về thì pop khung. Đệ quy quá sâu sẽ hết chỗ trên stack: tràn stack.',
     'Nhập “(a[b)]” và tìm đúng kí tự làm nó thất bại, rồi tính “2 3 4 * +” và “2 3 + 4 *” để so sánh.',
   ],
   complexityHead: ['Việc', 'Chi phí', 'Vì sao'],
@@ -159,8 +159,8 @@ export const vi = {
       'O(n)',
       'Mỗi số một lần push; mỗi toán tử hai lần pop và một lần push.',
     ],
-    ['Ngăn xếp lời gọi của fact(n)', 'O(n)', 'Push n khung, mỗi khung pop một lần.'],
-    ['Bộ nhớ thêm', 'O(n)', 'Ngăn xếp có thể cùng lúc chứa mọi dấu mở, mọi số hay mọi khung.'],
+    ['Call stack của fact(n)', 'O(n)', 'Push n khung, mỗi khung pop một lần.'],
+    ['Bộ nhớ thêm', 'O(n)', 'Stack có thể cùng lúc chứa mọi dấu mở, mọi số hay mọi khung.'],
   ],
   practiceTitle: 'Tự kiểm tra',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
@@ -185,10 +185,10 @@ export const vi = {
     {
       type: 'number',
       prompt:
-        'Kiểm tra (([]){}) bằng bộ kiểm tra dấu ngoặc. Cùng lúc ngăn xếp chứa nhiều nhất bao nhiêu dấu mở?',
+        'Kiểm tra (([]){}) bằng bộ kiểm tra dấu ngoặc. Cùng lúc stack chứa nhiều nhất bao nhiêu dấu mở?',
       answer: 3,
       unit: 'dấu mở',
-      hints: ['Theo dõi chiều cao ngăn xếp sau mỗi kí tự.'],
+      hints: ['Theo dõi chiều cao stack sau mỗi kí tự.'],
       solution: 'Chiều cao sau từng kí tự: 1, 2, 3, 2, 1, 2, 1, 0. Nhiều nhất là 3, sau ( ( [.',
     },
     {
@@ -204,7 +204,7 @@ export const vi = {
     },
     {
       type: 'number',
-      prompt: 'Khi fact(5) chạy, ngăn xếp lời gọi lúc sâu nhất có bao nhiêu khung?',
+      prompt: 'Khi fact(5) chạy, call stack lúc sâu nhất có bao nhiêu khung?',
       answer: 5,
       unit: 'khung',
       hints: ['fact(5) gọi fact(4), fact(4) gọi fact(3), cứ thế tiếp tục.'],
@@ -213,5 +213,5 @@ export const vi = {
     },
   ],
   nextTeaser:
-    'Bài sau, Ngăn xếp đơn điệu và hàng đợi đơn điệu, giữ ngăn xếp luôn tăng hoặc luôn giảm để tìm phần tử lớn hơn kế tiếp trong O(n).',
+    'Bài sau, Stack đơn điệu và queue đơn điệu, giữ stack luôn tăng hoặc luôn giảm để tìm phần tử lớn hơn kế tiếp trong O(n).',
 };

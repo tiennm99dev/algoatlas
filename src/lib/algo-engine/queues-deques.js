@@ -17,16 +17,16 @@ export const MAX_VALUE = 99;
 
 export const dequePseudocode = [
   'pushBack(v):            ▹ enqueue',
-  '  if size = C: đầy, dá»«ng',
+  '  if size = C: đầy, dừng',
   '  a[(head + size) mod C] = v; size = size + 1',
   'popFront():             ▹ dequeue',
-  '  if size = 0: rỗng, dá»«ng',
+  '  if size = 0: rỗng, dừng',
   '  v = a[head]; head = (head + 1) mod C; size = size − 1',
   'pushFront(v):',
-  '  if size = C: đầy, dá»«ng',
+  '  if size = C: đầy, dừng',
   '  head = (head − 1 + C) mod C; a[head] = v; size = size + 1',
   'popBack():',
-  '  if size = 0: rỗng, dá»«ng',
+  '  if size = 0: rỗng, dừng',
   '  v = a[(head + size − 1) mod C]; size = size − 1',
 ];
 

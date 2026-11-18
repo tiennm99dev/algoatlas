@@ -75,14 +75,14 @@ function practice() {
 describe('monotonic stack and queue lesson', () => {
   it('pops shorter bars when a taller one arrives and records their answer', () => {
     render();
-    expect(narration()).toContain('Ngăn xếp giữ các chỉ số còn đang chờ');
+    expect(narration()).toContain('Stack giữ các chỉ số còn đang chờ');
     next(7);
     expect(narration()).toBe('Đỉnh là a[1] = 2, nhỏ hơn 7: 7 là phần tử lớn hơn kế tiếp của nó.');
     next(1);
     expect(narration()).toBe('Pop chỉ số 1 và ghi answer[1] = 7. Nó bị bỏ hẳn.');
     expect(label('Đáp án lớn hơn kế tiếp')).toContain('chưa biết, 7, chưa biết');
     next(3);
-    expect(label('Ngăn xếp')).toBe('Ngăn xếp, từ đáy lên đỉnh: chỉ số 2 (7).');
+    expect(label('Stack')).toBe('Stack, từ đáy lên đỉnh: chỉ số 2 (7).');
   });
 
   it('finishes with every answer and the 2n bound', () => {
@@ -109,7 +109,9 @@ describe('monotonic stack and queue lesson', () => {
     click(button('Đến bước cuối'));
     expect(label('Lớn nhất của các cửa sổ')).toBe('Lớn nhất của các cửa sổ: 7, 7, 7, 5, 8, 8.');
     click(button('Bước trước'));
-    expect(narration()).toBe('Cửa sổ a[5..7] đã đủ: giá trị lớn nhất của nó ở đầu hàng, a[6] = 8.');
+    expect(narration()).toBe(
+      'Cửa sổ a[5..7] đã đủ: giá trị lớn nhất của nó ở đầu deque, a[6] = 8.',
+    );
     commit(input('k'), '2');
     click(button('Đến bước cuối'));
     expect(label('Lớn nhất của các cửa sổ')).toBe('Lớn nhất của các cửa sổ: 4, 7, 7, 3, 5, 8, 8.');
@@ -125,7 +127,7 @@ describe('monotonic stack and queue lesson', () => {
       seen.push(narration());
       click(button('Bước tiếp'));
     }
-    expect(seen).toContain('Chỉ số 0 đã trượt ra khỏi cửa sổ a[1..2]: pop nó ở đầu hàng.');
+    expect(seen).toContain('Chỉ số 0 đã trượt ra khỏi cửa sổ a[1..2]: pop nó ở đầu deque.');
   });
 
   it('refuses bad values and a bad k, keeping the last valid ones', () => {

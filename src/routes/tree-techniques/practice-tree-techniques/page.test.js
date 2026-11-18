@@ -80,7 +80,7 @@ describe('advanced tree problems practice', () => {
     );
     next(1);
     expect(narration()).toBe(
-      'sum M L = 34. Cách thô: đi qua 8 nút của đường đi. HLD: 3 đoạn trên chuỗi, thăm 29 nút cây phân đoạn.',
+      'sum M L = 34. Cách thô: đi qua 8 nút của đường đi. HLD: 3 đoạn trên chuỗi, thăm 29 nút segment tree.',
     );
     expect(byTest('answer')).toBe('34');
     expect(nodeName('A')).toBe('Nút A, giá trị 3, tổ tiên chung gần nhất');

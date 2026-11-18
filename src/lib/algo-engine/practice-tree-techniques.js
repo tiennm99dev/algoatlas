@@ -41,7 +41,7 @@ export const MAX_VALUE = 9;
 
 export const practicePseudocode = [
   'for op in ops:',
-  '  sum u v:  thô: đi dọc đường đi, cộng giá trị   HLD: mỗi chuỗi một đoạn trên cây phân đoạn',
+  '  sum u v:  thô: đi dọc đường đi, cộng giá trị   HLD: mỗi chuỗi một đoạn trên segment tree',
   '  dist u v: thô: đi dọc đường đi, đếm cạnh      HLD: leo theo các chuỗi đến lca;',
   '            dist = depth[u] + depth[v] − 2·depth[lca]',
   '  set v x:  thô: a[v] = x                         HLD: cập nhật lá và các tổ tiên của nó',

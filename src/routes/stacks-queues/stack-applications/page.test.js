@@ -74,7 +74,7 @@ function practice() {
 describe('stack applications lesson', () => {
   it('checks the nested preset, pushing openers and popping on matches', () => {
     render();
-    expect(narration()).toContain('Ngăn xếp ban đầu rỗng');
+    expect(narration()).toContain('Stack ban đầu rỗng');
     next(3);
     expect(narration()).toBe(
       'Kí tự thứ 3 là (, một dấu ngoặc mở: push nó. Nó chờ dấu đóng tương ứng.',
@@ -104,7 +104,7 @@ describe('stack applications lesson', () => {
     expect(narration()).toContain('còn 1 dấu mở chưa bao giờ được đóng');
     commit(input('brackets'), ')');
     next(1);
-    expect(narration()).toContain('ngăn xếp đang rỗng: không có dấu mở nào chờ nó');
+    expect(narration()).toContain('stack đang rỗng: không có dấu mở nào chờ nó');
   });
 
   it('refuses text longer than 24 characters', () => {
@@ -138,7 +138,7 @@ describe('stack applications lesson', () => {
     commit(/** @type {HTMLSelectElement} */ (document.querySelector('select')), 'missing');
     click(button('Đến bước cuối'));
     click(button('Bước trước'));
-    expect(narration()).toContain('+ cần hai giá trị, nhưng ngăn xếp chỉ có 1');
+    expect(narration()).toContain('+ cần hai giá trị, nhưng stack chỉ có 1');
   });
 
   it('grows and unwinds the call stack of fact(n)', () => {
