@@ -33,8 +33,10 @@
   }
 }
 
-/* Scroll boxes the lesson gives a tab stop (scroll-regions.js) show the same ring. */
-[data-scroll-region]:focus-visible {
+/* Scroll boxes the lesson gives a tab stop (scroll-regions.js), and boxes an author marks as
+   scroll frames, show the same ring. */
+[data-scroll-region]:focus-visible,
+[data-scroll-frame]:focus-visible {
   outline: 2px solid var(--color-teal-700);
   outline-offset: 2px;
 }

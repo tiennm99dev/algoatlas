@@ -151,7 +151,13 @@
       <div class="rounded-xl border border-slate-200 bg-white p-4">
         <!-- A scrollable region must be keyboard focusable. -->
         <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
-        <div class="overflow-x-auto" tabindex="0" role="group" aria-label={m.plotScroller}>
+        <div
+          class="overflow-x-auto"
+          data-scroll-frame
+          tabindex="0"
+          role="group"
+          aria-label={m.plotScroller}
+        >
           <svg
             viewBox="0 0 {W} {H}"
             role="img"

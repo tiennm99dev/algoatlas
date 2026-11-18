@@ -215,6 +215,8 @@ describe('binary search tree lesson', () => {
     expect(scroller?.getAttribute('tabindex')).toBe('0');
     expect(scroller?.getAttribute('aria-label')).toBeTruthy();
     expect(scroller?.className).toContain('overflow-x-auto');
+    // Marked as a scroll frame, so the arrow keys scroll it instead of stepping the player.
+    expect(scroller?.hasAttribute('data-scroll-frame')).toBe(true);
   });
 
   it('inserts when Enter submits the key field and does not submit on Search', () => {

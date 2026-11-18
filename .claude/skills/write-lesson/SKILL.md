@@ -169,7 +169,9 @@ House rules:
   `lesson-layout` gives every `overflow-x-auto` or `overflow-auto` box a tab stop and a focus
   ring while it overflows with nothing focusable inside (`scroll-regions.js`), and arrow keys
   pressed on it scroll it instead of stepping the player, so a plain scrolling `div` needs no `tabindex` of its own; wrap an
-  SVG drawing in `ScrollFrame` instead when it should keep a readable minimum width.
+  SVG drawing in `ScrollFrame` instead when it should keep a readable minimum width. A scroller
+  that sets its own `tabindex` must also carry `data-scroll-frame`, or the arrow keys step the
+  player instead of scrolling it; the attribute gives it the same focus ring.
 
 ## 7. Shared components
 

@@ -264,7 +264,13 @@
              The drawing keeps a readable minimum width and scrolls sideways when the card is narrower. -->
         <!-- A scrollable region must be keyboard focusable. -->
         <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
-        <div class="overflow-x-auto" tabindex="0" role="group" aria-label={m.treeScroller}>
+        <div
+          class="overflow-x-auto"
+          data-scroll-frame
+          tabindex="0"
+          role="group"
+          aria-label={m.treeScroller}
+        >
           <svg
             viewBox="0 0 {vbW} {vbH}"
             role="img"

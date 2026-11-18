@@ -238,7 +238,13 @@
         </h2>
         <!-- A scrollable region must be keyboard focusable. -->
         <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
-        <div class="overflow-x-auto" tabindex="0" role="group" aria-label={m.chartScroller}>
+        <div
+          class="overflow-x-auto"
+          data-scroll-frame
+          tabindex="0"
+          role="group"
+          aria-label={m.chartScroller}
+        >
           <svg
             viewBox="0 0 {chartW} {TOP + PLOT_H + 24}"
             role="img"
