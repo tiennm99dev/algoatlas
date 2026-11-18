@@ -117,7 +117,7 @@ export const en = {
   /** @type {Record<Bin, string>} */
   binNotes: {
     p: 'Solvable exactly in polynomial time.',
-    npc: 'NP-complete, and no constant-factor approximation unless P = NP, or a yes/no question.',
+    npc: 'NP-complete as a yes/no question. An optimisation problem belongs here when it is NP-hard and has no constant-factor approximation unless P = NP.',
     approx: 'NP-hard exactly, but within a constant factor in polynomial time.',
   },
   cards,
