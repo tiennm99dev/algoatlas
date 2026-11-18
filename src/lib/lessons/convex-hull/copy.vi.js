@@ -9,9 +9,9 @@ export const vi = {
   level: 'Trung bình',
   title: 'Bao lồi',
   intro:
-    'Bao lồi (convex hull) là đa giác lồi nhỏ nhất bao quanh một tập điểm, giống hình mà một sợi dây chun ôm sát lại. Ta sắp xếp các điểm, rồi duyệt chúng với một ngăn xếp (stack): mỗi khi ba điểm mới nhất không tạo thành một lần rẽ trái, điểm ở giữa không thể là đỉnh của bao, nên ta lấy nó ra. Mỗi điểm được đẩy vào một lần và lấy ra nhiều nhất một lần, nên sau bước sắp xếp O(n log n), phần duyệt chỉ tốn O(n).',
+    'Bao lồi (convex hull) là đa giác lồi nhỏ nhất bao quanh một tập điểm, giống hình mà một sợi dây chun ôm sát lại. Ta sắp xếp các điểm, rồi duyệt chúng với một stack (ngăn xếp): mỗi khi ba điểm mới nhất không tạo thành một lần rẽ trái, điểm ở giữa không thể là đỉnh của bao, nên ta lấy nó ra. Mỗi điểm được đẩy vào một lần và lấy ra nhiều nhất một lần, nên sau bước sắp xếp O(n log n), phần duyệt chỉ tốn O(n).',
   summary:
-    'Dựng bao lồi của các điểm bạn đặt bằng thuật toán Graham hoặc thuật toán chuỗi đơn điệu của Andrew, và xem các khúc rẽ lõm bị loại khỏi ngăn xếp.',
+    'Dựng bao lồi của các điểm em đặt bằng thuật toán Graham hoặc thuật toán chuỗi đơn điệu của Andrew, và xem các khúc rẽ lõm bị loại khỏi stack.',
   instruction:
     'Chọn một thuật toán rồi đi từng bước. Mỗi phép kiểm tra cho thấy khúc rẽ second → top → p, và nếu không phải rẽ trái thì top bị lấy ra. Sau đó kéo một điểm, nhấn vào chỗ trống để thêm điểm, hoặc nhấn “Ngẫu nhiên”. Kéo một đỉnh vào phía trong để thấy bao lồi thay đổi ngay.',
   methodLabel: 'Thuật toán',
@@ -40,7 +40,7 @@ export const vi = {
   occupiedError: 'Ở đó đã có một điểm.',
   selectFirst: 'Hãy chọn một điểm trước: nhấn vào nó, hoặc chọn nó bằng bàn phím rồi nhấn Enter.',
   legend: {
-    chain: 'Chuỗi trong ngăn xếp',
+    chain: 'Chuỗi trong stack',
     lower: 'Chuỗi dưới đã xong',
     hull: 'Bao lồi đã xong',
     current: 'p, điểm đang được thêm',
@@ -49,7 +49,7 @@ export const vi = {
   },
   /** @param {number} rank */
   rankNote: (rank) => `#${rank}`,
-  stackTitle: 'Ngăn xếp, từ đáy lên đỉnh',
+  stackTitle: 'Stack, từ đáy lên đỉnh',
   stackEmpty: 'rỗng',
   orderTitle: 'Thứ tự duyệt',
   orderEmpty: 'chưa sắp xếp',
@@ -92,7 +92,7 @@ export const vi = {
           ? 'Lượt thứ nhất, từ trái sang phải: lượt này dựng chuỗi dưới.'
           : 'Lượt thứ hai, từ phải sang trái: lượt này dựng chuỗi trên trên cùng các điểm.';
       case 'consider':
-        return `Tiếp theo là ${name(/** @type {number} */ (f.current))}. Kiểm tra khúc rẽ nó tạo với đỉnh ngăn xếp.`;
+        return `Tiếp theo là ${name(/** @type {number} */ (f.current))}. Kiểm tra khúc rẽ nó tạo với đỉnh stack.`;
       case 'test': {
         const [second, top, p] = /** @type {[number, number, number]} */ (f.triple);
         const value = /** @type {number} */ (f.cross);
@@ -104,7 +104,7 @@ export const vi = {
       case 'pop':
         return `Lấy ${name(/** @type {number} */ (f.popped[f.popped.length - 1]))} ra. Điểm này nằm bên trong hoặc trên cạnh của bao.`;
       case 'push':
-        return `Đẩy ${name(f.stack[f.stack.length - 1])} vào. Ngăn xếp có ${f.stack.length} điểm.`;
+        return `Đẩy ${name(f.stack[f.stack.length - 1])} vào. Stack có ${f.stack.length} điểm.`;
       case 'done': {
         const hull = /** @type {number[]} */ (f.hull);
         if (hull.length === 0) return 'Không có điểm nào, nên không có bao lồi.';
@@ -113,7 +113,7 @@ export const vi = {
     }
   },
   takeaways: [
-    'Cả hai thuật toán đều sắp xếp, rồi duyệt với một ngăn xếp, lấy ra mọi đỉnh ngăn xếp tạo khúc rẽ không phải rẽ trái. Chỉ thứ tự sắp xếp là khác: theo góc quanh một điểm mốc, hoặc theo x rồi theo y.',
+    'Cả hai thuật toán đều sắp xếp, rồi duyệt với một stack, lấy ra mọi đỉnh stack tạo khúc rẽ không phải rẽ trái. Chỉ thứ tự sắp xếp là khác: theo góc quanh một điểm mốc, hoặc theo x rồi theo y.',
     'Chuỗi đơn điệu duyệt hai lần, một lần cho chuỗi dưới và một lần cho chuỗi trên, rồi ghép hai chuỗi lại. Nó không cần so sánh góc, nên dễ viết đúng hơn.',
     'Mỗi điểm được đẩy vào một lần trong mỗi lượt và lấy ra nhiều nhất một lần, nên phần duyệt là O(n). Bước sắp xếp mới là phần O(n log n), và nói chung không thể nhanh hơn, vì có thể dùng một thuật toán bao lồi để sắp xếp.',
     'Lấy ra khi tích có hướng ≤ 0 sẽ bỏ các điểm thẳng hàng với một cạnh. Muốn giữ chúng, chỉ lấy ra khi tích có hướng < 0, và cẩn thận với các điểm hoà trên tia cuối cùng của thuật toán Graham.',
@@ -127,7 +127,7 @@ export const vi = {
       'Thời gian O(n)',
       'Mỗi điểm được đẩy vào một lần trong mỗi lượt và lấy ra nhiều nhất một lần, nên mỗi lượt có nhiều nhất khoảng 2n phép kiểm tra.',
     ],
-    ['Bộ nhớ', 'O(n)', 'Thứ tự đã sắp xếp và ngăn xếp.'],
+    ['Bộ nhớ', 'O(n)', 'Thứ tự đã sắp xếp và stack.'],
     [
       'Toàn bộ thuật toán',
       'O(n log n)',
@@ -151,7 +151,7 @@ export const vi = {
     {
       type: 'number',
       prompt:
-        'Ngăn xếp đang là (0, 0), (4, 0), (4, 1), và điểm tiếp theo theo thứ tự của thuật toán Graham là (5, 3). Có bao nhiêu điểm bị lấy ra?',
+        'Stack đang là (0, 0), (4, 0), (4, 1), và điểm tiếp theo theo thứ tự của thuật toán Graham là (5, 3). Có bao nhiêu điểm bị lấy ra?',
       answer: 1,
       unit: 'điểm',
       hints: ['Kiểm tra (4, 0) → (4, 1) → (5, 3) trước.', 'Rồi kiểm tra (0, 0) → (4, 0) → (5, 3).'],

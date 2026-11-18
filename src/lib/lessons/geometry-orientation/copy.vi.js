@@ -23,9 +23,9 @@ export const vi = {
   intro:
     'Gần như mọi bài hình học tính toán đều quy về một câu hỏi: đi từ a đến b thì c nằm bên trái, bên phải hay ngay phía trước? Tích có hướng (cross product) trả lời câu hỏi này chỉ bằng hai phép nhân và một phép trừ, không cần góc, không cần phép chia. Trên số nguyên, kết quả chính xác tuyệt đối; trên số thực dấu phẩy động (float), kết quả có thể sai.',
   summary:
-    'Tính tích vô hướng (dot product) và tích có hướng trên các điểm bạn kéo, đọc hướng quay từ dấu của kết quả và xem số thực dấu phẩy động tính sai.',
+    'Tính tích vô hướng (dot product) và tích có hướng trên các điểm em kéo, đọc hướng quay từ dấu của kết quả và xem số thực dấu phẩy động tính sai.',
   instruction:
-    'Kéo A, B hoặc C, hoặc chọn một điểm rồi nhấn Shift + phím mũi tên để dời nó. Dấu của tích có hướng và hướng quay cập nhật ngay khi bạn dời điểm. Lùi từng bước để xem riêng hai vectơ và từng tích, rồi chọn ví dụ “Bẫy số thực”.',
+    'Kéo A, B hoặc C, hoặc chọn một điểm rồi nhấn Shift + phím mũi tên để dời nó. Dấu của tích có hướng và hướng quay cập nhật ngay khi em dời điểm. Lùi từng bước để xem riêng hai vectơ và từng tích, rồi chọn ví dụ “Bẫy số thực”.',
   presetLabel: 'Ví dụ',
   presets: {
     left: 'Rẽ trái',
@@ -153,7 +153,7 @@ export const vi = {
     },
     {
       type: 'choice',
-      prompt: 'Đi từ a = (2, 2) đến b = (6, 2), rồi tiếp tục về phía c = (6, 0), bạn rẽ hướng nào?',
+      prompt: 'Đi từ a = (2, 2) đến b = (6, 2), rồi tiếp tục về phía c = (6, 0), em rẽ hướng nào?',
       options: ['Rẽ trái', 'Rẽ phải', 'Đi thẳng'],
       answer: 1,
       hints: [
@@ -180,7 +180,7 @@ export const vi = {
     {
       type: 'choice',
       prompt:
-        'Toạ độ các điểm của bạn là số thập phân, đo đến phần trăm mét. Cách nào kiểm tra ba điểm thẳng hàng đáng tin cậy nhất?',
+        'Toạ độ các điểm của em là số thập phân, đo đến phần trăm mét. Cách nào kiểm tra ba điểm thẳng hàng đáng tin cậy nhất?',
       options: [
         'So sánh hệ số góc (b.y − a.y) / (b.x − a.x) bằng ==',
         'So sánh tích có hướng tính bằng số thực với 0 bằng ==',

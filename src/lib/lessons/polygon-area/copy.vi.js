@@ -15,7 +15,7 @@ export const vi = {
   intro:
     'Chỉ cần đi một vòng quanh các cạnh của đa giác là ta trả lời được hai câu hỏi. Công thức dây giày (shoelace formula) cộng một số hạng có dấu cho mỗi cạnh để ra diện tích và chiều đi vòng. Phương pháp chiếu tia (ray casting) và chỉ số vòng quay (winding number) đếm cách các cạnh đi qua một điểm để biết điểm đó có nằm trong đa giác không.',
   summary:
-    'Tính diện tích đa giác bằng công thức dây giày, rồi kiểm tra một điểm bằng phương pháp chiếu tia và chỉ số vòng quay trên đa giác bạn tự sửa.',
+    'Tính diện tích đa giác bằng công thức dây giày, rồi kiểm tra một điểm bằng phương pháp chiếu tia và chỉ số vòng quay trên đa giác em tự sửa.',
   instruction:
     'Chọn một phương pháp rồi kéo các đỉnh. Nhấn vào chỗ trống để thêm đỉnh, hoặc dùng các ô nhập bên dưới. Ở chế độ dây giày, hãy xem tam giác có dấu từ gốc toạ độ tới mỗi cạnh cộng dồn thành diện tích. Ở hai chế độ còn lại, kéo Q và đếm xem các cạnh làm gì. Chọn ví dụ ngôi sao: hai phép kiểm tra cho kết quả khác nhau.',
   methodLabel: 'Phương pháp',
@@ -212,7 +212,7 @@ export const vi = {
     },
     {
       type: 'choice',
-      prompt: 'Một tổng dây giày ra −56. Bạn biết được gì?',
+      prompt: 'Một tổng dây giày ra −56. Em biết được gì?',
       options: [
         'Diện tích là 56 và các đỉnh đi ngược chiều kim đồng hồ',
         'Diện tích là 28 và các đỉnh đi theo chiều kim đồng hồ',

@@ -183,7 +183,7 @@ export const vi = {
     ['Vét cạn', 'O(n) mỗi truy vấn', 'Kiểm tra từng điểm với cả hai khoảng.'],
   ],
   nextTeaser:
-    'Tiếp theo là bài luyện tập: bài toán hình học, nơi bạn tự dự đoán từng con số trong ba bài toán: điểm nằm phía nào của đường thẳng, diện tích trong hàng rào ngắn nhất và cặp điểm xa nhau nhất.',
+    'Tiếp theo là bài luyện tập: bài toán hình học, nơi em tự dự đoán từng con số trong ba bài toán: điểm nằm phía nào của đường thẳng, diện tích trong hàng rào ngắn nhất và cặp điểm xa nhau nhất.',
   practiceTitle: 'Tự kiểm tra',
   /** @type {import('$lib/components/answer-check.js').Exercise[]} */
   practice: [

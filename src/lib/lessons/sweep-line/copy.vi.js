@@ -18,7 +18,7 @@ export const vi = {
   intro:
     'Kiểm tra mọi cặp trong n đoạn thẳng tốn n(n − 1)/2 phép kiểm tra, trong khi hai đoạn chỉ có thể giao nhau ở chỗ một đường thẳng đứng đi qua cả hai. Vậy ta trượt một đường như thế từ trái sang phải, chỉ dừng ở các đầu mút, và chỉ giữ những đoạn nằm dưới nó: tập đang xét. Đó là ý tưởng của đường quét (sweep line). Một bài toán hai chiều trở thành một dãy các cập nhật nhỏ một chiều.',
   summary:
-    'Quét một đường thẳng đứng qua các đoạn thẳng bạn kéo, theo dõi các sự kiện và tập đang xét, rồi tìm các giao điểm với số phép kiểm tra cặp ít hơn nhiều.',
+    'Quét một đường thẳng đứng qua các đoạn thẳng em kéo, theo dõi các sự kiện và tập đang xét, rồi tìm các giao điểm với số phép kiểm tra cặp ít hơn nhiều.',
   instruction:
     'Đi từng bước để dời đường quét từ sự kiện này sang sự kiện khác, và xem tập đang xét thay đổi. Kéo một đầu mút bất kì, hoặc chọn một đầu mút rồi nhấn Shift + phím mũi tên. Chọn ví dụ “Các đoạn dài song song” và so sánh số phép kiểm tra cặp của hai phương pháp.',
   methodLabel: 'Phương pháp',
@@ -148,7 +148,7 @@ export const vi = {
     [
       'Tìm mọi giao điểm (Bentley-Ottmann)',
       'Thời gian O((n + k) log n)',
-      'Các giao điểm trở thành sự kiện trong một hàng đợi ưu tiên, mỗi sự kiện đổi chỗ hai đoạn kề nhau.',
+      'Các giao điểm trở thành sự kiện trong một priority queue (hàng đợi ưu tiên), mỗi sự kiện đổi chỗ hai đoạn kề nhau.',
     ],
   ],
   nextTeaser:
@@ -189,7 +189,7 @@ export const vi = {
       type: 'choice',
       prompt: 'Khi một đầu bắt đầu và một đầu kết thúc có cùng x, vì sao xử lí đầu bắt đầu trước?',
       options: [
-        'Để sắp xếp nhanh hơn',
+        'Để bước sắp xếp chạy nhanh hơn',
         'Để các đoạn chạm nhau tại x đó cùng nằm trong tập đang xét và được kiểm tra',
         'Vì các đầu kết thúc không quan trọng',
       ],

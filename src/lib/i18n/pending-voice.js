@@ -49,8 +49,6 @@ export const pendingTopics = new Set([
 
   'review-core',
 
-  'geometry',
-
   'flows',
 
   'advanced-dp',

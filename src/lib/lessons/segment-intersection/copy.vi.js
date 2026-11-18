@@ -183,7 +183,7 @@ export const vi = {
     {
       type: 'choice',
       prompt:
-        'Với a = (1, 1), b = (5, 3), c = (8, 1) và d = (8, 7), o3 và o4 trái dấu. Bạn kết luận được gì?',
+        'Với a = (1, 1), b = (5, 3), c = (8, 1) và d = (8, 7), o3 và o4 trái dấu. Em kết luận được gì?',
       options: [
         'Hai đoạn cắt nhau',
         'c và d nằm ở hai phía của đường thẳng qua a và b, nhưng vẫn cần xét o1 và o2',

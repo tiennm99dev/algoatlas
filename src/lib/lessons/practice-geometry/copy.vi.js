@@ -13,11 +13,11 @@ export const vi = {
   level: 'Nâng cao',
   title: 'Luyện tập: bài toán hình học',
   intro:
-    'Mã hình học thường sai theo hai kiểu: một phép so sánh bị làm tròn sai hướng, và một bài toán giải bằng vét cạn trong khi bao lồi đã đủ. Sa bàn này chạy ba bài toán kinh điển trên các điểm bạn đặt. Trước mỗi bước, hãy dự đoán số nguyên chính xác mà bước đó tính ra; nút “Kiểm tra” chỉ cho đi tiếp khi bạn trả lời đúng.',
+    'Mã hình học thường sai theo hai kiểu: một phép so sánh bị làm tròn sai hướng, và một bài toán giải bằng vét cạn trong khi bao lồi đã đủ. Sa bàn này chạy ba bài toán kinh điển trên các điểm em đặt. Trước mỗi bước, hãy dự đoán số nguyên chính xác mà bước đó tính ra; nút “Kiểm tra” chỉ cho đi tiếp khi em trả lời đúng.',
   summary:
     'Đặt các điểm rồi dự đoán chính xác tích có hướng, tổng dây giày và bình phương khoảng cách trong ba bài toán về bao lồi và hướng quay, kiểm tra từng bước.',
   instruction:
-    'Chọn một bài toán, rồi kéo các điểm, nhấn vào chỗ trống để thêm điểm, hoặc chọn một ví dụ. Ở mỗi bước, nhập giá trị vào ô “Đến lượt bạn” rồi nhấn “Kiểm tra”, hoặc nhấn “Bước tiếp” để xem đáp án. Sau đó dùng sa bàn để trả lời các câu hỏi bên dưới.',
+    'Chọn một bài toán, rồi kéo các điểm, nhấn vào chỗ trống để thêm điểm, hoặc chọn một ví dụ. Ở mỗi bước, nhập giá trị vào ô “Đến lượt em” rồi nhấn “Kiểm tra”, hoặc nhấn “Bước tiếp” để xem đáp án. Sau đó dùng sa bàn để trả lời các câu hỏi bên dưới.',
   puzzleLabel: 'Bài toán',
   puzzles: {
     side: 'Điểm nằm phía nào của đường thẳng AB?',
@@ -77,7 +77,7 @@ export const vi = {
   },
   /** @param {number} d2 */
   bestLabel: (d2) => `d² = ${d2}`,
-  askTitle: 'Đến lượt bạn',
+  askTitle: 'Đến lượt em',
   askLabels: {
     side: 'cross(B − A, p − A)',
     fence: 'twice sau cạnh này',
@@ -117,8 +117,8 @@ export const vi = {
     distance: 'Khoảng cách √d²',
     pairs: 'Số cặp đã so sánh',
     brute: 'Số cặp khi vét cạn',
-    correct: 'Số câu bạn trả lời đúng',
-    wrong: 'Số câu bạn trả lời sai',
+    correct: 'Số câu em trả lời đúng',
+    wrong: 'Số câu em trả lời sai',
   },
   pending: '…',
   /**
