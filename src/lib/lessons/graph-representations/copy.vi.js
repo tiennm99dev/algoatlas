@@ -9,7 +9,7 @@ export const vi = {
   level: 'Cơ bản',
   title: 'Biểu diễn đồ thị',
   intro:
-    'Đồ thị là một tập đỉnh nối với nhau bằng các cạnh: thành phố và đường đi, người và tình bạn bè, công việc và thứ tự phụ thuộc. Trước khi một thuật toán đi trên đồ thị, chương trình phải lưu nó lại, và hai cách kinh điển là ma trận kề và danh sách kề. Hai cách giữ cùng những cạnh ấy nhưng trả lời câu hỏi với chi phí rất khác nhau.',
+    'Đồ thị là một tập đỉnh nối với nhau bằng các cạnh: thành phố và đường đi, người và quan hệ bạn bè, công việc và thứ tự phụ thuộc. Trước khi một thuật toán đi trên đồ thị, chương trình phải lưu nó lại, và hai cách kinh điển là ma trận kề và danh sách kề. Hai cách giữ cùng những cạnh ấy nhưng trả lời câu hỏi với chi phí rất khác nhau.',
   summary:
     'Vẽ một đồ thị và xem từng cạnh được ghi vào ma trận kề và danh sách kề, với đồ thị có hướng, vô hướng và có trọng số.',
   instruction:

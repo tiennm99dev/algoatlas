@@ -270,8 +270,8 @@ practice: [
 ],
 ```
 
-- `number` reads English numbers (`1,024`, `3.5`, `−2`); a comma never marks decimals. A unit
-  is optional when the learner leaves it out.
+- `number` reads `3.5` or `3,5` as 3.5 and `−2`; digits are never grouped, so `1,024` reads as
+  1.024 and `1 000` is rejected. A unit is optional when the learner leaves it out.
 - `text` ignores case, accents, extra spaces, spaces around brackets and operators, `²` vs
   `^2` and trailing punctuation, so `O( N² )` matches `O(n^2)`. List every other accepted
   spelling in `accept`.

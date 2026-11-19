@@ -8,7 +8,7 @@ export const vi = {
   level: 'Trung bình',
   title: 'DFS trên lưới',
   intro:
-    'DFS (duyệt theo chiều sâu) lao theo một hành lang xa nhất có thể và chỉ lùi lại khi bị kẹt. Nó đến được mọi ô mà BFS đến được, nhưng đường đầu tiên nó tìm tới đích thường không phải đường ngắn nhất.',
+    'DFS (duyệt theo chiều sâu) lao theo một hành lang xa nhất có thể và chỉ lùi lại khi bị kẹt. Nó đến được mọi ô mà BFS (duyệt theo chiều rộng) đến được, nhưng đường đầu tiên nó tìm tới đích thường không phải đường ngắn nhất.',
   summary:
     'Xem DFS lao sâu vào từng hành lang trên lưới do em vẽ, rồi so đường nó tìm được với đường ngắn nhất của BFS.',
   instruction:

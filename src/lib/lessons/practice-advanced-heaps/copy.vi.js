@@ -23,7 +23,7 @@ export const vi = {
   level: 'Nâng cao',
   title: 'Luyện tập: heap nâng cao',
   intro:
-    'Một thuật toán nên dùng priority queue (hàng đợi ưu tiên) nào? Điều đó phụ thuộc vào tỉ lệ các thao tác nó dùng, vào số khoá priority queue chứa, và vào việc các khoá có phải là số nguyên nhỏ hay không. Hãy cho heap nhị phân, heap Fibonacci và cây van Emde Boas thi đấu trên đúng các thao tác priority queue mà thuật toán Dijkstra thực hiện, hoặc trên một tỉ lệ thao tác do em đặt, rồi xem cấu trúc nào tốn ít bước nhất.',
+    'Một thuật toán nên dùng priority queue (hàng đợi ưu tiên) nào? Điều đó phụ thuộc vào tỉ lệ các thao tác nó dùng, vào số khoá priority queue chứa, và vào việc các khoá có phải là số nguyên nhỏ hay không. Hãy cho heap (đống) nhị phân, heap Fibonacci và cây van Emde Boas thi đấu trên đúng các thao tác priority queue mà thuật toán Dijkstra thực hiện, hoặc trên một tỉ lệ thao tác do em đặt, rồi xem cấu trúc nào tốn ít bước nhất.',
   summary:
     'Cho heap nhị phân, heap Fibonacci và cây van Emde Boas thi đấu trên các thao tác priority queue của thuật toán Dijkstra hoặc trên một tỉ lệ thao tác, rồi chọn đúng priority queue.',
   instruction:

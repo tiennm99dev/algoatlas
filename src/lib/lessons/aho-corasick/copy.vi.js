@@ -10,7 +10,7 @@ export const vi = {
   level: 'Nâng cao',
   title: 'Thuật toán Aho-Corasick',
   intro:
-    'Tìm nhiều mẫu lần lượt từng mẫu một thì phải lặp lại công việc cho mọi mẫu. Aho-Corasick đặt tất cả vào một trie và thêm các liên kết thất bại, nên khi không khớp, ta lùi về hậu tố dài nhất vẫn còn trong trie thay vì bắt đầu lại. Khi đó chỉ một lượt qua văn bản là tìm được mọi mẫu, dù có bao nhiêu mẫu đi nữa.',
+    'Tìm nhiều mẫu lần lượt từng mẫu một thì phải lặp lại công việc cho mọi mẫu. Aho-Corasick đặt tất cả vào một trie (cây tiền tố) và thêm các liên kết thất bại, nên khi không khớp, ta lùi về hậu tố dài nhất vẫn còn trong trie thay vì bắt đầu lại. Khi đó chỉ một lượt qua văn bản là tìm được mọi mẫu, dù có bao nhiêu mẫu đi nữa.',
   summary:
     'Dựng một trie có liên kết thất bại và liên kết đầu ra, rồi tìm nhiều mẫu trong một lượt qua văn bản, không phải quay lui.',
   instruction:

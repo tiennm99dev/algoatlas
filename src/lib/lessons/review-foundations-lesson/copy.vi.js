@@ -4,7 +4,7 @@ export const vi = {
   level: 'Trung bình',
   title: 'Ôn tập: nền tảng',
   intro:
-    'Bài trắc nghiệm này trộn câu hỏi từ mọi chương của phần nền tảng: độ phức tạp, mảng và xâu, sắp xếp, tìm kiếm, linked list (danh sách liên kết), stack (ngăn xếp) và queue (hàng đợi), hash (băm), đệ quy, cây, heap và đồ thị. Phần lớn câu hỏi mô tả một việc cần làm rồi hỏi cấu trúc dữ liệu hay thuật toán nào hợp với nó, vì biết chọn đúng cũng quan trọng như biết từng thứ hoạt động ra sao.',
+    'Bài trắc nghiệm này trộn câu hỏi từ mọi chương của phần nền tảng: độ phức tạp, mảng và xâu, sắp xếp, tìm kiếm, linked list (danh sách liên kết), stack (ngăn xếp) và queue (hàng đợi), hash (băm), đệ quy, cây, heap (đống) và đồ thị. Phần lớn câu hỏi mô tả một việc cần làm rồi hỏi cấu trúc dữ liệu hay thuật toán nào hợp với nó, vì biết chọn đúng cũng quan trọng như biết từng thứ hoạt động ra sao.',
   summary:
     'Bài trắc nghiệm tổng hợp cho cả phần nền tảng: chi phí của các thao tác cơ bản, chọn cấu trúc dữ liệu cho một việc, và ôn lại sắp xếp, tìm kiếm.',
   instruction:
